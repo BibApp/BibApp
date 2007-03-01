@@ -1,10 +1,10 @@
 #sidebar
   %h3 Groups
   %ol#groups.popular
-  - @group_results.each do |row|
-    %li
-      = row.papers
-      = link_to "#{row.name}", group_path(row.to_param)
+    - @group_results.each do |row|
+      %li
+        = row.papers
+        = link_to "#{row.name}", group_path(row.to_param)
 
 %h2= "Our experts on: #{@query}"
 

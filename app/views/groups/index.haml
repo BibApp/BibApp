@@ -28,7 +28,7 @@
   #authors
     %h3 Prolific Authors
     - @people.each do |person|
-      = link_to(image_tag(person.image, :height => "40px", :alt => "#{person.display_name}", :class => "photo"), :controller => "people", :action => "show", :id => person.id)
+      = link_to(image_tag(person.image, :height => "40px", :alt => "#{person.display_name}", :class => "photo"), person_path(person.to_param))
       
   #journals
     %h3 Popular Journals
