@@ -86,6 +86,8 @@ class Group < ActiveRecord::Base
           GROUP BY tags.id, tags.name
           ORDER BY count DESC
           LIMIT ?", id, y, limit])
+      tags = tags.sort_by { |t| t.name }
+      tags.each { |t| t.name.gsub!("-", " ")}
 
       # I'm gonna compute the bins as:
       # bin_number = ((this_tag_frequency * bin_count)/max_tag_frequency).ceil
