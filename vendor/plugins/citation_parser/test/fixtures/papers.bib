@@ -1,0 +1,199 @@
+
+@InProceedings{DBLP:conf/iccv/WangA03,
+  Author         = {Hongcheng Wang and Narendra Ahuja},
+  Title          = {Facial Expression Decomposition},
+  BookTitle      = {ICCV},
+  Pages          = {958-965},
+  note           = {Using a 2D Deformable Face Model they do a HOSVD used
+                   to decompose a Tensor like in
+                   \ref{vlasic05:multilinear}. Sped up HOSVD by PCA to
+                   reduce dimensionality of face description. },
+  ps             = {local/iccv03_facial.ps.gz},
+  year           = 2003
+}
+
+@InProceedings{DBLP:conf/cvpr/KolmogorovCBCR05,
+  Author         = {Vladimir Kolmogorov and Antonio Criminisi and Andrew
+                   Blake and Geoff Cross and Carsten Rother},
+  Title          = {Bi-Layer Segmentation of Binocular Stereo Video.},
+  BookTitle      = {CVPR (2)},
+  Pages          = {407-414},
+  pdf            = {local/Criminisi_cvpr2005.pdf},
+  year           = 2005
+}
+
+@Proceedings{DBLP:conf/cvpr/2005,
+  Title          = {2005 IEEE Computer Society Conference on Computer
+                   Vision and Pattern Recognition (CVPR 2005), 20-26 June
+                   2005, San Diego, CA, USA},
+  Publisher      = {IEEE Computer Society},
+  booktitle      = {CVPR},
+  isbn           = {0-7695-2372-2},
+  year           = 2005
+}
+
+@InProceedings{WangCGF04,
+  Author         = "Yang Wang and Xiaolei Huang and Chan-Su Lee and Song Zhang and
+                   Zhiguo Li and Dimitris Samaras and Dimitris Metaxas and Ahmed
+                   Elgammal and Peisen Huang",
+  Title          = "High Resolution Acquisition, Learning and Transfer of
+                   Dynamic 3-D Facial Expressions",
+  BookTitle      = "Computer Graphics Forum",
+  Pages          = "III: 677-686",
+  Note           = {Mapping 3D Scans expression trajectories onto a low
+                   dimensional manifold -> warping the manifolds of the
+                   same expression of different people into the same shape
+                   -> Learning mappings from the warped manifolds to the
+                   original high-dimensional manifolds. They claim that
+                   the warped manifolds contain the essence of a smile,
+                   while the mapping function contains the person specific
+                   style. Their morphs are not very convincing, the
+                   intermediate faces are not mixtures of the original
+                   faces. Maybe because of the nonlinearity of the model
+                   and the linear warping.},
+  year           = 2004,
+  pdf = {local/hr_transfer/paper1044.pdf}
+}
+
+@InProceedings{946637,
+  Author         = {A. Criminisi and J. Shotton and A. Blake and P. H. S.
+                   Torr},
+  Title          = {Gaze Manipulation for One-to-one Teleconferencing},
+  BookTitle      = {ICCV '03: Proceedings of the Ninth IEEE International
+                   Conference on Computer Vision},
+  Pages          = {191},
+  Address        = {Washington, DC, USA},
+  Publisher      = {IEEE Computer Society},
+  isbn           = {0-7695-1950-4},
+  pdf            = {local/criminisi_iccv03.pdf},
+  year           = 2003
+}
+
+@InProceedings{blanz03:component_based,
+  Author         = {Jennifer Huang and Bernd Heisele and Volker Blanz},
+  Title          = {Component-based Face Recognition with 3D Morphable
+                   Models},
+  BookTitle      = {International Conference on Audio- and Video-Based
+                   Biometric Person Authentication (AVBPA-03)},
+  Editor         = {Kittler, Josef and Nixon, Mark S.},
+  Volume         = {2688},
+  Number         = {-},
+  Series         = {Lecture Notes in Computer Science},
+  Pages          = {27--34},
+  Address        = {Surrey, UK},
+  Publisher      = {Springer},
+  Note           = {},
+  pdf            = {local/avbpa2003.pdf},
+  year           = 2003
+}
+
+@Article{vlasic05:multilinear,
+  Author         = {Daniel Vlasic and Matthew Brand and Hanspeter Pfister
+                   and Jovan Popovi{'c}},
+  Title          = {Face transfer with multilinear models},
+  Journal        = {ACM Trans. Graph.},
+  Volume         = {24},
+  Number         = {3},
+  Pages          = {426--433},
+  address        = {New York, NY, USA},
+  doi            = {http://doi.acm.org/10.1145/1073204.1073209},
+  issn           = {0730-0301},
+  note           = {Quite similar to the approach in Basel, but with
+                   multilinear models based on tensor decomposition. Quite
+                   good results with only a few example images. Inputation
+                   of missing datasets. },
+  pdf            = {local/face_transfer/vlasic-2005-ftm.pdf},
+  publisher      = {ACM Press},
+  year           = 2005
+}
+
+@InProceedings{HuangANM04,
+  Author         = "Xiaolei Huang and Song Zhang and Yang Wang and Dimitris
+                   Metaxas and Dimitris Samaras",
+  Title          = "A Hierarchical Framework for Hight Resolution Facial
+                   Expression Tracking",
+  BookTitle      = "IEEE Workshop on Articulated and Nonridgid Motion",
+  Pages          = "22",
+  Note           = {Detailed high framerate aquisition of frontal mesh and
+                   texture data of faces using structured light. Tracking
+                   of correspondences along frames by a simple two step
+                   algorithm. First fitting of coarse mesh using a
+                   gradient descent algorithms where source surface points
+                   move to the closest target surface point, then bspline
+                   deformation of fine mesh initialized bu coarse mesh.},
+  pdf            = {local/anm04-face-tracking.pdf},
+  year           = 2004
+}
+
+@Proceedings{DBLP:conf/iccv/2003,
+  Title          = {9th IEEE International Conference on Computer Vision
+                   (ICCV 2003), 14-17 October 2003, Nice, France},
+  Publisher      = {IEEE Computer Society},
+  isbn           = {0-7695-1950-4},
+  year           = 2003
+}
+
+@Article{Perez03a,
+  Author         = {Pérez, P. and Gangnet, M. and Blake, A.},
+  Title          = {Poisson image editing},
+  Journal        = {ACM Transactions on Graphics (SIGGRAPH'03)},
+  Volume         = {22},
+  Number         = {3},
+  Pages          = {313--318},
+  pdf            = {local/perez_siggraph03.pdf},
+  year           = 2003
+}
+
+@InProceedings{BlaBasVetPog2003,
+  Author         = {Volker Blanz and Curzio Basso and Thomas Vetter and
+                   Tomaso Poggio},
+  Title          = {Reanimating Faces in Images and Video},
+  BookTitle      = {EUROGRAPHICS 2003 (EUROGRAPHICS-03) : the European
+                   Association for Computer Graphics, 24th Annual
+                   Conference},
+  Editor         = {Brunet, Pere and Fellner, Dieter W.},
+  Volume         = {22},
+  Number         = {3},
+  Series         = {Computer Graphics Forum},
+  Pages          = {641--650},
+  Address        = {Granada, Spain},
+  Organization   = {The Eurographics Association},
+  Publisher      = {Blackwell},
+  Note           = {Lineares Modell mit Visemen fuer den Mundebereich.
+                   Keine Koartikulation. The Morphable model with tracking
+                   and inpainting.},
+  isbn           = {0167-7055},
+  pdf            = {local/blanz_eg03.pdf},
+  year           = 2003
+}
+
+@PhdThesis{romdhani05:mff,
+  Author         = {Sami Romdhani},
+  Title          = {Face Image Analysis using a Multiple Feature Fitting
+                   Strateg},
+  School         = {University of basel},
+  pdf            = {local/romdhani_thesis.pdf},
+  year           = 2005
+}
+
+@InProceedings{goecke05:trends,
+  title = {Current Trends in Joint Audio-Video Signal Processing: A Review},
+  Author = {Roland Göcke},
+  Address = {Sydney, Australia},
+  BookTitle = {Proceedings of the IEEE 8th International Symposium on Signal Processing and Its Applications ISSPA 2005},
+  pages = {70--73}, 
+  year = 2005,
+  Organization = {IEEE},
+  note = {A short overview of applications and methods for lip tracking, automated speech recogniton, person recogniton, etc. Pointers to databases with joint AV material and relevant Publications.}
+}
+
+@Article{seyadarabi:facial,
+title = {Facial Expressions Animation and Lip Tracking  Using Facial Characteristic Points and Deformable Model},
+Journal = {International Journal of Information Technology},
+VOLUME = 1 ,
+NUMBER = 4 ,
+year = 2004 ,
+ISSN = {1305-239X},
+Author = {Hadi Seyedarabi and Ali Aghagolzadeh and Sohrab Khanmohammadi},
+note = {Written in very bad english and does not contain too much information. They track feature points in 2D video data using optical flow and use these points to interpolate a triangle mesh. They claim to have a muscle-based model, but that shows nowhere.}
+}

@@ -1,0 +1,127 @@
+	background: white;
+	}
+	
+#menu {
+	display: none;
+	}
+	
+#wrapper, #content {
+	width: auto; 
+	margin: 0;
+	padding: 0; 
+	border: 0;
+	float: none !important;
+	color: black; 
+	background: transparent;
+	}
+	
+body {
+	background: white;
+	font-size: 12pt;
+	}
+	
+div#content {
+font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+	
+
+div#header {
+	display:none;
+}
+
+#footer {
+	font-size: .8em; 
+	padding: 1.5em; 
+	float: left; 
+	width: 100%;
+	border-top: 2px solid #ccc;
+	background-color:#E8EBF0;
+}
+
+ul#footer-nav{
+	display:none;
+}
+
+/* citation analysis */
+
+table.legend {
+    border: 2px solid #666;
+    border-collapse: collapse;
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    width: 85%;
+	margin-bottom:1em;
+}
+
+
+.legend thead, .legend td {
+    padding: 4px;
+}
+
+.legend thead {
+    font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    border-bottom: 1px solid #bbb;
+    border-left: 1px solid #bbb;
+    background-image: url(../images/thgradient.gif);
+    background-position: top;
+    background-repeat: repeat-x;
+    background-color: #cfddf7;
+}
+
+.legend thead td {
+	font-weight: bold;
+	font-size:normal;
+}
+
+.legend tfoot td {
+	font-weight: bold;
+	font-size:normal;
+}
+
+.legend td {
+    font-weight: normal;
+    font-size: small;
+    border-left: 1px solid #bbb;
+    border-bottom: 1px solid #edf3fe;
+}
+
+
+
+/* Archive analysis */
+
+div#graph {
+	display:none;
+}
+a img {
+	display:none;
+}
+
+table.results {
+	display:none;
+}
+div.detailed-citation-analysis {
+	margin-top:1em;
+}
+
+h3.publisher {
+border-bottom:1px dashed black;
+page-break-after:avoid;
+}
+
+h4.journal {
+
+}
+
+ol.citations-archive {
+	width:95%;
+	text-indent: -1.5em;
+}
+
+ol.citations-archive li.journal span.source {
+	font-style:italic;
+}
+
+ol.citations-archive li.nlm-citation {
+	margin-bottom:0.5em;
+	font-size:.8em;
+	list-style:none;
+}
