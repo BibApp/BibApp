@@ -7,6 +7,7 @@ body * { font-size: 100%; }
 #main { width: 100%; float:left; }
 #content { margin-top: .5em; width:60%; }
 #sidebar { float:right; width:350px; border-left:1px solid #ccc; padding:.5em .5em 0 .5em; margin-right:1em; }
+#sidebar .results {list-style:none;}
 #footer { margin-top: 2em; font-size: .8em; float: left; width: 100%; border-top: 2px solid #ccc; background-color:#E8EBF0; }
 #footer img { padding-bottom:20px; }
 #footer p { padding:1em; line-height:1.5em; }
