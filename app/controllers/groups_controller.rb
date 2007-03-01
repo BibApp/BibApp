@@ -8,7 +8,8 @@ class GroupsController < ApplicationController
       # redirect_to :controller => :account, :action => :signup
     end
     @people_count        = Authorship.count('person_id', :distinct => true)
-    @archive_count       = Citation.count(:conditions => "archive_status_id in (2,4,5,6,7)")
+    @archive_count       = Citation.count(
+                            :conditions => "archive_status_id in (2,4,5,6,7) and citation_state_id = 3")
     @people              = Authorship.top_authors(30)
     @publications        = Publication.favorites
     @publishers          = Publisher.favorites
