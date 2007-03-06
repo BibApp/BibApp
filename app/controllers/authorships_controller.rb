@@ -26,6 +26,6 @@ class AuthorshipsController < ApplicationController
     
     @feed = Feed.find(authorship[:feed_id])
     @feed.update_attributes(:feed_state_id => 2)
-    redirect_to(:controller => "feeds", :action => "index")
+    redirect_to(:controller => "admin", :action => "feeds")
   end
 end
