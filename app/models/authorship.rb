@@ -15,6 +15,7 @@ class Authorship < ActiveRecord::Base
       return if not citations.respond_to? :each
       citations.each do |c|
         Authorship.create(:person_id => person.id, :citation_id => c.id )
+        c.update_attribute(:imported_for, person.id)
       end
     end
   

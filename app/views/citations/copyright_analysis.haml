@@ -1,6 +1,10 @@
+#sidebar
+  = render :partial => "people/vcard", :locals => { :person => @person }
+
 #content
   %h2 Archiving Policy Analysis
     %h3= "#{link_to(@person.display_name, :controller => "people", :action => "show", :id => @person.id)}" 
+
     %table.legend
       %thead
         %tr
@@ -49,4 +53,27 @@
             %td= ref.issn_isbn
             %td= link_to(ref.publisher, "http://www.sherpa.ac.uk/romeo.php?all=yes##{ref.sherpa_id}") if ref.publisher
             
-    = image_tag("/images/romeosmall.jpg")
+    #detailed-analysis
+      %h2 Archiving details
+      - @person.sherpa_publishers.each do |pub|
+        %div.publisher
+          -if pub.publisher_name?
+            %h3{:class => "publisher #{pub.romeo_colour}"}
+              ="#{pub.publisher_name}: #{pub.count}"
+            -@person.sherpa_publications.each do |publ|
+              -if publ.publisher_name == pub.publisher_name
+                %h4.journal="#{publ.publication_name}: #{publ.count}"
+                -@person.citations.each do |c|
+                  -if c.publication
+                    -if c.publication.name == publ.publication_name
+                      %ol.citations
+                        %li.nlm-citation=format_citation_apa_to_html(c)
+      - if @unknown > 0
+        %div.publisher
+          %h3.publisher.unknown="Unknown: #{@unknown}"
+          %ol.citations
+            -@person.citations.each do |c|
+              -if !c.publication
+                %li.nlm-citation=format_citation_apa_to_html(c)
+      = image_tag("/images/romeosmall.jpg")
+    

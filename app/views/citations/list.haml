@@ -7,6 +7,6 @@
     = @citations.size
     citations on 
     = params[:tag]
-
-  - @citations.each do |citation|
-    = render :partial => "shared/citation", :locals => { :citation => citation }
+  %ol.citations
+    - @citations.each do |citation|
+      = render :partial => "shared/citation", :locals => { :citation => citation }
