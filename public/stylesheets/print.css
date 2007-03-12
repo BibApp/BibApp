@@ -1,10 +1,11 @@
-	background: white;
-	}
-	
 #menu {
 	display: none;
 	}
-	
+
+a {
+	text-decoration:none;
+	color:black;
+}
 #wrapper, #content {
 	width: auto; 
 	margin: 0;
@@ -19,7 +20,8 @@ body {
 	background: white;
 	font-size: 12pt;
 	}
-	
+
+div#sidebar {display:none;}	
 div#content {
 font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
 }
@@ -35,7 +37,6 @@ div#header {
 	float: left; 
 	width: 100%;
 	border-top: 2px solid #ccc;
-	background-color:#E8EBF0;
 }
 
 ul#footer-nav{
@@ -44,7 +45,13 @@ ul#footer-nav{
 
 /* citation analysis */
 
-table.legend {
+.green { background-color:#D0F9D2; }
+.blue { background-color:#D3ECFA; }
+.yellow { background-color:#FFFFDF; }
+.white { background-color:#FFFFFF; }
+.unknown { background-color:#E6E6E6; }
+
+table {
     border: 2px solid #666;
     border-collapse: collapse;
     font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -53,11 +60,11 @@ table.legend {
 }
 
 
-.legend thead, .legend td {
+thead, td {
     padding: 4px;
 }
 
-.legend thead {
+thead {
     font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
     border-bottom: 1px solid #bbb;
     border-left: 1px solid #bbb;
@@ -67,17 +74,17 @@ table.legend {
     background-color: #cfddf7;
 }
 
-.legend thead td {
+thead td {
 	font-weight: bold;
 	font-size:normal;
 }
 
-.legend tfoot td {
+tfoot td {
 	font-weight: bold;
 	font-size:normal;
 }
 
-.legend td {
+td {
     font-weight: normal;
     font-size: small;
     border-left: 1px solid #bbb;
@@ -95,33 +102,39 @@ a img {
 	display:none;
 }
 
-table.results {
-	display:none;
-}
-div.detailed-citation-analysis {
+div#detailed-analysis {
 	margin-top:1em;
+	width: 80%;
 }
 
 h3.publisher {
-border-bottom:1px dashed black;
+border-top:2px solid #666;
+border-bottom:2px solid #666;
 page-break-after:avoid;
 }
 
 h4.journal {
-
+page-break-after:avoid;
 }
 
-ol.citations-archive {
+/* Citations */
+
+ol.citations {
 	width:95%;
 	text-indent: -1.5em;
 }
 
-ol.citations-archive li.journal span.source {
+ol.citations li.journal span.source {
 	font-style:italic;
 }
 
-ol.citations-archive li.nlm-citation {
+ol.citations li.nlm-citation {
 	margin-bottom:0.5em;
 	font-size:.8em;
 	list-style:none;
 }
+
+ol.citations h4 {display:none;}
+ol.citations div.admin {display:none;}
+ol.citations div.links {display:none;}
+ol.citations div.tags {display:none;}

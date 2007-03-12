@@ -73,10 +73,10 @@ class Citation < ActiveRecord::Base
   end
 
   def issn_dupe_key
-    if (issn_isbn.nil? or pub_year.nil? or start_page.nil? or issn_isbn.empty?)
+    if (authors.nil? or issn_isbn.nil? or pub_year.nil? or start_page.nil? or issn_isbn.empty?)
       nil
     else
-      (issn_isbn + pub_year.to_s + start_page.to_s).gsub(/[^0-9Xx]/, '').downcase
+      (authors.split(",")[0] + issn_isbn + pub_year.to_s + start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
     end
   end
 

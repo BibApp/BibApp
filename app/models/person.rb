@@ -25,7 +25,7 @@ class Person < ActiveRecord::Base
     :source => :citation,
     :through => :authorships,
     :order => "pub_year DESC, id DESC",
-    :limit => 15
+    :limit => 5
   
   def groups_not
     all_groups = Group.find(:all, :order => "name")
@@ -83,14 +83,18 @@ class Person < ActiveRecord::Base
   
   def favorite_publications
     favorite_publications = Person.find_by_sql(
-      ["select count(title_primary) as count, periodical_full as full_name
-      from citations 
-      join authorships on (citations.id = authorships.citation_id)
-      where length(periodical_full) > 0 and authorships.person_id = ? 
-      group by periodical_full 
-      order by count DESC
+      ["select count(c.id) as count, c.issn_isbn, c.periodical_full as full_name, c.title_tertiary
+      from citations c
+      join authorships au on c.id = au.citation_id
+      left join publications publ on c.publication_id = publ.id
+      left join publishers pub on publ.publisher_id = pub.id
+      where au.person_id = ?
+      and c.citation_state_id = 3
+      group by c.issn_isbn 
+      order by count DESC, c.periodical_full
       limit 10", id]
     )
+    favorite_publications.each{|p| p.full_name = p.title_tertiary if p.full_name.empty?}
   end
   
   def favorite_publishers
@@ -102,6 +106,32 @@ class Person < ActiveRecord::Base
       group by publisher 
       order by count DESC
       limit 10", id]
+    )
+  end
+  
+  def sherpa_publishers
+    distinct_publishers = Publisher.find_by_sql(
+      ["select distinct(pub.name) as publisher_name, count(c.title_primary) as count, pub.romeo_colour
+      from citations c
+      join authorships au on (c.id = au.citation_id)
+      left join publications publ on (c.publication_id = publ.id)
+      left join publishers pub on publ.publisher_id = pub.id
+      where au.person_id = ?
+      group by publisher_name
+      order by pub.name ASC", id]
+    )
+  end
+  
+  def sherpa_publications
+    distinct_publishers = Publication.find_by_sql(
+      ["select distinct(publ.name) as publication_name, count(c.title_primary) as count, pub.name as publisher_name
+      from citations c
+      join authorships au on (c.id = au.citation_id)
+      left join publications publ on (c.publication_id = publ.id)
+      left join publishers pub on publ.publisher_id = pub.id
+      where au.person_id = ?
+      group by publ.name
+      order by publ.name ASC", id]
     )
   end
 
@@ -130,7 +160,7 @@ class Person < ActiveRecord::Base
       left join publishers pub on publ.publisher_id = pub.id
       where au.person_id = ?
       and c.citation_state_id = 3
-      group by c.periodical_full 
+      group by c.issn_isbn 
       order by count DESC, c.periodical_full", id]
     )
   end
