@@ -9,6 +9,8 @@ class Person < ActiveRecord::Base
                 [ :first_name, :first ], 
                 [ :middle_name, :middle ]
               ]
+              
+  before_save   :set_first_last
 
   has_many :memberships
   has_many :groups,
@@ -89,6 +91,7 @@ class Person < ActiveRecord::Base
       left join publications publ on c.publication_id = publ.id
       left join publishers pub on publ.publisher_id = pub.id
       where au.person_id = ?
+      and length(c.issn_isbn) > 0
       and c.citation_state_id = 3
       group by c.issn_isbn 
       order by count DESC, c.periodical_full
@@ -130,6 +133,7 @@ class Person < ActiveRecord::Base
       left join publications publ on (c.publication_id = publ.id)
       left join publishers pub on publ.publisher_id = pub.id
       where au.person_id = ?
+      and length(c.issn_isbn) > 0
       group by publ.name
       order by publ.name ASC", id]
     )
@@ -163,6 +167,10 @@ class Person < ActiveRecord::Base
       group by c.issn_isbn 
       order by count DESC, c.periodical_full", id]
     )
+  end
+  
+  def set_first_last
+    self.first_last = "#{self.first_name} #{self.last_name}"
   end
   
 end
