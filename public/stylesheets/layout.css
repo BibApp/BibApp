@@ -77,7 +77,7 @@ ul#nav li { padding: 0 1em; border-right:1px solid #ccc; float: left; display: b
 #vcard-metadata { display:block; float:left; margin-left:1em; }
 #work { float:left; width:95%; }
 #work h3 { padding-top: .5em; }
-#work a img { padding:0 1em, 1em, 1em; border:0; text-decoration: none; }
+#work a img { padding: 0 1em 1em 1em; border: 0; text-decoration: none; }
 
 
 /* Classes, alpha */
@@ -93,8 +93,8 @@ ol.citations-archive li.nlm-citation { margin-bottom:0.5em; font-size:.8em; list
 .clearer { clear: both; }
 ul.dept-meta { padding-left: 15em; }
 ul.dept-meta li { list-style: none; display: inline; }
-div.detailed-citation-analysis { margin:1em, 1em, 1em, 0; width:55%; border-top:1px solid black; }
-.edit-form { width:100%; margin-top:1.5em; padding:.5em, 0, 0, 1em; float:left; }
+div.detailed-citation-analysis { margin: 1em 1em 1em 0; width: 55%; border-top: 1px solid black; }
+.edit-form { width: 100%; margin-top: 1.5em; padding: .5em 0 0 1em; float: left; }
 .error-assistant { color:#FF0000; font-weight:bold; }
 .even { background-color:#E8EBF0; }
 .feeds { text-decoration:none; border:0; }
@@ -104,8 +104,8 @@ table.legend { float:right; border: 2px solid #666; border-collapse: collapse; f
 .legend td { font-weight: normal; font-size: small; border-left: 1px solid #bbb; border-bottom: 1px solid #edf3fe; }
 .legend thead, .legend td { padding: 4px; }
 .legend thead { font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; border-bottom: 1px solid #bbb; border-left: 1px solid #bbb; background-image: url(../images/thgradient.gif); background-position: top; background-repeat: repeat-x; background-color: #cfddf7; }
-.legend thead td { font-weight: bold; font-size:normal; }
-.legend tfoot td { font-weight: bold; font-size:normal; }
+.legend thead td { font-weight: bold; font-size: medium; }
+.legend tfoot td { font-weight: bold; font-size: medium; }
 .meta { padding:.5em; font-size: .9em; }
 .meta a { padding: .15em; }
 span.meta { font-size: x-small; }
@@ -120,7 +120,7 @@ h3.publisher { padding:0.25em; font-size:1.2em; border-bottom:1px dashed black; 
 table.results { clear: both; border: 2px solid #666; border-collapse: collapse; font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; margin-top: 2em; margin-bottom:1em; width: 100%; margin-left: auto; margin-right: auto; }
 .results thead { font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif; border-bottom: 1px solid #bbb; border-left: 1px solid #bbb; background-image: url(../images/thgradient.gif); background-position: top; background-repeat: repeat-x; background-color: #cfddf7; }
 .results thead, .results td { padding: 4px; }
-.results thead td { font-weight: bold; font-size:normal; }
+.results thead td { font-weight: bold; font-size: medium; }
 .results td { font-weight: normal; font-size: small; border-left: 1px solid #bbb; border-bottom: 1px solid #edf3fe; }
 .text h3 { padding:1em; }
 .text address { text-decoration:none; padding:0.5em; }
