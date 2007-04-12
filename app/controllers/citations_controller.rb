@@ -63,7 +63,7 @@ class CitationsController < ApplicationController
     @person = Person.find(params[:id])
     @journals = @person.copyright_analysis
     @journals.each{|j| j.romeo_colour = "unknown" if !j.romeo_colour}
-    @journals.each{|j| j.periodical_full = j.title_tertiary if j.periodical_full.empty?}
+    @journals.each{|j| j.periodical_full = j.title_tertiary if j.periodical_full.nil? or j.periodical_full.empty?}
     
     @green = 0
     @blue = 0
