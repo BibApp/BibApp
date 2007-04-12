@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
       order by count DESC, c.periodical_full
       limit 10", id]
     )
-    favorite_publications.each{|p| p.full_name = p.title_tertiary if p.full_name.empty?}
+    favorite_publications.each{|p| p.full_name = p.title_tertiary if p.full_name.nil? or p.full_name.empty?}
   end
   
   def favorite_publishers
