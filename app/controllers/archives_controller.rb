@@ -80,7 +80,6 @@ class ArchivesController < ApplicationController
     builder = Builder::XmlMarkup.new(:indent => 2)
     xml = builder.dublin_core { |dc|
       dc.dcvalue(citation.title_primary, :element => "title", :qualifier => "none") if citation.title_primary and !citation.title_primary.empty?
-      dc.dcvalue(citation.abstract, :element => "description", :qualifier => "abstract") if citation.abstract and !citation.abstract.empty?
       dc.dcvalue(citation.pub_year, :element => "date", :qualifier => "issued")
       dc.dcvalue(citation.publisher, :element => "publisher", :qualifier => "none") if citation.publisher and !citation.publisher.empty?
       dc << copyright_statement(citation)
