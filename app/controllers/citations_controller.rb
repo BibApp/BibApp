@@ -28,6 +28,7 @@ class CitationsController < ApplicationController
   
   def new
     @citation = Citation.new
+    @reftypes = Reftype.find(:all)
   end
 
   def create
@@ -42,6 +43,9 @@ class CitationsController < ApplicationController
 
   def edit
     @citation = Citation.find(params[:id])
+  end
+
+  def toggle
   end
 
   def update

@@ -27,16 +27,21 @@ class Authorship < ActiveRecord::Base
         person_id = person.id
       end
     
+       #Find People this author has co-authored with
+       # (This query should be valid in both MySQL and PostgreSQL) 
       Person.find_by_sql(
-      ["select p.*, count(a2.person_id) as pub_count from authorships a1, authorships a2, people p
-      where a1.citation_id = a2.citation_id
-      and a1.person_id <> a2.person_id
-      and a1.person_id = ?
-      and a2.person_id = p.id
-      group by a2.person_id
-      order by pub_count desc
-      limit 10", person_id])
-    
+         ["SELECT p.*, coauth.pub_count 
+           FROM people p
+           JOIN (SELECT p.id as person_id, count(a2.person_id) as pub_count
+                 FROM authorships a1, authorships a2, people p
+                 WHERE a1.citation_id = a2.citation_id
+                 AND a1.person_id <> a2.person_id
+                 AND a1.person_id = ?
+                 AND a2.person_id = p.id
+                 GROUP BY p.id) AS coauth
+           ON p.id=coauth.person_id      
+           ORDER BY coauth.pub_count DESC
+           LIMIT 10", person_id])
     end
   
     def coauthor_groups(person)
@@ -47,23 +52,35 @@ class Authorship < ActiveRecord::Base
         person_id = person.id
       end
     
+       #Find Groups whose members this author has co-authored with
+       # (This query should be valid in both MySQL and PostgreSQL) 
       Group.find_by_sql(
-      ["select g.*, count(distinct coauths.citation_id) as pub_count from authorships a1
-      join authorships coauths on a1.citation_id = coauths.citation_id
-      join memberships m on m.person_id = coauths.person_id
-      join groups g on m.group_id = g.id
-      where a1.person_id = ?
-      group by g.id, g.name, g.suppress, g.created_at
-      order by pub_count desc", person_id])
-    
+         ["SELECT g.*, g_auth.pub_count 
+           FROM groups g
+           JOIN (SELECT g.id as group_id, count(distinct coauths.citation_id) as pub_count
+                 FROM authorships a1
+                 JOIN authorships coauths ON a1.citation_id = coauths.citation_id
+                 JOIN memberships m ON m.person_id = coauths.person_id
+                 JOIN groups g ON m.group_id = g.id
+                 WHERE a1.person_id = ?
+                 GROUP by g.id) AS g_auth
+           ON g.id=g_auth.group_id      
+           ORDER BY g_auth.pub_count DESC", person_id])
     end
+    
     def top_authors(count = 25)
+       #Find authors with the most authorships/publications
+       # (This query should be valid in both MySQL and PostgreSQL)          
       people = Person.find_by_sql(
-        ["SELECT p.*, count(au.id) as pub_count FROM people p
-          JOIN authorships au ON p.id = au.person_id
-          GROUP BY p.id
-          HAVING count(au.id) > 0
-          ORDER BY pub_count DESC
+         ["SELECT p.*, auth.pub_count 
+           FROM people p
+           JOIN (SELECT per.id as person_id, count(au.id) as pub_count 
+                 FROM people per
+                 JOIN authorships au ON per.id = au.person_id
+                 GROUP BY per.id) AS auth
+           ON p.id=auth.person_id
+           HAVING auth.pub_count > 0
+           ORDER BY auth.pub_count DESC
           limit ?", count])
     end
   end

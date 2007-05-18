@@ -160,14 +160,18 @@ class Group < ActiveRecord::Base
   end
 
   def people_who_have_published
+    # (This query should be valid in both MySQL and PostgreSQL) 
     people = Person.find_by_sql(
-      ["SELECT p.*, count(au.id) as pub_count FROM people p
-        JOIN memberships m ON p.id = m.person_id
-        JOIN groups g ON g.id = m.group_id
-        JOIN authorships au ON p.id = au.person_id
-        WHERE g.id = ? 
-        GROUP BY p.id
-        HAVING count(au.id) > 0
+         ["SELECT p.*, auth.pub_count 
+           FROM people p
+           JOIN (SELECT per.id as person_id, count(au.id) as pub_count
+                 FROM people per
+                 JOIN memberships m ON per.id = m.person_id
+                 JOIN groups g ON g.id = m.group_id
+                 JOIN authorships au ON per.id = au.person_id
+                 WHERE g.id = ? 
+                 GROUP BY per.id) AS auth
+           ON p.id=auth.person_id      
         ORDER BY p.last_name", id])
   end
 
