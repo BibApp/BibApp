@@ -172,7 +172,7 @@ class CreateInitialStructure < ActiveRecord::Migration
     create_table "publishers", :force => true do |t|
       t.column "sherpa_id",              :integer
       t.column "name",                   :string
-      t.column "romeo_colour",           :string
+      t.column "romeo_color",           :string
       t.column "created_at",             :datetime
       t.column "updated_at",             :datetime
       t.column "dspace_xml",             :text
