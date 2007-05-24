@@ -117,7 +117,7 @@ class Person < ActiveRecord::Base
   def sherpa_publishers
     # This query should work in both MySQL and PostgreSQL
     distinct_publishers = Publisher.find_by_sql(
-      ["select distinct(pub.name) as publisher_name, count(c.title_primary) as count, pub.romeo_colour
+      ["select distinct(pub.name) as publisher_name, count(c.title_primary) as count, pub.romeo_color
       from citations c
       join authorships au on (c.id = au.citation_id)
       left join publications publ on (c.publication_id = publ.id)
@@ -161,7 +161,7 @@ class Person < ActiveRecord::Base
     # This query should work in both MySQL and PostgreSQL 
     copyright_analysis = Person.find_by_sql(
       ["select count(c.id) as count, c.issn_isbn, c.periodical_full, c.title_tertiary,
-          pub.sherpa_id, pub.name as publisher, pub.romeo_colour
+          pub.sherpa_id, pub.name as publisher, pub.romeo_color
       from citations c
       join authorships au on c.id = au.citation_id
       left join publications publ on c.publication_id = publ.id
@@ -169,7 +169,7 @@ class Person < ActiveRecord::Base
       where au.person_id = ?
       and c.citation_state_id = 3
       group by c.periodical_full, c.issn_isbn, c.title_tertiary,
-          pub.sherpa_id, pub.name, pub.romeo_colour
+          pub.sherpa_id, pub.name, pub.romeo_color
       order by count DESC, c.periodical_full", id]
     )
   end
