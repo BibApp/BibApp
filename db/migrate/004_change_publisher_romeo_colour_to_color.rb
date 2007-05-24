@@ -4,6 +4,6 @@ class ChangePublisherRomeoColourToColor < ActiveRecord::Migration
   end
 
   def self.down
-    rename_column :publishers, :romeo_colour, :romeo_color
+    rename_column :publishers, :romeo_color, :romeo_colour
   end
 end
