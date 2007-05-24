@@ -25,17 +25,17 @@ class Publisher < ActiveRecord::Base
     data['publishers'][0]['publisher'].each do |pub|
       sherpa_id = pub['id'].to_i
       name = pub['name'][0]
-      romeo_colour = pub['romeocolour'][0]
+      romeo_color = pub['romeocolor'][0]
       
       logger.debug("PubInspect: #{pub.inspect}")
       logger.debug("SherpaId: #{sherpa_id}")
       logger.debug("Name: #{name}")
-      logger.debug("Colour: #{romeo_colour}")
+      logger.debug("Color: #{romeo_color}")
 
       add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
       add.update_attributes!({
         :name                   => name,
-        :romeo_colour           => romeo_colour,
+        :romeo_color           => romeo_color,
         :sherpa_id              => sherpa_id
       })
     end
