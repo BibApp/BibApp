@@ -25,7 +25,7 @@ class Publisher < ActiveRecord::Base
     data['publishers'][0]['publisher'].each do |pub|
       sherpa_id = pub['id'].to_i
       name = pub['name'][0]
-      romeo_color = pub['romeocolor'][0]
+      romeo_color = pub['romeocolour'][0]
       
       logger.debug("PubInspect: #{pub.inspect}")
       logger.debug("SherpaId: #{sherpa_id}")
