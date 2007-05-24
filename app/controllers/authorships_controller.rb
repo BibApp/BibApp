@@ -17,15 +17,18 @@ class AuthorshipsController < ApplicationController
   def create_from_ris
     authorship = params[:authorship]
     @person = Person.find(authorship[:person_id])
-
-    # Handle the citations, redirect to the list of this person's citations
-    citations = authorship[:ris]
-    
-    cites = Authorship.create_batch!(@person, citations)
-    logger.debug("Cites returns: #{cites}")
-    
     @feed = Feed.find(authorship[:feed_id])
-    @feed.update_attributes(:feed_state_id => 2)
+
+    if params[:commit] == "Save it!"
+      # Citation was good, save it
+      citations = authorship[:ris]
+      cites = Authorship.create_batch!(@person, citations)
+      @feed.update_attributes(:feed_state_id => 2)
+    elsif params[:commit] == "This is bogus!"
+      # Citation was wrong, mark it was bad
+      @feed.update_attributes(:feed_state_id => 3)
+    end
+    # Return to admin/feeds to continue collecting
     redirect_to(:controller => "admin", :action => "feeds")
   end
 end

@@ -11,8 +11,7 @@
     = "Citations to collect: #{@count.size}"
   - if @count.size > 0
     %h4
-      =@person.display_name
-      = link_to("view", :controller => :people, :action => :show, :id => @person.id)
+      = link_to("#{@person.display_name}", :controller => :people, :action => :show, :id => @person.id)
     %p
       = link_to(@citation.title, @citation.link)
     - form_for :authorship, :url => {:controller => :authorships, :action => :create_from_ris} do |form|
@@ -24,5 +23,6 @@
       = form.file_field(:file)
       %br
       = submit_tag("Save it!")
+      = submit_tag("This is bogus!")
   -else
     %p Nothing to collect!  You've done a great job.
