@@ -66,7 +66,7 @@ class CitationsController < ApplicationController
   def copyright_analysis
     @person = Person.find(params[:id])
     @journals = @person.copyright_analysis
-    @journals.each{|j| j.romeo_colour = "unknown" if !j.romeo_colour}
+    @journals.each{|j| j.romeo_color = "unknown" if !j.romeo_color}
     @journals.each{|j| j.periodical_full = j.title_tertiary if j.periodical_full.nil? or j.periodical_full.empty?}
     
     @green = 0
@@ -77,19 +77,19 @@ class CitationsController < ApplicationController
     @total = 0
     
     @journals.each do |c|
-      if c.romeo_colour == "green"
+      if c.romeo_color == "green"
         @green += c.count.to_i
       end
-      if c.romeo_colour == "blue"
+      if c.romeo_color == "blue"
         @blue += c.count.to_i
       end
-      if c.romeo_colour == "yellow"
+      if c.romeo_color == "yellow"
         @yellow += c.count.to_i
       end
-      if c.romeo_colour == "white"
+      if c.romeo_color == "white"
         @white += c.count.to_i
       end
-      if c.romeo_colour == "unknown"  
+      if c.romeo_color == "unknown"  
         @unknown += c.count.to_i
       end     
       @total = @total + c.count.to_i
