@@ -82,10 +82,18 @@ class ArchivesController < ApplicationController
       dc.dcvalue(citation.title_primary, :element => "title", :qualifier => "none") if citation.title_primary and !citation.title_primary.empty?
       dc.dcvalue(citation.pub_year, :element => "date", :qualifier => "issued")
       dc.dcvalue(citation.publisher, :element => "publisher", :qualifier => "none") if citation.publisher and !citation.publisher.empty?
-      dc << copyright_statement(citation)
-      dc << citation.publication.publisher.dspace_xml
+      if citation.publication.publisher.sherpa_id == 7
+        dc.dcvalue(aip_notice(citation), :element => "rights", :qualifier => "none")
+        dc.dcvalue(aip_link(citation), :element => "identifier", :qualifier => "citation")
+      else
+        dc.dcvalue(copyright_statement(citation), :element => "rights", :qualifier => "none")
+        dc << citation.publication.publisher.dspace_xml
+        dc.dcvalue(format_citation_apa_to_s(citation), :element => "identifier", :qualifier => "citation")
+      end
       dc.dcvalue("This material is presented to ensure timely dissemination of scholarly and technical work. Copyright and all rights therein are retained by authors or by other copyright holders. All persons copying this information are expected to adhere to the terms and constraints invoked by each author's copyright. In most cases, these works may not be reposted without the explicit permission of the copyright holder.", :element => "description", :qualifier => "none")
-      dc.dcvalue(format_citation_apa_to_s(citation), :element => "identifier", :qualifier => "citation")
+      dc.dcvalue(citation.links, :element => "identifier", :qualifier => "doi") if citation.links and !citation.links.empty?
+      dc.dcvalue(citation.publication.publisher.url, :element => "relation", :qualifier => "ispartof") if citation.publication.publisher.url and !citation.publication.publisher.url.empty?
+      dc.dcvalue(citation.publication.url, :element => "relation", :qualifier => "ispartof") if citation.publication.url and !citation.publication.url.empty?
       dc.dcvalue("application/pdf", :element => "format", :qualifier => "mimetype")
       citation.author_array.each do |a|
         dc.dcvalue(a, :element => "contributor", :qualifier => "author")
@@ -95,7 +103,21 @@ class ArchivesController < ApplicationController
   end
   
   def copyright_statement(citation)
-    copyright_statement = "<dcvalue element=\"rights\" qualifier=\"none\">&#169;#{citation.pub_year} #{citation.publication.publisher.name}<\/dcvalue>"
+    copyright_statement = "Copyright #{citation.pub_year} #{citation.publication.publisher.name}"
+  end
+  
+  # AIP required notice
+  def aip_notice(citation)
+    aip_notice = "Copyright #{citation.pub_year} American Institute of Physics. This article may be downloaded for personal use only. Any other use requires prior permission of the author and the American Institute of Physics."
+  end
+  
+  # AIP required link
+  def aip_link(citation)
+    if citation.publication.publication_code
+      aip_link = "The following article appeared in #{format_citation_apa_to_s(citation)} and may be found at http://link.aip.org/link/?#{citation.publication.publication_code}/#{citation.volume}/#{citation.start_page}"
+    else
+      aip_link = "The following article appeared in #{format_citation_apa_to_s(citation)} and may be found at #{citation.publication.url}"
+    end
   end
   
   def format_citation_apa_to_s(citation)
