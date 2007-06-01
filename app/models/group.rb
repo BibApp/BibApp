@@ -184,10 +184,10 @@ class Group < ActiveRecord::Base
         WHERE g.id = ?", id])
   end
 
-  def romeo_colours
+  def romeo_colors
     colors = Hash.new
     color_totals = Record.find_by_sql(
-      ["select count(c.id) as count, pub.romeo_colour
+      ["select count(c.id) as count, pub.romeo_color
       from citations c
       join authorships au on c.id = au.citation_id
       join people p on au.person_id = p.id
@@ -198,9 +198,9 @@ class Group < ActiveRecord::Base
       where g.id = ?
       and c.periodical_full != ''
       and c.citation_state_id = 3
-      group by pub.romeo_colour", id])
+      group by pub.romeo_color", id])
     color_totals.each do |color_info|
-      colors[color_info.romeo_colour] = color_info.count.to_i
+      colors[color_info.romeo_color] = color_info.count.to_i
     end
   end
   
