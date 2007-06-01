@@ -81,7 +81,7 @@ class ArchivesController < ApplicationController
     xml = builder.dublin_core { |dc|
       dc.dcvalue(citation.title_primary, :element => "title", :qualifier => "none") if citation.title_primary and !citation.title_primary.empty?
       dc.dcvalue(citation.pub_year, :element => "date", :qualifier => "issued")
-      dc.dcvalue(citation.publisher, :element => "publisher", :qualifier => "none") if citation.publisher and !citation.publisher.empty?
+      dc.dcvalue(citation.publication.publisher.name, :element => "publisher", :qualifier => "none") if citation.publication.publisher.name and !citation.publication.publisher.name.empty?
       if citation.publication.publisher.sherpa_id == 7
         dc.dcvalue(aip_notice(citation), :element => "rights", :qualifier => "none")
         dc.dcvalue(aip_link(citation), :element => "identifier", :qualifier => "citation")
