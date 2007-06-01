@@ -7,7 +7,7 @@ elsevier:
   postprint: 1
   preprint_conditions: Does not include Cell press
   copyright: <a href="http://www.com">Foo</a>
-  romeo_colour: green
+  romeo_color: green
   dspace_xml: This is filler.
 
 ieee:
@@ -17,5 +17,5 @@ ieee:
   preprint: 1
   postprint: 1
   copyright: <a href="http://www.com">Bar</a>
-  romeo_colour: green
+  romeo_color: green
   dspace_xml: This is filler.
