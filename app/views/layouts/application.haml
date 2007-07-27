@@ -13,9 +13,11 @@
     = javascript_include_tag 'plotkit/Layout.js'
     = javascript_include_tag 'plotkit/Canvas.js'
     = javascript_include_tag 'plotkit/SweetCanvas.js'
+    = javascript_include_tag 'plotkit/excanvas.js'
     = javascript_include_tag 'niftycube.js'
     = javascript_include_tag 'scriptaculous'
     = javascript_include_tag 'slider'
+    = javascript_include_tag 'build'
     - if (@rss_feeds)
       - @rss_feeds.each do |feed|
         = auto_discovery_link_tag( :rss, { :controller => feed[:controller], :action => feed[:action], :id => feed[:id] })

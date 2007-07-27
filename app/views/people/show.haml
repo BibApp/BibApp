@@ -1,6 +1,7 @@
 #sidebar
-  %h3 Citation Types
-  %canvas#mygraph{ :width => "300", :height => "175"}
+  #piechart
+    %h3 Citation Types
+    %canvas#mygraph{:width => "325", :height => "325"}
   %h3 Popular research topics:
   %ol#tags.popular
     = render :partial => "tags"

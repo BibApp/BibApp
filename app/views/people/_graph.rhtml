@@ -2,10 +2,12 @@
 
 <% size = @person.publication_reftypes.size 
 	 i = 0
+	 j = 0
 %>
 var options = {
    "IECanvasHTC": "/javascripts/plotkit/iecanvas.htc",
    "colorScheme": PlotKit.Base.palette(PlotKit.Base.baseColors()[0]),
+   "padding": {left: 0, right: 0, top: 40, bottom: 40},
    "xTicks": [<% @person.publication_reftypes.each do |r| -%>
    			{v:<%=r.reftype_id.to_s%>, label:"<%=r.refworks_reftype -%>"}
    			<%i = i + 1
@@ -23,7 +25,13 @@ function drawGraph() {
   var layout = new PlotKit.Layout("pie", options)
   layout.addDataset("RefCount", [
 		<% @person.publication_reftypes.each do |r| -%>
-			[<%= r.reftype_id.to_s + ',' + r.count.to_s -%>],
+			[<%= r.reftype_id.to_s + ',' + r.count.to_s -%>]
+			<%j = j + 1
+   			if j == size
+   				break
+   			else -%>
+			,
+			<%end -%>
 		<% end -%>
 	]);
   layout.evaluate();

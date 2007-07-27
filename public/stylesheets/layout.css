@@ -56,7 +56,7 @@ div#legend { float:right; width:40%; }
 div#legend a img{ clear:right; float:left; }
 ul#nav { float: right; position: relative; left: 1px; }
 ul#nav li { padding: 0 1em; border-right:1px solid #ccc; float: left; display: block; }
-#pagination { margin:.5em; font-size:3em; float:left; }
+#pagination { margin:.5em; font-size:3em; float:left; padding-bottom:.8em; }
 #person { float:left; width:100%; margin-bottom:1em; }
 #person img { float:left; }
 #person-selector { float: left; width: 20em; }

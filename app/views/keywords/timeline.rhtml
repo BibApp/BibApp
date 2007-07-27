@@ -35,9 +35,8 @@ function show_list(year) {
   }
 }
 
-function set_year(ydata) {
-  header = document.getElementById("curyear");
-  header.innerHTML = ydata.year;
+function set_year(ydata) {    
+  document.getElementById("curyear").innerHTML = ydata.year;
   show_list(ydata.year);
 }
 
