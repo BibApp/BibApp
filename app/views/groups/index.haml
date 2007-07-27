@@ -30,20 +30,21 @@
     - @people.each do |person|
       = link_to(image_tag(person.image, :height => "40px", :alt => "#{person.display_name}", :class => "photo"), person_path(person.to_param))
       
-  #journals
-    %h3 Popular Journals
-    %ol
-      -@publications.each do |pub|
+  #published
+    #journals
+      %h3 Popular Journals
+      %ol
+        -@publications.each do |pub|
+            - next if !pub.full_name?
+            %li
+              = pub.count
+              = pub.full_name.titleize
+      
+    #publishers
+      %h3 Popular Publishers
+      %ol
+        -@publishers.each do |pub|
           - next if !pub.full_name?
           %li
             = pub.count
-            = pub.full_name.titleize
-      
-  #publishers
-    %h3 Popular Publishers
-    %ol
-      -@publishers.each do |pub|
-        - next if !pub.full_name?
-        %li
-          = pub.count
-          = pub.full_name.titleize
+            = pub.full_name
