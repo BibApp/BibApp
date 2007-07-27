@@ -95,7 +95,7 @@ class Person < ActiveRecord::Base
       where au.person_id = ?
       and length(c.issn_isbn) > 0
       and c.citation_state_id = 3
-      group by c.issn_isbn, c.periodical_full 
+      group by c.issn_isbn, c.periodical_full, c.title_tertiary 
       order by count DESC, c.periodical_full
       limit 10", id]
     )
