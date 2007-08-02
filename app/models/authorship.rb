@@ -70,18 +70,18 @@ class Authorship < ActiveRecord::Base
     
     def top_authors(count = 25)
        #Find authors with the most authorships/publications
-       # (This query should be valid in both MySQL and PostgreSQL)          
+       # (This query should be valid in both MySQL and PostgreSQL) 
       people = Person.find_by_sql(
-         ["SELECT p.*, auth.pub_count 
-           FROM people p
-           JOIN (SELECT per.id as person_id, count(au.id) as pub_count 
-                 FROM people per
-                 JOIN authorships au ON per.id = au.person_id
-                 GROUP BY per.id) AS auth
-           ON p.id=auth.person_id
-           HAVING auth.pub_count > 0
-           ORDER BY auth.pub_count DESC
-          limit ?", count])
+         ["SELECT p.*, au.pub_count
+			 FROM people p JOIN (
+				 SELECT au.person_id, count(au.id) as pub_count
+				 FROM authorships au
+				 GROUP BY au.person_id
+				 HAVING count(au.id) > 0
+				 ORDER BY pub_count DESC
+				 LIMIT ?) AS au
+			 ON p.id = au.person_id
+			 ORDER BY au.pub_count DESC", count])
     end
   end
 end
