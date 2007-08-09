@@ -34,31 +34,31 @@ module ApplicationHelper
     apa =  '<span class="person_group"><span class="authors">' + author_format(citation) + '</span></span> '
     apa += '(<span class="year">' + citation.pub_year.to_s + '</span>). '
     apa += '<span class="article-title">' + citation.title_primary.titleize + '</span>. '
-    if citation.reftype_id == 5
+    if citation.reftype_id == 5 # Conference Proceeding
       apa += 'In ' + citation.title_secondary.titleize + ',' if citation.title_secondary
-      apa += '<span class="volume">' + citation.volume + '</span>' if citation.volume
-      apa += '(<span class="issue">' + citation.issue + '</span>)' if citation.issue
-      apa += ', ' + citation.start_page + '-' if citation.start_page
-      apa += citation.end_page + '.' if citation.end_page
+      apa += '<span class="volume">' + citation.volume + '</span>' if citation.volume && !citation.volume.empty?
+      apa += '(<span class="issue">' + citation.issue + '</span>)' if citation.issue && !citation.issue.empty?
+      apa += ', ' + citation.start_page + '-' if citation.start_page && !citation.start_page.empty?
+      apa += citation.end_page + '.' if citation.end_page && !citation.end_page.empty?
       apa += citation.place_of_publication + ': ' if citation.place_of_publication && !citation.place_of_publication.empty?
-      apa += citation.publisher + '.' if citation.publisher
+      apa += citation.publisher + '.' if citation.publisher && !citation.publisher.empty?
     elsif citation.reftype_id == 4 # Book, Section
       apa += 'In <span class="source">' + citation.periodical_full.titleize + '</span>, ' if citation.periodical_full && !citation.periodical_full.empty?
       apa += '<span class="volume">' + citation.volume + '</span>' if citation.volume && !citation.volume.empty?
       apa += '<span class="issue">' + citation.issue + '</span>)' if citation.issue && !citation.issue.empty?
-      apa += '(' + citation.start_page + '-' if citation.start_page
-      apa += citation.end_page + '). ' if citation.end_page
+      apa += '(' + citation.start_page + '-' if citation.start_page && !citation.start_page.empty?
+      apa += citation.end_page + '). ' if citation.end_page && !citation.end_page.empty?
       apa += citation.place_of_publication + ': ' if citation.place_of_publication && !citation.place_of_publication.empty?
-      apa += citation.publisher + '.' if citation.publisher
+      apa += citation.publisher + '.' if citation.publisher && !citation.publisher.empty?
     elsif citation.reftype_id == 3 # Book, Whole
       apa += citation.place_of_publication + ': ' if citation.place_of_publication && !citation.place_of_publication.empty?
-      apa += citation.publisher + '.' if citation.publisher
-    elsif citation.reftype_id == 1
+      apa += citation.publisher + '.' if citation.publisher && !citation.publisher.empty?
+    elsif citation.reftype_id == 1 # Journal Article
       apa += '<span class="source">' + citation.periodical_full.titleize + '</span>, ' if citation.periodical_full && !citation.periodical_full.empty?
       apa += '<span class="volume">' + citation.volume + '</span>' if citation.volume && !citation.volume.empty?
       apa += '(<span class="issue">' + citation.issue + '</span>)' if citation.issue && !citation.issue.empty?
-      apa += ', ' + citation.start_page + '-' if citation.start_page
-      apa += citation.end_page + '.' if citation.end_page
+      apa += ', ' + citation.start_page + '-' if citation.start_page && !citation.start_page.empty?
+      apa += citation.end_page + '.' if citation.end_page && !citation.end_page.empty?
     end
     apa
   end
@@ -105,12 +105,12 @@ module ApplicationHelper
      end
 
      # truncates hyphenated first names to initials
-     while author_string =~ /(\w+)-(\w+)/
+     while author_string =~ /, (\w+)-(\w+)/
        first_part = $1
        second_part = $2
        first_initial = first_part.slice(0,1)
        second_initial = second_part.slice(0,1)
-       author_string = author_string.sub(/(\w+)-(\w+)/, "#{first_initial}.#{second_initial}.")
+       author_string = author_string.sub(/, (\w+)-(\w+)/, ", #{first_initial}.#{second_initial}.")
      end
 
      while author_string =~ /and (\w+, )(\w{2,}),?/
