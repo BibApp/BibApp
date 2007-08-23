@@ -94,6 +94,7 @@ class Person < ActiveRecord::Base
       left join publishers pub on publ.publisher_id = pub.id
       where au.person_id = ?
       and length(c.issn_isbn) > 0
+	  and length(c.periodical_full) > 0
       and c.citation_state_id = 3
       group by c.issn_isbn, c.periodical_full, c.title_tertiary 
       order by count DESC, c.periodical_full
