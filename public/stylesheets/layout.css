@@ -64,8 +64,9 @@ ul#nav li { padding: 0 1em; border-right:1px solid #ccc; float: left; display: b
 #popular { margin-top: 1em; line-height: 1.5em; font-size: .9em; }
 #popular #authors { margin-top: 1em; float: left; }
 #popular #authors .photo { padding: 1px; border: 1px dashed #ccc; }
-#popular #journals { float: left; clear: left; }
-#popular #publishers { float: left; padding-left: 3em; }
+#popular #published { margin-top: 1em;}
+#popular #journals { float: left; clear: left; padding-left: 3em;}
+#popular #publishers { float: left; padding-left:3em; width:40%}
 #popular #subjects { float: left; }
 #popular-left { float: left; width: 40%; }
 #popular-right { padding-left: 1em; float: left; width: 40%; border-left:1px solid #ccc; }
