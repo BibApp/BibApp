@@ -1,9 +1,0 @@
-#content
-  %h3= "Archive citations: #{@citation_count} remain"
-
-  - if @citations.size > 0
-    %ul#archive-list
-      - @citations.each do |citation|
-        = render :partial => 'arch_entry', :locals => {:citation => citation}
-  - else
-    %p Nothing to archive! You've done well.
