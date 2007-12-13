@@ -1,7 +1,0 @@
-#content
-  %h2= "#{@posts.size} new items"
-  - if @posts.size > 0
-    %p
-      = link_to("Want to capture them?", :controller => "feeds", :action => "index")
-  -else
-    %p Nothing to capture!  You've done well.

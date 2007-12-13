@@ -1,8 +1,0 @@
-#content
-  %h3= "Add Citations for #{@person.display_name}"
-  -form_tag({:action => "create"}, {:multipart => true}) do
-    = hidden_field_tag('person_id', @person.id)
-    %p
-      %label{ :for => "file" } Upload your file:
-      = file_field('upload', 'file')
-      = submit_tag("Upload my file")
