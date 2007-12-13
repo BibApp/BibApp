@@ -1,7 +1,0 @@
---- 
-cwd: /rails/bibapp
-port: "3001"
-environment: production
-address: 127.0.0.1
-pid_file: log/mongrel.pid
-servers: 1

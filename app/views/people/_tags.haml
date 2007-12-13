@@ -1,4 +1,0 @@
-- @tags.each do |item|
-  %li{:class => "#{item.class.to_s.downcase}"}
-    %span.citation-count= item.count
-    = link_to(item.name.gsub(/-/, ' ').strip, :controller => "citations", :action => "list", :person_id => @person.id, "#{item.class.to_s.downcase.to_sym}" => item.name)

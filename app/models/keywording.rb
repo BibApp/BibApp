@@ -1,3 +1,0 @@
-class Keywording
-  
-end
