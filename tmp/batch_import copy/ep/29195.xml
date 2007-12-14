@@ -1,0 +1,1381 @@
+<xml xmlns:s='uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882'
+	xmlns:dt='uuid:C2F41010-65B3-11d1-A29F-00AA00C14882'
+	xmlns:rs='urn:schemas-microsoft-com:rowset'
+	xmlns:z='#RowsetSchema'>
+<s:Schema id='RowsetSchema'>
+	<s:ElementType name='row' content='eltOnly' rs:CommandTimeout='30'
+	 rs:updatable='true'>
+		<s:AttributeType name='UserID' rs:number='1' rs:writeunknown='true'
+			 rs:basecatalog='refworks' rs:basetable='refs' rs:basecolumn='UserID'
+			 rs:keycolumn='true'>
+			<s:datatype dt:type='int' dt:maxLength='4' rs:precision='10'
+			 rs:fixedlength='true' rs:maybenull='false'/>
+		</s:AttributeType>
+		<s:AttributeType name='InternalRefID' rs:number='2'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='InternalRefID' rs:keycolumn='true'>
+			<s:datatype dt:type='int' dt:maxLength='4' rs:precision='10'
+			 rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='Created' rs:number='3' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Created'>
+
+			<s:datatype dt:type='dateTime' rs:dbtype='timestamp'
+			 dt:maxLength='16' rs:scale='3' rs:precision='23' rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='LastModified' rs:number='4' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='LastModified'>
+			<s:datatype dt:type='dateTime' rs:dbtype='timestamp'
+			 dt:maxLength='16' rs:scale='3' rs:precision='23' rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='Marked' rs:number='5' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Marked'>
+			<s:datatype dt:type='string' dt:maxLength='10' rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='UserRefID' rs:number='6' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='UserRefID' rs:keycolumn='true'>
+
+			<s:datatype dt:type='int' dt:maxLength='4' rs:precision='10'
+			 rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='RefType' rs:number='7' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='RefType'>
+			<s:datatype dt:type='int' dt:maxLength='4' rs:precision='10'
+			 rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='AuthorPrimary' rs:number='8'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AuthorPrimary'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='AuthorSecondary' rs:number='9'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AuthorSecondary'>
+
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='AuthorTertiary' rs:number='10'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AuthorTertiary'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='TitlePrimary' rs:number='11'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='TitlePrimary'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='TitleSecondary' rs:number='12'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='TitleSecondary'>
+
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='TitleTertiary' rs:number='13'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='TitleTertiary'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='Keyword' rs:number='14' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Keyword'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='PubYear' rs:number='15' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='PubYear'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='PubDateFreeForm' rs:number='16'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='PubDateFreeForm'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='PeriodicalFull' rs:number='17'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='PeriodicalFull'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='PeriodicalAbbrev' rs:number='18'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='PeriodicalAbbrev'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Volume' rs:number='19' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Volume'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Issue' rs:number='20' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Issue'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='StartPage' rs:number='21' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='StartPage'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='OtherPages' rs:number='22' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='OtherPages'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Edition' rs:number='23' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Edition'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Publisher' rs:number='24' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Publisher'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='PlaceOfPublication' rs:number='25'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='PlaceOfPublication'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='ISSN_ISBN' rs:number='26' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='ISSN_ISBN'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Availability' rs:number='27'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Availability'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Author_Address_Affiliation' rs:number='28'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Author_Address_Affiliation'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='AccessionNumber' rs:number='29'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AccessionNumber'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Language' rs:number='30' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Language'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Classification' rs:number='31'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Classification'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='SubFile_Database' rs:number='32'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='SubFile_Database'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='OriginalForeignTitle' rs:number='33'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='OriginalForeignTitle'>
+
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='Links' rs:number='34' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Links'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='DOI' rs:number='35' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='DOI'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='Abstract' rs:number='36' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Abstract'>
+
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='Notes' rs:number='37' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Notes'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='Folder' rs:number='38' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Folder'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='User1' rs:number='39' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='User1'>
+
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='User2' rs:number='40' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='User2'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='User3' rs:number='41' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='User3'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='User4' rs:number='42' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='User4'>
+
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='User5' rs:number='43' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='User5'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='CallNumber' rs:number='44' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='CallNumber'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='DatabaseName' rs:number='45'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='DatabaseName'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='DataSource' rs:number='46' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='DataSource'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='IdentifyingPhrase' rs:number='47'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='IdentifyingPhrase'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='RetrievedDate' rs:number='48'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='RetrievedDate'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='ShortenedTitle' rs:number='49'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='ShortenedTitle'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='TextAttributes' rs:number='50'
+			 rs:nullable='true' rs:maydefer='true' rs:writeunknown='true'
+			 rs:basecatalog='refworks' rs:basetable='refs' rs:basecolumn='TextAttributes'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='AuthorQuaternary' rs:number='51'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AuthorQuaternary'>
+
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='AuthorQuinary' rs:number='52'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='AuthorQuinary'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='LinkVendorData' rs:number='53'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='LinkVendorData'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='URL' rs:number='54' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='URL'>
+
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='SponsoringLibrary' rs:number='55'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='SponsoringLibrary'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='SponsoringLibraryLocation' rs:number='56'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='SponsoringLibraryLocation'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='CitedRefs' rs:number='57' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='CitedRefs'>
+
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='WebsiteTitle' rs:number='58'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='WebsiteTitle'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='WebsiteEditor' rs:number='59'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='WebsiteEditor'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='WebsiteVersion' rs:number='60'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='WebsiteVersion'>
+
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='PubDateElectronic' rs:number='61'
+			 rs:nullable='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='PubDateElectronic'>
+			<s:datatype dt:type='string' dt:maxLength='256'/>
+		</s:AttributeType>
+		<s:AttributeType name='SourceType' rs:number='62' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='SourceType' rs:keycolumn='true'>
+			<s:datatype dt:type='int' dt:maxLength='4' rs:precision='10'
+			 rs:fixedlength='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='OverFlow' rs:number='63' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Overflow'>
+
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:AttributeType name='Objects' rs:number='64' rs:nullable='true'
+			 rs:writeunknown='true' rs:basecatalog='refworks' rs:basetable='refs'
+			 rs:basecolumn='Objects'>
+			<s:datatype dt:type='string' dt:maxLength='2000'/>
+		</s:AttributeType>
+		<s:AttributeType name='Comments' rs:number='65' rs:nullable='true'
+			 rs:maydefer='true' rs:writeunknown='true' rs:basecatalog='refworks'
+			 rs:basetable='refs' rs:basecolumn='Comments'>
+			<s:datatype dt:type='string' dt:maxLength='1073741823'
+			 rs:long='true'/>
+		</s:AttributeType>
+		<s:extends type='rs:rowbase'/>
+
+	</s:ElementType>
+</s:Schema>
+<rs:data>
+	<z:row UserID='11264' InternalRefID='1' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='1' RefType='1' AuthorPrimary='Allen,T.R.|Tan,L.|Gan,J.|Gupta,G.|Was,G.S.|Kenik,E.A.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Microstructural development in advanced ferritic-martensitic steel HCM12A'
+		 TitleSecondary='' TitleTertiary='' Keyword='GRAIN-BOUNDARY SEGREGATION|RADIATION-INDUCED SEGREGATION|ALLOYS|IRRADIATION|SOLUTE|Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2006' PubDateFreeForm='JUN 1' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='351' Issue='1-3'
+		 StartPage='174' OtherPages='186' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Univ Wisconsin, Dept Nucl Engn, Madison, WI 53706 USA. Idaho Natl Lab, Idaho Falls, ID USA. Univ Michigan, Ann Arbor, MI 48109 USA. Oak Ridge Natl Lab, Oak Ridge, TN USA. Pacific NW Natl Lab, Richland, WA 99352 USA.; Allen, TR, Univ Wisconsin, D(TRUNCATED)'
+		 AccessionNumber='000238620600019' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='HCM12A is an advanced nominal 12Cr ferritic-martensitic steel designed for higher temperature operation and is under consideration for application in core components in Generation IV nuclear energy systems. This work provides information on the hardening and microstructural changes in HCM12A after irradiation using 2.0 MeV protons at 400 degrees C to 10 dpa and at 500 degrees C to 3 dpa, and using 5 MeV Ni-ions at 500 degrees C to 50 dpa. Following irradiation, changes in hardness were measured using Vickers hardness indentation, changes in microstructure and phase stability were studied using transmission electron microscopy, and changes in microchemistry were measured using scanning Auger microscopy and analytical electron microscopy. The hardness at 400 degrees C increases by roughly 70% and saturates by roughly 5 dpa. The microstructural changes contributing to this hardness increase are mainly the formation of precipitate phases. Hardness increases are much smaller at 500 degrees C. Chromium is enriched at grain boundaries prior to irradiation, likely due to grain boundary carbides, and increases further during irradiation at least partially due to radiation-induced segregation. Published by Elsevier B.V.'
+		 Notes='PT: J; CR: ALLEN TR, 1998, ACTA MATER, V46, P3679 ALLEN TR, 2003, P ICAPP 03 AM NUCL S BRIMHALL JL, 1984, J NUCL MATER, V122, P196 BRUEMMER SM, 1991, J NUCL MATER, V186, P13 BUSBY JT, 2005, J NUCL MATER, V336, P267 CLAUSING RE, 1986, J NUCL MATER B, V141, P978 DAMCOTT DL, 1995, NUCL INSTRUM METH B, V99, P780 DAVIS LE, 1976, HDB AUGER ELECT SPEC GAN J, 2004, MATER RES SOC SYMP P, V792, P13 HORSTEN MG, 2000, AM SOC TEST MATER, V1366, P579 KATO T, 1991, J NUCL MATER A, V179, P623 KLUEH RL, 1992, J NUCL MATER, V187, P60 KUCERA J, 1981, MATER SCI ENG, V52, P1 LEGGETT RD, 1993, J NUCL MATER, V204, P23 MAHON GJ, 1987, P S RAD IND SENS STA, P99 MANSUR LK, 1994, J NUCL MATER, V216, P97 MAZIASZ PJ, 1989, J NUCL MATER, V169, P95 MORGAN TS, 1992, ASTM STP, V1125, P633 OHNUKI S, 1982, J NUCL MATER, V104, P1121 SCHAEUBLIN R, 2002, J NUCL MATER A, V307, P197 TAKAHASHI H, 1981, J NUCL MATER, V103, P1415 TAKAHASHI H, 1995, ANN PHYS-PARIS S, V20, P109 VISWANATHAN R, 2000, P 2000 INT JOINT POW, P1 WAS GS, 1999, J NUCL MATER, V270, P96 WAS GS, 2003, 6 INT M NUCL APPL AC, P864; NR: 25; TC: 0; J9: J NUCL MATER; PG: 13; GA: 057UL'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='2' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:15' Marked='0         '
+		 UserRefID='2' RefType='1' AuthorPrimary='Gan,J.|Cole,J.I.|Allen,T.R.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Irradiated microstructure of alloy 800H'
+		 TitleSecondary='' TitleTertiary='' Keyword='Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2006' PubDateFreeForm='JUN 1' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='351' Issue='1-3'
+		 StartPage='223' OtherPages='227' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Idaho Natl Lab, Idaho Falls, ID 83415 USA. Univ Wisconsin, Madison, WI 53706 USA. Pacific NW Natl Lab, Richland, WA 99352 USA.; Gan, J, Idaho Natl Lab, Idaho Falls, ID 83415 USA.; Jian.Gan@inl.gov'
+		 AccessionNumber='000238620600024' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='Austenitic alloy 800H has the same basic composition as INCOLOY alloy 800 (Fe-20Cr-32Ni) but with significantly higher creep-rupture strength due to a required 60 pm minimum grain size. It is one of the high temperature candidate alloys being considered for Generation IV nuclear reactor systems. The radiation resistance of 800H has not been previously studied. This work provides information on the microstructural changes in 800H after irradiation using 5.0 MeV Ni ions at 500 degrees C to 5 and 50 dpa. Following irradiation,. changes in microstructure and phase stability were studied using transmission electron microscopy (TEM). At a dose of 50 dpa, no voids were found and the density and size of the faulted loops were measured to be 2.3 x 10(16) cm(-3) and 8.4 nm. respectively. There are fine precipitates distributed in 800H with an average size approximately 6 nm and a density greater than 9.1 X 10(15) cm(-3). The high Ni content and the presence of precipitates are believed to be responsible for the resistance to void formation at dose up to 50 dpa. Published by Elsevier B.V.'
+		 Notes='PT: J; CR: *SPEC MET CORP, 2004, PUBL, P7 BROWN C, 1976, DEV MICROSCOPY ANAL, P405 COGHLAN WA, 1987, ASTM STP, V955, P315 GAN J, 1999, THESIS U MICHIGAN GAN J, 2000, P MRS S MICR PROC IR, V560 GAN J, 2004, J NUCL MATER, V325, P94 GARNER FA, 1987, ASTM STP, V955, P289 LUCAS GE, 1993, J NUCL MATER, V206, P287 NATESAN K, 2003, NUREGCR6824 ZIEGLER JF, 1997, TRIM97 PROGRAM; NR: 10; TC: 0; J9: J NUCL MATER; PG: 5; GA: 057UL'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='3' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='3' RefType='1' AuthorPrimary='Cole,J.I.|Tsai,H.|Allen,T.R.|Yoshitake,T.|Akasaka,N.|Yamagata,I.|Nakamura,Y.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Strain-rate effects on microstructural deformation in irradiated 316 SS'
+		 TitleSecondary='' TitleTertiary='' Keyword='PLASTIC INSTABILITY|STAINLESS-STEEL|Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2006' PubDateFreeForm='JUN 1' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='351' Issue='1-3'
+		 StartPage='316' OtherPages='323' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Idaho Natl Lab, Nucl Fuels &#x26; Mat Dept, Idaho Falls, ID USA. Argonne Natl Lab, Argonne, IL 60439 USA. Univ Wisconsin, Madison, WI 53706 USA. Japan Atom Energy Res &#x26; Dev Agcy, Oarai, Ibaraki, Japan.; Cole, JI, Idaho Natl Lab, Nucl Fuels &#x26; Mat Dept(TRUNCATED)'
+		 AccessionNumber='000238620600033' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='A series of studies have been performed to investigate the post-irradiation deformation and failure behavior of 12% cold-worked 316 stainless steel following irradiation to variety of doses and temperatures in the outer rows of the experimental breeder reactor II (EBR-II). In the current phase of these studies, three sets of samples with different radiation-induced microstructures have been characterized with transmission electron microscopy (TEM) following tensile testing to failure at a &#x27;fast&#x27; strain-rate (1 x 10(-3) s(-1)) and a &#x27;slow&#x27; strain-rate (1 x 10(-7) s(-1)). The samples were irradiated to doses between 9 and 41 dpa at temperatures between 383 and 443 degrees C. Tensile tests were conducted at a temperature of 430 degrees C and only regions outside of the necked region were examined. Over the parameters tested, strain-rate had a negligible effect on the deformation microstructure. In addition, there was no clear evidence of localized deformation behavior and the deformation appeared relatively homogeneous, characterized by unfaulting and incorporation of faulted dislocation loops into the general dislocation network structure. The influence of the defect microstructures and strain-rate on deformation behavior is discussed. Published by Elsevier B.V.'
+		 Notes='PT: J; CR: BRUEMMER SM, 1987, MRS S P MICR EV IRR, P437 BYUN TS, 2003, J NUCL MATER, V321, P29 BYUN TS, 2004, ACTA MATER, V52, P1597 BYUN TS, 2004, ACTA MATER, V52, P3889 COLE JI, 1995, J NUCL MATER, V225, P53 COLE JI, 1995, P 7 INT S ENV DEGR M, P817 HAMILTON ML, 1987, ASTM STP, V956, P245 LEE EH, 2001, J NUCL MATER, V296, P183 MASTEL B, 1963, J APPL PHYS, V34, P3637 ONCHI T, 1980, J NUCL MATER, V88, P226 ROBINSON JM, 1994, INT MATER REV, V39, P113 SHARP JV, 1967, PHILOS MAG, V16, P77 WESCHLER MS, 1973, INHOMOGENEITY PLASTI, P19 YOSHITAKE T, 2006, J ASTM INT, V3; NR: 14; TC: 0; J9: J NUCL MATER; PG: 8; GA: 057UL'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='4' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:15' Marked='0         '
+		 UserRefID='5' RefType='1' AuthorPrimary='Tan,L.|Sridharan,K.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The effect of grain boundary engineering on the oxidation behavior of INCOLOY alloy 800H in supercritical water'
+		 TitleSecondary='' TitleTertiary='' Keyword='TEXTURE EVOLUTION|STRESS|MICROSTRUCTURE|CHARACTER|GROWTH|Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2006' PubDateFreeForm='FEB 1' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='348' Issue='3'
+		 StartPage='263' OtherPages='271' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA.; Allen, TR, Univ Wisconsin, Dept Engn Phys, 1500 Engn Dr, Madison, WI 53706 USA.; allen@engr.wisc.edu'
+		 AccessionNumber='000234900100004' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='Grain boundary engineering (GBE) was applied to INCOLOY alloy 800H by means of thermomechanical processing. The oxidation behavior of GBE-treated alloy 800H exposed in supercritical water (SCW) with 25 ppb dissolved oxygen at 500 degrees C and 25 MPa was significantly improved as compared to 800H in the annealed condition. Gravimetry, optical microscopy, scanning electron micro scopy/energy dispersive X-ray spectroscopy (SEM/EDS), X-ray diffraction (XRD), and electron backscatter diffraction (EBSD) were employed in this study to analyze the oxidation behavior of control (annealed) and GBE-treated samples. GBE improves the protective oxidation behavior by enhancing spallation resistance and reducing oxidation rate. Spallation resistance correlates with a reduction in texture of the oxide layers. (c) 2005 Elsevier B.V. All rights reserved.'
+		 Notes='PT: J; CR: 2004, SPECIAL METALS PUBLI *INT CTR DIFFR DAT, JCPDS POWD DIFFR FIL *TPRC, 1970, THERM PROP MATT AN L, 2005, MAT MET T A, V36, P1921 ARMITT J, 1978, 686 EPRI FP ERB U, 2001, P 10 INT S PROC FABR, P3 ERICSSON T, 1970, OXID MET, V2, P173 FIELD DP, 1997, ULTRAMICROSCOPY, V67, P1 GAO W, 2004, MAT RES, V7, P175 GERTSMAN VY, 2001, ACTA MATER, V49, P1589 HWANG NM, 1997, SCRIPTA MATER, V37, P1761 KHALID FA, 1999, MAT SCI ENG A-STRUCT, V265, P87 LEE DS, 2003, MAT SCI ENG A-STRUCT, V354, P106 MA N, 2004, ACTA MATER, V52, P3869 OTSUKA N, 1991, CORROSION, V47, P240 PAN Y, 1996, ACTA MATER, V44, P4685 PILLING NB, 1923, J I MET, V29, P529 RANDLE V, 1996, ROLE COINCIDENCE SIT ROGERGE PR, 2000, HDB CORROSION ENG, P233 SANKUR H, 1988, APPL OPTICS, V27, P1564 SHIMADA M, 2002, ACTA MATER, V50, P2331 TAN L, IN PRESS CORROS SCI WAS GS, 2005, P ICAPP 05 SEOUL KOR WATANABE T, 1984, RES MECH, V11, P47; NR: 24; TC: 0; J9: J NUCL MATER; PG: 9; GA: 006LX'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='5' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='6' RefType='1' AuthorPrimary='Allen,T.R.|Cole,J.I.|Trybus,C.L.|Porter,D.L.|Tsai,H.|Garner,F.|Kenik,E.A.|Yoshitake,T.|Ohta,J.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The effect of dose rate on the response of austenitic stainless steels to neutron radiation'
+		 TitleSecondary='' TitleTertiary='' Keyword='MICROSTRUCTURAL EVOLUTION|INDUCED SEGREGATION|IRRADIATION CREEP|DISPLACEMENT RATE|ALLOYS|TEMPERATURE|DEPENDENCE|BOR-60|Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2006' PubDateFreeForm='JAN 1' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='348' Issue='1-2'
+		 StartPage='148' OtherPages='164' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Univ Wisconsin, Madison, WI 53706 USA. Argonne Natl Lab, Idaho Falls, ID 83403 USA. Argonne Natl Lab, Argonne, IL 60439 USA. Pacific NW Natl Lab, Richland, WA 99352 USA. Oak Ridge Natl Lab, Oak Ridge, TN 37831 USA. Japan Nucl Cycle Dev Inst, Iba(TRUNCATED)'
+		 AccessionNumber='000234739100018' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='Depending on reactor design and component location, austenitic stainless steels may experience significantly different irradiation dose rates in the same reactor. Understanding the effect of dose rate on radiation performance is important to predicting component lifetime. This study examined the effect of dose rate on swelling, grain boundary segregation, and tensile properties in austenitic stainless steels through the examination of components retrieved from the Experimental Breeder Reactor-II (EBR-II) following its shutdown. Annealed 304 stainless steel, stress-relieved 304 stainless steel, 12% cold-worked 316 stainless steel, and 20% cold-worked 316 stainless steel were irradiated over a dose range of 1-56 dpa at temperatures from 371 to 440 degrees C and dose rates from 0.5 to 5.8 x 10(-7) dpa/s. Density and tensile properties were measured for 304 and 316 stainless steel. Changes in grain boundary composition were examined for 304 stainless steel. Swelling appears to increase at lower dose rates in both 304 and 316 stainless steel, although the effect was not always statistically significant. Grain boundary segregation also appears to increase at lower dose rate in 304 stainless steel. For the range of dose rates examined, no measurable dose rate effect on tensile properties was noted for any of the steels. (c) 2005 Elsevier B.V. All rights reserved.'
+		 Notes='PT: J; CR: ALLEN TR, 1998, J NUCL MATER, V255, P44 ALLEN TR, 1999, J NUCL MATER, V270, P290 BOND GM, 1999, 9 INT S ENV DEGR MAT, P1045 BRAGER HR, 1978, ASTM STP, V683, P207 BRAGER HR, 1984, J NUCL MATER, V122, P332 BUDYLKIN NI, 2004, J NUCL MATER A, V329, P621 CARSON NJ, 1972, ANL7982 DUMBILL S, 1987, P C MAT NUCL REACT C, V1, P119 DUPOUY JM, 1977, P INT C RAD EFF BREE, P83 EDWARDS DJ, 2003, J NUCL MATER, V317, P32 FISH RL, 1979, ASTM STP, V683, P450 GARNER FA, 1980, PHASE STABILITY IRRA, P165 GARNER FA, 1981, J NUCL MATER, V103, P803 GARNER FA, 1982, ASTM STP, V782, P295 GARNER FA, 1983, P C DIMENSIONAL STAB, V2, P41 GARNER FA, 1984, J NUCL MATER, V122, P459 GARNER FA, 1985, ASTM STP, V870, P187 GARNER FA, 1990, ASTM STP, V1046, P673 GARNER FA, 1993, ASTM STP, V1175, P803 GARNER FA, 1993, P 6 INT S ENV DEGR M, P783 GARNER FA, 1994, IRRADIATION PERFOR 1, V10, P419 GARNER FA, 1994, T AM NUCL SOC, V71, P190 GARNER FA, 1997, J NUCL MATER, V251, P252 GARNER FA, 1998, INT S CONTR MAT INV, P249 GARNER FA, 2002, P FONT 5 CONTR MAT I GARNER FA, 2003, 11 INT C ENV DEGR MA, P647 GREENBERG S, 1969, ANL7624 GREENBERG S, 1970, ANL7682 GREENBERG S, 1972, ANL7937 HASHIMOTO T, 1992, J NUCL MATER, V187, P161 HIGGY HR, 1975, J NUCL MATER, V55, P177 KENIK EA, 1976, SCRIPTA METALL, V10, P733 KENIK EA, 1992, J NUCL MATER B, V191, P1331 LUCAS GE, 1993, J NUCL MATER, V206, P287 MUROGA T, 1990, J NUCL MATER, V174, P282 NEUSTROEV VS, 1998, INT S CONTR MAT INV, P261 NEUSTROEV VS, 2000, AM SOC TEST MATER, V1366, P792 NEUSTROEV VS, 2004, UNPUB ATM 22 EFF RAD OKITA T, 2001, 10 INT C ENV DEGR MA OKITA T, 2001, P 10 INT S ENV DEGR OKITA T, 2002, J NUCL MATER A, V307, P322 OKITA T, 2003, 11 INT C ENV DEGR MA, P657 POKOR C, 2004, J NUCL MATER, V326, P19 POKOR C, 2004, J NUCL MATER, V326, P30 POROLLO SI, 1998, INT S CONTR MAT INV, P271 POROLLO SI, 2004, UNPUB P ASTM C EFF R PORTER DL, 1980, T AM NUCL SOC, V34, P230 PORTER DL, 1985, ASTM STP, V870, P212 PORTER DL, 1991, J NUCL MATER A, V179, P581 PORTER DL, 2000, AM SOC TEST MATER, V1366, P884 RUTHER WE, 1998, ANL983 RUTHER WE, 1998, ANL984 SERAN JL, P C DIM STAB MECH BE, V1, P22 SERAN JL, 1982, ASTM STP, V782, P5 SPELLWARD P, 1997, P 8 INT S ENV DEGR M, P734 VANDUYSEN JC, 1993, ASTM STP, V1175, P747 WAS GS, 1993, J NUCL MATER, V205, P332 WILLIAMS DB, 1996, TRANSMISSION ELECT M, P321 WIRE GL, 1981, ASTM STP, V725, P375 WOLFER WG, 1982, ASTM STP, V782, P1023; NR: 60; TC: 0; J9: J NUCL MATER; PG: 17; GA: 004GD'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='6' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='7' RefType='1' AuthorPrimary='Chen,Y.|Sequeira,C.|Allen,T.|Chen,C.P.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Electrocatalytic abilities of hydrogen storage alloy as anode electrocatalyst of alkaline fuel cell'
+		 TitleSecondary='' TitleTertiary='' Keyword='hydrogen storage alloy|alkaline fuel cell|anode|electrocatalytic ability|surface modification|Chemistry, Physical|Materials Science, Multidisciplinary|Metallurgy &#x26; Metallurgical Engineering'
+		 PubYear='2005' PubDateFreeForm='DEC 8' PeriodicalFull='Journal of Alloys and Compounds'
+		 PeriodicalAbbrev='J.Alloys Compounds' Volume='404' Issue=''
+		 StartPage='661' OtherPages='664' Edition='' Publisher='ELSEVIER SCIENCE SA'
+		 PlaceOfPublication='LAUSANNE; PO BOX 564, 1001 LAUSANNE, SWITZERLAND'
+		 ISSN_ISBN='0925-8388' Availability='' Author_Address_Affiliation='Zhejiang Univ, Dept Mat Sci &#x26; Engn, Hangzhou 310027, Peoples R China. Inst Super Tecn, Dept Chem Engn, P-1049001 Lisbon, Portugal. Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA.; Chen, CP, Zhejiang Univ, Dept Mat Sci &#x26; Engn, Hangzhou 310(TRUNCATED)'
+		 AccessionNumber='000234100100152' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='The electrocatalytic abilities of hydrogen storage alloy (HSA)MlNi(3.65)Co(0.85)Al(0.3)Mn(0.3) (Ml: La-rich mischmetal) as the anode electrocatalyst of an alkaline fuel cell were studied. To improve the electrocatalytic activity of the alloy, modifications including ball-milling, surface treatment and chemical coating with Pd were employed. The electrocatalytic ability of the optimized HSA anode was found to be reasonably good, with a current density of 50 mA/cm(2) at 0.866 V and 196.2 mA/cm(2) at 0.5 V (versus Hg/HgO). The temperature was also found to be important for the electrocatalytic behavior of HSA anode. (c) 2005 Elsevier B.V. All rights reserved.'
+		 Notes='PT: J; CR: HU WK, 2003, J ALLOY COMPD, V356, P734 KANEKI N, 1981, J CHEM SOC JPN, V14, P613 VIDEM K, 1978, HYDRIDES ENERGY STOR, P463 WANG XH, 1999, J ALLOY COMPD, V293, P833; NR: 4; TC: 0; J9: J ALLOYS COMPOUNDS; PG: 4; GA: 995KV'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='7' Created='2006-07-21T07:09:13'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='8' RefType='1' AuthorPrimary='Allen,T.R.|Gan,J.|Cole,J.I.|Ukai,S.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The stability of 9Cr-ODS oxide particles under heavy-ion irradiation'
+		 TitleSecondary='' TitleTertiary='' Keyword='NEUTRON-IRRADIATION|STEELS|Nuclear Science &#x26; Technology'
+		 PubYear='2005' PubDateFreeForm='NOV' PeriodicalFull='Nuclear Science and Engineering'
+		 PeriodicalAbbrev='Nucl.Sci.Eng.' Volume='151' Issue='3'
+		 StartPage='305' OtherPages='312' Edition='' Publisher='AMER NUCLEAR SOCIETY'
+		 PlaceOfPublication='LA GRANGE PK; 555 N KENSINGTON AVENUE, LA GRANGE PK, IL 60526 USA'
+		 ISSN_ISBN='0029-5639' Availability='' Author_Address_Affiliation='Univ Wisconsin, Madison, WI 53706 USA. Argonne Natl Lab, Argonne, IL 60439 USA. Japan Nucl Cycle Dev Inst, Ibaraki, Japan. Pacific NW Natl Lab, Richland, WA USA.; Allen, TR, Univ Wisconsin, 1500 Engn Dr, Madison, WI 53706 USA.; allen@engr.wisc.edu'
+		 AccessionNumber='000232705800005' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='An oxide-dispersion-strengthened (ODS) martensitic steel 9Cr-ODS was irradiated with 5-MeV Ni ions at 500 degrees C at a dose rate of 1.4 X 10(-3) dpa/s to doses of 5, 50, and 150 dpa. The ODS steel has been designed for use in higher-temperature energy systems. However, the radiation effects are not fully characterized, particularly to high doses. Dense dislocations, precipitates, and yttrium-titanium oxide particles dominated the microstructure of 9Cr-ODS for both the unirradiated and irradiated cases with no dislocation loops observed. No voids were detected for doses up to 150 dpa. The average size of the oxide particles, whose size is approximately described by a lognormal distribution, slightly decreased with dose from similar to 12 nm for the unirradiated case to similar to 9 nm at 150 dpa. The decrease in size follows a square root of dose dependency, indicating the effect is radiation induced. The decrease in size is not expected to have a detrimental effect on high-temperature strength, even to extremely high dose.'
+		 Notes='PT: J; CR: COURTNEY TH, 1990, MECH BEHAV MAT GELLES DS, 1994, DOEER031316, P146 KLUEH RL, 2001, HIGH CHROMIUM FERRIT, P213 MANSUR LK, 1994, J NUCL MATER, V216, P97 PORTER DA, 1992, PHASE TRANSFORMATION UKAI S, 2002, J NUCL SCI TECHNOL, V39, P872 WAS GS, 1990, PROG SURF SCI, V32, P211 YAMASHITA S, 2002, J NUCL MATER A, V307, P283 YAMASHITA S, 2004, J NUCL MATER A, V329, P377; NR: 9; TC: 0; J9: NUCL SCI ENG; PG: 8; GA: 976AS'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+
+	<z:row UserID='11264' InternalRefID='8' Created='2006-07-21T07:09:14'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='12' RefType='1' AuthorPrimary='Allen,T.R.|Cole,J.I.|Gan,J.|Was,G.S.|Dropek,R.|Kenik,E.A.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Swelling and radiation-induced segregation in austentic alloys'
+		 TitleSecondary='' TitleTertiary='' Keyword='CR-NI ALLOYS|GRAIN-BOUNDARY SEGREGATION|STAINLESS-STEEL|ELECTRON-IRRADIATION|OVERSIZED ELEMENTS|TEMPERATURE|MECHANISM|Materials Science, Multidisciplinary|Nuclear Science &#x26; Technology|Mining &#x26; Mineral Processing'
+		 PubYear='2005' PubDateFreeForm='JUN 30' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='342' Issue='1-3'
+		 StartPage='90' OtherPages='100' Edition='' Publisher='ELSEVIER SCIENCE BV'
+		 PlaceOfPublication='AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS'
+		 ISSN_ISBN='0022-3115' Availability='' Author_Address_Affiliation='Univ Wisconsin, Madison, WI 53706 USA. Argonne Natl Lab W, Argonne, IL 60439 USA. Univ Michigan, Ann Arbor, MI 48109 USA. Oak Ridge Natl Lab, Oak Ridge, TN 37831 USA.; Allen, TR, Univ Wisconsin, 1500 Engn Dr, Madison, WI 53706 USA.; allen@engr.wisc.edu'
+		 AccessionNumber='000230354800012' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='To elucidate the relationship between radiation-induced segregation and swelling in austenitic stainless steels, a series of alloys were irradiated with 3.2 MeV protons to doses of 0.5 and 1.0 dpa at 400 degrees C. Three alloy series were irradiated, the first to examine the effect of bulk nickel in Fe-16-18Cr-xNi, the second to determine the effect of Mo and P in an Fe-16Cr-13Ni base alloy, and the third to examine the effect of oversized solute Zr addition to an Fe-18Cr-0.5Ni alloy. The addition of nickel in Fe-16-18Cr-xNi caused a significant decrease in swelling and increase in segregation. The addition of Mo+P to Fe-16Cr-13Ni eliminated swelling and reduced segregation. The addition of Zr to Fe-18Cr-9.5Ni decreased swelling and altered the segregation. Comparison of swelling with changes in lattice parameter and shear modulus caused by the segregation showed that swelling correlates well with the decreases in lattice parameter caused by radiation-induced segregation. Those alloys whose segregation decreased the lattice parameter the greatest showed the lowest swelling. These results are consistent with theoretical predictions made by Wolfer. (c) 2005 Elsevier B.V. All rights reserved.'
+		 Notes='PT: J; CR: ALLEN TR, 1998, ACTA MATER, V46, P3679 ALLEN TR, 1998, J NUCL MATER, V255, P44 ALLEN TR, 2000, AM SOC TEST MATER, V1366, P739 ALLEN TR, 2002, ASTM STP, V1405, P427 BATES JF, 1977, P AIME INT C RAD EFF, P625 BOND GM, 1999, P 9 INT S ENV DEGR M, P1045 BROWN C, 1976, DEV ELECT MICROSCOPY BUSBY JT, 1997, P 8 INT S ENV DEGR M CARTER RD, 1993, J NUCL MATER, V205, P361 CAWTHORNE C, 1967, NATURE, V216, P515 DAMCOTT DL, 1991, RADIAT EFF, V118, P383 DAMCOTT DL, 1995, J NUCL MATER, V225, P97 DAMCOTT DL, 1995, NUCL INSTRUM METH B, V99, P780 GARNER FA, 1993, J NUCL MATER, V205, P411 GARNER FA, 1994, MAT SCI TECHNOLOGY A, V10 GARNER FA, 1998, CONTRIBUTION MAT INV, P249 GARNER FA, 2002, CONTRIBUTION MAT INV GARNER FA, 2003, 11 INT C ENV DEGR MA, P647 GUILLOU R, 1981, MET SCI, V15, P63 JOHNSTON WG, 1974, J NUCL MATER, V54, P24 KATO T, 1991, MATER T JIM, V32, P921 KATO T, 1992, J NUCL MATER, V189, P167 KENIK EA, 1994, J NUCL MATER, V216, P157 LEE EH, 1985, PHILOS MAG A, V52, P493 MANSUR LK, 1994, J NUCL MATER, V216, P97 MARWICK AD, 1978, J PHYS F MET PHYS, V8, P1849 NEUSTROEV VS, 1998, INT S CONTR MAT INV, P261 NEUSTROEV VS, 2000, AM SOC TEST MATER, V1366, P792 OKAMOTO PR, 1979, J NUCL MATER, V83, P2 OKITA T, 2004, J NUCL MATER, V327, P130 POROLLO SI, 1998, INT S CONTR MAT INV, P271 SIAHMED A, 1982, ASTM STP, V782, P1008 SNIEGOWSKI JJ, 1983, P TOP C FERR ALL US WAS GS, 1993, J NUCL MATER, V205, P332 WOLFER WG, 1980, J NUCL MATER, V91, P265 WOLFER WG, 1982, ASTM STP, V782, P1023; NR: 36; TC: 0; J9: J NUCL MATER; PG: 11; GA: 943LI'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='9' Created='2006-07-21T07:09:14'
+		 LastModified='2006-08-30T08:38:15' Marked='0         '
+		 UserRefID='13' RefType='1' AuthorPrimary='Tan,L.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='An electron backscattered diffraction study of grain boundary-engineered INCOLOY Alloy 800H'
+		 TitleSecondary='' TitleTertiary='' Keyword='CSL DISTRIBUTIONS|ANNEALING TWINS|POLYCRYSTALS|CHARACTER|NICKEL|Materials Science, Multidisciplinary|Metallurgy &#x26; Metallurgical Engineering'
+		 PubYear='2005' PubDateFreeForm='JUL' PeriodicalFull='Metallurgical and Materials Transactions A-Physical Metallurgy and Materials Science'
+		 PeriodicalAbbrev='Metall.Mater.Trans.A-Phys.Metall.Mater.Sci.'
+		 Volume='36A' Issue='7' StartPage='1921' OtherPages='1925'
+		 Edition='' Publisher='MINERALS METALS MATERIALS SOC' PlaceOfPublication='WARRENDALE; 184 THORN HILL RD, WARRENDALE, PA 15086 USA'
+		 ISSN_ISBN='1073-5623' Availability='' Author_Address_Affiliation='Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA.; Tan, L, Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA.; lizhentan@wise.edu'
+		 AccessionNumber='000229997800032' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='Grain-boundary engineering (GBE) as a viable approach to improve material properties has been extensively investigated in the last 2 decades. This article explicates attempts to alter the grain-boundary (GB) orientation of INCOLOY Alloy 800H by means of thermomechanical processing. The deviations from the exact Sigma 3 value were found to be correlated with Sigma 3 frequency. The annealing-induced grain-size change plays an important role in the low-Sigma coincidence-site lattice boundaries (CSLBs).'
+		 Notes='PT: J; CR: 2004, TECHNICAL B *ID NAT ENG ENV LA, 2004, INEELEXT0402347 LLC BRANDON DG, 1966, ACTA METALL, V14, P1479 ERB U, 2001, P 10 INT S PROC FABR, P3 GERTSMAN VY, 2001, ACTA MATER, V49, P1589 LEE DS, 2003, MAT SCI ENG A-STRUCT, V354, P106 LEHOCKEY EM, 1998, METALL MATER TRANS A, V29, P3069 LIN P, 1997, SCRIPTA MATER, V36, P1145 PALUMBO G, 1992, PHYS STATUS SOLIDI A, V131, P425 PALUMBO G, 1998, 3 INT C GRAIN GROWTH, P311 PAN Y, 1996, ACTA MATER, V44, P4685 RANDLE V, 1996, ROLE COINCIDENCE SIT, P7 RANDLE V, 1999, ACTA MATER, V47, P4187 SCHWARTZ AJ, 1998, JOM-J MIN MET MAT S, V50, P50 SHIMADA M, 2002, ACTA MATER, V50, P2331 THOMSON CB, 1997, ACTA MATER, V45, P4909 WATANABE T, 1984, RES MECH, V11, P47 WATANABE T, 1993, GRAIN BOUNDARY ENG, P57 WATANABE T, 1999, ACTA MATER, V47, P4171; NR: 19; TC: 0; J9: METALL MATER TRANS A; PG: 5; GA: 938KE'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='10' Created='2006-07-21T07:09:14'
+		 LastModified='2006-08-30T08:38:15' Marked='0         '
+		 UserRefID='14' RefType='1' AuthorPrimary='Wilson,P.P.H.|Allen,T.R.|El-Guebaly,L.A.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Synergies between Generation-IV and advanced fusion power plant research programs'
+		 TitleSecondary='' TitleTertiary='' Keyword='Nuclear Science &#x26; Technology'
+		 PubYear='2005' PubDateFreeForm='APR' PeriodicalFull='Fusion Science and Technology'
+		 PeriodicalAbbrev='Fusion Sci.Technol.' Volume='47' Issue='3'
+		 StartPage='445' OtherPages='449' Edition='' Publisher='AMER NUCLEAR SOCIETY'
+		 PlaceOfPublication='LA GRANGE PK; 555 N KENSINGTON AVENUE, LA GRANGE PK, IL 60526 USA'
+		 ISSN_ISBN='1536-1055' Availability='' Author_Address_Affiliation='Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA.; Wilson, PPH, Univ Wisconsin, Dept Engn Phys, 1500 Engn Dr, Madison, WI 53706 USA.; wilsonp@engr.wisc.edu'
+		 AccessionNumber='000227978200023' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='For the first time since the early 1990&#x27;s, the U.S. Department of Energy has long term research and development programs in both nuclear fission and nuclear fusion, the Generation IV program and the ARIES program, respectively. The Generation IV program has introduced a safety goal for future fission reactor systems that has long been reflected in the ARIES mission: no off site emergency response to any design basis accident. This change, in concert with the overall departure from light water reactor technology, will drive a change in the regulatory framework for both Generation IV reactors and fusion power plants of the future. Further, both fission and fusion power plants will have to compete in similar future energy markets with uncertainties in energy prices and the development of alternative energy products. Enabling the success of nuclear energy, advanced materials will be a cornerstone to both programs, driven both by higher temperatures and heat fluxes and by a desire for longer lifetimes in high radiation environments. The synergies created by these increasingly parallel programs open the door for renewed collaborations that will increase the total effectiveness of research needed in both.'
+		 Notes='PT: J; CR: *DEP EN OFF NUCL E, 2003, REP C ADV FUEL CYCL *DEP EN OFF NUCL E, 2004, NUCL HYDR INT FACT S *U CAL SAN DIEG, ARIES WEB SITE *US DEP EN, NUCL HYDR IN *US DEP EN, 1996, DOESTD600296 *US DEP EN, 2002, GIF00200 *US DEP EN, 2004, WORKSH ADV COMP MAT PETRUNIK KJ, 2003, CANADIAN NUCL SOC B, V24, P16 STACEY WM, 2002, FUSION SCI TECHNOL, V41, P116 SVIATOSKLAVSKY I, 1978, P 3 ANS TOP FUS EN A; NR: 10; TC: 0; J9: FUSION SCI TECHNOL; PG: 5; GA: 911CF'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='11' Created='2006-07-21T07:09:16'
+		 LastModified='2006-08-30T08:38:15' Marked='0         '
+		 UserRefID='44' RefType='1' AuthorPrimary='Koc,M.|Allen,T.|Jiratheranat,S.|Altan,T.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The use of FEA and design of experiments to establish design guidelines for simple hydroformed parts'
+		 TitleSecondary='' TitleTertiary='' Keyword='hydroforming|guidelines|design of experiments|response surface method|FEA|metal forming|Engineering, Manufacturing|Engineering, Mechanical'
+		 PubYear='2000' PubDateFreeForm='DEC' PeriodicalFull='International Journal of Machine Tools &#x26; Manufacture'
+		 PeriodicalAbbrev='Int.J.Mach.Tools Manuf.' Volume='40'
+		 Issue='15' StartPage='2249' OtherPages='2266' Edition=''
+		 Publisher='PERGAMON-ELSEVIER SCIENCE LTD' PlaceOfPublication='OXFORD; THE BOULEVARD, LANGFORD LANE, KIDLINGTON, OXFORD OX5 1GB, ENGLAND'
+		 ISSN_ISBN='0890-6955' Availability='' Author_Address_Affiliation='Tower Automot, Ctr Tech, Adv Technol Div, Milwaukee, WI 53216 USA.; Koc, M, Tower Automot, Ctr Tech, Adv Technol Div, 3533 N 27th St, Milwaukee, WI 53216 USA.'
+		 AccessionNumber='000089800800007' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='We present models to predict the protrusion height of &#x22;Tee-shaped&#x22; hydroformed parts, both because this information is of direct relevance to engineers attempting to build such parts and also to illustrate an advantageous process for developing design guidelines for tube hydroforming (THF) in general. A newly proposed design of experiments technique, Low Cost Response Surface Method (LCRSM), was utilized to facilitate the economical prediction and optimization of this height as a function of geometrical parameters subject to thinning of the wall thickness at the protrusion region. The same methodology is also proposed for the economical investigation of other geometries and conditions. As a result of this investigation, not only were known and expected trends of effect of parameters verified, but also numerical values within a practical range of parameters at certain conditions were obtained. In addition, interactions between factors were also revealed as predicted. Moreover, this information was gained from a substantially reduced number of finite element analysis (FEA) simulations via LCRSM compared to standard response surface method (RSM) or factorial techniques, avoiding costly physical experimentation. (C) 2000 Elsevier Science Ltd. All rights reserved.'
+		 Notes='PT: J; CR: ALLEN T, 1999, LOW COST RESPONSE SU ALLEN T, 1999, QUALITY ENG, V12, P583 ALLEN T, 2000, UNPUB GRAPHICAL COMP BERNSHTEYN MA, 2000, UNPUB APPL BASED COM DOHMANN F, 1996, J MATER PROCESS TECH, V60, P669 KIM HJ, 1993, ADV TECHNOL PLASTICI, P545 KOC M, 1999, ERCNSM99R19 OH STAT KOC M, 1999, THESIS OHIO STATE U LIMB ME, 1973, P 14 INT MTDR C, P799 MONTGOMERY D, 1997, QUALITY CONTROL MYERS R, 1995, RESPONSE SURFACE MET WELCH WJ, 1990, J QUAL TECHNOL, V22, P15 YU L, 2000, THESIS OHIO STATE U; NR: 13; TC: 18; J9: INT J MACH TOOL MANUF; PG: 18; GA: 362WG'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='12' Created='2006-07-21T07:09:18'
+		 LastModified='2006-08-30T08:38:13' Marked='0         '
+		 UserRefID='64' RefType='1' AuthorPrimary='Allen,T.' AuthorSecondary=''
+		 AuthorTertiary='' TitlePrimary='The practical side of e-mail in agile manufacturing plants'
+		 TitleSecondary='' TitleTertiary='' Keyword='Engineering, Multidisciplinary|Instruments &#x26; Instrumentation'
+		 PubYear='1997' PubDateFreeForm='MAY' PeriodicalFull='I&#x26;Cs-Instrumentation &#x26; Control Systems'
+		 PeriodicalAbbrev='I&#x26;CS-Instrum.Control Syst.' Volume='70'
+		 Issue='5' StartPage='53' OtherPages='57' Edition='' Publisher='CHILTON CO'
+		 PlaceOfPublication='RADNOR; CHILTON WAY, RADNOR, PA 19089'
+		 ISSN_ISBN='0746-2395' Availability='' Author_Address_Affiliation='Allen, T, EFFECT MANAGEMENT SYST INC,MILWAUKEE,WI 53224.'
+		 AccessionNumber='A1997XB56800013' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='' Notes='PT: J; NR: 0; TC: 0; J9: I&#x26;CS-INSTR CONTROL SYST; PG: 5; GA: XB568'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='13' Created='2006-07-21T07:09:18'
+		 LastModified='2006-08-30T08:38:14' Marked='0         '
+		 UserRefID='67' RefType='1' AuthorPrimary='Allen,T.' AuthorSecondary=''
+		 AuthorTertiary='' TitlePrimary='MES: A powerful information solution for discrete manufacturers'
+		 TitleSecondary='' TitleTertiary='' Keyword='Engineering, Multidisciplinary|Instruments &#x26; Instrumentation'
+		 PubYear='1996' PubDateFreeForm='JUN' PeriodicalFull='I&#x26;Cs-Instrumentation &#x26; Control Systems'
+		 PeriodicalAbbrev='I&#x26;CS-Instrum.Control Syst.' Volume='69'
+		 Issue='6' StartPage='55' OtherPages='59' Edition='' Publisher='CHILTON CO'
+		 PlaceOfPublication='RADNOR; CHILTON WAY, RADNOR, PA 19089'
+		 ISSN_ISBN='0746-2395' Availability='' Author_Address_Affiliation='Allen, T, EFFECT MANAGEMENT SYST INC,MILWAUKEE,WI 53224.'
+		 AccessionNumber='A1996UU22300018' Language='English' Classification=''
+		 SubFile_Database='Article' OriginalForeignTitle='' Links=''
+		 DOI='' Abstract='' Notes='PT: J; NR: 0; TC: 0; J9: I&#x26;CS-INSTR CONTROL SYST; PG: 5; GA: UU223'
+		 Folder='Allen T* - wos|Allen T* - comb' User1='' User2=''
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='14' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:29' Marked='0         '
+		 UserRefID='2990' RefType='5' AuthorPrimary='Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Structural and cladding aspects of fast reactors'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='Nuclear reactors|Cladding (coating)|Nuclear energy|Molten materials|Nuclear fuels|Building materials|Corrosion resistance'
+		 PubYear='2006' PubDateFreeForm='' PeriodicalFull='' PeriodicalAbbrev=''
+		 Volume='94' Issue='' StartPage='799' OtherPages='800'
+		 Edition='' Publisher='American Nuclear Society, La Grange Park, IL 60526, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='A significant number of the nuclear energy systems proposed under the Generation IV initiative are fast reactors. These include the sodium cooled fast reactor, the lead cooled fast reactor, and the gas-cooled fast reactor. Additionally, fast spectrum versions of the supercritical water-cooled reactor and molten salt-cooled reactors have been proposed. Cladding, fuel matrix, and structural components in these fast spectrum Generation IV systems will operate roughly in the temperature range 350-850&#x26;deg;C and experience doses up to 200 dpa [1], Table 1 lists some of the materials suggested as candidates for fast spectrum Generation IV systems. In many instances, candidates for cladding and structural materials are the same alloys, with the cladding performance being the most difficult technical challenge. The survivability of fuel cladding (prevention of cladding breach) must be predictable. Therefore, the wastage and strain of the cladding under all operating conditions must be understood. Cladding wastage can be caused by corrosion of the cladding by the coolant or fuel cladding chemical interaction (FCCI). Cladding strain can be caused by fission gas pressurization, swelling of constrained components, or in the fuel region, fuel cladding mechanical interaction (FCMI). The performance of ducts and structural materials must also be predictable. This requires that structural materials maintain adequate toughness, strength, and dimensional stability under all expected conditions. Adequate dimensional stability includes resistance to swelling, creep, growth, and corrosion. The duct performance must be adequate for all temperatures and radiation dose, even under accident conditions. Recently the OECD published a report on structural and cladding materials for fast spectrum transmutation systems [2]. The OECD report is relevant to liquid metal-cooled (SFR, LFR) reactors, as well as accelerator-driven transmutation systems. The report highlights the ability and limitation of HT9 as a cladding material and describes many alternative materials that should be considered beyond HT9. The properties of HT9 will be described in the presentation. Recent research on advanced cladding materials has analyzed radiation response and corrosion resistance. As an example, figure 1 shows the stability of oxides in an oxide dispersion strengthened (ODS) steel as a function of radiation dose. The size of the oxide particles decreases by a small amount with increasing radiation dose. Figure 2 shows that these same ODS steels have a significantly lower corrosion rate than other advanced ferritic -martensitic steels. A broader description of the highlights of the radiation and corrosion response in advanced cladding and structural materials will be described in the presentation. Additionally, specific needs will be highlighted for fast spectrum gas-cooled reactor systems.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019702'
+		 User2='Nuclear energy systems; Water-cooled reactors; Radiation response'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='15' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='2991' RefType='5' AuthorPrimary='Miller,B.D.|Dickerson,C.A.|Yount,H.J.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Radiation resistance of ceramic candidates for generation IV gas-cooled reactors'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='716'
+		 OtherPages='' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019665'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='16' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='2992' RefType='5' AuthorPrimary='Chen,Y.|Sridharan,K.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of 9Cr oxide dispersion strengthened steel in supercritical water environment'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='740'
+		 OtherPages='741' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin, 3335 Engineering Hall, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019678'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+
+	<z:row UserID='11264' InternalRefID='17' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='2993' RefType='5' AuthorPrimary='Tan,L.|Sridharan,K.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Grain boundary engineering of FCC and BCC alloys'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='744'
+		 OtherPages='' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, 3335 Engineering Hall, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019680'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='18' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='2994' RefType='5' AuthorPrimary='Tan,L.|Machut,M.T.|Sridharan,K.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Oxidation behavior of HCM12A exposed in Harsh environments'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='745'
+		 OtherPages='' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, 3335 Engineering Hall, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019681'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='19' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='2995' RefType='5' AuthorPrimary='Machut,McLean|Sridharan,Kumar|Li,Ning|Allen,Todd'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Modeling of corrosion mechanisms of steels for lead-alloy cooled reactors'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='750'
+		 OtherPages='751' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Nuclear Engineering and Engineering Physics, University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019683'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='20' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='2996' RefType='5' AuthorPrimary='Wardle,Kent E.|Allen,Todd R.|Swaney,Ross'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='CFD study of turbulence in an annular centrifugal contactor'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='108'
+		 OtherPages='109' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019441'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='21' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='2997' RefType='5' AuthorPrimary='Olson,Luke|Ambrosek,James|Sridharan,Kumar|Anderson,Mark|Allen,Todd|Williams,Dave|Wilson,Dane'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Experimental design for testing materials corrosion in molten fluoride salt'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='805'
+		 OtherPages='806' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019704'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='22' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='2998' RefType='5' AuthorPrimary='Allen,T.R.|Gan,J.|Cole,J.I.|Ukai,S.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Radiation response of a 9 Cr oxide dispersion strengthened ODS to heavy ion irradiation'
+		 TitleSecondary='2006 Annual Meeting - American Nuclear Society, Jun 4-8 2006'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2006' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='94' Issue='' StartPage='829'
+		 OtherPages='830' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Reno, NV, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='063010019713'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='23' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='2999' RefType='1' AuthorPrimary='Tan,L.|Sridharan,K.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The effect of grain boundary engineering on the oxidation behavior of INCOLOY alloy 800H in supercritical water'
+		 TitleSecondary='' TitleTertiary='' Keyword='Alloys|Oxidation|Grain boundaries|Supercritical fluid extraction|Thermomechanical treatment|Temperature distribution|Gravimetric analysis|Scanning electron microscopy|Energy dispersive spectroscopy|X ray diffraction analysis|Optical microscopy'
+		 PubYear='2006' PubDateFreeForm='' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='348' Issue='3'
+		 StartPage='263' OtherPages='271' Edition='' Publisher='Elsevier, Amsterdam, 1000 AE, Netherlands'
+		 PlaceOfPublication='' ISSN_ISBN='0022-3115' Availability=''
+		 Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='http://dx.doi.org/10.1016/j.jnucmat.2005.09.023'
+		 DOI='' Abstract='Grain boundary engineering (GBE) was applied to INCOLOY alloy 800H by means of thermomechanical processing. The oxidation behavior of GBE-treated alloy 800H exposed in supercritical water (SCW) with 25 ppb dissolved oxygen at 500 &#x26;deg;C and 25 MPa was significantly improved as compared to 800H in the annealed condition. Gravimetry, optical microscopy, scanning electron microscopy/energy dispersive X-ray spectroscopy (SEM/EDS), X-ray diffraction (XRD), and electron backscatter diffraction (EBSD) were employed in this study to analyze the oxidation behavior of control (annealed) and GBE-treated samples. GBE improves the protective oxidation behavior by enhancing spallation resistance and reducing oxidation rate. Spallation resistance correlates with a reduction in texture of the oxide layers. &#x26;copy; 2005 Elsevier B.V. All rights reserved.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06019624558'
+		 User2='Supercritical water (SCW); Grain boundary engineering (GBE); Spallation'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='24' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3000' RefType='1' AuthorPrimary='Allen,T.R.|Cole,J.I.|Trybus,C.L.|Porter,D.L.|Tsai,H.|Garner,F.|Kenik,E.A.|Yoshitake,T.|Ohta,Joji'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The effect of dose rate on the response of austenitic stainless steels to neutron radiation'
+		 TitleSecondary='' TitleTertiary='' Keyword='Stainless steel|Austenite|Neutron irradiation|Temperature distribution|Swelling|Grain boundaries|Tensile properties'
+		 PubYear='2006' PubDateFreeForm='' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='348' Issue='1-2'
+		 StartPage='148' OtherPages='164' Edition='' Publisher='Elsevier, Amsterdam, 1000 AE, Netherlands'
+		 PlaceOfPublication='' ISSN_ISBN='0022-3115' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='http://dx.doi.org/10.1016/j.jnucmat.2005.09.011'
+		 DOI='' Abstract='Depending on reactor design and component location, austenitic stainless steels may experience significantly different irradiation dose rates in the same reactor. Understanding the effect of dose rate on radiation performance is important to predicting component lifetime. This study examined the effect of dose rate on swelling, grain boundary segregation, and tensile properties in austenitic stainless steels through the examination of components retrieved from the Experimental Breeder Reactor-II (EBR-II) following its shutdown. Annealed 304 stainless steel, stress-relieved 304 stainless steel, 12% cold-worked 316 stainless steel, and 20% cold-worked 316 stainless steel were irradiated over a dose range of 1-56 dpa at temperatures from 371 to 440 &#x26;deg;C and dose rates from 0.5 to 5.8 &#x26;times; 10-7 dpa/s. Density and tensile properties were measured for 304 and 316 stainless steel. Changes in grain boundary composition were examined for 304 stainless steel. Swelling appears to increase at lower dose rates in both 304 and 316 stainless steel, although the effect was not always statistically significant. Grain boundary segregation also appears to increase at lower dose rate in 304 stainless steel. For the range of dose rates examined, no measurable dose rate effect on tensile properties was noted for any of the steels. &#x26;copy; 2005 Elsevier B.V. All rights reserved.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05529616872'
+		 User2='Dose rates; Reactor design; Radiation performance'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='31| 804|(2| 576ÿ' AuthorQuaternary=''
+		 AuthorQuinary='' URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='25' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:29' Marked='0         '
+		 UserRefID='3001' RefType='5' AuthorPrimary='Allen,T.R.|Chen,Y.|Tan,L.|Ren,X.|Sridharan,K.|Ukai,Shigeharu'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of candidate materials for supercritical water-cooled reactors'
+		 TitleSecondary='12th International Conference on Environmental Degradation of Materials in Nuclear Power Systems-Water Reactors, Aug 14-18 2005'
+		 TitleTertiary='Proceedings of the Twelfth International Conference on Environmental Degradation of Materials in Nuclear Power Systems-Water Reactors'
+		 Keyword='Corrosion|Water cooled reactors|Supercritical fluids|Oxidation|Anisotropy|Grain boundaries|Oxygen|Steel'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='' PeriodicalAbbrev=''
+		 Volume='' Issue='' StartPage='1397' OtherPages='1407'
+		 Edition='' Publisher='Minerals, Metals and Materials Society, Warrendale, PA 15086, United States'
+		 PlaceOfPublication='Salt Lake City, UT, United States'
+		 ISSN_ISBN='' Availability='' Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='Advanced nuclear energy systems have been proposed that will use supercritical water as a coolant. Because of the limited experience with candidate alloys exposed to supercritical water, a test program has been initiated to understand oxidation behavior in these candidate alloys. This work will report on the corrosion response of two austenitic and three ferritic-martensitic steels exposed to supercritical water at a temperature of 500&#x26;deg;C and 25 ppb dissolved oxygen content up to exposure times of 1026 hours. The alloys tested and examined were 800H, D9, NF616, HCM12A, and an Oxide Dispersion Strengthened (ODS) martensitic steel containing 9% Cr. Following exposure, weight change was measured and the oxide was characterized. Ferritic-martensitic steels experienced a larger weight gain than austenitic stainless steels, but the oxide growth is more predictable for the ferritic-martensitic steels. The ODS steel showed significantly less oxidation than the other ferritic-martensitic alloys. Both D9 and alloy 800H showed spallation of the oxide. Thermo-mechanical processing of 800H was used to maximize the fraction of low angle grain boundaries. This treatment significantly improved the oxidation response in 800H. There was an enrichment of hematite in the outer oxide layer and an improvement in oxide adhesion to the substrate, which appears to be linked to a reduction in anisotropy in the oxide.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06269957799'
+		 User2='Oxidation response; Oxide Dispersion Strengthened (ODS); Dissolved oxygen; Ferritic-martensitic steels'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+
+	<z:row UserID='11264' InternalRefID='26' Created='2006-08-09T10:38:21'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='3002' RefType='1' AuthorPrimary='Ren,X.|Ling Zheng|Sridharan,K.|Allen,T.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of ferritic-martensitic steel HT9 in supercritical water'
+		 TitleSecondary='' TitleTertiary='Trans. Am. Nucl. Soc. (USA)'
+		 Keyword='corrosion|critical points|fission reactor coolants|fission reactor design|martensitic steel|nuclear power stations|permittivity|thermal analysis'
+		 PubYear='2005' PubDateFreeForm='/' PeriodicalFull='Transactions of the American Nuclear Society'
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='119'
+		 OtherPages='20' Edition='' Publisher='ANS' PlaceOfPublication=''
+		 ISSN_ISBN='0003-018X' Availability='' Author_Address_Affiliation='Mater. Sci. Program, Wisconsin Univ., Madison, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='The supercritical water reactor (SCWR) has many advantages, including simplified design, smaller volume and higher thermal efficiency, than current light water nuclear reactors (LWR). For future fossil fuel power plants, supercritical water (SCW) is also a good candidate because of its higher thermal efficiency. Above the thermal critical point (temperature above 374.2 &#x26;deg;C and pressure above 22.1 MPa), SCW acts as a dense gas. Its properties, such as density, ion product and dielectric constant, can be tuned by changing temperature and pressure to meet requirements of different applications. Used as coolant in nuclear reactors, SCW is expected to be more corrosive to structural materials in reactors than is lower temperature water. Therefore, the understanding of corrosion behavior of candidate materials in SCW is required. The research described is for one such candidate material, a ferritic-martensitic steel HT9, and represents a part of ongoing research at the University of Wisconsin on testing and screening of a wide range of alloys for future SCWRs'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='8823573'
+		 User2='corrosion; ferritic-martensitic steel; HT9 steel; supercritical water reactor; SCWR; simplified design; thermal efficiency; light water nuclear reactors; fossil fuel power plants; supercritical water; SCW; thermal critical point; dense gas; ion product; dielectric constant; coolant; structural materials'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='27' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:32' Marked='0         '
+		 UserRefID='3003' RefType='5' AuthorPrimary='Ren,Xiaowei|Zheng,Ling|Sridharan,Kumar|Allen,Todd'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of ferritic-martensitic steel HT9 in supercritical water'
+		 TitleSecondary='2005 Annual Meeting - American Nuclear Society, Jun 5-9 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='119'
+		 OtherPages='120' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='San Diego, CA, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Materials Science Program, University of Wisconsin-Madison, 1500 Engineering Research Building, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099732122'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='28' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='3004' RefType='5' AuthorPrimary='Zillmer,A.J.|Licht,J.R.|Sridharan,K.|Allen,T.R.|Corradini,M.L.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Long term corrosion performance of alloys in supercritical water'
+		 TitleSecondary='2005 Annual Meeting - American Nuclear Society, Jun 5-9 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='121'
+		 OtherPages='122' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='San Diego, CA, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099732123'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='29' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:32' Marked='0         '
+		 UserRefID='3005' RefType='5' AuthorPrimary='Sridharan,K.|King,J.A.|Harrington,S.P.|Johnson,A.K.|Anderson,M.H.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of surface modified alloys in supercritical water'
+		 TitleSecondary='2005 Annual Meeting - American Nuclear Society, Jun 5-9 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='123'
+		 OtherPages='124' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='San Diego, CA, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin, 1500 Engineering Drive, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099732124'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='30' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='3006' RefType='5' AuthorPrimary='Yount,Hannah|Allen,Todd'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Estimating fracture toughness in heat treated ceramics being evaluated for advanced fuel materials'
+		 TitleSecondary='2005 Winter Meeting - American Nuclear Society, Nov 13-17 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='93' Issue='' StartPage='783'
+		 OtherPages='784' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Washington, D.C., United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099730190'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='31' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='3007' RefType='5' AuthorPrimary='Machut,McLean|Sridharan,Kumar|Allen,Todd'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of candidate materials for lead-cooled reactors'
+		 TitleSecondary='2005 Annual Meeting - American Nuclear Society, Jun 5-9 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='131'
+		 OtherPages='132' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='San Diego, CA, United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Nuclear Engineering and Engineering Physics, University of Wisconsin- Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099732127'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='32' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:50' Marked='0         '
+		 UserRefID='3008' RefType='1' AuthorPrimary='Zillmer,A.J.|Licht,J.R.|Sridharan,K.|Allen,T.R.|Corradini,M.L.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Long term corrosion performance of alloys in supercritical water'
+		 TitleSecondary='' TitleTertiary='Trans. Am. Nucl. Soc. (USA)'
+		 Keyword='austenitic stainless steel|corrosion|fission reactor materials|fission reactor safety|high-temperature effects|oxidation'
+		 PubYear='2005' PubDateFreeForm='/' PeriodicalFull='Transactions of the American Nuclear Society'
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='121'
+		 OtherPages='2' Edition='' Publisher='ANS' PlaceOfPublication=''
+		 ISSN_ISBN='0003-018X' Availability='' Author_Address_Affiliation='Dept. of Eng. Phys., Wisconsin Univ., Madison, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='The U.S. Department of Energy has identified the supercritical water-cooled reactor (SCWR) as one of the concepts for study in the Generation IV advanced reactor program. Advantages of using supercritical water as coolant and moderator include higher thermal efficiency and plant simplification. However, materials corrosion will be an important consideration in SCWRs because of the high temperatures and the oxidative nature of supercritical water. Considerable insight can be gained by examining corrosion in alloys that have been exposed for extended periods in supercritical water fossil fuel power plants many of which have been in operation for over four decades. The present research program was undertaken to examine the corrosion of components obtained from Genoa Station 3 supercritical water fossil fuel power plant, located in Genoa, WI. The plant is rated at 376 MWe and has been in operation since 1969'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='8801242'
+		 User2='long term corrosion performance; alloys; supercritical water-cooled reactor; SCWR; coolant; moderator; thermal efficiency; plant simplification; materials corrosion; high temperature dependence; oxidation; supercritical water fossil fuel power plants; power plant operation; austenitic stainless steel'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='33' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:32' Marked='0         '
+		 UserRefID='3009' RefType='1' AuthorPrimary='Sridharan,K.|King,J.A.|Harrington,S.P.|Johnson,A.K.|Anderson,M.H.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of surface modified alloys in supercritical water'
+		 TitleSecondary='' TitleTertiary='Trans. Am. Nucl. Soc. (USA)'
+		 Keyword='austenitic stainless steel|corrosion resistance|fission reactor materials|fission reactor safety|high-temperature effects|ion implantation|stress effects'
+		 PubYear='2005' PubDateFreeForm='/' PeriodicalFull='Transactions of the American Nuclear Society'
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='123'
+		 OtherPages='4' Edition='' Publisher='ANS' PlaceOfPublication=''
+		 ISSN_ISBN='0003-018X' Availability='' Author_Address_Affiliation='Dept. of Eng. Phys., Wisconsin Univ., Madison, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='Materials corrosion will be an important consideration in the Generation IV supercritical water reactor (SCWR) systems because of the high temperature and the oxidative nature of supercritical water. In fact, selection and development of alloys with optimum corrosion, stress-corrosion, and radiation damage resistance in the supercritical water environment will be central to the implementation of SCWRs. Since corrosion is initiated at the materials&#x27; surface, opportunities exist to apply techniques to modify the surface and near-surface regions of materials in order to improve their corrosion resistance. Such approaches can potentially allow for the independent optimization of the properties of the materials&#x27; surface and its bulk. With this objective, the present research was undertaken to investigate the effects of select energetic ion-based surface modification treatments on corrosion resistance and mechanisms in supercritical water'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='8801243'
+		 User2='surface modified alloys; materials corrosion; supercritical water reactor; SCWR; high temperature dependence; oxidation; optimum corrosion; stress-corrosion; radiation damage resistance; corrosion resistance; optimization; energetic ion-based surface modification treatments; ion implantation; austenitic stainless steel'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='34' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:31' Marked='0         '
+		 UserRefID='3010' RefType='5' AuthorPrimary='Machut,McLean|Sridharan,Kumar|Li,Ning|Allen,Todd'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion performance of surface modified materials for lead-cooled reactors'
+		 TitleSecondary='2005 Winter Meeting - American Nuclear Society, Nov 13-17 2005'
+		 TitleTertiary='Transactions of the American Nuclear Society'
+		 Keyword='' PubYear='2005' PubDateFreeForm='' PeriodicalFull=''
+		 PeriodicalAbbrev='' Volume='93' Issue='' StartPage='471'
+		 OtherPages='472' Edition='' Publisher='American Nuclear Society, La Grange Park, United States'
+		 PlaceOfPublication='Washington, D.C., United States' ISSN_ISBN='0003-018X'
+		 Availability='' Author_Address_Affiliation='Department of Nuclear Engineering and Engineering Physics, University of Wisconsin- Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='' Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06099730071'
+		 User2='' User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+
+	<z:row UserID='11264' InternalRefID='35' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3011' RefType='1' AuthorPrimary='Machut,Mc.L.|Kumar Sridharan|Allen,T.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion of candidate materials for lead-cooled reactors'
+		 TitleSecondary='' TitleTertiary='Trans. Am. Nucl. Soc. (USA)'
+		 Keyword='claddings|corrosion|fission reactor coolants|fission reactor safety|heat exchangers|liquid metals|martensitic steel'
+		 PubYear='2005' PubDateFreeForm='/' PeriodicalFull='Transactions of the American Nuclear Society'
+		 PeriodicalAbbrev='' Volume='92' Issue='' StartPage='131'
+		 OtherPages='2' Edition='' Publisher='ANS' PlaceOfPublication=''
+		 ISSN_ISBN='0003-018X' Availability='' Author_Address_Affiliation='Dept. of Nucl. Eng. &#x26; Eng. Phys., Wisconsin Univ., Madison, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='A significant challenge facing the use of Lead-Bismuth Eutectic (LBE) for Lead-Cooled Fast Reactors or Accelerator Driven Systems is the selection and development of structural and cladding materials suitable for long-term use in a highly corrosive liquid metal environment. The goal of this study is to determine the oxide development in LBE for three ferritic-martensitic steels, specifically HCM12A, T22, and 9Cr-2WVTa. HCM12A is a ferritic-martensitic steel designed for high-temperature fossil boiler components that is being evaluated for reactor application, T22 is a ferritic-martensitic steel typically used for lower temperature heat exchanger components, and 9Cr-2WVTa is an experimental ferritic-martensitic stainless steel developed as a &#x22;low-activation&#x22; steel for fusion application'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='8801245'
+		 User2='corrosion; candidate materials; lead-cooled reactors; Lead-Bismuth Eutectic; Lead-Cooled Fast Reactors; Accelerator Driven Systems; structural materials; cladding materials; corrosive liquid metal environment; oxide development; HCM12A; T22; 9Cr-2WVTa; ferritic-martensitic steel design; high-temperature fossil boiler components; heat exchanger components; low-activation steel; fusion application; FeCrWVTaC'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='36' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3012' RefType='1' AuthorPrimary='Allen,T.R.|Tan,L.|Tucker,J.D.|Gan,J.|Gupta,G.|Was,G.S.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Radiation resistance of advanced ferritic-martensitic steel HCM12A'
+		 TitleSecondary='' TitleTertiary='' Keyword='Steel|Martensite|Ferrites|Fast reactors|Hardening|Dislocations (crystals)|Microstructure|Transmission electron microscopy|Auger electron spectroscopy'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='Journal of ASTM International'
+		 PeriodicalAbbrev='' Volume='2' Issue='8' StartPage='337'
+		 OtherPages='349' Edition='' Publisher='American Society for Testing and Materials, West Conshohocken, PA 19428-2959, United States'
+		 PlaceOfPublication='' ISSN_ISBN='' Availability='' Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='HCM12A is an advanced 12 Cr ferritic-martensitic steel designed for higher temperature operation than could be achieved using earlier generation steels such as HT9. HCM12A is one of the advanced alloys under consideration for application in core components in Generation IV nuclear energy systems, and is of particular interest to the supercritical water reactor, sodium fast reactor, and lead fast reactor designs. The radiation resistance of HCM12A has not previously been studied. This work provides information on the hardening and microstructural changes in HCM12A after irradiation using 2.0 MeV protons at 400&#x26;deg;C to 10 dpa and 5 MeV Ni-ions at 500&#x26;deg;C to 50 dpa. Following irradiation, changes in hardness were measured using Vickers hardness indentation, changes in microstructure and phase stability were studied using transmission electron microscopy, and changes in microchemistry were measured using scanning Auger microscopy. The hardness increases by roughly 70 % and saturates by roughly 5 dpa. The changes to the microstructure contributing to this hardness increase are primarily due to the formation of precipitate phases, with some contribution from changes in dislocation density. Chromium is enriched at grain boundaries prior to irradiation, likely due to grain boundary carbides, and increases further during the irradiation. Copyright &#x26;copy; 2005 by ASTM International.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='06049654664'
+		 User2='Radiation resistance; Dislocation density' User3=''
+		 User4='' User5='' CallNumber='' DatabaseName='' DataSource=''
+		 IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='37' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3013' RefType='1' AuthorPrimary='Allen,T.R.|Gan,J.|Cole,J.I.|Ukai,S.|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The stability of 9Cr-ODS oxide particles under heavy-ion irradiation'
+		 TitleSecondary='' TitleTertiary='' Keyword='Martensite|Heavy ions|Irradiation|High temperature effects|Normal distribution|Particle size analysis|Dispersions'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='Nuclear Science and Engineering'
+		 PeriodicalAbbrev='Nucl.Sci.Eng.' Volume='151' Issue='3'
+		 StartPage='305' OtherPages='312' Edition='' Publisher='American Nuclear Society, La Grange Park, IL 60526, United States'
+		 PlaceOfPublication='' ISSN_ISBN='0029-5639' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='An oxide-dispersion-strengthened (ODS) martensitic steel 9Cr-ODS was irradiated with 5-MeV Ni ions at 500&#x26;deg;C at a dose rate of 1.4 &#x26;times; 10 -3 dpa/s to doses of 5, 50, and 150 dpa. The ODS steel has been designed for use in higher-temperature energy systems. However, the radiation effects are not fully characterized, particularly to high doses. Dense dislocations, precipitates, and yttrium-titanium oxide particles dominated the microstructure of 9Cr-ODS for both the unirradiated and irradiated cases with no dislocation loops observed. No voids were detected for doses up to 150 dpa. The average size of the oxide particles, whose size is approximately described by a lognormal distribution, slightly decreased with dose from [similar to] 12 nmfor the unirradiated case to [similar to] 9 nm at 150 dpa. The decrease in size follows a square root of dose dependency, indicating the effect is radiation induced. The decrease in size is not expected to have a detrimental effect on high-temperature strength, even to extremely high dose.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05469481195'
+		 User2='Oxide-dispersion-strengthened (ODS); Oxide particles; Heavy-ion irradiation; Higher-temperature energy systems'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='31| 145|(2| 897ÿ' AuthorQuaternary=''
+		 AuthorQuinary='' URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='38' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:32' Marked='0         '
+		 UserRefID='3014' RefType='1' AuthorPrimary='Tan,L.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='An electron backscattered diffraction study of grain boundary-engineered INCOLOY Alloy 800H'
+		 TitleSecondary='' TitleTertiary='' Keyword='Grain boundaries|Backscattering|Polycrystalline materials|Annealing|Silica|Superlattices|Scanning electron microscopy|Mathematical models'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='Metallurgical and Materials Transactions A: Physical Metallurgy and Materials Science'
+		 PeriodicalAbbrev='Metall Mat Trans A Phys Metall Mat Sci'
+		 Volume='36' Issue='7' StartPage='1921' OtherPages='1925'
+		 Edition='' Publisher='Minerals, Metals and Materials Society, Warrendale, PA 15086, United States'
+		 PlaceOfPublication='' ISSN_ISBN='1073-5623' Availability=''
+		 Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='Grain-boundary engineering (GBE) as a viable approach to improve material properties has been extensively investigated in the last 2 decades. This article explicates attempts to alter the grain-boundary (GB) orientation of INCOLOY Alloy 800H by means of thermomechanical processing. The deviations from the exact summation 3 value were found to be correlated with summation 3 frequency. The annealing-induced grain-size change plays an important role in the low- summation coincidence-site lattice boundaries (CSLBs).'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05349308726'
+		 User2='Grain-boundary engineering (GBE); Thermomechanical processing; Electron backscattering diffraction (EBSD); Boundary energy'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='39' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:48' Marked='0         '
+		 UserRefID='3015' RefType='5' AuthorPrimary='Tan,L.|Allen,T.R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='An EBSD study of oxidation behavior of an iron-based alloy in supercritical water'
+		 TitleSecondary='2005 TMS Annual Meeting, Feb 13-17 2005'
+		 TitleTertiary='TMS Annual Meeting' Keyword='Iron alloys|Oxidation|Supercritical fluids|Water|Energy dispersive spectroscopy|Chemical reactors|Magnetite|Cooling|Thermal effects|Grain size and shape|Microstructure|Grain boundaries|Scanning electron microscopy'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='' PeriodicalAbbrev=''
+		 Volume='' Issue='' StartPage='61' OtherPages='67' Edition=''
+		 Publisher='Minerals, Metals and Materials Society, Warrendale, PA 15086, United States'
+		 PlaceOfPublication='San Francisco, CA, United States'
+		 ISSN_ISBN='' Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin-Madison, Madison, WI 53706-1687, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='The supercritical-water-cooled reactor (SCWR) system is recommended in the DOE Generation IV reactor program due to its high thermal efficiency and plant simplification. At supercritical water conditions of 500&#x26;deg;C and 25 MPa, one of the properties of most concern for materials selection is oxidation behavior. This behavior is generally evaluated by means of weight or thickness change. In this work, a new analytical method, electron backscatter diffraction (EBSD), was employed to study the oxidation behavior of alloy 800H exposed to SCW. Microstructural evolution including phase, grain character, and texture is revealed by this technique. This methodology is important to understand oxidation mechanisms and sheds light on the study of the effect of Grain Boundary Engineering on oxidation resistance.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05339299515'
+		 User2='Alloy 800H; SEM/EDS; Hematite; Spinel' User3=''
+		 User4='' User5='' CallNumber='' DatabaseName='' DataSource=''
+		 IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='40' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3016' RefType='1' AuthorPrimary='Allen,T.R.|Cole,J.I.|Gan,J.|Was,G.S.|Dropek,R.|Kenik,E.A.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Swelling and radiation-induced segregation in austentic alloys'
+		 TitleSecondary='' TitleTertiary='' Keyword='Austenite|Radiation effects|Swelling|Stainless steel|Zirconium|Addition reactions|Thermal effects|Microstructure|Melting'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='Journal of Nuclear Materials'
+		 PeriodicalAbbrev='J.Nucl.Mater.' Volume='342' Issue='1-3'
+		 StartPage='90' OtherPages='100' Edition='' Publisher='Elsevier, Amsterdam, 1000 AE, Netherlands'
+		 PlaceOfPublication='' ISSN_ISBN='0022-3115' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='http://dx.doi.org/10.1016/j.jnucmat.2005.02.008'
+		 DOI='' Abstract='To elucidate the relationship between radiation-induced segregation and swelling in austenitic stainless steels, a series of alloys were irradiated with 3.2 MeV protons to doses of 0.5 and 1.0 dpa at 400&#x26;deg;C. Three alloy series were irradiated, the first to examine the effect of bulk nickel in Fe-16-18Cr-xNi, the second to determine the effect of Mo and P in an Fe-16Cr-13Ni base alloy, and the third to examine the effect of oversized solute Zr addition to an Fe-18Cr-0.5Ni alloy. The addition of nickel in Fe-16-18Cr-xNi caused a significant decrease in swelling and increase in segregation. The addition of Mo+P to Fe-16Cr-13Ni eliminated swelling and reduced segregation. The addition of Zr to Fe-18Cr-9.5Ni decreased swelling and altered the segregation. Comparison of swelling with changes in lattice parameter and shear modulus caused by the segregation showed that swelling correlates well with the decreases in lattice parameter caused by radiation-induced segregation. Those alloys whose segregation decreased the lattice parameter the greatest showed the lowest swelling. These results are consistent with theoretical predictions made by Wolfer. &#x26;copy; 2005 Elsevier B.V. All rights reserved.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05269178991'
+		 User2='Radiation-induced segregation; Austenitic alloys; Austenitic steels; Fracture mechanisms'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='41' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='3017' RefType='1' AuthorPrimary='Wilson,Paul P.H.|Allen,Todd R.|El-Guebaly,Laila A.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Synergies between Generation-IV and advanced fusion power plant research programs'
+		 TitleSecondary='' TitleTertiary='' Keyword='Nuclear power plants|Fission reactions|Nuclear energy|Machine design|Optimization|Research and development management|Nuclear reactors|Environmental impact'
+		 PubYear='2005' PubDateFreeForm='' PeriodicalFull='Fusion Science and Technology'
+		 PeriodicalAbbrev='' Volume='47' Issue='3' StartPage='445'
+		 OtherPages='449' Edition='' Publisher='American Nuclear Society, La Grange Park, IL 60526, United States'
+		 PlaceOfPublication='' ISSN_ISBN='1536-1055' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin-Madison, Dept. of Engineering Physics, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='For the first time since the early 1990&#x27;s, the U.S. Department of Energy has long term research and development programs in both nuclear fission and nuclear fusion, the Generation IV program and the ARIES program, respectively. The Generation IV program has introduced a safety goal for future fission reactor systems that has long been reflected in the ARIES mission: no offsite emergency response to any design basis accident. This change, in concert with the overall departure from light water reactor technology, will drive a change in the regulatory framework for both Generation IV reactors and fusion power plants of the future. Further, both fission and fusion power plants will have to compete in similar future energy markets with uncertainties in energy prices and the development of alternative energy products. Enabling the success of nuclear energy, advanced materials will be a cornerstone to both programs, driven both by higher temperatures and heat fluxes and by a desire for longer lifetimes in high radiation environments. The synergies created by these increasingly parallel programs open the door for renewed collaborations that will increase the total effectiveness of research needed in both.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05189073995'
+		 User2='Fusion power plants; Fuel cycle; Safety enhancement; High average power laser (HAPL)'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='42' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:30' Marked='0         '
+		 UserRefID='3018' RefType='1' AuthorPrimary='Allen,Todd R.|Tan,Lizhen|Tucker,Julie D.|Gan,Jian|Gupta,Gaurav|Was,Gary|Shutthanandan,S.|Thevuthasan,S.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Microstructural development in advanced ferritic-martensitic steel HCM12A'
+		 TitleSecondary='' TitleTertiary='' Keyword='Steel|Ferrite|Martensite|Metallographic microstructure|High temperature operations|Hardening|Proton irradiation|Vickers hardness testing|Indentation|Grain boundaries|Chromium|Transmission electron microscopy|Auger electron spectroscopy'
+		 PubYear='2004' PubDateFreeForm='' PeriodicalFull='JOM'
+		 PeriodicalAbbrev='JOM' Volume='56' Issue='11' StartPage='263'
+		 OtherPages='' Edition='' Publisher='Minerals, Metals and Materials Society, Warrendale, PA 15086, United States'
+		 PlaceOfPublication='' ISSN_ISBN='1047-4838' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin, Engrg. Physics, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='HCM12A is an advanced 12 Cr ferritic-martensitic steel designed for higher temperature operation and is under consideration for application in core components in Generation IV nuclear energy systems. This work provides information on the hardening and microstructural changes in HCM12A after irradiation using 2.0 MeV protons at 400&#x26;deg;C to 10 dpa, at 500&#x26;deg;C to 3 dpa, and 5 MeV Ni-ions at 500&#x26;deg;C to 50 dpa. Following irradiation, changes in hardness were measured using Vickers hardness indentation, changes in microstructure and phase stability were studied using transmission microscopy, and changes in microchemistry were measured using scanning Auger microscopy. The hardness at 400&#x26;deg;C increases by roughly 70% and saturates by roughly 5 dpa. The changes to the microstructure contributing to this hardness increase are mainly the formation of precipitate phases. Chromium is enriched at grain boundaries prior the irradiation, likely due to grain boundary carbides and increases further during irradiation.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05179064368'
+		 User2='Ferritic steel; Martensitic steel; Vickers hardness indentation'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='43' Created='2006-08-09T10:38:22'
+		 LastModified='2006-08-30T08:37:49' Marked='0         '
+		 UserRefID='3019' RefType='1' AuthorPrimary='Tan,Lizhen|Allen,Todd R.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='An EBSD study of oxidation behavior of iron-base alloy in supercritical water reactor'
+		 TitleSecondary='' TitleTertiary='' Keyword='Iron alloys|Oxidation resistance|Electron diffraction|Water cooled reactors|Metallographic microstructure|Grain size and shape|Textures|Grain boundaries'
+		 PubYear='2004' PubDateFreeForm='' PeriodicalFull='JOM'
+		 PeriodicalAbbrev='JOM' Volume='56' Issue='11' StartPage='66'
+		 OtherPages='' Edition='' Publisher='Minerals, Metals and Materials Society, Warrendale, PA 15086, United States'
+		 PlaceOfPublication='' ISSN_ISBN='1047-4838' Availability=''
+		 Author_Address_Affiliation='University of Wisconsin, Dept. of Engrg. Physics, Madison, WI 53706, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='The supercritical-water-cooled reactor (SCWR) system is recommended in the DOE Generation IV reactor program due to its high thermal efficiency and plant simplification. At supercritical water conditions of 500&#x26;deg;C and 25 MPa, one of the properties of most concern for materials selection is oxidation behavior. This behavior is generally evaluated by means of weight or thickness change. In this work, a new analytical method, electron backscatter diffraction, was employed to study the oxidation behavior of alloys exposed to SCW. Microstructural evolution including phase, grain size and shape, and texture, from bulk to the interface between oxides and SCW is revealed by this technique. This methodology is important to understand oxidation mechanisms and sheds light on the study of the effect of Grain Boundary Engineering on oxidation resistance.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05179063128'
+		 User2='Supercritical water cooled reactor; Electron backsccatter diffraction; Thermal efficiency'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+
+	<z:row UserID='11264' InternalRefID='44' Created='2006-08-09T10:38:23'
+		 LastModified='2006-08-30T08:37:32' Marked='0         '
+		 UserRefID='3020' RefType='5' AuthorPrimary='Sridharan,K.|Zillmer,A.|Licht,J.R.|Allen,T.R.|Anderson,M.H.|Tan,L.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='Corrosion behavior of candidate alloys for supercritical water reactors'
+		 TitleSecondary='Proceedings of the 2004 International Congress on Advances in Nuclear Power Plants, ICAPP&#x27;04, Jun 13-17 2004'
+		 TitleTertiary='Proceedings of the 2004 International Congress on Advances in Nuclear Power Plants, ICAPP&#x27;04'
+		 Keyword='Nickel alloys|Austenite|Stainless steel|Martensite|Ferrite|Stress corrosion cracking|Water cooled reactors|Water cooling systems|Supercritical fluids|Metal cladding|Reactor cores|Nuclear power plants|Fossil fuel power plants|Carbon dioxide|Nitrogen oxides|Heat transfer'
+		 PubYear='2004' PubDateFreeForm='' PeriodicalFull='' PeriodicalAbbrev=''
+		 Volume='' Issue='' StartPage='527' OtherPages='536' Edition=''
+		 Publisher='American Nuclear Society, La Grange Park, IL 60526, United States'
+		 PlaceOfPublication='Pittsburgh, PA, United States' ISSN_ISBN='0894486802'
+		 Availability='' Author_Address_Affiliation='Department of Engineering Physics, University of Wisconsin, Madison, WI, United States'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='The corrosion and stress corrosion cracking behavior of metallic cladding and other core internal structures is critical to the success of the Generation IV Supercritical Water-cooled Reactors (SCWR). The eventual materials selected will be chosen based on the combined corrosion, stress-corrosion, mechanical performance, and radiation stability properties. Among the materials being considered are austenitic stainless steels, ferritic/martensitic steels, and nickel-base alloys. This paper reports initial studies on the corrosion performance of the candidate alloys 316 austenitic stainless steel, Inconel 718, and Zircaloy-2, all exposed to supercritical water at 300-500&#x26;deg;C in a corrosion loop at the University of Wisconsin. Long-term corrosion performance of AISI 347, also a candidate austenitic steel, has also been examined by sectioning samples from a component that was exposed for a period of about 30 years in supercritical water at the Genoa 3 Supercritical Water fossil power plant located in Genoa, Wisconsin.'
+		 Notes='Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved'
+		 Folder='Allen T* - ev|Allen T* - comb' User1='05129002022'
+		 User2='Metallic cladding; Supercritical water reactors; Corrosion behaviors; Supercritical water'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='45' Created='2006-08-09T10:38:23'
+		 LastModified='2006-08-30T08:37:29' Marked='0         '
+		 UserRefID='3029' RefType='1' AuthorPrimary='Allen,T.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='The practical side of e-mail in agile manufacturing plants'
+		 TitleSecondary='' TitleTertiary='I&#x26;CS (USA)' Keyword='computer integrated manufacturing|electronic mail|groupware|process control'
+		 PubYear='1997' PubDateFreeForm='05/' PeriodicalFull='I&#x26;CS'
+		 PeriodicalAbbrev='' Volume='70' Issue='5' StartPage='53'
+		 OtherPages='7' Edition='' Publisher='Chilton' PlaceOfPublication=''
+		 ISSN_ISBN='1074-2328' Availability='' Author_Address_Affiliation='Effective Manage. Syst. Inc., Milwaukee, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='For many of today&#x27;s more information driven manufacturers, electronic mail (e-mail) is proving to be a highly efficient mode of communications among customers, vendors, and employees. However, the utility of e-mail reaches far beyond front office correspondence to include operational and maintenance data crucial to the agile manufacturer. By now, most shop floor personnel and management are familiar with (if not well versed in) online communications. After all, even if one&#x27;s work is not rich in information technology chances are good that an individual has worked with e-mail at home, in school, or in another workplace. This article looks at how e-mail and its groupware sibling can help keep everyone in an enterprise up to date on the manufacturing process. The role of two forms of groupware-Outlook from Microsoft and Notes from Lotus-is demonstrated'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='5641248'
+		 User2='e-mail; agile manufacturing plants; information driven manufacturers; electronic mail; customers; vendors; employees; maintenance data; operational data; shop floor personnel; management; groupware; Outlook; Microsoft; Notes; Lotus'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+	<z:row UserID='11264' InternalRefID='46' Created='2006-08-09T10:38:23'
+		 LastModified='2006-08-30T08:37:29' Marked='0         '
+		 UserRefID='3030' RefType='1' AuthorPrimary='Allen,T.'
+		 AuthorSecondary='' AuthorTertiary='' TitlePrimary='MES: a powerful information solution for discrete manufacturers'
+		 TitleSecondary='' TitleTertiary='I&#x26;CS (USA)' Keyword='manufacturing resources planning|production control|statistical process control|stock control'
+		 PubYear='1996' PubDateFreeForm='06/' PeriodicalFull='I&#x26;CS'
+		 PeriodicalAbbrev='' Volume='69' Issue='6' StartPage='55'
+		 OtherPages='9' Edition='' Publisher='Chilton' PlaceOfPublication=''
+		 ISSN_ISBN='1074-2328' Availability='' Author_Address_Affiliation='Effective Manage. Syst. Inc., Milwaukee, WI, USA'
+		 AccessionNumber='' Language='' Classification='' SubFile_Database=''
+		 OriginalForeignTitle='' Links='' DOI='' Abstract='Manufacturing execution systems (MES) offer discrete manufacturers powerful information solutions. Totally divorced from the traditional or layered approach to manufacturing-where planning, execution, and control functions are regarded as separate entities-the MES model provides a real-time window into operations. This window can bring about a long list of operational and business benefits-benefits such as dynamic scheduling, factory floor empowerment, and access to the previously untapped wealth of information contained in the controls level. The goal of this new manufacturing model is one continuous flow of goods and materials in which the product is designed, produced, and shipped without spending any time sitting around collecting overhead. To achieve this, all levels of the enterprise, from shop floor right up to the front office, must be fully integrated and online. This article looks at MES from the discrete manufacturing point of view. It discusses the benefits as well as the challenges of putting this technology tool to work optimizing manufacturing resources'
+		 Notes='' Folder='Allen T* - ev|Allen T* - comb' User1='5350275'
+		 User2='manufacturing execution systems; information solution; discrete manufacturers; business benefits; operational benefits; dynamic scheduling; factory floor empowerment; manufacturing resources optimisation'
+		 User3='' User4='' User5='' CallNumber='' DatabaseName=''
+		 DataSource='' IdentifyingPhrase='' RetrievedDate='' ShortenedTitle=''
+		 TextAttributes='' AuthorQuaternary='' AuthorQuinary=''
+		 URL='' SponsoringLibrary='' SponsoringLibraryLocation=''
+		 CitedRefs='' WebsiteTitle='' WebsiteEditor='' WebsiteVersion=''
+		 PubDateElectronic='' SourceType='0' OverFlow='' Objects=''
+		 Comments=''/>
+</rs:data>
+</xml>

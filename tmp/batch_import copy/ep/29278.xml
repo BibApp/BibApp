@@ -1,0 +1,1055 @@
+<xml xmlns:s="uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882"
+  xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:rs="urn:schemas-microsoft-com:rowset"
+  xmlns:z="#RowsetSchema">
+  <s:Schema id="RowsetSchema">
+    <s:ElementType name="row" content="eltOnly" rs:CommandTimeout="30" rs:updatable="true">
+      <s:AttributeType name="UserID" rs:number="1" rs:writeunknown="true" rs:basecatalog="refworks"
+        rs:basetable="refs" rs:basecolumn="UserID" rs:keycolumn="true">
+        <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"
+          rs:maybenull="false"/>
+      </s:AttributeType>
+      <s:AttributeType name="InternalRefID" rs:number="2" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="InternalRefID"
+        rs:keycolumn="true">
+        <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="Created" rs:number="3" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Created">
+
+        <s:datatype dt:type="dateTime" rs:dbtype="timestamp" dt:maxLength="16" rs:scale="3"
+          rs:precision="23" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="LastModified" rs:number="4" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="LastModified">
+        <s:datatype dt:type="dateTime" rs:dbtype="timestamp" dt:maxLength="16" rs:scale="3"
+          rs:precision="23" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="Marked" rs:number="5" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Marked">
+        <s:datatype dt:type="string" dt:maxLength="10" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="UserRefID" rs:number="6" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="UserRefID" rs:keycolumn="true">
+
+        <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="RefType" rs:number="7" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="RefType">
+        <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="AuthorPrimary" rs:number="8" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="AuthorPrimary">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="AuthorSecondary" rs:number="9" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="AuthorSecondary">
+
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="AuthorTertiary" rs:number="10" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="AuthorTertiary">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="TitlePrimary" rs:number="11" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="TitlePrimary">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="TitleSecondary" rs:number="12" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="TitleSecondary">
+
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="TitleTertiary" rs:number="13" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="TitleTertiary">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="Keyword" rs:number="14" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Keyword">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="PubYear" rs:number="15" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="PubYear">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="PubDateFreeForm" rs:number="16" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="PubDateFreeForm">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="PeriodicalFull" rs:number="17" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="PeriodicalFull">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="PeriodicalAbbrev" rs:number="18" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="PeriodicalAbbrev">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Volume" rs:number="19" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Volume">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Issue" rs:number="20" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Issue">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="StartPage" rs:number="21" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="StartPage">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="OtherPages" rs:number="22" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="OtherPages">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Edition" rs:number="23" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Edition">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Publisher" rs:number="24" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Publisher">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="PlaceOfPublication" rs:number="25" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="PlaceOfPublication">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="ISSN_ISBN" rs:number="26" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="ISSN_ISBN">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Availability" rs:number="27" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Availability">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Author_Address_Affiliation" rs:number="28" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="Author_Address_Affiliation">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="AccessionNumber" rs:number="29" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="AccessionNumber">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Language" rs:number="30" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Language">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Classification" rs:number="31" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="Classification">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="SubFile_Database" rs:number="32" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="SubFile_Database">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="OriginalForeignTitle" rs:number="33" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="OriginalForeignTitle">
+
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="Links" rs:number="34" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Links">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="DOI" rs:number="35" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="DOI">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="Abstract" rs:number="36" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="Abstract">
+
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="Notes" rs:number="37" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Notes">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="Folder" rs:number="38" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Folder">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="User1" rs:number="39" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="User1">
+
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="User2" rs:number="40" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="User2">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="User3" rs:number="41" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="User3">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="User4" rs:number="42" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="User4">
+
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="User5" rs:number="43" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="User5">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="CallNumber" rs:number="44" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="CallNumber">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="DatabaseName" rs:number="45" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="DatabaseName">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="DataSource" rs:number="46" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="DataSource">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="IdentifyingPhrase" rs:number="47" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="IdentifyingPhrase">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="RetrievedDate" rs:number="48" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="RetrievedDate">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="ShortenedTitle" rs:number="49" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="ShortenedTitle">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="TextAttributes" rs:number="50" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="TextAttributes">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="AuthorQuaternary" rs:number="51" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="AuthorQuaternary">
+
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="AuthorQuinary" rs:number="52" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="AuthorQuinary">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="LinkVendorData" rs:number="53" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="LinkVendorData">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="URL" rs:number="54" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="URL">
+
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="SponsoringLibrary" rs:number="55" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="SponsoringLibrary">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="SponsoringLibraryLocation" rs:number="56" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="SponsoringLibraryLocation">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="CitedRefs" rs:number="57" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="CitedRefs">
+
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="WebsiteTitle" rs:number="58" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="WebsiteTitle">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="WebsiteEditor" rs:number="59" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="WebsiteEditor">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="WebsiteVersion" rs:number="60" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="WebsiteVersion">
+
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="PubDateElectronic" rs:number="61" rs:nullable="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="PubDateElectronic">
+        <s:datatype dt:type="string" dt:maxLength="256"/>
+      </s:AttributeType>
+      <s:AttributeType name="SourceType" rs:number="62" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="SourceType" rs:keycolumn="true">
+        <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="OverFlow" rs:number="63" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="Overflow">
+
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:AttributeType name="Objects" rs:number="64" rs:nullable="true" rs:writeunknown="true"
+        rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Objects">
+        <s:datatype dt:type="string" dt:maxLength="2000"/>
+      </s:AttributeType>
+      <s:AttributeType name="Comments" rs:number="65" rs:nullable="true" rs:maydefer="true"
+        rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+        rs:basecolumn="Comments">
+        <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+      </s:AttributeType>
+      <s:extends type="rs:rowbase"/>
+
+    </s:ElementType>
+  </s:Schema>
+  <rs:data>
+    <z:row UserID="11264" InternalRefID="1" Created="2006-07-21T10:16:04"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2064" RefType="1"
+      AuthorPrimary="Kammer,D.C.|Alvin,K.F.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Combining metamodels with rational function representations of discretization error for uncertainty quantification"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="finite element|high-consequence systems|extrapolation to h=0|decoupled Monte Carlo|Engineering, Multidisciplinary|Mathematics, Interdisciplinary Applications|Mechanics"
+      PubYear="2002" PubDateFreeForm=""
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="191" Issue="13-14" StartPage="1367"
+      OtherPages="1379" Edition="" Publisher="ELSEVIER SCIENCE SA"
+      PlaceOfPublication="LAUSANNE; PO BOX 564, 1001 LAUSANNE, SWITZERLAND" ISSN_ISBN="0045-7825"
+      Availability=""
+      Author_Address_Affiliation="Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA. Sandia Natl Labs, Albuquerque, NM 87185 USA.; Kammer, DC, Univ Wisconsin, Dept Engn Phys, 539 Eng Res Bldg,1500 Engn Dr, Madison, WI 53706 USA."
+      AccessionNumber="000173771800005" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Techniques for producing metamodels for the efficient Monte Carlo simulation of high consequence systems are presented. The bias of f.e.m mesh discretization errors is eliminated or minimized by extrapolation, using rational functions, rather than the power series representation of Richardson extrapolation. Examples, including estimation of the vibrational frequency of a one-dimensional bar, show that the rational function model gives more accurate estimates using fewer terms than Richardson extrapolation, an important consideration for computational reliability assessment of high-consequence systems, where small biases in solutions can significantly affect the accuracy of small-magnitude probability estimates. Rational function representation of discretization error enable the user to accurately extrapolate to the continuum from numerical experiments performed outside the asymptotic region of the usual power series, allowing use of coarser meshes in the numerical experiments, resulting in significant savings. (C) 2002 Elsevier Science B.V. All rights reserved."
+      Notes="PT: J; CR: ALVIN KF, 1997, UNCERTAINTY QUANTIFI ALVIN KF, 1998, AIAA J, V38, P910 CONTE SD, 1972, ELEMENTARY NUMERICAL COOK RD, 1989, CONCEPTS APPL FINITE FOX EP, 1993, 34 AIAA ASME ASCE AH, P714 FOX EP, 1994, 35 AIAA SDM C HILT H, P1075 FOX EP, 1996, AIAA SDM C SALT LAK, P1615 FOX J, 1997, APPL REGRESSION ANAL, P398 HAFTKA RT, 1998, APPL MECH REV, V51, P435 HEISER RF, 1989, IND ENG CHEM RES, V28, P484 KAUFMAN M, 1996, COMPUT MECH, V18, P112 KHURI AI, 1996, RESPONSE SURFACES DE MALKUS DS, 1987, J NON-NEWTON FLUID, V25, P93 NELDER JA, 1966, BIOMETRICS, V22, P128 PRESS WH, 1986, NUMERICAL RECIPES AR RATKOWSKY DA, 1983, NONLINEAR REGRESSION RICHARDSON LF, 1910, T ROY SOC LONDON A, V210 ROMERO DR, 1997, APPL DECOUPLED MONTE STOER J, 1980, INTRO NUMERICAL ANAL VENTER G, 1997, 38 AIAA ASME ASCE AH, P1225; NR: 20; TC: 1; J9: COMPUT METHOD APPL MECH ENG; PG: 13; GA: 520GC"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="2" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2065" RefType="1"
+      AuthorPrimary="Tsai,T.P.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Numerical breakdown at high Weissenberg number in non-Newtonian contraction flows"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="non-monotonic numerical simulation|quadrature|UCM|FINITE-ELEMENT|STRESSES|FLUIDS|Mechanics"
+      PubYear="2000" PubDateFreeForm="JAN" PeriodicalFull="Rheologica Acta"
+      PeriodicalAbbrev="Rheol.Acta" Volume="39" Issue="1" StartPage="62" OtherPages="70" Edition=""
+      Publisher="SPRINGER VERLAG"
+      PlaceOfPublication="NEW YORK; 175 FIFTH AVE, NEW YORK, NY 10010 USA" ISSN_ISBN="0035-4511"
+      Availability=""
+      Author_Address_Affiliation="Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA. Univ Wisconsin, Engn Mech &#x26; Astronaut Program, Madison, WI 53706 USA.; Malkus, DS, Univ Wisconsin, Dept Engn Phys, Madison, WI 53706 USA."
+      AccessionNumber="000084942900007" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Planar contraction flows of non-Newtonian fluids with integral constitutive models are studied to investigate the problem of numerical breakdown at high Weissenberg or Debrorah numbers. Spurious shear stress extrema are found on the wall downstream of the re-entrant corner for both sharp and rounded corners. Moreover, a non-monotonic relation between sheer stress and strain rate is found when the Deborah number limit is approached, which correlates with these shear extrema. This strongly suggests that non-monotonicity between shear stress and strain rate may be responsible for the Deborah number limit problem in contraction flow simulations. This non-monotonicity is caused by the inaccuracy of the quadrature. using constitutive equations that do not have shear stress maxims when exactly evaluated. This conclusion agrees with It cent analytical findings by others that inaccuracy of the integration along the streamlines - either by numerical integration or asymptotic approximation - makes the problem ill-conditioned, with spurious growth occurring on the wall downstream of the re-entrant corner."
+      Notes="PT: J; CR: BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 BERNSTEIN B, 1994, J RHEOL, V38, P53 BIRD RB, 1987, DYNAMICS POLYM LIQUI, V1 BROOKS A, 1982, COMP METH APPL MECH, V32, P199 FEIGL KA, 1991, THESIS IIT KEUNINGS R, 1986, J NON-NEWTON FLUID, V20, P209 KING RC, 1988, J NON-NEWTON FLUID, V29, P147 MALKUS DS, 1990, J COMPUT PHYS, V87, P464 MARCHAL JM, 1987, J NON-NEWTON FLUID, V26, P77 RENARDY M, 1993, J NON-NEWTON FLUID, V50, P127 RENARDY M, 1994, J NON-NEWTON FLUID, V52, P91 TSAI TP, 1994, THESIS U WISCONSIN U; NR: 12; TC: 2; J9: RHEOL ACTA; PG: 9; GA: 277PX"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="3" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2066" RefType="1"
+      AuthorPrimary="Chen,C.T.|Malkus,D.S.|Vanderby,R." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="A fiber matrix model for interstitial fluid flow and permeability in ligaments and tendons"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="finite element analysis|ligaments and tendons|interstitial fluid|tissue permeability|non-Newtonian fluid|DIMENSIONAL POROUS-MEDIA|PROTEOGLYCAN AGGREGATE|ARTICULAR-CARTILAGE|MICROSCOPIC FLOW|SURFACE|Biophysics|Engineering, Biomedical|Hematology"
+      PubYear="1998" PubDateFreeForm="MAR-APR" PeriodicalFull="Biorheology"
+      PeriodicalAbbrev="Biorheology" Volume="35" Issue="2" StartPage="103" OtherPages="118"
+      Edition="" Publisher="IOS PRESS"
+      PlaceOfPublication="AMSTERDAM; VAN DIEMENSTRAAT 94, 1013 CN AMSTERDAM, NETHERLANDS"
+      ISSN_ISBN="0006-355X" Availability=""
+      Author_Address_Affiliation="Univ Wisconsin, Ctr Clin Sci, Div Orthoped Surg, Madison, WI 53792 USA. Univ Wisconsin, Dept Mech Engn, Madison, WI 53792 USA. Dept Engn Phys, Madison, WI 53706 USA. Cornell Univ, James A Baker Inst Anim Hlth, Ithaca, NY 14853 USA.; Vanderby, R,(TRUNCATED)"
+      AccessionNumber="000077054100001" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Collagen fibrils in ligaments and tendons are highly organized into parallel arrays which influence interstitial fluid transport. Finite element (FE) models were developed analogous to the fibrillar arrays in ligaments and tendons to investigate interstitial fluid flow and tissue permeability as a function of interfibrillar spacing and fluid properties. Collagen fibrils were assumed to be a periodic square array of impermeable cylinders. A two-dimensional FE model was used to study transverse fluid flow and a three-dimensional model was used to study flow parallel to the collagen fibrils. Parametric FE analysis provided data to formulate empirical expressions for permeability (kappa) as a function of porosity (phi). Results show that longitudinal permeability (kappa = 1.1.10(-15)phi(2.5)[1 - phi](-0.333)) can be up to 50 times higher than transverse permeability (kappa = 1.2.10(-15)phi(0.5)[phi - phi(min)](2.5)) in a compact array. Maximum fluid shear stresses occur at the narrowest zones of adjacent fibrils (1.21 Pa or 12.1 dyn/cm(2) at 10 mu m/s of average transverse influx). If interstitial fluid is highly non-Newtonian, the permeability should be considered as flow (shear)-dependent, The computational results suggest that tissue permeability in ligaments and tendons is highly anisotropic, porosity-dependent, and can be estimated by analytic expressions."
+      Notes="PT: J; CR: ABRAHAMSSON SO, 1991, SCAND J PLAST RECO S, V23, P1 AMIEL D, 1984, J ORTHOPAED RES, V1, P257 BIRD RB, 1987, DYNAMIC POLYM LIQUID, V1, P228 BRODSKY B, 1982, METHOD ENZYMOL A, V82, P127 CHEN CT, 1995, BIOMED ENG-APP BAS C, V7, P149 CHEN CT, 1996, THESIS U WISCONSIN M CHRISTEL PS, 1993, ANTERIOR CRUCIATE LI, P195 DEWAELE A, 1923, OIL COLOR CHEM ASS J, V6, P33 DULLIEN FAL, 1991, POROUS MEDIA FLUID T FRANK C, 1987, INJURY REPAIR MUSCUL, P45 GANOULIS J, 1988, J HYDRAUL ENG-ASCE, V115, P1223 HAPPEL J, 1959, AICHE J, V5, P174 HUNG CT, 1996, J BIOMECH, V29, P1411 JOZSA L, 1991, ACTA ANAT, V142, P306 KAMIYA A, 1988, BIORHEOLOGY, V25, P271 KASTELIC J, 1978, CONNECTIVE TISSUE RE, V6, P11 LAI WM, 1980, BIORHEOLOGY, V17, P111 LARSON RE, 1986, J FLUID MECH, V166, P449 LARSON RE, 1987, J FLUID MECH, V178, P119 MACGINITIE LA, 1994, J ORTHOPAED RES, V12, P151 MANSKE PR, 1985, HAND CLIN, V1, P13 MAROUDAS A, 1975, BIORHEOLOGY, V12, P233 MOW VC, 1989, BIOCHIM BIOPHYS ACTA, V992, P201 PACKER DL, 1994, J HAND SURG-AM, V19, P769 REICH KM, 1991, AM J PHYSIOL, V261, C428 RODEN L, 1980, BIOCH GLYCOPROTEINS, P267 SOBY L, 1990, BIOPOLYMERS, V29, P1587 TSAY RY, 1991, J FLUID MECH, V226, P125 WOO SLY, 1991, BASIC ORTHOPAEDIC BI, P199 ZHU WB, 1991, J BIOMECH, V11, P1007; NR: 30; TC: 12; J9: BIORHEOLOGY; PG: 16; GA: 139WK"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="4" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2067" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|PRITCHARD,W.G.|YAO,M." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="The Hole-Pressure Effect and Viscometry" TitleSecondary="" TitleTertiary=""
+      Keyword="VISCOMETRY|HOLE PRESSURES|RHEOLOGY|NEWTONIAN FLUID|NON-NEWTONIAN FLUID|VISCOELASTICITY|NORMAL STRESS DIFFERENCES|FINITE-ELEMENT|SHEAR-FLOW|FLUIDS|HIGASHITANI|ERRORS|MODEL|SLOT|1ST|Mechanics"
+      PubYear="1992" PubDateFreeForm="NOV-DEC" PeriodicalFull="Rheologica Acta"
+      PeriodicalAbbrev="Rheol.Acta" Volume="31" Issue="6" StartPage="521" OtherPages="534"
+      Edition="" Publisher="DR DIETRICH STEINKOPFF VERLAG"
+      PlaceOfPublication="BERLIN 33; C/O SPRINGER-VERLAG, HEIDELBERGER PLATZ 3, 1000 BERLIN 33, GERMANY"
+      ISSN_ISBN="0035-4511" Availability=""
+      Author_Address_Affiliation="OHIO AEROSP INST,22800 CEDAR POINT RD,BROOK PK,OH 44142. UNIV WISCONSIN,CTR MATH SCI,RHEOL RES CTR,MADISON,WI 53706. UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706. PENN STATE UNIV,DEPT MATH,UNIV PK,PA 16802."
+      AccessionNumber="A1992KG36800002" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="This paper provides an assessment of our current understanding of the hole-pressure effect and the role it plays in the field of viscometry. The discovery in 1968 by Broadbent, Kaye, Lodge and Vale that the use of pressure taps to measure the normal stress exerted on a boundary by a non-Newtonian material can lead to significant errors has opened up interesting new avenues for making viscometric measurements. The kinematical theory developed by Higashitani and Pritchard (1972) to estimate the hole pressure, to which a deeper understanding has recently been supplied by Yao and Malkus (1990), has formed the basis of many new developments in viscometry. It is interesting that such a simplistic theory for the hole pressure apparently has a rather wide range of applicability."
+      Notes="PT: J; CR: ADAMS N, 1964, PHILOS T ROY SOC A, V256, P149 ALVAREZ GA, 1985, RHEOL ACTA, V24, P368 BAIRD DG, 1975, T SOC RHEOL, V19, P147 BAIRD DG, 1976, J APPL POLYM SCI, V19, P3155 BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 BIRD RB, 1987, DYNAMICS POLYM LIQUI BROADBENT JM, 1968, NATURE, V217, P55 COCHRANE T, 1981, PHILOS T ROY SOC A, V301, P163 CRIMINALE WO, 1958, ARCH RATIONAL MECH A, V1, P410 CROCHET MJ, 1986, J RHEOL, V30, S91 FEIGL K, 1991, THESIS ILLINOIS I TE GARNER FH, 1950, PHILOS T ROY SOC A, V243, P37 GIESEKUS H, 1963, RHEOL ACTA, V3, P59 GREENSMITH HW, 1953, PHILOS T R SOC A, V245, P399 HIGASHITANI K, 1972, T SOC RHEOL, V16, P687 JACKSON NR, 1982, J NONNEWTONIAN FLUID, V10, P55 JACKSON NR, 1982, J NONNEWTONIAN FLUID, V10, P71 JAMES DF, 1991, 63TH ANN M SOC RHEOL JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P255 KAYE A, 1968, RHEOL ACTA, V7, P368 KEENTOK M, 1980, J NONNEWTONIAN FLUID, V6, P303 LODGE AS, 1983, RHEOL ACTA, V22, P151 LODGE AS, 1985, CHEM ENG COMMUN, V32, P1 LODGE AS, 1987, RHEOL ACTA, V26, P516 LODGE AS, 1987, SAE872043 TECHN PAP LODGE AS, 1988, RHEOLOGICAL MEASUREM, P345 LODGE AS, 1989, J RHEOL, V33, P821 LODGE AS, 1991, IMA J APPL MATH, V46, P39 MALKUS DS, 1985, VISCOELASTICITY RHEO, P391 MALKUS DS, 1987, J NON-NEWTON FLUID, V25, P93 MEISSNER J, 1989, J RHEOL, V33, P843 MEISSNER J, 1991, SHEAR RHEOLOGY POLYM PIKE RD, 1984, J NON-NEWTON FLUID, V16, P211 POPPER B, 1956, BRIT J APPL PHYS, V7, P452 PRITCHARD WG, 1970, RHEOL ACTA, V9, P200 PRITCHARD WG, 1971, PHILOS T ROY SOC A, V270, P507 RAMACHANDRAN S, 1985, MACROMOLECULES, V18, P695 RENARDY M, 1987, MATH PROBLEMS VISCOE RICHARDS GD, 1981, RHEOL ACTA, V20, P261 RUSSELL RJ, 1945, THESIS IMPERIAL COLL SUGENG F, 1988, J RHEOL, V32, P215 TANNER RI, 1966, PHYS FLUIDS, V9, P1246 TANNER RI, 1969, T SOC RHEOL, V13, P471 TANNER RI, 1985, ENG RHEOLOGY TONG PP, 1980, THESIS U WISCONSIN M WEBSTER MF, 1984, RHEOL ACTA, V23, P582 YAO M, 1989, THESIS U WISCONSIN M YAO M, 1990, RHEOL ACTA, V29, P310 YAO M, 1991, J NON-NEWTON FLUID, V40, P25; NR: 49; TC: 5; J9: RHEOL ACTA; PG: 14; GA: KG368"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="5" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2068" RefType="1"
+      AuthorPrimary="CORNWELL,R.E.|MALKUS,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Improved Numerical Dissipation for Time Integration Algorithms in Conduction Heat-Transfer"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Engineering, Multidisciplinary|Mathematics, Interdisciplinary Applications|Mechanics"
+      PubYear="1992" PubDateFreeForm="JUN"
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="97" Issue="2" StartPage="149"
+      OtherPages="156" Edition="" Publisher="ELSEVIER SCIENCE SA LAUSANNE"
+      PlaceOfPublication="LAUSANNE 1; PO BOX 564, 1001 LAUSANNE 1, SWITZERLAND"
+      ISSN_ISBN="0045-7825" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN, DEPT ENGN MECH, MADISON, WI 53706 USA.; CORNWELL, RE, BOEING COMMERCIAL AIRPLANE GRP, POB 3707, MS 6M-42, SEATTLE, WA 98124 USA."
+      AccessionNumber="A1992HZ61100001" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="The Hilber-Hughes-Taylor (HHT) alpha-method is applied to the direct integration of the equations of conduction heat transfer. The method is shown to possess improved algorithmic dissipation, relative to the general trapezoidal methods, while retaining second order accuracy. The alpha-method is compared with members of the generalized trapezoidal family of methods."
+      Notes="PT: J; CR: HILBER HM, 1977, EARTHQ ENG STRUCT D, V5, P283 HUGHES TJR, 1987, FINITE ELEMENT METHO LAMBERT JD, 1973, COMPUTATIONAL METHOD MIRANDA I, 1989, EARTHQ ENG STRUCT D, V18, P643 MYERS GE, 1987, ANAL METHODS CONDUCT; NR: 5; TC: 6; J9: COMPUT METHOD APPL MECH ENG; PG: 8; GA: HZ611"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="6" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2069" RefType="1"
+      AuthorPrimary="KOLKKA,R.W.|MALKUS,D.S.|ROSE,T.R." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Finite Rise Time Step Strain Modeling of nearly Monodisperse Polymer Melts and Solutions"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="STEP SHEAR|MONODISPERSE POLYMERS|STRESS RELAXATION|DOI-EDWARDS THEORY|STRESS-RELAXATION|CONSTITUTIVE-EQUATIONS|POLYSTYRENE SOLUTIONS|SHEAR|FLUID|DYNAMICS|Mechanics"
+      PubYear="1991" PubDateFreeForm="SEP-OCT" PeriodicalFull="Rheologica Acta"
+      PeriodicalAbbrev="Rheol.Acta" Volume="30" Issue="5" StartPage="430" OtherPages="446"
+      Edition="" Publisher="DR DIETRICH STEINKOPFF VERLAG"
+      PlaceOfPublication="BERLIN 33; C/O SPRINGER-VERLAG, HEIDELBERGER PLATZ 3, 1000 BERLIN 33, GERMANY"
+      ISSN_ISBN="0035-4511" Availability=""
+      Author_Address_Affiliation="MICHIGAN TECHNOL UNIV,DEPT CHEM ENGN,HOUGHTON,MI 49931. MICHIGAN TECHNOL UNIV,DEPT MATH SCI,HOUGHTON,MI 49931. UNIV WISCONSIN,CTR MATH SCI,RHEOL RE CTR,MADISON,WI 53706. UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706.; KOLKKA, RW, MICHIGAN TECHN(TRUNCATED)"
+      AccessionNumber="A1991GR33000004" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="The step shear strain experiment is one of the fundamental transient tests used to characterize the rheology of viscoelastic polymer melts and solutions. Many melts and solutions exhibit homogeneous deformation and stress relaxation; in these cases the transient dynamics can be modeled by completely ignoring momentum effects and imposing singular kinematics. Recently, however, it has been observed that there are certain classes of nearly monodisperse melts and solutions that exhibit anomalous nonhomogeneous deformation and stress relaxation (Morrison and Larson (1990), Larson, Khan, and Raju (1988), Vrentas and Graessley (1982), and Osaki and Kurata (1980)). We demonstrate that, for these classes, a finite rise time must be incorporated, some source of inhomogeneity must be present, and a small amount of added Newtonian viscosity is necessary. We examine five nonlinear and quasilinear models; the Johnson-Segalman, Phan Thien-Tanner, Giesekus, White-Metzner, and Larson models. We determine which mathematical features of the models are necessary and/or sufficient to describe the observed experimental behavior."
+      Notes="PT: J; CR: COOK RD, 1989, CONCEPTS APPLICATION FUKUDA M, 1975, J POLYM SCI PP, V13, P1563 IDE Y, 1977, J NONNEWTONIAN FLUID, V2, P281 JOSEPH DD, 1990, FLUID DYNAMICS VISCO KHAN SA, 1987, J RHEOL, V31, P207 KOLKKA RW, 1988, J NON-NEWTON FLUID, V29, P303 KOLKKA RW, 1989, J NON-NEWTON FLUID, V33, P305 KOLKKA RW, 1990, 9010U WISC MAD CTR M LARSON RG, 1988, CONSTITUTIVE EQUATIO LARSON RG, 1988, J RHEOL, V32, P145 LODGE AS, 1972, RHEOL ACTA, V11, P351 LODGE AS, 1984, J NON-NEWTON FLUID, V14, P67 MALKUS DS, 1990, J COMPUT PHYS, V87, P464 MALKUS DS, 1991, FINITE ELEMENTS FLUI MALKUS DS, 1991, SIAM J APPL MATH MARRUCCI G, 1983, J RHEOL, V27, P433 MORRISON FA, 1990, IN PRESS ANN AICHE M NARAIN A, 1982, RHEOL ACTA, V21, P228 OSAKI K, 1980, MACROMOLECULES, V13, P671 VENERUS DC, 1990, J RHEOL, V34, P657 VINOGRADOV GV, 1972, J POLYM SCI A2, V10, P1061 VRENTAS CM, 1982, J RHEOL, V26, P359 WAGNER MH, 1978, J NONNEWTONIAN FLUID, V4, P39; NR: 23; TC: 6; J9: RHEOL ACTA; PG: 17; GA: GR330"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="7" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:55" Marked="0         " UserRefID="2070" RefType="1"
+      AuthorPrimary="YAO,M.|MALKUS,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Numerical-Simulation of Hole Pressure for a Johnson-Segalman Fluid"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="HPBL EQUATIONS|FINITE ELEMENT METHOD|HOLE PRESSURE|JOHNSON-SEGALMAN FLUID|NON-NEWTONIAN FLOWS|POSTERIOR ERROR ANALYSIS|FINITE-ELEMENT|FLOW BIREFRINGENCE|TRANSVERSE SLOT|HIGASHITANI|ERRORS|Mechanics"
+      PubYear="1991" PubDateFreeForm="JUL" PeriodicalFull="Journal of Non-Newtonian Fluid Mechanics"
+      PeriodicalAbbrev="J.Non Newtonian Fluid Mech." Volume="40" Issue="1" StartPage="25"
+      OtherPages="46" Edition="" Publisher="ELSEVIER SCIENCE BV"
+      PlaceOfPublication="AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS"
+      ISSN_ISBN="0377-0257" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,CTR MAT SCI,MADISON,WI 53705. UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53705."
+      AccessionNumber="A1991GA26000002" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="The elastic hole pressure for plane, steady, creeping shear flow over a transverse slot of a Johnson-Segalman fluid is studied numerically. To correctly apply the theory of Higashitani, Pritchard, Baird and Lodge (HPBL), we start with a modified hole-pressure relation (MHPR) and simulate the hole-pressure measurement using the finite element method and the multiple-mesh extrapolation technique. The path integrals in MHPR and HP are evaluated to check the error cancellation phenomenon and a full instrument simulation is conducted to predict N1. The agreement between numerical simulation and analytical prediction is satisfactory, within the range of De less-than-or-equal-to 1. This study suggests that N1 can be predicted via the hole-pressure measurement to a sufficient approximation for the Johnson-Segalman model."
+      Notes="PT: J; CR: BAIRD DG, 1984, 9 P INT C RHEOL MEX, P641 BAIRD DG, 1988, J RHEOL, V32, P621 BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 BIRD RB, 1987, DYNAMICS POLYM LIQUI, V1 HIGASHITANI K, 1972, T SOC RHEOL, V16, P687 JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P255 LODGE AS, 1983, RHEOL ACTA, V22, P151 LODGE AS, 1988, RHEOLOGICLA MEASUREM, CH11 LODGE AS, 1989, J RHEOL, V33, P821 MALKUS DS, IN PRESS J COMPUT PH MALKUS DS, 1984, J NON-NEWTON FLUID, V16, P77 MALKUS DS, 1985, VISCOELASTICITY RHEO, P391 MALKUS DS, 1986, 2943 U WISC MATH RES MALKUS DS, 1987, J NON-NEWTON FLUID, V25, P93 MALKUS DS, 1988, 8914 U WIS MAD CTR M MALKUS DS, 1990, IMA VOLUMES MATH ITS, V27, P146 MALVERN LE, 1969, INTRO MECHANICS CONT PIKE RD, 1984, J NON-NEWTON FLUID, V16, P211 PIKE RD, 1984, THESIS VIRGINIA POLY PIPKIN AC, 1972, MECHANICS TODAY, V1, P262 SUGENG F, 1988, J RHEOL, V32, P215 WALTERS K, 1975, RHEOMETRY, P105 WEBSTER MF, 1984, RHEOL ACTA, V23, P582 YAO M, UNPUB HP HPBL EQUATI YAO M, 1989, THESIS U WISCONSIN M YAO M, 1990, 9024 U WISC MAD CTR YAO M, 1990, INT J NUMER METH FL, V10, P713 YAO M, 1990, RHEOL ACTA, V29, P310; NR: 28; TC: 3; J9: J NON-NEWTONIAN FLUID MECH; PG: 22; GA: GA260"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+
+    <z:row UserID="11264" InternalRefID="8" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2071" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|NOHEL,J.A.|PLOHR,B.J." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Analysis of New Phenomena in Shear-Flow of Non-Newtonian Fluids"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="QUADRATIC ORDINARY DIFFERENTIAL EQUATION|PHASE PLANE|GLOBAL DYNAMICS|ASYMPTOTICS|NON-NEWTONIAN|SHEAR FLOW|SPURT|SHAPE MEMORY|HYSTERESIS|LATENCY|DYNAMICS|Mathematics, Applied"
+      PubYear="1991" PubDateFreeForm="AUG" PeriodicalFull="SIAM Journal on Applied Mathematics"
+      PeriodicalAbbrev="SIAM J Appl Math" Volume="51" Issue="4" StartPage="899" OtherPages="929"
+      Edition="" Publisher="SIAM PUBLICATIONS"
+      PlaceOfPublication="PHILADELPHIA; 3600 UNIV CITY SCIENCE CENTER PH#382-9800, PHILADELPHIA, PA 19104-2688"
+      ISSN_ISBN="0036-1399" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,DEPT RESP MED,MADISON,WI 53706. UNIV WISCONSIN,DEPT MATH,MADISON,WI 53706. SUNY STONY BROOK,DEPT APPL MATH,STONY BROOK,NY 11794.; MALKUS, DS, UNIV WISCONSIN,CTR MATH SCI,MADISON,WI 53706."
+      AccessionNumber="A1991FX96400002" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Phase-plane and small-parameter asymptotic techniques are used to analyze systems of ordinary differential equations that describe the transient behavior of non-Newtonian fluids in shear flow. These systems approximate the partial differential equations that derive from three-dimensional balance laws and from differential constitutive models for highly elastic liquids. Two models are considered: one with a single relaxation time and small Newtonian viscosity; the other with two relaxation times and no Newtonian viscosity. Both possess the key feature that the variation of steady shear stress with strain rate is not monotone. The analysis shows that both models exhibit several distinctive phenomena: spurt, shape memory, hysteresis, latency, and normal stress oscillations. The predictions for the spurt phenomenon agree quantitatively with experimental results for polymer melts; the other new phenomena, which were discovered recently in numerical simulation, should also be observable in rheological experiments."
+      Notes="PT: J; CR: ANDRONOV AA, 1949, THEORY OSCILLATORS BIRD RB, 1987, DYNAMICS POLYM LIQUI CODDINGTON EA, 1955, THEORY ORDINARY DIFF COPPEL WA, 1989, COMMUNICATION DENN MM, 1990, ANNU REV FLUID MECH, V22, P13 DOI M, 1978, J CHEM SOC FARAD T 2, V74, P1789 HUNTER JK, 1983, PHYS FLUIDS, V26, P2345 JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P255 KOLKKA R, 1989, IN PRESS J NONNEWTON KOLKKA RW, 1988, J NON-NEWTON FLUID, V29, P303 MALKUS DS, 1990, J COMPUT PHYS, V87, P464 MCLEISH TCB, 1986, J POLYM SCI POL PHYS, V24, P1735 NOHEL JA, 1990, P ROY SOC EDINB A, V115, P39 OLDROYD JG, 1958, P ROY SOC LOND A MAT, V245, P278 PEARSON J, 1985, MECHANICS POLYM PROC RENARDY M, 1987, PITMAN MONOGRAPHS SU, V35 VINOGRADOV GV, 1972, J POLYM SCI A2, V10, P1061 YAO M, 1990, 9024 U WISC MAD CTR; NR: 18; TC: 39; J9: SIAM J APPL MATH; PG: 31; GA: FX964"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="9" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:55" Marked="0         " UserRefID="2072" RefType="1"
+      AuthorPrimary="YAO,M.|MALKUS,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Cancellation of Errors in the Higashitani-Pritchard Treatment of Hole Pressures Generated by Viscoelastic Liquids in Creeping Flow Past a Transverse Slot"
+      TitleSecondary="" TitleTertiary="" Keyword="Mechanics" PubYear="1990"
+      PubDateFreeForm="JUL-AUG" PeriodicalFull="Rheologica Acta" PeriodicalAbbrev="Rheol.Acta"
+      Volume="29" Issue="4" StartPage="310" OtherPages="322" Edition=""
+      Publisher="DR DIETRICH STEINKOPFF VERLAG"
+      PlaceOfPublication="BERLIN 33; C/O SPRINGER-VERLAG, HEIDELBERGER PLATZ 3, 1000 BERLIN 33, GERMANY"
+      ISSN_ISBN="0035-4511" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53705.; YAO, M, UNIV WISCONSIN,CTR MATH SCI,610 WALNUT ST,MADISON,WI 53705."
+      AccessionNumber="A1990DZ60000004" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BAIRD DG, 1975, T SOC RHEOL, V19, P147 BAIRD DG, 1984, 9 P INT C RHEOL MEX, P641 BIRD RB, 1987, DYNAMICS POLYM LIQUI, V1 BROADBENT JM, 1968, NATURE, V217, P55 BROADBENT JM, 1971, RHEOLOGICA ACAT, V10, P557 HIGASHITANI K, 1972, T SOC RHEOL, V16, P687 JACKSON NR, 1982, J NONNEWTONIAN FLUID, V10, P55 JACKSON NR, 1982, J NONNEWTONIAN FLUID, V10, P71 LODGE AS, 1964, ELASTIC LIQUIDS LODGE AS, 1974, BODY TENSOR FIELDS C LODGE AS, 1983, J RHEOL, V27, P497 LODGE AS, 1983, RHEOL ACTA, V22, P151 LODGE AS, 1988, RHEOLOGICLA MEASUREM, CH11 LODGE AS, 1989, J RHEOL, V33, P821 MALKUS DS, 1986, 2943 U WISC MATH RES MALKUS DS, 1987, J NON-NEWTON FLUID, V25, P93 MALVERN LE, 1969, INTRO MECHANICS CONT PIKE RD, 1984, J NON-NEWTON FLUID, V16, P211 PIPKIN AC, 1972, MECHANICS TODAY, V1, P262 PRITCHARD WG, 1971, PHILOS T ROY SOC A, V270, P507 RICHARDS GD, 1981, RHEOL ACTA, V20, P261 SRINIVASAN R, 1987, RHEOL ACTA, V26, P107 SUGENG F, 1988, J RHEOL, V32, P215 TANNER RI, 1969, T SOC RHEOL, V13, P471 TANNER RI, 1985, ENG RHEOLOGY TANNER RI, 1988, J NONNEWTONIAN FLUID, V28, P309 WEBSTER MF, 1984, RHEOL ACTA, V23, P582 YAO M, 1989, THESIS U WISCONSIN M; NR: 28; TC: 4; J9: RHEOL ACTA; PG: 13; GA: DZ600"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="10" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:55" Marked="0         " UserRefID="2073" RefType="1"
+      AuthorPrimary="YAO,M.|MALKUS,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Boundary Node Correction and Superconvergence in the Fem" TitleSecondary=""
+      TitleTertiary=""
+      Keyword="Computer Science, Interdisciplinary Applications|Mathematics, Interdisciplinary Applications|Mechanics|Physics, Fluids &#x26; Plasmas"
+      PubYear="1990" PubDateFreeForm="APR 17"
+      PeriodicalFull="International Journal for Numerical Methods in Fluids"
+      PeriodicalAbbrev="Int.J.Numer.Methods Fluids" Volume="10" Issue="6" StartPage="713"
+      OtherPages="721" Edition="" Publisher="JOHN WILEY &#x26; SONS LTD"
+      PlaceOfPublication="W SUSSEX; BAFFINS LANE CHICHESTER, W SUSSEX, ENGLAND PO19 1UD"
+      ISSN_ISBN="0271-2091" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,CTR MATH SCI,,MADISON,WI 53706.; YAO, M, UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706."
+      AccessionNumber="A1990DA49200007" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 CONTE SD, 1972, ELEMENTARY NUMERICAL HUGHES TJR, 1979, J COMPUT PHYS, V30, P1 HUGHES TJR, 1987, FINITE ELEMENT METHO LEONE JM, 1987, COMMUNICATION DEC MALKUS DS, 1987, J NON-NEWTON FLUID, V25, P93 SANI RL, 1981, INT J NUMER METH ENG, V1, P17 SANI RL, 1981, INT J NUMER METH FL, V1, P171 YAO M, 1989, THESIS U WISCONSIN M; NR: 9; TC: 1; J9: INT J NUMER METHOD FLUID; PG: 9; GA: DA492"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="11" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2074" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|NOHEL,J.A.|PLOHR,B.J." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Dynamics of Shear-Flow of a Non-Newtonian Fluid" TitleSecondary=""
+      TitleTertiary=""
+      Keyword="Computer Science, Interdisciplinary Applications|Physics, Mathematical"
+      PubYear="1990" PubDateFreeForm="APR" PeriodicalFull="Journal of Computational Physics"
+      PeriodicalAbbrev="J.Comput.Phys." Volume="87" Issue="2" StartPage="464" OtherPages="487"
+      Edition="" Publisher="ACADEMIC PRESS INC JNL-COMP SUBSCRIPTIONS"
+      PlaceOfPublication="SAN DIEGO; 525 B ST, STE 1900, SAN DIEGO, CA 92101-4495"
+      ISSN_ISBN="0021-9991" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53705. UNIV WISCONSIN,DEPT MATH,MADISON,WI 53705. UNIV WISCONSIN,DEPT COMP SCI,MADISON,WI 53705.; MALKUS, DS, UNIV WISCONSIN,CTR MATH SCI,MADISON,WI 53705."
+      AccessionNumber="A1990DA45700009" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BIRD RB, 1987, DYNAMICS POLYM LIQUI DOI M, 1978, J CHEM SOC FARAD T 2, V74, P1789 GUILLOPE C, 1989, IN PRESS MATH MODELL HUNTER JK, 1983, PHYS FLUIDS, V26, P2345 ISAACSON E, UNPUB CONSTRUCTION N JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P255 JOSEPH DD, 1985, ARCH RATION MECH AN, V87, P213 JOSEPH DD, 1986, J NON-NEWTON FLUID, V20, P117 KOLKKA RW, 1988, J NON-NEWTON FLUID, V29, P303 LIN YH, 1985, J RHEOL, V29, P609 MALKUS D, IN PRESS FINITE ELEM, V8 MALKUS D, UNPUB ANAL NEW PHENO MCLEISH TCB, 1986, J POLYM SCI POL PHYS, V24, P1735 MENIKOFF R, 1989, REV MOD PHYS, V61, P75 NOHEL J, IN PRESS P ROYAL S A PEARSON J, 1985, MECHANICS POLYM PROC PLOHR B, 1988, AIAA J, V26, P470 PLOHR B, 1989, 1988 WORKSH PART DIF RENARDY M, 1987, MATH PROBLEMS VISCOE VINOGRADOV GV, 1972, J POLYM SCI A2, V10, P1061; NR: 20; TC: 61; J9: J COMPUT PHYS; PG: 24; GA: DA457"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="12" Created="2006-07-21T10:16:05"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2075" RefType="1"
+      AuthorPrimary="KOLKKA,R.W.|MALKUS,D.S.|HANSEN,M.G.|IERLEY,G.R.|WORTHING,R.A."
+      AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Spurt Phenomena of the Johnson Segalman Fluid and Related Models"
+      TitleSecondary="" TitleTertiary="" Keyword="Mechanics" PubYear="1988" PubDateFreeForm="SEP"
+      PeriodicalFull="Journal of Non-Newtonian Fluid Mechanics"
+      PeriodicalAbbrev="J.Non Newtonian Fluid Mech." Volume="29" Issue="1-3" StartPage="303"
+      OtherPages="335" Edition="" Publisher="ELSEVIER SCIENCE BV"
+      PlaceOfPublication="AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS"
+      ISSN_ISBN="0377-0257" Availability=""
+      Author_Address_Affiliation="MICHIGAN TECHNOL UNIV,DEPT MATH,HOUGHTON,MI 49931. UNIV WISCONSIN,CTR MATH SCI,DEPT ENGN MECH,MADISON,WI 53705. UNIV WISCONSIN,RHEOL RES CTR,MADISON,WI 53705. MICHIGAN TECHNOL UNIV,DEPT CHEM ENGN,HOUGHTON,MI 49931.; KOLKKA, RW, MICHIGAN TECHNOL (TRUNCATED)"
+      AccessionNumber="A1988R548700014" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BIRD RB, 1987, DYNAMICS POLYM LIQUI, V1 BIRD RB, 1987, DYNAMICS POLYM LIQUI, V2 BLYLER LL, 1970, POLYM ENG SCI, V10, P193 CURTISS CF, 1987, DYNAMICS POLYM LIQUI, V2 GIESEKUS H, 1982, J NONNEWT FLUID MECH, V11, P69 HUGHES TJR, 1979, J COMPUT PHYS, V30, P1 HUGHES TJR, 1987, FINITE ELEMENT METHO HUNTER JK, 1983, PHYS FLUIDS, V26, P2345 HUSEBY TW, 1966, T SOC RHEOL, V10, P181 IOOSS G, 1980, ELEMENTARY STABILITY JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P278 JOSEPH DD, 1985, ARCH RATION MECH AN, V87, P213 JOSEPH DD, 1986, J NON-NEWTON FLUID, V20, P117 KALIKA DS, 1987, J RHEOL, V31, P815 LIN YH, 1985, J RHEOL, V29, P605 MALKUS DS, 20 U WIS MAD CTR MAT MCLEISH TCB, 1986, J POLYM SCI POL PHYS, V24, P1735 PATERA AT, 1981, J FLUID MECH, V112, P467 PETRIE CJS, 1976, AICHE J, V22, P209 RAMAMURTHY AV, 1986, J RHEOL, V30, P337 RENARDY M, 1987, SURVEYS PURE APPLIED, V35 RIMMER PL, 1971, RHEOL ACTA, V10, P601 SCHOWALTER WR, 1988, J NON-NEWTON FLUID, V29, P25 SQUIRE HB, 1933, P R SOC LOND A-CONTA, V142, P621 TORDELLA JP, 1969, RHEOLOGY THEORY APPL, V5, P57 VANSCHAFTINGEN JJ, 1985, J NONNEWTONIAN FLUID, V18, P335 VINOGRADOV GV, 1972, J POLYM SCI A, V2, P1061 YERUSHALMI J, 1970, CHEM ENG SCI, V25, P1891; NR: 28; TC: 56; J9: J NON-NEWTONIAN FLUID MECH; PG: 33; GA: R5487"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="13" Created="2006-07-21T10:16:06"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2076" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|PLESHA,M.E.|LIU,M.R." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Reversed Stability Conditions in Transient Finite-Element Analysis"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Engineering, Multidisciplinary|Mathematics, Interdisciplinary Applications|Mechanics"
+      PubYear="1988" PubDateFreeForm="MAY"
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="68" Issue="1" StartPage="97"
+      OtherPages="114" Edition="" Publisher="ELSEVIER SCIENCE SA LAUSANNE"
+      PlaceOfPublication="LAUSANNE 1; PO BOX 564, 1001 LAUSANNE 1, SWITZERLAND"
+      ISSN_ISBN="0045-7825" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,MATH RES CTR,MADISON,WI 53706.; MALKUS, DS, UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706."
+      AccessionNumber="A1988N179000006" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BELYTSCHKO T, 1978, INT J NUMER METH ENG, V12, P1575 BELYTSCHKO T, 1983, COMPUTATIONAL METHOD BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 BIRD RB, 1977, DYNAMICS POLYM LIQUI, V1 BIRD RB, 1977, DYNAMICS POLYM LIQUI, V2 CURTISS CF, 1977, DYNAMICS POLYM LIQUI, V2 ENGELMAN MS, 1982, ADV ENG SOFTWARE, V4, P163 HINTON E, 1976, EARTHQUAKE ENG STRUC, V4, P245 HUGHES TJR, 1979, J COMPUT PHYS, V30, P1 HUGHES TJR, 1987, FINITE ELEMENT METHO KHESHGI H, 1985, MATH COMPUT, V45, P347 MALKUS D, 1988, COMPUT METH APPL MEC, V66, P365 MALKUS DS, 1981, INT J ENG SCI, V19, P1299 MALKUS DS, 1984, COMPUT METHOD APPL M, V45, P331 MALKUS DS, 1985, MRC2860 U WISC MATH MALKUS DS, 1986, COMPUT METHOD APPL M, V59, P281 WILKINSON JH, 1965, ALGEBRAIC EIGENVALUE; NR: 17; TC: 2; J9: COMPUT METHOD APPL MECH ENG; PG: 18; GA: N1790"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="14" Created="2006-07-21T10:16:06"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2077" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|QIU,X.J." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Divisor Structure of Finite-Element Eigenproblems Arising from Negative and Zero Masses"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Engineering, Multidisciplinary|Mathematics, Interdisciplinary Applications|Mechanics"
+      PubYear="1988" PubDateFreeForm="FEB"
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="66" Issue="3" StartPage="365"
+      OtherPages="368" Edition="" Publisher="ELSEVIER SCIENCE SA LAUSANNE"
+      PlaceOfPublication="LAUSANNE 1; PO BOX 564, 1001 LAUSANNE 1, SWITZERLAND"
+      ISSN_ISBN="0045-7825" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,MATH RES CTR,MADISON,WI 53706. NANJING AERONAUT INST,DEPT MATH PHYS &#x26; MECH,NANJING 210002,PEOPLES R CHINA.; MALKUS, DS, UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706."
+      AccessionNumber="A1988L860400007" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: GANTMACHER FR, 1971, MATRIX THEORY, V2 MALKUS DS, 1981, INT J ENG SCI, V19, P1299 MALKUS DS, 1986, COMPUT METHOD APPL M, V59, P281 QIU X, 1982, THEORETICAL PROBLEMS; NR: 4; TC: 3; J9: COMPUT METHOD APPL MECH ENG; PG: 4; GA: L8604"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="15" Created="2006-07-21T10:16:06"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2078" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|WEBSTER,M.F." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="On the Accuracy of Finite-Element and Finite-Difference Predictions of Non-Newtonian Slot Pressures for a Maxwell Fluid"
+      TitleSecondary="" TitleTertiary="" Keyword="Mechanics" PubYear="1987" PubDateFreeForm="JUL"
+      PeriodicalFull="Journal of Non-Newtonian Fluid Mechanics"
+      PeriodicalAbbrev="J.Non Newtonian Fluid Mech." Volume="25" Issue="1" StartPage="93"
+      OtherPages="127" Edition="" Publisher="ELSEVIER SCIENCE BV"
+      PlaceOfPublication="AMSTERDAM; PO BOX 211, 1000 AE AMSTERDAM, NETHERLANDS"
+      ISSN_ISBN="0377-0257" Availability=""
+      Author_Address_Affiliation="UNIV WALES UNIV COLL SWANSEA,DEPT MATH &#x26; COMP SCI,SWANSEA SA2 8PP,W GLAM,WALES. UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706.; MALKUS, DS, UNIV WISCONSIN,MATH RES CTR,MADISON,WI 53706."
+      AccessionNumber="A1987J495300003" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 BIRD RB, 1977, DYNAMICS POLYM LIQUI, V1 BIRD RB, 1977, DYNAMICS POLYM LIQUI, V2 CIARLET PG, 1980, FINITE ELEMENT METHO COCHRANE T, 1981, PHILOS T ROY SOC A, V301, P163 CONTE SD, 1972, ELEMENTARY NUMERICAL DAVIES AR, 1984, J NON-NEWTON FLUID, V16, P195 HIGASHITANI K, 1972, T SOC RHEOL, V16, P687 HOLSTEIN H, 1981, J NONNEWTONIAN FLUID, V8, P81 KEUNINGS R, 1986, J NON-NEWTON FLUID, V20, P209 LODGE AS, 1983, RHEOL ACTA, V22, P151 MALKUS DS, IN PRESS MALKUS DS, 1984, J NON-NEWTON FLUID, V16, P77 MALKUS DS, 1985, VISCOELASTICITY RHEO, P391 MALKUS DS, 1986, 2943 U WISC MAD MATH PIKE RD, 1984, J NON-NEWTON FLUID, V16, P211 PIPKIN AC, 1972, MECHANICS TODAY, V1, P262 RICHARDS GD, 1981, RHEOL ACTA, V20, P261 SALATHE E, 1980, RHEOL ACTA, V19, P574 TANNER RI, 1982, J NONNEWTONIAN FLUID, V10, P169 WEBSTER MF, 886 U READ NUM AN RE WEBSTER MF, 1984, RHEOL ACTA, V23, P582; NR: 22; TC: 12; J9: J NON-NEWTONIAN FLUID MECH; PG: 35; GA: J4953"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="16" Created="2006-07-21T10:16:06"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2079" RefType="1"
+      AuthorPrimary="MALKUS,D.S.|PLESHA,M.E." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Zero and Negative Masses in Finite-Element Vibration and Transient Analysis"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Engineering, Multidisciplinary|Mathematics, Interdisciplinary Applications|Mechanics"
+      PubYear="1986" PubDateFreeForm="DEC"
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="59" Issue="3" StartPage="281"
+      OtherPages="306" Edition="" Publisher="ELSEVIER SCIENCE SA LAUSANNE"
+      PlaceOfPublication="LAUSANNE 1; PO BOX 564, 1001 LAUSANNE 1, SWITZERLAND"
+      ISSN_ISBN="0045-7825" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53705.; MALKUS, DS, UNIV WISCONSIN,MATH RES CTR,MADISON,WI 53705."
+      AccessionNumber="A1986F097800002" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BATHE KJ, 1982, FINITE ELEMENT PROCE BELYTSCHKO T, 1977, FORMULATIONS COMPUTA, P673 BELYTSCHKO T, 1978, INT J NUMER METH ENG, V12, P1575 BELYTSCHKO T, 1983, COMPUTATIONAL METHOD CIARLET PG, 1978, FINITE ELEMENT METHO COOK RD, 1974, CONCEPTS APPLICATION FIX GJ, 1972, MATH FDN FINITE ELEM, P525 FRIED I, 1972, J SOUND VIBRATION, V20, P333 FRIED I, 1972, J SOUND VIBRATION, V22, P407 FRIED I, 1975, INT J SOLIDS STRUCT, V11, P461 GANTMACHER FR, 1971, MATRIX THEORY, V2 GOLUB G, 1972, STANCS72270 STANF U GOLUB GH, 1973, SIAM REV, V15, P318 HINTON E, 1976, EARTHQUAKE ENG STRUC, V4, P245 HUGHES TJR, 1978, J APPL MECH, V45, P371 NEWMARK NM, 1959, J ENG MECHANICS DIVI, V85, P67 PAIGE CC, 1972, J I MATH APPL, V10, P373 PETERS G, 1970, SIAM J NUMER ANAL, V7, P479 RICHTMEYER RD, 1967, DIFFERENCE METHODS I WILKINSON JH, 1965, ALGEBRAIC EIGENVALUE; NR: 20; TC: 8; J9: COMPUT METHOD APPL MECH ENG; PG: 26; GA: F0978"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+
+    <z:row UserID="11264" InternalRefID="17" Created="2006-07-21T10:16:06"
+      LastModified="2006-08-30T09:23:54" Marked="0         " UserRefID="2080" RefType="1"
+      AuthorPrimary="MALKUS,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Finite-Element Simulation of Flows of Fluids with Integral Constitutive-Equations"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Engineering, Multidisciplinary|Mathematics, Applied" PubYear="1985"
+      PubDateFreeForm="NOV" PeriodicalFull="Communications in Applied Numerical Methods"
+      PeriodicalAbbrev="" Volume="1" Issue="6" StartPage="275" OtherPages="280" Edition=""
+      Publisher="JOHN WILEY &#x26; SONS LTD"
+      PlaceOfPublication="W SUSSEX; BAFFINS LANE CHICHESTER, W SUSSEX, ENGLAND PO19 1UD"
+      ISSN_ISBN="0748-8025" Availability=""
+      Author_Address_Affiliation="UNIV WISCONSIN,DEPT ENGN MECH,MADISON,WI 53706. UNIV WISCONSIN,MATH RES CTR,MADISON,WI 53706."
+      AccessionNumber="A1985D623400003" Language="English" Classification=""
+      SubFile_Database="Article" OriginalForeignTitle="" Links="" DOI="" Abstract=""
+      Notes="PT: J; CR: BERNSTEIN B, 1966, ACTA MECH, V2, P330 BERNSTEIN B, 1981, COMPUT METH APPL MEC, V27, P279 BERNSTEIN B, 1983, 3RD WORKSH NUM METH BERNSTEIN B, 1985, INT J NUMER METH FL, V5, P43 CHEN F, 1982, THESIS ILLINOIS I TE COURT H, 1981, J NONNEWTONIAN FLUID, V8, P95 CROCHET MJ, 1980, J NONNEWTONIAN FLUID, V7, P199 CURTISS CF, 1981, J CHEM PHYS, V74, P2016 DOI M, 1978, J CHEM SOC FARAD T 2, V74, P1789 DOI M, 1978, J CHEM SOC FARAD T 2, V74, P1802 DOI M, 1978, J CHEM SOC FARAD T 2, V74, P1818 DOI M, 1979, J CHEM SOC FARAD T 2, V75, P38 DUPONT S, 1984, FINITE ELEMENT SIMUL ENGELMAN MS, 1982, ADV ENG SOFTWARE, V4, P163 JACKSON NR, 1982, J NONNEWTONIAN FLUID, V10, P71 JANESCHITZKRIEG.H, 1983, POLYM MELT RHEOLOGY JOHNSON MW, 1977, J NONNEWTONIAN FLUID, V2, P255 MALKUS DS, 1984, J NON-NEWTON FLUID, V16, P77 MENDELSON MA, 1982, J NONNEWT FLUID MECH, V10, P31 PETRIE CJS, 1975, J NONNEWTONIAN FLUID, V5, P53 PETRIE CJS, 1979, ELONGATIONAL FLOWS VIRIYAYUTHAKORN M, 1981, J NONNEWT FLUID MECH, V8, P245; NR: 22; TC: 0; J9: COMMUN APPL NUMER METHOD; PG: 6; GA: D6234"
+      Folder="Malkus D* - wos|Malkus D* - comb" User1="" User2="" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="18" Created="2006-08-09T11:59:10"
+      LastModified="2006-08-30T09:23:33" Marked="0         " UserRefID="5097" RefType="1"
+      AuthorPrimary="Kammer,Daniel C.|Alvin,Kevin F.|Malkus,David S." AuthorSecondary=""
+      AuthorTertiary=""
+      TitlePrimary="Combining metamodels with rational function representations of discretization error for uncertainty quantification"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Mechanical engineering|Extrapolation|Solutions|Continuum mechanics|Monte Carlo methods|Numerical methods"
+      PubYear="2002" PubDateFreeForm=""
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="191" Issue="13-14" StartPage="1367"
+      OtherPages="1379" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0045-7825"
+      Availability=""
+      Author_Address_Affiliation="Department of Engineering Physics, University of Wisconsin, Madison, WI 53706, United States"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/S0045-7825(01)00328-0" DOI=""
+      Abstract="Techniques for producing metamodels for the efficient Monte Carlo simulation of high consequence systems are presented. The bias of f.e.m mesh discretization errors is eliminated or minimized by extrapolation, using rational functions, rather than the power series representation of Richardson extrapolation. Examples, including estimation of the vibrational frequency of a one-dimensional bar, show that the rational function model gives more accurate estimates using fewer terms than Richardson extrapolation, an important consideration for computational reliability assessment of high-consequence systems, where small biases in solutions can significantly affect the accuracy of small-magnitude probability estimates. Rational function representation of discretization error enable the user to accurately extrapolate to the continuum from numerical experiments performed outside the asymptotic region of the usual power series, allowing use of coarser meshes in the numerical experiments, resulting in significant savings. &#x26;copy; 2002 Elsevier Science B.V. All rights reserved."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="02086867101"
+      User2="Mesh discretization errors; Uncertainty quantification" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="19" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5098" RefType="1"
+      AuthorPrimary="Tsai,T.-P.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Numerical breakdown at high Weissenberg number in non-Newtonian contraction flows"
+      TitleSecondary="" TitleTertiary="Rheol. Acta (Germany)"
+      Keyword="computational fluid dynamics|confined flow|convergence of numerical methods|flow simulation|non-Newtonian flow|non-Newtonian fluids|stress-strain relations"
+      PubYear="2000" PubDateFreeForm="01/" PeriodicalFull="Rheologica Acta" PeriodicalAbbrev=""
+      Volume="39" Issue="1" StartPage="62" OtherPages="70" Edition=""
+      Publisher="Dr. Dietrich Steinkopff Verlag" PlaceOfPublication="" ISSN_ISBN="0035-4511"
+      Availability=""
+      Author_Address_Affiliation="Dept. of Eng. Phys., Wisconsin Univ., Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1007/s003970050007" DOI=""
+      Abstract="Planar contraction flows of non-Newtonian fluids with integral constitutive models are studied to investigate the problem of numerical breakdown at high Weissenberg or Debrorah numbers. Spurious shear stress extrema are found on the wall downstream of the re-entrant corner for both sharp and rounded corners. Moreover, a non-monotonic relation between shear stress and strain rate is found when the Deborah number limit is approached, which correlates with these shear extrema. This strongly suggests that non-monotonicity between shear stress and strain rate may be responsible for the Deborah number limit problem in contraction flow simulations. This non-monotonocity is caused by the inaccuracy of the quadrature, using constitutive equations that do not have shear stress maxima when exactly evaluated. This conclusion agrees with recent analytical findings by others that inaccuracy of the integration along the streamlines - either by numerical integration or asymptotic approximation - makes the problem ill-conditioned, with spurious growth occurring on the wall downstream of the re-entrant corner"
+      Notes="" Folder="Malkus D* - ev|Malkus D* - comb" User1="6550403"
+      User2="numerical breakdown; high Weissenberg number; nonNewtonian contraction flows; planar contraction flows; nonNewtonian fluids; integral constitutive models; spurious shear stress extrema; reentrant corner; sharp corners; rounded corners; shear stress; strain rate; stress-strain relation; Deborah number limit problem; numerical integration; asymptotic approximation; computational fluid dynamics"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="20" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:33" Marked="0         " UserRefID="5099" RefType="1"
+      AuthorPrimary="Chih-Tung Chen|Malkus,D.S.|Vanderby,R.,Jr" AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="A fiber matrix model for interstitial fluid flow and permeability in ligaments and tendons"
+      TitleSecondary="" TitleTertiary="Biorheology (USA)"
+      Keyword="biological tissues|biorheology|finite element analysis|flow through porous media|non-Newtonian fluids|permeability|physiological models"
+      PubYear="1998" PubDateFreeForm="03/" PeriodicalFull="Biorheology"
+      PeriodicalAbbrev="Biorheology" Volume="35" Issue="2" StartPage="103" OtherPages="18"
+      Edition="" Publisher="Elsevier" PlaceOfPublication="" ISSN_ISBN="0006-355X" Availability=""
+      Author_Address_Affiliation="Div. of Orthopedic Surg., Wisconsin Univ., Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/S0006-355X(99)80001-8" DOI=""
+      Abstract="Collagen fibrils in ligaments and tendons are highly organized into parallel arrays which influence interstitial fluid transport. Finite element (FE) models were developed analogous to the fibrillar arrays in ligaments and tendons to investigate interstitial fluid flow and tissue permeability as a function of interfibrillar spacing and fluid properties. Collagen fibrils were assumed to be a periodic square array of impermeable cylinders. A two-dimensional FE model was used to study transverse fluid flow and a three-dimensional model was used to study flow parallel to the collagen fibrils. Parametric FE analysis provided data to formulate empirical expressions for permeability (&#x26;kappa;) as a function of porosity (&#x26;phi;). Results show that longitudinal permeability (&#x26;kappa;=1.1&#x26;middot;10-15&#x26;phi;2.5[1-&#x26;phi;]-0.333) can be up to 50 times higher than transverse permeability (&#x26;kappa;=1.2&#x26;middot;10-15&#x26;phi;0 5[&#x26;phi;-&#x26;phi;min]2.5) in a compact array. Maximum fluid shear stresses occur at the narrowest zones of adjacent fibrils (1.21 Pa or 12.1 dyn/cm2 at 10 &#x26;mu;m/s of average transverse influx). If interstitial fluid is highly non-Newtonian, the permeability should be considered as flow (shear)-dependent. The computational results suggest that tissue permeability in ligaments and tendons is highly anisotropic, porosity-dependent, and can be estimated by analytic expressions"
+      Notes="" Folder="Malkus D* - ev|Malkus D* - comb" User1="6114457"
+      User2="fiber matrix model; interstitial fluid flow; ligaments; tendons; parallel arrays; interstitial fluid transport; finite element models; fibrillar arrays; tissue permeability; analytic expressions; empirical expressions; transverse permeability; compact array"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle=""
+      TextAttributes="31| 796|(3| 5|(3| 9|(6| 82|(3| 5|(3| 12|03| 1|(3| 123|(1| 329ÿ"
+      AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation=""
+      CitedRefs="" WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic=""
+      SourceType="0" OverFlow="" Objects="" Comments=""/>
+    <z:row UserID="11264" InternalRefID="21" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:33" Marked="0         " UserRefID="5100" RefType="1"
+      AuthorPrimary="Cornwell,Robert, E.|Malkus,David, S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Improved numerical dissipation for time integration algorithms in conduction heat transfer"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Heat Transfer -- Mathematical Models|Heat Transfer - Conduction|Mathematical Techniques - Algorithms|Mathematical Techniques - Integration|Mathematical Techniques - Time Domain Analysis|Mathematical Techniques - Transfer Functions"
+      PubYear="1992" PubDateFreeForm=""
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="97" Issue="2" StartPage="149"
+      OtherPages="156" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0045-7825"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin, Madison, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0045-7825(92)90161-C" DOI=""
+      Abstract="The Hilber-Hughes-Taylor (HHT) &#x26;alpha;-method is applied to the direct integration of the equations of conduction heat transfer. The method is shown to possess improved algorithmic dissipation, relative to the general trapezoidal methods, while retaining second order accuracy. The &#x26;alpha;-method is compared with members of the generalized trapezoidal family of methods."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="92080559979"
+      User2="Numerical Dissipation; Algorithmic Dissipation; Hilber Hughes Taylor Alpha Method; Trapezoidal Methods"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="22" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5101" RefType="1"
+      AuthorPrimary="Malkus,D.S.|Pritchard,W.G.|Yao,M." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="The hole-pressure effect and viscometry" TitleSecondary=""
+      TitleTertiary="Rheol. Acta (Germany)"
+      Keyword="non-Newtonian flow|non-Newtonian fluids|rheology|viscosity measurement"
+      PubYear="1992" PubDateFreeForm="11/" PeriodicalFull="Rheologica Acta" PeriodicalAbbrev=""
+      Volume="31" Issue="6" StartPage="521" OtherPages="34" Edition="" Publisher=""
+      PlaceOfPublication="" ISSN_ISBN="0035-4511" Availability=""
+      Author_Address_Affiliation="Dept. of Eng. Mech., Wisconsin Univ., Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="" DOI=""
+      Abstract="Provides an assessment of the current understanding of the hole-pressure effect and the role it plays in the field of viscometry. The discovery in 1968 by Broadbent, Kaye, lodge and Vale that the use of pressure taps to measure the normal stress exerted on a boundary by a non-Newtonian material can lead to significant errors has opened up interesting new avenues for making viscometric measurements. The kinematical theory developed by Higashitani and Pritchard (1972) to estimate the hole pressure, to which a deeper understanding has recently been supplied by Yao and Malkus (1990), has formed the basis of many new developments in viscometry. It is interesting that such a simplistic theory for the hole pressure apparently has a rather wide range of applicability"
+      Notes="" Folder="Malkus D* - ev|Malkus D* - comb" User1="4357834"
+      User2="nonNewtonian material; viscometry; hole-pressure effect; pressure taps; normal stress; kinematical theory"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="23" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5102" RefType="1"
+      AuthorPrimary="Malkus,David S.|Nohel,John A.|Plohr,Bradley J." AuthorSecondary=""
+      AuthorTertiary=""
+      TitlePrimary="Analysis of new phenomena in shear flow of non-Newtonian fluids"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Flow of Fluids -- Non Newtonian|Fluid Mechanics--Mathematical Models|Stresses--Shear|Mathematical Techniques--Differential Equations|Polymers--Processing|Computers--Applications"
+      PubYear="1991" PubDateFreeForm="" PeriodicalFull="SIAM Journal on Applied Mathematics"
+      PeriodicalAbbrev="SIAM J Appl Math" Volume="51" Issue="4" StartPage="899" OtherPages="929"
+      Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0036-1399" Availability=""
+      Author_Address_Affiliation="Wisconsin-Madison, Madison, WI, USA" AccessionNumber=""
+      Language="" Classification="" SubFile_Database="" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Phase-plane and small-parameter asymptotic techniques are used to analyze systems of ordinary differential equations that describe the transient behavior of non-Newtonian fluids in shear flow. These systems approximate the partial differential equations that derive from three-dimensional balance laws and from differential constitutive models for highly elastic liquids. Two models are considered: one with a single relaxation time and small Newtonian viscosity; the other with two relaxation times and no Newtonian viscosity. Both possess the key feature that the variation of steady shear stress with strain rate is not monotone. The analysis shows that both models exhibit several distinctive phenomena: spurt, shape memory, hysteresis, latency, and normal stress oscillations. The predictions for the spurt phenomenon agree quantitatively with experimental results for polymer melts; the other new phenomena, which were discovered recently in numerical simulation, should also be observable in rheological experiments."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="91100305468"
+      User2="Phase-Plane; Small-Parameter Asymptotic Technique; Shear Flow; Global Dynamics; Asymptotics; Shape Memory"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="24" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5103" RefType="1"
+      AuthorPrimary="Yao,M.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Numerical simulation of hole pressure for a Johnson-Segalman fluid"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="Flow of Fluids -- Non Newtonian|Mathematical Techniques--Numerical Methods|Stresses--Shear|Pressure Measurement"
+      PubYear="1991" PubDateFreeForm="" PeriodicalFull="Journal of Non-Newtonian Fluid Mechanics"
+      PeriodicalAbbrev="J.Non Newtonian Fluid Mech." Volume="40" Issue="1" StartPage="25"
+      OtherPages="46" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0377-0257"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0377-0257(91)87024-R" DOI=""
+      Abstract="The elastic hole pressure for plane, steady, creeping shear flow over a transverse slot of a Johnson-Segalman fluid is studied numerically. To correctly apply the theory of Higashitani, Pritchard, Baird and Lodge (HPBL), we start with a modified hole-pressure relation (MHPR) and simulate the hole-pressure measurement using the finite element method and the multiple-mesh extrapolation technique. The path integrals in MHPR and HP are evaluated to check the error cancellation phenomenon and a full instrument simulation is conducted to predict N1. The agreement between numerical simulation and analytical prediction is satisfactory, within the range of De . The agreement between numerical simulation and analytical prediction is satisfactory, within the range of De 1 can be predicted via the hole-pressure measurement to a sufficient approximation for the Johnson-Segalman model."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="91110333336" User2="Shear Flow" User3=""
+      User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="31| 547|01| 111| 111|01| 113ÿ"
+      AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation=""
+      CitedRefs="" WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic=""
+      SourceType="0" OverFlow="" Objects="" Comments=""/>
+    <z:row UserID="11264" InternalRefID="25" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5104" RefType="1"
+      AuthorPrimary="Yao,M.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Boundary node correction and superconvergence in the FEM" TitleSecondary=""
+      TitleTertiary=""
+      Keyword="Flow of Fluids -- Computer Simulation|Mathematical Techniques--Finite Element Method"
+      PubYear="1990" PubDateFreeForm=""
+      PeriodicalFull="International Journal for Numerical Methods in Fluids"
+      PeriodicalAbbrev="Int.J.Numer.Methods Fluids" Volume="10" Issue="6" StartPage="713"
+      OtherPages="721" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0271-2091"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="" DOI=""
+      Abstract="Convergence improvement and superconvergence behaviour, obtained by the simple boundary node correction (BNC) procedure for certain stress-like variables of smoothed FEM solutions, are reported in this paper. The effectiveness of BNC is shown through three examples of steady flow problems, and a posterior error analysis based on the multiple-mesh extrapolation technique has been used for estimating the convergence rates."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="90070431279"
+      User2="Boundary Node Correction; Pressure Smoothing; Super Convergence; Posterior Error Analysis; Multiple Mesh Extrapolation; Steady Flow Problems"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+
+    <z:row UserID="11264" InternalRefID="26" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5105" RefType="1"
+      AuthorPrimary="Yao,M.|Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Cancellation of errors in the Higashitani-Pritchard treatment of hole pressures generated by viscoelastic liquids in creeping flow past a transverse slot"
+      TitleSecondary="" TitleTertiary="Rheol. Acta (West Germany)"
+      Keyword="creeping flow|non-Newtonian flow|shear flow|viscoelasticity" PubYear="1990"
+      PubDateFreeForm="07/" PeriodicalFull="Rheologica Acta" PeriodicalAbbrev="" Volume="29"
+      Issue="4" StartPage="310" OtherPages="22" Edition="" Publisher="" PlaceOfPublication=""
+      ISSN_ISBN="0035-4511" Availability=""
+      Author_Address_Affiliation="Dept. of Eng. Mech., Wisconsin Univ., Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="" DOI=""
+      Abstract="Analytical studies of the hole pressure for non-Newtonian creeping flow past a transverse slot are pursued with particular interest in the formulation of Higashitani and Pritchard (HP). To correct the flaws in the treatment of HP&#x27;s original work; a modified hole-pressure relation (MHPR) is employed. Some important mathematical properties of the MHPR are presented. By studying the MHPR in streamline coordinate formulation, the authors find a fortuitous error cancellation phenomenon in the derivation of the HP formula: namely, the error caused by one key flaw is fortuitously cancelled out by the error introduced through another key flaw. For second-order fluids and Tanner&#x27;s `viscometric model&#x27; (under certain assumptions) the cancellation of errors is proved to be exact. It is this cancellation of errors that provides a theoretical explanation for the paradox between an apparently flawed derivation and the fortunate success of the HP prediction"
+      Notes="" Folder="Malkus D* - ev|Malkus D* - comb" User1="3762574"
+      User2="nonNewtonian flow; viscometric model; nonNewtonian flow; Higashitani-Pritchard treatment; hole pressures; viscoelastic liquids; creeping flow; transverse slot; modified hole-pressure relation; streamline coordinate formulation; error cancellation phenomenon; second-order fluids"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="27" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5106" RefType="1"
+      AuthorPrimary="Malkus,D.S.|Nohel,J.A.|Plohr,B.J." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="Dynamics of shear flow of a non-Newtonian fluid" TitleSecondary=""
+      TitleTertiary="J. Comput. Phys. (USA)"
+      Keyword="emulsions|non-Newtonian flow|non-Newtonian fluids|numerical methods|polymers|shear flow|suspensions|viscoelasticity"
+      PubYear="1990" PubDateFreeForm="04/" PeriodicalFull="Journal of Computational Physics"
+      PeriodicalAbbrev="" Volume="87" Issue="2" StartPage="464" OtherPages="87" Edition=""
+      Publisher="" PlaceOfPublication="" ISSN_ISBN="0021-9991" Availability=""
+      Author_Address_Affiliation="Center for the Math. Sci., Wisconsin Univ., Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0021-9991(90)90261-X" DOI=""
+      Abstract="Viscoelastic materials with fading memory, e.g., polymers, suspensions, and emulsions exhibit behavior that is intermediate between the nonlinear hyperbolic response of purely elastic materials and the strongly diffusive, parabolic response of viscous fluids. Many popular numerical methods used in the computation of steady viscoelastic flows fail in important flow regimes, and thus do not capture significant non-Newtonian phenomena. A key to satisfactory explanation of these phenomena is the study of the full dynamics of the flow. The authors study the dynamics of shear flow, presenting a description of non-Newtonian phenomena caused by a non-monotone relation between the steady shear stress and shear strain rate. Analytical results for such phenomena are surveyed, and three distinct numerical methods are developed to accurately compute the dynamics"
+      Notes="" Folder="Malkus D* - ev|Malkus D* - comb" User1="3654264"
+      User2="nonNewtonian fluid; shear flow; polymers; suspensions; emulsions; nonlinear hyperbolic response; elastic materials; parabolic response; viscous fluids; numerical methods; steady viscoelastic flows; steady shear stress; shear strain rate; dynamics"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="28" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5107" RefType="1"
+      AuthorPrimary="Malkus,David S.|Qiu,Xiangjun" AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="DIVISOR STRUCTURE OF FINITE ELEMENT EIGENPROBLEMS ARISING FROM NEGATIVE AND ZERO MASSES"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="MATHEMATICAL TECHNIQUES -- Finite Element Method|MECHANICS|KINETICS" PubYear="1988"
+      PubDateFreeForm="" PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="66" Issue="3" StartPage="365"
+      OtherPages="368" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0374-2830"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0045-7825(88)90007-2" DOI=""
+      Abstract="This note explains why and when the divisor structure of finite element eigenproblems is non-pathological even when negative and/or zero masses result from lumping schemes. The only case of concern is when the stiffness matrix is singular due to rigid-body modes, as happens, for example, with single elements. It is found that there are no pathologies if the lumping scheme adequately reproduces the kinetic energy of rigid-body motion."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="88050066095"
+      User2="DIVISOR STRUCTURE; FINITE ELEMENT EIGENPROBLEMS; ZERO MASSES; LUMPING SCHEMES; STIFFNESS MATRIX"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="29" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5108" RefType="1"
+      AuthorPrimary="Malkus,David S.|Plesha,Michael E.|Liu,Meng-Ru" AuthorSecondary=""
+      AuthorTertiary=""
+      TitlePrimary="REVERSED STABILITY CONDITIONS IN TRANSIENT FINITE ELEMENT ANALYSIS"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="VIBRATIONS -- Stability|MATHEMATICAL TECHNIQUES - Finite Element Method|ELASTIC WAVES|FLUID MECHANICS"
+      PubYear="1988" PubDateFreeForm=""
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="68" Issue="1" StartPage="97"
+      OtherPages="114" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0374-2830"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0045-7825(88)90109-0" DOI=""
+      Abstract="Numerical methods which introduce artificially unstable modes are discussed. In structural and elastodynamics these result from optimal mass lumping with higher-order elements. In fluid mechanics an additional source of these modes can be a penalty function with alternating signs. These modes yield unstable modal equations; however, they do not necessarily imply unstable transient integration in the presence of algorithmic damping. Stable integration can be achieved by satisfying a stability condition in which the roles of space-step and time-step are reversed. Elastodynamics, the Navier-Stokes equations, and non-Newtonian fluids provide numerical examples."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="88090131578"
+      User2="TRANSIENT FINITE ELEMENT ANALYSIS; FEM; ELASTODYNAMICS" User3="" User4="" User5=""
+      CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+      ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+      SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="30" Created="2006-08-09T11:59:11"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5109" RefType="1"
+      AuthorPrimary="Malkus,David S.|Webster,Michael F." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="ON THE ACCURACY OF FINITE ELEMENT AND FINITE DIFFERENCE PREDICTIONS OF NON-NEWTONIAN SLOT PRESSURES FOR A MAXWELL FLUID"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="RHEOLOGY -- Mathematical Models|LIQUIDS - Non Newtonian|MATHEMATICAL TECHNIQUES - Finite Element Method|FLOW OF FLUIDS - Non Newtonian"
+      PubYear="1987" PubDateFreeForm="" PeriodicalFull="Journal of Non-Newtonian Fluid Mechanics"
+      PeriodicalAbbrev="J.Non Newtonian Fluid Mech." Volume="25" Issue="1" StartPage="93"
+      OtherPages="127" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0377-0257"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0377-0257(87)85014-0" DOI=""
+      Abstract="Plane slow flow of a Maxwell fluid over a transverse slot is considered. Results are computed by a finite difference method (FDM) using the differential form of the constitutive equation, and by a finite element method (FEM) using the integral form. Even on fine grids, the two methods produce different results, particularly at low D//e. However, extrapolation of the results to zero mesh spacing shows excellent agreement between the two methods. Hence both methods are convergent with mesh refinement, but high accuracy would require extremely fine meshes."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="87110172054"
+      User2="NON-NEWTONIAN SLOT PRESSURES; MAXWELL FLUID; TRANSVERSE SLOTS; CONSTITUTIVE EQUATION"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="31" Created="2006-08-09T11:59:12"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5110" RefType="1"
+      AuthorPrimary="Malkus,David S.|Plesha,Michael E." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="ZERO AND NEGATIVE MASSES IN FINITE ELEMENT VIBRATION AND TRANSIENT ANALYSIS"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="MATHEMATICAL TECHNIQUES -- Finite Element Method|VIBRATIONS - Analysis"
+      PubYear="1986" PubDateFreeForm=""
+      PeriodicalFull="Computer Methods in Applied Mechanics and Engineering"
+      PeriodicalAbbrev="Comput.Methods Appl.Mech.Eng." Volume="59" Issue="3" StartPage="281"
+      OtherPages="306" Edition="" Publisher="" PlaceOfPublication="" ISSN_ISBN="0374-2830"
+      Availability="" Author_Address_Affiliation="Univ of Wisconsin-Madison, Madison, WI, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="http://dx.doi.org/10.1016/0045-7825(86)90002-2" DOI=""
+      Abstract="Mass matrix lumping by quadrature is considered. Accuracy requirements seem to dictate the use of zero or negative masses for multidimensional higher-order elements. It is shown that the zero and/or negative masses do not destroy the essential algebraic properties of the discrete eigenproblem, in spite of the negative or infinite eigenvalues which may result. Explicit transient methods require positive-definite lumping which, for some elements, may only be achieved by sacrificing accuracy to avoid the negative or zero masses that would render the lumping indefinite. An implicit-explicit time integration method based on quadratic triangles with optimal lumping is devised, analyzed, and tested. It treats the nodes with nonzero masses explicitly and the nodes with zero masses implicitly."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="87030040568"
+      User2="ZERO AND NEGATIVE MASSES; FINITE ELEMENT VIBRATION; TRANSIENT ANALYSIS; MASS MATRIX LUMPING"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="32" Created="2006-08-09T11:59:12"
+      LastModified="2006-08-30T09:23:33" Marked="0         " UserRefID="5111" RefType="5"
+      AuthorPrimary="Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="CALIBRATION OF HOLE-PRESSURE MEASUREMENTS IN NON-NEWTONIAN FLOW BY NUMERICAL METHODS"
+      TitleSecondary="Hybrid and Mixed Finite Element Methods. Presented at the Winter Annual Meeting of the American Society of Mechanical Engineers."
+      TitleTertiary="AMD (Symposia Series) (American Society of Mechanical Engineers, Applied Mechanics Division)"
+      Keyword="FLOW OF FLUIDS -- Non Newtonian|MATHEMATICAL TECHNIQUES - Numerical Methods|STRESSES - Shear"
+      PubYear="1985" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="73" Issue=""
+      StartPage="133" OtherPages="141" Edition="" Publisher="ASME, New York, NY, USA"
+      PlaceOfPublication="Miami Beach, FL, USA" ISSN_ISBN="0160-8835" Availability=""
+      Author_Address_Affiliation="Univ of Wisconsin-Madison, Mathematics Research Cent, Madison, WI, USA, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="" DOI=""
+      Abstract="The crossed-triangle macroelement has been identified as an ideal element for non-Newtonian fluid flow calculations involving fluids with integral constitutive equations. In spite of an instability of the pressure approximation, these elements have been shown to have convergent velocities in Stokes flow, and there is strong evidence that pressure-smoothing schemes recover accurate pressures. Earlier studies by the author of Newtonian flow over transverse slots at low Reynolds numbers showed that excellent results could be obtained using the element. Studies of non-Newtonian flows in the same geometry showed good qualitative agreement with laboratory experiment but led to some puzzling predictions of the pressure difference between the top and bottom of the slot (the &#x27;hole-pressure&#x27;). In this paper, those puzzling predictions are re-examined."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="86020028888"
+      User2="FLOW CALCULATIONS; CROSSED-TRIANGLE MACROELEMENT; TIME-HISTORY QUADRATURE; FLOWS OVER TRANSVERSE SLOTS; FINITE ELEMENT APPROXIMATION; CALIBRATION RULE"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="33" Created="2006-08-09T11:59:12"
+      LastModified="2006-08-30T09:23:33" Marked="0         " UserRefID="5112" RefType="5"
+      AuthorPrimary="Malkus,D.S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="CALIBRATION OF HOLE-PRESSURE MEASUREMENTS IN NON-NEWTONIAN FLOW BY NUMERICAL METHODS"
+      TitleSecondary="Hybrid and Mixed Finite Element Methods. Presented at the Winter Annual Meeting of the American Society of Mechanical Engineers."
+      TitleTertiary="AMD (Symposia Series) (American Society of Mechanical Engineers, Applied Mechanics Division)"
+      Keyword="FLOW OF FLUIDS -- Non Newtonian|MATHEMATICAL TECHNIQUES - Numerical Methods|STRESSES - Shear"
+      PubYear="1985" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="73" Issue=""
+      StartPage="133" OtherPages="141" Edition="" Publisher="ASME, New York, NY, USA"
+      PlaceOfPublication="Miami Beach, FL, USA" ISSN_ISBN="0160-8835" Availability=""
+      Author_Address_Affiliation="Univ of Wisconsin-Madison, Mathematics Research Cent, Madison, WI, USA, USA"
+      AccessionNumber="" Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+      Links="" DOI=""
+      Abstract="The crossed-triangle macroelement has been identified as an ideal element for non-Newtonian fluid flow calculations involving fluids with integral constitutive equations. In spite of an instability of the pressure approximation, these elements have been shown to have convergent velocities in Stokes flow, and there is strong evidence that pressure-smoothing schemes recover accurate pressures. Earlier studies by the author of Newtonian flow over transverse slots at low Reynolds numbers showed that excellent results could be obtained using the element. Studies of non-Newtonian flows in the same geometry showed good qualitative agreement with laboratory experiment but led to some puzzling predictions of the pressure difference between the top and bottom of the slot (the &#x27;hole-pressure&#x27;). In this paper, those puzzling predictions are re-examined."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="86010012879"
+      User2="FLOW CALCULATIONS; CROSSED-TRIANGLE MACROELEMENT; TIME-HISTORY QUADRATURE; FLOWS OVER TRANSVERSE SLOTS; FINITE ELEMENT APPROXIMATION; CALIBRATION RULE"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+    <z:row UserID="11264" InternalRefID="34" Created="2006-08-09T11:59:12"
+      LastModified="2006-08-30T09:23:34" Marked="0         " UserRefID="5113" RefType="1"
+      AuthorPrimary="Malkus,David S." AuthorSecondary="" AuthorTertiary=""
+      TitlePrimary="FINITE ELEMENT SIMULATION OF FLOWS OF FLUIDS WITH INTEGRAL CONSTITUTIVE EQUATIONS"
+      TitleSecondary="" TitleTertiary=""
+      Keyword="FLOW OF FLUIDS -- Non Newtonian|STRESSES - Strain|MATHEMATICAL TECHNIQUES - Finite Element Method|MATERIALS WITH MEMORY"
+      PubYear="1985" PubDateFreeForm="" PeriodicalFull="Communications in Applied Numerical Methods"
+      PeriodicalAbbrev="" Volume="1" Issue="6" StartPage="275" OtherPages="280" Edition=""
+      Publisher="" PlaceOfPublication="" ISSN_ISBN="" Availability=""
+      Author_Address_Affiliation="Univ of Wisconsin-Madison, WI, USA" AccessionNumber="" Language=""
+      Classification="" SubFile_Database="" OriginalForeignTitle="" Links="" DOI=""
+      Abstract="Finite element procedures to compute solutions to steady flow problems with &#x27;memory fluids&#x27; have been developed. While many aspects of these methods are still under development, they have reached the stage at which they can be implemented in general-purpose nonlinear fluid mechanics codes which use the penalty form of the &#x27;v - p&#x27; formulation. The key to the success of such methods is the use of a very special element which allows virtually exact determination of the streamlines and large-strain elastic deformation tensors of the motion implied by the velocity field, which are required by the constitutive theories in question. This paper describes the constitutive equations and the numerical treatment of them which can be used to compare steady, two-dimensional flow solutions. Some new results concerning hole pressures in plane flows over transverse slots are presented."
+      Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+      Folder="Malkus D* - ev|Malkus D* - comb" User1="86090135635" User2="CONSTITUTIVE EQUATIONS"
+      User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+      RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary=""
+      URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+      WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects=""
+      Comments=""/>
+
+  </rs:data>
+</xml>

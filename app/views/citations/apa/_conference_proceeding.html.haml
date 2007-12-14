@@ -1,0 +1,15 @@
+%li{:class => "citation-#{c.class.name.to_s.underscore}"}
+  %span.citation-type="#{c[:type]}"
+  %br/
+  %span.authors
+    - c.authors.each do |a|
+      %span.author=link_to "#{a.name}", author_path(a)
+  %span.year="(#{c.year}). "
+  %span.title="#{c.title_primary}. "
+  %span.conference
+    = "In #{c.title_secondary}"
+  %span.volume=": Vol. #{c.volume}"
+  %span.publication=link_to "#{c.publication.authority.name}", publication_path(c.publication.authority.to_param)
+  %span.start-page="(#{c.start_page}-"
+  %span.end-page="#{c.end_page})."
+  %span.publisher="#{link_to c.publisher.authority.name, publisher_path(c.publisher.authority.to_param)}."

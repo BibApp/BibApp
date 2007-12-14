@@ -1,0 +1,4 @@
+%h2 Groups
+%ol.groups-alphabetical
+  - @groups.each do |g|
+    %li=link_to "#{g.name}", group_path(g)

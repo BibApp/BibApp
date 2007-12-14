@@ -1,0 +1,10 @@
+%div{:class => "column span-24"}
+  %div{:class => "column span-16"}
+    %h2="Publishers (#{@publishers.total_entries}) - #{link_to "Add", new_publisher_path}"
+    = will_paginate @publishers
+    %ol.publishers
+      -@publishers.each do |publisher|
+        %li
+          =link_to "#{publisher.name}", publisher_path(publisher)
+    
+  

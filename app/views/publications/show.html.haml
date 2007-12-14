@@ -1,0 +1,19 @@
+%p=link_to "Return to Publication List", publications_url
+%h2 
+  = @publication.name
+  %span=link_to "Edit", edit_publication_path(@publication)
+
+%div{:class => "column span-24"}
+  %div{:class => "column span-16"}
+    %h3="Citations (#{@citations.total_entries})"
+    = will_paginate @citations
+    %ul.citations
+      - @citations.each do |citation|
+        = render :partial => "shared/citation", :locals => { :citation => citation }
+
+  #facets{:class => "column span-6 prepend-2 last"}
+    %div{:class => "column span-4"}
+      %h3="Authority for (#{@authority_for.size})"
+      %ul.authority-children
+      - @authority_for.each do |auth|
+        %li=link_to auth.name, publication_path(auth)
