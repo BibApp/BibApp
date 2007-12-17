@@ -1,0 +1,21 @@
+#main
+  #header{:class => "column span-24"}
+    %h1{:class => "column span-12"}=link_to $APPLICATION_NAME, citations_url
+    %div{:class => "column span-7 prepend-5 last"}
+      Search:
+      - form_tag "/search", :method => :get, :class => "header-search-form" do
+        = text_field_tag(:q, value = nil, options = {})
+        = submit_tag 'Go'
+    %div{:class => "column span-24"}
+      %p{:class => "column span-12"}
+        ="We're putting "
+        %strong="#{archivable_count} papers"
+        online, for free.
+        %strong="This is true."
+      %ul{:class => "column span-6 prepend-5 last global-nav"}
+        %li
+          %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
+        %li
+          %a{:href => "faq"} FAQ
+        %li
+          %a{:href => "login"} Login

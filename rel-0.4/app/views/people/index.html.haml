@@ -1,0 +1,4 @@
+%h2 People
+%ol.people
+  - @people.each do |p|
+    %li=link_to "#{p.first_last}", person_path(p)
