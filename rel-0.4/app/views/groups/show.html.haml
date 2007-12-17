@@ -1,0 +1,12 @@
+%h2= @group.name
+
+%h3 People
+%ol.people-alphabetical
+  - @group.people.each do |p|
+    %li=link_to "#{p.first_last}", person_path(p)
+    
+%h3="Citations (#{@citations.total_entries})"
+= will_paginate @citations
+%ol.citations
+  - @citations.each do |citation|
+    = render :partial => "shared/citation", :locals => {:citation => citation}
