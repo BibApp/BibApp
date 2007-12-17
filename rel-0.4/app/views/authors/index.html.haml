@@ -1,7 +1,0 @@
-%h3="Authors - #{link_to 'Add', new_author_path}"
-%ul.authors
-  -@authors.each do |au|
-    %li
-      ="#{au.name}"
-      = render :partial => "actions", :locals => { :au => au }
-  

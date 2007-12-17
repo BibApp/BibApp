@@ -1,4 +1,0 @@
-- authors.each do |au|
-  - fields_for "author[]", au do |au_field|
-    = render :partial => 'author', :locals => {:au_field => au_field}
-= link_to "Add author", url_for(:controller => 'authors', :action => 'new')
