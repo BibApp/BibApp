@@ -1,8 +1,0 @@
-%div{:class => "column span-24"}
-  %div{:class => "column span-16"}
-    %h2="Publications (#{@publications.total_entries}) - #{link_to "Add", new_publication_path}"
-    = will_paginate @publications
-    %ol.publications
-      -@publications.each do |publication|
-        %li
-          =link_to "#{publication.name} - #{publication.issn_isbn}", publication_path(publication)
