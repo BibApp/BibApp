@@ -1,0 +1,4 @@
+%ul.actions
+  %li=link_to "show", citation_path(c)
+  %li=link_to "edit", edit_citation_path(c)
+  %li=link_to "destroy",{:controller=>"citations", :action=>"destroy", :id=>c.id}, :confirm => "Are you sure?", :method => :delete
