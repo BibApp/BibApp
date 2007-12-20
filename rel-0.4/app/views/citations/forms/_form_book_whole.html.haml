@@ -1,0 +1,20 @@
+%fieldset
+  %legend Book Whole
+
+  %p= render :partial => 'authors'
+
+  %p
+    %label Year of Publication
+    %br/
+    = form.text_field :year, :size => 4
+  %p
+    %label Book Title
+    %br/
+    = form.text_field :title_primary, :size => 40
+  %p
+    %label Publisher
+    %br/
+    = form.collection_select :publisher_id, @publisher_authorities, :id, :name
+    = hidden_field_tag :type, 'BookWhole'
+  %p.submit
+    = submit_tag :save
