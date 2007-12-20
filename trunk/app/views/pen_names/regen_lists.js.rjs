@@ -1,3 +1,0 @@
-page.hide "author_#{@author.id}"
-page.replace_html 'current', :partial => "author", :collection => @person.authors, :locals => {:selected => true}
-page['author_name'].value = ""
