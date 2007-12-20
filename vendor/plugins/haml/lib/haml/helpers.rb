@@ -1,5 +1,4 @@
-require 'haml/helpers/action_view_mods'
-require 'haml/helpers/action_view_extensions'
+require File.dirname(__FILE__) + '/helpers/action_view_mods'
 
 module Haml
   # This module contains various helpful methods to make it easier to do
@@ -8,33 +7,21 @@ module Haml
   # disposal from within the template.
   module Helpers
     self.extend self
-
-    @@action_view_defined = defined?(ActionView)
+    
+    @@action_view = false
     @@force_no_action_view = false
 
     # Returns whether or not ActionView is installed on the system.
     def self.action_view?
-      @@action_view_defined
-    end
-
-    # Isolates the whitespace-sensitive tags in the string and uses preserve
-    # to convert any endlines inside them into HTML entities for endlines.
-    def find_and_preserve(input)
-      input = input.to_s
-      input.scan(/<(textarea|code|pre)[^>]*>(.*?)<\/\1>/im) do |tag, contents|
-        input = input.gsub(contents, preserve(contents))
-      end
-      input
+      @@action_view
     end
 
     # Takes any string, finds all the endlines and converts them to
     # HTML entities for endlines so they'll render correctly in
     # whitespace-sensitive tags without screwing up the indentation.
-    def preserve(input)      
+    def flatten(input)
       input.gsub(/\n/, '&#x000A;').gsub(/\r/, '')
     end
-
-    alias_method :flatten, :preserve
 
     # Takes an Enumerable object and a block
     # and iterates over the object,
@@ -82,22 +69,6 @@ module Haml
         "<li>#{result}</li>"
       end
       to_return.join("\n")
-    end
-
-    # Returns a hash containing default assignments for the xmlns and xml:lang
-    # attributes of the <tt>html</tt> HTML element.
-    # It also takes an optional argument for the value of xml:lang and lang,
-    # which defaults to 'en-US'.
-    # For example,
-    #
-    #   %html{html_attrs}
-    #
-    # becomes
-    #
-    #   <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en-US' lang='en-US'>
-    #
-    def html_attrs(lang = 'en-US')
-      {:xmlns => "http://www.w3.org/1999/xhtml", 'xml:lang' => lang, :lang => lang}
     end
 
     # Increments the number of tabs the buffer automatically adds
@@ -201,75 +172,13 @@ module Haml
     def capture_haml(*args, &block)
       capture_haml_with_buffer(buffer.buffer, *args, &block)
     end
-
-    # Outputs text directly to the Haml buffer, with the proper tabulation
-    def puts(text = "")
-      buffer.buffer << ('  ' * buffer.tabulation) << text.to_s << "\n"
-      nil
-    end
-
-    #
-    # call-seq:
-    #   open(name, attributes = {}) {...}
-    #   open(name, text, attributes = {}) {...}
-    #
-    # Creates an HTML tag with the given name and optionally text and attributes.
-    # Can take a block that will be executed
-    # between when the opening and closing tags are output.
-    # If the block is a Haml block or outputs text using puts,
-    # the text will be properly indented.
-    # 
-    # For example,
-    #
-    #   open :table do
-    #     open :tr do
-    #       open :td, {:class => 'cell'} do
-    #         open :strong, "strong!"
-    #         puts "data"
-    #       end
-    #       open :td do
-    #         puts "more_data"
-    #       end
-    #     end
-    #   end
-    #
-    # outputs
-    #
-    #   <table>
-    #     <tr>
-    #       <td class='cell'>
-    #         <strong>
-    #           strong!
-    #         </strong>
-    #         data
-    #       </td>
-    #       <td>
-    #         more_data
-    #       </td>
-    #     </tr>
-    #   </table>
-    #
-    def open(name, attributes = {}, alt_atts = {}, &block)
-      text = nil
-      if attributes.is_a? String
-        text = attributes
-        attributes = alt_atts
-      end
-
-      puts "<#{name}#{buffer.build_attributes(attributes)}>"
-      tab_up
-        # Print out either the text (using push_text) or call the block and add an endline
-        if text
-          puts(text)
-        elsif block
-          block.call
-        end
-      tab_down
-      puts "</#{name}>"
-      nil
-    end
     
     private
+    
+    # Sets whether or not ActionView is installed on the system.
+    def self.action_view(value) # :nodoc:
+      @@action_view = value
+    end
 
     # Gets a reference to the current Haml::Buffer object.
     def buffer
@@ -289,7 +198,7 @@ module Haml
     def capture_haml_with_buffer(local_buffer, *args, &block)
       position = local_buffer.length
       
-      block.call *args
+      block.call(*args)
       
       captured = local_buffer.slice!(position..-1)
       
@@ -312,17 +221,15 @@ module Haml
     # also works in other ActionView templates,
     # where it will always return false.
     def is_haml?
-      @haml_is_haml
+      @haml_stack ? @haml_stack.size > 0 : false
     end
     
-    include ActionViewExtensions if self.const_defined? "ActionViewExtensions"
+    include ActionViewMods if self.const_defined?  "ActionViewMods"
   end
 end
 
-module ActionView
-  class Base # :nodoc:
-    def is_haml?
-      false
-    end
+class ActionView::Base # :nodoc:
+  def is_haml?
+    false
   end
 end

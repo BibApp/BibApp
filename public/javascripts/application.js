@@ -8,11 +8,11 @@ function populate_person_form(ldap_result_index, form) {
   f['person_last_name'].value = res.sn;
   if (res.postaladdress) {
     var aparts = res.postaladdress.split('$');
-    f['person_office_address_line_one'].value = aparts[0];
-    if (aparts[1]) { f['person_office_address_line_two'].value = aparts[1]; }
+    f['person_officeaddr_line1'].value = aparts[0];
+    if (aparts[1]) { f['person_officeaddr_line2'].value = aparts[1]; }
   }
-  if (res.mail) { f['person_email'].value = res.mail }
-  if (res.telephonenumber) { f['person_phone'].value = res.telephonenumber  }
+  if (res.mail) { f['person_email_address'].value = res.mail }
+  if (res.telephonenumber) { f['person_office_phone'].value = res.telephonenumber  }
   if (res.postalcode) { f['person_office_zip'].value = res.postalcode }
   if (res.l) { f['person_office_city'].value = res.l }
   if (res.st) { f['person_office_state'].value = res.st }

@@ -1,32 +1,19 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
+vanveen_on_dc:
   id: 1
-  author_id: 1
+  person_id: 1
   citation_id: 1
-  position: 0
-  created_at: 2007-10-17 10:47:25
-  updated_at: 2007-10-17 10:47:25
 
-two:
+hagness_on_dc:
   id: 2
-  author_id: 2
+  person_id: 2
   citation_id: 1
-  position: 0
-  created_at: 2007-10-17 10:47:25
-  updated_at: 2007-10-17 10:47:25
 
-three:
+vanveen_on_price_control:
   id: 3
-  author_id: 3
-  citation_id: 1
-  position: 0
-  created_at: 2007-10-17 10:47:25
-  updated_at: 2007-10-17 10:47:25
-  
-four:
+  person_id: 1
+  citation_id: 6
+
+vanveen_on_quant:
   id: 4
-  author_id: 4
-  citation_id: 1
-  position: 0
-  created_at: 2007-10-17 10:47:25
-  updated_at: 2007-10-17 10:47:25
+  person_id: 1
+  citation_id: 5

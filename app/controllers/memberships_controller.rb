@@ -1,18 +1,22 @@
 class MembershipsController < ApplicationController
   before_filter :find_membership, :only => [:destroy]
-  before_filter :find_person, :only => [:create, :create_group, :new, :destroy, :sort]
-  before_filter :find_group,  :only => [:create, :create_group, :destroy]
-  
-  make_resourceful do 
-    build :index, :show, :new, :update
-  end
-  
+  before_filter :find_group, :only => [:create, :destroy]
+  before_filter :find_person, :only => [:create, :destroy, :new, :create_group]
   
   def create
-    @person.groups << @group  
+    @person.groups << @group
     respond_to do |format|
       format.js { render :action => :regen_lists }
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
+      format.html { redirect_to :action => new, :person_id => @person.id }
+    end
+    
+  end
+  
+  def destroy
+    @membership.destroy if @membership
+    respond_to do |format|
+      format.js { render :action => :regen_lists }
+      format.html { redirect_to :action => new, :person_id => @person.id }
     end
   end
   
@@ -25,34 +29,16 @@ class MembershipsController < ApplicationController
     end
   end
   
-  def destroy
-    @membership.destroy if @membership
-    respond_to do |format|
-      format.js { render :action => :regen_lists }
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
-    end
+  def new
   end
-  
-  def sort
-    @person.groups.each do |group|
-      membership = Membership.find_by_person_id_and_group_id(@person.id, group.id)
-      membership.position = params["current"].index(group.id.to_s)+1
-      membership.save
-    end
-    
-    respond_to do |format|
-      format.js { render :action => :regen_lists }
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
-    end
-  end
-  
+
   private
   def find_person
-    @person = Person.find_by_id(params[:person_id])
+    @person ||= Person.find(params[:person_id])
   end
   
   def find_group
-    @group = Group.find_by_id(params[:group_id])
+    @group ||= Group.find(params[:group_id])
   end
   
   def find_membership

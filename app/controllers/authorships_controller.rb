@@ -1,85 +1,34 @@
 class AuthorshipsController < ApplicationController
-  # GET /authorships
-  # GET /authorships.xml
-  def index
-    @authorships = Authorship.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @authorships }
-    end
-  end
-
-  # GET /authorships/1
-  # GET /authorships/1.xml
-  def show
-    @authorship = Authorship.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @authorship }
-    end
-  end
-
-  # GET /authorships/new
-  # GET /authorships/new.xml
-  def new
-    @authorship = Authorship.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @authorship }
-    end
-  end
-
-  # GET /authorships/1/edit
-  def edit
-    @authorship = Authorship.find(params[:id])
-  end
-
-  # POST /authorships
-  # POST /authorships.xml
+  
   def create
-    @authorship = Authorship.new(params[:authorship])
+    @person = Person.find(params[:person_id])
+    
+    if request.post?
+      # Handle the file upload, redirect to the list of this person's citations
+      file = Upload.save(@person, params[:upload]) 
 
-    respond_to do |format|
-      if @authorship.save
-        flash[:notice] = 'Authorship was successfully created.'
-        format.html { redirect_to(@authorship) }
-        format.xml  { render :xml => @authorship, :status => :created, :location => @authorship }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @authorship.errors, :status => :unprocessable_entity }
-      end
+      Authorship.create_batch!(@person, file)
+
+      redirect_to(:controller => "people", :action => "show", :id => @person.id)
+      
     end
   end
+  
+  def create_from_ris
+    authorship = params[:authorship]
+    @person = Person.find(authorship[:person_id])
+    @feed = Feed.find(authorship[:feed_id])
 
-  # PUT /authorships/1
-  # PUT /authorships/1.xml
-  def update
-    @authorship = Authorship.find(params[:id])
-
-    respond_to do |format|
-      if @authorship.update_attributes(params[:authorship])
-        flash[:notice] = 'Authorship was successfully updated.'
-        format.html { redirect_to(@authorship) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @authorship.errors, :status => :unprocessable_entity }
-      end
+    if params[:commit] == "Save it!"
+      # Citation was good, save it
+      citations = authorship[:ris]
+      cites = Authorship.create_batch!(@person, citations)
+      @feed.update_attributes(:feed_state_id => 2)
+    elsif params[:commit] == "This is bogus!"
+      # Citation was wrong, mark it was bad
+      @feed.update_attributes(:feed_state_id => 3)
     end
-  end
-
-  # DELETE /authorships/1
-  # DELETE /authorships/1.xml
-  def destroy
-    @authorship = Authorship.find(params[:id])
-    @authorship.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(authorships_url) }
-      format.xml  { head :ok }
-    end
+    # Return to admin/feeds to continue collecting
+    redirect_to(:controller => "admin", :action => "feeds")
   end
 end

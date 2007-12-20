@@ -14,5 +14,9 @@ config.action_controller.perform_caching             = true
 # Enable serving of images, stylesheets, and javascripts from an asset server
 # config.action_controller.asset_host                  = "http://assets.example.com"
 
-# Disable delivery errors, bad email addresses will be ignored
+# Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
+
+# Where files for archiving are uploaded and, ultimately, delivered
+ARCHIVE_UPLOAD_DIR = "#{RAILS_ROOT}/tmp/archive_upload"
+ARCHIVE_OUTPUT_DIR = "#{RAILS_ROOT}/tmp/archive_output"

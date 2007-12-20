@@ -1,53 +1,45 @@
 ActionController::Routing::Routes.draw do |map|
-
   # The priority is based upon order of creation: first created -> highest priority.
-
+  
   # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
+  # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
-
+  
+  
   # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+  # map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+  # You can have the root of your site routed by hooking up '' 
+  # -- just remember to delete public/index.html.
+  # map.connect '', :controller => "welcome"
+  
+  map.connect "/people/ldap_results",
+    :controller => "people",
+    :action => "ldap_results"
+  map.connect "/citations/list",
+    :controller => "citations",
+    :action => "list"
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+  map.resources :citations, :memberships, :people, :groups, :publishers
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.resources :authors,
-    :citations,
-    :groups,
-    :memberships,
-    :pen_names,
-    :people,
-    :publishers,
-    :publications
+  # Install the default route as the lowest priority.
 
   map.connect "/",
-    :controller => 'citations',
+    :controller => 'groups',
+    :action => 'index'
+  map.connect "/account/login",
+    :controller => 'account',
+    :action => 'login'
+  map.connect "/about",
+    :controller => 'about',
     :action => 'index'
   map.connect "/search",
     :controller => 'search',
     :action => 'index'
-    
+  map.keyword_page '/keywords/:url_abbrev',
+    :controller => 'keywords',
+    :action => 'view_timeline',
+    :url_abbrev => 'url_abbrev'
   map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
-  
 end

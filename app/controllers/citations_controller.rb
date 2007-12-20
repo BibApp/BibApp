@@ -1,150 +1,101 @@
 class CitationsController < ApplicationController
-  before_filter :find_authorities, :only => [:new, :edit]
   
-  make_resourceful do
-    build :show, :edit, :destroy
-    
-    response_for :show do |format|
-      format.html # index.html
-      format.xml  { render :xml => @citation.to_xml }
-      format.yaml { render :txt => @citation.to_yaml }
-    end
-    
-    before :edit do
-      @authors = @citation.authors
-    end
-  end
+  caches_page :show, :index, :copyright_analysis
   
   def index
+    list
+    render :action => 'list'
+  end
+
+  before_filter :login_required, :only => [ :edit, :update ]
+  before_filter :find_citation, :only => [:edit, :update, :show]
   
-    @citations = Citation.paginate(
-      :all, 
-      :conditions => ["citation_state_id = ?", 3],
-      :order => "year desc, title_primary",
-      :page => params[:page] || 1,
-      :per_page => 5
-    )
-    
-    @groups = Citation.find_by_sql(
-      "select count(citations.id) as count, groups.*
-      from citations
-      join authorships on citations.id = authorships.citation_id
-      join authors on authorships.author_id = authors.id
-      join pen_names on authors.id = pen_names.author_id
-      join people on pen_names.person_id = people.id
-      join memberships on people.id = memberships.person_id
-      join groups on memberships.group_id = groups.id
-      where citations.citation_state_id = 3
-      group by groups.name
-      order by count(citations.id) DESC
-      limit 10"
-    )
-    
-    @people = Citation.find_by_sql(
-      "select count(citations.id) as count, people.*
-      from citations
-      join authorships on citations.id = authorships.citation_id
-      join authors on authorships.author_id = authors.id
-      join pen_names on authors.id = pen_names.author_id
-      join people on pen_names.person_id = people.id
-      where citations.citation_state_id = 3
-      group by people.id
-      order by count(citations.id) DESC
-      limit 10"
-    )
-    
-    @publications = Citation.find_by_sql(
-      "select count(citations.id) as count, publications.*
-      from citations
-      join publications on citations.publication_id = publications.id
-      where citations.citation_state_id = 3
-      group by publications.name
-      order by count(citations.id) DESC
-      limit 10"
-    )
-    
+  def find_citation
+    @citation = Citation.find(params[:id])
+  end
+  
+  def list
+    tag = params[:tag]
+    @person = Person.find(params[:person_id])
+    @citations = Citation.find_all_by_tag_or_person_id(tag, @person.id)
+  end
+
+  def show
+    @citation = Citation.find(params[:id])
+
     respond_to do |format|
-      format.html # index.html
-      format.xml  {render :xml => @citation.errors.to_xml}
+      format.html { render :action  => "show" }
+      format.xml  { render :action => "show.rxml", :layout => false }
     end
   end
   
   def new
-    params[:type] ||= 'JournalArticle'
-    @citation_types = ["Journal Article", "Conference Proceeding", "Book"]
-    @citation = subklass_init(params[:type], params[:citation])
-    @authors = Array.new
-    author = Author.new
-    @authors << author
+    @citation = Citation.new
+    @reftypes = Reftype.find(:all)
   end
-  
-  def create
-    
-    # TODO: This step is dumb, we should map attrs in the SubClass::create method itself
-    # If we have a Book object, we need to capture the Title as the new Publication Name
-    if params[:type] == 'Book'
-      params[:citation][:publication_full] = params[:citation][:title_primary]
-    end
-    
-    # Initiate the Citation SubKlass
-    @citation = subklass_init(params[:type], params[:citation])
-    
-    authors = Array.new
-    authorships = Array.new
 
-    params[:author].each do |add|
-      author = Author.find_or_create_by_name(add)
-      authors << author.name
-      authorships << author.id
-    end
-    
-    @citation.serialized_data = { "authors" => authors, "authorships" => authorships }
-    
-    respond_to do |format|
-      if @citation.save
-        flash[:notice] = "Citation was successfully created."
-        format.html {redirect_to citation_url(@citation)}
-        format.xml  {head :created, :location => citation_url(@citation)}
-      else
-        format.html {render :action => "new"}
-        format.xml  {render :xml => @citation.errors.to_xml}
-      end
+  def create
+    @citation = Citation.new(params[:citation])
+    if @citation.save
+      flash[:notice] = 'Citation was successfully created.'
+      redirect_to :action => 'list'
+    else
+      render :action => 'new'
     end
   end
-  
+
+  def edit
+    @citation = Citation.find(params[:id])
+  end
+
+  def toggle
+  end
+
   def update
     @citation = Citation.find(params[:id])
-    authors = params[:author]
-    authors.each do |id, hash|
-      row = Author.find(id)
-      row.update_attributes(:name => hash[:name])
+    if @citation.update_attributes(params[:citation])
+      flash[:notice] = 'Citation was successfully updated.'
+      redirect_to :action => 'show', :id => @citation
+    else
+      render :action => 'edit'
     end
+  end
 
-    respond_to do |format|
-      if @citation.update_attributes(params[:citation])
-        flash[:notice] = "Citation was successfully updated."
-        format.html {redirect_to citation_url(@citation)}
-        format.xml  {head :ok}
-      else
-        format.html {render :action => "edit"}
-        format.xml  {render :xml => @citation.errors.to_xml}
+  def destroy
+    Citation.find(params[:id]).destroy
+    redirect_to :action => 'list'
+  end
+ 
+  def copyright_analysis
+    @person = Person.find(params[:id])
+    @journals = @person.copyright_analysis
+    @journals.each{|j| j.romeo_color = "unknown" if !j.romeo_color}
+    @journals.each{|j| j.periodical_full = j.title_tertiary if j.periodical_full.nil? or j.periodical_full.empty?}
+    
+    @green = 0
+    @blue = 0
+    @yellow = 0
+    @white = 0
+    @unknown = 0
+    @total = 0
+    
+    @journals.each do |c|
+      if c.romeo_color == "green"
+        @green += c.count.to_i
       end
+      if c.romeo_color == "blue"
+        @blue += c.count.to_i
+      end
+      if c.romeo_color == "yellow"
+        @yellow += c.count.to_i
+      end
+      if c.romeo_color == "white"
+        @white += c.count.to_i
+      end
+      if c.romeo_color == "unknown"  
+        @unknown += c.count.to_i
+      end     
+      @total = @total + c.count.to_i
     end
-  end
-  
-  private
-  
-  def subklass_init(klass_type, citation)
-    klass_type.sub!(" ", "")
-    klass = klass_type.constantize
-    if klass.superclass != Citation
-      raise NameError.new("#{klass_type} is not a subclass of Citation") and return
-    end
-    citation = klass.new(citation)
-  end
-  
-  def find_authorities
-    @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
-    @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
   end
 end

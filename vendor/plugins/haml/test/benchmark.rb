@@ -1,6 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/haml'
-require 'haml/template'
-require 'sass/engine'
+require File.dirname(__FILE__) + '/../lib/haml/template'
 require 'rubygems'
 require 'active_support'
 require 'action_view'
@@ -21,15 +19,26 @@ module Haml
       end
     end
     
-    # Benchmarks haml against ERb, and Sass on its own.
+    # Benchmarks HAML against ERb. If <tt>template_name</tt> is specified,
+    # looks for a haml template in ./templates and an rhtml template in
+    # ./rhtml with the name <tt>template_name</tt>. Otherwise, uses
+    # <tt>haml_template</tt> and <tt>rhtml_template</tt> as the location of
+    # the templates.
     # 
     # Returns the results of the benchmarking as a string.
     # 
-    def benchmark(runs = 100)
-      template_name = 'standard'
-      haml_template = "haml/templates/#{template_name}"
-      rhtml_template = "haml/rhtml/#{template_name}"
-      sass_template = File.dirname(__FILE__) + "/sass/templates/complex.sass"
+    # :call-seq:
+    # benchmark(runs = 100, template_name = 'standard')
+    # benchmark(runs = 100, haml_template, rhtml_template)
+    # 
+    def benchmark(runs = 100, template_name = 'standard', other_template = nil)
+      if other_template.nil?
+        haml_template = "templates/#{template_name}"
+        rhtml_template = "rhtml/#{template_name}"
+      else
+        haml_template = template_name
+        rhtml_template = other_template
+      end
       
       old_stdout = $stdout
       $stdout = StringIO.new
@@ -39,15 +48,9 @@ module Haml
         b.report("erb:") { runs.times { @base.render rhtml_template } }
       end
       
-      #puts times[0].inspect, times[1].inspect
+      #puts times.inspect
       ratio = sprintf("%g", times[0].to_a[5] / times[1].to_a[5])
       puts "Haml/ERB: " + ratio
-      
-      puts '', '-' * 50, 'Sass on its own', '-' * 50
-      
-      Benchmark.bmbm do |b|
-        b.report("sass:") { runs.times { Sass::Engine.new(File.read(sass_template)).render } }
-      end
       
       $stdout.pos = 0
       to_return = $stdout.read

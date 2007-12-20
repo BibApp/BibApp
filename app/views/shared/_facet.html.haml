@@ -1,6 +1,0 @@
-%h4= name.capitalize
-%ul.facets
-  - values.each do |v|
-    %li
-      =link_to "#{v[0]}", "search?q=#{@query}&fq=#{name}_facet:#{v[0]}"
-      ="(#{v[1]})"

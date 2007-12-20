@@ -13,10 +13,11 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 
-# Disable request forgery protection in test environment
-config.action_controller.allow_forgery_protection    = false
-
 # Tell ActionMailer not to deliver emails to the real world.
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
+
+# Where files for archiving are uploaded and, ultimately, delivered
+ARCHIVE_UPLOAD_DIR = "#{RAILS_ROOT}/tmp/archive_upload"
+ARCHIVE_OUTPUT_DIR = "#{RAILS_ROOT}/tmp/archive_output"

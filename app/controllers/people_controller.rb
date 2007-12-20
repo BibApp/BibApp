@@ -1,31 +1,80 @@
 class PeopleController < ApplicationController
-  make_resourceful do 
-    build :all
+  
+  caches_page :index, :list, :show
+  
+  before_filter :login_required, :only => [ :edit, :update ]
+  before_filter :find_person, :only => [:edit, :update, :show]
+  
+  def index
+    redirect_to groups_path
+  end
+
+  def show
     
-    before :new do
-      if params[:q]
-        @ldap_results = ldap_search(params[:q])
-      end
+    @people_coauths = Authorship.coauthors_of(@person)
+    @group_coauths = Authorship.coauthor_groups(@person)
+        
+    # Locate associated tags
+    @tags = @person.tags(10)
+    
+    # Got an image for this person?
+    if !@person.image_url
+      @person.image_url = "/images/question_mark.png"
     end
     
-    before :show do
-      @citations = Citation.paginate(
-        :all,
-        :joins => ["
-          join authorships on citations.id = authorships.citation_id
-          join authors on authorships.author_id = authors.id
-          join pen_names on authors.id = pen_names.author_id
-          join people on pen_names.person_id = people.id 
-          "],
-        :conditions => ["people.id = ? and citations.citation_state_id = ?", params[:id], 3],
-        :order => "citations.year DESC, citations.title_primary",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
+    # Prepare vcard webservice address
+    # TODO: Generalize this!
+    @vcard = "http://suda.co.uk/projects/X2V/get-vcard.php?uri=http%3A//bibapp.wendtlibrary.org/person/show/#{@person.id.to_s}"
+    @rss_feeds = [{
+      :controller => "rss",
+      :action => "person",
+      :id => @person.id
+    }]
+  end
+
+  def new
+    if params[:q]
+      @ldap_results = ldap_search(params[:q])
+    end
+  end
+  
+  def create
+    @person = Person.new(params[:person])
+    if @person.save
+      flash[:notice] = 'Person was successfully created.'
+      redirect_to edit_person_path(@person)
+    else
+      render :action => 'new'
     end
   end
 
+  def edit
+    # Prepare unique college affiliations for vcard
+    if !@person.image_url
+      @person.image_url = "/images/question_mark.png"
+    end
+  end
+
+  def update
+    if @person.update_attributes(params[:person])
+      flash[:notice] = "#{@person.display_name} was successfully updated."
+      redirect_to person_path(@person)
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    @person.destroy
+    flash[:notice] = "#{@person.display_name} was deleted."
+    redirect_to people_path
+  end
+  
   private
+  def find_person
+    @person = Person.find(params[:id])
+  end
+  
   def ldap_search(query)
     begin
       require 'rubygems'
