@@ -1,0 +1,4 @@
+%div{:class => "column span-24"}
+  %div{:class => "column span-12"}
+    %ul.citations
+    = render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }

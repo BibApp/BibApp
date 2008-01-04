@@ -1,0 +1,19 @@
+#content
+  %h3="#{link_to @person.first_last, person_path(@person)}'s Pen Names:"
+  %ol#current
+    = render :partial => "author", :collection => @person.authors(true), :locals => {:selected => true}
+  
+  - remote_form_for :author, Author.new, :url => {:action => :create_author }, :method => :post do |form|
+    = form.text_field :name, :size => 20
+    = hidden_field_tag :person_id, @person.id
+    = submit_tag "Add"
+  
+  %br/
+  - form_remote_tag :url => '/pen_names/live_search_for_authors' do
+    = text_field_tag(:q, value = nil, options = {})
+    = hidden_field_tag(:person_id, value = @person.id)
+    = submit_tag 'Filter'
+  
+  %ol#inactive
+  
+  =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }

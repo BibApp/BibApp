@@ -1,0 +1,29 @@
+%fieldset
+  %legend="Publication"
+  - form_for @publication do |form|
+    %p
+      %label Name
+      %br/
+      = form.text_field :name
+    %p
+      %label URL
+      %br/
+      = form.text_field :url
+    %p
+      %label ISSN or ISBN
+      %br/
+      = form.text_field :issn_isbn
+    %p
+      %label Code
+      %br/
+      = form.text_field :code
+    %p
+      %label Publisher
+      %br/
+      = form.collection_select :publisher_id, @publishers, :id, :name
+    %p
+      %label Publication Authority Record
+      %br/
+      = form.collection_select :authority_id, @publications, :id, :form_select
+    %p.submit
+      = submit_tag :save
