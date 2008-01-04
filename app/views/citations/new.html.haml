@@ -1,0 +1,8 @@
+%h3 Add a Citation
+%ul
+  - @citation_types.each do |ct|
+    %li
+      =link_to ct, new_citation_path(:type => ct)
+
+- form_for :citation, @citation, :url => {:controller => "citations", :action => "create"}, :html => {:method => :post} do |form|
+  = render :partial => "citations/forms/form_#{@citation.class.name.to_s.underscore}", :locals => { :form => form, :authors => @authors }

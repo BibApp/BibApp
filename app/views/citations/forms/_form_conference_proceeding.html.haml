@@ -1,0 +1,30 @@
+%fieldset
+  %legend Conference Proceeding
+
+  %p= render :partial => 'authors'
+
+  %p
+    %label Year of Publication
+    %br/
+    = form.text_field :year, :size => 4
+  %p
+    %label Article Title
+    %br/
+    = form.text_field :title_primary, :size => 40
+  %p
+    %label Periodical Title
+    %br/
+    = form.collection_select :publication_id, @publication_authorities, :id, :name
+  %p
+    %label Volume
+    = form.text_field :volume, :size => 4
+    %label Issue
+    = form.text_field :issue, :size => 4
+  %p
+    %label Start Page
+    = form.text_field :start_page, :size => 4
+    %label End Page
+    = form.text_field :end_page, :size => 4
+    = hidden_field_tag :type, 'JournalArticle'
+  %p.submit
+    = submit_tag :save
