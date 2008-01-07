@@ -31,6 +31,7 @@ class MedlineImporter < CitationImporter
         end
         r_hash[r_key] = r_val
       end
+      r_hash["original_data"] = props["original_data"]
     end
 
     r_hash.each do |key, value|
@@ -69,7 +70,8 @@ class MedlineImporter < CitationImporter
        :own => :source,
        :stat => :notes,
        :pmid => :external_id,
-       :aid => :links
+       :aid => :links,
+       :original_data => :original_data
     }
   
     @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
@@ -98,6 +100,8 @@ class MedlineImporter < CitationImporter
       "JFULL" => "JournalArticle",  # Journal (full)
       "JOUR"  => "JournalArticle",  # Journal
       "Journal Article" => "JournalArticle",
+      "Comparative Study" => "JournalArticle",
+      "Research Support, Non-U.S. Gov't" => "JournalArticle", #TODO: fix this... break
       "MAP"   => "Map", # Map
       "MGZN"  => "Magazine", # Magazine
       "MPCT"  => "MotionPicture", # Motion picture

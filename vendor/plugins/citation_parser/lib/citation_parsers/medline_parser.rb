@@ -22,6 +22,9 @@ class MedlineParser < CitationParser
         cite.properties[key] = Array.new if cite.properties[key].nil?
         cite.properties[key] << val.strip
       end
+
+      # Map original data for inclusion in database
+      cite.properties["original_data"] = rec
       @citations << cite
     end
     @citations
