@@ -11,8 +11,6 @@ class RisImporter < CitationImporter
     return false if !self.class.import_formats.include?(parsed_citation.citation_type)
     props = parsed_citation.properties
     props.each do |key, values|
-      puts "Key: #{key}\n"
-      puts "Value: #{values} | #{values.class}\n\n"
       
       # Key
       r_key = @attr_map[key]
@@ -31,14 +29,18 @@ class RisImporter < CitationImporter
         end
         r_hash[r_key] = r_val
       end
+      r_hash["original_data"] = props["original_data"]
     end
 
     r_hash.each do |key, value|
-      if value.size < 2
+      puts "r_hash Key: #{key}\n"
+      puts "r_hash Value: #{value} | #{value.class}\n\n"
+      
+      if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
       end
       
-      if value.size >= 2
+      if value.size >= 2 && value.class.to_s == "Array"
         r_hash[key] = value.flatten
       end
     end
@@ -76,10 +78,11 @@ class RisImporter < CitationImporter
        :bn => :issn_isbn,
        :n1 => :notes,
        :m1 => :notes,
-       :l2 => :links
+       :l2 => :links,
+       :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })    
+    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
     @attr_translators[:ty] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
     @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     
