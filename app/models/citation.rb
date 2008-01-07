@@ -163,7 +163,7 @@ class Citation < ActiveRecord::Base
       end
       
       # Set publication_id
-      if h[:publication].empty?
+      if h[:publication].nil?
         h[:publication] = "Unknown"
       end
       
