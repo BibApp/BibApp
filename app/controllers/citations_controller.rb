@@ -71,7 +71,13 @@ class CitationsController < ApplicationController
   
   def new
     params[:type] ||= 'JournalArticle'
-    @citation_types = ["Journal Article", "Conference Proceeding", "Book"]
+    @citation_types = [
+        "Add Batch",
+        "Journal Article", 
+        "Conference Proceeding", 
+        "Book"
+    ]
+    
     @citation = subklass_init(params[:type], params[:citation])
     @authors = Array.new
     author = Author.new
@@ -86,30 +92,36 @@ class CitationsController < ApplicationController
       params[:citation][:publication_full] = params[:citation][:title_primary]
     end
     
-    # Initiate the Citation SubKlass
-    @citation = subklass_init(params[:type], params[:citation])
+    # If we need to add a batch
+    if params[:type] == "AddBatch"
+      @citation = Citation.import_batch!(params[:citation][:citations])
+    else
+      # If we need to add one
+      # Initiate the Citation SubKlass
+      @citation = subklass_init(params[:type], params[:citation])
     
-    authors = Array.new
-    authorships = Array.new
+      authors = Array.new
+      authorships = Array.new
 
-    params[:author].each do |add|
-      author = Author.find_or_create_by_name(add)
-      authors << author.name
-      authorships << author.id
-    end
-    
-    @citation.serialized_data = { "authors" => authors, "authorships" => authorships }
-    
-    respond_to do |format|
-      if @citation.save
-        flash[:notice] = "Citation was successfully created."
-        format.html {redirect_to citation_url(@citation)}
-        format.xml  {head :created, :location => citation_url(@citation)}
-      else
-        format.html {render :action => "new"}
-        format.xml  {render :xml => @citation.errors.to_xml}
+      params[:author].each do |add|
+        author = Author.find_or_create_by_name(add)
+        authors << author.name
+        authorships << author.id
       end
-    end
+    
+      @citation.serialized_data = { "authors" => authors, "authorships" => authorships }
+    
+      respond_to do |format|
+        if @citation.save
+          flash[:notice] = "Citation was successfully created."
+          format.html {redirect_to citation_url(@citation)}
+          format.xml  {head :created, :location => citation_url(@citation)}
+        else
+          format.html {render :action => "new"}
+          format.xml  {render :xml => @citation.errors.to_xml}
+        end
+      end # If we are adding one
+    end # If we need to add a batch
   end
   
   def update
