@@ -1,4 +1,7 @@
-%h2 People
-%ol.people
-  - @people.each do |p|
-    %li=link_to "#{p.first_last}", person_path(p)
+%div{:class => "column span-24"}
+  %div{:class => "column span-16"}
+    %h2="People (#{@people.total_entries}) - #{link_to "Add", new_person_path}"
+    = will_paginate @people
+    %ol.people
+      - @people.each do |p|
+        %li=link_to "#{p.first_last}", person_path(p)

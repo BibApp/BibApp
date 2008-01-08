@@ -1,6 +1,15 @@
 class PeopleController < ApplicationController
   make_resourceful do 
     build :all
+
+    before :index do
+      @people = Person.paginate(
+        :all,
+        :order => "last_name",
+        :page => params[:page] || 1,
+        :per_page => 10
+      )
+    end
     
     before :new do
       if params[:q]
