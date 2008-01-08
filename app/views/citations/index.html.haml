@@ -1,6 +1,7 @@
 %div{:class => "column span-24"}
   %div{:class => "column span-16"}
-    %h3="Citations (#{@citations.total_entries})"
+    %h2
+      ="Citations (#{@citations.total_entries}) - #{link_to "Add", new_citation_path}"
     = will_paginate @citations
     %ul.citations
       - @citations.each do |citation|
