@@ -1,4 +1,7 @@
-%h2 Groups
-%ol.groups-alphabetical
-  - @groups.each do |g|
-    %li=link_to "#{g.name}", group_path(g)
+%div{:class => "column span-24"}
+  %div{:class => "column span-16"}
+    %h2="Groups (#{@groups.total_entries}) - #{link_to "Add", new_group_path}"
+    = will_paginate @groups
+    %ol.groups-alphabetical
+      - @groups.each do |g|
+        %li=link_to "#{g.name}", group_path(g)
