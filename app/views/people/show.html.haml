@@ -1,9 +1,18 @@
 %div{:class => "column span-24"}
-  %h2= @person.first_last
+  %h2="#{@person.first_last}"
+  %p.edit_person_actions
+    %strong
+      Edit: 
+    = link_to @person.first_last, edit_person_path
+    | 
+    = link_to "Groups", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id}}
+    | 
+    = link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}
+    
   %p= @person.research_focus
 
   %div{:class => "column span-16"}
-    %h3="Citations (#{@citations.total_entries})"
+    %h3="Citations (#{@citations.total_entries}) #{link_to 'Add', new_citation_path}"
     = will_paginate @citations
     %ol.citations
       - @citations.each do |citation|
@@ -15,7 +24,7 @@
       - @person.groups.each do |g|
         %li=link_to "#{g.name}", group_path(g)
 
-    %h3="Authors (#{@person.authors.size})"
+    %h3="Pen Names (#{@person.authors.size})"
     %ol.authors-alphabetical
       - @person.authors.each do |a|
         %li=link_to "#{a.name}", author_path(a)
