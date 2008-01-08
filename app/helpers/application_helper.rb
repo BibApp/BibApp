@@ -36,6 +36,10 @@ module ApplicationHelper
   end
   
   def archivable_count
+    if Citation.find(:first).nil?
+      return @archivable_count = 0
+    end
+    
     archivable_publishers = Publisher.find(
       :all, 
       :select => "pub1.id, pub2.id as auth", 
