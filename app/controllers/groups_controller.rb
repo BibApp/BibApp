@@ -1,6 +1,15 @@
 class GroupsController < ApplicationController
   make_resourceful do 
     build :all
+
+    before :index do
+      @groups = Group.paginate(
+        :all,
+        :order => "name",
+        :page => params[:page] || 1,
+        :per_page => 10
+      )
+    end
     
     before :show do 
       @citations = Citation.paginate(
