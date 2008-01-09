@@ -11,9 +11,10 @@ class Citation < ActiveRecord::Base
   before_validation_on_create :set_initial_states
   validates_presence_of :title_primary
 
-  after_save :set_authorships
-  after_save :deduplicate
+  before_save :set_authorships
   before_save :set_dupe_keys
+  after_save :deduplicate
+
 
   #### Serialization ####
   serialize :serialized_data

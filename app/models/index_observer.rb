@@ -4,7 +4,7 @@ class IndexObserver < ActiveRecord::Observer
   observe Citation
   
   def after_save(record)
-    if record.batch_index?
+    if record.batch_index? || record.citation_state_id != 3
       # Do not update
     else
       Index.update_solr(record)

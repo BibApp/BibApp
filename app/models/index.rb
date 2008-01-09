@@ -40,7 +40,7 @@ class Index
   
   class << self
     def batch_index
-      records = Question.find(:all, :conditions => ["batch_index = ?", 1])
+      records = Citation.find(:all, :conditions => ["citation_state_id = ?, batch_index = ?",3,1])
       solr = Solr::Connection.new("http://localhost:8982/solr")
       records.each do |record|
         doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
