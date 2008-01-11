@@ -4,7 +4,10 @@
     =" Results for:"
     %strong=" #{@query}"
   - if !@filter.empty?
-    %h4="Filters: #{@filter}"
+    %h4
+      ="Remove Filters: "
+      - @filter.each do |f|
+        =remove_filter(@query,@filter,f)
 
   %div{:class => "column span-24"}
     %div{:class => "column span-12"}
