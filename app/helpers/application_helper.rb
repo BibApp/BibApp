@@ -59,4 +59,27 @@ module ApplicationHelper
     )
     return @archivable_count
   end
+  
+  def add_filter(query, query_filter, facet, value, count)
+
+    # If we have >1 filter, we need to join the facet_field:value
+    if query_filter.size > 0 || query_filter.empty?
+
+      prepped_filter = Array.new
+      prepped_filter << query_filter.dup
+      prepped_filter << '"' + value + '"'
+      prepped_filter = prepped_filter.join("+>+")
+
+    # If we have no filters, we need to send the first
+    else
+      prepped_filter = "#{facet}_facet:#{value}"
+    end
+    
+    link_to "#{value} (#{count})", {
+      :controller => "search", 
+      :action => :index, 
+      :fq => prepped_filter,
+      :q => query
+    }
+  end
 end
