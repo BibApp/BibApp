@@ -3,6 +3,8 @@
     %em="#{@q.total_hits}"
     =" Results for:"
     %strong=" #{@query}"
+  - if !@filter.empty?
+    %h4="Filters: #{@filter}"
 
   %div{:class => "column span-24"}
     %div{:class => "column span-12"}
@@ -27,37 +29,13 @@
               ="#{score}"
 
     #facets{:class => "column span-12 last"}
-      %div{:class => "column span-4"}
-        %h4 Authors
-        %ul.author-facets
-          - @author_facets.each do |af|
+    - @facets.each do |facet, values|
+      %div{:class => "column span-5"}
+        %h4=facet.capitalize
+        %ul{:class => "#{facet}-facets"}
+          - values.each do |value, count|
             %li
-              =link_to "#{af[0]}", "search?q=#{@query}&fq=author_facet:#{af[0]}"
-              ="(#{af[1]})"
-            
-      %div{:class => "column span-3 last"}
-        %h4 Years
-        %ul.year-facets
-          - @year_facets.each do |yf|
-            %li
-              =link_to "#{yf[0]} ", "search?q=#{@query}&fq=year_facet:#{yf[0]}"
-              ="(#{yf[1]})"
-
-      %div{:class => "column span-5 last"}
-        %h4 Types
-        %ul.type-facets
-          - @type_facets.each do |tf|
-            %li
-              =link_to "#{tf[0]} ", "search?q=#{@query}&fq=type_facet:#{tf[0]}"
-              ="(#{tf[1]})"
-
-      %div{:class => "column span-12"}
-        %h4 Publications
-        %ul.publication-facets
-          - @publication_facets.each do |pf|
-            %li
-              =link_to "#{pf[0]}", "search?q=#{@query}&fq=publication_facet:#{pf[0]}"
-              ="(#{pf[1]})"
+              =add_filter(@query,@filter,facet,value,count)
 
 - else
   %p Search form here.
