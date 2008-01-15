@@ -15,5 +15,9 @@
     %div{:class => "column span-4"}
       %h3="Authority for (#{@authority_for.size})"
       %ul.authority-children
-      - @authority_for.each do |auth|
-        %li=link_to auth.name, publication_path(auth)
+        - @authority_for.each do |auth|
+          %li=link_to auth.name, publication_path(auth)
+    %div{:class => "column span-6"}
+      %h3="Publisher"
+      %p=link_to @publication.publisher.name, publisher_path(@publication.publisher)
+        
