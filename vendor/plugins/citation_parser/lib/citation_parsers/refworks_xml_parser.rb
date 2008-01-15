@@ -16,6 +16,7 @@ class RefworksXmlParser < CitationParser
       c.properties = param_hash(ref)
       @citations << c
     }
+
     @citations
   end
   
