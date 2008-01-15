@@ -10,8 +10,10 @@ class RefworksXmlImporter < CitationImporter
     return false if !self.class.import_formats.include?(parsed_citation.citation_type)
     props = parsed_citation.properties
     props.each do |key, values|
-      puts "Key: #{key}\n"
-      puts "Value: #{values} | #{values.class}\n\n"
+      
+      puts("Key: #{key}\n")
+      puts("Value: #{values.inspect}\n")
+      puts("Value: #{values.class}\n")
       
       # Key
       r_key = @attr_map[key]
@@ -30,14 +32,15 @@ class RefworksXmlImporter < CitationImporter
         end
         r_hash[r_key] = r_val
       end
+      r_hash["original_data"] = props["original_data"].to_s
     end
 
     r_hash.each do |key, value|
-      if value.size < 2
+      if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
       end
       
-      if value.size >= 2
+      if value.size >= 2 && value.class.to_s == "Array"
         r_hash[key] = value.flatten
       end
     end
