@@ -33,7 +33,7 @@
 
     #facets{:class => "column span-12 last"}
     - @facets.each do |facet, values|
-      %div{:class => "column span-5"}
+      %div{:class => "column span-11"}
         %h4=facet.capitalize
         %ul{:class => "#{facet}-facets"}
           - values.each do |value, count|
