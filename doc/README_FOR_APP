@@ -1,2 +1,92 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+=== Get Started ===
+
+1. Rails 2.0.2
+
+You need to roll the latest Rails.
+
+<pre>
+gem install rails --include-dependencies
+</pre>
+
+2. Get the Latest BibApp Code
+
+<pre>
+svn checkout http://bibapp.googlecode.com/svn/trunk/
+</pre>
+
+3. Edit Configs
+
+Edit the /config files:
+
+* database.yml.example
+* ldap.yml.example
+* personalize.rb.example
+* solr.yml.example
+
+You'll need to remove the .example extension from each of these files and personalize the contents as necessary.  As we are using the Rails' "Acts as Solr" plugin, the Solr location and port will stay the same (no changes necessary).
+
+4. Setup Your Database
+
+Backup your old BibApp database and prep a new one.  There is no migration presently to move data from v0.4 to truck's schema.
+
+<pre>
+cd ~Sites/bibapp
+rake db:migrate
+</pre>
+
+4. Run Mongrel? or the server of your preference...
+
+<pre>
+cd ~Sites/bibapp
+mongrel_rails start
+</pre>
+
+5. Start Solr
+
+<pre>
+cd ~Sites/bibapp
+rake solr:start
+</pre>
+
+You are done.  Pull it up: http://localhost:3000
+
+=== Add Data ===
+
+Base = /
+
+1. Add Citations: /citations/new
+
+* Add either RIS, MEDLINE or "old-style" Refworks XML
+
+2. Add People: /people
+
+* Use the LDAP search form at the bottom of the page
+* When the page refreshes, you should have "use me" options for importing LDAP data to the web form
+
+3. Add PenNames: /people/1
+
+* If you have Citation data loaded, the "Filter" form will help you view possible author name variants.
+
+* Example: Ray Vanderby, Jr
+- Filter by "Vanderby"
+- Results will be:
+
+# Vanderby Jr.,Ray
+# Vanderby R.,Jr
+# Vanderby,R.
+# Vanderby,R.,Jr
+# Vanderby,R.Jr
+# Vanderby,Ray
+# Vanderby,Ray Jr
+
+- Select all of the "correct" pen names for Ray Vanderby, Jr
+- Selecting a pen name automatically includes citations authored via that name to Ray Vanderby, Jr's Person page
+
+4. Add Groups: /people/1
+
+* Add "Memberships" (Group Names) and submit
+* Groups automatically get their own Group page ( /group/1 )
+
+5. Try out search
+
+6. More to come...
