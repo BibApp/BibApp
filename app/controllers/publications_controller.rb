@@ -34,8 +34,11 @@ class PublicationsController < ApplicationController
     end
     
     after :update do
+
+      #TODO: Pass this off to a 
       current_object.citations.each do |c|
         c.publication = current_object.authority
+        c.publisher = current_object.publisher
         c.save
       end
     end
