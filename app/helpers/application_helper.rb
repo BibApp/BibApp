@@ -65,7 +65,6 @@ module ApplicationHelper
     # If we have >1 filter, we need to join the facet_field:value
     if query_filter.size > 0 || !query_filter.empty?
       
-      logger.debug("QF: #{query_filter.inspect}")
       prepped_filter = Array.new
       prepped_filter << query_filter.dup
       prepped_filter << '"' + value + '"'
@@ -98,6 +97,5 @@ module ApplicationHelper
       :fq => prepped_filter,
       :q => query
     }
-    
   end
 end
