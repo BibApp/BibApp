@@ -26,6 +26,7 @@ class Citation < ActiveRecord::Base
   
   # Deduplication: deduplicate Citation records on create
   def deduplicate
+    logger.debug("\n\n===DEDUPLICATE===\n\n")
     begin
       Citation.transaction do
         dupe_candidates = self.duplicates
@@ -86,6 +87,7 @@ class Citation < ActiveRecord::Base
       first_author = first_author[0]
     end
     
+    first_author = first_author.split(",")[0]
     publication = Publication.find(self.publication_id)
     
     logger.debug "First Author = #{first_author}\n"
@@ -154,7 +156,7 @@ class Citation < ActiveRecord::Base
       h[:authorships_cache] = authorships
 
       # Set publisher_id
-      if h[:publisher].nil?
+      if h[:publisher].nil? || h[:publisher].empty?
         h[:publisher] = "Unknown"
       end
       
@@ -164,7 +166,7 @@ class Citation < ActiveRecord::Base
       end
       
       # Set publication_id
-      if h[:publication].nil?
+      if h[:publication].nil? || h[:publication].empty?
         h[:publication] = "Unknown"
       end
       
@@ -223,6 +225,7 @@ class Citation < ActiveRecord::Base
 
   # Authorships
   def set_authorships
+    logger.debug("\n\n===SET AUTHORSHIPS===\n\n")
     self.serialized_data[:authorships_cache].each do |a|
       Authorship.find_or_create_by_citation_id_and_author_id(:citation_id => self.id, :author_id => a)
     end
