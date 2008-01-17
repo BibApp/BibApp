@@ -1,20 +1,31 @@
 class PublishersController < ApplicationController
   make_resourceful do 
     build :all
-    
+
+    publish :yaml, :xml, :json, :attributes => [
+      :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
+        :publications => [:id, :name]
+        }
+      ]
+
     before :new, :edit do
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
       @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     end
 
     before :index do
-      @publishers = Publisher.paginate(
-        :all, 
-        :conditions => ["id = authority_id"], 
-        :order => "name",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )  
+      if params[:q]
+        query = params[:q]
+        @current_objects = current_objects
+      else
+        @current_objects = Publisher.paginate(
+          :all, 
+          :conditions => ["id = authority_id"], 
+          :order => "name",
+          :page => params[:page] || 1,
+          :per_page => 20
+        )
+      end
     end
     
     before :show do
@@ -39,15 +50,12 @@ class PublishersController < ApplicationController
         c.save
       end
     end
-       
-    response_for :index do |format|
-      format.html # index.html
-      format.xml { render :xml => @publishers.to_xml }
+  end
+  
+  def current_objects
+    if params[:q]
+      query = '%' + params[:q] + '%'
     end
-    
-    response_for :show do |format|
-      format.html # index.html
-      format.xml { render :xml => @publisher.to_xml }
-    end
+    @current_objects ||= current_model.find(:all, :conditions => ["name like ?", query])
   end
 end
