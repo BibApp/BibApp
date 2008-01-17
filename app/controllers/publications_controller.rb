@@ -1,6 +1,13 @@
 class PublicationsController < ApplicationController
+
   make_resourceful do 
     build :all
+    
+    publish :yaml, :xml, :json, :attributes => [
+      :id, :name, :url, :issn_isbn, :publisher_id, {
+        :publisher => [:id, :name]
+        }
+      ]
     
     before :new, :edit do
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
@@ -8,13 +15,18 @@ class PublicationsController < ApplicationController
     end
     
     before :index do
-      @publications = Publication.paginate(
-        :all,
-        :conditions => ["id = authority_id"],
-        :order => "name",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
+      if params[:q]
+        query = params[:q]
+        @current_objects = current_objects
+      else
+        @current_objects = Publication.paginate(
+          :all,
+          :conditions => ["id = authority_id"],
+          :order => "name",
+          :page => params[:page] || 1,
+          :per_page => 20
+        )
+      end
     end
     
     before :show do      
@@ -34,23 +46,17 @@ class PublicationsController < ApplicationController
     end
     
     after :update do
-
-      #TODO: Pass this off to a 
+      #TODO: Pass this off to an AsyncObserver
       current_object.citations.each do |c|
         c.publication = current_object.authority
         c.publisher = current_object.publisher
         c.save
       end
     end
-
-    response_for :index do |format|
-      format.html # index.html
-      format.xml { render :xml => @publications.to_xml }
-    end
-    
-    response_for :show do |format|
-      format.html # index.html
-      format.xml { render :xml => @publication.to_xml }
-    end
   end
+  
+  def current_objects
+    @current_objects ||= current_model.find_all_by_issn_isbn(params[:q])
+  end
+  
 end
