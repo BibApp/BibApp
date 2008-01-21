@@ -14,7 +14,7 @@ class Publication < ActiveRecord::Base
     if publication.authority_id != publication.id
       publication.citations.each do |citation|
         citation.publication_id = publication.authority_id
-        citation.save_without_callbacks
+        citation.save
       end
     end
   end
