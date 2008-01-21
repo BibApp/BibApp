@@ -2,7 +2,7 @@
 # migrations feature of ActiveRecord to incrementally modify your database, and
 # then regenerate this schema definition.
 
-ActiveRecord::Schema.define(:version => 16) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "authors", :force => true do |t|
     t.integer  "data_source_id"
@@ -13,6 +13,9 @@ ActiveRecord::Schema.define(:version => 16) do
     t.integer  "authority_id"
   end
 
+  add_index "authors", ["name"], :name => "author_name"
+  add_index "authors", ["person_id"], :name => "fk_person_id"
+
   create_table "authorships", :force => true do |t|
     t.integer  "author_id"
     t.integer  "citation_id"
@@ -21,8 +24,7 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "authorships", ["author_id"], :name => "author_id"
-  add_index "authorships", ["citation_id"], :name => "citation_id"
+  add_index "authorships", ["author_id", "citation_id"], :name => "author_citation_join", :unique => true
 
   create_table "citations", :force => true do |t|
     t.string   "type"
@@ -54,14 +56,16 @@ ActiveRecord::Schema.define(:version => 16) do
     t.integer  "external_id"
     t.text     "serialized_data"
     t.text     "original_data"
+    t.integer  "batch_index",               :default => 0
   end
 
-  add_index "citations", ["title_dupe_key"], :name => "title_dupe_key"
-  add_index "citations", ["issn_isbn_dupe_key"], :name => "issn_isbn_dupe_key"
-  add_index "citations", ["citation_state_id"], :name => "citation_state_id"
-  add_index "citations", ["publication_id"], :name => "publication_id"
-  add_index "citations", ["publisher_id"], :name => "publisher_id"
-  add_index "citations", ["type"], :name => "type"
+  add_index "citations", ["title_dupe_key"], :name => "title_dupe"
+  add_index "citations", ["issn_isbn_dupe_key"], :name => "issn_isbn_dupe"
+  add_index "citations", ["citation_state_id"], :name => "fk_citation_state_id"
+  add_index "citations", ["publication_id"], :name => "fk_publication_id"
+  add_index "citations", ["publisher_id"], :name => "fk_publisher_id"
+  add_index "citations", ["batch_index"], :name => "batch_index"
+  add_index "citations", ["type"], :name => "fk_citation_type"
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -69,6 +73,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "groups", ["name"], :name => "group_name", :unique => true
 
   create_table "keywordings", :force => true do |t|
     t.integer  "keyword_id"
@@ -78,11 +84,15 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
+  add_index "keywordings", ["keyword_id", "citation_id"], :name => "keyword_citation_join", :unique => true
+
   create_table "keywords", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "keywords", ["name"], :name => "keyword_name", :unique => true
 
   create_table "memberships", :force => true do |t|
     t.integer  "person_id"
@@ -94,12 +104,16 @@ ActiveRecord::Schema.define(:version => 16) do
     t.integer  "position"
   end
 
+  add_index "memberships", ["person_id", "group_id"], :name => "person_group_join"
+
   create_table "pen_names", :force => true do |t|
     t.integer  "author_id"
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "pen_names", ["author_id", "person_id"], :name => "author_person_join", :unique => true
 
   create_table "people", :force => true do |t|
     t.integer  "external_id"
@@ -137,8 +151,10 @@ ActiveRecord::Schema.define(:version => 16) do
     t.string   "place"
   end
 
-  add_index "publications", ["publisher_id"], :name => "publisher_id"
-  add_index "publications", ["authority_id"], :name => "authority_id"
+  add_index "publications", ["publisher_id"], :name => "fk_publisher_id"
+  add_index "publications", ["authority_id"], :name => "fk_authority_id"
+  add_index "publications", ["name"], :name => "publication_name"
+  add_index "publications", ["issn_isbn"], :name => "issn_isbn"
 
   create_table "publishers", :force => true do |t|
     t.integer  "sherpa_id"
@@ -153,7 +169,8 @@ ActiveRecord::Schema.define(:version => 16) do
     t.datetime "updated_at"
   end
 
-  add_index "publishers", ["authority_id"], :name => "authority_id"
+  add_index "publishers", ["name"], :name => "publisher_name", :unique => true
+  add_index "publishers", ["authority_id"], :name => "fk_authority_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
@@ -168,5 +185,7 @@ ActiveRecord::Schema.define(:version => 16) do
   create_table "tags", :force => true do |t|
     t.string "name"
   end
+
+  add_index "tags", ["name"], :name => "tag_name", :unique => true
 
 end
