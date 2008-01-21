@@ -7,12 +7,11 @@ class Person < ActiveRecord::Base
   def citations
     citations = Citation.find(
       :all,
-      :joins => ["
-        join authorships on citations.id = authorships.citation_id
+      :joins =>
+        "join authorships on citations.id = authorships.citation_id
         join authors on authorships.author_id = authors.id
         join pen_names on authors.id = pen_names.author_id
-        join people on pen_names.person_id = people.id 
-        "],
+        join people on pen_names.person_id = people.id",
       :conditions => ["people.id = ? and citations.citation_state_id = ?", self.id, 3],
       :order => "citations.year DESC, citations.title_primary"
     )
