@@ -14,8 +14,10 @@ class Publication < ActiveRecord::Base
     if publication.authority_id != publication.id
       publication.citations.each do |citation|
         citation.publication_id = publication.authority_id
-        citation.save
+        citation.batch_index = 1
+        citation.save_without_callbacks
       end
+      Index.batch_index
     end
   end
   
@@ -28,9 +30,17 @@ class Publication < ActiveRecord::Base
   def form_select
     "#{name} - #{issn_isbn}"
   end
+
+  def authority_for
+    authority_for = Publication.find(
+      :all, 
+      :conditions => ["authority_id = ?", self.id]
+    )
+    return authority_for
+  end
   
   class << self
-    
+  
     def update_multiple(pub_ids, auth_id)
       pub_ids.split(",").each do |pub|
         update = Publication.find_by_id(pub)

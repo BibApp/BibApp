@@ -6,6 +6,8 @@ class PublicationsController < ApplicationController
     publish :yaml, :xml, :json, :attributes => [
       :id, :name, :url, :issn_isbn, :publisher_id, {
         :publisher => [:id, :name]
+        }, {
+        :authority_for => [:id, :name]
         }
       ]
     
@@ -32,17 +34,11 @@ class PublicationsController < ApplicationController
         :page => params[:page] || 1,
         :per_page => 10
       )
-      
-      @authority_for = Publication.find(
-        :all,
-        :conditions => ["authority_id = ?", current_object.id],
-        :order => "name"
-      )
     end
   end
   
   private
   def current_objects
-    @current_objects ||= current_model.find_all_by_issn_isbn(params[:q])
+    @current_objects ||= current_model.find_all_by_issn_isbn(params[:q], :conditions => ['id = authority_id'])
   end
 end
