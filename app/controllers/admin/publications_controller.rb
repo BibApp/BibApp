@@ -1,13 +1,6 @@
-class PublicationsController < ApplicationController
-
-  make_resourceful do 
-    build :index, :show
-    
-    publish :yaml, :xml, :json, :attributes => [
-      :id, :name, :url, :issn_isbn, :publisher_id, {
-        :publisher => [:id, :name]
-        }
-      ]
+class Admin::PublicationsController < ApplicationController
+  make_resourceful do
+    build :index, :show, :new, :edit, :create, :update
     
     before :index do
       if params[:q]
@@ -19,7 +12,7 @@ class PublicationsController < ApplicationController
           :conditions => ["id = authority_id"],
           :order => "name",
           :page => params[:page] || 1,
-          :per_page => 20
+          :per_page => 30
         )
       end      
     end
@@ -39,8 +32,25 @@ class PublicationsController < ApplicationController
         :order => "name"
       )
     end
+
+    before :new, :edit do
+      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+    end
   end
   
+  def update_multiple
+    pub_ids = params[:pub_ids]
+    auth_id = params[:auth_id]
+    update = Publication.update_multiple(pub_ids, auth_id)
+    
+    respond_to do |wants|
+      wants.html do
+        redirect_to :action => 'index', :page => params[:page]
+      end
+    end
+  end
+
   private
   def current_objects
     @current_objects ||= current_model.find_all_by_issn_isbn(params[:q])

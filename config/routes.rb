@@ -30,6 +30,13 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
+  map.namespace(:admin) do |admin|
+    admin.resources :publications,
+      :collection => {
+        :update_multiple => :put
+      }
+  end
+
   # Install the default routes as the lowest priority.
   map.resources :authors,
     :citations,
@@ -43,6 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "/",
     :controller => 'citations',
     :action => 'index'
+    
   map.connect "/search",
     :controller => 'search',
     :action => 'index'

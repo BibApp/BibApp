@@ -94,3 +94,7 @@ ul.global-nav li {
 .citations {
 	padding-top:1em;
 }
+
+tr.selected {
+	background-color:#FFFF99;
+}

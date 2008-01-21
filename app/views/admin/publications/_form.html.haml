@@ -1,6 +1,6 @@
 %fieldset
   %legend="Publication"
-  - form_for @publication do |form|
+  - form_for @publication, :url => {:controller => "admin/publications", :action => "update"} do |form|
     %p
       %label Name
       %br/
