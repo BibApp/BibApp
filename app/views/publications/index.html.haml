@@ -4,5 +4,5 @@
     = will_paginate @current_objects
     %ol.publications
       -@current_objects.each do |publication|
-        %li
+        %li.publication
           =link_to "#{publication.name} - #{publication.issn_isbn}", publication
