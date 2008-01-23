@@ -162,7 +162,7 @@ class Citation < ActiveRecord::Base
       
       h[:publisher].each do |add|
         publisher = Publisher.find_or_create_by_name(add)
-        h[:publisher_id] = publisher.id
+        h[:publisher_id] = publisher.authority_id
       end
       
       # Set publication_id
@@ -177,7 +177,7 @@ class Citation < ActiveRecord::Base
           :publisher_id => h[:publisher_id]
         )
         
-        h[:publication_id] = publication.id
+        h[:publication_id] = publication.authority_id
       end
       
       # Create the Citation
