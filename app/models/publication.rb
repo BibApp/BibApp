@@ -17,6 +17,7 @@ class Publication < ActiveRecord::Base
         citation.batch_index = 1
         citation.save_without_callbacks
       end
+      #TODO: AsyncObserver
       Index.batch_index
     end
   end
