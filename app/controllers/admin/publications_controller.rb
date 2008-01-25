@@ -37,6 +37,14 @@ class Admin::PublicationsController < ApplicationController
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
       @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     end
+    
+    after :update do
+      current_object.citations.each do |c|
+        c.publication = current_object.authority
+        c.publisher = current_object.publisher.authority
+        c.save
+      end
+    end
   end
   
   def update_multiple
@@ -53,6 +61,11 @@ class Admin::PublicationsController < ApplicationController
 
   private
   def current_objects
+    #TODO: If params[:q], handle multiple request types:
+    # * ISSN
+    # * ISBN
+    # * Name (abbreviations)
+    # * Publisher
     @current_objects ||= current_model.find_all_by_issn_isbn(params[:q])
   end
 end
