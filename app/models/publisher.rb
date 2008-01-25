@@ -3,17 +3,48 @@ class Publisher < ActiveRecord::Base
   belongs_to :authority,
     :class_name => "Publisher",
     :foreign_key => :authority_id
-  has_many :citations
+  has_many :citations, :conditions => ["citation_state_id = 3"]
 
   after_create do |publisher|
     publisher.authority_id = publisher.id
     publisher.save
   end
   
+  after_save do |publisher|
+    
+    # If Publisher authority changed, we need to echo new authority key
+    # to each related model.
+    if publisher.authority_id != publisher.id
+      
+      # Update publications
+      publisher.publications.each do |publication|
+        publication.publisher_id = publisher.authority_id
+        publication.save
+      end
+      
+      # Update citations
+      publisher.citations.each do |citation|
+        citation.publisher_id = publisher.authority_id
+        citation.batch_index = 1
+        citation.save_without_callbacks
+      end
+      #TODO: AsyncObserver
+      Index.batch_index
+    end
+  end
+  
   def to_param
     param_name = name.gsub(" ", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
+  end
+  
+  def authority_for
+    authority_for = Publisher.find(
+      :all, 
+      :conditions => ["authority_id = ?", self.id]
+    )
+    return authority_for
   end
     
   def self.from_sherpa_api(host, page)
@@ -43,6 +74,17 @@ class Publisher < ActiveRecord::Base
         :sherpa_id    => sherpa_id,
         :source_id    => 1           
       })
+    end
+  end
+  
+  class << self
+  
+    def update_multiple(pub_ids, auth_id)
+      pub_ids.split(",").each do |pub|
+        update = Publisher.find_by_id(pub)
+        update.authority_id = auth_id
+        update.save
+      end
     end
   end
 end
