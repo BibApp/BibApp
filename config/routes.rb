@@ -31,7 +31,14 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   map.namespace(:admin) do |admin|
+    
+    # Admin::Publications
     admin.resources :publications,
+      :collection => {
+        :update_multiple => :put
+      }
+    # Admin::Publishers
+    admin.resources :publishers,
       :collection => {
         :update_multiple => :put
       }
