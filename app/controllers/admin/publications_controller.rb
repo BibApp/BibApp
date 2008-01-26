@@ -1,4 +1,5 @@
 class Admin::PublicationsController < ApplicationController
+
   make_resourceful do
     build :index, :show, :new, :edit, :create, :update
     
@@ -36,14 +37,6 @@ class Admin::PublicationsController < ApplicationController
     before :new, :edit do
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
       @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
-    end
-    
-    after :update do
-      current_object.citations.each do |c|
-        c.publication = current_object.authority
-        c.publisher = current_object.publisher.authority
-        c.save
-      end
     end
   end
   

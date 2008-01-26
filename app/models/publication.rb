@@ -11,12 +11,27 @@ class Publication < ActiveRecord::Base
   end
   
   after_save do |publication|
+    
+    # If Publication authority changed, we need to echo new authority key
+    # to each related model.
+    
+    logger.debug("\n\nPub: #{publication.id} | Auth: #{publication.authority_id}\n\n")
     if publication.authority_id != publication.id
+      
+      # Update publications
+      logger.debug("\n\n===Updating Publications===\n\n")
+      publication.authority_for.each do |pub|
+        pub.authority_id = publication.authority_id
+        pub.save
+      end
+      
+      # Update citations
+      logger.debug("\n\n===Updating Citations===\n\n")
       publication.citations.each do |citation|
         citation.publication_id = publication.authority_id
-        citation.batch_index = 1
-        citation.save_without_callbacks
+        citation.save_and_set_for_index_without_callbacks
       end
+      
       #TODO: AsyncObserver
       Index.batch_index
     end

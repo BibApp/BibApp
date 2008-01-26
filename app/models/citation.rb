@@ -114,7 +114,12 @@ class Citation < ActiveRecord::Base
   
   def save_without_callbacks
     create_or_update_without_callbacks
-  end 
+  end
+  
+  def save_and_set_for_index_without_callbacks
+    self.batch_index = 1
+    self.save_without_callbacks
+  end
 
   # Batch import Citations
   def self.import_batch!(data)    
@@ -232,6 +237,7 @@ class Citation < ActiveRecord::Base
   end
 
   def set_dupe_keys
+    logger.debug("\n\n===SET DUPE KEYS===\n\n")
     write_attribute("issn_isbn_dupe_key", issn_isbn_dupe_key)
     write_attribute("title_dupe_key", title_dupe_key)
   end
