@@ -14,20 +14,31 @@ class Publisher < ActiveRecord::Base
     
     # If Publisher authority changed, we need to echo new authority key
     # to each related model.
+    
+    logger.debug("\n\nPub: #{publisher.id} | Auth: #{publisher.authority_id}\n\n")
     if publisher.authority_id != publisher.id
       
+      # Update publishers
+      logger.debug("\n\n===Updating Publishers===\n\n")
+      publisher.authority_for.each do |pub|
+        pub.authority_id = publisher.authority_id
+        pub.save
+      end
+      
       # Update publications
+      logger.debug("\n\n===Updating Publications===\n\n")
       publisher.publications.each do |publication|
         publication.publisher_id = publisher.authority_id
         publication.save
       end
       
       # Update citations
+      logger.debug("\n\n===Updating Citations===\n\n")
       publisher.citations.each do |citation|
         citation.publisher_id = publisher.authority_id
-        citation.batch_index = 1
-        citation.save_without_callbacks
+        citation.save_and_set_for_index_without_callbacks
       end
+      
       #TODO: AsyncObserver
       Index.batch_index
     end

@@ -1,17 +1,13 @@
 class PublishersController < ApplicationController
+
   make_resourceful do 
-    build :all
+    build :index, :show
 
     publish :yaml, :xml, :json, :attributes => [
       :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
         :publications => [:id, :name]
         }
       ]
-
-    before :new, :edit do
-      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
-      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
-    end
 
     before :index do
       if params[:q]
@@ -42,13 +38,6 @@ class PublishersController < ApplicationController
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
-    end
-    
-    after :update do
-      current_object.citations.each do |c|
-        c.publisher = current_object.authority
-        c.save
-      end
     end
   end
   

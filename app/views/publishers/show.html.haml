@@ -1,7 +1,7 @@
 %p=link_to "Return to Publisher List", publishers_url
 %h2
   = @publisher.name
-  %span=link_to "Edit", edit_publisher_path(@publisher)
+  %span=link_to "Edit", edit_admin_publisher_path(@publisher)
 
 %div{:class => "column span-24"}
   %div{:class => "column span-16"}
@@ -13,8 +13,12 @@
         
   #facets{:class => "column span-6 prepend-2 last"}
     %div{:class => "column span-4"}
-      %h4="Authority for (#{@authority_for.size})"
-      %ul.authority-children
-      - @authority_for.each do |auth|
-        %li= auth.name
+      - if @publisher.authority_for.size > 0
+        %h3="Authority for (#{@publisher.authority_for.size})"
+        %ul.authority-children
+          - @publisher.authority_for.each do |auth|
+            %li=link_to auth.name, publisher_path(auth)
+      - else
+        %h3 Authorized Title
+        %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)
       
