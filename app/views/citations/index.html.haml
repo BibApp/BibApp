@@ -13,19 +13,19 @@
       -@groups.each do |group|
         %li
           =link_to group.name, group_path(group)
-          = "(#{group.count})"
+          = "(#{group.total})"
 
     %h3=link_to "People", people_url
     %ol.people
       -@people.each do |person|
         %li
           =link_to "#{person.last_name}, #{person.first_name}", person_path(person)
-          = "(#{person.count})"
+          = "(#{person.total})"
     %hr/      
     %h3=link_to "Publications", publications_url
     %ol.publications
       -@publications.each do |publication|
         %li
           =link_to publication.name, publication_path(publication)
-          = "(#{publication.count})"
+          = "(#{publication.total})"
       
