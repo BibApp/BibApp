@@ -26,41 +26,50 @@ class CitationsController < ApplicationController
     )
     
     @groups = Citation.find_by_sql(
-      "select count(citations.id) as count, groups.*
-      from citations
-      join authorships on citations.id = authorships.citation_id
-      join authors on authorships.author_id = authors.id
-      join pen_names on authors.id = pen_names.author_id
-      join people on pen_names.person_id = people.id
-      join memberships on people.id = memberships.person_id
-      join groups on memberships.group_id = groups.id
-      where citations.citation_state_id = 3
-      group by groups.name
-      order by count(citations.id) DESC
-      limit 10"
+      "SELECT g.*, cit.total
+	   		FROM groups g
+			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
+					FROM citations
+					join authorships on citations.id = authorships.citation_id
+					join authors on authorships.author_id = authors.id
+					join pen_names on authors.id = pen_names.author_id
+					join people on pen_names.person_id = people.id
+					join memberships on people.id = memberships.person_id
+					join groups on memberships.group_id = groups.id
+					where citations.citation_state_id = 3
+					group by groups.id) as cit
+			ON g.id=cit.group_id
+			ORDER BY cit.total DESC
+			LIMIT 10"	
     )
     
     @people = Citation.find_by_sql(
-      "select count(citations.id) as count, people.*
-      from citations
-      join authorships on citations.id = authorships.citation_id
-      join authors on authorships.author_id = authors.id
-      join pen_names on authors.id = pen_names.author_id
-      join people on pen_names.person_id = people.id
-      where citations.citation_state_id = 3
-      group by people.id
-      order by count(citations.id) DESC
-      limit 10"
+      "SELECT p.*, cit.total
+	   		FROM people p
+			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
+					FROM citations
+					join authorships on citations.id = authorships.citation_id
+					join authors on authorships.author_id = authors.id
+					join pen_names on authors.id = pen_names.author_id
+					join people on pen_names.person_id = people.id
+					where citations.citation_state_id = 3
+					group by people.id) as cit
+			ON p.id=cit.people_id
+			ORDER BY cit.total DESC
+			LIMIT 10"
     )
     
     @publications = Citation.find_by_sql(
-      "select count(citations.id) as count, publications.*
-      from citations
-      join publications on citations.publication_id = publications.id
-      where citations.citation_state_id = 3
-      group by publications.name
-      order by count(citations.id) DESC
-      limit 10"
+	  "SELECT pub.*, cit.total
+	   		FROM publications pub
+			JOIN (SELECT publications.id as publication_id, count(distinct citations.id) as total
+					FROM citations
+					join publications on citations.publication_id = publications.id
+					where citations.citation_state_id = 3
+					group by publications.id) as cit
+			ON pub.id=cit.publication_id
+			ORDER BY cit.total DESC
+			LIMIT 10"
     )
     
     respond_to do |format|
