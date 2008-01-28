@@ -8,13 +8,34 @@ You need to roll the latest Rails.
 gem install rails --include-dependencies
 </pre>
 
-2. Get the Latest BibApp Code
+2. Ruby Gem Pre-requisites
+
+Generally, you install gems using the following:
+
+<pre>
+gem install [gem-name] --include-dependencies
+</pre>
+
+The following gems are required to run BibApp:
+
+* namecase
+* ruby-net-ldap - Used to pull person info from LDAP
+* xml-simple
+
+In situations, you may also wish to install the following gems:
+
+* mongrel - If you plan to use a Mongrel server 
+* mongrel_cluster - If you want to cluster several Mongrel servers
+* postgres  - If you plan to use a PostgreSQL database
+
+
+3. Get the Latest BibApp Code
 
 <pre>
 svn checkout http://bibapp.googlecode.com/svn/trunk/
 </pre>
 
-3. Edit Configs
+4. Edit Configs
 
 Edit the /config files:
 
@@ -25,26 +46,32 @@ Edit the /config files:
 
 You'll need to remove the .example extension from each of these files and personalize the contents as necessary.  As we are using the Rails' "Acts as Solr" plugin, the Solr location and port will stay the same (no changes necessary).
 
-4. Setup Your Database
+5. Setup Your Database
 
-Backup your old BibApp database and prep a new one.  There is no migration presently to move data from v0.4 to truck's schema.
+If you don't already have a BibApp database created, create it!  
+Make sure it is named the same as the 'database' in your config/database.yml file!
+
+If you have an old BibApp (version 0.4) database, just back it up and prep a new one.  There is no migration presently to move data from v0.4 to truck's schema.
+
+Now you can generate the BibApp database structure from within [bibapp]
+(where [bibapp] represents the location where you downloaded BibApp to):
 
 <pre>
-cd ~Sites/bibapp
+cd [bibapp]
 rake db:migrate
 </pre>
 
-4. Run Mongrel? or the server of your preference...
+6. Run Mongrel? or the server of your preference...
 
 <pre>
-cd ~Sites/bibapp
+cd [bibapp]
 mongrel_rails start
 </pre>
 
-5. Start Solr
+7. Start Solr
 
 <pre>
-cd ~Sites/bibapp
+cd [bibapp]
 rake solr:start
 </pre>
 
