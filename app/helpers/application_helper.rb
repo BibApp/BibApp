@@ -36,7 +36,7 @@ module ApplicationHelper
   end
   
   def archivable_count
-    if Publisher.find(:all, :conditions => ["publisher_copy = 1"]).empty?
+    if Publisher.find(:all, :conditions => ["publisher_copy = '1'"]).empty?
       return @archivable_count = 0
     end
     
