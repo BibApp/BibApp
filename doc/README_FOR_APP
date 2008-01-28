@@ -22,11 +22,18 @@ The following gems are required to run BibApp:
 * ruby-net-ldap - Used to pull person info from LDAP
 * xml-simple
 
-In situations, you may also wish to install the following gems:
+You also need to choose your Database, and install one of the following gems:
+
+* mysql     - If you plan to use a MySQL database (default)
+* postgres  - If you plan to use a PostgreSQL database
+
+See the /config/database.yml.example for more tips on installing and configuring
+your database driver.
+
+You may also wish to install the following gems:
 
 * mongrel - If you plan to use a Mongrel server 
 * mongrel_cluster - If you want to cluster several Mongrel servers
-* postgres  - If you plan to use a PostgreSQL database
 
 
 3. Get the Latest BibApp Code
