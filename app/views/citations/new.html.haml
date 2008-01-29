@@ -1,3 +1,6 @@
+- if flash[:notice]
+  %div#flash= flash[:notice]
+
 %h3 Add a Citation
 %ul
   - @citation_types.each do |ct|
