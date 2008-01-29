@@ -80,17 +80,19 @@ class CitationsController < ApplicationController
   
   def new
     params[:type] ||= 'JournalArticle'
+
+    # @TODO: Add each citation subklass to this array
+    # "Journal Article", 
+    # "Conference Proceeding", 
+    # "Book"
+    # more...
+    
     @citation_types = [
         "Add Batch",
-        "Journal Article", 
-        "Conference Proceeding", 
-        "Book"
     ]
     
     @citation = subklass_init(params[:type], params[:citation])
-    @authors = Array.new
-    author = Author.new
-    @authors << author
+
   end
   
   def create
