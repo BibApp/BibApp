@@ -2,11 +2,7 @@
 
 1. Rails 2.0.2
 
-You need to roll the latest Rails.
-
-<pre>
-gem install rails --include-dependencies
-</pre>
+Rails 2.0.2 is frozen in this Rails application.  Since we're still in development, knowing RoR application development is the most important part of using this code.
 
 2. Ruby Gem Pre-requisites
 
@@ -51,14 +47,16 @@ Edit the /config files:
 * personalize.rb.example
 * solr.yml.example
 
-You'll need to remove the .example extension from each of these files and personalize the contents as necessary.  As we are using the Rails' "Acts as Solr" plugin, the Solr location and port will stay the same (no changes necessary).
+You'll need to remove the .example extension from each of these files and personalize the contents as necessary.  As we are using the Rails "Acts as Solr" plugin, the Solr location and port will stay the same (no changes necessary).
 
 5. Setup Your Database
 
 If you don't already have a BibApp database created, create it!  
 Make sure it is named the same as the 'database' in your config/database.yml file!
 
-If you have an old BibApp (version 0.4) database, just back it up and prep a new one.  There is no migration presently to move data from v0.4 to truck's schema.
+If you have an old BibApp (version 0.4) database, just back it up and prep a new one.
+
+*IMPORTANT!* There is *no migration• presently to move data from v0.4 to truck's schema.
 
 Now you can generate the BibApp database structure from within [bibapp]
 (where [bibapp] represents the location where you downloaded BibApp to):
@@ -75,12 +73,41 @@ cd [bibapp]
 mongrel_rails start
 </pre>
 
-7. Start Solr
+7. Solr
 
+Starting
 <pre>
 cd [bibapp]
 rake solr:start
 </pre>
+
+View your Solr install here:
+http://localhost:8982/solr/admin/
+
+Stopping
+<pre>
+cd [bibapp]
+rake solr:stop
+</pre>
+
+<aside>
+  h4. Should you need to reindex the Solr index:
+
+  1. Stop solr
+  [bibapp] rake solr:stop
+
+  2. Delete the index:
+  [bibapp] rm -r vendor/plugins/acts_as_solr/solr/solr/data/*
+
+  3. Restart solr
+  [bibapp] rake solr:start
+
+  4. Reindex your citations
+  [bibapp] script/console
+  [sc] citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
+  [sc] citations.each{ |c| c.save_and_set_for_index_without_callbacks }
+  [sc] Index.batch_index
+</aside>
 
 You are done.  Pull it up: http://localhost:3000
 
