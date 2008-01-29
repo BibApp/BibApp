@@ -79,7 +79,7 @@ class CitationsController < ApplicationController
   end
   
   def new
-    params[:type] ||= 'JournalArticle'
+    params[:type] ||= 'Add Batch'
 
     # @TODO: Add each citation subklass to this array
     # "Journal Article", 
@@ -97,7 +97,7 @@ class CitationsController < ApplicationController
   
   def create
     
-    # TODO: This step is dumb, we should map attrs in the SubClass::create method itself
+    # @TODO: This step is dumb, we should map attrs in the SubClass::create method itself
     # If we have a Book object, we need to capture the Title as the new Publication Name
     if params[:type] == 'Book'
       params[:citation][:publication_full] = params[:citation][:title_primary]
@@ -106,8 +106,21 @@ class CitationsController < ApplicationController
     # If we need to add a batch
     if params[:type] == "AddBatch"
       @citation = Citation.import_batch!(params[:citation][:citations])
+      
+      respond_to do |format|
+        if @citation
+          flash[:notice] = "Batch was successfully created."
+          format.html {redirect_to new_citation_url}
+          format.xml  {head :created, :location => citation_url(@citation)}
+        else
+          format.html {render :action => "new"}
+          format.xml  {render :xml => @citation.errors.to_xml}
+        end
+      end
+
     else
-      # If we need to add one
+      # @TODO: Finish single citation entry?
+      # If we need to add just one
       # Initiate the Citation SubKlass
       @citation = subklass_init(params[:type], params[:citation])
     
