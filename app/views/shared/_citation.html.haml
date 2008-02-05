@@ -1,9 +1,9 @@
 %li
   =link_to "#{citation.title_primary}", citation_path(citation)
   %p 
-    %strong Authors:
-    - citation.authors.each do |au|
-      =link_to "#{au.name}", author_path(au)
+    %strong AuthorStrings:
+    - citation.author_strings.each do |as|
+      =link_to "#{as.name}", author_string_path(as)
     %br/
     %strong Source:
     =link_to "#{citation.publication.authority.name}", publication_path(citation.publication.authority.to_param)

@@ -30,29 +30,17 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
-  map.namespace(:admin) do |admin|
-    
-    # Admin::Publications
-    admin.resources :publications,
-      :collection => {
-        :update_multiple => :put
-      }
-    # Admin::Publishers
-    admin.resources :publishers,
-      :collection => {
-        :update_multiple => :put
-      }
-  end
-
   # Install the default routes as the lowest priority.
-  map.resources :authors,
+    
+  map.resources :author_strings,
     :citations,
     :groups,
     :memberships,
     :pen_names,
-    :people,
-    :publishers,
-    :publications
+    :people
+    
+  map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put}
+  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put}
 
   map.connect "/",
     :controller => 'citations',

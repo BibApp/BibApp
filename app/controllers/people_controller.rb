@@ -22,9 +22,9 @@ class PeopleController < ApplicationController
       @citations = Citation.paginate(
         :all,
         :joins =>
-          "join authorships on citations.id = authorships.citation_id
-          join authors on authorships.author_id = authors.id
-          join pen_names on authors.id = pen_names.author_id
+          "join citation_author_strings on citations.id = citation_author_strings.citation_id
+          join author_strings on citation_author_strings.author_string_id = author_strings.id
+          join pen_names on author_strings.id = pen_names.author_string_id
           join people on pen_names.person_id = people.id",
         :conditions => ["people.id = ? and citations.citation_state_id = ?", @person.id, 3],
         :order => "citations.year DESC, citations.title_primary",

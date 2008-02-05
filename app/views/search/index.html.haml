@@ -17,9 +17,9 @@
           %li
             =link_to "#{doc.title_primary}", citation_path(doc)
             %p 
-              %strong Authors:
-              - doc.authors.each do |au|
-                =link_to "#{au.name}", author_path(au)
+              %strong AuthorStings:
+              - doc.author_strings.each do |as|
+                =link_to "#{as.name}", author_string_path(as)
               %br/
               %strong Source:
               =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
@@ -30,6 +30,8 @@
               %br/
               %strong Rank:
               ="#{score}"
+              %br/
+              %strong="#{link_to_findit(doc)}"
 
     #facets{:class => "column span-12 last"}
     - @facets.each do |facet, values|
@@ -42,4 +44,3 @@
 
 - else
   %p Search form here.
-    

@@ -1,2 +1,2 @@
-page.replace_html 'current', :partial => "author", :collection => @person.authors, :locals => {:selected => true}
-page['author_name'].value = ""
+page.replace_html 'current', :partial => "author_string", :collection => @person.author_strings, :locals => {:selected => true}
+page['author_string_name'].value = ""
