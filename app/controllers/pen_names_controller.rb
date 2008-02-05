@@ -1,7 +1,7 @@
 class PenNamesController < ApplicationController
   before_filter :find_pen_name, :only => [:destroy]
-  before_filter :find_person, :only => [:create, :create_author, :new, :destroy, :sort]
-  before_filter :find_author,  :only => [:create, :create_author, :destroy]
+  before_filter :find_person, :only => [:create, :create_author_string, :new, :destroy, :sort]
+  before_filter :find_author_string,  :only => [:create, :create_author_string, :destroy]
 
   make_resourceful do 
     build :index, :show, :new, :update
@@ -9,16 +9,16 @@ class PenNamesController < ApplicationController
 
 
   def create
-    @person.authors << @author
+    @person.author_strings << @author_string
     respond_to do |format|
       format.js { render :action => :regen_lists }
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
     end
   end
 
-  def create_author
-    @author = Author.find_or_create_by_name(params[:author][:name])
-    @person.authors << @author
+  def create_author_string
+    @author = AuthorString.find_or_create_by_name(params[:author_string][:name])
+    @person.author_strings << @author_string
     respond_to do |format|
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
       format.js { render :action => :regen_lists }
@@ -35,7 +35,7 @@ class PenNamesController < ApplicationController
 
   def sort
     @person.pen_names.each do |pen_name|
-      pen_name = PenName.find_by_person_id_and_author_id(@person.id, pen_name.id)
+      pen_name = PenName.find_by_person_id_and_author_string_id(@person.id, pen_name.id)
       pen_name.position = params["current"].index(pen_name.id.to_s)+1
       pen_name.save
     end
@@ -46,18 +46,18 @@ class PenNamesController < ApplicationController
     end
   end
 
-  def live_search_for_authors
+  def live_search_for_author_strings
     @phrase = params[:q]
     a1 = "%"
     a2 = "%"
     @searchphrase = a1 + @phrase + a2
-    @results = Author.find(:all, :conditions => [ "name LIKE ?", @searchphrase], :order => "name")
+    @results = AuthorString.find(:all, :conditions => [ "name LIKE ?", @searchphrase], :order => "name")
     @number_match = @results.length
     @person = Person.find(params[:person_id])
-    @results = @results - @person.authors
+    @results = @results - @person.author_strings
         
     respond_to do |format|
-      format.js { render :action => :author_filter }
+      format.js { render :action => :author_string_filter }
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
     end
   end
@@ -67,14 +67,14 @@ class PenNamesController < ApplicationController
     @person = Person.find_by_id(params[:person_id])
   end
 
-  def find_author
-    @author = Author.find_by_id(params[:author_id])
+  def find_author_string
+    @author_string = AuthorString.find_by_id(params[:author_string_id])
   end
 
   def find_pen_name
-    @pen_name = PenName.find_by_person_id_and_author_id(
+    @pen_name = PenName.find_by_person_id_and_author_string_id(
       params[:person_id],
-      params[:author_id]
+      params[:author_string_id]
     )
   end
   

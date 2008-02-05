@@ -10,7 +10,7 @@ module ApplicationHelper
         :url => {
           :action => :destroy,
           :person_id => person.id, 
-          "#{model.class.to_s.downcase}_id".to_sym => model.id},
+          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id},
         :method => :delete
       )
     else
@@ -18,12 +18,12 @@ module ApplicationHelper
         :url => {
           :action => :create,
           :person_id => person.id, 
-          "#{model.class.to_s.downcase}_id".to_sym => model.id
+          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id
           },
         :method => :post
       )
     end
-    check_box_tag("#{model.class.to_s.downcase}_#{model.id}_toggle", 1, selected, :onclick => js)
+    check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, :onclick => js)
   end
   
   def namecase(name)

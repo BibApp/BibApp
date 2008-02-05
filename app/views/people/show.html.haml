@@ -20,11 +20,11 @@
 
   %div{:class => "column span-6 prepend-2 last"}
     %h3="Groups (#{@person.groups.size})"
-    %ol.groups-alphabetical
+    %ol.groups_alphabetical
       - @person.groups.each do |g|
         %li=link_to "#{g.name}", group_path(g)
 
-    %h3="Pen Names (#{@person.authors.size})"
-    %ol.authors-alphabetical
-      - @person.authors.each do |a|
-        %li=link_to "#{a.name}", author_path(a)
+    %h3="Pen Names (#{@person.author_strings.size})"
+    %ol.author_strings_alphabetical
+      - @person.author_strings.each do |as|
+        %li=link_to "#{as.name}", author_string_path(as)

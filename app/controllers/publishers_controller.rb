@@ -1,7 +1,7 @@
 class PublishersController < ApplicationController
 
   make_resourceful do 
-    build :index, :show
+    build :index, :show, :new, :edit, :create, :update
 
     publish :yaml, :xml, :json, :attributes => [
       :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
@@ -9,7 +9,7 @@ class PublishersController < ApplicationController
         }
       ]
 
-    before :index do
+  before :index do
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
@@ -23,7 +23,7 @@ class PublishersController < ApplicationController
         )
       end
     end
-    
+
     before :show do
       @citations = Citation.paginate(
         :all,
@@ -32,15 +32,48 @@ class PublishersController < ApplicationController
         :page => params[:page] || 1,
         :per_page => 10
       )
-        
+
       @authority_for = Publisher.find(
         :all,
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
     end
+
+    before :new, :edit do
+      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+    end
   end
   
+  def authorities
+    if params[:q]
+      query = params[:q]
+      @current_objects = current_objects
+    else
+      @current_objects = Publisher.paginate(
+        :all, 
+        :conditions => ["id = authority_id"], 
+        :order => "name",
+        :page => params[:page] || 1,
+        :per_page => 20
+      )
+    end    
+  end
+
+  def update_multiple
+    pub_ids = params[:pub_ids]
+    auth_id = params[:auth_id]
+    update = Publisher.update_multiple(pub_ids, auth_id)
+
+    respond_to do |wants|
+      wants.html do
+        redirect_to :action => 'authorities', :page => params[:page]
+      end
+    end
+  end
+
+  private
   def current_objects
     if params[:q]
       query = '%' + params[:q] + '%'

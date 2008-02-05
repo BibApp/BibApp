@@ -2,8 +2,15 @@ class Citation < ActiveRecord::Base
   #### Associations ####
   belongs_to :publication
   belongs_to :publisher
-  has_many :authors, :through => :authorships, :order => "position"
+  has_many :author_strings, 
+    :through => :citation_author_strings, 
+    :order => "position"
+  has_many :citation_author_strings
+  
+  has_many :people,
+    :through => :authorships
   has_many :authorships
+  
   has_many :keywords, :through => :keywordings
   has_many :keywordings
 
@@ -11,7 +18,7 @@ class Citation < ActiveRecord::Base
   before_validation_on_create :set_initial_states
   validates_presence_of :title_primary
 
-  before_save :set_authorships
+  before_save :set_citation_author_strings
   before_save :set_dupe_keys
   after_save :deduplicate
 
@@ -80,7 +87,7 @@ class Citation < ActiveRecord::Base
 
   def issn_isbn_dupe_key
     # Set issn_isbn_dupe_key
-    first_author = self.serialized_data[:authors]
+    first_author = self.serialized_data[:author_strings]
     if first_author.class.name == "String"
       #Nothing - we have our primary author
     else
@@ -147,18 +154,18 @@ class Citation < ActiveRecord::Base
     return [] if attr_hashes.nil?
     all_cites = attr_hashes.map { |h|
       
-      # Find or create Authors, store each Author.id to generate Authorships
-      authors = Array.new
-      authorships = Array.new
+      # Find or create AuthorStrings, store each AuthorSring.id to generate CitationAuthorString
+      author_strings = Array.new
+      citation_author_strings = Array.new
 
-      h[:authors].each do |add|
-        author = Author.find_or_create_by_name(add)
-        authors << author.name
-        authorships << author.id
+      h[:author_strings].each do |add|
+        author_string = AuthorString.find_or_create_by_name(add)
+        author_strings << author_string.name
+        citation_author_strings << author_string.id
       end
       
-      h[:authors_cache] = authors
-      h[:authorships_cache] = authorships
+      h[:author_strings_cache] = author_strings
+      h[:citation_author_strings_cache] = citation_author_strings
 
       # Set publisher_id
       if h[:publisher].nil? || h[:publisher].empty?
@@ -206,9 +213,9 @@ class Citation < ActiveRecord::Base
       # Clean the hash of non-Citation table data
       # Cleaning preps hash for AR insert
       h.delete(:klass)
-      h.delete(:authors)
-      h.delete(:authors_cache)
-      h.delete(:authorships_cache)
+      h.delete(:author_strings)
+      h.delete(:author_strings_cache)
+      h.delete(:citation_author_strings_cache)
       h.delete(:publisher)
       h.delete(:publication)
       h.delete(:publication_place)
@@ -228,11 +235,11 @@ class Citation < ActiveRecord::Base
     #return deduplicate(valid_cites)
   end
 
-  # Authorships
-  def set_authorships
-    logger.debug("\n\n===SET AUTHORSHIPS===\n\n")
-    self.serialized_data[:authorships_cache].each do |a|
-      Authorship.find_or_create_by_citation_id_and_author_id(:citation_id => self.id, :author_id => a)
+  # CitationAuthorStrings
+  def set_citation_author_strings
+    logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
+    self.serialized_data[:citation_author_strings_cache].each do |a|
+      CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => self.id, :author_string_id => a)
     end
   end
 

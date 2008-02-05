@@ -1,21 +1,10 @@
 class Person < ActiveRecord::Base
-  has_many :authors, :through => :pen_names
+  has_many :author_strings, :through => :pen_names
   has_many :pen_names
   has_many :groups, :through => :memberships
   has_many :memberships
-  
-  def citations
-    citations = Citation.find(
-      :all,
-      :joins =>
-        "join authorships on citations.id = authorships.citation_id
-        join authors on authorships.author_id = authors.id
-        join pen_names on authors.id = pen_names.author_id
-        join people on pen_names.person_id = people.id",
-      :conditions => ["people.id = ? and citations.citation_state_id = ?", self.id, 3],
-      :order => "citations.year DESC, citations.title_primary"
-    )
-  end
+  has_many :citations, :through => :authorships
+  has_many :authorships
 
   def first_last
     "#{first_name} #{last_name}"
@@ -34,9 +23,9 @@ class Person < ActiveRecord::Base
     return all_groups - groups
   end
   
-  def authors_not
-    all_authors = Author.find(:all, :order => "name")
+  def author_strings_not
+    all_author_strings = AuthorString.find(:all, :order => "name")
     # TODO: do this right. The vector subtraction is dumb.
-    return all_authors - authors
+    return all_author_strings - author_strings
   end
 end
