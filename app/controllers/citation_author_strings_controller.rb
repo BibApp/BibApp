@@ -1,0 +1,2 @@
+class CitationAuthorStringsController < ApplicationController
+end

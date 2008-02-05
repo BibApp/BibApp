@@ -1,0 +1,9 @@
+%fieldset
+  %legend="AuthorString"
+  - form_for @author_string do |form|
+    %p
+      %label="Name"
+      %br/
+      = form.text_field :name
+    %p.submit
+      = submit_tag :save

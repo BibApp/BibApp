@@ -1,0 +1,66 @@
+%div{:class => "column span-24"}
+  %div{:class => "column span-16"}
+    %h2="ADMIN::Publishers (#{@current_objects.total_entries}) - #{link_to "Add", new_publisher_path}"
+    %h3 Select and add authority
+    = will_paginate @current_objects
+    %table#publishers
+      %thead
+        %tr
+          %td Select
+          %td Title
+          %td= render :partial => 'authority_actions'
+      %tbody
+        -@current_objects.each do |publisher|
+          %tr.publisher{:id => "publisher_#{publisher.id}"}
+            %td
+              %a.add select
+            %td=link_to "#{publisher.name} - #{publisher.citations.size}", edit_publisher_path(publisher)
+            %td
+              %a.update make authority
+            
+%script{:type => 'text/javascript'}
+  :plain
+    
+    Event.addBehavior({
+      'a.add:click': function() {
+        var id = this.up('tr').id;
+        console.log(id);
+      
+        if (this.innerHTML == "remove") {
+          $(id).removeClassName("selected");
+          this.update("select");
+        } else {
+          $(id).addClassName("selected");
+          this.update("remove");
+        }
+      },
+      'a.update:click': function() {
+        var auth_id = this.up('tr').id;
+        console.log(auth_id);
+        
+        if (this.innerHTML == "make authority") {
+          $(auth_id).addClassName("authority");
+          this.update("Authority!");
+        } else {
+          $(auth_id).removeClassName("authority");
+          this.update("make authority");
+        }
+      },
+        
+      '#authority:submit': function() {
+        pub_ids = new Array();
+        auth_id = new Array();
+        
+        auth_id = $$('tr.authority')[0].id.split('_')[1];
+        
+        $$('tr.selected').each(function(value) {
+          pub_ids = pub_ids.concat(value.id.split('_')[1]);
+        })
+        
+        $('pub_ids').value = pub_ids;
+        $('auth_id').value = auth_id;
+        
+      }
+    });
+    
+    // $$('tr.selected') will return an Array of "selected" rows
