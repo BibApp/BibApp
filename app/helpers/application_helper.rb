@@ -31,7 +31,28 @@ module ApplicationHelper
   end
   
   def link_to_findit(citation)
-    suffix = $CITATION_SUFFIX.gsub("[title]", citation.title_primary.to_s.sub(" ", "+")).gsub("[year]", citation.year.to_s).gsub("[issue]", citation.issue.to_s).gsub("[vol]", citation.volume.to_s).gsub("[fst]", citation.start_page).gsub("[issn]", citation.publication.issn_isbn)
+  	
+  	#start w/default suffix to "Find It!"
+  	suffix = $CITATION_SUFFIX
+  	
+	#Substitute citation title
+  	suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
+  	
+	#Substitute citation year
+	suffix = (citation.year.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.year.to_s)
+	
+	#Substitute citation issue
+	suffix = (citation.issue.nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation.issue.to_s)	
+	
+	#Substitute citation volume
+	suffix = (citation.volume.nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation.volume.to_s)	
+	
+	#Substitute citation start-page
+	suffix = (citation.start_page.nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation.start_page)	
+		
+	#Substitute citation ISSN/ISBN
+	suffix = (citation.publication.nil? || citation.publication.issn_isbn.nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation.publication.issn_isbn)	
+		
     link_to "Find it", "#{$CITATION_BASE_URL}?#{suffix}"
   end
   
