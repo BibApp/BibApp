@@ -75,10 +75,16 @@ mongrel_rails start
 
 7. Solr
 
-Starting
+Starting (on Linux/Mac OSX)
 <pre>
 cd [bibapp]
 rake solr:start
+</pre>
+
+Starting (on Windows)
+<pre>
+cd [bibapp]
+rake solr:start_win
 </pre>
 
 View your Solr install here:
@@ -100,7 +106,8 @@ rake solr:stop
   [bibapp] rm -r vendor/plugins/acts_as_solr/solr/solr/data/*
 
   3. Restart solr
-  [bibapp] rake solr:start
+  [bibapp] rake solr:start     (for Linux/Mac OSX)
+  [bibapp] rake solr:start_win (for Windows)
 
   4. Reindex your citations
   [bibapp] script/console
