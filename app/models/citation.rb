@@ -10,7 +10,6 @@ class Citation < ActiveRecord::Base
   has_many :people,
     :through => :authorships
   has_many :authorships
-  
   has_many :keywords, :through => :keywordings
   has_many :keywordings
 
@@ -21,7 +20,6 @@ class Citation < ActiveRecord::Base
   before_save :set_citation_author_strings
   before_save :set_dupe_keys
   after_save :deduplicate
-
 
   #### Serialization ####
   serialize :serialized_data
@@ -85,6 +83,8 @@ class Citation < ActiveRecord::Base
     return (issn_dupes + title_dupes).uniq
   end
 
+  #Builds ISSN/ISBN based De-Duplication key (used to find duplicate citations)
+  #  Format: [first_author][ISSN/ISBN][year][start-page]  (all in lowercase, no spaces/punctuation)
   def issn_isbn_dupe_key
     # Set issn_isbn_dupe_key
     first_author = self.serialized_data[:author_strings]
@@ -240,7 +240,7 @@ class Citation < ActiveRecord::Base
     logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
     self.serialized_data[:citation_author_strings_cache].each do |a|
       CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => self.id, :author_string_id => a)
-    end
+	end
   end
 
   def set_dupe_keys
@@ -253,12 +253,14 @@ class Citation < ActiveRecord::Base
   def set_initial_states
     self.citation_state_id = 1
     self.citation_archive_state_id = 1
-  end
+  end  
 
   def solr_id
     "Citation:#{id}"
   end
   
+  #Builds Title-based De-Duplication key (used to find duplicate citations)
+  #  Format: [primary-title][year][citation-type][start-page]  (all in lowercase, no spaces/punctuation)
   def title_dupe_key
     # Set title_dupe_key      
     if self.title_primary.nil? or self.year.nil? or self[:type].nil? or self.start_page.nil?
