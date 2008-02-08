@@ -4,47 +4,42 @@ class Citation < ActiveRecord::Base
   belongs_to :publisher
   has_many :author_strings, 
     :through => :citation_author_strings, 
-    :order => "position"
+    :order => :position
   has_many :citation_author_strings
   
   has_many :people,
     :through => :authorships
   has_many :authorships
+  
   has_many :keywords, :through => :keywordings
   has_many :keywordings
 
-  #### Validations ####
+  #### Callbacks ####
   before_validation_on_create :set_initial_states
-  validates_presence_of :title_primary
-
-  before_save :set_citation_author_strings
-  before_save :set_dupe_keys
-  after_save :deduplicate
 
   #### Serialization ####
   serialize :serialized_data
 
   ########## Methods ##########
-  # Rule #1: Alphabetical please
-  # Rule #2: Comment H-E-A-V-I-L-Y
-  # Rule #3: Include @TODOs
+  # Rule #1: Comment H-E-A-V-I-L-Y
+  # Rule #2: Include @TODOs
   
   # Deduplication: deduplicate Citation records on create
-  def deduplicate
+  def self.deduplicate(citation)
     logger.debug("\n\n===DEDUPLICATE===\n\n")
     begin
       Citation.transaction do
-        dupe_candidates = self.duplicates
+        dupe_candidates = duplicates(citation)
 
         if dupe_candidates.empty?
-          self.citation_state_id = 3
-          self.save_without_callbacks
+          citation.citation_state_id = 3
+          citation.save_without_callbacks
           next
         end
                   
         if dupe_candidates.size < 2
-          self.citation_state_id = 3
-          self.save_without_callbacks
+          citation.citation_state_id = 3
+          citation.save_without_callbacks
           next
         end
         
@@ -71,42 +66,17 @@ class Citation < ActiveRecord::Base
   end
 
   # Deduplication: search for Citation duplicates
-  def duplicates
+  def self.duplicates(citation)
     # This is Very Slow (at least on mysql) when done in one query with an OR:
     # mysql will only use one index per query, and the or implies that your index 
     # would need to be indexed with more than one key first.
     # Alternative approach: use find_by_sql and UNION
+    logger.debug("\n\nCitation: #{citation.inspect}\n\n")
     issn_dupes = Citation.find(:all, 
-      :conditions => ["citation_state_id <> 2 and issn_isbn_dupe_key = ?", issn_isbn_dupe_key])
+      :conditions => ["citation_state_id <> 2 and issn_isbn_dupe_key = ?", citation.issn_isbn_dupe_key])
     title_dupes = Citation.find(:all, 
-      :conditions => ["citation_state_id <> 2 and title_dupe_key = ?", title_dupe_key])
+      :conditions => ["citation_state_id <> 2 and title_dupe_key = ?", citation.title_dupe_key])
     return (issn_dupes + title_dupes).uniq
-  end
-
-  #Builds ISSN/ISBN based De-Duplication key (used to find duplicate citations)
-  #  Format: [first_author][ISSN/ISBN][year][start-page]  (all in lowercase, no spaces/punctuation)
-  def issn_isbn_dupe_key
-    # Set issn_isbn_dupe_key
-    first_author = self.serialized_data[:author_strings]
-    if first_author.class.name == "String"
-      #Nothing - we have our primary author
-    else
-      first_author = first_author[0]
-    end
-    
-    first_author = first_author.split(",")[0]
-    publication = Publication.find(self.publication_id)
-    
-    logger.debug "First Author = #{first_author}\n"
-    logger.debug "Publiction = #{publication.issn_isbn}\n"
-    logger.debug "Year = #{self.year}\n"
-    logger.debug "Start Page = #{self.start_page}\n"    
-        
-    if (first_author.nil? or publication.issn_isbn.nil? or self.year.nil? or self.year.empty? or self.start_page.nil? or self.start_page.empty? or publication.issn_isbn.empty?)
-      issn_isbn_dupe_key = nil
-    else
-      issn_isbn_dupe_key = (first_author+publication.issn_isbn+self.year.to_s+self.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
-    end
   end
   
   # Deduplication: set score
@@ -154,20 +124,15 @@ class Citation < ActiveRecord::Base
     return [] if attr_hashes.nil?
     all_cites = attr_hashes.map { |h|
       
-      # Find or create AuthorStrings, store each AuthorSring.id to generate CitationAuthorString
+      # Setting author_strings
       author_strings = Array.new
-      citation_author_strings = Array.new
-
       h[:author_strings].each do |add|
         author_string = AuthorString.find_or_create_by_name(add)
-        author_strings << author_string.name
-        citation_author_strings << author_string.id
+        author_strings << author_string
       end
-      
-      h[:author_strings_cache] = author_strings
-      h[:citation_author_strings_cache] = citation_author_strings
 
-      # Set publisher_id
+      # Setting publisher_id
+      # If there is no publisher data, set publisher to Unknown
       if h[:publisher].nil? || h[:publisher].empty?
         h[:publisher] = "Unknown"
       end
@@ -177,21 +142,29 @@ class Citation < ActiveRecord::Base
         h[:publisher_id] = publisher.authority_id
       end
       
-      # Set publication_id
+      # Setting publication_id
+      # If there is no publication data, set publication to Unknown
       if h[:publication].nil? || h[:publication].empty?
         h[:publication] = "Unknown"
       end
       
+      publication = Array.new
       h[:publication].each do |add|
         publication = Publication.find_or_create_by_name_and_issn_isbn(
           :name => add, 
           :issn_isbn => h[:issn_isbn], 
           :publisher_id => h[:publisher_id]
         )
-        
         h[:publication_id] = publication.authority_id
       end
       
+      # Setting keywords
+      keywords = Array.new
+      h[:keywords].each do |add|
+        keyword = Keyword.find_or_create_by_name(add)
+        keywords << keyword
+      end
+
       # Create the Citation
       klass = h[:klass]
         
@@ -200,22 +173,11 @@ class Citation < ActiveRecord::Base
       if klass.superclass != Citation
         raise NameError.new("#{klass_type} is not a subclass of Citation") and return
       end
-
-      # Prepare serialized_data Hash      
-      s = Hash.new
-
-      h.each do |k, v|
-        s[k] = v
-      end
-      
-      h[:serialized_data] = s
       
       # Clean the hash of non-Citation table data
       # Cleaning preps hash for AR insert
       h.delete(:klass)
       h.delete(:author_strings)
-      h.delete(:author_strings_cache)
-      h.delete(:citation_author_strings_cache)
       h.delete(:publisher)
       h.delete(:publication)
       h.delete(:publication_place)
@@ -224,49 +186,75 @@ class Citation < ActiveRecord::Base
       h.delete(:source)
 
       citation = klass.create(h)
+      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, author_strings, publication)
+      citation.title_dupe_key = self.set_title_dupe_key(citation)
+      citation.save_and_set_for_index_without_callbacks
+      deduplicate(citation)
+      set_citation_author_strings(citation, author_strings)
+      set_keywordings(citation, keywords)
     }
-    
-    valid_cites, invalid_cites = all_cites.partition { |c|  c.title_primary? }
-
-    # @TODO: STI breaks AR base method .valid?... WTF?
-    valid_cites.each do |vc|
-      vc.save
-    end
-    #return deduplicate(valid_cites)
+    Index.batch_index
   end
 
-  # CitationAuthorStrings
-  def set_citation_author_strings
+  # Set CitationAuthorStrings
+  def self.set_citation_author_strings(citation, author_strings)
     logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
-    self.serialized_data[:citation_author_strings_cache].each do |a|
-      CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => self.id, :author_string_id => a)
-	end
+    author_strings.each do |author_string|
+      CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => citation.id, :author_string_id => author_string.id)
+    end
   end
 
-  def set_dupe_keys
-    logger.debug("\n\n===SET DUPE KEYS===\n\n")
-    write_attribute("issn_isbn_dupe_key", issn_isbn_dupe_key)
-    write_attribute("title_dupe_key", title_dupe_key)
+  # Set Keywordings
+  def self.set_keywordings(citation, keywords)
+    logger.debug("\n\n===SET KEYWORDINGS===\n\n")
+    keywords.each do |keyword|
+      Keywording.find_or_create_by_citation_id_and_keyword_id(:citation_id => citation.id, :keyword_id => keyword.id)
+    end
   end
+
+=begin
+  # Set Dupe Keys
+  def self.set_dupe_keys(citation, author_strings, publication)
+    logger.debug("\n\n===SET DUPE KEYS===\n\n")
+    logger.debug("Citation: #{citation.inspect}\n\n")
+    logger.debug("AuthorStrings: #{author_strings.inspect}\n\n")
+    logger.debug("Publication: #{publication.inspect}\n\n")
+    self.write_attribute("issn_isbn_dupe_key", self.issn_isbn_dupe_key(citation, author_strings, publication))
+    self.write_attribute("title_dupe_key", self.title_dupe_key(citation))
+  end
+=end
 
   # All Citations begin unverified
   def set_initial_states
     self.citation_state_id = 1
     self.citation_archive_state_id = 1
-  end  
+  end
 
   def solr_id
     "Citation:#{id}"
   end
-  
-  #Builds Title-based De-Duplication key (used to find duplicate citations)
-  #  Format: [primary-title][year][citation-type][start-page]  (all in lowercase, no spaces/punctuation)
-  def title_dupe_key
+
+  def self.set_issn_isbn_dupe_key(citation, author_strings, publication)
+    # Set issn_isbn_dupe_key
+    if author_strings
+      first_author = author_strings[0].name.split(",")[0]
+    else
+      first_author = nil
+    end
+        
+    if (first_author.nil? or publication.issn_isbn.nil? or citation.year.nil? or citation.year.empty? or citation.start_page.nil? or citation.start_page.empty? or publication.issn_isbn.empty?)
+      issn_isbn_dupe_key = nil
+    else
+      issn_isbn_dupe_key = (first_author+publication.issn_isbn+citation.year.to_s+citation.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
+    end
+  end
+    
+  def self.set_title_dupe_key(citation)
     # Set title_dupe_key      
-    if self.title_primary.nil? or self.year.nil? or self[:type].nil? or self.start_page.nil?
+    if citation.title_primary.nil? or citation.year.nil? or citation[:type].nil? or citation.start_page.nil?
       title_dupe_key = nil
     else 
-      title_dupe_key = self.title_primary.downcase.gsub(/[^a-z]/,'')+self.year.to_s+self[:type].to_s+self.start_page.to_s
+      title_dupe_key = citation.title_primary.downcase.gsub(/[^a-z]/,'')+citation.year.to_s+citation[:type].to_s+citation.start_page.to_s
     end
   end
  
