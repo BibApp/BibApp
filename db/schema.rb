@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 21) do
+ActiveRecord::Schema.define(:version => 22) do
 
   create_table "author_strings", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(:version => 21) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "pen_name_id"
+    t.boolean  "highlight"
+    t.integer  "score"
+    t.boolean  "hide"
   end
 
   add_index "authorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
@@ -180,7 +184,6 @@ ActiveRecord::Schema.define(:version => 21) do
     t.datetime "updated_at"
   end
 
-  add_index "publishers", ["name"], :name => "publisher_name", :unique => true
   add_index "publishers", ["authority_id"], :name => "fk_publisher_authority_id"
 
   create_table "taggings", :force => true do |t|
