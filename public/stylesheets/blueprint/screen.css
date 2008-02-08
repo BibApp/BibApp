@@ -61,6 +61,9 @@ ul.global-nav li {
 .citation_book .title{font-style:italic;}
 
 /* Pagination */
+#alpha-nav li {
+	display:inline;
+}
 .pagination {
   padding: 3px;
   margin: 3px;
