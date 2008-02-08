@@ -14,9 +14,7 @@ gem install [gem-name] --include-dependencies
 
 The following gems are required to run BibApp:
 
-* namecase
-* ruby-net-ldap - Used to pull person info from LDAP
-* xml-simple
+* None... 'cuz we're "freezing everything necessary":http://errtheblog.com/posts/50-vendor-everything
 
 You also need to choose your Database, and install one of the following gems:
 
