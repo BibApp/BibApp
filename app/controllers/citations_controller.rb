@@ -1,80 +1,83 @@
 class CitationsController < ApplicationController
   before_filter :find_authorities, :only => [:new, :edit]
-  
+
   make_resourceful do
-    build :show, :edit, :destroy
+    build :index, :show, :edit, :destroy
     
-    response_for :show do |format|
-      format.html # index.html
-      format.xml  { render :xml => @citation.to_xml }
-      format.yaml { render :txt => @citation.to_yaml }
-    end
+    publish :yaml, :xml, :json, :attributes => [
+      :id, :type, :title_primary, :title_secondary, :title_tertiary,
+      :year, :volume, :issue, :start_page, :end_page, :links, {
+        :publication => [:id, :name]
+        }, {
+        :publisher => [:id, :name]
+        }, {
+        :author_strings => [:id, :name]
+        }, {
+        :people => [:id, :first_last]
+        }
+      ]    
+    
+      before :index do
+
+        @citations = Citation.paginate(
+          :all, 
+          :conditions => ["citation_state_id = ?", 3],
+          :order => "year desc, title_primary",
+          :page => params[:page] || 1,
+          :per_page => 5
+        )
+
+        @groups = Citation.find_by_sql(
+          "SELECT g.*, cit.total
+    	   		FROM groups g
+    			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
+    					FROM citations
+    					join citation_author_strings on citations.id = citation_author_strings.citation_id
+    					join author_strings on citation_author_strings.author_string_id = author_strings.id
+    					join pen_names on author_strings.id = pen_names.author_string_id
+    					join people on pen_names.person_id = people.id
+    					join memberships on people.id = memberships.person_id
+    					join groups on memberships.group_id = groups.id
+    					where citations.citation_state_id = 3
+    					group by groups.id) as cit
+    			ON g.id=cit.group_id
+    			ORDER BY cit.total DESC
+    			LIMIT 10"	
+        )
+
+        @people = Citation.find_by_sql(
+          "SELECT p.*, cit.total
+    	   		FROM people p
+    			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
+    					FROM citations
+    					join citation_author_strings on citations.id = citation_author_strings.citation_id
+    					join author_strings on citation_author_strings.author_string_id = author_strings.id
+    					join pen_names on author_strings.id = pen_names.author_string_id
+    					join people on pen_names.person_id = people.id
+    					where citations.citation_state_id = 3
+    					group by people.id) as cit
+    			ON p.id=cit.people_id
+    			ORDER BY cit.total DESC
+    			LIMIT 10"
+        )
+
+        @publications = Citation.find_by_sql(
+    	  "SELECT pub.*, cit.total
+    	   		FROM publications pub
+    			JOIN (SELECT publications.id as publication_id, count(distinct citations.id) as total
+    					FROM citations
+    					join publications on citations.publication_id = publications.id
+    					where citations.citation_state_id = 3
+    					group by publications.id) as cit
+    			ON pub.id=cit.publication_id
+    			ORDER BY cit.total DESC
+    			LIMIT 10"
+        )
+      end
     
     before :edit do
-      @authors = @citation.authors
-    end
-  end
-  
-  def index
-  
-    @citations = Citation.paginate(
-      :all, 
-      :conditions => ["citation_state_id = ?", 3],
-      :order => "year desc, title_primary",
-      :page => params[:page] || 1,
-      :per_page => 5
-    )
-    
-    @groups = Citation.find_by_sql(
-      "SELECT g.*, cit.total
-	   		FROM groups g
-			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
-					FROM citations
-					join citation_author_strings on citations.id = citation_author_strings.citation_id
-					join author_strings on citation_author_strings.author_string_id = author_strings.id
-					join pen_names on author_strings.id = pen_names.author_string_id
-					join people on pen_names.person_id = people.id
-					join memberships on people.id = memberships.person_id
-					join groups on memberships.group_id = groups.id
-					where citations.citation_state_id = 3
-					group by groups.id) as cit
-			ON g.id=cit.group_id
-			ORDER BY cit.total DESC
-			LIMIT 10"	
-    )
-    
-    @people = Citation.find_by_sql(
-      "SELECT p.*, cit.total
-	   		FROM people p
-			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
-					FROM citations
-					join citation_author_strings on citations.id = citation_author_strings.citation_id
-					join author_strings on citation_author_strings.author_string_id = author_strings.id
-					join pen_names on author_strings.id = pen_names.author_string_id
-					join people on pen_names.person_id = people.id
-					where citations.citation_state_id = 3
-					group by people.id) as cit
-			ON p.id=cit.people_id
-			ORDER BY cit.total DESC
-			LIMIT 10"
-    )
-    
-    @publications = Citation.find_by_sql(
-	  "SELECT pub.*, cit.total
-	   		FROM publications pub
-			JOIN (SELECT publications.id as publication_id, count(distinct citations.id) as total
-					FROM citations
-					join publications on citations.publication_id = publications.id
-					where citations.citation_state_id = 3
-					group by publications.id) as cit
-			ON pub.id=cit.publication_id
-			ORDER BY cit.total DESC
-			LIMIT 10"
-    )
-    
-    respond_to do |format|
-      format.html # index.html
-      format.xml  {render :xml => @citation.errors.to_xml}
+      auto_complete_for :author_strings, :name
+      @author_strings = @citation.author_strings
     end
   end
   
@@ -150,9 +153,9 @@ class CitationsController < ApplicationController
   
   def update
     @citation = Citation.find(params[:id])
-    authors = params[:author]
-    authors.each do |id, hash|
-      row = Author.find(id)
+    author_strings = params[:author_strings]
+    author_strings.each do |id, hash|
+      row = AuthorString.find(id)
       row.update_attributes(:name => hash[:name])
     end
 
