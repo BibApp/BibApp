@@ -1,6 +1,7 @@
 class CitationAuthorString   < ActiveRecord::Base
   belongs_to :author_string
   belongs_to :citation
+  acts_as_list :scope => :citation_id
   
   validates_presence_of :author_string_id, :citation_id
   validates_uniqueness_of :citation_id, :scope => :author_string_id
