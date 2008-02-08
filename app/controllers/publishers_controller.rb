@@ -14,13 +14,8 @@ class PublishersController < ApplicationController
         query = params[:q]
         @current_objects = current_objects
       else
-        @current_objects = Publisher.paginate(
-          :all, 
-          :conditions => ["id = authority_id"], 
-          :order => "name",
-          :page => params[:page] || 1,
-          :per_page => 20
-        )
+        page = params[:page] || "a"
+        @current_objects = Publisher.find(:all, :conditions => ["name like ?", "#{page}%"])
       end
     end
 
@@ -51,13 +46,8 @@ class PublishersController < ApplicationController
       query = params[:q]
       @current_objects = current_objects
     else
-      @current_objects = Publisher.paginate(
-        :all, 
-        :conditions => ["id = authority_id"], 
-        :order => "name",
-        :page => params[:page] || 1,
-        :per_page => 20
-      )
+      page = params[:page] || "a"
+      @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{page}%"])
     end    
   end
 
