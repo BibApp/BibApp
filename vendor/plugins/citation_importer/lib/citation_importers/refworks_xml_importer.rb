@@ -53,7 +53,7 @@ class RefworksXmlImporter < CitationImporter
     # Todo: improve Publication and Publisher handling
     @attr_map = {
       :reftype_id => :klass,
-      :authors => :authors,
+      :author_strings => :author_strings,
       :affiliations => :affiliation,
       :title_primary => :title_primary,
       :title_secondary => :title_secondary,
