@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  require 'namecase'
   require 'config/personalize.rb'
   
   def ajax_checkbox_toggle(model, person, selected)
@@ -26,8 +25,8 @@ module ApplicationHelper
     check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, :onclick => js)
   end
   
-  def namecase(name)
-    NameCase.new(name).nc!
+  def alpha_paginate(controller, page)
+    @current_objects = controller.singularize.capitalize.constantize.find(:all, :conditions => ["name like ?", "#{page}%"])
   end
   
   def link_to_findit(citation)
