@@ -1,0 +1,4 @@
+- author_strings.each do |as|
+  - fields_for "author_strings[]", as do |as_field|
+    = render :partial => 'author_string', :locals => {:as_field => as_field}
+= link_to "Add author", url_for(:controller => 'author_strings', :action => 'new')
