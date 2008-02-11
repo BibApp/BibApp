@@ -17,7 +17,7 @@ class PenNamesController < ApplicationController
   end
 
   def create_author_string
-    @author = AuthorString.find_or_create_by_name(params[:author_string][:name])
+    @author_string = AuthorString.find_or_create_by_name(params[:author_string][:name])
     @person.author_strings << @author_string
     respond_to do |format|
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
