@@ -5,11 +5,14 @@ class PenName < ActiveRecord::Base
   
   validates_presence_of :author_string_id, :person_id
   
-  # @TODO: PenNames provide the logic for setting Authorships
+  # PenNames provide the logic for creating and destroying Authorships
+  # PenName lifecycle needs create or destroy associated Authorships
+  # @TODO: move these callbacks to a pen_name_observer
+  #
   # after_save
   #
   # 1. Person has a new PenName
-  # * Insert a Authorship row for each Citation associated with PenName
+  # * Create a Authorship row for each unique Citation associated with PenName
   # * Set Authorship.score to calculated (options: calculated (0), verified (1), wrong/incorrect (2))
   #
   # 2. More than one Person claims same PenName
@@ -27,8 +30,10 @@ class PenName < ActiveRecord::Base
     
   def set_authorships
     self.author_string.citations.each do |citation|
-      as = Authorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id(citation.id, self.person_id, self.id)
-      as.update_attributes(:score => 0)
+      if citation.citation_state_id == 3
+        as = Authorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id(citation.id, self.person_id, self.id)
+        as.update_attributes(:score => 0)
+      end
     end
   end
   
