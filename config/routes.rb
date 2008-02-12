@@ -30,6 +30,11 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
+  #Auto-Complete Routes for Web-Based Citation entry
+  map.resources :citations, 
+                :collection => {:auto_complete_for_author_name => :get, 
+                				:auto_complete_for_publication_name => :get }
+  
   # Install the default routes as the lowest priority.
     
   map.resources :author_strings,
@@ -41,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
     :authorships,
     :keywords,
     :keywordings
-    
+
   map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put}
   map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put}
 
@@ -55,5 +60,6 @@ ActionController::Routing::Routes.draw do |map|
     
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  
   
 end

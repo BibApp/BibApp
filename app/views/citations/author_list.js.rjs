@@ -1,0 +1,8 @@
+#If 'remove' flag specified, remove author string from list
+page << 'if (' + (!@remove.nil?).to_s + ') {'
+page.remove @author_string
+#Otherwise, add author string to bottom of list of authors
+page << '} else {'
+page.insert_html :bottom, 'author_list', :partial => "author_string", :locals => {:author_string => @author_string, :selected => true}
+page << '}'
+page['author_name'].value = ""
