@@ -37,7 +37,10 @@ ActionController::Routing::Routes.draw do |map|
     :groups,
     :memberships,
     :pen_names,
-    :people
+    :people,
+    :authorships,
+    :keywords,
+    :keywordings
     
   map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put}
   map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put}
