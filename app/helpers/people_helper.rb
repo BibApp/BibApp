@@ -1,6 +1,8 @@
 module PeopleHelper
+  require 'namecase'
+  
   def pretty_ldap_person(ldap_result)
-    namecase("#{ldap_result[:givenname]} #{ldap_result[:sn]} ") +
+    NameCase.new("#{ldap_result[:givenname]} #{ldap_result[:sn]} ") +
     pretty_ldap_dept(ldap_result)
   end
   
