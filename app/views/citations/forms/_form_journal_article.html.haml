@@ -1,7 +1,7 @@
 %fieldset
   %legend Journal Article
 
-  %p= render :partial => 'authors'
+  = render :partial => 'author_strings'
 
   %p
     %label Year of Publication
@@ -11,10 +11,9 @@
     %label Article Title
     %br/
     = form.text_field :title_primary, :size => 40
-  %p
-    %label Periodical Title
-    %br/
-    = form.collection_select :publication_id, @publication_authorities, :id, :name
+    
+  = render :partial => 'publication'  
+ 
   %p
     %label Volume
     = form.text_field :volume, :size => 4

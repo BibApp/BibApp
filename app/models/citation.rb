@@ -16,13 +16,31 @@ class Citation < ActiveRecord::Base
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
-
+  after_create :create_author_strings
+  
   #### Serialization ####
   serialize :serialized_data
 
   ########## Methods ##########
   # Rule #1: Comment H-E-A-V-I-L-Y
   # Rule #2: Include @TODOs
+  
+  
+  # List of all currently enabled Citation Types
+  def self.types
+  	# @TODO: Add each citation subklass to this array
+	# "Journal Article", 
+	# "Conference Proceeding", 
+	# "Book"
+	# more...   	    			  
+	types = [
+		"Add Batch",
+		"Journal Article", 
+		"Conference Proceeding", 
+		"Book"		
+	]  
+  end
+  
   
   # Deduplication: deduplicate Citation records on create
   def self.deduplicate(citation)
@@ -190,18 +208,10 @@ class Citation < ActiveRecord::Base
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
       deduplicate(citation)
-      set_citation_author_strings(citation, author_strings)
+      citation.author_strings = author_strings
       set_keywordings(citation, keywords)
     }
     Index.batch_index
-  end
-
-  # Set CitationAuthorStrings
-  def self.set_citation_author_strings(citation, author_strings)
-    logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
-    author_strings.each do |author_string|
-      CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => citation.id, :author_string_id => author_string.id)
-    end
   end
 
   # Set Keywordings
@@ -211,7 +221,52 @@ class Citation < ActiveRecord::Base
       Keywording.find_or_create_by_citation_id_and_keyword_id(:citation_id => citation.id, :keyword_id => keyword.id)
     end
   end
-
+  
+  #Updates author_strings for the current citation
+  # 	If this citation is still a *new* record (i.e. it hasn't been created
+  # 	in the database), then the author_strings are just cached until the 
+  #  	citation is created.
+  #     Based on ideas at:
+  #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+  def author_strings=(author_strings)
+	logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
+  
+	if self.new_record?
+		#Defer saving to Citation object directly, until it is created
+		@author_strings = author_strings
+	else
+	  	# Create author_strings and save to database
+		Citation.update_citation_author_strings(self, author_strings)  
+	end
+  end  
+  
+  # Update CitationAuthorStrings - updates list of authors for citation
+  def self.update_citation_author_strings(citation, author_strings)
+  	logger.debug("\n\n===UPDATE CITATION_AUTHOR_STRINGS===\n\n")
+	  
+	unless author_strings.nil?
+		#first, remove any author_string(s) that are no longer in list
+		citation.citation_author_strings.each do |cas|
+			cas.destroy unless author_strings.include?(cas.author_string)
+			author_strings.delete(cas.author_string)
+		end 
+		#next, add any new author string(s) to list
+		author_strings.each do |author_string|
+			CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => citation.id, :author_string_id => author_string.id)
+		end
+		#refresh citation in memory based on database updates
+		citation.reload
+	end	  
+  end    
+  
+  # Create author strings, after a Citation is created successfully
+  #  Called by 'after_create' callback
+  def create_author_strings
+  	#Create any initialized author_strings and save to Citation
+  	self.author_strings = @author_strings if @author_strings
+  end  
+  
+  
 =begin
   # Set Dupe Keys
   def self.set_dupe_keys(citation, author_strings, publication)
