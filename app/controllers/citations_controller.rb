@@ -256,8 +256,9 @@ class CitationsController < ApplicationController
   
   # Initializes a new citation subclass, but doesn't create it in the database
   def subklass_init(klass_type, citation)
-    klass_type.sub!(" ", "")
-    klass = klass_type.constantize
+    klass_type.sub!(" ", "") #remove spaces
+	klass_type.gsub!(/[()]/, "") #remove any parens
+    klass = klass_type.constantize #change into a class
     if klass.superclass != Citation
       raise NameError.new("#{klass_type} is not a subclass of Citation") and return
     end

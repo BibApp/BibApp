@@ -37,7 +37,7 @@ class Citation < ActiveRecord::Base
 		"Add Batch",
 		"Journal Article", 
 		"Conference Proceeding", 
-		"Book"		
+		"Book (Whole)"		
 	]  
   end
   
