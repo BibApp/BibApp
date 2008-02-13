@@ -79,6 +79,7 @@ class CitationsController < ApplicationController
     before :edit do
       @author_strings = @citation.author_strings
 	  @publication = @citation.publication
+	  @keywords = @citation.keywords
     end
 	
 	#initialize variables used by 'new.html.haml'
@@ -124,6 +125,7 @@ class CitationsController < ApplicationController
 	  # Load other citation info available in request params
 	  set_publication(@citation)
 	  set_author_strings(@citation)
+	  set_keywords(@citation)
 	  
 	  # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
 	  #Index our citation in Solr
@@ -149,6 +151,7 @@ class CitationsController < ApplicationController
 	# Load other citation info available in request params
 	set_publication(@citation)
  	set_author_strings(@citation)
+	set_keywords(@citation)
 	
     respond_to do |format|
       if @citation.update_attributes(params[:citation])
@@ -181,15 +184,32 @@ class CitationsController < ApplicationController
   # in case any errors should occur in saving citation
   def set_author_strings(citation)
   	#default to empty array of author strings
-	params[:author_string] ||= []	
+	params[:author_strings] ||= []	
 				
 	#Set AuthorStrings for this Citation
 	@author_strings = Array.new
-	params[:author_string].each do |add|
+	params[:author_strings].each do |add|
 		@author_strings << AuthorString.find_or_initialize_by_name(add)
 	end
 	citation.author_strings = @author_strings 	
-  end	  	
+  end
+  
+  # Load keywords list from Request params
+  # and set for the current citation.
+  # Also sets the instance variable @keywords,
+  # in case any errors should occur in saving citation
+  def set_keywords(citation)
+	#default to empty array of keywords
+	params[:keywords] ||= []	
+				  
+	#Set Keywords for this Citation
+	@keywords = Array.new
+	params[:keywords].each do |add|
+		@keywords << Keyword.find_or_initialize_by_name(add)
+	end
+	citation.keywords = @keywords 	
+  end  
+  	  	
   	
   #Auto-Complete for entering Author Names in Web-based Citation entry
   #  This method provides users with a list of matching AuthorStrings
@@ -207,30 +227,27 @@ class CitationsController < ApplicationController
 			:order => 'name ASC',
 			:limit => 8)
 		  
-	render :partial => 'autocomplete_author', :locals => {:author_strings => author_strings}
+	render :partial => 'autocomplete_list', :locals => {:objects => author_strings}
   end    
   
-  #Adds a single author string to list of authors in Web-based Citation entry
-  def add_author_to_list
-  	@author_string = params[:author_string]
-	
-	#Add author to list dynamically using Javascript
-	respond_to do |format|
-		format.js { render :action => :author_list }
-	end  	
-  	
-  end
-  
-  #Removes an author string from list of authors in Web-based Citation entry
-  def remove_author_from_list
-  	@author_string = params[:author_string]
-	@remove = true
+  #Auto-Complete for entering Keywords in Web-based Citation entry
+  #  This method provides users with a list of matching Keywords
+  #  already in BibApp.
+  def auto_complete_for_keyword_name
+   	keyword = params[:keyword][:name].downcase
 	  
-	#remove author from list dynamically using Javascript
-	respond_to do |format|
-	  format.js { render :action => :author_list }
-	end  	
-  end
+	#search at beginning of word
+	beginning_search = keyword + "%"
+	#search at beginning of any other words
+	word_search = "% " + keyword + "%"	
+	  
+	keywords = Keyword.find(:all, 
+			  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+			  :order => 'name ASC',
+			  :limit => 8)
+			
+	render :partial => 'autocomplete_list', :locals => {:objects => keywords}
+  end    
   
   #Auto-Complete for entering Publication Titles in Web-based Citation entry
   #  This method provides users with a list of matching Publications
@@ -248,9 +265,56 @@ class CitationsController < ApplicationController
 			  :order => 'name ASC',
 			  :limit => 8)
 			
-	  render :partial => 'autocomplete_publication', :locals => {:publications => publications}
+	  render :partial => 'autocomplete_list', :locals => {:objects => publications}
   end    
        
+  #Adds a single item value to list of items in Web-based Citation entry
+  # This is used to add multiple values in form (e.g. multiple authors, keywords, etc)
+  # Expects three parameters:
+  # 	item_name - "Name" of type of item (e.g. "author_string", "keywords")
+  #     item_value - value to add to item list
+  #     clear_field - Name of form field to clear after processing is complete
+  #
+  # (E.g.) item_name=>"author_string", item_value=>"Donohue, Tim", clear_field=>"author_name"
+  #	  Above example will add value "Donohue, Tim" to list of "author_string" values in form.
+  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_string_list". 
+  #   It then clears the "author_name" field (which is the textbox where the value was entered).
+  #   End result example (doesn't include AJAX code created, but you get the idea):
+  #   <input type="textbox" id="author_name" name="author_name" value=""/>
+  #   <ul id='author_string_list'>
+  #     <li id='Donohue, Timothy' class='list_item'>
+  #       <input type="checkbox" id="author_string[]" name="author_string[]" value="Donohue, Tim"/> Donohue, Tim
+  #     </li>
+  #   </ul>
+  def add_item_to_list
+  	@item_name = params[:item_name]     
+    @item_value = params[:item_value]   
+	@clear_field = params[:clear_field]
+	  
+	#Add item value to list dynamically using Javascript
+	respond_to do |format|
+	  format.js { render :action => :item_list }
+	end  	
+  end
+	
+  #Removes a single item value from list of items in Web-based Citation entry
+  # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
+  # Expects two parameters:
+  # 	item_name - "Name" of type of item (e.g. "author_string", "keywords")
+  #     item_value - value to add to item list  
+  #
+  # Essentially this does the opposite of 'add_item_to_list', and removes
+  # an existing item.
+  def remove_item_from_list
+  	@item_name = params[:item_name]
+  	@item_value = params[:item_value]
+	@remove = true
+		
+	#remove item value from list dynamically using Javascript
+	respond_to do |format|
+		format.js { render :action => :item_list }
+	end  	
+  end
   
   private
   

@@ -1,0 +1,3 @@
+%li.list_item{:id => "#{item_value}"}
+  = check_box_tag "#{item_name}[]", "#{item_value}", "#{selected}", :onclick => remote_function(:url => { :action => :remove_item_from_list, :item_name => item_name, :item_value => item_value} )
+  = item_value

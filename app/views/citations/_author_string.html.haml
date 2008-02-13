@@ -1,3 +1,0 @@
-%li.author_string{:id => "#{author_string}"}
-  = check_box_tag "author_string[]", "#{author_string}", "#{selected}", :onclick => remote_function(:url => { :action => :remove_author_from_list, :author_string => author_string} )
-  = author_string
