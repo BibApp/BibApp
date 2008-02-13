@@ -74,12 +74,15 @@ class CitationsController < ApplicationController
     			LIMIT 10"
         )
       end
-    
+	
+	#initialize variables used by 'edit.html.haml'
     before :edit do
       @author_strings = @citation.author_strings
+	  @publication = @citation.publication
     end
 	
-	before :new do
+	#initialize variables used by 'new.html.haml'
+	before :new do  
 	  #if 'type' unspecified, default to first type in list
 	  params[:type] ||= Citation.types[0]
 			
@@ -119,7 +122,8 @@ class CitationsController < ApplicationController
       @citation = subklass_init(params[:type], params[:citation])
     
 	  # Load other citation info available in request params
-	  set_extra_citation_info(@citation)
+	  set_publication(@citation)
+	  set_author_strings(@citation)
 	  
 	  # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
 	  #Index our citation in Solr
@@ -143,7 +147,8 @@ class CitationsController < ApplicationController
     @citation = Citation.find(params[:id])
     
 	# Load other citation info available in request params
-	set_extra_citation_info(@citation)
+	set_publication(@citation)
+ 	set_author_strings(@citation)
 	
     respond_to do |format|
       if @citation.update_attributes(params[:citation])
@@ -157,27 +162,34 @@ class CitationsController < ApplicationController
     end
   end
   
-  # Sets additional Citation information available from Request params,
-  # which is not auto-loaded by RoR ActiveRecord
-  def set_extra_citation_info(citation)
-  
-  	#First, set Publication info for this Citation
-  	if params[:publication] && params[:publication][:name]
-		publication = Publication.find_or_initialize_by_name(params[:publication][:name])
-		citation.publication_id = publication.id
-	end
-		  
-	#Next, we'll set our list of author_strings
-	#default to empty array of author strings
-	params[:author_string] ||= []	
-		  
-	#Set AuthorStrings for this Citation
-	author_strings = Array.new
-	params[:author_string].each do |add|
-		author_strings << AuthorString.find_or_initialize_by_name(add)
-	end
-	citation.author_strings = author_strings  	
+  # Load publication information from Request params
+  # and set for the current citation.
+  # Also sets the instance variable @publication,
+  # in case any errors should occur in saving citation  
+  def set_publication(citation)
+	#Set Publication info for this Citation
+	if params[:publication] && params[:publication][:name]
+		@publication = Publication.find_or_initialize_by_name(params[:publication][:name])
+		citation.publication = @publication
+	end  	
   end	
+  
+  
+  # Load author strings list from Request params
+  # and set for the current citation.
+  # Also sets the instance variable @author_strings,
+  # in case any errors should occur in saving citation
+  def set_author_strings(citation)
+  	#default to empty array of author strings
+	params[:author_string] ||= []	
+				
+	#Set AuthorStrings for this Citation
+	@author_strings = Array.new
+	params[:author_string].each do |add|
+		@author_strings << AuthorString.find_or_initialize_by_name(add)
+	end
+	citation.author_strings = @author_strings 	
+  end	  	
   	
   #Auto-Complete for entering Author Names in Web-based Citation entry
   #  This method provides users with a list of matching AuthorStrings
