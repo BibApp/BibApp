@@ -10,19 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'rexml/xpath'
-
-class Solr::Response::Ping < Solr::Response::Xml
-
+class Solr::Response::ModifyDocument < Solr::Response::Xml
   def initialize(xml)
     super
-    @ok = REXML::XPath.first(@doc, './solr/ping') ? true : false
   end
-
-  # returns true or false depending on whether the ping
-  # was successful or not
-  def ok?
-    @ok
-  end
-
 end

@@ -272,23 +272,7 @@
     <lst name="defaults">
      <str name="echoParams">explicit</str>
      <float name="tie">0.01</float>
-     <str name="qf">
-        text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-     </str>
-     <str name="pf">
-        text^0.2 features^1.1 name^1.5 manu^1.4 manu_exact^1.9
-     </str>
-     <str name="bf">
-        ord(poplarity)^0.5 recip(rord(price),1,1000,1000)^0.3
-     </str>
-     <str name="fl">
-        id,name,price,score
-     </str>
-     <str name="mm">
-        2&lt;-1 5&lt;-2 6&lt;90%
-     </str>
-     <int name="ps">100</int>
-     <str name="q.alt">*:*</str>
+     <str name="qf">text</str>
     </lst>
   </requestHandler>
 
@@ -383,7 +367,7 @@
      <!-- the field in your schema that you want to be able to build -->
      <!-- your spell index on. This should be a field that uses a very -->
      <!-- simple FieldType without a lot of Analysis (ie: string) -->
-     <str name="termSourceField">word</str>
+     <str name="termSourceField">spellword</str>
      
    </requestHandler>
 

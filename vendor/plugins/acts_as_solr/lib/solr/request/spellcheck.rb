@@ -10,19 +10,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'rexml/xpath'
+class Solr::Request::Spellcheck < Solr::Request::Select
 
-class Solr::Response::Ping < Solr::Response::Xml
-
-  def initialize(xml)
-    super
-    @ok = REXML::XPath.first(@doc, './solr/ping') ? true : false
+  def initialize(params)
+    super('spellchecker')
+    @params = params
   end
-
-  # returns true or false depending on whether the ping
-  # was successful or not
-  def ok?
-    @ok
+  
+  def to_hash
+    hash = super
+    hash[:q] = @params[:query]
+    hash[:suggestionCount] = @params[:suggestion_count]
+    hash[:accuracy] = @params[:accuracy]
+    hash[:onlyMorePopular] = @params[:only_more_popular]
+    hash[:cmd] = @params[:command]
+    return hash
   end
 
 end

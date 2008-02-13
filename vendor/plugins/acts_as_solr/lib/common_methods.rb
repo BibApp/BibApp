@@ -3,20 +3,36 @@ module ActsAsSolr #:nodoc:
   module CommonMethods
     
     # Converts field types into Solr types
-    def get_solr_field_type(field_type)
+    def get_solr_field_type(field_type, multi_valued = false)
       if field_type.is_a?(Symbol)
-        case field_type
-          when :float:          return "f"
-          when :integer:        return "i"
-          when :boolean:        return "b"
-          when :string:         return "s"
-          when :date:           return "d"
-          when :range_float:    return "rf"
-          when :range_integer:  return "ri"
-          when :facet:          return "facet"
-          when :text:           return "t"
+        if multi_valued
+           case field_type
+            when :float:          return "f_mv"
+            when :integer:        return "i_mv"
+            when :boolean:        return "b_mv"
+            when :string:         return "s_mv"
+            when :date:           return "d_mv"
+            when :range_float:    return "rf_mv"
+            when :range_integer:  return "ri_mv"
+            when :facet:          return "facet"
+            when :text:           return "s_mv"
+          else
+            raise "Unknown field_type symbol: #{field_type}"
+          end
         else
-          raise "Unknown field_type symbol: #{field_type}"
+         case field_type
+            when :float:          return "f"
+            when :integer:        return "i"
+            when :boolean:        return "b"
+            when :string:         return "s"
+            when :date:           return "d"
+            when :range_float:    return "rf"
+            when :range_integer:  return "ri"
+            when :facet:          return "facet"
+            when :text:           return "t"
+          else
+            raise "Unknown field_type symbol: #{field_type}"
+          end
         end
       elsif field_type.is_a?(String)
         return field_type
