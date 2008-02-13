@@ -4,16 +4,13 @@
   = render :partial => 'author_strings'
 
   %p
-    %label Year of Publication
-    %br/
+    %label Year of Publication:
     = form.text_field :year, :size => 4
   %p
-    %label Book Title
-    %br/
+    %label Book Title*:
     = form.text_field :title_primary, :size => 40
   %p
-    %label Publisher
-    %br/
+    %label Publisher:
     = form.collection_select :publisher_id, @publisher_authorities, :id, :name
     = hidden_field_tag :type, 'BookWhole'
   %p.submit

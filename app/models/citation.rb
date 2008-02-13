@@ -16,7 +16,10 @@ class Citation < ActiveRecord::Base
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
-  after_create :create_author_strings
+  def after_create 
+   	create_author_strings
+  	create_keywords
+  end
   
   #### Serialization ####
   serialize :serialized_data
@@ -148,6 +151,7 @@ class Citation < ActiveRecord::Base
         author_string = AuthorString.find_or_create_by_name(add)
         author_strings << author_string
       end
+	  citation.author_strings = author_strings
 
       # Setting publisher_id
       # If there is no publisher data, set publisher to Unknown
@@ -182,7 +186,8 @@ class Citation < ActiveRecord::Base
         keyword = Keyword.find_or_create_by_name(add)
         keywords << keyword
       end
-
+	  citation.keywords = keywords
+	  
       # Create the Citation
       klass = h[:klass]
         
@@ -208,19 +213,54 @@ class Citation < ActiveRecord::Base
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
       deduplicate(citation)
-      citation.author_strings = author_strings
-      set_keywordings(citation, keywords)
     }
     Index.batch_index
   end
 
-  # Set Keywordings
-  def self.set_keywordings(citation, keywords)
-    logger.debug("\n\n===SET KEYWORDINGS===\n\n")
-    keywords.each do |keyword|
-      Keywording.find_or_create_by_citation_id_and_keyword_id(:citation_id => citation.id, :keyword_id => keyword.id)
-    end
-  end
+  #Updates keywords for the current citation
+  # 	If this citation is still a *new* record (i.e. it hasn't been created
+  # 	in the database), then the keywords are just cached until the 
+  #  	citation is created.
+  #     Based on ideas at:
+  #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+  def keywords=(keywords)
+  	logger.debug("\n\n===SET KEYWORDS===\n\n")
+	
+	if self.new_record?
+		#Defer saving to Citation object directly, until it is created
+		@keywords = keywords
+	else
+		# Create author_strings and save to database
+		Citation.update_keywordings(self, keywords)  
+	end
+  end  
+	
+  # Update Keywordings - updates list of keywords for citation
+  def self.update_keywordings(citation, keywords)
+	logger.debug("\n\n===UPDATE KEYWORDINGS===\n\n")
+		
+	unless keywords.nil?
+		#first, remove any keyword(s) that are no longer in list
+		citation.keywordings.each do |kw|
+			kw.destroy unless keywords.include?(kw.keyword)
+			keywords.delete(kw.keyword)
+		end 
+		#next, add any new keyword(s) to list
+		keywords.each do |keyword|
+			Keywording.find_or_create_by_citation_id_and_keyword_id(:citation_id => citation.id, :keyword_id => keyword.id)
+		end
+		#refresh citation in memory based on database updates
+		citation.reload
+	end	  
+  end    
+	
+  # Create keywords, after a Citation is created successfully
+  #  Called by 'after_create' callback
+  def create_keywords
+  	#Create any initialized keywords and save to Citation
+	self.keywords = @keywords if @keywords
+  end  
+  
   
   #Updates author_strings for the current citation
   # 	If this citation is still a *new* record (i.e. it hasn't been created

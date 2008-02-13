@@ -1,0 +1,8 @@
+#keywords_field
+  %label Keyword(s):
+  = text_field_with_auto_complete :keyword, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+  = link_to_remote "Add Keyword to List", :url => { :action => :add_item_to_list}, :condition => "$('keyword_name').value.length > 0", :with => "'item_name=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'"
+  %ul#keywords_list
+    - if @keywords
+      - @keywords.each do |add|
+        = render :partial => 'list_item', :locals => {:item_name => 'keywords', :item_value => add.name, :selected => true}
