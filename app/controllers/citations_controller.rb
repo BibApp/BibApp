@@ -2,7 +2,7 @@ class CitationsController < ApplicationController
   before_filter :find_authorities, :only => [:new, :edit]
 
   make_resourceful do
-    build :index, :show, :edit, :destroy
+    build :index, :show, :new, :edit, :destroy
     
     publish :yaml, :xml, :json, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
@@ -76,21 +76,16 @@ class CitationsController < ApplicationController
       end
     
     before :edit do
-      #auto_complete_for :author_strings, :name
       @author_strings = @citation.author_strings
     end
 	
-  end
-  
-  # Prepare all information required by 'new.html.haml' page
-  def new
-  	logger.debug("\n\n===STARTING NEW===\n\n")
-		
-  	#if 'type' unspecified, default to first type in list
-    params[:type] ||= Citation.types[0]
-    
-	#initialize citation subclass with any passed in citation info
-	@citation = subklass_init(params[:type], params[:citation])
+	before :new do
+	  #if 'type' unspecified, default to first type in list
+	  params[:type] ||= Citation.types[0]
+			
+	  #initialize citation subclass with any passed in citation info
+	  @citation = subklass_init(params[:type], params[:citation])		
+	end 
   end
   
   def create
@@ -188,19 +183,19 @@ class CitationsController < ApplicationController
   #  This method provides users with a list of matching AuthorStrings
   #  already in BibApp.
   def auto_complete_for_author_name
-  	@author_string = params[:author][:name].downcase
+  	author_string = params[:author][:name].downcase
 	
 	#search at beginning of name
-	@beginning_search = @author_string + "%"
+	beginning_search = author_string + "%"
 	#search at beginning of any other words in name
-	@word_search = "% " + @author_string + "%"	
+	word_search = "% " + author_string + "%"	
 	
-	@author_strings = AuthorString.find(:all, 
-			:conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", @beginning_search, @word_search ], 
+	author_strings = AuthorString.find(:all, 
+			:conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			:order => 'name ASC',
 			:limit => 8)
 		  
-	render :partial => 'autocomplete_author', :locals => {:author_strings => @author_strings}
+	render :partial => 'autocomplete_author', :locals => {:author_strings => author_strings}
   end    
   
   #Adds a single author string to list of authors in Web-based Citation entry
@@ -229,19 +224,19 @@ class CitationsController < ApplicationController
   #  This method provides users with a list of matching Publications
   #  already in BibApp.
   def auto_complete_for_publication_name
-	  @publication_name = params[:publication][:name].downcase
+	  publication_name = params[:publication][:name].downcase
 	  
 	  #search at beginning of name
-	  @beginning_search = @publication_name + "%"
+	  beginning_search = publication_name + "%"
 	  #search at beginning of any other words in name
-	  @word_search = "% " + @publication_name + "%"
+	  word_search = "% " + publication_name + "%"
 	  
-	  @publications = Publication.find(:all, 
-	  		  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", @beginning_search, @word_search ], 
+	  publications = Publication.find(:all, 
+	  		  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			  :order => 'name ASC',
 			  :limit => 8)
 			
-	  render :partial => 'autocomplete_publication', :locals => {:publications => @publications}
+	  render :partial => 'autocomplete_publication', :locals => {:publications => publications}
   end    
        
   
