@@ -101,11 +101,12 @@ module ActsAsSolr #:nodoc:
       include InstanceMethods
       include CommonMethods
       include ParserMethods
-      
+
       cattr_accessor :configuration
       cattr_accessor :solr_configuration
       
-      self.configuration = { 
+      self.configuration = {
+        :index => true,
         :fields => nil,
         :additional_fields => nil,
         :exclude_fields => [],
@@ -120,15 +121,23 @@ module ActsAsSolr #:nodoc:
         :primary_key_field => "pk_i",
         :default_boost => 1.0
       }
-      
+
       configuration.update(options) if options.is_a?(Hash)
       solr_configuration.update(solr_options) if solr_options.is_a?(Hash)
       Deprecation.validate_index(configuration)
       
       configuration[:solr_fields] = []
-      
-      after_save    :solr_save
-      after_destroy :solr_destroy
+
+      if configuration[:index]
+        after_save    :solr_save
+        after_destroy :solr_destroy
+      end
+
+      if configuration[:include].is_a?(Array)
+        configuration[:include].each do |association|
+          process_association(association)
+        end
+      end
 
       if configuration[:fields].respond_to?(:each)
         process_fields(configuration[:fields])
@@ -140,6 +149,57 @@ module ActsAsSolr #:nodoc:
     end
     
     private
+
+    def process_association(association)
+      if(association.is_a?(Hash) and association.has_key?(:known_as))
+        parent_name = association[:known_as]
+        association = association[:name]
+      else
+        parent_name = self.name.downcase.intern
+      end
+      r = self.reflect_on_association(association)
+      unless r.nil? or parent_name.nil?
+        begin
+          assoc_klass = r.klass
+          add_save_to_included_class(parent_name, assoc_klass)
+        rescue ActiveRecord::StatementInvalid=>err
+          puts "acts_as_solr had problems loading the class #{r.class_name}, skipping the association.\n#{err.message}"
+          logger.error "acts_as_solr had problems loading the class #{r.class_name}, skipping the association.\n#{err.message}"
+        end
+      end
+    end
+
+    def add_save_to_included_class(parent_name, klass)
+      case klass.reflect_on_association(parent_name).macro
+      when :has_one, :belongs_to
+        klass.class_eval <<-end_eval
+          after_save    :#{parent_name}_solr_association_save
+          after_destroy :#{parent_name}_solr_association_destroy
+
+          def #{parent_name}_solr_association_save
+            #{parent_name}.solr_save if #{parent_name}
+          end
+          def #{parent_name}_solr_association_destroy
+            #{parent_name}.solr_save if #{parent_name}
+          end
+        end_eval
+
+      when :has_many, :has_and_belongs_to_many
+         klass.class_eval <<-end_eval
+          after_save    :#{parent_name}_solr_association_save
+          after_destroy :#{parent_name}_solr_association_destroy
+
+          def #{parent_name}_solr_association_save
+            #{parent_name}.each{|o| o.solr_save } if #{parent_name}
+          end
+
+          def #{parent_name}_solr_association_destroy
+            #{parent_name}.each{|o| o.solr_save } if #{parent_name}
+          end
+        end_eval
+      end
+    end
+
     def get_field_value(field)
       configuration[:solr_fields] << field
       type  = field.is_a?(Hash) ? field.values[0] : nil

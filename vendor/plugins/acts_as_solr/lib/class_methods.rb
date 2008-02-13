@@ -151,8 +151,18 @@ module ActsAsSolr #:nodoc:
         items_processed = items.size
       end
       solr_optimize
+      rebuild_solr_spellcheck
       logger.debug items_processed > 0 ? "Index for #{self.name} has been rebuilt" : "Nothing to index for #{self.name}"
     end
+
+    def rebuild_solr_spellcheck
+      ActsAsSolr::Post.execute(Solr::Request::Spellcheck.new(:query => 'rebuild', :command => 'rebuild'))
+    end
+
+    def get_spelling_suggestions(query)
+       ActsAsSolr::Post.execute(Solr::Request::Spellcheck.new(:query => query,  :suggestion_count => 2)).suggestions
+    end
+
   end
   
 end

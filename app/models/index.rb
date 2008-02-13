@@ -35,7 +35,8 @@ class Index
     :publication_facet => Proc.new{|record| record.publication.authority.name},
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
     :type_facet => Proc.new{|record| record[:type]},
-    :year_facet => Proc.new{|record| record.year}
+    :year_facet => Proc.new{|record| record.year},
+    :spellword  => :abstract
   }
   
   class << self

@@ -10,19 +10,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'rexml/xpath'
-
-class Solr::Response::Ping < Solr::Response::Xml
-
-  def initialize(xml)
+class Solr::Response::Spellcheck < Solr::Response::Ruby
+  attr_reader :suggestions
+  
+  def initialize(ruby_code)
     super
-    @ok = REXML::XPath.first(@doc, './solr/ping') ? true : false
+    @suggestions = @data['suggestions']
   end
-
-  # returns true or false depending on whether the ping
-  # was successful or not
-  def ok?
-    @ok
-  end
-
 end

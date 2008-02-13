@@ -36,7 +36,8 @@ class SearchController < ApplicationController
       # 2. Load objects and Solr score for view
       
       @docs = Array.new
-      @q.docs.each do |doc|
+      logger.debug "Docs: #{@q.inspect}"
+      @q.data["response"]["docs"].each do |doc|
         citation = citation = Citation.find(doc["pk_i"][0])
         @docs << [citation, doc['score']]
       end

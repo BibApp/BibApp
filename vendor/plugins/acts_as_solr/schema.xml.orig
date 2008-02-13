@@ -16,10 +16,10 @@
  limitations under the License.
 -->
 
-<!--  
+<!--
  This is the Solr schema file. This file should be named "schema.xml" and
  should be in the conf directory under the solr home
- (i.e. ./solr/conf/schema.xml by default) 
+ (i.e. ./solr/conf/schema.xml by default)
  or located where the classloader for the Solr webapp can find it.
 
  This example schema is the recommended starting point for users.
@@ -113,9 +113,9 @@
 
 
  <fields>
-   <field name="id" type="string" indexed="true" stored="true" required="true" /> 
+   <field name="id" type="string" indexed="true" stored="true" required="true" />
    <field name="pk_i" type="integer" indexed="true" stored="true"/>
-   <field name="pk_s" type="string" indexed="true" stored="true"/>   
+   <field name="pk_s" type="string" indexed="true" stored="true"/>
    <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
 
    <dynamicField name="*_i" type="integer" indexed="true" stored="false"/>
