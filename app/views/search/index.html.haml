@@ -3,6 +3,13 @@
     %em="#{@q.total_hits}"
     =" Results for:"
     %strong=" #{@query}"
+  -if !@spelling_suggestions.empty?
+    Did you mean:
+    %ul#spelling-suggestions
+      - @spelling_suggestions.each do |suggestion|
+        %li
+          %em=link_to suggestion, {:controller => "search", :q => suggestion }
+      
   - if !@filter.empty?
     %h4
       ="Remove Filters: "
@@ -11,7 +18,7 @@
 
   %div{:class => "column span-24"}
     %div{:class => "column span-12"}
-      %h4="Citations (#{@docs.size})"
+      %h4 Citations
       %ol.results
         - @docs.each do |doc, score|
           %li
