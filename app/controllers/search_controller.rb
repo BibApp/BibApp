@@ -2,10 +2,11 @@ class SearchController < ApplicationController
   
   def index
     
-    @query  = params[:q] || []
+    @query  = params[:q] || ""
     @filter = params[:fq] || ""
     @filter = @filter.split("+>+").each{|f| f.strip!}
-
+    
+    
     if params[:q]
       solr = Solr::Connection.new("http://localhost:8982/solr")
       
@@ -29,6 +30,22 @@ class SearchController < ApplicationController
             }
           })
       end
+
+      # @TODO: Do this better, but for proof of concept...
+      # Spellcheck
+      # 1. Query Solr with qt=spellchecker, invokes SpellCheckerRequestHandler
+      # 2. If strings are identical it means they can spell, so don't suggest anything
+      # 3. If strings are not identical, go ahead and suggest.
+      
+      @spelling_suggestions = Index.get_spelling_suggestions(@query)
+      
+      @spelling_suggestions.each do |suggestion|
+        # if suggestion matches query don't suggest...
+        if suggestion.downcase == @query.downcase
+          @spelling_suggestions.delete(suggestion)
+        end
+      end
+      
       
       # Processing returned docs:
       # 1. Extract the IDs from Solr response

@@ -66,5 +66,14 @@ class Index
       solr.delete(record.solr_id)
       solr.commit
     end
+    
+    def get_spelling_suggestions(query)
+      solr = Solr::Connection.new("http://localhost:8982/solr")
+      spelling_suggestions = solr.send(Solr::Request::Spellcheck.new(:query => query)).suggestions
+      if spelling_suggestions == query
+        spelling_suggestions = nil
+      end
+      return spelling_suggestions
+    end
   end
 end
