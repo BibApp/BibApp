@@ -148,11 +148,10 @@ class Citation < ActiveRecord::Base
       # Setting author_strings
       author_strings = Array.new
       h[:author_strings].each do |add|
-        author_string = AuthorString.find_or_create_by_name(add)
+        author_string = AuthorString.find_or_initialize_by_name(add)
         author_strings << author_string
       end
-	  citation.author_strings = author_strings
-
+	  
       # Setting publisher_id
       # If there is no publisher data, set publisher to Unknown
       if h[:publisher].nil? || h[:publisher].empty?
@@ -183,10 +182,9 @@ class Citation < ActiveRecord::Base
       # Setting keywords
       keywords = Array.new
       h[:keywords].each do |add|
-        keyword = Keyword.find_or_create_by_name(add)
+        keyword = Keyword.find_or_initialize_by_name(add)
         keywords << keyword
       end
-	  citation.keywords = keywords
 	  
       # Create the Citation
       klass = h[:klass]
@@ -209,10 +207,12 @@ class Citation < ActiveRecord::Base
       h.delete(:source)
 
       citation = klass.create(h)
+	  citation.author_strings = author_strings
+	  citation.keywords = keywords
       citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, author_strings, publication)
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
-      deduplicate(citation)
+      deduplicate(citation) 
     }
     Index.batch_index
   end
@@ -247,7 +247,12 @@ class Citation < ActiveRecord::Base
 		end 
 		#next, add any new keyword(s) to list
 		keywords.each do |keyword|
-			Keywording.find_or_create_by_citation_id_and_keyword_id(:citation_id => citation.id, :keyword_id => keyword.id)
+			#if this is a brand new keyword, we must save it first
+			if keyword.new_record?
+				keyword.save
+			end
+			#add it to this citation
+			citation.keywords << keyword
 		end
 		#refresh citation in memory based on database updates
 		citation.reload
@@ -292,7 +297,12 @@ class Citation < ActiveRecord::Base
 		end 
 		#next, add any new author string(s) to list
 		author_strings.each do |author_string|
-			CitationAuthorString.find_or_create_by_citation_id_and_author_string_id(:citation_id => citation.id, :author_string_id => author_string.id)
+			#if this is a brand new author string, we must save it first
+			if author_string.new_record?
+				author_string.save
+			end
+			#add it to this citation
+			citation.author_strings << author_string
 		end
 		#refresh citation in memory based on database updates
 		citation.reload
