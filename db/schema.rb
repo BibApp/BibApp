@@ -9,15 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 23) do
 
-  create_table "author_strings", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "authorship_states", :force => true do |t|
+    t.string "name"
   end
-
-  add_index "author_strings", ["name"], :name => "author_name"
 
   create_table "authorships", :force => true do |t|
     t.integer  "person_id"
@@ -29,16 +25,30 @@ ActiveRecord::Schema.define(:version => 22) do
     t.boolean  "highlight"
     t.integer  "score"
     t.boolean  "hide"
+    t.integer  "authorship_state_id"
   end
 
   add_index "authorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
 
-  create_table "citation_author_strings", :force => true do |t|
-    t.integer  "author_string_id"
+  create_table "citation_archive_states", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "citation_name_string_types", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "citation_name_strings", :force => true do |t|
+    t.integer  "name_string_id"
     t.integer  "citation_id"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "citation_name_string_type_id"
+  end
+
+  create_table "citation_states", :force => true do |t|
+    t.string "name"
   end
 
   create_table "citations", :force => true do |t|
@@ -55,21 +65,16 @@ ActiveRecord::Schema.define(:version => 22) do
     t.text     "abstract"
     t.text     "notes"
     t.string   "links"
-    t.string   "citation_archive_uri"
+    t.string   "local_archive_uri"
     t.string   "title_dupe_key"
     t.string   "issn_isbn_dupe_key"
     t.integer  "citation_state_id"
     t.integer  "citation_archive_state_id"
     t.integer  "publication_id"
     t.integer  "publisher_id"
-    t.integer  "imported_for"
-    t.integer  "bump_value"
     t.datetime "archived_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "data_source_id"
-    t.integer  "external_id"
-    t.text     "serialized_data"
     t.text     "original_data"
     t.integer  "batch_index",               :default => 0
   end
@@ -82,11 +87,29 @@ ActiveRecord::Schema.define(:version => 22) do
   add_index "citations", ["batch_index"], :name => "batch_index"
   add_index "citations", ["type"], :name => "fk_citation_type"
 
+  create_table "external_system_keys", :force => true do |t|
+    t.integer "external_system_id"
+    t.integer "citation_id"
+    t.string  "exernal_key_number"
+  end
+
+  create_table "external_systems", :force => true do |t|
+    t.string "name"
+    t.string "abbreviation"
+    t.string "base_url"
+    t.string "lookup_params"
+  end
+
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
+    t.boolean  "hide"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "parent_id"
   end
 
   add_index "groups", ["name"], :name => "group_name", :unique => true
@@ -113,13 +136,22 @@ ActiveRecord::Schema.define(:version => 22) do
     t.integer  "person_id"
     t.integer  "group_id"
     t.string   "title"
-    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "position"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
   add_index "memberships", ["person_id", "group_id"], :name => "person_group_join"
+
+  create_table "name_strings", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "name_strings", ["name"], :name => "author_name"
 
   create_table "pen_names", :force => true do |t|
     t.integer  "author_string_id"
@@ -184,6 +216,7 @@ ActiveRecord::Schema.define(:version => 22) do
     t.datetime "updated_at"
   end
 
+  add_index "publishers", ["name"], :name => "publisher_name", :unique => true
   add_index "publishers", ["authority_id"], :name => "fk_publisher_authority_id"
 
   create_table "taggings", :force => true do |t|
