@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  has_many :author_strings, :through => :pen_names
+  has_many :name_strings, :through => :pen_names
   has_many :pen_names
   has_many :groups, :through => :memberships
   has_many :memberships
@@ -23,9 +23,9 @@ class Person < ActiveRecord::Base
     return all_groups - groups
   end
   
-  def author_strings_not
-    all_author_strings = AuthorString.find(:all, :order => "name")
+  def name_strings_not
+    all_name_strings = NameString.find(:all, :order => "name")
     # TODO: do this right. The vector subtraction is dumb.
-    return all_author_strings - author_strings
+    return all_name_strings - name_strings
   end
 end

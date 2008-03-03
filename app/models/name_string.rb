@@ -1,7 +1,7 @@
-class AuthorString < ActiveRecord::Base
+class NameString < ActiveRecord::Base
   has_many :citations, 
-    :through => :citation_author_strings
-  has_many :citation_author_strings
+    :through => :citation_name_strings
+  has_many :citation_name_strings
 
   def to_param
     param_name = name.gsub(" ", "_")
