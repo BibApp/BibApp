@@ -1,9 +1,9 @@
 class PenName < ActiveRecord::Base
-  belongs_to :author_string
+  belongs_to :name_string
   belongs_to :person
   has_many :authorships
   
-  validates_presence_of :author_string_id, :person_id
+  validates_presence_of :name_string_id, :person_id
   
   # PenNames provide the logic for creating and destroying Authorships
   # PenName lifecycle needs create or destroy associated Authorships
@@ -29,7 +29,7 @@ class PenName < ActiveRecord::Base
   
     
   def set_authorships
-    self.author_string.citations.each do |citation|
+    self.name_string.citations.each do |citation|
       if citation.citation_state_id == 3
         as = Authorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id(citation.id, self.person_id, self.id)
         as.update_attributes(:score => 0)

@@ -2,10 +2,10 @@ class Citation < ActiveRecord::Base
   #### Associations ####
   belongs_to :publication
   belongs_to :publisher
-  has_many :author_strings, 
-    :through => :citation_author_strings, 
+  has_many :name_strings, 
+    :through => :citation_name_strings, 
     :order => :position
-  has_many :citation_author_strings
+  has_many :citation_name_strings
   
   has_many :people,
     :through => :authorships
@@ -17,7 +17,7 @@ class Citation < ActiveRecord::Base
   #### Callbacks ####
   before_validation_on_create :set_initial_states
   def after_create 
-   	create_author_strings
+   	create_name_strings
   	create_keywords
   end
   
@@ -145,11 +145,11 @@ class Citation < ActiveRecord::Base
     return [] if attr_hashes.nil?
     all_cites = attr_hashes.map { |h|
       
-      # Setting author_strings
-      author_strings = Array.new
-      h[:author_strings].each do |add|
-        author_string = AuthorString.find_or_initialize_by_name(add)
-        author_strings << author_string
+      # Setting NameStrings
+      name_strings = Array.new
+      h[:name_strings].each do |add|
+        name_string = NameString.find_or_initialize_by_name(add)
+        name_strings << name_string
       end
 	  
       # Setting publisher_id
@@ -198,7 +198,7 @@ class Citation < ActiveRecord::Base
       # Clean the hash of non-Citation table data
       # Cleaning preps hash for AR insert
       h.delete(:klass)
-      h.delete(:author_strings)
+      h.delete(:name_strings)
       h.delete(:publisher)
       h.delete(:publication)
       h.delete(:publication_place)
@@ -207,9 +207,9 @@ class Citation < ActiveRecord::Base
       h.delete(:source)
 
       citation = klass.create(h)
-	  citation.author_strings = author_strings
-	  citation.keywords = keywords
-      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, author_strings, publication)
+      citation.name_strings = name_strings
+      citation.keywords = keywords
+      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, name_strings, publication)
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
       deduplicate(citation) 
@@ -267,62 +267,62 @@ class Citation < ActiveRecord::Base
   end  
   
   
-  #Updates author_strings for the current citation
+  #Updates name_strings for the current citation
   # 	If this citation is still a *new* record (i.e. it hasn't been created
-  # 	in the database), then the author_strings are just cached until the 
+  # 	in the database), then the name_strings are just cached until the 
   #  	citation is created.
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
-  def author_strings=(author_strings)
-	logger.debug("\n\n===SET CITATION_AUTHOR_STRINGS===\n\n")
+  def name_strings=(name_strings)
+	logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
   
 	if self.new_record?
 		#Defer saving to Citation object directly, until it is created
-		@author_strings = author_strings
+		@name_strings = name_strings
 	else
-	  	# Create author_strings and save to database
-		Citation.update_citation_author_strings(self, author_strings)  
+	  	# Create name_strings and save to database
+		Citation.update_citation_name_strings(self, name_strings)  
 	end
   end  
   
-  # Update CitationAuthorStrings - updates list of authors for citation
-  def self.update_citation_author_strings(citation, author_strings)
-  	logger.debug("\n\n===UPDATE CITATION_AUTHOR_STRINGS===\n\n")
+  # Update CitationNameStrings - updates list of authors for citation
+  def self.update_citation_name_strings(citation, name_strings)
+  	logger.debug("\n\n===UPDATE CITATION_NAME_STRINGS===\n\n")
 	  
-	unless author_strings.nil?
-		#first, remove any author_string(s) that are no longer in list
-		citation.citation_author_strings.each do |cas|
-			cas.destroy unless author_strings.include?(cas.author_string)
-			author_strings.delete(cas.author_string)
+	unless name_strings.nil?
+		#first, remove any name_string(s) that are no longer in list
+		citation.citation_name_strings.each do |cas|
+			cas.destroy unless name_strings.include?(cas.name_string)
+			name_strings.delete(cas.name_string)
 		end 
 		#next, add any new author string(s) to list
-		author_strings.each do |author_string|
-			#if this is a brand new author string, we must save it first
-			if author_string.new_record?
-				author_string.save
+		name_strings.each do |name_string|
+			#if this is a brand new name string, we must save it first
+			if name_string.new_record?
+				name_string.save
 			end
 			#add it to this citation
-			citation.author_strings << author_string
+			citation.name_strings << name_string
 		end
 		#refresh citation in memory based on database updates
 		citation.reload
 	end	  
   end    
   
-  # Create author strings, after a Citation is created successfully
+  # Create name strings, after a Citation is created successfully
   #  Called by 'after_create' callback
-  def create_author_strings
-  	#Create any initialized author_strings and save to Citation
-  	self.author_strings = @author_strings if @author_strings
+  def create_name_strings
+  	#Create any initialized name_strings and save to Citation
+  	self.name_strings = @name_strings if @name_strings
   end  
   
   
 =begin
   # Set Dupe Keys
-  def self.set_dupe_keys(citation, author_strings, publication)
+  def self.set_dupe_keys(citation, name_strings, publication)
     logger.debug("\n\n===SET DUPE KEYS===\n\n")
     logger.debug("Citation: #{citation.inspect}\n\n")
-    logger.debug("AuthorStrings: #{author_strings.inspect}\n\n")
+    logger.debug("NameStrings: #{name_strings.inspect}\n\n")
     logger.debug("Publication: #{publication.inspect}\n\n")
     self.write_attribute("issn_isbn_dupe_key", self.issn_isbn_dupe_key(citation, author_strings, publication))
     self.write_attribute("title_dupe_key", self.title_dupe_key(citation))
@@ -341,8 +341,8 @@ class Citation < ActiveRecord::Base
 
   def self.set_issn_isbn_dupe_key(citation, author_strings, publication)
     # Set issn_isbn_dupe_key
-    if author_strings
-      first_author = author_strings[0].name.split(",")[0]
+    if name_strings
+      first_author = name_strings[0].name.split(",")[0]
     else
       first_author = nil
     end
