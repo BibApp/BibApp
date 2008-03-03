@@ -16,9 +16,9 @@ class GroupsController < ApplicationController
       @citations = Citation.paginate(
         :all,
         :joins => "
-          join citation_author_strings on citations.id = citation_author_strings.citation_id
-          join author_strings on citation_author_strings.author_string_id = author_strings.id
-          join pen_names on author_strings.id = pen_names.author_string_id
+          join citation_name_strings on citations.id = citation_name_strings.citation_id
+          join name_strings on citation_name_strings.name_string_id = name_strings.id
+          join pen_names on name_strings.id = pen_names.name_string_id
           join people on pen_names.person_id = people.id
           join memberships on people.id = memberships.person_id
           join groups on memberships.group_id = groups.id

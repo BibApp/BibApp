@@ -11,7 +11,7 @@ class CitationsController < ApplicationController
         }, {
         :publisher => [:id, :name]
         }, {
-        :author_strings => [:id, :name]
+        :name_strings => [:id, :name]
         }, {
         :people => [:id, :first_last]
         }
@@ -32,9 +32,9 @@ class CitationsController < ApplicationController
     	   		FROM groups g
     			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
     					FROM citations
-    					join citation_author_strings on citations.id = citation_author_strings.citation_id
-    					join author_strings on citation_author_strings.author_string_id = author_strings.id
-    					join pen_names on author_strings.id = pen_names.author_string_id
+    					join citation_name_strings on citations.id = citation_name_strings.citation_id
+    					join name_strings on citation_name_strings.name_string_id = name_strings.id
+    					join pen_names on name_strings.id = pen_names.name_string_id
     					join people on pen_names.person_id = people.id
     					join memberships on people.id = memberships.person_id
     					join groups on memberships.group_id = groups.id
@@ -50,9 +50,9 @@ class CitationsController < ApplicationController
     	   		FROM people p
     			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
     					FROM citations
-    					join citation_author_strings on citations.id = citation_author_strings.citation_id
-    					join author_strings on citation_author_strings.author_string_id = author_strings.id
-    					join pen_names on author_strings.id = pen_names.author_string_id
+    					join citation_name_strings on citations.id = citation_name_strings.citation_id
+    					join name_strings on citation_name_strings.name_string_id = name_strings.id
+    					join pen_names on name_strings.id = pen_names.name_string_id
     					join people on pen_names.person_id = people.id
     					where citations.citation_state_id = 3
     					group by people.id) as cit
@@ -77,9 +77,9 @@ class CitationsController < ApplicationController
 	
 	#initialize variables used by 'edit.html.haml'
     before :edit do
-      @author_strings = @citation.author_strings
-	  @publication = @citation.publication
-	  @keywords = @citation.keywords
+      @name_strings = @citation.name_strings
+      @publication = @citation.publication
+      @keywords = @citation.keywords
     end
 	
 	#initialize variables used by 'new.html.haml'
@@ -124,7 +124,7 @@ class CitationsController < ApplicationController
     
 	  # Load other citation info available in request params
 	  set_publication(@citation)
-	  set_author_strings(@citation)
+	  set_name_strings(@citation)
 	  set_keywords(@citation)
 	  
 	  # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
@@ -150,7 +150,7 @@ class CitationsController < ApplicationController
     
 	# Load other citation info available in request params
 	set_publication(@citation)
- 	set_author_strings(@citation)
+ 	set_name_strings(@citation)
 	set_keywords(@citation)
 	
     respond_to do |format|
@@ -178,20 +178,20 @@ class CitationsController < ApplicationController
   end	
   
   
-  # Load author strings list from Request params
+  # Load name strings list from Request params
   # and set for the current citation.
   # Also sets the instance variable @author_strings,
   # in case any errors should occur in saving citation
-  def set_author_strings(citation)
+  def set_name_strings(citation)
   	#default to empty array of author strings
-	params[:author_strings] ||= []	
+	params[:name_strings] ||= []	
 				
-	#Set AuthorStrings for this Citation
-	@author_strings = Array.new
-	params[:author_strings].each do |add|
-		@author_strings << AuthorString.find_or_initialize_by_name(add)
+	#Set NameStrings for this Citation
+	@name_strings = Array.new
+	params[:name_strings].each do |add|
+		@name_strings << NameString.find_or_initialize_by_name(add)
 	end
-	citation.author_strings = @author_strings 	
+	citation.name_strings = @name_strings 	
   end
   
   # Load keywords list from Request params
@@ -211,23 +211,23 @@ class CitationsController < ApplicationController
   end  
   	  	
   	
-  #Auto-Complete for entering Author Names in Web-based Citation entry
+  #Auto-Complete for entering NameStrings in Web-based Citation entry
   #  This method provides users with a list of matching AuthorStrings
   #  already in BibApp.
-  def auto_complete_for_author_name
-  	author_string = params[:author][:name].downcase
+  def auto_complete_for_name_string
+  	name_string = params[:name_string][:name].downcase
 	
 	#search at beginning of name
-	beginning_search = author_string + "%"
+	beginning_search = name_string + "%"
 	#search at beginning of any other words in name
-	word_search = "% " + author_string + "%"	
+	word_search = "% " + name_string + "%"	
 	
-	author_strings = AuthorString.find(:all, 
+	name_strings = NameString.find(:all, 
 			:conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			:order => 'name ASC',
 			:limit => 8)
 		  
-	render :partial => 'autocomplete_list', :locals => {:objects => author_strings}
+	render :partial => 'autocomplete_list', :locals => {:objects => name_strings}
   end    
   
   #Auto-Complete for entering Keywords in Web-based Citation entry
@@ -269,13 +269,13 @@ class CitationsController < ApplicationController
   end    
        
   #Adds a single item value to list of items in Web-based Citation entry
-  # This is used to add multiple values in form (e.g. multiple authors, keywords, etc)
+  # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:
-  # 	item_name - "Name" of type of item (e.g. "author_string", "keywords")
+  # 	item_name - "Name" of type of item (e.g. "name_string", "keywords")
   #     item_value - value to add to item list
   #     clear_field - Name of form field to clear after processing is complete
   #
-  # (E.g.) item_name=>"author_string", item_value=>"Donohue, Tim", clear_field=>"author_name"
+  # (E.g.) item_name=>"name_string", item_value=>"Donohue, Tim", clear_field=>"author_name"
   #	  Above example will add value "Donohue, Tim" to list of "author_string" values in form.
   #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_string_list". 
   #   It then clears the "author_name" field (which is the textbox where the value was entered).
@@ -283,37 +283,37 @@ class CitationsController < ApplicationController
   #   <input type="textbox" id="author_name" name="author_name" value=""/>
   #   <ul id='author_string_list'>
   #     <li id='Donohue, Timothy' class='list_item'>
-  #       <input type="checkbox" id="author_string[]" name="author_string[]" value="Donohue, Tim"/> Donohue, Tim
+  #       <input type="checkbox" id="name_string[]" name="name_string[]" value="Donohue, Tim"/> Donohue, Tim
   #     </li>
   #   </ul>
   def add_item_to_list
-  	@item_name = params[:item_name]     
-    @item_value = params[:item_value]   
-	@clear_field = params[:clear_field]
-	  
-	#Add item value to list dynamically using Javascript
-	respond_to do |format|
-	  format.js { render :action => :item_list }
-	end  	
+    @item_name = params[:item_name]
+    @item_value = params[:item_value]
+    @clear_field = params[:clear_field]
+
+    #Add item value to list dynamically using Javascript
+      respond_to do |format|
+      format.js { render :action => :item_list }
+    end
   end
 	
   #Removes a single item value from list of items in Web-based Citation entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
   # Expects two parameters:
-  # 	item_name - "Name" of type of item (e.g. "author_string", "keywords")
-  #     item_value - value to add to item list  
+  #   item_name - "Name" of type of item (e.g. "name_string", "keywords")
+  #   item_value - value to add to item list  
   #
   # Essentially this does the opposite of 'add_item_to_list', and removes
   # an existing item.
   def remove_item_from_list
-  	@item_name = params[:item_name]
-  	@item_value = params[:item_value]
-	@remove = true
-		
-	#remove item value from list dynamically using Javascript
-	respond_to do |format|
-		format.js { render :action => :item_list }
-	end  	
+    @item_name = params[:item_name]
+    @item_value = params[:item_value]
+    @remove = true
+
+    #remove item value from list dynamically using Javascript
+    respond_to do |format|
+      format.js { render :action => :item_list }
+    end
   end
   
   private
@@ -321,15 +321,13 @@ class CitationsController < ApplicationController
   # Initializes a new citation subclass, but doesn't create it in the database
   def subklass_init(klass_type, citation)
     klass_type.sub!(" ", "") #remove spaces
-	klass_type.gsub!(/[()]/, "") #remove any parens
+    klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Citation
       raise NameError.new("#{klass_type} is not a subclass of Citation") and return
     end
     citation = klass.new(citation)
   end
-  
-  
   
   def find_authorities
     @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
