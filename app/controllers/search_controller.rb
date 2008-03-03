@@ -15,7 +15,7 @@ class SearchController < ApplicationController
           @query, {
             :filter_queries => @filter, 
             :facets => {
-              :fields => [:author_string_facet, :year_facet, :publication_facet, :type_facet], 
+              :fields => [:name_string_facet, :year_facet, :publication_facet, :type_facet], 
               :mincount => 1, 
               :limit => 10
             }
@@ -24,7 +24,7 @@ class SearchController < ApplicationController
         @q = solr.query(
           @query, {
             :facets => {
-              :fields => [:author_string_facet, :year_facet, :publication_facet, :type_facet],
+              :fields => [:name_string_facet, :year_facet, :publication_facet, :type_facet],
               :mincount => 1,
               :limit => 10
             }
@@ -60,7 +60,7 @@ class SearchController < ApplicationController
       end
       
       @facets = {
-        "author_string" => @q.data["facet_counts"]["facet_fields"]["author_string_facet"].sort{|a,b| b[1]<=>a[1]},
+        "author_string" => @q.data["facet_counts"]["facet_fields"]["name_string_facet"].sort{|a,b| b[1]<=>a[1]},
         "publication" => @q.data["facet_counts"]["facet_fields"]["publication_facet"].sort{|a,b| b[1]<=>a[1]},
         "type" => @q.data["facet_counts"]["facet_fields"]["type_facet"].sort{|a,b| b[1]<=>a[1]},
         "year" => @q.data["facet_counts"]["facet_fields"]["year_facet"].sort{|a,b| b <=> a}
