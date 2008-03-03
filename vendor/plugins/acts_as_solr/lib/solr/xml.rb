@@ -17,7 +17,7 @@ begin
   
   # If we can load rubygems and libxml-ruby...
   require 'rubygems'
-  require 'xml/libxml'
+  require 'xml-libxml'
   
   # then make a few modifications to XML::Node so it can stand in for REXML::Element
   class XML::Node
