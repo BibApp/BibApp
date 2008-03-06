@@ -38,7 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # Install the default routes as the lowest priority.
     
-  map.resources :author_strings,
+  map.resources :name_strings,
     :citations,
     :groups,
     :memberships,
