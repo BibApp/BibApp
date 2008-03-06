@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 23) do
+ActiveRecord::Schema.define(:version => 24) do
 
   create_table "authorship_states", :force => true do |t|
     t.string "name"
@@ -154,13 +154,13 @@ ActiveRecord::Schema.define(:version => 23) do
   add_index "name_strings", ["name"], :name => "author_name"
 
   create_table "pen_names", :force => true do |t|
-    t.integer  "author_string_id"
+    t.integer  "name_string_id"
     t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "pen_names", ["author_string_id", "person_id"], :name => "author_person_join", :unique => true
+  add_index "pen_names", ["name_string_id", "person_id"], :name => "author_person_join", :unique => true
 
   create_table "people", :force => true do |t|
     t.integer  "external_id"
