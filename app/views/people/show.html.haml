@@ -24,7 +24,7 @@
       - @person.groups.each do |g|
         %li=link_to "#{g.name}", group_path(g)
 
-    %h3="Pen Names (#{@person.author_strings.size})"
-    %ol.author_strings_alphabetical
-      - @person.author_strings.each do |as|
-        %li=link_to "#{as.name}", author_string_path(as)
+    %h3="Pen Names (#{@person.name_strings.size})"
+    %ol.name_strings_alphabetical
+      - @person.name_strings.each do |ns|
+        %li=link_to "#{ns.name}", name_string_path(ns)
