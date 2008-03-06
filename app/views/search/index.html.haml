@@ -24,9 +24,9 @@
           %li
             =link_to "#{doc.title_primary}", citation_path(doc)
             %p 
-              %strong AuthorStings:
-              - doc.author_strings.each do |as|
-                =link_to "#{as.name}", author_string_path(as)
+              %strong NameStings:
+              - doc.name_strings.each do |ns|
+                =link_to "#{ns.name}", name_string_path(ns)
               %br/
               %strong Source:
               =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
