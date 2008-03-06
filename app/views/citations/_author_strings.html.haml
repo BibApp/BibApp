@@ -1,8 +1,8 @@
-#authors_field
-  %label Author(s):
-  = text_field_with_auto_complete :author, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
-  = link_to_remote "Add Author to List", :url => { :action => :add_item_to_list}, :condition => "$('author_name').value.length > 0", :with => "'item_name=author_strings&item_value='+$F('author_name')+'&clear_field=author_name'"
-  %ul#author_strings_list
-    - if @author_strings
-      - @author_strings.each do |as|
-        = render :partial => 'list_item', :locals => {:item_name => 'author_strings', :item_value => as.name, :selected => true}
+#names_field
+  %label Name(s):
+  = text_field_with_auto_complete :name_string, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+  = link_to_remote "Add NameString to List", :url => { :action => :add_item_to_list}, :condition => "$('name_string_name').value.length > 0", :with => "'item_name=name_strings&item_value='+$F('name_string_name')+'&clear_field=name_string_name'"
+  %ul#name_strings_list
+    - if @name_strings
+      - @name_strings.each do |ns|
+        = render :partial => 'list_item', :locals => {:item_name => 'name_strings', :item_value => ns.name, :selected => true}
