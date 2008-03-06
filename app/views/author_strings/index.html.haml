@@ -1,7 +1,0 @@
-%h3="AuthorStrings - #{link_to 'Add', new_author_string_path}"
-%ul.author_strings
-  -@author_strings.each do |as|
-    %li
-      ="#{as.name}"
-      = render :partial => "actions", :locals => { :as => as }
-  
