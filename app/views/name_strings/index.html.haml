@@ -1,0 +1,7 @@
+%h3="NameStrings - #{link_to 'Add', new_name_string_path}"
+%ul.name_strings
+  -@name_strings.each do |ns|
+    %li
+      ="#{ns.name}"
+      = render :partial => "actions", :locals => { :ns => ns }
+  
