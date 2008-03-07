@@ -54,7 +54,7 @@ class MedlineImporter < CitationImporter
     @attr_map = {
        :pt => :klass,
        :ti => :title_primary,
-       :au => :author_strings,
+       :au => :name_strings,
        :ad => :affiliation,
        :jt => :publication,
        :ta => :publication,

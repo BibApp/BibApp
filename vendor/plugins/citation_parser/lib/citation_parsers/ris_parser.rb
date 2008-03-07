@@ -7,6 +7,7 @@ class RisParser < CitationParser
     if not risdata =~ /^ER  \-/
       return nil
     end
+    
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
       rec.strip!

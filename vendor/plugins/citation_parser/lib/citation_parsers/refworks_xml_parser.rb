@@ -19,7 +19,7 @@ class RefworksXmlParser < CitationParser
   def param_hash(xml)
     return {
       :reftype_id => xml[:RefType].to_a,
-      :author_strings => xml[:AuthorPrimary].split("|"),
+      :name_strings => xml[:AuthorPrimary].split("|"),
       :affiliations => xml[:AuthorSecondary].to_a,
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
