@@ -20,12 +20,16 @@ class CitationParser
   
   def parse(data)
     @citations = Array.new
+
     @@parsers.each do |klass|
       parser = klass.new
       @citations = parser.parse(data)
-      return @citations unless @citations.nil?
     end
-    return nil
+    if @citations.nil?
+      return nil
+    else
+      return @citations
+    end
   end
   
   protected

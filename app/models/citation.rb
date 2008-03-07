@@ -122,6 +122,7 @@ class Citation < ActiveRecord::Base
   # Batch import Citations
   def self.import_batch!(data)    
     
+    logger.debug "\n\nDATA: #{data.inspect}\n\n"
     # Read the data
     str = data
     if data.respond_to? :read
@@ -133,10 +134,14 @@ class Citation < ActiveRecord::Base
     # Init: Parser and Importer
     p = CitationParser.new
     i = CitationImporter.new
-    
+
+    # Did we read the data string?
+    logger.debug("\n\nSTR: #{str.inspect}\n\n")
+
     # Parse the data
     pcites = p.parse(str)
-    return nil if pcites.nil?
+    logger.debug("\n\nPCs: #{pcites.inspect}\n\n")
+    return nil if pcites.nil? 
     
     # Map Import hashes
     attr_hashes = i.citation_attribute_hashes(pcites)
@@ -181,9 +186,11 @@ class Citation < ActiveRecord::Base
       
       # Setting keywords
       keywords = Array.new
-      h[:keywords].each do |add|
-        keyword = Keyword.find_or_initialize_by_name(add)
-        keywords << keyword
+      if h[:keywords]
+        h[:keywords].each do |add|
+          keyword = Keyword.find_or_initialize_by_name(add)
+          keywords << keyword
+        end
       end
 	  
       # Create the Citation
@@ -205,6 +212,8 @@ class Citation < ActiveRecord::Base
       h.delete(:issn_isbn)
       h.delete(:keywords)
       h.delete(:source)
+      # @TODO add external_systems to citation import
+      h.delete(:external_id)
 
       citation = klass.create(h)
       citation.name_strings = name_strings
@@ -230,7 +239,7 @@ class Citation < ActiveRecord::Base
 		#Defer saving to Citation object directly, until it is created
 		@keywords = keywords
 	else
-		# Create author_strings and save to database
+		# Create keywords and save to database
 		Citation.update_keywordings(self, keywords)  
 	end
   end  
@@ -339,7 +348,7 @@ class Citation < ActiveRecord::Base
     "Citation:#{id}"
   end
 
-  def self.set_issn_isbn_dupe_key(citation, author_strings, publication)
+  def self.set_issn_isbn_dupe_key(citation, name_strings, publication)
     # Set issn_isbn_dupe_key
     if name_strings
       first_author = name_strings[0].name.split(",")[0]

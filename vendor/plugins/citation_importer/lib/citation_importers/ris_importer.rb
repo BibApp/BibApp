@@ -33,8 +33,6 @@ class RisImporter < CitationImporter
     end
 
     r_hash.each do |key, value|
-      puts "r_hash Key: #{key}\n"
-      puts "r_hash Value: #{value} | #{value.class}\n\n"
       
       if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
@@ -45,7 +43,6 @@ class RisImporter < CitationImporter
       end
     end
     
-    puts "Mapped Hash: #{r_hash.inspect}"
     return r_hash
   end
   
@@ -57,8 +54,8 @@ class RisImporter < CitationImporter
        :ti => :title_primary,
        :bt => :title_secondary,
        :t3 => :title_tertiary,
-       :a1 => :author_strings,
-       :ed => :author_strings,
+       :a1 => :name_strings,
+       :ed => :name_strings,
        :ad => :affiliation,
        :jf => :publication,
        :ja => :publication,
