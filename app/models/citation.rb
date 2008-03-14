@@ -290,7 +290,6 @@ class Citation < ActiveRecord::Base
   #  	citation is created.
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
-<<<<<<< .mine
   def citation_name_strings=(citation_name_strings)
     logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
   
@@ -301,19 +300,7 @@ class Citation < ActiveRecord::Base
       # Create name_strings and save to database
       Citation.update_citation_name_strings(self, citation_name_strings)  
     end
-  end
-=======
-  def name_strings=(name_strings)
-    logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
-    
-    if self.new_record?
-		  #Defer saving to Citation object directly, until it is created
-		  @name_strings = name_strings
-    else
-	  	# Create name_strings and save to database
-		  Citation.update_citation_name_strings(self, name_strings)  
-    end
-  end  
+  end 
   
   # Update CitationNameStrings - updates list of authors for citation
   def self.update_citation_name_strings(citation, citation_name_strings)
