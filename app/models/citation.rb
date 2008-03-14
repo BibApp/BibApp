@@ -233,46 +233,46 @@ class Citation < ActiveRecord::Base
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
   def keywords=(keywords)
-  	logger.debug("\n\n===SET KEYWORDS===\n\n")
-	
-	if self.new_record?
-		#Defer saving to Citation object directly, until it is created
-		@keywords = keywords
-	else
-		# Create keywords and save to database
-		Citation.update_keywordings(self, keywords)  
-	end
+    logger.debug("\n\n===SET KEYWORDS===\n\n")
+    
+    if self.new_record?
+		  #Defer saving to Citation object directly, until it is created
+		  @keywords = keywords
+    else
+		  # Create keywords and save to database
+		  Citation.update_keywordings(self, keywords)  
+    end
   end  
 	
   # Update Keywordings - updates list of keywords for citation
   def self.update_keywordings(citation, keywords)
-	logger.debug("\n\n===UPDATE KEYWORDINGS===\n\n")
+    logger.debug("\n\n===UPDATE KEYWORDINGS===\n\n")
 		
-	unless keywords.nil?
-		#first, remove any keyword(s) that are no longer in list
-		citation.keywordings.each do |kw|
-			kw.destroy unless keywords.include?(kw.keyword)
-			keywords.delete(kw.keyword)
-		end 
-		#next, add any new keyword(s) to list
-		keywords.each do |keyword|
-			#if this is a brand new keyword, we must save it first
-			if keyword.new_record?
-				keyword.save
-			end
-			#add it to this citation
-			citation.keywords << keyword
-		end
-		#refresh citation in memory based on database updates
-		citation.reload
-	end	  
+    unless keywords.nil?
+      #first, remove any keyword(s) that are no longer in list
+      citation.keywordings.each do |kw|
+        kw.destroy unless keywords.include?(kw.keyword)
+        keywords.delete(kw.keyword)
+      end
+		  #next, add any new keyword(s) to list
+      keywords.each do |keyword|
+        #if this is a brand new keyword, we must save it first
+        if keyword.new_record?
+          keyword.save
+        end
+        #add it to this citation
+        citation.keywords << keyword
+      end
+      #refresh citation in memory based on database updates
+		  citation.reload
+    end #end unless no keywords	  
   end    
 	
   # Create keywords, after a Citation is created successfully
   #  Called by 'after_create' callback
   def create_keywords
   	#Create any initialized keywords and save to Citation
-	self.keywords = @keywords if @keywords
+    self.keywords = @keywords if @keywords
   end  
   
   
@@ -283,39 +283,39 @@ class Citation < ActiveRecord::Base
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
   def name_strings=(name_strings)
-	logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
-  
-	if self.new_record?
-		#Defer saving to Citation object directly, until it is created
-		@name_strings = name_strings
-	else
+    logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
+    
+    if self.new_record?
+		  #Defer saving to Citation object directly, until it is created
+		  @name_strings = name_strings
+    else
 	  	# Create name_strings and save to database
-		Citation.update_citation_name_strings(self, name_strings)  
-	end
+		  Citation.update_citation_name_strings(self, name_strings)  
+    end
   end  
   
   # Update CitationNameStrings - updates list of authors for citation
   def self.update_citation_name_strings(citation, name_strings)
   	logger.debug("\n\n===UPDATE CITATION_NAME_STRINGS===\n\n")
 	  
-	unless name_strings.nil?
-		#first, remove any name_string(s) that are no longer in list
-		citation.citation_name_strings.each do |cas|
-			cas.destroy unless name_strings.include?(cas.name_string)
-			name_strings.delete(cas.name_string)
-		end 
-		#next, add any new author string(s) to list
-		name_strings.each do |name_string|
-			#if this is a brand new name string, we must save it first
-			if name_string.new_record?
-				name_string.save
-			end
-			#add it to this citation
-			citation.name_strings << name_string
-		end
-		#refresh citation in memory based on database updates
-		citation.reload
-	end	  
+    unless name_strings.nil?
+      #first, remove any name_string(s) that are no longer in list
+		  citation.citation_name_strings.each do |cas|
+        cas.destroy unless name_strings.include?(cas.name_string)
+        name_strings.delete(cas.name_string)
+		  end 
+		  #next, add any new author string(s) to list
+		  name_strings.each do |name_string|
+        #if this is a brand new name string, we must save it first
+        if name_string.new_record?
+				  name_string.save
+        end
+        #add it to this citation
+        citation.name_strings << name_string
+      end
+		  #refresh citation in memory based on database updates
+		  citation.reload
+    end # end unless no name_strings	  
   end    
   
   # Create name strings, after a Citation is created successfully
