@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 24) do
+ActiveRecord::Schema.define(:version => 25) do
 
   create_table "authorship_states", :force => true do |t|
     t.string "name"
@@ -34,17 +34,13 @@ ActiveRecord::Schema.define(:version => 24) do
     t.string "name"
   end
 
-  create_table "citation_name_string_types", :force => true do |t|
-    t.string "name"
-  end
-
   create_table "citation_name_strings", :force => true do |t|
     t.integer  "name_string_id"
     t.integer  "citation_id"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "citation_name_string_type_id"
+    t.string   "role"
   end
 
   create_table "citation_states", :force => true do |t|

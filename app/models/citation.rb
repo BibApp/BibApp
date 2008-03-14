@@ -1,4 +1,6 @@
-class Citation < ActiveRecord::Base  
+class Citation < ActiveRecord::Base
+  require 'htmlentities'
+  
   #### Associations ####
   belongs_to :publication
   belongs_to :publisher
@@ -16,8 +18,9 @@ class Citation < ActiveRecord::Base
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
+
   def after_create 
-   	create_name_strings
+   	create_citation_name_strings
   	create_keywords
   end
   
@@ -27,7 +30,6 @@ class Citation < ActiveRecord::Base
   ########## Methods ##########
   # Rule #1: Comment H-E-A-V-I-L-Y
   # Rule #2: Include @TODOs
-  
   
   # List of all currently enabled Citation Types
   def self.types
@@ -150,11 +152,12 @@ class Citation < ActiveRecord::Base
     return [] if attr_hashes.nil?
     all_cites = attr_hashes.map { |h|
       
-      # Setting NameStrings
-      name_strings = Array.new
-      h[:name_strings].each do |add|
-        name_string = NameString.find_or_initialize_by_name(add)
-        name_strings << name_string
+      # Setting CitationNameStrings
+      citation_name_strings = Array.new
+      
+      h[:citation_name_strings].each do |cns|
+        name_string = NameString.find_or_initialize_by_name(cns[:name])
+        citation_name_strings << {:name => name_string, :role => cns[:role]}
       end
 	  
       # Setting publisher_id
@@ -187,7 +190,7 @@ class Citation < ActiveRecord::Base
       # Setting keywords
       keywords = Array.new
       if h[:keywords]
-        h[:keywords].each do |add|
+        h[:keywords].uniq.each do |add|
           keyword = Keyword.find_or_initialize_by_name(add)
           keywords << keyword
         end
@@ -195,6 +198,11 @@ class Citation < ActiveRecord::Base
 	  
       # Create the Citation
       klass = h[:klass]
+      
+      # Clean the abstract
+      # @TODO we'll want to clean all data
+      code = HTMLEntities.new
+      h[:abstract] = code.encode(h[:abstract], :decimal)
         
       # Are we working with a legit SubKlass?
       klass = klass.constantize
@@ -205,7 +213,7 @@ class Citation < ActiveRecord::Base
       # Clean the hash of non-Citation table data
       # Cleaning preps hash for AR insert
       h.delete(:klass)
-      h.delete(:name_strings)
+      h.delete(:citation_name_strings)
       h.delete(:publisher)
       h.delete(:publication)
       h.delete(:publication_place)
@@ -216,9 +224,9 @@ class Citation < ActiveRecord::Base
       h.delete(:external_id)
 
       citation = klass.create(h)
-      citation.name_strings = name_strings
+      citation.citation_name_strings = citation_name_strings
       citation.keywords = keywords
-      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, name_strings, publication)
+      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
       deduplicate(citation) 
@@ -282,6 +290,19 @@ class Citation < ActiveRecord::Base
   #  	citation is created.
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+<<<<<<< .mine
+  def citation_name_strings=(citation_name_strings)
+    logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
+  
+    if self.new_record?
+      #Defer saving to Citation object directly, until it is created
+      @citation_name_strings = citation_name_strings
+    else
+      # Create name_strings and save to database
+      Citation.update_citation_name_strings(self, citation_name_strings)  
+    end
+  end
+=======
   def name_strings=(name_strings)
     logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
     
@@ -295,34 +316,37 @@ class Citation < ActiveRecord::Base
   end  
   
   # Update CitationNameStrings - updates list of authors for citation
-  def self.update_citation_name_strings(citation, name_strings)
-  	logger.debug("\n\n===UPDATE CITATION_NAME_STRINGS===\n\n")
-	  
-    unless name_strings.nil?
+  def self.update_citation_name_strings(citation, citation_name_strings)
+    logger.debug("\n\n===UPDATE NAME_STRINGS===\n\n")
+    unless citation_name_strings.nil?
       #first, remove any name_string(s) that are no longer in list
-		  citation.citation_name_strings.each do |cas|
-        cas.destroy unless name_strings.include?(cas.name_string)
-        name_strings.delete(cas.name_string)
-		  end 
-		  #next, add any new author string(s) to list
-		  name_strings.each do |name_string|
-        #if this is a brand new name string, we must save it first
-        if name_string.new_record?
-				  name_string.save
-        end
-        #add it to this citation
-        citation.name_strings << name_string
+      citation.citation_name_strings.each do |cns| # Current CNSs
+        cns.destroy unless citation_name_strings.collect{|c| c.name}.include?(cns.name_string.name)
       end
-		  #refresh citation in memory based on database updates
-		  citation.reload
-    end # end unless no name_strings	  
+       
+      #next, add any new author string(s) to list
+      citation_name_strings.each do |cns|
+        #if this is a brand new name_string, we must save it first
+        logger.debug("CNS: #{cns.inspect}")
+        name_string = NameString.find_or_create_by_name(cns[:name].name)
+        
+        #add it to this citation
+        citation.citation_name_strings << 
+          CitationNameString.new({
+            :name_string_id => name_string.id, 
+            :role => cns[:role]
+          })
+      end
+      #refresh citation in memory based on database updates
+      citation.reload
+    end
   end    
   
   # Create name strings, after a Citation is created successfully
   #  Called by 'after_create' callback
-  def create_name_strings
+  def create_citation_name_strings
   	#Create any initialized name_strings and save to Citation
-  	self.name_strings = @name_strings if @name_strings
+  	self.citation_name_strings = @citation_name_strings if @citation_name_strings
   end  
   
   
@@ -348,10 +372,10 @@ class Citation < ActiveRecord::Base
     "Citation:#{id}"
   end
 
-  def self.set_issn_isbn_dupe_key(citation, name_strings, publication)
+  def self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
     # Set issn_isbn_dupe_key
-    if name_strings
-      first_author = name_strings[0].name.split(",")[0]
+    if citation_name_strings
+      first_author = citation_name_strings[0][:name].name.split(",")[0]
     else
       first_author = nil
     end
