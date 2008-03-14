@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
 
   #Auto-Complete Routes for Web-Based Citation entry
   map.resources :citations, 
-                :collection => {:auto_complete_for_author_name => :get, 
+                :collection => {:auto_complete_for_name_string_name => :get, 
                 				:auto_complete_for_keyword_name => :get,
 								:auto_complete_for_publication_name => :get}
   

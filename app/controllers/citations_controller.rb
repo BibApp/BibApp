@@ -126,7 +126,17 @@ class CitationsController < ApplicationController
 	  set_publication(@citation)
 	  set_name_strings(@citation)
 	  set_keywords(@citation)
+    
+    # @TODO: Deduplication is currently not working   
+    # Initialize deduplication keys
+    #Citation.set_issn_isbn_dupe_key(@citation, @citation.name_strings, @citation.publication)
+    #Citation.set_title_dupe_key(citation)
+    
+    #@citation.save_and_set_for_index_without_callbacks
 	  
+    #Do any de-duping of this citation
+    #Citation.deduplicate(@citation)
+    
 	  # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
 	  #Index our citation in Solr
 	  #Index.update_solr(@citation)
@@ -212,9 +222,9 @@ class CitationsController < ApplicationController
   	  	
   	
   #Auto-Complete for entering NameStrings in Web-based Citation entry
-  #  This method provides users with a list of matching AuthorStrings
+  #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
-  def auto_complete_for_name_string
+  def auto_complete_for_name_string_name
   	name_string = params[:name_string][:name].downcase
 	
 	#search at beginning of name
