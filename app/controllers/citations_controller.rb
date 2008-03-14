@@ -74,23 +74,23 @@ class CitationsController < ApplicationController
     			LIMIT 10"
         )
       end
-	
-	#initialize variables used by 'edit.html.haml'
+	   
+    #initialize variables used by 'edit.html.haml'
     before :edit do
       @name_strings = @citation.name_strings
       @publication = @citation.publication
       @keywords = @citation.keywords
     end
 	
-	#initialize variables used by 'new.html.haml'
-	before :new do  
-	  #if 'type' unspecified, default to first type in list
-	  params[:type] ||= Citation.types[0]
+    #initialize variables used by 'new.html.haml'
+    before :new do  
+      #if 'type' unspecified, default to first type in list
+      params[:type] ||= Citation.types[0]
 			
-	  #initialize citation subclass with any passed in citation info
-	  @citation = subklass_init(params[:type], params[:citation])		
-	end 
-  end
+      #initialize citation subclass with any passed in citation info
+      @citation = subklass_init(params[:type], params[:citation])		
+    end 
+  end # end make_resourceful
   
   def create
     # @TODO: This step is dumb, we should map attrs in the SubClass::create method itself
@@ -122,24 +122,24 @@ class CitationsController < ApplicationController
       # Create the basic Citation SubKlass
       @citation = subklass_init(params[:type], params[:citation])
     
-	  # Load other citation info available in request params
-	  set_publication(@citation)
-	  set_name_strings(@citation)
-	  set_keywords(@citation)
+      # Load other citation info available in request params
+      set_publication(@citation)
+      set_name_strings(@citation)
+      set_keywords(@citation)
     
-    # @TODO: Deduplication is currently not working   
-    # Initialize deduplication keys
-    #Citation.set_issn_isbn_dupe_key(@citation, @citation.name_strings, @citation.publication)
-    #Citation.set_title_dupe_key(citation)
+      # @TODO: Deduplication is currently not working   
+      # Initialize deduplication keys
+      #Citation.set_issn_isbn_dupe_key(@citation, @citation.name_strings, @citation.publication)
+      #Citation.set_title_dupe_key(citation)
     
-    #@citation.save_and_set_for_index_without_callbacks
+      #@citation.save_and_set_for_index_without_callbacks
 	  
-    #Do any de-duping of this citation
-    #Citation.deduplicate(@citation)
+      #Do any de-duping of this citation
+      #Citation.deduplicate(@citation)
     
-	  # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
-	  #Index our citation in Solr
-	  #Index.update_solr(@citation)
+      # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
+      #Index our citation in Solr
+      #Index.update_solr(@citation)
 	
       respond_to do |format|
         if @citation.save
@@ -148,7 +148,7 @@ class CitationsController < ApplicationController
           format.xml  {head :created, :location => citation_url(@citation)}
         else
           format.html {render :action => "new"}
-		  format.xml  {render :xml => @citation.errors.to_xml}
+          format.xml  {render :xml => @citation.errors.to_xml}
         end
       end # If we are adding one
     end # If we need to add a batch
@@ -158,10 +158,11 @@ class CitationsController < ApplicationController
   def update
     @citation = Citation.find(params[:id])
     
-	# Load other citation info available in request params
-	set_publication(@citation)
- 	set_name_strings(@citation)
-	set_keywords(@citation)
+    
+    # Load other citation info available in request params
+    set_publication(@citation)
+    set_name_strings(@citation)
+    set_keywords(@citation)
 	
     respond_to do |format|
       if @citation.update_attributes(params[:citation])
@@ -180,11 +181,11 @@ class CitationsController < ApplicationController
   # Also sets the instance variable @publication,
   # in case any errors should occur in saving citation  
   def set_publication(citation)
-	#Set Publication info for this Citation
-	if params[:publication] && params[:publication][:name]
-		@publication = Publication.find_or_initialize_by_name(params[:publication][:name])
-		citation.publication = @publication
-	end  	
+    #Set Publication info for this Citation
+    if params[:publication] && params[:publication][:name]
+      @publication = Publication.find_or_initialize_by_name(params[:publication][:name])
+		  citation.publication = @publication
+    end  	
   end	
   
   
@@ -194,14 +195,14 @@ class CitationsController < ApplicationController
   # in case any errors should occur in saving citation
   def set_name_strings(citation)
   	#default to empty array of author strings
-	params[:name_strings] ||= []	
+    params[:name_strings] ||= []	
 				
-	#Set NameStrings for this Citation
-	@name_strings = Array.new
-	params[:name_strings].each do |add|
-		@name_strings << NameString.find_or_initialize_by_name(add)
-	end
-	citation.name_strings = @name_strings 	
+    #Set NameStrings for this Citation
+    @name_strings = Array.new
+    params[:name_strings].each do |add|
+      @name_strings << NameString.find_or_initialize_by_name(add)
+    end
+    citation.name_strings = @name_strings 	
   end
   
   # Load keywords list from Request params
@@ -209,15 +210,15 @@ class CitationsController < ApplicationController
   # Also sets the instance variable @keywords,
   # in case any errors should occur in saving citation
   def set_keywords(citation)
-	#default to empty array of keywords
-	params[:keywords] ||= []	
+    #default to empty array of keywords
+    params[:keywords] ||= []	
 				  
-	#Set Keywords for this Citation
-	@keywords = Array.new
-	params[:keywords].each do |add|
-		@keywords << Keyword.find_or_initialize_by_name(add)
-	end
-	citation.keywords = @keywords 	
+    #Set Keywords for this Citation
+    @keywords = Array.new
+    params[:keywords].each do |add|
+      @keywords << Keyword.find_or_initialize_by_name(add)
+    end
+    citation.keywords = @keywords 	
   end  
   	  	
   	
@@ -227,17 +228,17 @@ class CitationsController < ApplicationController
   def auto_complete_for_name_string_name
   	name_string = params[:name_string][:name].downcase
 	
-	#search at beginning of name
-	beginning_search = name_string + "%"
-	#search at beginning of any other words in name
-	word_search = "% " + name_string + "%"	
+    #search at beginning of name
+    beginning_search = name_string + "%"
+    #search at beginning of any other words in name
+    word_search = "% " + name_string + "%"	
 	
-	name_strings = NameString.find(:all, 
+    name_strings = NameString.find(:all, 
 			:conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			:order => 'name ASC',
 			:limit => 8)
 		  
-	render :partial => 'autocomplete_list', :locals => {:objects => name_strings}
+    render :partial => 'autocomplete_list', :locals => {:objects => name_strings}
   end    
   
   #Auto-Complete for entering Keywords in Web-based Citation entry
@@ -246,17 +247,17 @@ class CitationsController < ApplicationController
   def auto_complete_for_keyword_name
    	keyword = params[:keyword][:name].downcase
 	  
-	#search at beginning of word
-	beginning_search = keyword + "%"
-	#search at beginning of any other words
-	word_search = "% " + keyword + "%"	
+    #search at beginning of word
+    beginning_search = keyword + "%"
+    #search at beginning of any other words
+    word_search = "% " + keyword + "%"	
 	  
-	keywords = Keyword.find(:all, 
+    keywords = Keyword.find(:all, 
 			  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			  :order => 'name ASC',
 			  :limit => 8)
 			
-	render :partial => 'autocomplete_list', :locals => {:objects => keywords}
+    render :partial => 'autocomplete_list', :locals => {:objects => keywords}
   end    
   
   #Auto-Complete for entering Publication Titles in Web-based Citation entry
