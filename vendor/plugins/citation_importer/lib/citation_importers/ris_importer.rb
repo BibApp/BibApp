@@ -41,8 +41,9 @@ class RisImporter < CitationImporter
       if value.size >= 2 && value.class.to_s == "Array"
         r_hash[key] = value.flatten
       end
+      
     end
-    
+    puts "\n\nMapped Hash: #{r_hash.inspect}\n\n"
     return r_hash
   end
   
@@ -54,8 +55,8 @@ class RisImporter < CitationImporter
        :ti => :title_primary,
        :bt => :title_secondary,
        :t3 => :title_tertiary,
-       :a1 => :name_strings,
-       :ed => :name_strings,
+       :a1 => :citation_name_strings,
+       :ed => :citation_name_strings,
        :ad => :affiliation,
        :jf => :publication,
        :ja => :publication,
@@ -80,6 +81,12 @@ class RisImporter < CitationImporter
     }
   
     @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+
+    # Map NameString and CitationNameStringType
+    # example {:name => "Larson, EW", :type=> "Author"}
+    @attr_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @attr_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
+    
     @attr_translators[:ty] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
     @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     
