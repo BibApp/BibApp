@@ -286,10 +286,7 @@ class Citation < ActiveRecord::Base
   #  	citation is created.
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
-<<<<<<< .mine
 
-=======
->>>>>>> .r328
   def citation_name_strings=(citation_name_strings)
     logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
   
@@ -300,11 +297,8 @@ class Citation < ActiveRecord::Base
       # Create name_strings and save to database
       Citation.update_citation_name_strings(self, citation_name_strings)  
     end
-<<<<<<< .mine
+    
   end
-=======
-  end 
->>>>>>> .r328
   
   # Update CitationNameStrings - updates list of authors for citation
   def self.update_citation_name_strings(citation, citation_name_strings)
