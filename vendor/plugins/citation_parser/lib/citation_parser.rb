@@ -1,9 +1,10 @@
 class CitationParser
   
   @@parsers = Array.new
+  
   class << self
     def inherited(subclass)
-      @@parsers << subclass
+      @@parsers << subclass unless @@parsers.include?(subclass)
     end
     
     def parsers
@@ -20,16 +21,13 @@ class CitationParser
   
   def parse(data)
     @citations = Array.new
-
     @@parsers.each do |klass|
+      puts("\nKlass: #{klass}\n")
       parser = klass.new
       @citations = parser.parse(data)
+      return @citations unless @citations.nil?
     end
-    if @citations.nil?
-      return nil
-    else
-      return @citations
-    end
+    return nil
   end
   
   protected
@@ -45,7 +43,5 @@ class ParsedCitation
     @properties = Hash.new
   end
 end
-
-
 
 Dir["#{File.expand_path(File.dirname(__FILE__))}/citation_parsers/*_parser.rb"].each { |p| require p }

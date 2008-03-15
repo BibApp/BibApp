@@ -27,6 +27,10 @@ class MedlineParser < CitationParser
       cite.properties["original_data"] = rec
       @citations << cite
     end
+    
+    puts("\nCitations Size: #{@citations.size}\n")
+    puts("\nMEDLINEParser says:#{@citations.each{|c| c.inspect}}\n")
+    
     @citations
   end
   

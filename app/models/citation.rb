@@ -124,7 +124,6 @@ class Citation < ActiveRecord::Base
   # Batch import Citations
   def self.import_batch!(data)    
     
-    logger.debug "\n\nDATA: #{data.inspect}\n\n"
     # Read the data
     str = data
     if data.respond_to? :read
@@ -137,13 +136,10 @@ class Citation < ActiveRecord::Base
     p = CitationParser.new
     i = CitationImporter.new
 
-    # Did we read the data string?
-    logger.debug("\n\nSTR: #{str.inspect}\n\n")
-
     # Parse the data
     pcites = p.parse(str)
-    logger.debug("\n\nPCs: #{pcites.inspect}\n\n")
-    return nil if pcites.nil? 
+    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
+    return nil if pcites.nil?
     
     # Map Import hashes
     attr_hashes = i.citation_attribute_hashes(pcites)
@@ -155,7 +151,7 @@ class Citation < ActiveRecord::Base
       # Setting CitationNameStrings
       citation_name_strings = Array.new
       
-      h[:citation_name_strings].each do |cns|
+      h[:citation_name_strings].flatten.each do |cns|
         name_string = NameString.find_or_initialize_by_name(cns[:name])
         citation_name_strings << {:name => name_string, :role => cns[:role]}
       end
@@ -190,7 +186,7 @@ class Citation < ActiveRecord::Base
       # Setting keywords
       keywords = Array.new
       if h[:keywords]
-        h[:keywords].uniq.each do |add|
+        h[:keywords].to_a.uniq.each do |add|
           keyword = Keyword.find_or_initialize_by_name(add)
           keywords << keyword
         end
@@ -290,6 +286,10 @@ class Citation < ActiveRecord::Base
   #  	citation is created.
   #     Based on ideas at:
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+<<<<<<< .mine
+
+=======
+>>>>>>> .r328
   def citation_name_strings=(citation_name_strings)
     logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
   
@@ -300,7 +300,11 @@ class Citation < ActiveRecord::Base
       # Create name_strings and save to database
       Citation.update_citation_name_strings(self, citation_name_strings)  
     end
+<<<<<<< .mine
+  end
+=======
   end 
+>>>>>>> .r328
   
   # Update CitationNameStrings - updates list of authors for citation
   def self.update_citation_name_strings(citation, citation_name_strings)
@@ -361,6 +365,7 @@ class Citation < ActiveRecord::Base
 
   def self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
     # Set issn_isbn_dupe_key
+    logger.debug("\nCNS: #{citation_name_strings.inspect}\n")
     if citation_name_strings
       first_author = citation_name_strings[0][:name].name.split(",")[0]
     else

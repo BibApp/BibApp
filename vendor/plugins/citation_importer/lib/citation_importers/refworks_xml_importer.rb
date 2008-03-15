@@ -1,19 +1,17 @@
 class RefworksXmlImporter < CitationImporter
+
   class << self
     def import_formats
       [:refworks_xml]
     end
   end
   
-  def generate_attribute_hash(parsed_citation) 
+  def generate_attribute_hash(parsed_citation)
+    puts("\n\n Parsed Citation: #{parsed_citation}\n\n")
     r_hash = Hash.new
     return false if !self.class.import_formats.include?(parsed_citation.citation_type)
     props = parsed_citation.properties
     props.each do |key, values|
-      
-      puts("Key: #{key}\n")
-      puts("Value: #{values.inspect}\n")
-      puts("Value: #{values.class}\n")
       
       # Key
       r_key = @attr_map[key]
@@ -36,6 +34,7 @@ class RefworksXmlImporter < CitationImporter
     end
 
     r_hash.each do |key, value|
+      
       if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
       end
@@ -43,9 +42,9 @@ class RefworksXmlImporter < CitationImporter
       if value.size >= 2 && value.class.to_s == "Array"
         r_hash[key] = value.flatten
       end
+      
     end
-    
-    puts "Mapped Hash: #{r_hash.inspect}"
+    puts "\n\nMapped Hash: #{r_hash.inspect}\n\n"
     return r_hash
   end
   
@@ -53,7 +52,8 @@ class RefworksXmlImporter < CitationImporter
     # Todo: improve Publication and Publisher handling
     @attr_map = {
       :reftype_id => :klass,
-      :name_strings => :name_strings,
+      :author_name_strings => :citation_name_strings,
+      :editor_name_strings => :citation_name_strings,
       :affiliations => :affiliation,
       :title_primary => :title_primary,
       :title_secondary => :title_secondary,
@@ -81,7 +81,12 @@ class RefworksXmlImporter < CitationImporter
       :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })    
+    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+
+    # Map NameString and CitationNameStringType
+    # example {:name => "Larson, EW", :type=> "Author"}
+    @attr_translators[:author_name_strings] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @attr_translators[:editor_name_strings] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     @attr_translators[:reftype_id] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
     
     @type_map = {
