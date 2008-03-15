@@ -124,7 +124,9 @@ class CitationsController < ApplicationController
     
       # Load other citation info available in request params
       set_publication(@citation)
-      set_name_strings(@citation)
+      set_author_name_strings(@citation)
+      # @TODO: Editors don't work yet, as they save over the Author Listing
+      #set_editor_name_strings(@citation)
       set_keywords(@citation)
     
       # @TODO: Deduplication is currently not working   
@@ -161,7 +163,7 @@ class CitationsController < ApplicationController
     
     # Load other citation info available in request params
     set_publication(@citation)
-    set_name_strings(@citation)
+    set_author_name_strings(@citation)
     set_keywords(@citation)
 	
     respond_to do |format|
@@ -191,18 +193,38 @@ class CitationsController < ApplicationController
   
   # Load name strings list from Request params
   # and set for the current citation.
-  # Also sets the instance variable @author_strings,
+  # Also sets the instance variable @author_name_strings,
   # in case any errors should occur in saving citation
-  def set_name_strings(citation)
+  def set_author_name_strings(citation)
   	#default to empty array of author strings
-    params[:name_strings] ||= []	
-				
+    params[:author_name_strings] ||= []	
+				    
     #Set NameStrings for this Citation
-    @name_strings = Array.new
-    params[:name_strings].each do |add|
-      @name_strings << NameString.find_or_initialize_by_name(add)
+    @author_name_strings = Array.new
+    params[:author_name_strings].each do |add|
+      name_string = NameString.find_or_initialize_by_name(add)
+      @author_name_strings << {:name => name_string, :role => "Author"}
     end
-    citation.name_strings = @name_strings 	
+    citation.citation_name_strings = @author_name_strings 	
+   
+ end
+ 
+  # Load name strings list from Request params
+  # and set for the current citation.
+  # Also sets the instance variable @editor_name_strings,
+  # in case any errors should occur in saving citation
+  def set_editor_name_strings(citation)
+    #default to empty array of author strings
+    params[:editor_name_strings] ||= [] 
+           
+    #Set NameStrings for this Citation
+    @editor_name_strings = Array.new
+    params[:editor_name_strings].each do |add|
+      name_string = NameString.find_or_initialize_by_name(add)
+      @editor_name_strings << {:name => name_string, :role => "Editor"}
+    end
+    citation.citation_name_strings = @editor_name_strings   
+   
   end
   
   # Load keywords list from Request params
@@ -221,25 +243,35 @@ class CitationsController < ApplicationController
     citation.keywords = @keywords 	
   end  
   	  	
-  	
+  #Auto-Complete for entering Author NameStrings in Web-based Citation entry
+  def auto_complete_for_author_string
+    auto_complete_for_name_string(params[:author][:string])
+  end
+  
+  #Auto-Complete for entering Editor NameStrings in Web-based Citation entry
+  def auto_complete_for_editor_string
+    auto_complete_for_name_string(params[:editor][:string])
+  end 
+  
   #Auto-Complete for entering NameStrings in Web-based Citation entry
   #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
-  def auto_complete_for_name_string_name
-  	name_string = params[:name_string][:name].downcase
-	
+  def auto_complete_for_name_string(name_string)
+    name_string = name_string.downcase
+  
     #search at beginning of name
     beginning_search = name_string + "%"
     #search at beginning of any other words in name
-    word_search = "% " + name_string + "%"	
-	
+    word_search = "% " + name_string + "%"  
+  
     name_strings = NameString.find(:all, 
-			:conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-			:order => 'name ASC',
-			:limit => 8)
-		  
+      :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+      :order => 'name ASC',
+      :limit => 8)
+      
     render :partial => 'autocomplete_list', :locals => {:objects => name_strings}
-  end    
+  end
+  
   
   #Auto-Complete for entering Keywords in Web-based Citation entry
   #  This method provides users with a list of matching Keywords
