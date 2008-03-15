@@ -6,10 +6,12 @@ class CitationImporter
     def inherited(subclass)
       @@importers << subclass unless @@importers.include?(subclass)
     end
+    
     def importers
       @@importers
     end
   end
+  
   def imps
     @imps
   end
@@ -22,7 +24,7 @@ class CitationImporter
     return hashes
   end
   
-  def citation_attribute_hash(parsed_citation) 
+  def citation_attribute_hash(parsed_citation)
     importer_obj(parsed_citation.citation_type).generate_attribute_hash(parsed_citation)
   end
   
@@ -44,7 +46,6 @@ class CitationImporter
       end
     end
   end
-
 
 end
 

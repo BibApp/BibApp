@@ -11,8 +11,6 @@ class MedlineImporter < CitationImporter
     return false if !self.class.import_formats.include?(parsed_citation.citation_type)
     props = parsed_citation.properties
     props.each do |key, values|
-      puts "Key: #{key}\n"
-      puts "Value: #{values} | #{values.class}\n\n"
       
       # Key
       r_key = @attr_map[key]
@@ -54,7 +52,8 @@ class MedlineImporter < CitationImporter
     @attr_map = {
        :pt => :klass,
        :ti => :title_primary,
-       :au => :name_strings,
+       :au => :citation_name_strings,
+       :fau => :citation_name_strings,
        :ad => :affiliation,
        :jt => :publication,
        :ta => :publication,
@@ -75,6 +74,12 @@ class MedlineImporter < CitationImporter
     }
   
     @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+    
+    # Map NameString and CitationNameStringType
+    # example {:name => "Larson, EW", :type=> "Author"}
+    @attr_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @attr_translators[:fau] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+        
     @attr_translators[:pt] = lambda { |val_arr| @type_map[val_arr[0]] }
     @attr_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0])}
     @attr_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0])}

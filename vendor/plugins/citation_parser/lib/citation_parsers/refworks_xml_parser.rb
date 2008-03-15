@@ -3,24 +3,35 @@ class RefworksXmlParser < CitationParser
     
   def parse(data)
     xml = Hpricot.XML(data)
-    return nil if (xml/'z:row').nil?
+    row_count = (xml/'z:row').collect{|ref| ref.to_s}
+    if row_count.size < 1
+      return nil
+    end
   
     (xml/'z:row').each { |ref|
-      puts "Ref: #{ref}\n\n"
       # add the citation to the database
       c = ParsedCitation.new(:refworks_xml)
       c.properties = param_hash(ref)
       @citations << c
     }
-
+    
+    @citations.each do |c|
+      puts("\n\nCitation: #{c.inspect}\n\n")
+    end
+    
+    puts("\nCitations Size: #{@citations.size}\n")
+    puts("\nRefworksParser says:#{@citations.each{|c| c.inspect}}\n")
+    
+    #Return @citations
     @citations
   end
   
   def param_hash(xml)
+
     return {
       :reftype_id => xml[:RefType].to_a,
-      :name_strings => xml[:AuthorPrimary].split("|"),
-      :affiliations => xml[:AuthorSecondary].to_a,
+      :author_name_strings => xml[:AuthorPrimary].split("|"),
+      :editor_name_strings => xml[:AuthorSecondary].split("|"),
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
       :title_tertiary => xml[:TitleTertiary].to_a,

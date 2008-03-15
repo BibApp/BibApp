@@ -30,6 +30,9 @@ class RisParser < CitationParser
       cite.properties["original_data"] = rec
       @citations << cite
     end
+    
+    puts("\nCitations Size: #{@citations.size}\n")
+    puts("\nRISParser says:#{@citations.each{|c| c.inspect}}\n")
     @citations
   end  
 end

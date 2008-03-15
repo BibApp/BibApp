@@ -86,7 +86,6 @@ class RisImporter < CitationImporter
     # example {:name => "Larson, EW", :type=> "Author"}
     @attr_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     @attr_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    
     @attr_translators[:ty] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
     @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     
