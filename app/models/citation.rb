@@ -238,20 +238,20 @@ class Citation < ActiveRecord::Base
   #			http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
   def keywords=(keywords)
     logger.debug("\n\n===SET KEYWORDS===\n\n")
-    
+    logger.debug("Keywords= #{keywords.inspect}")
     if self.new_record?
 		  #Defer saving to Citation object directly, until it is created
-		  @keywords = keywords
+		  @keywords_cache = keywords
     else
 		  # Create keywords and save to database
 		  Citation.update_keywordings(self, keywords)  
-    end
+		end
   end  
 	
   # Update Keywordings - updates list of keywords for citation
   def self.update_keywordings(citation, keywords)
     logger.debug("\n\n===UPDATE KEYWORDINGS===\n\n")
-		
+    
     unless keywords.nil?
       #first, remove any keyword(s) that are no longer in list
       citation.keywordings.each do |kw|
@@ -269,14 +269,18 @@ class Citation < ActiveRecord::Base
       end
       #refresh citation in memory based on database updates
 		  citation.reload
-    end #end unless no keywords	  
+    end #end unless no keywords
+
+    logger.debug("Citation Keywords Saved= #{citation.keywords.inspect}")
   end    
 	
   # Create keywords, after a Citation is created successfully
   #  Called by 'after_create' callback
   def create_keywords
+    logger.debug("===CREATE KEYWORDS===") 
+    logger.debug("Cached Keywords= #{@keywords_cache.inspect}")
   	#Create any initialized keywords and save to Citation
-    self.keywords = @keywords if @keywords
+    self.keywords = @keywords_cache if @keywords_cache
   end  
   
   
@@ -289,10 +293,12 @@ class Citation < ActiveRecord::Base
 
   def citation_name_strings=(citation_name_strings)
     logger.debug("\n\n===SET CITATION_NAME_STRINGS===\n\n")
+    logger.debug("CitationNameStrings: #{citation_name_strings.inspect}")
+    
   
     if self.new_record?
       #Defer saving to Citation object directly, until it is created
-      @citation_name_strings = citation_name_strings
+      @citation_name_strings_cache = citation_name_strings
     else
       # Create name_strings and save to database
       Citation.update_citation_name_strings(self, citation_name_strings)  
@@ -302,7 +308,7 @@ class Citation < ActiveRecord::Base
   
   # Update CitationNameStrings - updates list of authors for citation
   def self.update_citation_name_strings(citation, citation_name_strings)
-    logger.debug("\n\n===UPDATE NAME_STRINGS===\n\n")
+    logger.debug("\n\n===UPDATE CITATION_NAME_STRINGS===\n\n")
     unless citation_name_strings.nil?
       #first, remove any name_string(s) that are no longer in list
       citation.citation_name_strings.each do |cns| # Current CNSs
@@ -330,8 +336,11 @@ class Citation < ActiveRecord::Base
   # Create name strings, after a Citation is created successfully
   #  Called by 'after_create' callback
   def create_citation_name_strings
+    logger.debug("===CREATE CITATION_NAME_STRINGS===")    
+    logger.debug("Cached CNS= #{@citation_name_strings_cache.inspect}")
+    
   	#Create any initialized name_strings and save to Citation
-  	self.citation_name_strings = @citation_name_strings if @citation_name_strings
+  	self.citation_name_strings = @citation_name_strings_cache if @citation_name_strings_cache
   end  
   
   
