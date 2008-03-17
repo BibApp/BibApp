@@ -53,24 +53,21 @@ class PublicationsController < ApplicationController
       query = params[:q]
       @current_objects = current_objects
     else
-      @current_objects = Publication.paginate(
-        :all, 
-        :conditions => ["id = authority_id"], 
-        :order => "name",
-        :page => params[:page] || 1,
-        :per_page => 20
-      )
+      @page = params[:page] || "a"
+      @current_objects = Publication.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
     end    
   end
   
   def update_multiple
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]
+    page = params[:page]
+    
     update = Publication.update_multiple(pub_ids, auth_id)
 
     respond_to do |wants|
       wants.html do
-        redirect_to :action => 'authorities', :page => params[:page]
+        redirect_to authorities_publications_path(:page => page)
       end
     end
   end
