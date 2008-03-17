@@ -28,7 +28,7 @@ namespace :solr do
     end
   end
   
-  desc 'Starts Solr. on windows . Options accepted: RAILS_ENV=your_env, PORT=XX. Defaults to development if none.'
+  desc 'Starts Solr on Windows. Options accepted: RAILS_ENV=your_env, PORT=XX. Defaults to development if none.'
   task :start_win do
     begin
       n = Net::HTTP.new('localhost', SOLR_PORT)
@@ -37,7 +37,7 @@ namespace :solr do
     rescue Net::HTTPServerException #responding
       puts "Port #{SOLR_PORT} in use" and return
 
-    rescue Errno::EBADF #not responding
+    rescue Errno::EBADF, Errno::ECONNREFUSED #not responding
       Dir.chdir(SOLR_PATH) do
           exec "java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
         sleep(5)
