@@ -46,19 +46,21 @@ class PublishersController < ApplicationController
       query = params[:q]
       @current_objects = current_objects
     else
-      page = params[:page] || "a"
-      @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{page}%"])
+      @page = params[:page] || "a"
+      @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
     end    
   end
 
   def update_multiple
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]
+    page = params[:page]
+    
     update = Publisher.update_multiple(pub_ids, auth_id)
 
     respond_to do |wants|
       wants.html do
-        redirect_to :action => 'authorities', :page => params[:page]
+        redirect_to authorities_publishers_path(:page => page)
       end
     end
   end

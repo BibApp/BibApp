@@ -1,10 +1,11 @@
 %div{:class => "column span-24"}
-  %div{:class => "column span-16"}
-    %h2="ADMIN::Publishers (#{@current_objects.size}) - #{link_to "Add", new_publisher_path}"
-    %h3 Select and add authority
+  %div{:class => "column span-20 prepend-1"}
+    %h2="ADMIN::Publishers (#{@page].upcase}) - #{link_to "Add", new_publisher_path}"
+    %h3 Select and Add Authority
     %ol#alpha-nav.pagination
       - ('a'..'z').each do |alink|
-        %li= link_to alink, publishers_path(:page => alink)
+        %li= link_to alink, authorities_publishers_path(:page => alink)
+    %br/
     %table#publishers
       %thead
         %tr
