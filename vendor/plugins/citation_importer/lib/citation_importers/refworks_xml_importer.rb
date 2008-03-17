@@ -35,6 +35,14 @@ class RefworksXmlImporter < CitationImporter
 
     r_hash.each do |key, value|
       
+      if value.class.to_s == "Array"
+        value = value.flatten
+      end
+      
+      if value[0].class.to_s == "Hash"
+        next
+      end
+      
       if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
       end

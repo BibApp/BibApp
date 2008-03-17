@@ -150,6 +150,8 @@ class Citation < ActiveRecord::Base
       
       # Setting CitationNameStrings
       citation_name_strings = Array.new
+      logger.debug("CNS Class: #{h[:citation_name_strings].class}")
+      logger.debug("CNSs: #{h[:citation_name_strings].inspect}")
       
       h[:citation_name_strings].flatten.each do |cns|
         name_string = NameString.find_or_initialize_by_name(cns[:name])
