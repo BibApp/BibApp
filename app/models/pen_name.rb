@@ -32,7 +32,6 @@ class PenName < ActiveRecord::Base
     self.name_string.citations.each do |citation|
       if citation.citation_state_id == 3
         as = Authorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id(citation.id, self.person_id, self.id)
-        as.update_attributes(:score => 0)
       end
     end
   end
