@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
     :memberships,
     :pen_names,
     :people,
-    :authorships,
+    :contributorships,
     :keywords,
     :keywordings
 

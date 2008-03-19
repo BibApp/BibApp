@@ -1,0 +1,2 @@
+class Editor < Contributorship
+end
