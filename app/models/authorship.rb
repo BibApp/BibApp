@@ -10,32 +10,42 @@ class Authorship   < ActiveRecord::Base
   after_create :calculate_score
 
   def calculate_score
-    # Build the calcuated "score", a rough guess at who has written a citation
+    
+    # Build the calcuated Contributorship.score attribute--a rough
+    # guess whether we think the Person has written the Citation
     #
     # Field           Value   Scoring Algorithm
     # ---------------------------------------------
-    # Yearspan        25      If matches = 25 pts
-    # Publication     25      If matches = 25 pts
-    # Collaborators   25      (25/total) * matching
-    # Keywords        25      (25/total) * matching
+    # Years            25      If matches = 25 pts
+    # Publications     25      If matches = 25 pts
+    # Collaborators    25      (25/total) * matching
+    # Keywords         25      (25/total) * matching
+
+    # Observations (EL):
+    # Looks to work pretty well.  I tested this against:
+    # * Morgan, D - Dane D Morgan - Engineering Physics
+    # * Morgan, D - David Morgan  - History Department
+    #
+    # The two faculty really separate between Collaborators and Keywords
     
     # @TODO:
-    # Done: Hash of validated person field values
+    # 1. Stop reloading self.person.scoring_hash for each citation (super slow, 100s of queries)
+    # 2. Add a view to admin unverified Contributions
+    # 3. Add "Verify This!" ajaxy button to Person view
+    # 4. Identify a name collision to test this on!
+    # 5. Crontask / Asynchtask to periodically adjust scores
          
-    # All scores begin at zero!
-    logger.debug("\nPerson: #{self.person.first_last}")
-    
     scoring_hash = self.person.scoring_hash
     
-    # Add year value if present
+    # Years
     year_score = 0
     year_score = 25 if scoring_hash[:years].include?(self.citation.year)
-          
-    # Add publication value if present
+    
+    # Publications
     publication_score = 0
     publication_score = 25 if scoring_hash[:publication_ids].include?(self.citation.publication.id)
     
-    # Add collaborators value if present
+    # Collaborators
     col_poss = self.citation.name_strings.size
     col_matches = 0
 
@@ -46,7 +56,7 @@ class Authorship   < ActiveRecord::Base
     collaborator_score = 0
     collaborator_score = ((25/col_poss)*col_matches)
     
-    # Add keywords value if present
+    # Keywords
     key_poss = self.citation.keywords.size
     key_matches = 0
     
@@ -70,8 +80,10 @@ class Authorship   < ActiveRecord::Base
     self.save
   end
   
-  # All Citations begin unverified
   def set_initial_states
+    # All Contributions start with:
+    # * state - "Unverified" 
+    # * score - 0
     self.authorship_state_id = 1
     self.score = 0
   end
