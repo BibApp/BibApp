@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   has_many :memberships
 
   def citations
+    # @TODO: Do this the Rails way.
     citations = Citation.find(
       :all,
       :joins => "

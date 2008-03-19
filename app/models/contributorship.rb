@@ -1,4 +1,4 @@
-class Authorship   < ActiveRecord::Base
+class Contributorship   < ActiveRecord::Base
   belongs_to :person
   belongs_to :citation
   belongs_to :pen_name
@@ -84,7 +84,7 @@ class Authorship   < ActiveRecord::Base
     # All Contributions start with:
     # * state - "Unverified" 
     # * score - 0
-    self.authorship_state_id = 1
+    self.contributorship_state_id = 1
     self.score = 0
   end
 end

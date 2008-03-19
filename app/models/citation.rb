@@ -10,8 +10,8 @@ class Citation < ActiveRecord::Base
   has_many :citation_name_strings
   
   has_many :people,
-    :through => :authorships
-  has_many :authorships
+    :through => :contributorships
+  has_many :contributorships
   
   has_many :keywords, :through => :keywordings
   has_many :keywordings

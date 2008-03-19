@@ -1,0 +1,2 @@
+class Author < Contributorship
+end

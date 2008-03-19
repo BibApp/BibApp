@@ -9,26 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 25) do
-
-  create_table "authorship_states", :force => true do |t|
-    t.string "name"
-  end
-
-  create_table "authorships", :force => true do |t|
-    t.integer  "person_id"
-    t.integer  "citation_id"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "pen_name_id"
-    t.boolean  "highlight"
-    t.integer  "score"
-    t.boolean  "hide"
-    t.integer  "authorship_state_id"
-  end
-
-  add_index "authorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
+ActiveRecord::Schema.define(:version => 27) do
 
   create_table "citation_archive_states", :force => true do |t|
     t.string "name"
@@ -52,7 +33,7 @@ ActiveRecord::Schema.define(:version => 25) do
     t.string   "title_primary"
     t.string   "title_secondary"
     t.string   "title_tertiary"
-    t.string   "affiliation"
+    t.text     "affiliation"
     t.string   "year"
     t.string   "volume"
     t.string   "issue"
@@ -82,6 +63,26 @@ ActiveRecord::Schema.define(:version => 25) do
   add_index "citations", ["publisher_id"], :name => "fk_citation_publisher_id"
   add_index "citations", ["batch_index"], :name => "batch_index"
   add_index "citations", ["type"], :name => "fk_citation_type"
+
+  create_table "contributorship_states", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "contributorships", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "citation_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "pen_name_id"
+    t.boolean  "highlight"
+    t.integer  "score"
+    t.boolean  "hide"
+    t.integer  "contributorship_state_id"
+    t.string   "type"
+  end
+
+  add_index "contributorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
 
   create_table "external_system_keys", :force => true do |t|
     t.integer "external_system_id"

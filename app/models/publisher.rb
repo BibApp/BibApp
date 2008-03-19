@@ -59,6 +59,8 @@ class Publisher < ActiveRecord::Base
   end
     
   def self.from_sherpa_api(host, page)
+    # @TODO: Rewrite this using hpricot
+    
     require 'rubygems'
     require 'xmlsimple'
     require 'net/http'

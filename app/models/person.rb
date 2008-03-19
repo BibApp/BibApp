@@ -3,8 +3,8 @@ class Person < ActiveRecord::Base
   has_many :pen_names
   has_many :groups, :through => :memberships
   has_many :memberships
-  has_many :citations, :through => :authorships
-  has_many :authorships
+  has_many :citations, :through => :contributorships
+  has_many :contributorships
 
   def first_last
     "#{first_name} #{last_name}"
@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
   
   # Person Contributorship Calculation Fields
   def verified_publications
-    Authorship.find_all_by_person_id_and_authorship_state_id(self.id,2)
+    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2)
   end
   
   def known_years
