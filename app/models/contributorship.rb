@@ -54,7 +54,7 @@ class Contributorship   < ActiveRecord::Base
     end
     
     collaborator_score = 0
-    collaborator_score = ((25/col_poss)*col_matches)
+    collaborator_score = ((25/col_poss)*col_matches) if col_poss != 0
     
     # Keywords
     key_poss = self.citation.keywords.size
@@ -65,7 +65,7 @@ class Contributorship   < ActiveRecord::Base
     end
     
     keyword_score = 0
-    keyword_score = ((25/key_poss)*key_matches)
+    keyword_score = ((25/key_poss)*key_matches) if key_poss != 0
     
     # Debugging the scoring algoritm
     logger.debug("\n\n========================================")
