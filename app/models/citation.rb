@@ -393,4 +393,14 @@ class Citation < ActiveRecord::Base
     end
   end
  
+  #Get all Author Strings of a citation, return as NameString objects
+  def author_name_strings
+    self.name_strings.find(:all, :conditions => [ 'role=?', 'Author'])
+  end 
+  
+   #Get all Editor Strings of a citation, return as NameString objects
+  def editor_name_strings
+    self.name_strings.find(:all, :conditions => [ 'role=?', 'Editor'])
+  end 
+ 
 end

@@ -1,4 +1,62 @@
 %div{:class => "column span-24"}
+  %h3 
+    = @citation.title_primary
+    %span=link_to "Edit", edit_citation_path
+
   %div{:class => "column span-12"}
-    %ul.citations
-    = render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }
+    %label APA Format:
+    %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }  
+
+%div{:class => "column span-24"}
+  %div{:class => "column span-12"}  
+    %fieldset
+      - if @citation.author_name_strings.size > 0
+        %div.field
+          %label Authors:
+          %span.field_value
+            - @citation.author_name_strings.each do |ns|
+              =link_to "#{ns.name}", name_string_path(ns)
+      - if @citation.editor_name_strings.size > 0
+        %div.field
+          %label Editors:
+          %span.field_value
+            - @citation.editor_name_strings.each do |ns|
+              =link_to "#{ns.name}", name_string_path(ns)
+      - if @citation.year?
+        %div.field
+          %label Year of Publication:
+          %span.field_value=@citation.year
+      %div.field
+        %label Publication Type:
+        %span.field_value=@citation.type 
+      - if @citation.publication.name?
+        %div.field
+          %label Publication Source:
+          %span.field_value
+            =link_to @citation.publication.name, publication_path(@citation.publication)
+      - if @citation.volume?
+        %div.field
+          %label Volume:
+          %span.field_value=@citation.volume
+      - if @citation.issue?
+        %div.field
+          %label Issue:
+          %span.field_value=@citation.issue
+      - if @citation.start_page?
+        %div.field
+          %label Page(s):
+          %span.field_value
+            =@citation.start_page
+            -if @citation.end_page?
+              =" - #{@citation.end_page}"                   
+      - if @citation.keywords.size > 0
+        %div.field
+          %label Keywords:
+          %span.field_value
+            - @citation.keywords.each do |kw|
+              =link_to "#{kw.name}", keyword_path(kw)
+      - if @citation.abstract?
+        %div.field
+          %label Abstract:
+          %span.field_value=@citation.abstract        
+                      

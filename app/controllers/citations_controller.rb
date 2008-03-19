@@ -77,7 +77,7 @@ class CitationsController < ApplicationController
 	   
     #initialize variables used by 'edit.html.haml'
     before :edit do
-      @name_strings = @citation.name_strings
+      @author_name_strings = @citation.author_name_strings
       @publication = @citation.publication
       @keywords = @citation.keywords
     end
