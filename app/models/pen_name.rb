@@ -31,7 +31,7 @@ class PenName < ActiveRecord::Base
   def set_contributorships
     self.name_string.citation_name_strings.each do |cns|
       if cns.citation.citation_state_id == 3
-        cs = Contributorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id_and_type(
+        cs = Contributorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id_and_role(
             cns.citation.id, 
             self.person_id, 
             self.id,
