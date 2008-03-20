@@ -5,6 +5,8 @@ class Person < ActiveRecord::Base
   has_many :memberships
   has_many :citations, :through => :contributorships
   has_many :contributorships
+  
+  has_one :image, :as => :asset
 
   def first_last
     "#{first_name} #{last_name}"
