@@ -1,4 +1,4 @@
-class CreateFiles < ActiveRecord::Migration
+class CreateAttachments < ActiveRecord::Migration
   def self.up
     create_table :attachments do |t|
       #attachment_fu required columns
