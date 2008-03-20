@@ -26,6 +26,10 @@ class Citation < ActiveRecord::Base
   	create_keywords
   end
   
+  def after_save
+    deduplicate
+  end
+  
   #### Serialization ####
   serialize :serialized_data
 
@@ -50,21 +54,21 @@ class Citation < ActiveRecord::Base
   
   
   # Deduplication: deduplicate Citation records on create
-  def self.deduplicate(citation)
+  def deduplicate
     logger.debug("\n\n===DEDUPLICATE===\n\n")
     begin
       Citation.transaction do
-        dupe_candidates = duplicates(citation)
+        dupe_candidates = duplicates
 
         if dupe_candidates.empty?
-          citation.citation_state_id = 3
-          citation.save_without_callbacks
+          self.citation_state_id = 3
+          self.save_without_callbacks
           next
         end
                   
         if dupe_candidates.size < 2
-          citation.citation_state_id = 3
-          citation.save_without_callbacks
+          self.citation_state_id = 3
+          self.save_without_callbacks
           next
         end
         
@@ -91,16 +95,16 @@ class Citation < ActiveRecord::Base
   end
 
   # Deduplication: search for Citation duplicates
-  def self.duplicates(citation)
+  def duplicates
     # This is Very Slow (at least on mysql) when done in one query with an OR:
     # mysql will only use one index per query, and the or implies that your index 
     # would need to be indexed with more than one key first.
     # Alternative approach: use find_by_sql and UNION
-    logger.debug("\n\nCitation: #{citation.inspect}\n\n")
+    logger.debug("\n\nCitation: #{self.inspect}\n\n")
     issn_dupes = Citation.find(:all, 
-      :conditions => ["citation_state_id <> 2 and issn_isbn_dupe_key = ?", citation.issn_isbn_dupe_key])
+      :conditions => ["citation_state_id <> 2 and issn_isbn_dupe_key = ?", self.issn_isbn_dupe_key])
     title_dupes = Citation.find(:all, 
-      :conditions => ["citation_state_id <> 2 and title_dupe_key = ?", citation.title_dupe_key])
+      :conditions => ["citation_state_id <> 2 and title_dupe_key = ?", self.title_dupe_key])
     return (issn_dupes + title_dupes).uniq
   end
   
@@ -229,7 +233,7 @@ class Citation < ActiveRecord::Base
       citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index_without_callbacks
-      deduplicate(citation) 
+      citation.deduplicate
     }
     Index.batch_index
   end
@@ -319,7 +323,7 @@ class Citation < ActiveRecord::Base
         cns.destroy unless citation_name_strings.collect{|c| c.name}.include?(cns.name_string.name)
       end
        
-      #next, add any new author string(s) to list
+      #next, add any new name string(s) to list
       citation_name_strings.each do |cns|
         #if this is a brand new name_string, we must save it first
         logger.debug("CNS: #{cns.inspect}")
