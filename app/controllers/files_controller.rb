@@ -1,2 +1,0 @@
-class FilesController < ApplicationController
-end

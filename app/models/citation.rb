@@ -16,7 +16,7 @@ class Citation < ActiveRecord::Base
   has_many :keywords, :through => :keywordings
   has_many :keywordings
   
-  has_many :files
+  has_many :files, :as => :asset
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
