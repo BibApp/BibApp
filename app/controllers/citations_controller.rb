@@ -124,10 +124,33 @@ class CitationsController < ApplicationController
     
       # Load other citation info available in request params
       set_publication(@citation)
-      set_author_name_strings(@citation)
+      
+      ###
+      # Setting CitationNameStrings
+      ###
+
+      #default to empty array of author strings
+      params[:author_name_strings] ||= [] 
+            
+      #Set Author NameStrings for this Citation
+      @author_name_strings = params[:author_name_strings]
+      citation_name_strings = Array.new
+      @author_name_strings.each do |name|
+        citation_name_strings << {:name => name, :role => "Author"}
+      end
+      @citation.citation_name_strings = citation_name_strings 
+       
+      #set_author_name_strings(@citation)
       # @TODO: Editors don't work yet, as they save over the Author Listing
       #set_editor_name_strings(@citation)
-      set_keywords(@citation)
+      
+      ###
+      # Setting Keywords
+      ###
+      # Save keywords to instance variable @keywords,
+      # in case any errors should occur in saving citation
+      @keywords = params[:keywords]
+      @citation.keyword_strings = @keywords
     
       # @TODO: Deduplication is currently not working   
       # Initialize deduplication keys
@@ -163,9 +186,30 @@ class CitationsController < ApplicationController
     
     # Load other citation info available in request params
     set_publication(@citation)
-    set_author_name_strings(@citation)
-    set_keywords(@citation)
-	
+    
+    ###
+    # Setting CitationNameStrings
+    ###
+
+    #default to empty array of author strings
+    params[:author_name_strings] ||= [] 
+            
+    #Set Author NameStrings for this Citation
+    @author_name_strings = params[:author_name_strings]
+    citation_name_strings = Array.new
+    @author_name_strings.each do |name|
+      citation_name_strings << {:name => name, :role => "Author"}
+    end
+    @citation.citation_name_strings = citation_name_strings 
+       
+    ###
+    # Setting Keywords
+    ###
+    # Save keywords to instance variable @keywords,
+    # in case any errors should occur in saving citation
+    @keywords = params[:keywords]
+    @citation.keyword_strings = @keywords
+    
     respond_to do |format|
       if @citation.update_attributes(params[:citation])
         flash[:notice] = "Citation was successfully updated."
@@ -226,23 +270,7 @@ class CitationsController < ApplicationController
     citation.citation_name_strings = @editor_name_strings   
    
   end
-  
-  # Load keywords list from Request params
-  # and set for the current citation.
-  # Also sets the instance variable @keywords,
-  # in case any errors should occur in saving citation
-  def set_keywords(citation)
-    #default to empty array of keywords
-    params[:keywords] ||= []	
-				  
-    #Set Keywords for this Citation
-    @keywords = Array.new
-    params[:keywords].each do |add|
-      @keywords << Keyword.find_or_initialize_by_name(add)
-    end
-    citation.keywords = @keywords 	
-  end  
-  	  	
+    	
   #Auto-Complete for entering Author NameStrings in Web-based Citation entry
   def auto_complete_for_author_string
     auto_complete_for_name_string(params[:author][:string])
