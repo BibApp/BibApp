@@ -5,6 +5,14 @@ class PenNamesController < ApplicationController
 
   make_resourceful do 
     build :index, :show, :new, :update
+    
+    before :new do 
+      @suggestions = NameString.find(
+        :all, 
+        :conditions => ["name like ?", "%" + @person.last_name + "%"],
+        :order => :name
+      )
+    end
   end
 
 

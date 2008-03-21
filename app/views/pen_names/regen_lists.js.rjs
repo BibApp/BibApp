@@ -1,2 +1,3 @@
+page.replace_html 'inactive', :partial => "name_string", :collection => @person.name_strings_not, :locals => {:selected => false}
 page.replace_html 'current', :partial => "name_string", :collection => @person.name_strings, :locals => {:selected => true}
 page['name_string_name'].value = ""
