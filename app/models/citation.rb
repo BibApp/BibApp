@@ -24,6 +24,9 @@ class Citation < ActiveRecord::Base
   def after_create 
    	create_citation_name_strings
   	create_keywords
+    create_publisher
+    #save any changes to citation
+    self.save_without_callbacks
   end
   
   def after_save
@@ -61,8 +64,8 @@ class Citation < ActiveRecord::Base
     logger.debug("\nDuplicates: #{duplicates.size}")
 
     if dupe_candidates.empty?
-      citation_state_id = 3
-      save_without_callbacks
+      self.citation_state_id = 3
+      self.save_without_callbacks
       return
     end
     
@@ -80,8 +83,9 @@ class Citation < ActiveRecord::Base
     end
 
     unless best.citation_state_id == 2
-    # Flag and save this as the canonical beast.
+      # Flag and save this as the canonical beast.
       best.citation_state_id = 3
+      best.save_without_callbacks
     end
 
     # All the others are, by definition, dupes
@@ -170,17 +174,8 @@ class Citation < ActiveRecord::Base
       citation_name_strings = h[:citation_name_strings]
       citation.citation_name_strings = citation_name_strings
       
-      
-      # Setting publisher_id
-      # If there is no publisher data, set publisher to Unknown
-      if h[:publisher].nil? || h[:publisher].empty?
-        h[:publisher] = "Unknown"
-      end
-      
-      h[:publisher].each do |add|
-        publisher = Publisher.find_or_create_by_name(add)
-        h[:publisher_id] = publisher.authority_id
-      end
+      # Setting publisher
+      citation.publisher_name = h[:publisher]
       
       # Setting publication_id
       # If there is no publication data, set publication to Unknown
@@ -290,6 +285,45 @@ class Citation < ActiveRecord::Base
     
   end 
   
+  # Initializes the Publisher 
+  # and saves it to the current citation
+  # Arguments:
+  #  * publisher name (as a string)
+  def publisher_name=(publisher_name)
+    logger.debug("\n\n===SET PUBLISHER NAME===\n\n")
+    logger.debug("Publisher NAME= #{publisher_name.inspect}")
+    # Setting publisher_id
+    # If there is no publisher data, set publisher to Unknown
+    if publisher_name.nil? || publisher_name.empty?
+      publisher_name = "Unknown"
+    end
+      
+    #initialize and save or update citation
+    self.publisher = Publisher.find_or_initialize_by_name(publisher_name)   
+  end
+  
+  # Updates publisher for the current citation
+  # If this citation is still a *new* record (i.e. it hasn't been created
+  # in the database), then the publisher is just cached until the 
+  # citation is created.
+  # Based on ideas at:
+  #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+  #
+  # Arguments:
+  #  * Publisher object
+  def publisher=(publisher)
+    logger.debug("\n\n===SET PUBLISHER===\n\n")
+    logger.debug("Publisher= #{publisher.inspect}")
+    if self.new_record?
+      #Defer saving to Citation object directly, until it is created
+      @publisher_cache = publisher
+    else
+      # Create publisher and save to database
+      Citation.update_publisher(self, publisher)  
+    end
+  end  
+  
+ 
   # All Citations begin unverified
   def set_initial_states
     self.citation_state_id = 1
@@ -360,8 +394,7 @@ class Citation < ActiveRecord::Base
         #add it to this citation
         citation.keywords << keyword
       end
-      #refresh citation in memory based on database updates
-      citation.reload
+      
     end #end unless no keywords
 
     logger.debug("Citation Keywords Saved= #{citation.keywords.inspect}")
@@ -404,8 +437,6 @@ class Citation < ActiveRecord::Base
             :role => cns[:role]
           })
       end
-      #refresh citation in memory based on database updates
-      citation.reload
     end
   end    
   
@@ -418,5 +449,35 @@ class Citation < ActiveRecord::Base
     #Create any initialized name_strings and save to Citation
     self.citation_name_strings = @citation_name_strings_cache if @citation_name_strings_cache
   end  
+  
+  
+  # Update Publisher - updates publisher for citation
+  # Arguments:
+  #   - citation object
+  #   - Publisher objects
+  def self.update_publisher(citation, publisher)
+    logger.debug("\n\n===UPDATE PUBLISHER===\n\n")
+    unless publisher.nil?
+      #if this is a brand new publisher, we must save it first
+      if publisher.new_record?
+        publisher.save
+      end
+      
+      #save publisher's authority_id to this citation
+      citation.publisher_id = publisher.authority_id
+    end #end unless no publisher
+
+    logger.debug("Citation Publisher Saved= #{citation.publisher.inspect}")
+  end   
+  
+  # Create publisher, after a Citation is created successfully
+  #  Called by 'after_create' callback
+  def create_publisher
+    logger.debug("===CREATE PUBLISHER===") 
+    logger.debug("Cached Publisher= #{@publisher_cache.inspect}")
+    #Create any initialized publisher and save to Citation
+    self.publisher = @publisher_cache if @publisher_cache
+  end  
+  
  
 end
