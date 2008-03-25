@@ -56,41 +56,39 @@ class Citation < ActiveRecord::Base
   # Deduplication: deduplicate Citation records on create
   def deduplicate
     logger.debug("\n\n===DEDUPLICATE===\n\n")
-    begin
-      Citation.transaction do
-        dupe_candidates = duplicates
 
-        if dupe_candidates.empty?
-          self.citation_state_id = 3
-          self.save_without_callbacks
-          next
-        end
-                  
-        if dupe_candidates.size < 2
-          self.citation_state_id = 3
-          self.save_without_callbacks
-          next
-        end
-        
-        best = dupe_candidates[0]
-        dupe_candidates.each do |candidate|
-          if candidate.preferred_score > best.preferred_score
-            best = candidate
-          end
-        end
+    dupe_candidates = duplicates
+    logger.debug("\nDuplicates: #{duplicates.size}")
+
+    if dupe_candidates.empty?
+      citation_state_id = 3
+      save_without_callbacks
+      return
+    end
     
-        unless best.citation_state_id == 2
-        # Flag and save this as the canonical beast.
-          best.citation_state_id = 3
-        end
+    if dupe_candidates.size < 2
+      self.citation_state_id = 3
+      self.save_without_callbacks
+      return
+    end
     
-        # All the others are, by definition, dupes
-        dupe_candidates.each do |dupe|
-          logger.debug "Saving dupe citation_states"
-          dupe.citation_state_id = 2 unless dupe.citation_state_id == 3
-          dupe.save_without_callbacks
-        end
+    best = dupe_candidates[0]
+    dupe_candidates.each do |candidate|
+      if candidate.preferred_score > best.preferred_score
+        best = candidate
       end
+    end
+
+    unless best.citation_state_id == 2
+    # Flag and save this as the canonical beast.
+      best.citation_state_id = 3
+    end
+
+    # All the others are, by definition, dupes
+    dupe_candidates.each do |dupe|
+      logger.debug "Saving dupe citation_states"
+      dupe.citation_state_id = 2 unless dupe.citation_state_id == 3
+      dupe.save_without_callbacks
     end
   end
 
@@ -100,7 +98,6 @@ class Citation < ActiveRecord::Base
     # mysql will only use one index per query, and the or implies that your index 
     # would need to be indexed with more than one key first.
     # Alternative approach: use find_by_sql and UNION
-    logger.debug("\n\nCitation: #{self.inspect}\n\n")
     issn_dupes = Citation.find(:all, 
       :conditions => ["citation_state_id <> 2 and issn_isbn_dupe_key = ?", self.issn_isbn_dupe_key])
     title_dupes = Citation.find(:all, 
@@ -293,22 +290,6 @@ class Citation < ActiveRecord::Base
     
   end 
   
-  
-  
-  
-  
-=begin
-  # Set Dupe Keys
-  def self.set_dupe_keys(citation, name_strings, publication)
-    logger.debug("\n\n===SET DUPE KEYS===\n\n")
-    logger.debug("Citation: #{citation.inspect}\n\n")
-    logger.debug("NameStrings: #{name_strings.inspect}\n\n")
-    logger.debug("Publication: #{publication.inspect}\n\n")
-    self.write_attribute("issn_isbn_dupe_key", self.issn_isbn_dupe_key(citation, author_strings, publication))
-    self.write_attribute("title_dupe_key", self.title_dupe_key(citation))
-  end
-=end
-
   # All Citations begin unverified
   def set_initial_states
     self.citation_state_id = 1
@@ -437,6 +418,5 @@ class Citation < ActiveRecord::Base
     #Create any initialized name_strings and save to Citation
     self.citation_name_strings = @citation_name_strings_cache if @citation_name_strings_cache
   end  
- 
  
 end
