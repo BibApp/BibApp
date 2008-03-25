@@ -1,7 +1,9 @@
 class RefworksXmlParser < CitationParser
   require 'hpricot'
+  require 'htmlentities'
     
   def parse(data)
+    Hpricot.buffer_size = 204800
     xml = Hpricot.XML(data)
     row_count = (xml/'z:row').collect{|ref| ref.to_s}
     if row_count.size < 1
@@ -11,6 +13,12 @@ class RefworksXmlParser < CitationParser
     (xml/'z:row').each { |ref|
       # add the citation to the database
       c = ParsedCitation.new(:refworks_xml)
+
+      # escape and parse troublesome keywords
+      keywords = HTMLEntities.new
+      ref[:Keyword] = keywords.decode(ref[:Keyword].to_s)
+      user_two = HTMLEntities.new
+      ref[:User2] = user_two.decode(ref[:User2].to_s)
       c.properties = param_hash(ref)
       @citations << c
     }
@@ -35,7 +43,7 @@ class RefworksXmlParser < CitationParser
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
       :title_tertiary => xml[:TitleTertiary].to_a,
-      :keywords => xml[:Keyword].split("|"),
+      :keywords => xml[:Keyword].split(/\||;/).each{|k| k.strip!},
       :year => xml[:PubYear].to_a,
       :periodical_full => xml[:PeriodicalFull].to_a,
       :periodical_abbrev => xml[:PeriodicalAbbrev].to_a,
@@ -60,7 +68,7 @@ class RefworksXmlParser < CitationParser
       :notes => xml[:Notes].to_a,
       :folder => xml[:Folder].to_a,
       :user_1 => xml[:User1].to_a,
-      :user_2 => xml[:User2].to_a,
+      :user_2 => xml[:User2].split(/\||;/).each{|k| k.strip!},
       :user_3 => xml[:User3].to_a,
       :user_4 => xml[:User4].to_a,
       :user_5 => xml[:User5].to_a,
