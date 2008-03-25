@@ -152,6 +152,12 @@ class CitationsController < ApplicationController
       @keywords = params[:keywords]
       @citation.keyword_strings = @keywords
     
+      ###
+      # Setting Publisher
+      ###
+      #@TODO: Get publisher in web form!
+      #@citation.publisher_name = params[:publisher_name]
+    
       # @TODO: Deduplication is currently not working   
       # Initialize deduplication keys
       #Citation.set_issn_isbn_dupe_key(@citation, @citation.name_strings, @citation.publication)

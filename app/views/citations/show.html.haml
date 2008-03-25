@@ -34,6 +34,11 @@
           %label Publication Source:
           %span.field_value
             =link_to @citation.publication.name, publication_path(@citation.publication)
+      - if @citation.publisher.name?
+        %div.field
+          %label Publisher:
+          %span.field_value
+            =link_to @citation.publisher.name, publisher_path(@citation.publisher)
       - if @citation.volume?
         %div.field
           %label Volume:
