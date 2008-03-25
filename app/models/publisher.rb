@@ -58,26 +58,26 @@ class Publisher < ActiveRecord::Base
     return authority_for
   end
     
-  def self.from_sherpa_api(host, page)
+  def self.from_sherpa_api
     # @TODO: Rewrite this using hpricot
     
-    require 'rubygems'
-    require 'xmlsimple'
-    require 'net/http'
-    
-    xml = Net::HTTP.get_response(host, page).response.body
-    data = XmlSimple.xml_in(xml)
+    require 'hpricot'
+    require 'open-uri'
 
-    data['publishers'][0]['publisher'].each do |pub|
-      sherpa_id = pub['id'].to_i
-      name = pub['name'][0]
-      url = pub['homeurl'][0]
-      romeo_color = pub['romeocolour'][0]
-      
-      logger.debug("PubInspect: #{pub.inspect}")
-      logger.debug("SherpaId: #{sherpa_id}")
-      logger.debug("Name: #{name}")
-      logger.debug("Color: #{romeo_color}")
+    # SHERPA's API is not-cached! Opening the URI directly will likely 
+    # produce a ruby net/http timeout.
+    #
+    # @TODO: 
+    # 1. Offer a cached copy within /trunk?
+    # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
+    
+    data = Hpricot.XML(open("tmp/sherpa/publishers.xml"))
+
+    (data/'publisher').each do |pub|
+      sherpa_id = pub[:id].to_i
+      name = (pub/'name').inner_html
+      url = (pub/'homeurl').inner_html
+      romeo_color = (pub/'romeocolour').inner_html
 
       add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
       add.update_attributes!({
