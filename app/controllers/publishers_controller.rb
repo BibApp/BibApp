@@ -47,7 +47,7 @@ class PublishersController < ApplicationController
       @current_objects = current_objects
     else
       @page = params[:page] || "a"
-      @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
+      @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"], :order => "name")
     end    
   end
 

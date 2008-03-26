@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 27) do
+ActiveRecord::Schema.define(:version => 31) do
+
+  create_table "attachments", :force => true do |t|
+    t.string   "filename"
+    t.integer  "size"
+    t.string   "content_type"
+    t.integer  "parent_id"
+    t.string   "thumbnail"
+    t.integer  "height"
+    t.integer  "width"
+    t.integer  "asset_id"
+    t.integer  "asset_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "citation_archive_states", :force => true do |t|
     t.string "name"
@@ -79,7 +93,7 @@ ActiveRecord::Schema.define(:version => 27) do
     t.integer  "score"
     t.boolean  "hide"
     t.integer  "contributorship_state_id"
-    t.string   "type"
+    t.string   "role"
   end
 
   add_index "contributorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
@@ -200,6 +214,12 @@ ActiveRecord::Schema.define(:version => 27) do
   add_index "publications", ["name"], :name => "publication_name"
   add_index "publications", ["issn_isbn"], :name => "issn_isbn"
 
+  create_table "publisher_sources", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "publishers", :force => true do |t|
     t.integer  "sherpa_id"
     t.integer  "source_id"
@@ -213,7 +233,6 @@ ActiveRecord::Schema.define(:version => 27) do
     t.datetime "updated_at"
   end
 
-  add_index "publishers", ["name"], :name => "publisher_name", :unique => true
   add_index "publishers", ["authority_id"], :name => "fk_publisher_authority_id"
 
   create_table "taggings", :force => true do |t|
