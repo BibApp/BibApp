@@ -40,6 +40,7 @@ class RefworksXmlImporter < CitationImporter
       end
       
       if value[0].class.to_s == "Hash"
+        r_hash[key] = value.flatten
         next
       end
       
