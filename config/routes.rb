@@ -45,12 +45,13 @@ ActionController::Routing::Routes.draw do |map|
     :memberships,
     :pen_names,
     :people,
-    :contributorships,
     :keywords,
     :keywordings
-
-  map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put}
-  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put}
+    
+  map.resources :contributorships, :member => { :verify => :put, :deny => :put }
+    
+  map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put }
+  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }
 
   map.connect "/",
     :controller => 'citations',

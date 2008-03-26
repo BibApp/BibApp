@@ -12,11 +12,27 @@
   %p= @person.research_focus
 
   %div{:class => "column span-16"}
-    %h3="Citations (#{@citations.total_entries}) #{link_to 'Add', new_citation_path}"
-    = will_paginate @citations
-    %ol.citations
-      - @citations.each do |citation|
-        = render :partial => "shared/citation", :locals => {:citation => citation}
+    %h3
+      Citations (
+      %span#contributorship_total_entries
+        = @contributorships.total_entries
+      )
+      = link_to 'Add', new_citation_path
+
+    = will_paginate @contributorships
+    
+    %ul#citations
+      - @contributorships.each do |c|
+        %li{:id => "contributorship_id-#{c.id}"}
+          %strong{:class => "float-right big-number contributorship_score", :id => "contributorship_score-#{c.id}"}
+            = c.score
+          = render :partial => "shared/citation", :locals => {:citation => c.citation, :id => c.id }
+          - if c.contributorship_state_id == 2
+            %ul
+              %li
+                %strong Verified!
+          - else
+            = render :partial => "shared/contribution_actions", :locals => {:contribution => c}
 
   %div{:class => "column span-6 prepend-2 last"}
     %h3="Groups (#{@person.groups.size})"

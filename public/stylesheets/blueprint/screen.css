@@ -126,3 +126,11 @@ div.auto_complete ul strong.highlight {
 tr.selected {
 	background-color:#FFFF99;
 }
+
+.float-right {
+	float:right;
+}
+
+.big-number {
+	font-size:2em;
+}

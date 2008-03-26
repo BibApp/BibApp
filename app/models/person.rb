@@ -4,7 +4,7 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :memberships
   has_many :memberships
   has_many :citations, :through => :contributorships
-  has_many :contributorships
+  has_many :contributorships, :conditions => "hide = 0"
   
   has_one :image, :as => :asset
 
@@ -26,9 +26,14 @@ class Person < ActiveRecord::Base
   end
   
   def name_strings_not
-    all_name_strings = NameString.find(:all, :order => "name")
+    suggestions = NameString.find(
+      :all, 
+      :conditions => ["name like ?", "%" + self.last_name + "%"],
+      :order => :name
+    )
+    
     # TODO: do this right. The vector subtraction is dumb.
-    return all_name_strings - name_strings
+    return suggestions - name_strings
   end
   
   # Person Contributorship Calculation Fields
