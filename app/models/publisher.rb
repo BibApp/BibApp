@@ -3,6 +3,11 @@ class Publisher < ActiveRecord::Base
   belongs_to :authority,
     :class_name => "Publisher",
     :foreign_key => :authority_id
+
+  belongs_to :publisher_source,
+    :class_name => "PublisherSource",
+    :foreign_key => :source_id
+
   has_many :citations, :conditions => ["citation_state_id = 3"]
 
   after_create do |publisher|
