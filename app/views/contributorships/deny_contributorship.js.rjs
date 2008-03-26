@@ -1,0 +1,3 @@
+page.hide("contributorship_id-#{@contributorship.id}")
+page.replace_html("contributorship_total_entries", @person.contributorships.size)
+page.visual_effect(:highlight, "contributorship_total_entries")

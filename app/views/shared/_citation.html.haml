@@ -1,15 +1,13 @@
-%li
-  =link_to "#{citation.title_primary}", citation_path(citation)
-  %p 
-    %strong NameStrings:
-    - citation.name_strings.each do |ns|
-      =link_to "#{ns.name}", name_string_path(ns)
-    %br/
-    %strong Source:
-    =link_to "#{citation.publication.authority.name}", publication_path(citation.publication.authority.to_param)
-    = "#{citation.volume}(#{citation.issue}), #{citation.start_page}-#{citation.end_page}."
-    %br/
-    %strong Year:
-    ="#{citation.year}"
-    %br/
-    %strong=#link_to_findit(citation)
+=link_to "#{citation.title_primary}", citation_path(citation)
+%p 
+  %strong NameStrings:
+  - citation.name_strings.each do |ns|
+    =link_to "#{ns.name}", name_string_path(ns)
+  %br/
+  %strong Source:
+  =link_to "#{citation.publication.authority.name}", publication_path(citation.publication.authority.to_param)
+  = "#{citation.volume}(#{citation.issue}), #{citation.start_page}-#{citation.end_page}."
+  %br/
+  %strong Year:
+  ="#{citation.year}"
+  %strong=#link_to_findit(citation)

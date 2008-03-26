@@ -83,8 +83,10 @@ class Contributorship   < ActiveRecord::Base
   def set_initial_states
     # All Contributions start with:
     # * state - "Unverified" 
-    # * score - 0
+    # * hide  - 0 (false)
+    # * score - 0 (zero)
     self.contributorship_state_id = 1
+    self.hide = 0
     self.score = 0
   end
 end

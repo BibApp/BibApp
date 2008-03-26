@@ -1,0 +1,3 @@
+%ul{:id => "contributorship_actions-#{contribution.id}"}
+  %li=link_to_remote("Verify", :update => "contributorships", :url  => verify_contributorship_path(contribution.id), :method => :put)
+  %li=link_to_remote("Deny", :update => "contributorships", :url  => deny_contributorship_path(contribution.id), :method => :put)

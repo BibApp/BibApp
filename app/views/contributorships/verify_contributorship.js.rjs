@@ -1,0 +1,3 @@
+page.visual_effect(:highlight, "contributorship_id-#{@contributorship.id}")
+page.replace_html("contributorship_score-#{@contributorship.id}", @contributorship.score)
+page.replace_html("contributorship_actions-#{@contributorship.id}", "<li><strong>Verified!</strong></li>")
