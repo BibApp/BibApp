@@ -30,10 +30,7 @@ class Contributorship   < ActiveRecord::Base
     
     # @TODO:
     # 1. Stop reloading self.person.scoring_hash for each citation (super slow, 100s of queries)
-    # 2. Add a view to admin unverified Contributions
-    # 3. Add "Verify This!" ajaxy button to Person view
-    # 4. Identify a name collision to test this on!
-    # 5. Crontask / Asynchtask to periodically adjust scores
+    # 2. Crontask / Asynchtask to periodically adjust scores
          
     scoring_hash = self.person.scoring_hash
     
@@ -88,5 +85,21 @@ class Contributorship   < ActiveRecord::Base
     self.contributorship_state_id = 1
     self.hide = 0
     self.score = 0
+  end
+
+  def candidates
+    candidates = Contributorship.count(
+      :conditions => ["
+        citation_id = ? and contributorship_state_id = ?", 
+        self.citation_id,
+        1 # caluculated
+      ]
+    )
+  end
+  
+  def possibilities
+    count = Array.new
+    possibilities = self.citation.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
+    return count.size
   end
 end

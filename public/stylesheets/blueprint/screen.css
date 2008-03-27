@@ -343,3 +343,8 @@ tr.selected {
 	display:inline;
 	list-style:none;
 }
+
+.contributorship_actions_list {
+	padding-top:1em;
+	margin:0px;
+}

@@ -26,7 +26,6 @@ class PenName < ActiveRecord::Base
   
   after_save :set_contributorships
   before_destroy :remove_contributorships
-  
     
   def set_contributorships
     self.name_string.citation_name_strings.each do |cns|
