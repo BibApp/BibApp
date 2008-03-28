@@ -26,7 +26,7 @@ class Person < ActiveRecord::Base
     # - Like > 50 we show on the person view, 'cuz they probably wrote it?
     # - Like < 50 we don't show, 'cuz maybe they didn't write it?
     def to_show 
-      find(:all, :conditions => ["contributorships.hide = ?", 0])
+      find(:all, :conditions => ["contributorships.hide = ?", false])
     end
   end
   
