@@ -32,6 +32,11 @@ class Person < ActiveRecord::Base
   
   has_one :image, :as => :asset
 
+
+  def name
+    "#{first_name} #{last_name}"
+  end
+  
   def first_last
     "#{first_name} #{last_name}"
   end
