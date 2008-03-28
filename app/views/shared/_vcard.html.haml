@@ -1,0 +1,24 @@
+%div{:class => "vcard"}
+  %a{:class => "fn url hide", :href => ""}
+    =o.name
+  %div{:class => "adr"}
+    %span{:class => "work"}
+    %div{:class => "street-address"}
+      =o.office_address_line_one
+    %span{:class => "locality"}
+      =o.office_city
+    %span{:class => "region"}
+      =o.office_state
+    %span{:class => "postal-code"}
+      =o.office_zip
+  - if o.phone
+    %div{:class => "tel"}
+      %span{:class => "type hide"} Work
+      = o.phone
+  - if o.email
+    %div{:class => "email"}
+      %span{:class => "type hide"} Work
+      %a{:href => "mailto:#{o.email}"}
+        = o.email
+    
+  
