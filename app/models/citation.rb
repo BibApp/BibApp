@@ -25,6 +25,8 @@ class Citation < ActiveRecord::Base
    	create_citation_name_strings
   	create_keywords
     create_publisher
+    create_publication  # publication must be created *after* publisher
+    
     #save any changes to citation
     self.save_without_callbacks
   end
@@ -177,22 +179,14 @@ class Citation < ActiveRecord::Base
       # Setting publisher
       citation.publisher_name = h[:publisher]
       
-      # Setting publication_id
-      # If there is no publication data, set publication to Unknown
-      if h[:publication].nil? || h[:publication].empty?
-        h[:publication] = "Unknown"
-      end
-      
-      publication = Array.new
-      h[:publication].each do |add|
-        publication = Publication.find_or_create_by_name_and_issn_isbn(
-          :name => add, 
-          :issn_isbn => h[:issn_isbn], 
-          :publisher_id => h[:publisher_id]
-        )
-        h[:publication_id] = publication.authority_id
-      end
-      
+      # Setting publication_info
+      issn_isbn = h[:issn_isbn]
+      publication_info = Hash.new
+      publication_info = {:name => h[:publication], 
+                                    :issn_isbn => issn_isbn,
+                                    :publisher => citation.publisher}
+      citation.publication_info = publication_info
+    
       # Setting keywords
       citation.keyword_strings = h[:keywords]
 	  
@@ -217,7 +211,7 @@ class Citation < ActiveRecord::Base
 
       #save remaining hash attributes
       citation.attributes=h
-      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
+      citation.issn_isbn_dupe_key = self.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
       citation.title_dupe_key = self.set_title_dupe_key(citation)
       citation.save_and_set_for_index
     }
@@ -291,8 +285,7 @@ class Citation < ActiveRecord::Base
   #  * publisher name (as a string)
   def publisher_name=(publisher_name)
     logger.debug("\n\n===SET PUBLISHER NAME===\n\n")
-    logger.debug("Publisher NAME= #{publisher_name.inspect}")
-    # Setting publisher_id
+
     # If there is no publisher data, set publisher to Unknown
     if publisher_name.nil? || publisher_name.empty?
       publisher_name = "Unknown"
@@ -323,6 +316,71 @@ class Citation < ActiveRecord::Base
     end
   end  
   
+  
+  # Initializes the Publication information
+  # and saves it to the current citation
+  # Arguments:
+  #  * hash {:name => "Publication name", 
+  #          :issn_isbn => "Publication ISSN or ISBN",
+  #          :publisher => Publisher }
+  #  (not all hash values need be set)
+  def publication_info=(publication_hash)
+    logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
+    logger.debug("Publication info = #{publication_hash.inspect}")
+    # If there is no publication name, set to Unknown
+    publication_name = publication_hash[:name]
+    if publication_name.nil? || publication_name.empty?
+      publication_name = "Unknown"
+    end
+   
+    # Initialize our publication, as best we can,
+    # based on the information provided
+    if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty? || publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+      publication = Publication.find_or_initialize_by_name_and_issn_isbn_and_publisher_id(
+          :name => publication_name, 
+          :issn_isbn => publication_hash[:issn_isbn], 
+          :publisher_id => publication_hash[:publisher].id
+      )
+    elsif not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
+      publication = Publication.find_or_initialize_by_name_and_issn_isbn(
+          :name => publication_name,  
+          :issn_isbn => publication_hash[:issn_isbn]
+      )
+    elsif not(publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+      publication = Publication.find_or_initialize_by_name_and_publisher_id(
+          :name => publication_name,  
+          :publisher_id => publication_hash[:publisher].id
+      )
+    else
+      publication = Publication.find_or_initialize_by_name(publication_name)
+    end
+    
+    #save or update citation
+    self.publication = publication   
+  end
+  
+  # Updates publication for the current citation
+  # If this citation is still a *new* record (i.e. it hasn't been created
+  # in the database), then the publication is just cached until the 
+  # citation is created.
+  # Based on ideas at:
+  #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+  #
+  # Arguments:
+  #  * Publication object
+  def publication=(publication)
+    logger.debug("\n\n===SET PUBLICATION===\n\n")
+    logger.debug("Publication= #{publication.inspect}")
+    if self.new_record?
+      #Defer saving to Citation object directly, until it is created
+      @publication_cache = publication
+    else
+      # Create publication and save to database
+      Citation.update_publication(self, publication)  
+    end
+  end 
+  
+  
  
   # All Citations begin unverified
   def set_initial_states
@@ -334,7 +392,7 @@ class Citation < ActiveRecord::Base
     "Citation:#{id}"
   end
 
-  def self.set_issn_isbn_dupe_key(citation, citation_name_strings, publication)
+  def self.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
     # Set issn_isbn_dupe_key
     logger.debug("\nCNS: #{citation_name_strings.inspect}\n")
     if citation_name_strings
@@ -343,10 +401,10 @@ class Citation < ActiveRecord::Base
       first_author = nil
     end
         
-    if (first_author.nil? or publication.issn_isbn.nil? or citation.year.nil? or citation.year.empty? or citation.start_page.nil? or citation.start_page.empty? or publication.issn_isbn.empty?)
+    if (first_author.nil? or issn_isbn.nil? or citation.year.nil? or citation.year.empty? or citation.start_page.nil? or citation.start_page.empty? or issn_isbn.empty?)
       issn_isbn_dupe_key = nil
     else
-      issn_isbn_dupe_key = (first_author+publication.issn_isbn+citation.year.to_s+citation.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
+      issn_isbn_dupe_key = (first_author+issn_isbn+citation.year.to_s+citation.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
     end
   end
     
@@ -477,6 +535,40 @@ class Citation < ActiveRecord::Base
     logger.debug("Cached Publisher= #{@publisher_cache.inspect}")
     #Create any initialized publisher and save to Citation
     self.publisher = @publisher_cache if @publisher_cache
+  end  
+  
+  # Update Publication - updates publication for citation
+  # Arguments:
+  #   - citation object
+  #   - Publication objects
+  def self.update_publication(citation, publication)
+    logger.debug("\n\n===UPDATE PUBLICATION===\n\n")
+    unless publication.nil?
+      #if this is a brand new publication, we must save it first
+      if publication.new_record?
+        #before saving, let's see if the publisher id was set properly
+        #(pub id may be nil if the publisher was just added for this citation)
+        if publication.publisher_id.nil?
+          publication.publisher_id=citation.publisher_id
+        end
+        publication.save
+      end
+      
+      #save publication's authority_id to this citation
+      citation.publication_id = publication.authority_id
+      
+    end #end unless no publication
+
+    logger.debug("Citation Publication Saved= #{citation.publication.inspect}")
+  end   
+  
+  # Create publication, after a Citation is created successfully
+  #  Called by 'after_create' callback
+  def create_publication
+    logger.debug("===CREATE PUBLICATION===") 
+    logger.debug("Cached Publication= #{@publication_cache.inspect}")
+    #Create any initialized publication and save to Citation
+    self.publication = @publication_cache if @publication_cache
   end  
   
  
