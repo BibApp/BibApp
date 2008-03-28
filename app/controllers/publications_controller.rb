@@ -23,7 +23,9 @@ class PublicationsController < ApplicationController
           :page => params[:page] || 1,
           :per_page => 30
         )
-      end      
+      end
+
+      @title = "Publications"
     end
 
     before :show do      
@@ -40,6 +42,7 @@ class PublicationsController < ApplicationController
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
+      @title = @current_object.name
     end
 
     before :new, :edit do
