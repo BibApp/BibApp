@@ -9,20 +9,24 @@ class PeopleController < ApplicationController
         :page => params[:page] || 1,
         :per_page => 10
       )
+      @title = "People"
     end
     
     before :new do
       if params[:q]
         @ldap_results = ldap_search(params[:q])
       end
+      @title = "Add a Person"
     end
     
     before :show do
       @person = Person.find(params[:id])
-      @contributorships = @person.contributorships.paginate(
+      @contributorships = @person.contributorships.to_show.paginate(
         :page => params[:page] || 1,
         :per_page => 10
       )
+      
+      @title = @person.first_last
     end
   end
 
