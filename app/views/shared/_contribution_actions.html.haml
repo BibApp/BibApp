@@ -1,4 +1,4 @@
 %ul{:id => "contributorship_actions-#{contribution.id}", :class => "contributorship_actions_list"}
-  %li{:class => "inline"}=link_to_remote("Verify", :update => "contributorships", :url  => verify_contributorship_path(contribution.id), :method => :put)
+  %li{:class => "inline"}=link_to_remote("Verify", :url  => verify_contributorship_path(contribution.id), :method => :put)
   |
-  %li{:class => "inline"}=link_to_remote("Deny", :update => "contributorships", :url  => deny_contributorship_path(contribution.id), :method => :put)
+  %li{:class => "inline"}=link_to_remote("Deny", :url  => deny_contributorship_path(contribution.id), :method => :put)
