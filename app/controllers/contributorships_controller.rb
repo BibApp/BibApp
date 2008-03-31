@@ -23,6 +23,8 @@ class ContributorshipsController < ApplicationController
     end
     
     @contributorship.reload
+
+    @contributorships = @person.contributorships.to_show
     
     respond_to do |format|
       format.js { render :action => :verify_contributorship }

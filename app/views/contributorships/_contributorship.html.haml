@@ -1,0 +1,19 @@
+%div{:id => "contributorship_id-#{contributorship.id}", :class => "span-15", :style => "border-top: 1px dotted #CCC; margin-top:1em; padding-top:2em"}
+  %div{:class => "span-10"}
+    = render :partial => "shared/citation", :locals => {:citation => contributorship.citation, :id => contributorship.id }
+  %div{:class => "prepend-2 span-3 last"}
+    %div{:id => "contributorship_admin-#{contributorship.id}", :class => "span-3"}
+      - if contributorship.contributorship_state_id == 2
+        %p
+          %strong Verified!
+      - else
+        %div{:class => "span-3"}
+          %strong Certainty
+        %div{:class => "span-3 big-number contributorship_score", :id => "contributorship_score-#{contributorship.id}"}
+          = contributorship.score
+        %div{:class => "span-3"}
+          ="#{pluralize(contributorship.possibilities, "possible")}"
+        %div{:class => "span-3"}
+          ="#{pluralize(contributorship.candidates, "candidate")}"
+        %div{:class => "span-3"}
+          = render :partial => "shared/contribution_actions", :locals => {:contribution => contributorship}
