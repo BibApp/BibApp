@@ -1,4 +1,9 @@
-%div{:class => "vcard"}
+%div{:class => "vcard span-8"}
+  %div{:class => "span-3"}
+    - if !o.image_url.empty?
+      - # Do nothing
+    - else
+      %img{:src => "/images/man.jpg"}
   %a{:class => "fn url hide", :href => ""}
     =o.name
   %div{:class => "adr"}
