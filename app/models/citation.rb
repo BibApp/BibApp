@@ -333,30 +333,35 @@ class Citation < ActiveRecord::Base
       publication_name = "Unknown"
     end
    
-    # Initialize our publication, as best we can,
-    # based on the information provided
-    if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty? || publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
-      publication = Publication.find_or_initialize_by_name_and_issn_isbn_and_publisher_id(
-          :name => publication_name, 
-          :issn_isbn => publication_hash[:issn_isbn], 
-          :publisher_id => publication_hash[:publisher].id
-      )
-    elsif not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-      publication = Publication.find_or_initialize_by_name_and_issn_isbn(
-          :name => publication_name,  
-          :issn_isbn => publication_hash[:issn_isbn]
-      )
-    elsif not(publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
-      publication = Publication.find_or_initialize_by_name_and_publisher_id(
-          :name => publication_name,  
-          :publisher_id => publication_hash[:publisher].id
-      )
-    else
-      publication = Publication.find_or_initialize_by_name(publication_name)
-    end
+    # We can have more than one Publisher name
+    # Ex: [Physics of Plasmas, Phys Plasmas]
     
-    #save or update citation
-    self.publication = publication   
+    publication_name.each do |publication_name|
+      # Initialize our publication, as best we can,
+      # based on the information provided
+      if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty? || publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+        publication = Publication.find_or_initialize_by_name_and_issn_isbn_and_publisher_id(
+            :name => publication_name, 
+            :issn_isbn => publication_hash[:issn_isbn], 
+            :publisher_id => publication_hash[:publisher].id
+        )
+      elsif not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
+        publication = Publication.find_or_initialize_by_name_and_issn_isbn(
+            :name => publication_name,  
+            :issn_isbn => publication_hash[:issn_isbn]
+        )
+      elsif not(publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+        publication = Publication.find_or_initialize_by_name_and_publisher_id(
+            :name => publication_name,  
+            :publisher_id => publication_hash[:publisher].id
+        )
+      else
+        publication = Publication.find_or_initialize_by_name(publication_name)
+      end
+
+      #save or update citation
+      self.publication = publication
+    end
   end
   
   # Updates publication for the current citation
