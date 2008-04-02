@@ -340,23 +340,23 @@ class Citation < ActiveRecord::Base
       # Initialize our publication, as best we can,
       # based on the information provided
       if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty? || publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
-        publication = Publication.find_or_initialize_by_name_and_issn_isbn_and_publisher_id(
+        publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
             :name => publication_name, 
             :issn_isbn => publication_hash[:issn_isbn], 
             :publisher_id => publication_hash[:publisher].id
         )
       elsif not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-        publication = Publication.find_or_initialize_by_name_and_issn_isbn(
+        publication = Publication.find_or_create_by_name_and_issn_isbn(
             :name => publication_name,  
             :issn_isbn => publication_hash[:issn_isbn]
         )
       elsif not(publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
-        publication = Publication.find_or_initialize_by_name_and_publisher_id(
+        publication = Publication.find_or_create_by_name_and_publisher_id(
             :name => publication_name,  
             :publisher_id => publication_hash[:publisher].id
         )
       else
-        publication = Publication.find_or_initialize_by_name(publication_name)
+        publication = Publication.find_or_create_by_name(publication_name)
       end
 
       #save or update citation
