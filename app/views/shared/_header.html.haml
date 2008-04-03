@@ -19,6 +19,6 @@
           %strong="This is true."
       %div{:class => "span-8 prepend-4 last"}
         Find an Expert:
-        - form_tag "/search", :method => :get, :class => "header-search-form" do
+        - form_tag "search", :method => :get, :class => "header-search-form" do
           = text_field_tag(:q, value = nil, options = {})
           = submit_tag 'Go'
