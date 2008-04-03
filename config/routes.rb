@@ -57,10 +57,6 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'citations',
     :action => 'index'
     
-  map.connect "/search",
-    :controller => 'search',
-    :action => 'index'
-    
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   
