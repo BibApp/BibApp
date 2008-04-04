@@ -8,7 +8,7 @@ class SearchController < ApplicationController
     
     
     if params[:q]
-      solr = Solr::Connection.new("http://localhost:8982/solr")
+      solr = Solr::Connection.new("http://localhost:8983/solr")
       
       if params[:fq]
         @q = solr.query(
@@ -55,15 +55,15 @@ class SearchController < ApplicationController
       @docs = Array.new
       logger.debug "Docs: #{@q.inspect}"
       @q.data["response"]["docs"].each do |doc|
-        citation = citation = Citation.find(doc["pk_i"][0])
+        citation = citation = Citation.find(doc["pk_i"])
         @docs << [citation, doc['score']]
       end
       
       @facets = {
-        "author_string" => @q.data["facet_counts"]["facet_fields"]["name_string_facet"].sort{|a,b| b[1]<=>a[1]},
-        "publication" => @q.data["facet_counts"]["facet_fields"]["publication_facet"].sort{|a,b| b[1]<=>a[1]},
-        "type" => @q.data["facet_counts"]["facet_fields"]["type_facet"].sort{|a,b| b[1]<=>a[1]},
-        "year" => @q.data["facet_counts"]["facet_fields"]["year_facet"].sort{|a,b| b <=> a}
+        "author_string" => @q.field_facets("name_string_facet"),
+        "publication" => @q.field_facets("publication_facet"),
+        "type" => @q.field_facets("type_facet"),
+        "year" => @q.field_facets("year_facet")
       }
       
     else
