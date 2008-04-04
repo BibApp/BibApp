@@ -87,12 +87,12 @@ module ApplicationHelper
       
       prepped_filter = Array.new
       prepped_filter << query_filter.dup
-      prepped_filter << '"' + value + '"'
+      prepped_filter << '"' + value.to_s + '"'
       prepped_filter = prepped_filter.join("+>+")
 
     # If we have no filters, we need to send the first
     else
-      prepped_filter = '"' + value + '"'
+      prepped_filter = '"' + value.to_s + '"'
     end
     
     link_to "#{value} (#{count})", {

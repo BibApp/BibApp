@@ -26,17 +26,22 @@ class Index
   
 
   SOLR_MAPPING = {
+    # Stored Fields
     :pk_i => :id,
     :id => Proc.new{|record| record.solr_id},
-    :title_primary_t => :title_primary,
-    :title_secondary_t => :title_secondary,
+    :title => :title_primary,
+    :abstract => :abstract,
+    
+    # Dynamic Fields
+    :title_t => :title_primary,
     :abstract_t => :abstract,
+    :title_secondary_t => :title_secondary,
     :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :publication_facet => Proc.new{|record| record.publication.authority.name},
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
     :type_facet => Proc.new{|record| record[:type]},
     :year_facet => Proc.new{|record| record.year},
-    :spellword  => :abstract
+    :word => :abstract
   }
   
   class << self
@@ -44,7 +49,7 @@ class Index
       records = Citation.find(
         :all, 
         :conditions => ["citation_state_id = ? and batch_index = ?", 3, 1])
-      solr = Solr::Connection.new("http://localhost:8982/solr")
+      solr = Solr::Connection.new("http://localhost:8983/solr")
       records.each do |record|
         doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
         solr.add(doc)
@@ -55,20 +60,20 @@ class Index
     end
   
     def update_solr(record)
-      solr = Solr::Connection.new("http://localhost:8982/solr")
+      solr = Solr::Connection.new("http://localhost:8983/solr")
       doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
       solr.add(doc)
       solr.commit
     end
   
     def remove_from_solr(record)
-      solr = Solr::Connection.new("http://localhost:8982/solr")
+      solr = Solr::Connection.new("http://localhost:8983/solr")
       solr.delete(record.solr_id)
       solr.commit
     end
     
     def get_spelling_suggestions(query)
-      solr = Solr::Connection.new("http://localhost:8982/solr")
+      solr = Solr::Connection.new("http://localhost:8983/solr")
       spelling_suggestions = solr.send(Solr::Request::Spellcheck.new(:query => query)).suggestions
       if spelling_suggestions == query
         spelling_suggestions = nil

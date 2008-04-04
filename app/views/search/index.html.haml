@@ -40,13 +40,13 @@
 
 
     #facets{:class => "column span-12 last"}
-    - @facets.each do |facet, values|
+    - @facets.each do |facet, results|
       %div{:class => "column span-11"}
         %h4=facet.capitalize
         %ul{:class => "#{facet}-facets"}
-          - values.each do |value, count|
+          - results.each do |r|
             %li
-              =add_filter(@query,@filter,facet,value,count)
+              =add_filter(@query,@filter,facet,r.name,r.value)
 
 - else
   %p Search form here.
