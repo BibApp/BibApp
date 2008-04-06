@@ -1,9 +1,9 @@
 class Index
-  
+  require 'solr'
   #### Solr ####
   
   # CONNECT
-  # solr = Solr::Connection.new("http://localhost:8982/solr")
+  # solr = Solr::Connection.new("http://localhost:8983/solr")
   
   # SEARCH
   # q = solr.query("complex", :facets => {:zeros => false, :fields => [:author_facet]})
