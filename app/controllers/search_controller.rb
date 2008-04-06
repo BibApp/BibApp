@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+  require 'solr'
   
   def index
     
