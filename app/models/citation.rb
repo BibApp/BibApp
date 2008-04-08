@@ -7,14 +7,17 @@ class Citation < ActiveRecord::Base
   has_many :name_strings, 
     :through => :citation_name_strings, 
     :order => :position
-  has_many :citation_name_strings
+  has_many :citation_name_strings,
+    :dependent => :delete_all
   
   has_many :people,
     :through => :contributorships
-  has_many :contributorships
+  has_many :contributorships,
+    :dependent => :delete_all
   
   has_many :keywords, :through => :keywordings
-  has_many :keywordings
+  has_many :keywordings,
+    :dependent => :delete_all
   
   has_many :files, :as => :asset
 
