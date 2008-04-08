@@ -8,6 +8,7 @@ class Contributorship   < ActiveRecord::Base
   
   before_validation_on_create :set_initial_states
   after_create :calculate_score
+  after_save :refresh_contributorships
 
   def calculate_score
     
@@ -101,5 +102,43 @@ class Contributorship   < ActiveRecord::Base
     count = Array.new
     possibilities = self.citation.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
     return count.size
+  end
+  
+  def verified
+    verified = Contributorship.count(
+      :conditions => ["
+        citation_id = ? and contributorship_state_id = ?", 
+        self.citation_id,
+        2 # caluculated
+      ]
+    )
+  end
+
+  def save_without_callbacks
+    create_or_update_without_callbacks
+  end
+  
+  def refresh_contributorships
+    # After save method
+    # If verified.size == possibilities.size
+    # - Loop through competing Contributorships
+    # - Set Contributorship.hide = true
+    
+    if self.verified == self.possibilities
+      refresh = Contributorship.find(
+        :all, 
+        :conditions => [
+          "citation_id = ? and contributorship_state_id = ? and id <> ?", 
+          self.citation_id,
+          1,
+          self.id
+        ]
+      )
+      
+      refresh.each do |r|
+        r.hide = true
+        r.save_without_callbacks
+      end
+    end
   end
 end
