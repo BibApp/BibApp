@@ -32,13 +32,11 @@ class CitationsController < ApplicationController
     	   		FROM groups g
     			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
     					FROM citations
-    					join citation_name_strings on citations.id = citation_name_strings.citation_id
-    					join name_strings on citation_name_strings.name_string_id = name_strings.id
-    					join pen_names on name_strings.id = pen_names.name_string_id
-    					join people on pen_names.person_id = people.id
+    					join contributorships on citations.id = contributorships.citation_id
+    					join people on contributorships.person_id = people.id
     					join memberships on people.id = memberships.person_id
     					join groups on memberships.group_id = groups.id
-    					where citations.citation_state_id = 3
+    					where contributorships.contributorship_state_id = 2
     					group by groups.id) as cit
     			ON g.id=cit.group_id
     			ORDER BY cit.total DESC
@@ -50,11 +48,9 @@ class CitationsController < ApplicationController
     	   		FROM people p
     			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
     					FROM citations
-    					join citation_name_strings on citations.id = citation_name_strings.citation_id
-    					join name_strings on citation_name_strings.name_string_id = name_strings.id
-    					join pen_names on name_strings.id = pen_names.name_string_id
-    					join people on pen_names.person_id = people.id
-    					where citations.citation_state_id = 3
+    					join contributorships on citations.id = contributorships.citation_id
+    					join people on contributorships.person_id = people.id
+    					where contributorships.contributorship_state_id = 2
     					group by people.id) as cit
     			ON p.id=cit.people_id
     			ORDER BY cit.total DESC
