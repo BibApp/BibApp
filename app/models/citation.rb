@@ -33,6 +33,7 @@ class Citation < ActiveRecord::Base
   
   def after_save
     deduplicate
+    create_contributorships
   end
   
   #### Serialization ####
@@ -178,13 +179,19 @@ class Citation < ActiveRecord::Base
       
       # Setting publisher
       citation.publisher_name = h[:publisher]
+      publisher_name = h[:publisher] 
+      
+      if publisher_name.nil? || publisher_name.empty?
+        publisher_name = "Unknown"
+      end
       
       # Setting publication_info
       issn_isbn = h[:issn_isbn]
       publication_info = Hash.new
       publication_info = {:name => h[:publication], 
                                     :issn_isbn => issn_isbn,
-                                    :publisher => citation.publisher}
+                                    :publisher => Publisher.find_by_name(publisher_name)}
+
       citation.publication_info = publication_info
     
       # Setting keywords
@@ -292,7 +299,7 @@ class Citation < ActiveRecord::Base
     end
       
     #initialize and save or update citation
-    self.publisher = Publisher.find_or_initialize_by_name(publisher_name)   
+    self.publisher = Publisher.find_or_create_by_name(publisher_name)
   end
   
   # Updates publisher for the current citation
@@ -312,7 +319,7 @@ class Citation < ActiveRecord::Base
       @publisher_cache = publisher
     else
       # Create publisher and save to database
-      Citation.update_publisher(self, publisher)  
+      Citation.update_publisher(self, publisher)
     end
   end  
   
@@ -339,18 +346,16 @@ class Citation < ActiveRecord::Base
     publication_name.each do |publication_name|
       # Initialize our publication, as best we can,
       # based on the information provided
-      if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty? || publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+
+      # English: If you have an issn or isbn and good publisher data 
+      if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
         publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
             :name => publication_name, 
             :issn_isbn => publication_hash[:issn_isbn], 
             :publisher_id => publication_hash[:publisher].id
         )
-      elsif not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-        publication = Publication.find_or_create_by_name_and_issn_isbn(
-            :name => publication_name,  
-            :issn_isbn => publication_hash[:issn_isbn]
-        )
-      elsif not(publication_hash[:publisher].nil? || publication_hash[:publisher].empty?)
+      
+      elsif not(publication_hash[:publisher].nil?)
         publication = Publication.find_or_create_by_name_and_publisher_id(
             :name => publication_name,  
             :publisher_id => publication_hash[:publisher].id
@@ -430,7 +435,38 @@ class Citation < ActiveRecord::Base
    #Get all Editor Strings of a citation, return as NameString objects
   def editor_name_strings
     self.name_strings.find(:all, :conditions => [ 'role=?', 'Editor'])
-  end 
+  end
+  
+  def create_contributorships
+    # After save method
+    # Ensures Contributorships are set for each CitationNameString claim
+    # associated with the Citation.
+    
+    if self.citation_state_id == 3 # Unique and a keeper
+      self.citation_name_strings.each do |cns|
+        # Find all People with a matching PenName claim
+        claims = PenName.find(:all, :conditions => ["name_string_id = ?", cns.name_string_id])
+      
+        # Debugger
+        logger.debug("===CREATE CONTRIBUTORSHIPS===")
+        logger.debug("\n Claims: ")
+        claims.each do |c| 
+          logger.debug("#{c.person.name}")
+        end
+      
+        # Find or create a Contributorship for each claim
+        # @TODO: Incorporate a Person.blacklist?
+        claims.each do |claim|
+          Contributorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id_and_role(
+            self.id,
+            claim.person.id, 
+            claim.id,
+            cns.role
+          )
+        end
+      end
+    end
+  end
   
   ### PRIVATE METHODS ###
   private
@@ -574,7 +610,5 @@ class Citation < ActiveRecord::Base
     logger.debug("Cached Publication= #{@publication_cache.inspect}")
     #Create any initialized publication and save to Citation
     self.publication = @publication_cache if @publication_cache
-  end  
-  
- 
+  end
 end
