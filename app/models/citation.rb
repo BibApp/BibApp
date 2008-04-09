@@ -476,11 +476,11 @@ class Citation < ActiveRecord::Base
         name_string = NameString.find_or_create_by_name(cns[:name])
         
         #add it to this citation
-        citation.citation_name_strings << 
-          CitationNameString.new({
-            :name_string_id => name_string.id, 
-            :role => cns[:role]
-          })
+        CitationNameString.create(
+                                  :citation_id => citation.id,
+                                  :name_string_id => name_string.id, 
+                                  :role => cns[:role]
+                               )
       end
     end
   end    
