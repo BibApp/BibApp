@@ -70,13 +70,6 @@ class CitationsController < ApplicationController
     			LIMIT 10"
         )
       end
-	   
-    #initialize variables used by 'edit.html.haml'
-    before :edit do
-      @author_name_strings = @citation.author_name_strings
-      @publication = @citation.publication
-      @keywords = @citation.keywords
-    end
 	
     #initialize variables used by 'new.html.haml'
     before :new do  
@@ -118,9 +111,6 @@ class CitationsController < ApplicationController
       # Create the basic Citation SubKlass
       @citation = subklass_init(params[:type], params[:citation])
     
-      # Load other citation info available in request params
-      set_publication(@citation)
-      
       ###
       # Setting CitationNameStrings
       ###
@@ -148,10 +138,11 @@ class CitationsController < ApplicationController
       @keywords = params[:keywords]
       @citation.keyword_strings = @keywords
     
-
       ###
       # Setting Publication Info, including Publisher
       ###
+      # Save publication info to instance variables
+      # in case any errors should occur in saving citation
       issn_isbn = params[:issn_isbn]
       publication_info = Hash.new
       publication_info = {:name => params[:publication][:name], 
@@ -159,11 +150,6 @@ class CitationsController < ApplicationController
                           :publisher_name => params[:publisher][:name]}
 
       @citation.publication_info = publication_info
-    
-
-
-      #@TODO: Get publisher in web form!
-      #@citation.publisher_name = params[:publisher_name]
     
       # @TODO: Deduplication is currently not working   
       # Initialize deduplication keys
@@ -196,10 +182,6 @@ class CitationsController < ApplicationController
   def update
     @citation = Citation.find(params[:id])
     
-    
-    # Load other citation info available in request params
-    set_publication(@citation)
-    
     ###
     # Setting CitationNameStrings
     ###
@@ -214,7 +196,7 @@ class CitationsController < ApplicationController
       citation_name_strings << {:name => name, :role => "Author"}
     end
     @citation.citation_name_strings = citation_name_strings 
-       
+      
     ###
     # Setting Keywords
     ###
@@ -222,6 +204,17 @@ class CitationsController < ApplicationController
     # in case any errors should occur in saving citation
     @keywords = params[:keywords]
     @citation.keyword_strings = @keywords
+    
+    ###
+    # Setting Publication Info, including Publisher
+    ###
+    issn_isbn = params[:issn_isbn]
+    publication_info = Hash.new
+    publication_info = {:name => params[:publication][:name], 
+                          :issn_isbn => issn_isbn,
+                          :publisher_name => params[:publisher][:name]}
+
+    @citation.publication_info = publication_info
     
     respond_to do |format|
       if @citation.update_attributes(params[:citation])
@@ -234,19 +227,6 @@ class CitationsController < ApplicationController
       end
     end
   end
-  
-  # Load publication information from Request params
-  # and set for the current citation.
-  # Also sets the instance variable @publication,
-  # in case any errors should occur in saving citation  
-  def set_publication(citation)
-    #Set Publication info for this Citation
-    if params[:publication] && params[:publication][:name]
-      @publication = Publication.find_or_initialize_by_name(params[:publication][:name])
-		  citation.publication = @publication
-    end  	
-  end	
-  
   
   # Load name strings list from Request params
   # and set for the current citation.
