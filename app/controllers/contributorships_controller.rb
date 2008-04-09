@@ -14,17 +14,18 @@ class ContributorshipsController < ApplicationController
   
   def verify
     @contributorship = Contributorship.find(params[:id])
-    @person = Person.find_by_id(@contributorship.person_id)
+    person = @contributorship.person
     
     @contributorship.update_attributes(:contributorship_state_id => 2)
+    person.update_scoring_hash
     
-    @contributorship.person.contributorships.each do |c|
+    @contributorship.person.contributorships.calculated.each do |c|
       c.calculate_score
     end
     
     @contributorship.reload
 
-    @contributorships = @person.contributorships.to_show
+    @contributorships = person.contributorships.to_show
     
     respond_to do |format|
       format.js { render :action => :verify_contributorship }

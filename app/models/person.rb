@@ -1,4 +1,6 @@
 class Person < ActiveRecord::Base
+
+  serialize :scoring_hash
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
   has_many :groups, :through => :memberships
@@ -26,12 +28,16 @@ class Person < ActiveRecord::Base
     # - Like > 50 we show on the person view, 'cuz they probably wrote it?
     # - Like < 50 we don't show, 'cuz maybe they didn't write it?
     def to_show 
-      find(:all, :conditions => ["contributorships.hide = ?", false])
+      find(:all, :conditions => ["contributorships.hide = ?", false], :include => [:citation])
+    end
+    
+    def calculated
+      find(:all, :conditions => ["contributorships.contributorship_state_id = 1"], :include => [:citation])
     end
   end
   
   has_one :image, :as => :asset
-
+  
 
   def name
     "#{first_name} #{last_name}"
@@ -67,41 +73,23 @@ class Person < ActiveRecord::Base
   
   # Person Contributorship Calculation Fields
   def verified_publications
-    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2)
+    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2,:include=>[:citation])
   end
   
-  def known_years
-    # Build an array of verified publication year strings
-    # Ex. ["2001,2002,..."]
-    self.verified_publications.collect{|vp| vp.citation.year}.uniq
-  end
-  
-  def known_publication_ids
-    # Build an array of verified publication objects
-    # Ex. [#<Publication id: 1...>,#<Publication id: 2...>,..."]
-    self.verified_publications.collect{|vp| vp.citation.publication.id}.uniq
-  end
-  
-  def known_collaborator_ids
-    # Build an array of verified name_string objects
-    # Ex. [#<NameString id: 1...>,#<NameString id: 2...>,..."]    
-    self.verified_publications.collect{|vp| vp.citation.name_strings.collect{|ns| ns.id}}.flatten.uniq
-  end
-  
-  def known_keyword_ids
-    # Build an array of verified keyword objects
-    # Ex. [#<Keyword id: 1...>,#<Keyword id: 2...>,..."]
-    self.verified_publications.collect{|vp| vp.citation.keywords.collect{|k| k.id}}.flatten.uniq
-  end
-  
-  def scoring_hash
+  def update_scoring_hash
+    vps = self.verified_publications
+    known_years = vps.collect{|vp| vp.citation.year}.uniq
+    known_publication_ids = vps.collect{|vp| vp.citation.publication.id}.uniq
+    known_collaborator_ids = vps.collect{|vp| vp.citation.name_strings.collect{|ns| ns.id}}.flatten.uniq
+    known_keyword_ids = vps.collect{|vp| vp.citation.keywords.collect{|k| k.id}}.flatten.uniq
+    
     # Return a hash comprising all the Contributorship scoring methods
     scoring_hash = {
-      :years => self.known_years, 
-      :publication_ids => self.known_publication_ids,
-      :collaborator_ids => self.known_collaborator_ids,
-      :keyword_ids => self.known_keyword_ids
+      :years => known_years, 
+      :publication_ids => known_publication_ids,
+      :collaborator_ids => known_collaborator_ids,
+      :keyword_ids => known_keyword_ids
     }
-    scoring_hash
+    self.update_attribute(:scoring_hash, scoring_hash)
   end
 end
