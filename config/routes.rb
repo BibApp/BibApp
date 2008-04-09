@@ -35,7 +35,8 @@ ActionController::Routing::Routes.draw do |map|
                 :collection => {:auto_complete_for_author_string => :get,
                         :auto_complete_for_editor_string => :get,
                 				:auto_complete_for_keyword_name => :get,
-								        :auto_complete_for_publication_name => :get}
+								        :auto_complete_for_publication_name => :get,
+                        :auto_complete_for_publisher_name => :get}
   
   # Install the default routes as the lowest priority.
     
