@@ -54,7 +54,7 @@ Make sure it is named the same as the 'database' in your config/database.yml fil
 
 If you have an old BibApp (version 0.4) database, just back it up and prep a new one.
 
-*IMPORTANT!* There is *no migration• presently to move data from v0.4 to truck's schema.
+*IMPORTANT!* There is *no migrations* presently to move data from v0.4 to truck's schema.
 
 Now you can generate the BibApp database structure from within [bibapp]
 (where [bibapp] represents the location where you downloaded BibApp to):
@@ -72,6 +72,15 @@ mongrel_rails start
 </pre>
 
 7. Solr
+
+TEMPORARY:  Solr Rake scripts were removed when we moved
+from acts_as_solr to just using the latest & greatest
+Solr in vendor/solr.  For the time being,
+start Solr using the following:
+<pre>
+cd [bibapp]/vendor/solr;
+java -jar start.jar
+</pre>
 
 Starting (on Linux/Mac OSX)
 <pre>
