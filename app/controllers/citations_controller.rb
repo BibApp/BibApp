@@ -111,62 +111,11 @@ class CitationsController < ApplicationController
       # Create the basic Citation SubKlass
       @citation = subklass_init(params[:type], params[:citation])
     
-      ###
-      # Setting CitationNameStrings
-      ###
-
-      #default to empty array of author strings
-      params[:author_name_strings] ||= [] 
-            
-      #Set Author NameStrings for this Citation
-      @author_name_strings = params[:author_name_strings]
-      citation_name_strings = Array.new
-      @author_name_strings.each do |name|
-        citation_name_strings << {:name => name, :role => "Author"}
-      end
-      @citation.citation_name_strings = citation_name_strings 
-       
-      #set_author_name_strings(@citation)
-      # @TODO: Editors don't work yet, as they save over the Author Listing
-      #set_editor_name_strings(@citation)
-      
-      ###
-      # Setting Keywords
-      ###
-      # Save keywords to instance variable @keywords,
-      # in case any errors should occur in saving citation
-      @keywords = params[:keywords]
-      @citation.keyword_strings = @keywords
+      #Update citation information based on inputs
+      update_citation_info
     
-      ###
-      # Setting Publication Info, including Publisher
-      ###
-      # Save publication info to instance variables
-      # in case any errors should occur in saving citation
-      issn_isbn = params[:issn_isbn]
-      publication_info = Hash.new
-      publication_info = {:name => params[:publication][:name], 
-                          :issn_isbn => issn_isbn,
-                          :publisher_name => params[:publisher][:name]}
-
-      @citation.publication_info = publication_info
-    
-      # @TODO: Deduplication is currently not working   
-      # Initialize deduplication keys
-      #Citation.set_issn_isbn_dupe_key(@citation, @citation.name_strings, @citation.publication)
-      #Citation.set_title_dupe_key(citation)
-    
-      #@citation.save_and_set_for_index_without_callbacks
-	  
-      #Do any de-duping of this citation
-      #Citation.deduplicate(@citation)
-    
-      # @TODO: This is erroring out, since we aren't yet saving all the citation fields on the "new citation" page	  
-      #Index our citation in Solr
-      #Index.update_solr(@citation)
-	
       respond_to do |format|
-        if @citation.save
+        if @citation.save and Index.update_solr(@citation)
           flash[:notice] = "Citation was successfully created."
           format.html {redirect_to citation_url(@citation)}
           format.xml  {head :created, :location => citation_url(@citation)}
@@ -182,6 +131,28 @@ class CitationsController < ApplicationController
   def update
     @citation = Citation.find(params[:id])
     
+    #First, update citation attributes (ensures deduplication keys are updated)
+    @citation.attributes=params[:citation]   
+
+    #Then, update other citation information
+    update_citation_info
+   
+    respond_to do |format|
+      if @citation.save and Index.update_solr(@citation)
+        flash[:notice] = "Citation was successfully updated."
+        format.html {redirect_to citation_url(@citation)}
+        format.xml  {head :ok}
+      else
+        format.html {render :action => "edit"}
+        format.xml  {render :xml => @citation.errors.to_xml}
+      end
+    end
+  end
+  
+  
+  # Actually update all properties of this Citation
+  # This is called by both create() and update()
+  def update_citation_info
     ###
     # Setting CitationNameStrings
     ###
@@ -216,17 +187,14 @@ class CitationsController < ApplicationController
 
     @citation.publication_info = publication_info
     
-    respond_to do |format|
-      if @citation.update_attributes(params[:citation])
-        flash[:notice] = "Citation was successfully updated."
-        format.html {redirect_to citation_url(@citation)}
-        format.xml  {head :ok}
-      else
-        format.html {render :action => "edit"}
-        format.xml  {render :xml => @citation.errors.to_xml}
-      end
-    end
+    ###
+    # Setting De-Duplication keys
+    ###
+    @citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(@citation, citation_name_strings, issn_isbn)
+    @citation.title_dupe_key = Citation.set_title_dupe_key(@citation)
+    
   end
+  
   
   # Load name strings list from Request params
   # and set for the current citation.
