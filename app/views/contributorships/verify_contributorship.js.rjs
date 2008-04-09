@@ -1,3 +1,4 @@
+page.replace_html "contributorship_admin-#{@contributorship.id}", "<p><strong>Verified!</strong></p>"
 page.replace 'contributorships', :partial => 'contributorships'
 page.visual_effect :highlight, "contributorship_id-#{@contributorship.id}"
-page.replace_html "contributorship_admin-#{@contributorship.id}", "<p><strong>Verified!</strong></p>"
+
