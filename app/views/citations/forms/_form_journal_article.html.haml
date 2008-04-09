@@ -15,7 +15,9 @@
   
   %p
     %label ISSN:
-    = text_field_tag 'issn_isbn', '', :size => 10
+    - issn_isbn = @publication.issn_isbn unless @publication.nil?
+    = text_field_tag 'issn_isbn', issn_isbn, :size => 10
+    
   
   %p
     %label Volume:
