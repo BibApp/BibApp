@@ -11,7 +11,12 @@
     = form.text_field :title_primary, :size => 40
     
   = render :partial => 'publication'  
- 
+  = render :partial => 'publisher'
+  
+  %p
+    %label ISSN:
+    = text_field_tag 'issn_isbn', '', :size => 10
+  
   %p
     %label Volume:
     = form.text_field :volume, :size => 4

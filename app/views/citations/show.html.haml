@@ -29,12 +29,12 @@
       %div.field
         %label Publication Type:
         %span.field_value=@citation.type 
-      - if @citation.publication.name?
+      - if @citation.publication_id? and @citation.publication.name?
         %div.field
           %label Publication Source:
           %span.field_value
             =link_to @citation.publication.name, publication_path(@citation.publication)
-      - if @citation.publisher.name?
+      - if @citation.publisher_id? and @citation.publisher.name?
         %div.field
           %label Publisher:
           %span.field_value

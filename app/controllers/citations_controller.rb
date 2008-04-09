@@ -148,9 +148,20 @@ class CitationsController < ApplicationController
       @keywords = params[:keywords]
       @citation.keyword_strings = @keywords
     
+
       ###
-      # Setting Publisher
+      # Setting Publication Info, including Publisher
       ###
+      issn_isbn = params[:issn_isbn]
+      publication_info = Hash.new
+      publication_info = {:name => params[:publication][:name], 
+                          :issn_isbn => issn_isbn,
+                          :publisher_name => params[:publisher][:name]}
+
+      @citation.publication_info = publication_info
+    
+
+
       #@TODO: Get publisher in web form!
       #@citation.publisher_name = params[:publisher_name]
     
@@ -338,9 +349,28 @@ class CitationsController < ApplicationController
 			  :order => 'name ASC',
 			  :limit => 8)
 			
-	  render :partial => 'autocomplete_list', :locals => {:objects => publications}
-  end    
-       
+	  render :partial => 'publication_autocomplete_list', :locals => {:publications => publications}
+	end 
+ 
+  #Auto-Complete for entering Publisher Name in Web-based Citation entry
+  #  This method provides users with a list of matching Publishers
+  #  already in BibApp.
+  def auto_complete_for_publisher_name
+    publisher_name = params[:publisher][:name].downcase
+    
+    #search at beginning of name
+    beginning_search = publisher_name + "%"
+    #search at beginning of any other words in name
+    word_search = "% " + publisher_name + "%"
+    
+    publishers = Publisher.find(:all, 
+          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+      
+    render :partial => 'autocomplete_list', :locals => {:objects => publishers}
+  end      
+        
   #Adds a single item value to list of items in Web-based Citation entry
   # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:

@@ -1,0 +1,4 @@
+-# Publisher text field, with auto-complete
+%p
+  %label Publisher:
+  = text_field_with_auto_complete :publisher, :name, {:size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5} 
