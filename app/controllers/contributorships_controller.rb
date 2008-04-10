@@ -13,6 +13,7 @@ class ContributorshipsController < ApplicationController
   end
   
   def verify
+    # @TODO: Auth check here
     @contributorship = Contributorship.find(params[:id])
     person = @contributorship.person
     
@@ -23,8 +24,6 @@ class ContributorshipsController < ApplicationController
       c.calculate_score
     end
     
-    @contributorship.reload
-
     @contributorships = person.contributorships.to_show
     
     respond_to do |format|
@@ -33,6 +32,7 @@ class ContributorshipsController < ApplicationController
   end
   
   def deny
+    # @TODO: Auth check here
     # Find Contributorship
     @contributorship = Contributorship.find(params[:id])
     @person = Person.find_by_id(@contributorship.person_id)

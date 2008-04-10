@@ -52,7 +52,10 @@ class Person < ActiveRecord::Base
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
   end
-  
+
+  def solr_id
+    "Person-#{id}"
+  end  
 
   def groups_not
     all_groups = Group.find(:all, :order => "name")
@@ -85,7 +88,7 @@ class Person < ActiveRecord::Base
     
     # Return a hash comprising all the Contributorship scoring methods
     scoring_hash = {
-      :years => known_years, 
+      :years => known_years.sort, 
       :publication_ids => known_publication_ids,
       :collaborator_ids => known_collaborator_ids,
       :keyword_ids => known_keyword_ids

@@ -8,8 +8,23 @@ class Contributorship   < ActiveRecord::Base
   
   before_validation_on_create :set_initial_states
   after_create :calculate_score
-  after_save :refresh_contributorships
-  before_destroy 
+  
+  after_save do |contributorship|
+    # Remove false positives from other PenName claimants
+    contributorship.refresh_contributorships
+    
+    # Update Solr!
+    # * Citations have many People...
+    # * But, only if contributorship_state_id == 2 (verified)
+    Index.update_solr(contributorship.citation)
+  end
+  
+  after_destroy do |contributorship|
+    # Update Solr!
+    # * Citations have many People...
+    # * But, only if contributorship_state_id == 2 (verified)
+    Index.update_solr(contributorship.citation)
+  end
 
   def calculate_score
     
@@ -34,39 +49,42 @@ class Contributorship   < ActiveRecord::Base
     # 1. Stop reloading self.person.scoring_hash for each citation (super slow, 100s of queries)
     # 2. Crontask / Asynchtask to periodically adjust scores
          
-    scoring_hash = self.person.scoring_hash
+    person_sh = self.person.scoring_hash
+    citation_sh = self.citation.scoring_hash
 
-    if scoring_hash && !scoring_hash.nil?
+    if person_sh && !person_sh.nil?
       # Years
       year_score = 0
       years = Array.new
       # Build full array of publishing years
 
-      scoring_hash[:years].first.upto(scoring_hash[:years].last){|y| years << y }
-      year_score = 25 if years.include?(self.citation.year)
-
+      logger.debug("Year: #{citation_sh[:year]}")
+      
+      person_sh[:years].sort.first.upto(person_sh[:years].sort.last){|y| years << y }
+      logger.debug("Array: #{years.inspect}")
+      year_score = 25 if years.include?(citation_sh[:year])
     
       # Publications
       publication_score = 0
-      publication_score = 25 if scoring_hash[:publication_ids].include?(self.citation.publication.id)
+      publication_score = 25 if person_sh[:publication_ids].include?(citation_sh[:publication_id])
     
       # Collaborators
-      col_poss = self.citation.name_strings.size
+      col_poss = citation_sh[:collaborator_ids].size
       col_matches = 0
 
-      self.citation.name_strings.each do |ns|
-        col_matches = (col_matches + 1) if scoring_hash[:collaborator_ids].include?(ns.id)
+      citation_sh[:collaborator_ids].each do |ns|
+        col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns.id)
       end
     
       collaborator_score = 0
       collaborator_score = ((25/col_poss)*col_matches) if col_poss != 0
     
       # Keywords
-      key_poss = self.citation.keywords.size
+      key_poss = citation_sh[:keyword_ids].size
       key_matches = 0
     
-      self.citation.keywords.each do |k|
-        key_matches = (key_matches + 1) if scoring_hash[:keyword_ids].include?(k.id)
+      citation_sh[:keyword_ids].each do |k|
+        key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k.id)
       end
     
       keyword_score = 0

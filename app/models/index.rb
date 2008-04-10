@@ -37,6 +37,8 @@ class Index
     :abstract_t => :abstract,
     :title_secondary_t => :title_secondary,
     :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
+    :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
+    :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
     :publication_facet => Proc.new{|record| record.publication.authority.name},
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
     :type_facet => Proc.new{|record| record[:type]},
