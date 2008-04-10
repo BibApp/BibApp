@@ -1,5 +1,7 @@
 class Citation < ActiveRecord::Base
   require 'htmlentities'
+
+  serialize :scoring_hash
   
   #### Associations ####
   belongs_to :publication
@@ -11,7 +13,9 @@ class Citation < ActiveRecord::Base
     :dependent => :delete_all
   
   has_many :people,
-    :through => :contributorships
+    :through => :contributorships,
+    :conditions => ["contributorship_state_id = ?", 2]
+    
   has_many :contributorships,
     :dependent => :delete_all
   
@@ -35,6 +39,7 @@ class Citation < ActiveRecord::Base
   def after_save
     deduplicate
     create_contributorships
+    update_scoring_hash
   end
   
   #### Serialization ####
@@ -345,7 +350,7 @@ class Citation < ActiveRecord::Base
   end
 
   def solr_id
-    "Citation:#{id}"
+    "Citation-#{id}"
   end
 
   def self.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
@@ -412,6 +417,23 @@ class Citation < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def update_scoring_hash
+    year = self.year
+    publication_id = self.publication_id
+    collaborator_ids = self.citation_name_strings.collect{|cns| cns.name_string_id}
+    keyword_ids = self.keywords.collect{|k| k.id}
+    
+    # Return a hash comprising all the Contributorship scoring methods
+    scoring_hash = {
+      :year => year, 
+      :publication_id => publication_id,
+      :collaborator_ids => collaborator_ids,
+      :keyword_ids => keyword_ids
+    }
+    self.scoring_hash = scoring_hash
+    self.save_without_callbacks
   end
   
   ### PRIVATE METHODS ###
