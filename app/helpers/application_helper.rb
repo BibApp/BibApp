@@ -96,8 +96,6 @@ module ApplicationHelper
     end
     
     link_to "#{value} (#{count})", {
-      :controller => "search", 
-      :action => :index, 
       :fq => prepped_filter,
       :q => query
     }
@@ -112,8 +110,6 @@ module ApplicationHelper
     prepped_filter = prepped_filter.join("+>+")
     
     link_to "#{value}", {
-      :controller => "search",
-      :action => :index,
       :fq => prepped_filter,
       :q => query
     }

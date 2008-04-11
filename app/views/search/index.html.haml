@@ -38,15 +38,15 @@
               %strong Rank:
               ="#{score}"
 
-
-    #facets{:class => "column span-12 last"}
-    - @facets.each do |facet, results|
-      %div{:class => "column span-11"}
-        %h4=facet.capitalize
-        %ul{:class => "#{facet}-facets"}
-          - results.each do |r|
-            %li
-              =add_filter(@query,@filter,facet,r.name,r.value)
+    %div{:class => "span-12 last"}
+      #facets{:class => "column span-12 last"}
+      - @facets.each do |facet, results|
+        %div{:class => "column span-11"}
+          %h4=facet.capitalize
+          %ul{:class => "#{facet}-facets"}
+            - results.each do |r|
+              %li
+                =add_filter(@query,@filter,facet,r.name,r.value)
 
 - else
   %p Search form here.

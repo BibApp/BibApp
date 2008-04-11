@@ -3,7 +3,8 @@ class Index
   #### Solr ####
   
   # CONNECT
-  # solr = Solr::Connection.new("http://localhost:8983/solr")
+  # SOLRCONN = Solr::Connection.new("http://localhost:8983/solr")
+  # SOLRCONN lives in initializers
   
   # SEARCH
   # q = solr.query("complex", :facets => {:zeros => false, :fields => [:author_facet]})
@@ -51,32 +52,29 @@ class Index
       records = Citation.find(
         :all, 
         :conditions => ["citation_state_id = ? and batch_index = ?", 3, 1])
-      solr = Solr::Connection.new("http://localhost:8983/solr")
+      
       records.each do |record|
         doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-        solr.add(doc)
+        SOLRCONN.add(doc)
         record.batch_index = 0
         record.save_without_callbacks
       end
-      solr.commit
+      SOLRCONN.commit
     end
   
     def update_solr(record)
-      solr = Solr::Connection.new("http://localhost:8983/solr")
       doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-      solr.add(doc)
-      solr.commit
+      SOLRCONN.add(doc)
+      SOLRCONN.commit
     end
   
     def remove_from_solr(record)
-      solr = Solr::Connection.new("http://localhost:8983/solr")
-      solr.delete(record.solr_id)
-      solr.commit
+      SOLRCONN.delete(record.solr_id)
+      SOLRCONN.commit
     end
     
     def get_spelling_suggestions(query)
-      solr = Solr::Connection.new("http://localhost:8983/solr")
-      spelling_suggestions = solr.send(Solr::Request::Spellcheck.new(:query => query)).suggestions
+      spelling_suggestions = SOLRCONN.send(Solr::Request::Spellcheck.new(:query => query)).suggestions
       if spelling_suggestions == query
         spelling_suggestions = nil
       end

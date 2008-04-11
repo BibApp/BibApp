@@ -25,6 +25,50 @@ class PeopleController < ApplicationController
         :page => params[:page] || 1,
         :per_page => 10
       )
+      @query = @person.solr_id
+      @filter = params[:fq] || ""
+      @filter = @filter.split("+>+").each{|f| f.strip!}
+      
+      if params[:fq]
+        @q = SOLRCONN.query(
+          @query, {
+            :filter_queries => @filter, 
+            :facets => {
+              :fields => [:person_facet, :name_string_facet, :year_facet, :publication_facet, :type_facet], 
+              :mincount => 1, 
+              :limit => 10
+            }
+          })
+      else
+        @q = SOLRCONN.query(
+          @query, {
+            :facets => {
+              :fields => [:person_facet, :name_string_facet, :year_facet, :publication_facet, :type_facet],
+              :mincount => 1,
+              :limit => 10
+            }
+          })
+      end
+      
+      # Processing returned docs:
+      # 1. Extract the IDs from Solr response
+      # 2. Find Citation objects via AR
+      # 2. Load objects and Solr score for view
+      
+      @docs = Array.new
+      logger.debug "Docs: #{@q.inspect}"
+      @q.data["response"]["docs"].each do |doc|
+        citation = citation = Citation.find(doc["pk_i"])
+        @docs << [citation, doc['score']]
+      end
+      
+      @facets = {
+        "people" => @q.field_facets("person_facet"),
+        "names" => @q.field_facets("name_string_facet"),
+        "publications" => @q.field_facets("publication_facet"),
+        "types" => @q.field_facets("type_facet"),
+        "years" => @q.field_facets("year_facet")
+      }
       
       @title = @person.first_last
     end

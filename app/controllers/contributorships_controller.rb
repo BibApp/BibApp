@@ -2,14 +2,15 @@ class ContributorshipsController < ApplicationController
   make_resourceful do
     build :index
     
-      before :index do
-        if params[:person_id]
-          @current_objects = Contributorship.find(
-            :all, 
-            :conditions => ["person_id = ?", params[:person_id]]
-          )
-        end
+    before :index do
+      if params[:person_id]
+        @person = Person.find(params[:person_id])
+        @contributorships = @person.contributorships.to_show.paginate(
+          :page => params[:page] || 1,
+          :per_page => 10
+        )
       end
+    end
   end
   
   def verify

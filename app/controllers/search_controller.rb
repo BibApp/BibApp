@@ -7,12 +7,10 @@ class SearchController < ApplicationController
     @filter = params[:fq] || ""
     @filter = @filter.split("+>+").each{|f| f.strip!}
     
-    
     if params[:q]
-      solr = Solr::Connection.new("http://localhost:8983/solr")
       
       if params[:fq]
-        @q = solr.query(
+        @q = SOLRCONN.query(
           @query, {
             :filter_queries => @filter, 
             :facets => {
@@ -22,7 +20,7 @@ class SearchController < ApplicationController
             }
           })
       else
-        @q = solr.query(
+        @q = SOLRCONN.query(
           @query, {
             :facets => {
               :fields => [:name_string_facet, :year_facet, :publication_facet, :type_facet],
