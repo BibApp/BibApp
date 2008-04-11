@@ -1,0 +1,73 @@
+%div{:class => "span-24"}
+  %p.edit_person_actions
+    %strong
+      Edit: 
+    = link_to @person.first_last, edit_person_path(@person)
+    |
+    = link_to "Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
+    | 
+    = link_to "Groups", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id}}
+    | 
+    = link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}
+        
+  %div{:class => "span-8"}
+    %h2="#{@person.first_last}"
+    = render :partial => "shared/vcard", :locals => {:o => @person}
+  %div{:class => "span-6 last"}
+    %h3="Groups (#{@person.groups.size})"
+    %ol.groups_alphabetical
+      - @person.groups.each do |g|
+        %li=link_to "#{g.name}", group_path(g)
+
+    %h3="Pen Names (#{@person.name_strings.size})"
+    %ol.name_strings_alphabetical
+      - @person.name_strings.each do |ns|
+        %li=link_to "#{ns.name}", name_string_path(ns)
+        
+  %div{:class => "column span-16"}
+    - if @q
+      %h3="#{pluralize(@q.total_hits,"Citation")} (#{@q.total_hits})"
+
+      - if !@filter.empty?
+        %h4
+          ="Remove Filters: "
+          - @filter.each do |f|
+            =remove_filter(@query,@filter,f)
+
+      %div{:class => "column span-24"}
+        %div{:class => "column span-12"}
+          %h4 Citations
+          %ol.results
+            - @docs.each do |doc, score|
+              %li
+                =link_to "#{doc.title_primary}", citation_path(doc)
+                %p 
+                  %strong NameStings:
+                  - doc.name_strings.each do |ns|
+                    =link_to "#{ns.name}", name_string_path(ns)
+                  %br/
+                  %strong Source:
+                  =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
+                  = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
+                  %br/
+                  %strong Year:
+                  ="#{doc.year}"
+
+
+        #facets{:class => "column span-12 last"}
+        - @facets.each do |facet, results|
+          %div{:class => "column span-11"}
+            %h4=facet.capitalize
+            %ul{:class => "#{facet}-facets"}
+              - results.each do |r|
+                %li
+                  =add_filter(@query,@filter,facet,r.name,r.value)
+    %h3
+      Citations (
+      %span#contributorship_total_entries
+        = @contributorships.total_entries
+      )
+      = link_to 'Add', new_citation_path
+
+    = will_paginate @contributorships
+    = render :partial => 'contributorships/contributorships'
