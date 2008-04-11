@@ -14,40 +14,7 @@ class NameStringsController < ApplicationController
       format.xml { render :xml => @name_strings.to_xml }
     end
 
-    before :show do 
-
-      solr = Solr::Connection.new("http://localhost:8982/solr")
-      filter = "name_string_facet:#{@name_string.name}"
-      
-      @q = solr.query("*:*",
-        {
-          :filter_queries => ["#{filter}"], 
-          :facets => {
-            :fields => [:name_string_facet, :year_facet, :publication_facet, :type_facet], 
-            :mincount => 1, 
-            :limit => 10
-          }
-        })
-        
-      @name_string_facets = {
-        :values => @q.data["facet_counts"]["facet_fields"]["name_string_facet"].sort{|a,b| b[1]<=>a[1]},
-        :name => "name_string"
-      }
-      
-      @publication_facets = {
-        :values => @q.data["facet_counts"]["facet_fields"]["publication_facet"].sort{|a,b| b[1]<=>a[1]},
-        :name => "publication"
-      }
-      
-      @type_facets = {
-        :values => @q.data["facet_counts"]["facet_fields"]["type_facet"].sort{|a,b| b[1]<=>a[1]},
-        :name => "type"
-      }
-      
-      @year_facets = {
-        :values => @q.data["facet_counts"]["facet_fields"]["year_facet"].sort{|a,b| b <=> a},
-        :name => "year"
-      }
+    before :show do
       
     end
     
