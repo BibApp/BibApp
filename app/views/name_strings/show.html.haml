@@ -2,29 +2,4 @@
 %p
   ="Name: #{@name_string.name}"
   %span=link_to "Edit", edit_name_string_path(@name_string)
-
-%div{:class => "column span-24"}
-  %div{:class => "column span-12"}
-    %h4="Citations (#{@name_string.citations.size})"
-    %ul.citations
-      - counter = 0
-      - @name_string.citations.each do |c|
-        - # We would grok the citation style from the user preferences?
-        - # @TODO: get rid of the counter
-        = render :partial => "citations/apa/#{c.class.name.to_s.underscore}", :locals => { :c => c }
-        - counter = counter + 1
-        - break if counter > 10
-
-  #facets{:class => "column span-10 append-2 last"}
-    %div{:class => "column span-5"}
-      = render :partial => "shared/facet", :locals => {:values => @name_string_facets[:values], :name => @name_string_facets[:name]}
-          
-    %div{:class => "column span-5 last"}
-      = render :partial => "shared/facet", :locals => {:values => @year_facets[:values], :name => @year_facets[:name]}
-
-  %div{:class => "column span-10 append 2"}
-    = render :partial => "shared/facet", :locals => {:values => @publication_facets[:values], :name => @publication_facets[:name]}
-
-
-    
   
