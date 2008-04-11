@@ -10,6 +10,8 @@ class Publisher < ActiveRecord::Base
 
   has_many :citations, :conditions => ["citation_state_id = 3"]
 
+  before_validation_on_create :set_initial_states
+  
   after_create do |publisher|
     publisher.authority_id = publisher.id
     publisher.save
@@ -44,9 +46,13 @@ class Publisher < ActiveRecord::Base
         citation.save_and_set_for_index_without_callbacks
       end
       
-      #TODO: AsyncObserver
+      #@TODO: AsyncObserver
       Index.batch_index
     end
+  end
+  
+  def set_initial_states
+    self.source_id = 2 # Import Data
   end
   
   def to_param
