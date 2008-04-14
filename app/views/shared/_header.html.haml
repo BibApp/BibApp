@@ -1,8 +1,9 @@
 #main
   #header{:class => "span-24"}
     %div{:class => "span-23 prepend-1"}
-      %div{:class => "span-1"}
-        %img{:src => "#{image_path($LOGO)}", :alt => "#{$LOGO_ALT_TEXT}"}
+      - if $LOGO and $LOGO_ALT_TEXT
+        %div{:class => "span-1"}
+          %img{:src => "#{image_path($LOGO)}", :alt => "#{$LOGO_ALT_TEXT}"}
       %div{:class => "span-9"}
         %h1{:style => "padding:0.5em 0 0 0.5em"}=link_to $APPLICATION_NAME, citations_url
       %div{:class => "span-6 prepend-6 last"}
