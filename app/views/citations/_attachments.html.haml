@@ -1,0 +1,9 @@
+%fieldset
+  %legend Attached File(s)
+  
+  - files.each do |f|
+    %div.file
+      = link_to "#{f.filename}", f.public_filename
+      = "(#{f.filesize}) - "
+      = link_to "remove", attachment_path(f), :method => :delete
+    

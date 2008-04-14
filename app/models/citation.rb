@@ -23,7 +23,7 @@ class Citation < ActiveRecord::Base
   has_many :keywordings,
     :dependent => :delete_all
   
-  has_many :files, :as => :asset
+  has_many :attachments, :as => :asset
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
@@ -52,16 +52,16 @@ class Citation < ActiveRecord::Base
   # List of all currently enabled Citation Types
   def self.types
   	# @TODO: Add each citation subklass to this array
-	# "Journal Article", 
-	# "Conference Proceeding", 
-	# "Book"
-	# more...   	    			  
-	types = [
-		"Add Batch",
-		"Journal Article", 
-		"Conference Proceeding", 
-		"Book (Whole)"		
-	]  
+	  # "Journal Article", 
+	  # "Conference Proceeding", 
+	  # "Book"
+	  # more...   	    			  
+	  types = [
+		  "Add Batch",
+		  "Journal Article", 
+		  "Conference Proceeding", 
+		  "Book (Whole)"		
+	  ]  
   end
   
   

@@ -47,7 +47,8 @@ ActionController::Routing::Routes.draw do |map|
     :pen_names,
     :people,
     :keywords,
-    :keywordings
+    :keywordings,
+    :attachments
     
   map.resources :contributorships, :member => { :verify => :put, :deny => :put }
     
