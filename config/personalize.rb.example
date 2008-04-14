@@ -12,6 +12,8 @@ $DEFAULT_STATE               = "WI"
 $DEFAULT_CITY                = "Madison"
 $DEFUALT_ZIP_CODE            = "53706"
 $UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
+$LOGO = "shield.gif"
+$LOGO_ALT_TEXT = "UW-Madison Shield W"
 
 ####
 # Linking To Publications
