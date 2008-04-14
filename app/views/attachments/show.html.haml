@@ -16,4 +16,6 @@
       %div.field
         %label Content Type:
         %span.field_value=@attachment.content_type
-    
+  %div{:class => "column span-12"}
+    - if @attachment.asset and @attachment.asset.kind_of?(Citation)
+      =link_to "Return to #{@attachment.asset.class.to_s.underscore.humanize}", citation_url(@attachment.asset)
