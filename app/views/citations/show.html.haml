@@ -70,8 +70,9 @@
       - if @citation.abstract?
         %div.field
           %label Abstract:
-          %span.field_value=@citation.abstract        
-  %div{:class => "column span-12"}
-    = render :partial => 'attachments', :locals => { :files => @citation.attachments }
+          %span.field_value=@citation.abstract
+  - if !@citation.attachments.nil? and !@citation.attachments.empty?               
+    %div{:class => "column span-12"}
+      = render :partial => 'attachments', :locals => { :files => @citation.attachments }
  
                                 
