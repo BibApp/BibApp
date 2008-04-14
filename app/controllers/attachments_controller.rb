@@ -31,11 +31,15 @@ class AttachmentsController < ApplicationController
         @attachment.asset = @asset unless @asset.nil?
     end
     
-    if @attachment.save
-      flash[:notice] = 'Attachment was successfully uploaded'
-      redirect_to attachment_url(@attachment)     
-    else
-      render :action => :new
+    respond_to do |format|
+      if @attachment.save
+        flash[:notice] = 'Attachment was successfully uploaded'
+        format.html {redirect_to attachment_url(@attachment)}
+        format.xml  {head :created, :location => attachment_url(@attachment)}    
+      else
+        format.html {render :action => "new"}
+        format.xml  {render :xml => @attachment.errors.to_xml}
+      end
     end
   end
   
@@ -45,10 +49,11 @@ class AttachmentsController < ApplicationController
     @attachment.destroy if @attachment
     
     respond_to do |format|
+      # @TODO Is there a better way to redirect back to appropriate asset type?
       if asset.kind_of?(Citation)
         format.html { redirect_to citation_url(asset) }
       end
-      format.xml {head :ok}
+      format.xml {head :ok }
     end
   end
 
