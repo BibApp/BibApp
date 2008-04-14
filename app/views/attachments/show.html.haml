@@ -1,0 +1,19 @@
+- if flash[:notice]
+  %div#flash= flash[:notice]
+
+%div{:class => "column span-24"}
+  %h3=@attachment.class.name.to_s
+  
+  %div{:class => "column span-12"}
+    %fieldset
+      %div.field
+        %label File Name:
+        %span.field_value
+          =link_to "#{@attachment.filename}", @attachment.public_filename
+      %div.field
+        %label File Size:
+        %span.field_value=@attachment.size
+      %div.field
+        %label Content Type:
+        %span.field_value=@attachment.content_type
+    

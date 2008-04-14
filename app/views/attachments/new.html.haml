@@ -1,0 +1,24 @@
+- if flash[:notice]
+  %div#flash= flash[:notice]
+
+= error_messages_for :attachment
+
+%h3="Upload #{@attachment.class.to_s.underscore.titleize}"
+
+- if @asset.kind_of?(Citation)
+  %div{:class => "column span-12"}
+    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
+    %span.citation= render :partial => "citations/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
+
+%div{:class => "column span-12"}  
+  - form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true } do |form|
+    %p
+      %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
+      = form.file_field :uploaded_data
+      = hidden_field_tag :type, @attachment.class
+      - unless @asset.nil?
+        = hidden_field_tag :asset_id, @asset.id
+        = hidden_field_tag :asset_type, @asset.class
+    %p.submit
+      = submit_tag "Upload"
+      
