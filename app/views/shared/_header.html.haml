@@ -1,24 +1,27 @@
 #main
   #header{:class => "span-24"}
-    %div{:class => "span-12"}
-      %h1=link_to $APPLICATION_NAME, citations_url
-    %div{:class => "span-6 prepend-6 last"}
-      %ul{:class => "global-nav"}
-        %li
-          %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
-        %li
-          %a{:href => "faq"} FAQ
-        %li
-          %a{:href => "login"} Login
-    %div{:class => "column span-24"}
-      %div{:class => "column span-12"}
-        %p
-          ="We're putting "
-          %strong="#{archivable_count} papers"
-          online, for free.
-          %strong="This is true."
-      %div{:class => "span-8 prepend-4 last"}
-        Find an Expert:
-        - form_tag "search", :method => :get, :class => "header-search-form" do
-          = text_field_tag(:q, value = nil, options = {})
-          = submit_tag 'Go'
+    %div{:class => "span-23 prepend-1"}
+      %div{:class => "span-1"}
+        %img{:src => "#{image_path($LOGO)}", :alt => "#{$LOGO_ALT_TEXT}"}
+      %div{:class => "span-9"}
+        %h1{:style => "padding:0.5em 0 0 0.5em"}=link_to $APPLICATION_NAME, citations_url
+      %div{:class => "span-6 prepend-6 last"}
+        %ul{:class => "global-nav"}
+          %li
+            %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
+          %li
+            %a{:href => "faq"} FAQ
+          %li
+            %a{:href => "login"} Login
+      %div{:class => "span-23"}
+        %div{:class => "span-10"}
+          %p#tagline
+            ="We're putting "
+            %strong="#{archivable_count} papers"
+            online, for free.
+            %strong="This is true."
+        %div{:class => "span-9 prepend-4 last"}
+          %strong#search Find an Expert:
+          - form_tag search_url, :method => :get, :class => "header-search-form" do
+            = text_field_tag(:q, value = nil, options = {})
+            = submit_tag 'Go'

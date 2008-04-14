@@ -53,7 +53,9 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put }
   map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }
-
+  
+  map.search 'search', :controller => 'search', :action => 'index'
+  
   map.connect "/",
     :controller => 'citations',
     :action => 'index'
