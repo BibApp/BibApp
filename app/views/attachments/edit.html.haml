@@ -5,9 +5,9 @@
 
 %h3="Upload #{@attachment.class.to_s.underscore.titleize}"
 
-- if @asset.kind_of?(Person)
+- if @attachment.asset.kind_of?(Person)
   %div{:class => "column span-12"}
-    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
+    %h4="Attaching to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}"
 
 %div{:class => "column span-12"}
   = link_to image_tag(@attachment.public_filename), @attachment.public_filename
@@ -18,9 +18,6 @@
       %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
       = form.file_field :uploaded_data
       = hidden_field_tag :type, @attachment.class
-      - unless @asset.nil?
-        = hidden_field_tag :asset_id, @asset.id
-        = hidden_field_tag :asset_type, @asset.class
     %p.submit
       = submit_tag :save
       
