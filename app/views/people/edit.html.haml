@@ -1,2 +1,6 @@
-%h3 Edit this Person
-= render :partial => 'form'
+%div{:class => "span-23"}
+  %p.person-edit-actions
+    = render :partial => "edit_actions", :locals => {@person => @person}
+    
+  %h3 Edit this Person
+  = render :partial => 'form'

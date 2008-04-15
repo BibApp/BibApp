@@ -1,12 +1,67 @@
-%h2= @group.name
+/ Group - View - Show 
+/ Main
+%div{:class => "column span-24"}
 
-%h3 People
-%ol.people-alphabetical
-  - @group.people.each do |p|
-    %li=link_to "#{p.first_last}", person_path(p)
+  / Left - Middle #1
+  %div{:class => "span-17"}
     
-%h3="Citations (#{@citations.total_entries})"
-= will_paginate @citations
-%ol.citations
-  - @citations.each do |citation|
-    = render :partial => "shared/citation", :locals => {:citation => citation}
+    / Left
+    %div{:class => "span-5 prepend-1"}
+      %h3 People
+      %ol.people-alphabetical
+        - @group.people.each do |p|
+          %li=link_to "#{p.first_last}", person_path(p)
+    
+    / Middle
+    %div{:class => "span-9 prepend-1 append-1 last"}
+      %h2= @group.name
+      %ul#stats
+        %li="People (#{@group.people.size})"
+        %li="Citations (#{@q.total_hits})"
+        %li="Archived (todo)"
+    
+    / Left - Middle #2  
+    %div{:class => "span-17 prepend-1"}
+
+      / Left - Publications
+      %div{:class => "span-8", :style => "padding-top:2em"}
+        %h3.heading=link_to "Publications", publications_url
+        %ol.publications
+          -@facets[:publications].each do |p|
+            %li
+              =link_to "#{p.name}", publication_path(Publication.find_by_name(p.name).to_param)
+              = "(#{p.value})"
+
+      / Middle - Publishers
+      %div{:class => "span-8", :style => "padding-top:2em"}
+        %h3.heading=link_to "Publishers", publishers_url
+        %ol.publishers
+          -@facets[:publishers].each do |p|
+            %li
+              =link_to "#{p.name}", publisher_path(Publisher.find_by_name(p.name).to_param)
+              = "(#{p.value})"
+
+  / Right - Citations
+  %div{:class => "span-6 last"}    
+    %h3="Citations (#{@q.total_hits})"
+    - if !@filter.empty?
+      %h4
+        ="Remove Filters: "
+      - @filter.each do |f|
+        =remove_filter(@query,@filter,f)
+    %ol.citations
+      - @docs.each do |doc, score|
+        %li
+          =link_to "#{doc.title_primary}", citation_path(doc)
+          %p 
+            %strong NameStings:
+            - doc.name_strings.each do |ns|
+              =link_to "#{ns.name}", name_string_path(ns)
+            %br/
+            %strong Source:
+            =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
+            = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
+            %br/
+            %strong Year:
+            ="#{doc.year}"
+            = #render :partial => "shared/coins", :locals => {:citation => doc}

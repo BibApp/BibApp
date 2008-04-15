@@ -33,6 +33,12 @@ class PublishersController < ApplicationController
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
+      @query = @current_object.solr_id
+      @filter = params[:fq] || ""
+      @filter = @filter.split("+>+").each{|f| f.strip!}
+      @q,@docs,@facets = Index.fetch(@query, @filter)
+      
+      @title = @current_object.name
     end
 
     before :new, :edit do

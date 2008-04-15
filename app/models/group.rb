@@ -12,5 +12,9 @@ class Group < ActiveRecord::Base
     param_name = name.gsub(" ", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
-  end  
+  end 
+  
+  def solr_id
+    "Group-#{id}"
+  end
 end

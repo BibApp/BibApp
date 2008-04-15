@@ -1,0 +1,21 @@
+/*
+2 * Choose two colors for your institution:
+3 * 1. A border color: #CC9933 (UW-Madison Gold)
+4 * 2. A heading color: #990000 (UW-Madison Red)
+5
+6 * Add your colors below where necessary.
+7*/
+8
+9.container {
+10 border-left:1px solid #CC9933; /* Gold */
+11 border-right:1px solid #CC9933; /* Gold */
+12}
+13
+14#header {
+15 color: #990000; /* Red */
+16 border-bottom: 3px double #CC9933; /* Gold */
+17}
+18
+19#header a{color:#990000;} /* Red */
+20#filter {color:#CC9933;} /* Gold */
+21#footer {border-top: 3px double #CC9933;} /* Gold */

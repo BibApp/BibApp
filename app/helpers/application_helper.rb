@@ -29,6 +29,12 @@ module ApplicationHelper
     @current_objects = controller.singularize.capitalize.constantize.find(:all, :conditions => ["name like ?", "#{page}%"])
   end
   
+  def object_by_facet_id(name)
+    klass,id = name.split("-")
+    object = klass.constantize.find(id)
+    object
+  end
+  
   def link_to_findit(citation)
   	
   	#start w/default suffix to "Find It!"
@@ -53,6 +59,68 @@ module ApplicationHelper
 	suffix = (citation.publication.nil? || citation.publication.issn_isbn.nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation.publication.issn_isbn)	
 		
     link_to "Find it", "#{$CITATION_BASE_URL}?#{suffix}"
+  end
+  
+  def coins(citation)
+    coins = "ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.btitle=The+Wind+in+the+Willows&amp;rft.au=Grahame,+Kenneth"
+=begin
+    # Journal - http://ocoins.info/cobg.html
+    rft.atitle
+    rft.title 
+    rft.jtitle 
+    rft.stitle 
+    rft.date 
+    rft.volume 
+    rft.issue 
+    rft.spage 
+    rft.epage 
+    rft.pages 
+    rft.artnum 
+    rft.issn 
+    rft.eissn 
+    rft.aulast 
+    rft.aufirst 
+    rft.auinit 
+    rft.auinit1 
+    rft.auinitm 
+    rft.ausuffix 
+    rft.au 
+    rft.aucorp 
+    rft.isbn 
+    rft.coden 
+    rft.sici 
+    rft.genre 
+    rft.chron 
+    rft.ssn 
+    rft.quarter 
+    rft.part 
+    
+    #Book - http://ocoins.info/cobgbook.html
+    rft.btitle
+    rft.isbn 
+    rft.aulast 
+    rft.aufirst 
+    rft.auinit 
+    rft.auinit1 
+    rft.auinitm 
+    rft.ausuffix 
+    rft.au 
+    rft.aucorp 
+    rft.atitle 
+    rft.title 
+    rft.place 
+    rft.pub 
+    rft.date 
+    rft.edition 
+    rft.tpages 
+    rft.series 
+    rft.spage 
+    rft.epage 
+    rft.pages 
+    rft.issn 
+    bici 
+    rft.genre 
+=end
   end
   
   def archivable_count
