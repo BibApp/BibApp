@@ -24,9 +24,13 @@ module ApplicationHelper
     end
     check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, :onclick => js)
   end
-  
-  def alpha_paginate(controller, page)
-    @current_objects = controller.singularize.capitalize.constantize.find(:all, :conditions => ["name like ?", "#{page}%"])
+
+  def letter_link_for(letters, letter, current)
+    if current == true
+      content_tag(:li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
+    else
+      content_tag :li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none'))
+    end
   end
   
   def object_by_facet_id(name)
