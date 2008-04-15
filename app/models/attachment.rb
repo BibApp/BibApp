@@ -15,7 +15,7 @@ class Attachment < ActiveRecord::Base
   # List of all currently enabled Attachment types
   def self.types               
     types = [
-      "Content File",
+      "Content File",  #Default type of attachment
       "Image"
     ]  
   end
