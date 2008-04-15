@@ -9,13 +9,15 @@ class PublishersController < ApplicationController
         }
       ]
 
-  before :index do
+    before :index do
+      @a_to_z = Publisher.letters.collect { |d| d.letter }
+      
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
       else
-        page = params[:page] || "a"
-        @current_objects = Publisher.find(:all, :conditions => ["name like ?", "#{page}%"])
+        @page = params[:page] || @a_to_z[0]
+        @current_objects = Publisher.find(:all, :conditions => ["name like ?", "#{@page}%"])
       end
     end
 
@@ -48,11 +50,13 @@ class PublishersController < ApplicationController
   end
   
   def authorities
+    @a_to_z = Publisher.letters.collect { |d| d.letter }
+    
     if params[:q]
       query = params[:q]
       @current_objects = current_objects
     else
-      @page = params[:page] || "a"
+      @page = params[:page] || @a_to_z[0]
       @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"], :order => "name")
     end    
   end

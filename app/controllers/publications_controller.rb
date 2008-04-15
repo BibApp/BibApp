@@ -12,19 +12,16 @@ class PublicationsController < ApplicationController
       ]
 
     before :index do
+      @a_to_z = Publication.letters.collect { |d| d.letter }
+      
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
       else
-        @current_objects = Publication.paginate(
-          :all,
-          :conditions => ["id = authority_id"],
-          :order => "name",
-          :page => params[:page] || 1,
-          :per_page => 30
-        )
+        @page = params[:page] || @a_to_z[0]
+        @current_objects = Publication.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
       end
-
+      
       @title = "Publications"
     end
 
@@ -51,11 +48,13 @@ class PublicationsController < ApplicationController
   end
 
   def authorities
+    @a_to_z = Publication.letters.collect { |d| d.letter }
+    
     if params[:q]
       query = params[:q]
       @current_objects = current_objects
     else
-      @page = params[:page] || "a"
+      @page = params[:page] || @a_to_z[0]
       @current_objects = Publication.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
     end    
   end

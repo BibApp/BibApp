@@ -1,7 +1,9 @@
-%div{:class => "column span-24"}
-  %div{:class => "column span-16"}
-    %h2="Publications (#{@current_objects.total_entries}) - #{link_to "Add", new_publication_path}"
-    = will_paginate @current_objects
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %h2="Publications (#{@current_objects.size}) - #{link_to "Add", new_publication_path}"
+    
+    = render :partial => "shared/alpha_pagination"
+
     %ol.publications
       -@current_objects.each do |publication|
         %li.publication

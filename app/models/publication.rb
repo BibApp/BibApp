@@ -60,6 +60,15 @@ class Publication < ActiveRecord::Base
   end
   
   class << self
+
+    def letters
+      find(
+        :all,
+        :select => 'SUBSTR(name, 1, 1) AS letter',
+        :group  => 'SUBSTR(name, 1, 1)',
+        :order  => 'name'
+      )
+    end
   
     def update_multiple(pub_ids, auth_id)
       pub_ids.split(",").each do |pub|
