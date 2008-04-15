@@ -13,7 +13,20 @@ class AttachmentsController < ApplicationController
       
       if params[:asset_type] and params[:asset_id]
         #initialize asset this attachment is being added to
-        @asset = asset_find(params[:asset_type], params[:asset_id])
+        @asset = object_find(params[:asset_type], params[:asset_id])
+      end
+    end
+    
+    #initialize variables used by 'edit.html.haml'
+    before :edit do  
+      #if 'type' unspecified, default to first type in list
+      params[:type] ||= Attachment.types[0]
+      
+      @attachment = object_find(params[:type], params[:id])
+      
+      if params[:asset_type] and params[:asset_id]
+        #initialize asset this attachment is being added to
+        @asset = object_find(params[:asset_type], params[:asset_id])
       end
     end
    
@@ -26,10 +39,34 @@ class AttachmentsController < ApplicationController
     
     if params[:asset_type] and params[:asset_id]
         #initialize asset this attachment is being added to
-        @asset = asset_find(params[:asset_type], params[:asset_id])
+        @asset = object_find(params[:asset_type], params[:asset_id])
         #add attachment to asset
         @attachment.asset = @asset unless @asset.nil?
     end
+    
+    respond_to do |format|
+      if @attachment.save
+        flash[:notice] = 'Attachment was successfully uploaded'
+        format.html {redirect_to attachment_url(@attachment)}
+        format.xml  {head :created, :location => attachment_url(@attachment)}    
+      else
+        format.html {render :action => "new"}
+        format.xml  {render :xml => @attachment.errors.to_xml}
+      end
+    end
+  end
+  
+  def update
+    #load attachment based on form info
+    @attachment = Attachment.find(params[:id])
+    @attachment.attributes=params[:attachment]
+    
+    #if params[:asset_type] and params[:asset_id]
+        #initialize asset this attachment is being added to
+    #    @asset = object_find(params[:asset_type], params[:asset_id])
+        #add attachment to asset
+    #    @attachment.asset = @asset unless @asset.nil?
+    #end
     
     respond_to do |format|
       if @attachment.save
@@ -51,6 +88,7 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       # @TODO Is there a better way to redirect back to appropriate asset type?
       if asset.kind_of?(Citation)
+        flash[:notice] = 'Attachment was successfully deleted'
         format.html { redirect_to citation_url(asset) }
       end
       format.xml {head :ok }
@@ -73,13 +111,13 @@ class AttachmentsController < ApplicationController
       attachment = klass.new(attachment)
     end
   
-    # Initializes a new asset, based on information provided
-    def asset_find(asset_type, asset_id)
-      asset_type.sub!(" ", "") #remove spaces
-      asset_type.gsub!(/[()]/, "") #remove any parens
-      asset_class = asset_type.constantize #change into a class
+    # Initializes a new object, based on information provided
+    def object_find(obj_type, obj_id)
+      obj_type.sub!(" ", "") #remove spaces
+      obj_type.gsub!(/[()]/, "") #remove any parens
+      obj_class = obj_type.constantize #change into a class
       
-      asset = asset_class.find(asset_id)
+      obj = obj_class.find(obj_id)
     end
   
 end  

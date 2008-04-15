@@ -95,4 +95,11 @@ class Person < ActiveRecord::Base
     }
     self.update_attribute(:scoring_hash, scoring_hash)
   end
+  
+  #A person's image file
+  def image_url
+    if !self.image.nil?
+      self.image.public_filename
+    end
+  end
 end
