@@ -10,43 +10,12 @@
         %li
           %em=link_to suggestion, {:controller => "search", :q => suggestion }
       
-  - if !@filter.empty?
-    %h4
-      ="Remove Filters: "
-      - @filter.each do |f|
-        =remove_filter(@query,@filter,f)
+  / Citations
+  = render :partial => "shared/citation", :locals => {:q => @q, :docs => @docs, :query => @query, :filter => @filter, :facets => @facets}
 
-  %div{:class => "column span-24"}
-    %div{:class => "column span-12"}
-      %h4 Citations
-      %ol.results
-        - @docs.each do |doc, score|
-          %li
-            =link_to "#{doc.title_primary}", citation_path(doc)
-            %p 
-              %strong NameStings:
-              - doc.name_strings.each do |ns|
-                =link_to "#{ns.name}", name_string_path(ns)
-              %br/
-              %strong Source:
-              =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
-              = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-              %br/
-              %strong Year:
-              ="#{doc.year}"
-              %br/
-              %strong Rank:
-              ="#{score}"
-
-    %div{:class => "span-12 last"}
-      #facets{:class => "column span-12 last"}
-      - @facets.each do |facet, results|
-        %div{:class => "column span-11"}
-          %h4=facet.capitalize
-          %ul{:class => "#{facet}-facets"}
-            - results.each do |r|
-              %li
-                =add_filter(@query,@filter,facet,r.name,r.value)
-
+  / Facets
+  %h3#filter Filter
+  %div#facets{:class => "span-9 prepend-1 last"}
+    = render :partial => "shared/facets", :locals => {:q => @q, :docs => @docs, :query => @query, :filter => @filter, :facets => @facets}
 - else
   %p Search form here.

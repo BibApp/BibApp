@@ -12,20 +12,14 @@ class GroupsController < ApplicationController
     end
     
     before :show do 
-      # @TODO map group.citations should be railsy
-      @citations = Citation.paginate(
-        :all,
-        :joins => "
-          join contributorships on citations.id = contributorships.citation_id
-          join people on contributorships.person_id = people.id
-          join memberships on people.id = memberships.person_id
-          join groups on memberships.group_id = groups.id
-          ",
-        :conditions => ["groups.id = ? and contributorships.contributorship_state_id = ?", params[:id], 2],
-        :order => "citations.year DESC, citations.title_primary",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
+      @query = @current_object.solr_id
+      @filter = params[:fq] || ""
+      @filter = @filter.split("+>+").each{|f| f.strip!}
+      @q,@docs,@facets = Index.fetch(@query, @filter)
+      
+      logger.debug("\n\n Facets: #{@facets.inspect}\n\n")
+      
+      @title = @current_object.name
     end
   end
 end

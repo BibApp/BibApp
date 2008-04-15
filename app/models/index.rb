@@ -12,39 +12,58 @@ class Index
   # q = solr.query("comp*", {:filter_queries => ["type_s:JournalArticle"]})
   
   # VIEW FACETS
-  # facets = q.data["facet_counts"]["facet_fields"]["author_facet"]
-  # @author_facets = q.data["facet_counts"]["facet_fields"]["author_facet"].sort{|a,b| b[1]<=>a[1]}
+  # @author_facets = @q.field_facets("name_string_facet")
 
   # DELETE INDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
   ## citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
-  ## citations.each{|c| c.remove_from_solr} 
+  ## citations.each{|c| Index.remove_from_solr(c)} 
 
   # REINDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
   ## citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
-  ## citations.each{|c| c.update_solr}
+  ## citations.each{|c| Index.update_solr(c)}
   
 
   SOLR_MAPPING = {
-    # Stored Fields
+    # Citation
     :pk_i => :id,
     :id => Proc.new{|record| record.solr_id},
     :title => :title_primary,
     :abstract => :abstract,
-    
-    # Dynamic Fields
+    :type_facet => Proc.new{|record| record[:type]},
+    :year_facet => Proc.new{|record| record.year},
     :title_t => :title_primary,
     :abstract_t => :abstract,
     :title_secondary_t => :title_secondary,
+    :citation_id_facet => Proc.new{|record| record.solr_id},
+
+    # SpellCheck
+    :word => :abstract,
+    
+    # NameString
     :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
+    :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
+    
+    # Person
     :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
+    
+    # Group
+    :group_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
+    :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
+    
+    # Publication
     :publication_facet => Proc.new{|record| record.publication.authority.name},
+    :publication_id_facet => Proc.new{|record| record.publication.authority.solr_id},
+    
+    # Publisher
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
-    :type_facet => Proc.new{|record| record[:type]},
-    :year_facet => Proc.new{|record| record.year},
-    :word => :abstract
+    :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
+    
+    # Keyword
+    :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
+    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
   }
   
   class << self
@@ -71,6 +90,88 @@ class Index
     def remove_from_solr(record)
       SOLRCONN.delete(record.solr_id)
       SOLRCONN.commit
+    end
+
+    def fetch (query_string, filter)
+      if !filter.empty?
+        q = SOLRCONN.query(
+          query_string, {
+            :filter_queries => filter, 
+            :facets => {
+              :fields => [
+                :group_facet,
+                :group_id_facet,
+                :keyword_facet,
+                :keyword_id_facet,
+                :name_string_facet,
+                :name_string_id_facet,
+                :person_facet,
+                :person_id_facet, 
+                :publication_facet,
+                :publication_id_facet,
+                :publisher_facet,
+                :publisher_id_facet,
+                :type_facet,
+                :year_facet 
+              ], 
+              :mincount => 1, 
+              :limit => 10
+            }
+          })
+      else
+        q = SOLRCONN.query(
+          query_string, {
+            :facets => {
+              :fields => [
+                :group_facet,
+                :group_id_facet,
+                :keyword_facet,
+                :keyword_id_facet,
+                :name_string_facet,
+                :name_string_id_facet,
+                :person_facet,
+                :person_id_facet, 
+                :publication_facet,
+                :publication_id_facet,
+                :publisher_facet,
+                :publisher_id_facet,
+                :type_facet,
+                {:year_facet => {:sort => true}}
+              ],
+              :mincount => 1,
+              :limit => 10
+            }
+          })
+      end
+      
+      # Processing returned docs:
+      # 1. Extract the IDs from Solr response
+      # 2. Find Citation objects via AR
+      # 2. Load objects and Solr score for view
+      
+      docs = Array.new
+      q.data["response"]["docs"].each do |doc|
+        citation = Citation.find(doc["pk_i"])
+        docs << [citation, doc['score']]
+      end
+      
+      facets = {
+        :people         => q.field_facets("person_facet"),
+        :person_id      => q.field_facets("person_id_facet"),
+        :groups         => q.field_facets("group_facet"),
+        :group_id       => q.field_facets("group_id_facet"),
+        :names          => q.field_facets("name_string_facet"),
+        :name_id        => q.field_facets("name_string_id_facet"),
+        :publications   => q.field_facets("publication_facet"),
+        :publication_id => q.field_facets("publication_id_facet"),
+        :publishers     => q.field_facets("publisher_facet"),
+        :publisher_id   => q.field_facets("publisher_id_facet"),
+        :keywords       => q.field_facets("keyword_facet"),
+        :keyword_id     => q.field_facets("keyword_id_facet"),
+        :types          => q.field_facets("type_facet"),
+        :years          => q.field_facets("year_facet")
+      }
+      return q,docs,facets
     end
     
     def get_spelling_suggestions(query)

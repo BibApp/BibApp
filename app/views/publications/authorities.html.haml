@@ -12,6 +12,7 @@
           %td Select
           %td ISSN / ISBN
           %td Title
+          %td Publisher
           %td= render :partial => 'authority_actions'
       %tbody
         -@current_objects.each do |publication|
@@ -19,7 +20,8 @@
             %td
               %a.add select
             %td=publication.issn_isbn
-            %td=link_to "#{publication.name}", edit_publication_path(publication)
+            %td=link_to "#{publication.authority.name}", edit_publication_path(publication)
+            %td=link_to "#{publication.publisher.authority.name}", publisher_path(publication.publisher)
             %td
               %a.update make authority
             

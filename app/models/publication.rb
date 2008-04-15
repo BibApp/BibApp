@@ -42,6 +42,10 @@ class Publication < ActiveRecord::Base
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
   end
+
+  def solr_id
+    "Publication-#{id}"
+  end
   
   def form_select
     "#{name} - #{issn_isbn}"

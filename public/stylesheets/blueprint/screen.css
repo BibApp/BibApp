@@ -21,7 +21,7 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 /* typography.css */
-body {font-size:75%;color:#222;background:#fff;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;}
+body {font-size:75%;color:#222;background:#D4D9DD;font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;}
 h1, h2, h3, h4, h5, h6 {font-weight:normal;color:#111;}
 h1 {font-size:3em;line-height:1;margin-bottom:0.5em;}
 h2 {font-size:2em;margin-bottom:0.75em;}
@@ -72,9 +72,9 @@ caption {background:#eee;}
 .bottom {margin-bottom:0;padding-bottom:0;}
 
 /* grid.css */
-.container {width:950px;margin:0 auto;}
+.container {width:950px;margin:0em auto;padding:1em 0em;}
 .showgrid {background:url(src/grid.png);}
-body {margin:1.5em 0;}
+body {margin:0 1.5em;}
 div.span-1, div.span-2, div.span-3, div.span-4, div.span-5, div.span-6, div.span-7, div.span-8, div.span-9, div.span-10, div.span-11, div.span-12, div.span-13, div.span-14, div.span-15, div.span-16, div.span-17, div.span-18, div.span-19, div.span-20, div.span-21, div.span-22, div.span-23, div.span-24 {float:left;margin-right:10px;}
 div.last {margin-right:0;}
 .span-1 {width:30px;}
@@ -226,11 +226,32 @@ textarea {width:390px;height:250px;padding:5px;}
 .success a {color:#264409;}
 
 /* BibApp */
-#header {border-bottom: 3px double #CCC; margin-bottom:2em;}
-#footer {border-top: 3px double #CCC; margin-top:2em; padding-top:2em;}
+
+h2 {border-bottom: 1px dotted #000;}
+h3 {color:#666666;}
+h4 {color:#666666;}
+
+.container {
+	background-color:#FFF;
+}
+
+#header {
+	margin-bottom:2em; 
+	padding:0em;
+}
+
+#facets {background-color:#F1F5FA; padding:1.5em;}
+#footer {margin-top:2em; padding:2em 0em 1em 0em;}
 
 #header a {
 	text-decoration:none;
+}
+
+#tagline {color:#000;}
+
+.heading a {
+	text-decoration:none;
+	color:#000;
 }
 
 .header-search-form {display:inline;}
@@ -239,9 +260,19 @@ ul.actions li {
 	display:inline;
 }
 
+ol.citations {
+	margin:0;
+	padding:0;
+}
+ul.global-nav {
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+
 ul.global-nav li {
 	display:inline;
-	padding-right: 1em;
+	padding: 0.5em;
 }
 
 .formError{
@@ -321,10 +352,6 @@ div.auto_complete ul strong.highlight {
   margin: 2px;
   border: 1px solid #eee;
   color: #ddd;
-}
-
-#citations {
-	padding-top:1em;
 }
 
 tr.selected {

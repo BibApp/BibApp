@@ -1,63 +1,27 @@
+/ === People === Show ===
+/ Main
 %div{:class => "span-24"}
-  %p.edit_person_actions
-    %strong
-      Edit: 
-    = link_to @person.first_last, edit_person_path(@person)
-    |
-    = link_to "Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
-    | 
-    = link_to "Groups", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id}}
-    | 
-    = link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}
-        
-  %div{:class => "span-8"}
-    %h2="#{@person.first_last}"
+  %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
+    
+    %h2
+      ="#{@person.first_last}"
+      %span=link_to "Edit", edit_person_path(@person)
     = render :partial => "shared/vcard", :locals => {:o => @person}
-  %div{:class => "span-6 last"}
-    %h3="Groups (#{@person.groups.size})"
-    %ol.groups_alphabetical
-      - @person.groups.each do |g|
-        %li=link_to "#{g.name}", group_path(g)
 
-    %h3="Pen Names (#{@person.name_strings.size})"
-    %ol.name_strings_alphabetical
-      - @person.name_strings.each do |ns|
-        %li=link_to "#{ns.name}", name_string_path(ns)
-  %div{:class => "span-24"}
-    %br/
-  %div{:class => "span-24"}
-    - if @q
-      %h3{:class => "span-11"}
-        ="Citations (#{@q.total_hits})"
+    %div{:class => "span-5"}
+      %h3 Groups
+      %ul
+        - @person.groups.each do |g|
+          %li=link_to g.name, group_path(g)
+          
+    %div{:class => "span-9 last"}
+      %h3 Research Focus
+      %p=@research_focus
 
-      - if !@filter.empty?
-        %h4
-          ="Remove Filters: "
-          - @filter.each do |f|
-            =remove_filter(@query,@filter,f)
-      %div{:class => "span-12 last"}
-        %ol.results
-          - @docs.each do |doc, score|
-            %li
-              =link_to "#{doc.title_primary}", citation_path(doc)
-              %p 
-                %strong NameStings:
-                - doc.name_strings.each do |ns|
-                  =link_to "#{ns.name}", name_string_path(ns)
-                %br/
-                %strong Source:
-                =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
-                = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-                %br/
-                %strong Year:
-                ="#{doc.year}"
+  / Citations
+  = render :partial => "shared/citation"
 
-      %div{:class => "span-12 last"}
-        #facets{:class => "span-12"}
-        - @facets.each do |facet, results|
-          %div{:class => "column span-11"}
-            %h4=facet.capitalize
-            %ul{:class => "#{facet}-facets"}
-              - results.each do |r|
-                %li
-                  =add_filter(@query,@filter,facet,r.name,r.value)
+  / Facets
+  %h3#filter Filter
+  %div#facets{:class => "span-9 prepend-1 last"}
+    = render :partial => "shared/facets"

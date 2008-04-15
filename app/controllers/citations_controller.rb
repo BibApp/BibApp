@@ -18,57 +18,10 @@ class CitationsController < ApplicationController
       ]    
     
       before :index do
-
-        @citations = Citation.paginate(
-          :all, 
-          :conditions => ["citation_state_id = ?", 3],
-          :order => "year desc, title_primary",
-          :page => params[:page] || 1,
-          :per_page => 5
-        )
-
-        @groups = Citation.find_by_sql(
-          "SELECT g.*, cit.total
-    	   		FROM groups g
-    			JOIN (SELECT groups.id as group_id, count(distinct citations.id) as total
-    					FROM citations
-    					join contributorships on citations.id = contributorships.citation_id
-    					join people on contributorships.person_id = people.id
-    					join memberships on people.id = memberships.person_id
-    					join groups on memberships.group_id = groups.id
-    					where contributorships.contributorship_state_id = 2
-    					group by groups.id) as cit
-    			ON g.id=cit.group_id
-    			ORDER BY cit.total DESC
-    			LIMIT 10"	
-        )
-
-        @people = Citation.find_by_sql(
-          "SELECT p.*, cit.total
-    	   		FROM people p
-    			JOIN (SELECT people.id as people_id, count(distinct citations.id) as total
-    					FROM citations
-    					join contributorships on citations.id = contributorships.citation_id
-    					join people on contributorships.person_id = people.id
-    					where contributorships.contributorship_state_id = 2
-    					group by people.id) as cit
-    			ON p.id=cit.people_id
-    			ORDER BY cit.total DESC
-    			LIMIT 10"
-        )
-
-        @publications = Citation.find_by_sql(
-    	  "SELECT pub.*, cit.total
-    	   		FROM publications pub
-    			JOIN (SELECT publications.id as publication_id, count(distinct citations.id) as total
-    					FROM citations
-    					join publications on citations.publication_id = publications.id
-    					where citations.citation_state_id = 3
-    					group by publications.id) as cit
-    			ON pub.id=cit.publication_id
-    			ORDER BY cit.total DESC
-    			LIMIT 10"
-        )
+        @query = "*:*"  
+        @filter = params[:fq] || ""
+        @filter = @filter.split("+>+").each{|f| f.strip!}
+        @q,@docs,@facets = Index.fetch(@query, @filter)
       end
 	
     #initialize variables used by 'new.html.haml'

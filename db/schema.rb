@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 35) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -20,9 +20,10 @@ ActiveRecord::Schema.define(:version => 31) do
     t.integer  "height"
     t.integer  "width"
     t.integer  "asset_id"
-    t.integer  "asset_type"
+    t.string   "asset_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "citation_archive_states", :force => true do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(:version => 31) do
     t.datetime "updated_at"
     t.text     "original_data"
     t.integer  "batch_index",               :default => 0
+    t.text     "scoring_hash"
   end
 
   add_index "citations", ["title_dupe_key"], :name => "title_dupe"
@@ -193,6 +195,7 @@ ActiveRecord::Schema.define(:version => 31) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "scoring_hash"
   end
 
   create_table "publications", :force => true do |t|

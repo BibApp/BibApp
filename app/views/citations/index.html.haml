@@ -1,31 +1,105 @@
 %div{:class => "column span-24"}
-  %div{:class => "column span-12"}
-    %h2
-      ="Citations (#{@citations.total_entries}) - #{link_to "Add", new_citation_path}"
-    = will_paginate @citations
-    %ul.citations
-      - @citations.each do |citation|
-        = render :partial => "shared/citation", :locals => { :citation => citation }
-  
-  %div{:class => "column span-8 prepend-2 last"}
-    %h3=link_to "Groups", groups_url
-    %ol.groups
-      -@groups.each do |group|
-        %li
-          =link_to group.name, group_path(group)
-          = "(#{group.total})"
 
-    %h3=link_to "People", people_url
-    %ol.people
-      -@people.each do |person|
+  %div{:class => "span-17"}
+    %div{:class => "span-5 prepend-1"}
+      / Groups
+      %div{:class => "span-5"}
+        %h4.heading Groups
+        %ol.groups
+          -@facets[:group_id].each do |g|
+            - group = object_by_facet_id(g.name)
+            %li
+              =link_to group.name, group_path(group)
+              ="(#{g.value})"
+
+      / People
+      %div{:class => "span-5 last"}
+        %h4.heading People
+        %ol.people
+          -@facets[:person_id].each do |p|
+            - person = object_by_facet_id(p.name)
+            %li
+              =link_to person.name, person_path(person)
+              ="(#{p.value})"
+
+    %div{:class => "span-9 prepend-1 append-1 last"}
+      / Features! Because the BibApp loves people
+      / Example text
+      %h2 Example!
+      %h3{:style => "color:#990000"} Adaptive liquid microlenses activated by stimuli-responsive hydrogels
+      %hr{:style => "border-bottom:1px dotted #CCC;"}
+      %div{:style => "float:right;padding:0.5em;margin:0.5em;"}
+        %div{:style => "text-align:center"}
+          %img{:src => "images/jiang_hongrui.gif", :alt => "Hongrui Jiang", :style => "float:right;", :height => "100px", :border => "1px solid #000"}
+          %h5 Hongrui Jiang
+      %p When Hongrui Jiang looked into a fly's eye, he saw a way to make a tiny lens so "smart" that it can adapt its focal length from minus infinity to plus infinity — without external control.
+      %p 
+        Incorporating hydrogels that respond to physical, chemical or biological stimuli and actuate lens function, these liquid microlenses could advance lab-on-a-chip technologies, optical imaging, medical diagnostics and bio-optical microfluidic systems.
+        %a{:href => "http://www.engr.wisc.edu/news/headlines/2006/Aug02.html"} more
+
+      %hr/
+    
+      %div{:class => "span-10", :style => "margin-left:1.5em"}
+        / University communications articles
+
+        / One
+        %div{:class => "span-2", :style => "text-align:center"}
+          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px"}
+          %h5 One
+
+        / Two
+        %div{:class => "span-2", :style => "text-align:center"}
+          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px"}
+          %h5 Two
+
+        / Three
+        %div{:class => "span-2", :style => "text-align:center"}
+          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px"}
+          %h5 Three
+
+        / Four
+        %div{:class => "span-2", :style => "text-align:center"}
+          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px"}
+          %h5 Four
+
+    %div{:class => "span-17 prepend-1"}
+      / Publications
+      %div{:class => "span-7 last"}
+        %h4.heading=link_to "Publications", publications_url
+        %ol.publications
+          -@facets[:publication_id].each do |p|
+            - publication = object_by_facet_id(p.name)
+            %li
+              =link_to publication.name, publication_path(publication)
+              ="(#{p.value})"
+
+      / Publishers
+      %div{:class => "span-7 last"}
+        %h4.heading=link_to "Publishers", publications_url
+        %ol.publishers
+          -@facets[:publisher_id].each do |p|
+            - publisher = object_by_facet_id(p.name)
+            %li
+              =link_to publisher.name, publisher_path(publisher)
+              ="(#{p.value})"
+  
+  / Citations        
+  %div{:class => "span-6 last"}
+    %h3.heading Recent Citations
+    
+    %ol.citations
+      - @docs.each do |doc, score|
         %li
-          =link_to "#{person.last_name}, #{person.first_name}", person_path(person)
-          = "(#{person.total})"
-    %hr/      
-    %h3=link_to "Publications", publications_url
-    %ol.publications
-      -@publications.each do |publication|
-        %li
-          =link_to publication.name, publication_path(publication)
-          = "(#{publication.total})"
-      
+          =link_to "#{doc.title_primary}", citation_path(doc)
+          %p 
+            %strong NameStings:
+            - doc.name_strings.each do |ns|
+              =link_to "#{ns.name}", name_string_path(ns)
+            %br/
+            %strong Source:
+            =link_to "#{doc.publication.authority.name}", publisher_path(doc.publication.authority.to_param)
+            = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
+            %br/
+            %strong Year:
+            ="#{doc.year}"
+            = #render :partial => "shared/coins", :locals => {:citation => doc}

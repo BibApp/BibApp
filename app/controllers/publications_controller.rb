@@ -28,20 +28,19 @@ class PublicationsController < ApplicationController
       @title = "Publications"
     end
 
-    before :show do      
-      @citations = Citation.paginate(
-        :all,
-        :conditions => ["publication_id = ? and citation_state_id = ?", current_object.id, 3],
-        :order => "year DESC, title_primary",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
+    before :show do
 
       @authority_for = Publication.find(
         :all,
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
+      
+      @query = @current_object.solr_id
+      @filter = params[:fq] || ""
+      @filter = @filter.split("+>+").each{|f| f.strip!}
+      @q,@docs,@facets = Index.fetch(@query, @filter)
+      
       @title = @current_object.name
     end
 

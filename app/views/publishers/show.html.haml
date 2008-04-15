@@ -1,24 +1,28 @@
-%p=link_to "Return to Publisher List", publishers_url
-%h2
-  = @publisher.name
-  %span=link_to "Edit", edit_publisher_path(@publisher)
-
-%div{:class => "column span-24"}
-  %div{:class => "column span-16"}
-    %h3="Citations (#{@citations.total_entries})"
-    %ol.citations
-      = will_paginate @citations
-      - @citations.each do |citation|
-        = render :partial => "shared/citation", :locals => { :citation => citation }
-        
-  #facets{:class => "column span-6 prepend-2 last"}
-    %div{:class => "column span-4"}
+/ === Publisher === Show ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %p=link_to "Return to publisher List", publishers_url
+    %h2
+      = @publisher.name
+      %span=link_to "Edit", edit_publisher_path(@publisher)
+  
+  / Citations
+  = render :partial => "shared/citation"
+  
+  / Facets
+  %h3#filter Filter
+  %div#facets{:class => "span-9 prepend-1 last"}
+    = render :partial => "shared/facets"
+  
+    / Authority
+    %div#authority{:class => "span-9"}
       - if @publisher.authority_for.size > 0
-        %h3="Authority for (#{@publisher.authority_for.size})"
+        %h3=@publisher.name
+        %p Authorized name for:
         %ul.authority-children
           - @publisher.authority_for.each do |auth|
-            %li=link_to auth.name, publisher_path(auth)
+            %li= auth.name
       - else
         %h3 Authorized Title
         %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)
-      
