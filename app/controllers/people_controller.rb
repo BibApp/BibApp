@@ -5,12 +5,16 @@ class PeopleController < ApplicationController
     build :all
 
     before :index do
-      @people = Person.paginate(
-        :all,
-        :order => "last_name",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
+      @a_to_z = Person.letters.collect { |d| d.letter }
+      
+      if params[:q]
+        query = params[:q]
+        @current_objects = current_objects
+      else
+        @page = params[:page] || @a_to_z[0]
+        @current_objects = Person.find(:all, :conditions => ["last_name like ?", "#{@page}%"])
+      end
+      
       @title = "People"
     end
     

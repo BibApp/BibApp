@@ -102,4 +102,15 @@ class Person < ActiveRecord::Base
       self.image.public_filename
     end
   end
+
+  class << self
+    def letters
+      find(
+        :all,
+        :select => 'SUBSTR(last_name, 1, 1) AS letter',
+        :group  => 'SUBSTR(last_name, 1, 1)',
+        :order  => 'last_name, first_name'
+      )
+    end
+  end
 end

@@ -1,7 +1,10 @@
 %div{:class => "column span-24"}
-  %div{:class => "column span-16"}
-    %h2="People (#{@people.total_entries}) - #{link_to "Add", new_person_path}"
-    = will_paginate @people
+  %div{:class => "column span-22 prepend-1"}
+    %h2="People (#{@people.size}) - #{link_to "Add", new_person_path}"
+    
+    = render :partial => "shared/alpha_pagination"
+    
     %ol.people
-      - @people.each do |p|
-        %li=link_to "#{p.first_last}", person_path(p)
+      -@current_objects.each do |person|
+        %li
+          =link_to "#{person.name}", person_path(person)
