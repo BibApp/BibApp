@@ -73,15 +73,6 @@ mongrel_rails start
 
 7. Solr
 
-TEMPORARY:  Solr Rake scripts were removed when we moved
-from acts_as_solr to just using the latest & greatest
-Solr in vendor/solr.  For the time being,
-start Solr using the following:
-<pre>
-cd [bibapp]/vendor/solr;
-java -jar start.jar
-</pre>
-
 Starting (on Linux/Mac OSX)
 <pre>
 cd [bibapp]
@@ -110,17 +101,14 @@ rake solr:stop
   [bibapp] rake solr:stop
 
   2. Delete the index:
-  [bibapp] rm -r vendor/plugins/acts_as_solr/solr/solr/data/*
+  [bibapp] rm -r vendor/solr/solr/data/*
 
   3. Restart solr
   [bibapp] rake solr:start     (for Linux/Mac OSX)
   [bibapp] rake solr:start_win (for Windows)
 
   4. Reindex your citations
-  [bibapp] script/console
-  [sc] citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
-  [sc] citations.each{ |c| c.save_and_set_for_index_without_callbacks }
-  [sc] Index.batch_index
+  [bibapp] rake solr:refresh_index
 </aside>
 
 You are done.  Pull it up: http://localhost:3000

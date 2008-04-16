@@ -80,6 +80,17 @@ class Index
       end
       SOLRCONN.commit
     end
+    
+    #Reindex *everything* in Solr
+    def index_all
+      records = Citation.find(:all)
+        
+      records.each do |record|
+        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+        SOLRCONN.add(doc)
+      end
+      SOLRCONN.commit
+    end
   
     def update_solr(record)
       doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
