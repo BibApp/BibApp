@@ -4,7 +4,7 @@
     %div{:class => "span-5 prepend-1"}
       / Groups
       %div{:class => "span-5"}
-        %h4.heading Groups
+        %h4.heading=link_to "Groups", groups_url
         %ol.groups
           -@facets[:group_id].each do |g|
             - group = object_by_facet_id(g.name)
@@ -14,7 +14,7 @@
 
       / People
       %div{:class => "span-5 last"}
-        %h4.heading People
+        %h4.heading=link_to "People", people_url
         %ol.people
           -@facets[:person_id].each do |p|
             - person = object_by_facet_id(p.name)
@@ -30,7 +30,7 @@
       %hr{:style => "border-bottom:1px dotted #CCC;"}
       %div{:style => "float:right;padding:0.5em;margin:0.5em;"}
         %div{:style => "text-align:center"}
-          %img{:src => "images/jiang_hongrui.gif", :alt => "Hongrui Jiang", :style => "float:right;", :height => "100px", :border => "1px solid #000"}
+          %img{:src => "images/man.jpg", :alt => "Hongrui Jiang", :style => "float:right;", :height => "100px", :border => "1px solid #000"}
           %h5 Hongrui Jiang
       %p When Hongrui Jiang looked into a fly's eye, he saw a way to make a tiny lens so "smart" that it can adapt its focal length from minus infinity to plus infinity — without external control.
       %p 
