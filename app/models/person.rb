@@ -104,12 +104,12 @@ class Person < ActiveRecord::Base
   end
 
   class << self
+    # return the first letter of each name, ordered alphabetically
     def letters
       find(
         :all,
-        :select => 'SUBSTR(last_name, 1, 1) AS letter',
-        :group  => 'SUBSTR(last_name, 1, 1)',
-        :order  => 'last_name, first_name'
+        :select => 'DISTINCT SUBSTR(last_name, 1, 1) AS letter',
+        :order  => 'letter'
       )
     end
   end

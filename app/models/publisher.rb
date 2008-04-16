@@ -106,12 +106,12 @@ class Publisher < ActiveRecord::Base
   end
   
   class << self
+    # return the first letter of each name, ordered alphabetically
     def letters
       find(
         :all,
-        :select => 'SUBSTR(name, 1, 1) AS letter',
-        :group  => 'SUBSTR(name, 1, 1)',
-        :order  => 'name'
+        :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
+        :order  => 'letter'
       )
     end
       
