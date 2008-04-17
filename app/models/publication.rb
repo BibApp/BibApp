@@ -29,6 +29,7 @@ class Publication < ActiveRecord::Base
       logger.debug("\n\n===Updating Citations===\n\n")
       publication.citations.each do |citation|
         citation.publication_id = publication.authority_id
+        citation.publisher_id = publication.publisher.authority_id
         citation.save_and_set_for_index_without_callbacks
       end
       
