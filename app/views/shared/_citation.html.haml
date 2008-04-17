@@ -1,26 +1,13 @@
-%div#citations{:class => "span-12 prepend-1"}
-  - if @q
-    %h3{:class => "span-12"}
-      ="Citations (#{@q.total_hits})"
-
-    %div{:class => "span-12"}
-      %ul.types
-        -@facets[:types].each do |p|
-          %li
-            =add_filter(@query,@filter,"type_facet",p.name,p.value)
-
-    %ol.citations
-      - @docs.each do |doc, score|
-        %li
-          =link_to "#{doc.title_primary}", citation_path(doc)
-          %p 
-            %strong NameStrings:
-            - doc.name_strings.each do |ns|
-              =link_to "#{ns.name}", name_string_path(ns)
-            %br/
-            %strong Source:
-            =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
-            = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-            %br/
-            %strong Year:
-            ="#{doc.year}"
+%li
+  =link_to "#{citation.title_primary}", citation_path(citation)
+  %p 
+    %strong NameStrings:
+    - citation.name_strings.each do |ns|
+      =link_to "#{ns.name}", name_string_path(ns)
+    %br/
+    %strong Source:
+    =link_to "#{citation.publication.authority.name}", publication_path(citation.publication.authority.to_param)
+    = "#{citation.volume}(#{citation.issue}), #{citation.start_page}-#{citation.end_page}."
+    %br/
+    %strong Year:
+    ="#{citation.year}"
