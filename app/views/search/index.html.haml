@@ -1,21 +1,26 @@
-- if @q
-  %h3
-    %em="#{@q.total_hits}"
-    =" Results for:"
-    %strong=" #{@query}"
-  -if !@spelling_suggestions.empty?
-    Did you mean:
-    %ul#spelling-suggestions
-      - @spelling_suggestions.each do |suggestion|
-        %li
-          %em=link_to suggestion, {:controller => "search", :q => suggestion }
+/ === Search === Index ===
+/ Main
+%div{:class => "span-24"}
+  - if @q.nil?
+    %div{:class => "span-22 prepend-1"}
+      %p Search form here.
+  - else
+    %div{:class => "span-22 prepend-1"}
+      %h2
+        %em="#{@q.total_hits}"
+        =" Results for:"
+        %strong=" #{@query}"
+      -if !@spelling_suggestions.empty?
+        Did you mean:
+        %ul#spelling-suggestions
+          - @spelling_suggestions.each do |suggestion|
+            %li
+              %em=link_to suggestion, {:controller => "search", :q => suggestion }
       
-  / Citations
-  = render :partial => "shared/citation", :locals => {:q => @q, :docs => @docs, :query => @query, :filter => @filter, :facets => @facets}
+    / Citations
+    = render :partial => "shared/citations"
 
-  / Facets
-  %h3#filter Filter
-  %div#facets{:class => "span-9 prepend-1 last"}
-    = render :partial => "shared/facets", :locals => {:q => @q, :docs => @docs, :query => @query, :filter => @filter, :facets => @facets}
-- else
-  %p Search form here.
+    / Facets
+    %h3#filter Filter
+    %div#facets{:class => "span-9 prepend-1 last"}
+      = render :partial => "shared/facets"

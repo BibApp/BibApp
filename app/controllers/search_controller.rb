@@ -15,6 +15,7 @@ class SearchController < ApplicationController
         end
       end
     else
+      @q = nil
       # There's nothing to return
     end
   end
