@@ -75,7 +75,7 @@
 
       / Publishers
       %div{:class => "span-7 last"}
-        %h4.heading=link_to "Publishers", publications_url
+        %h4.heading=link_to "Publishers", publishers_url
         %ol.publishers
           -@facets[:publisher_id].each do |p|
             - publisher = object_by_facet_id(p.name)
