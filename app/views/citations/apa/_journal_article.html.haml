@@ -4,7 +4,7 @@
   %span.name_strings
     - c.name_strings.each do |ns|
       %span.name_string=link_to "#{ns.name}", name_string_path(ns)
-  %span.year="(#{c.year}). "
+  %span.year="(#{c.publication_date.year}). "
   %span.title="#{c.title_primary}. "
   %span.publication=link_to "#{c.publication.name}", publication_path(c.publication.to_param)
   %span.volume="#{c.volume}"

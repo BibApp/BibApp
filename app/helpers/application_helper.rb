@@ -48,7 +48,7 @@ module ApplicationHelper
   	suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
   	
 	#Substitute citation year
-	suffix = (citation.year.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.year.to_s)
+	suffix = (citation.publication_date.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.publication_date.year.to_s)
 	
 	#Substitute citation issue
 	suffix = (citation.issue.nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation.issue.to_s)	

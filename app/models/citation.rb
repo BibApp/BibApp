@@ -362,19 +362,19 @@ class Citation < ActiveRecord::Base
       first_author = nil
     end
         
-    if (first_author.nil? or issn_isbn.nil? or citation.year.nil? or citation.year.empty? or citation.start_page.nil? or citation.start_page.empty? or issn_isbn.empty?)
+    if (first_author.nil? or issn_isbn.nil? or citation.publication_date.nil? or citation.start_page.nil? or citation.start_page.empty? or issn_isbn.empty?)
       issn_isbn_dupe_key = nil
     else
-      issn_isbn_dupe_key = (first_author+issn_isbn+citation.year.to_s+citation.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
+      issn_isbn_dupe_key = (first_author+issn_isbn+citation.publication_date.year.to_s+citation.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
     end
   end
     
   def self.set_title_dupe_key(citation)
     # Set title_dupe_key      
-    if citation.title_primary.nil? or citation.year.nil? or citation[:type].nil? or citation.start_page.nil?
+    if citation.title_primary.nil? or citation.publication_date.nil? or citation[:type].nil? or citation.start_page.nil?
       title_dupe_key = nil
     else 
-      title_dupe_key = citation.title_primary.downcase.gsub(/[^a-z]/,'')+citation.year.to_s+citation[:type].to_s+citation.start_page.to_s
+      title_dupe_key = citation.title_primary.downcase.gsub(/[^a-z]/,'')+citation.publication_date.year.to_s+citation[:type].to_s+citation.start_page.to_s
     end
   end
  
@@ -420,7 +420,7 @@ class Citation < ActiveRecord::Base
   end
 
   def update_scoring_hash
-    year = self.year
+    year = self.publication_date.year
     publication_id = self.publication_id
     collaborator_ids = self.citation_name_strings.collect{|cns| cns.name_string_id}
     keyword_ids = self.keywords.collect{|k| k.id}

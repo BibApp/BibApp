@@ -32,7 +32,7 @@ class Index
     :title => :title_primary,
     :abstract => :abstract,
     :type_facet => Proc.new{|record| record[:type]},
-    :year_facet => Proc.new{|record| record.year},
+    :year_facet => Proc.new{|record| record.publication_date.year},
     :title_t => :title_primary,
     :abstract_t => :abstract,
     :title_secondary_t => :title_secondary,
