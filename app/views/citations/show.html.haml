@@ -29,10 +29,10 @@
           %span.field_value
             - @citation.editor_name_strings.each do |ns|
               =link_to "#{ns.name}", name_string_path(ns)
-      - if @citation.year?
+      - if @citation.publication_date?
         %div.field
-          %label Year of Publication:
-          %span.field_value=@citation.year
+          %label Publication Date:
+          %span.field_value=@citation.publication_date
       %div.field
         %label Publication Type:
         %span.field_value=@citation.type 

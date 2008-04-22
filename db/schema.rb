@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 35) do
+ActiveRecord::Schema.define(:version => 36) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(:version => 35) do
     t.string   "title_secondary"
     t.string   "title_tertiary"
     t.text     "affiliation"
-    t.string   "year"
     t.string   "volume"
     t.string   "issue"
     t.string   "start_page"
@@ -70,15 +69,18 @@ ActiveRecord::Schema.define(:version => 35) do
     t.text     "original_data"
     t.integer  "batch_index",               :default => 0
     t.text     "scoring_hash"
+    t.date     "publication_date"
+    t.string   "language"
+    t.string   "copyright_holder"
   end
 
-  add_index "citations", ["title_dupe_key"], :name => "title_dupe"
-  add_index "citations", ["issn_isbn_dupe_key"], :name => "issn_isbn_dupe"
-  add_index "citations", ["citation_state_id"], :name => "fk_citation_state_id"
+  add_index "citations", ["batch_index"], :name => "batch_index"
   add_index "citations", ["publication_id"], :name => "fk_citation_publication_id"
   add_index "citations", ["publisher_id"], :name => "fk_citation_publisher_id"
-  add_index "citations", ["batch_index"], :name => "batch_index"
+  add_index "citations", ["citation_state_id"], :name => "fk_citation_state_id"
   add_index "citations", ["type"], :name => "fk_citation_type"
+  add_index "citations", ["issn_isbn_dupe_key"], :name => "issn_isbn_dupe"
+  add_index "citations", ["title_dupe_key"], :name => "title_dupe"
 
   create_table "contributorship_states", :force => true do |t|
     t.string "name"
@@ -98,7 +100,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.string   "role"
   end
 
-  add_index "contributorships", ["person_id", "citation_id"], :name => "author_citation_join", :unique => true
+  add_index "contributorships", ["citation_id", "person_id"], :name => "author_citation_join", :unique => true
 
   create_table "external_system_keys", :force => true do |t|
     t.integer "external_system_id"
@@ -135,7 +137,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.datetime "updated_at"
   end
 
-  add_index "keywordings", ["keyword_id", "citation_id"], :name => "keyword_citation_join", :unique => true
+  add_index "keywordings", ["citation_id", "keyword_id"], :name => "keyword_citation_join", :unique => true
 
   create_table "keywords", :force => true do |t|
     t.string   "name"
@@ -156,7 +158,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.datetime "end_date"
   end
 
-  add_index "memberships", ["person_id", "group_id"], :name => "person_group_join"
+  add_index "memberships", ["group_id", "person_id"], :name => "person_group_join"
 
   create_table "name_strings", :force => true do |t|
     t.string   "name"
@@ -173,7 +175,7 @@ ActiveRecord::Schema.define(:version => 35) do
     t.datetime "updated_at"
   end
 
-  add_index "pen_names", ["name_string_id", "person_id"], :name => "author_person_join", :unique => true
+  add_index "pen_names", ["person_id", "name_string_id"], :name => "author_person_join", :unique => true
 
   create_table "people", :force => true do |t|
     t.integer  "external_id"
@@ -212,10 +214,10 @@ ActiveRecord::Schema.define(:version => 35) do
     t.string   "place"
   end
 
-  add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
   add_index "publications", ["authority_id"], :name => "fk_publication_authority_id"
-  add_index "publications", ["name"], :name => "publication_name"
+  add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
   add_index "publications", ["issn_isbn"], :name => "issn_isbn"
+  add_index "publications", ["name"], :name => "publication_name"
 
   create_table "publisher_sources", :force => true do |t|
     t.string   "name"
@@ -246,7 +248,7 @@ ActiveRecord::Schema.define(:version => 35) do
   end
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
+  add_index "taggings", ["taggable_type", "taggable_id"], :name => "index_taggings_on_taggable_id_and_taggable_type"
 
   create_table "tags", :force => true do |t|
     t.string "name"
