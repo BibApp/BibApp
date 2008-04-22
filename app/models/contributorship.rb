@@ -73,7 +73,7 @@ class Contributorship   < ActiveRecord::Base
       col_matches = 0
 
       citation_sh[:collaborator_ids].each do |ns|
-        col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns.id)
+        col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns.object_id)
       end
     
       collaborator_score = 0
@@ -84,7 +84,7 @@ class Contributorship   < ActiveRecord::Base
       key_matches = 0
     
       citation_sh[:keyword_ids].each do |k|
-        key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k.id)
+        key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k.object_id)
       end
     
       keyword_score = 0
