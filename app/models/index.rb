@@ -84,7 +84,12 @@ class Index
     #Reindex *everything* in Solr
     def index_all
       records = Citation.find(:all)
+      
+      #Delete all existing records in Solr
+      SOLRCONN.delete_by_query('*:*')
         
+      #Reindex all citations again  
+      records = Citation.find(:all)  
       records.each do |record|
         doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
         SOLRCONN.add(doc)

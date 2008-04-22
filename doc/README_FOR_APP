@@ -97,17 +97,7 @@ rake solr:stop
 <aside>
   h4. Should you need to reindex the Solr index:
 
-  1. Stop solr
-  [bibapp] rake solr:stop
-
-  2. Delete the index:
-  [bibapp] rm -r vendor/solr/solr/data/*
-
-  3. Restart solr
-  [bibapp] rake solr:start     (for Linux/Mac OSX)
-  [bibapp] rake solr:start_win (for Windows)
-
-  4. Reindex your citations
+  1. Reindex your citations (this will first delete your old Solr index!)
   [bibapp] rake solr:refresh_index
 </aside>
 
