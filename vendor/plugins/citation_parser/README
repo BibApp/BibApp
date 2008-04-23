@@ -1,4 +1,58 @@
 CitationParser
 ==============
 
-Description goes here
+Parses supported citation formats "as-is" into a Ruby Hash.
+
+During the parsing the following occurs:
+(1) Field names are underscored
+    (e.g. "FirstAuthor" -> "first_author" or "Author" -> "author")
+(2) Resulting names are turned into symbols 
+    (e.g. "first_author" -> :first_author)
+However, the data values within fields are not changed in any way.
+
+In addition, a special :original_data field is added to the
+resulting Hash.  Its value corresponds to the text of
+the entire original citation (in its original structure).
+
+So, for RIS citations, this :original_data field will contain
+the entire citation in RIS format.  
+
+For MedLine citations, the :original_data
+field contains the entire citation in MedLine format.  
+
+You get the idea. :)
+
+================
+An RIS example: 
+================
+Parsing of the below RIS citation:
+ TY  - THES
+ ID  - 1031
+ A1  - Gill,Pat
+ T1  - A trick done with mirrors : women and morality in Restoration satiric comedy
+ Y1  - 1987
+ KW  - English drama
+ KW  - Restoration drama
+ VL  - Ph. D.
+ PB  - Cornell University
+ A3  - Anonymous
+ M1  - Dissertation/Thesis
+ ER  - 
+
+Produces a Ruby Hash of the structure:
+{
+ :ty => "THES",
+ :id => "1031",
+ :a1 => "Gill,Pat",
+ :t1 => "A trick done with mirrors : women and morality in Restoration satiric comedy",
+ :y1 => "1987",
+ :kw => "English drama",
+ :kw => "Restoration drama",
+ :vl => "Ph. D.",
+ :pb => "Cornell University",
+ :a3 => "Anonymous",
+ :m1 => "Dissertation/Thesis",
+ :er => "",
+ :original_data  => "<<entire original citation in RIS appears here>>"
+}
+ 

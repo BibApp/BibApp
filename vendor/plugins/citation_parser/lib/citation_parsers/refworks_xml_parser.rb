@@ -2,6 +2,8 @@ class RefworksXmlParser < CitationParser
   require 'hpricot'
   require 'htmlentities'
     
+  # Perform our initial parse of Citation Data,
+  # using Hpricot to parse the Refworks XML format
   def parse(data)
     Hpricot.buffer_size = 204800
     xml = Hpricot.XML(data)
@@ -37,20 +39,20 @@ class RefworksXmlParser < CitationParser
   def param_hash(xml)
 
     return {
-      :reftype_id => xml[:RefType].to_a,
-      :author_name_strings => xml[:AuthorPrimary].split("|"),
-      :editor_name_strings => xml[:AuthorSecondary].split("|"),
+      :ref_type => xml[:RefType].to_a,
+      :author_primary => xml[:AuthorPrimary].split("|"),
+      :author_secondary => xml[:AuthorSecondary].split("|"),
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
       :title_tertiary => xml[:TitleTertiary].to_a,
-      :keywords => xml[:Keyword].split(/\||;/).each{|k| k.strip!},
-      :year => xml[:PubYear].to_a,
+      :keyword => xml[:Keyword].split(/\||;/).each{|k| k.strip!},
+      :pub_year => xml[:PubYear].to_a,
       :periodical_full => xml[:PeriodicalFull].to_a,
       :periodical_abbrev => xml[:PeriodicalAbbrev].to_a,
       :volume => xml[:Volume].to_a,
       :issue => xml[:Issue].to_a,
       :start_page => xml[:StartPage].to_a,
-      :end_page => xml[:OtherPages].to_a,
+      :other_pages => xml[:OtherPages].to_a,
       :edition =>  xml[:Edition].to_a,
       :publisher => xml[:Publisher].to_a,
       :place_of_publication => xml[:PlaceOfPublication].to_a,
