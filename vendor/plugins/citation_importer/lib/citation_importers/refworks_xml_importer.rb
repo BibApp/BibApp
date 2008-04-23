@@ -60,25 +60,25 @@ class RefworksXmlImporter < CitationImporter
   def initialize
     # Todo: improve Publication and Publisher handling
     @attr_map = {
-      :reftype_id => :klass,
-      :author_name_strings => :citation_name_strings,
-      :editor_name_strings => :citation_name_strings,
-      :affiliations => :affiliation,
+      :ref_type => :klass,
+      :author_primary => :citation_name_strings,
+      :author_secondary => :citation_name_strings, #RefWorks loads Editors here
       :title_primary => :title_primary,
       :title_secondary => :title_secondary,
       :title_tertiary => :publication, # RefWorks loads Conference Proceeding publication data here
-      :keywords => :keywords,
-      :year => :year,
+      :keyword => :keywords,
+      :pub_year => :publication_date,
       :periodical_full => :publication,
       :periodical_abbrev => :publication,
       :volume => :volume,
       :issue => :issue,
       :start_page => :start_page,
-      :end_page => :end_page,
+      :other_pages => :end_page, #RefWorks loads end page here
       :publisher => :publisher,
       :place_of_publication => :publication_place,
       :issn_isbn => :issn_isbn,
       :author_address_affiliations => :affiliation,
+      :language => :language,
       :links => :links,
       :doi => :links,
       :abstract => :abstract,
@@ -94,9 +94,11 @@ class RefworksXmlImporter < CitationImporter
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}
-    @attr_translators[:author_name_strings] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
-    @attr_translators[:editor_name_strings] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    @attr_translators[:reftype_id] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
+    @attr_translators[:author_primary] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @attr_translators[:author_secondary] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
+    @attr_translators[:ref_type] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
+    @attr_translators[:pub_year] = lambda { |val_arr| val_arr.collect!{|n| Date.new(n.to_i)}}
+    
     
     @type_map = {
       "0"  => "Generic",

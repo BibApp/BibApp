@@ -34,6 +34,15 @@ class RisImporter < CitationImporter
 
     r_hash.each do |key, value|
       
+      if value.class.to_s == "Array"
+        value = value.flatten
+      end
+      
+      if value[0].class.to_s == "Hash"
+        r_hash[key] = value.flatten
+        next
+      end
+      
       if value.size < 2 || value.class.to_s == "String"
         r_hash[key] = value.to_s
       end
@@ -65,8 +74,8 @@ class RisImporter < CitationImporter
        :kw => :keywords,
        :u2 => :keywords,
        :n2 => :abstract,
-       :y1 => :year,
-       :py => :year,
+       :y1 => :publication_date,
+       :py => :publication_date,
        :sp => :start_page,
        :ep => :end_page,
        :vl => :volume,
@@ -88,6 +97,7 @@ class RisImporter < CitationImporter
     @attr_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     @attr_translators[:ty] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
     @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    @attr_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     
     @type_map = {
        "ABST"  => "Abstract",  # Abstract
@@ -130,7 +140,23 @@ class RisImporter < CitationImporter
   
   def publication_date_parse(publication_date)
     date = Hash.new
-    date[:year] = publication_date.split(/[^A-Za-z0-9_]/)[0]
+    
+    # Split on the non-word characters (in this case, should be slashes /)
+    # Expected format: "YYYY/MM/DD/other info"
+    date_parts = publication_date.split(/[^A-Za-z0-9_]/)
+    
+    # first part is year
+    year = date_parts[0].to_i
+    # then month (default to Jan)
+    month = 1
+    month = date_parts[1] if date_parts.length > 1
+    # then day (default to 1)
+    day = 1
+    day = date_parts[2] if date_parts.length > 2
+    
+    # create a date suitable for saving
+    date[:publication_date] = Date.new(year,month,day).to_s
+    
     return date
   end
   
