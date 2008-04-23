@@ -60,7 +60,7 @@ class MedlineImporter < CitationImporter
        :pb => :publisher,
        :mh => :keywords,
        :ab => :abstract,
-       :dp => :year, # translated
+       :dp => :publication_date, # translated
        :pg => :start_page, #translated
        :vi => :volume,
        :ip => :issue,
@@ -270,7 +270,7 @@ class MedlineImporter < CitationImporter
   
   def publication_date_parse(publication_date)
     date = Hash.new
-    date[:year] = publication_date.slice(0..3)
+    date[:publication_date] = Date.parse(publication_date).to_s
     return date
   end
   
