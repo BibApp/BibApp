@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 36) do
+ActiveRecord::Schema.define(:version => 37) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(:version => 36) do
     t.date     "publication_date"
     t.string   "language"
     t.string   "copyright_holder"
+    t.boolean  "peer_reviewed"
   end
 
   add_index "citations", ["batch_index"], :name => "batch_index"
