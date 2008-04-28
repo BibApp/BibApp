@@ -70,6 +70,8 @@ class MedlineImporter < CitationImporter
        :stat => :notes,
        :pmid => :external_id,
        :aid => :links,
+       :la  => :language,
+       :ci  => :copyright_holder,
        :original_data => :original_data
     }
   
