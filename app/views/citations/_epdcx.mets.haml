@@ -1,0 +1,84 @@
+-# METS Metadata Wrapper, which contains metadata
+-# in EPrints DC XML Schema (epdcx) - As necessary for SWORD
+-# See: http://www.ukoln.ac.uk/repositories/digirep/index/Eprints_Application_Profile
+%mdWrap{ :LABEL=>"SWORD Metadata - EPrints DC XML schema", :MDTYPE=>"OTHER", :OTHERMDTYPE=>"EPDCX", :MIMETYPE=>"text/xml" }
+  %xmlData
+    %epdcx:descriptionSet{ 'xmlns:epdcx'=>"http://purl.org/eprint/epdcx/2006-11-16/", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation'=>"http://purl.org/eprint/epdcx/2006-11-16/ http://purl.org/eprint/epdcx/xsd/2006-11-16/epdcx.xsd" }
+      
+      -##### Description of item as a SCHOLARLY WORK #####
+      %epdcx:description{ 'epdcx:resourceId'=>"sword-mets-epdcx-#{@citation.id}" }
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/ScholarlyWork" }/
+        -# TITLE (PRIMARY)
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
+          %epdcx:valueString=@citation.title_primary
+        -# SUBJECTS (i.e. Keywords/Tags)  @TODO - Add Tags!!
+        - if @citation.keywords
+          - @citation.keywords.each do |kw|
+            %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/subject" }
+              %epdcx:valueString=kw.name 
+        -# ABSTRACT
+        - if @citation.abstract and !@citation.abstract.empty?
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/abstract" }
+            %epdcx:valueString=@citation.abstract
+        -# CREATOR (i.e. AUTHOR)
+        - if @citation.author_name_strings 
+          - @citation.author_name_strings.each do |ns|
+            %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/creator" }
+              %epdcx:valueString=ns.name
+        -# Reference to Expression of item (see below)
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isExpressedAs", 'epdcx:valueRef'=>"sword-mets-expr-#{@citation.id}" }/
+      
+      -##### Description of an EXPRESSION of the item #####
+      %epdcx:description{ 'epdcx:resourceId'=>"sword-mets-expr-#{@citation.id}" }
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Expression" }/
+        -# ADDITIONAL TITLES
+        - if @citation.title_secondary and !@citation.title_secondary.empty?
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
+            %epdcx:valueString=@citation.title_secondary
+        - if @citation.title_tertiary and !@citation.title_tertiary.empty?
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
+            %epdcx:valueString=@citation.title_tertiary 
+        -# DESCRIPTION / NOTES
+        - if @citation.notes and !@citation.notes.empty?
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/description" }
+            %epdcx:valueString=@citation.notes
+        -# DATE AVAILABLE
+        - if @citation.publication_date
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/available" }
+            %epdcx:valueString{'epdcx:sesURI'=>"http://purl.org/dc/terms/W3CDTF"}=@citation.publication_date.year
+        -# LANGUAGE
+        - if @citation.language
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/language", 'epdcx:vesURI'=>"http://purl.org/dc/terms/RFC3066" }
+            %epdcx:valueString=@citation.language    
+        -# TYPE (Based on EPrints Type Vocab or DCMI Types)
+          -# Check if EPrints Type
+        - if @citation.type_uri and @citation.type_uri.include? "eprint/type"
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:vesURI'=>"http://purl.org/eprint/terms/Type", 'epdcx:valueURI'=>"#{@citation.type_uri}" }/ 
+          -# Otherwise, assume it is a DCMI Type
+        - elsif @citation.type_uri and !@citation.type_uri.empty?
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:vesURI'=>"http://purl.org/dc/dcmitype/", 'epdcx:valueURI'=>"#{@citation.type_uri}" }/ 
+        -# COPYRIGHT HOLDER
+        - if @citation.copyright_holder
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/copyrightHolder" }
+            %epdcx:valueString=@citation.copyright_holder
+        -# EDITORS
+        - if @citation.editor_name_strings 
+          - @citation.editor_name_strings.each do |ns|
+            %epdcx:statement{ 'epdcx:propertyURI'=>"http://www.loc.gov/loc.terms/relators/EDT" }
+              %epdcx:valueString=ns.name
+        
+        -# BIBLIOGRAPHIC CITATION
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/bibliographicCitation" }
+          -# Plain-text Citation in APA Citation Format
+          %epdcx:valueString=@citation.to_s
+          -# OpenURL ContextObject
+          = render :partial => 'epdcx_openurl' 
+          
+        -# Reference to Manifestation of an Expression of item (see below)
+        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isManifestedAs", 'epdcx:valueRef'=>"sword-mets-manifest-#{@citation.id}" }/
+      
+      -# @TODO - Creation one Manifestation per FILE!
+      -##### Description of a MANIFESTATION of an expression of the item #####
+      -#%epdcx:description{ 'epdcx:resourceId'=>"sword-mets-manifest-#{@citation.id}" }
+      -#  %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Manifestation" }/
+           

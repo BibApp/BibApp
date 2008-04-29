@@ -12,4 +12,10 @@ class NameString < ActiveRecord::Base
   def solr_id
     "NameString-#{id}"
   end
+  
+  #return what looks to be the last name in this name string
+  def last_name
+    names = self.name.split(',')
+    names[0]
+  end
 end

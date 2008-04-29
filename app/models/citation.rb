@@ -356,7 +356,7 @@ class Citation < ActiveRecord::Base
   def self.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
     # Set issn_isbn_dupe_key
     logger.debug("\nCNS: #{citation_name_strings.inspect}\n")
-    if citation_name_strings
+    if citation_name_strings 
       first_author = citation_name_strings[0][:name].split(",")[0]
     else
       first_author = nil
@@ -435,6 +435,145 @@ class Citation < ActiveRecord::Base
     self.scoring_hash = scoring_hash
     self.save_without_callbacks
   end
+  
+  # Returns to citation Type URI based on the EPrints Application Profile's
+  # Type vocabulary.  If the type is not available in the EPrints App Profile,
+  # then the URI of the appropriate DCMI Type is returned.
+  #
+  # This is used for generating a SWORD package
+  # which contains a METS file conforming to the EPrints DC XML Schema. 
+  #
+  # For more info on EPrints App. Profile, and it's Type vocabulary, see:
+  # http://www.ukoln.ac.uk/repositories/digirep/index/EPrints_Application_Profile
+  def type_uri
+    
+    #Maps our Citation Types to EPrints Application Profile Type URIs,
+    # or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile)
+    # @TODO - Is there a better place to store this mapping info?  DB maybe? 
+    #         Should each citation subclass just define its own "type_uri"?
+    type_map = {
+      "Abstract"    => "http://purl.org/eprint/type/ScholarlyText",
+      "Artwork"     => "http://purl.org/dc/dcmitype/Image",  #DCMI Type
+      #"BillResolutions" => ??
+      "BookEdited"  => "http://purl.org/eprint/type/Book",
+      "BookReview"  => "http://purl.org/eprint/type/BookReview",
+      "BookSection" => "http://purl.org/eprint/type/BookItem",
+      "BookWhole"   => "http://purl.org/eprint/type/Book",
+      "ComputerProgram" => "http://purl.org/dc/dcmitype/Software", #DCMI Type
+      "ConferencePaper" =>  " http://purl.org/eprint/type/ConferencePaper",
+      "ConferencePoster" => "http ://purl.org/eprint/type/ConferencePoster",
+      "ConferenceProceeding" => "http://purl.org/eprint/type/ConferenceItem",
+      #"CourtCaseDecision" => ??
+      "DissertationThesis" => "http://purl.org/eprint/type/Thesis",
+      "Generic" => "http://purl.org/eprint/type/ScholarlyText",
+      "Grant" => "http://purl.org/eprint/type/ScholarlyText",
+      #"Hearing" => ??
+      "JournalArticle" => "http://purl.org/eprint/type/JournalArticle",
+      #"LawStatutes" => ??
+      "MagazineArticle" => "http://purl.org/eprint/type/JournalArticle",
+      "Map" => "http://purl.org/dc/dcmitype/StillImage", #DCMI Type
+      "Monograph" => "http://purl.org/eprint/type/Book",
+      "MotionPicture" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
+      "MusicScore" => "http://purl.org/dc/dcmitype/Text",
+      "NewspaperArticle" => "http://purl.org/eprint/type/NewsItem",
+      "Patent" => "http://purl.org/eprint/type/Patent",
+      #"PersonalCommunication" => ??
+      "Report" => "http://purl.org/eprint/type/Report",
+      "SoundRecording" => "http://purl.org/dc/dcmitype/Sound", #DCMI Type
+      "UnpublishedMaterial" => "http://purl.org/eprint/type/ScholarlyText",
+      "Video" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
+      "WebPage" => "http://purl.org/dc/dcmitype/InteractiveResource", #DCMI Type
+    }
+    
+    type_map[self.type]
+  end
+  
+  #Convert citation into a String
+  def to_s
+    # Default to displaying citation in APA citation format
+    to_apa
+  end
+  
+  #Convert citation into a String in the APA Citation Format
+  # This is currently used during generation of METS file
+  # conforming to EPrints DC XML Schema for use with SWORD.
+  # @TODO: There is likely a better way to do this more generically.
+  def to_apa
+    citation_string = ""
+    
+    #---------------------------------------------
+    # All APA Citation formats start out the same:
+    #---------------------------------------------
+    #Add authors
+    self.author_name_strings.each do |ns|
+      if citation_string == ""
+        citation_string << ns.name
+      else
+        citation_string << ", #{ns.name}"
+      end 
+    end
+    
+    #Add editors
+    self.editor_name_strings.each do |ns|
+      if citation_string == ""
+        citation_string << ns.name
+      else
+        citation_string << ", #{ns.name}"
+      end 
+    end
+    citation_string << " (Ed.)." if self.editor_name_strings.size == 1
+    citation_string << " (Eds.)." if self.editor_name_strings.size > 1
+    
+    #Publication year
+    citation_string << " (#{self.publication_date.year})" if self.publication_date
+    
+    #Only add a period if the string doesn't currently end in a period.
+    citation_string << ". " if !citation_string.match("\.\s*\Z")
+    
+    #Title
+    citation_string << "#{self.title_primary}. " if self.title_primary
+    
+    #---------------------------------------
+    #Formatting specific to type of Citation
+    #---------------------------------------
+    case self.class
+    when BookWhole, BookEdited
+   
+      citation_string << self.publisher.authority.name if self.publisher
+      #Only add a period if the string doesn't currently end in a period.
+      citation_string << ". " if !citation_string.match("\.\s*\Z")
+    
+    when ConferenceProceeding #Conference Proceeding in APA Format
+      
+      citation_string << "In #{self.title_secondary}" if self.title.secondary
+      citation_string << ": Vol. #{self.volume}" if self.volume
+      #Only add a period if the string doesn't currently end in a period.
+      citation_string << ". " if !citation_string.match("\.\s*\Z")
+      citation_string << "#{self.publication.authority.name}" if self.publication
+      citation_string << ", (" if self.start_page or self.end_page
+      citation_string << self.start_page if self.start_page
+      citation_string << "-#{self.end_page}" if self.end_page
+      citation_string << ")" if self.start_page or self.end_page
+      citation_string << "." if !citation_string.match("\.\s*\Z")
+      citation_string << self.publisher.authority.name if self.publisher
+      citation_string << "."
+
+    else #default to JournalArticle in APA format
+      
+      citation_string << "#{self.publication.authority.name}, " if self.publication
+      citation_string << self.volume if self.volume
+      citation_string << "(#{self.issue})" if self.issue
+      citation_string << ", " if self.start_page or self.end_page
+      citation_string << self.start_page if self.start_page
+      citation_string << "-#{self.end_page}" if self.end_page
+      citation_string << "."
+    
+    end
+    
+    
+    citation_string
+  end
+  
   
   ### PRIVATE METHODS ###
   private
