@@ -15,14 +15,20 @@ class CitationsController < ApplicationController
         }, {
         :people => [:id, :first_last]
         }
-      ]    
+      ]
     
-      before :index do
-        @query = "*:*"  
-        @filter = params[:fq] || ""
-        @filter = @filter.split("+>+").each{|f| f.strip!}
-        @q,@docs,@facets = Index.fetch(@query, @filter)
-      end
+    #Add a response for METS!
+    response_for :show do |format| 
+      format.mets  #loads show.mets.haml
+      format.html  #loads show.html.haml
+    end
+    
+    before :index do
+      @query = "*:*"  
+      @filter = params[:fq] || ""
+      @filter = @filter.split("+>+").each{|f| f.strip!}
+      @q,@docs,@facets = Index.fetch(@query, @filter)
+    end
 	
     #initialize variables used by 'new.html.haml'
     before :new do  

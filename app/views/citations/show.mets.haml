@@ -1,0 +1,26 @@
+!!! XML
+%mets{ :OBJID=>"sword-mets", :LABEL=>"BibApp SWORD package", :xmlns=>"http://www.loc.gov/METS/", 'xmlns:xlink'=>"http://www.w3.org/1999/xlink", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation'=>"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" }
+  
+  -# METS Header
+  %metsHdr{ :CREATEDATE=>"#{DateTime.now.to_s}" }
+    %agent{ :ROLE=>"CREATOR", :TYPE=>"OTHER" }
+      %name="BibApp"
+ 
+  -# Descriptive Metadata Section
+  %dmdSec{ :ID=>"sword-mets-dmd-#{@citation.id}", :CREATED=>"#{@citation.created_at.to_s(:xsd)}" }
+    -# Metadata in EPrints DC XML Schema - As necessary for SWORD
+    = render :partial => 'epdcx'
+ 
+  -# Files Section
+  %fileSec
+    %fileGrp{ :ID=>"sword-mets-fgrp-#{@citation.id}", :USE=>"CONTENT" }
+      - @citation.attachments.each do |att|
+        %file{ :ID=>"sword-mets-file-#{att.id}", :MIMETYPE=>att.content_type, :SIZE=>att.size }
+          %FLocat{ :LOCTYPE=>"URL", "xlink:href"=>att.public_filename }/  
+  
+  -# Structure Map Section
+  %structMap{ :ID=>"sword-mets-struct-#{@citation.id}", :TYPE=>"LOGICAL" }
+    %div{ :ID=>"sword-mets-struct-div-#{@citation.id}", :DMDID=>"sword-mets-dmd-#{@citation.id}", :TYPE=>"SWORD Object" }
+      - @citation.attachments.each do |att|
+        %div{ :ID=>"sword-mets-struct-file-#{att.id}", :TYPE=>"FILE" }
+          %fptr{ :FILEID=>"sword-mets-file-#{att.id}" }/
