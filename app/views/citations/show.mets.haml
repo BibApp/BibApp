@@ -16,7 +16,7 @@
     %fileGrp{ :ID=>"sword-mets-fgrp-#{@citation.id}", :USE=>"CONTENT" }
       - @citation.attachments.each do |att|
         %file{ :ID=>"sword-mets-file-#{att.id}", :MIMETYPE=>att.content_type, :SIZE=>att.size }
-          %FLocat{ :LOCTYPE=>"URL", "xlink:href"=>att.public_filename }/  
+          %FLocat{ :LOCTYPE=>"URL", "xlink:href"=>att.public_url(request) }/  
   
   -# Structure Map Section
   %structMap{ :ID=>"sword-mets-struct-#{@citation.id}", :TYPE=>"LOGICAL" }
