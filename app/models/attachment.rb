@@ -37,5 +37,10 @@ class Attachment < ActiveRecord::Base
       filesize=self.size.to_s + "bytes"
     end
   end
- 
+  
+  # Return the full URL of the file in BibApp
+  # Needs the request object to build the URL
+  def public_url(request)
+    request.protocol+request.host_with_port+self.public_filename
+  end 
 end

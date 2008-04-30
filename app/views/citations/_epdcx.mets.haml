@@ -75,10 +75,25 @@
           = render :partial => 'epdcx_openurl' 
           
         -# Reference to Manifestation of an Expression of item (see below)
-        %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isManifestedAs", 'epdcx:valueRef'=>"sword-mets-manifest-#{@citation.id}" }/
+        -# There is one Manifestation per FILE!
+        - @citation.attachments.each do |att|
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isManifestedAs", 'epdcx:valueRef'=>"sword-mets-manifest-#{att.id}" }/
       
-      -# @TODO - Creation one Manifestation per FILE!
       -##### Description of a MANIFESTATION of an expression of the item #####
-      -#%epdcx:description{ 'epdcx:resourceId'=>"sword-mets-manifest-#{@citation.id}" }
-      -#  %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Manifestation" }/
+      - @citation.attachments.each do |att|
+        %epdcx:description{ 'epdcx:resourceId'=>"sword-mets-manifest-#{att.id}" }
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Manifestation" }/
+          -# CONTENT TYPE
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/format", 'epdcx:valueURI'=>"http://purl.org/dc/terms/IMT" }
+            %epdcx:valueString=att.content_type
+          -# PUBLISHER
+          - if @citation.publisher
+            %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/publisher" }
+              %epdcx:valueString=@citation.publisher.authority.name
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> att.public_url(request) }/
+        %epdcx:description{ 'epdcx:resourceURI'=>att.public_url(request) }
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Copy" }/
+          
+              
+          
            
