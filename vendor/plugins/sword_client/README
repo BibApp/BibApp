@@ -1,0 +1,61 @@
+SwordClient
+===========
+
+Ruby-based SWORD Client which is able to send HTTP requests to an 
+existing SWORD Server.  In addition, it is able to perform some 
+basic parsing of the Atom-based HTTP response sent from the SWORD server.
+
+This is only the *client*.  Your SWORD Server must already exist!  SWORD 
+servers are already available for DSpace (www.dspace.org) and Fedora
+(www.fedora.info) repository software.  Supposedly EPrints (www.eprints.org)
+will also soon have a SWORD Server packaged with it.
+
+For more information on SWORD or the SWORD APP Profile:
+http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
+
+For more information on Atom or Atom Publishing Protocol (APP):
+http://tools.ietf.org/html/rfc4287 (Atom Syndication Format)
+http://tools.ietf.org/html/rfc5023 (Atom Publishing Protocol)
+
+
+Example
+=======
+
+NOTE: Each of the below numbered examples build off each other.  So pay 
+attention to the variable names!
+
+1. Initializing a basic Connection to a SWORD server (this doesn't actually connect, yet!):
+
+@connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
+
+2. Initializing a more complex, Proxy-based, Connection to a SWORD server (this doesn't actually connect, yet!):
+
+params = {  :username => @username,
+            :password => @password,
+            :on_behalf_of => @behalf_of_username,
+            :proxy_settings => {:server  => "my.proxy.edu", 
+                                :port    => "80",
+                                :username => "proxy_user", 
+                                :password => "proxy_pass"} }
+                                
+@connection = SwordClient::Connection.new(@sword_url, params)
+
+3. Requesting the SWORD Service Document from an initialized Connection (@connection)
+
+@service_doc_xml = @connection.service_document
+
+4. Parsing the Atom-based SWORD Service Document to get a list of valid Collections to deposit to
+
+@collection_arr = SwordClient::Response.get_collections(@service_doc_xml)
+
+5. Posting a File for Deposit to a SWORD Server
+
+@post_response_doc = @connection.post_file("/path/to/sword-example.zip", @collection_arr[0][:deposit_url])
+    
+6. Parsing the Atom-based response from the SWORD Server aftering posting a file
+
+@response_hash = SwordClient::Response.parse_post_response(@post_response_doc)
+
+
+
+Copyright (c) 2008 BibApp (Tim Donohue), released under the MIT license
