@@ -24,10 +24,12 @@ class CitationsController < ApplicationController
     end
     
     before :index do
-      @query = "*:*"  
+      @query = "*:*"
+      @sort = params[:sort] || "year desc"
+      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@query, @filter)
+      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
     end
 	
     #initialize variables used by 'new.html.haml'
