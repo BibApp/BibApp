@@ -8,7 +8,11 @@ class Membership < ActiveRecord::Base
     # Update Solr!
     # * Citations have many People...
     membership.person.contributorships.each do |c|
-      Index.update_solr(c.citation)
+      if c.contributorship_state_id == 2
+        c.citation.save_and_set_for_index_without_callbacks
+      end
     end
+    
+    Index.batch_index
   end
 end
