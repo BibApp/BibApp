@@ -11,18 +11,18 @@ class Contributorship   < ActiveRecord::Base
   
   after_save do |contributorship|
     # Remove false positives from other PenName claimants
+    logger.debug("\n=== REFRESHING ===\n")
     contributorship.refresh_contributorships
     
-    # Update Solr!
-    # * Citations have many People...
-    # * But, only if contributorship_state_id == 2 (verified)
-    Index.update_solr(contributorship.citation)
+    if contributorship.contributorship_state_id == 2    
+      # Update Solr!
+      # * Citations have many People...
+      # * But, only if contributorship_state_id == 2 (verified)
+      Index.update_solr(contributorship.citation)
+    end
   end
   
   after_destroy do |contributorship|
-    # Update Solr!
-    # * Citations have many People...
-    # * But, only if contributorship_state_id == 2 (verified)
     Index.update_solr(contributorship.citation)
   end
 
@@ -73,7 +73,7 @@ class Contributorship   < ActiveRecord::Base
       col_matches = 0
 
       citation_sh[:collaborator_ids].each do |ns|
-        col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns.object_id)
+        col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns)
       end
     
       collaborator_score = 0
@@ -84,7 +84,7 @@ class Contributorship   < ActiveRecord::Base
       key_matches = 0
     
       citation_sh[:keyword_ids].each do |k|
-        key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k.object_id)
+        key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k)
       end
     
       keyword_score = 0
