@@ -97,7 +97,7 @@
             %p.metadata 
               - doc.name_strings.each do |ns|
                 =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
-              ="(#{doc.year})"
+              ="(#{doc.publication_date.year})"
               %br/
               =link_to "#{doc.publisher.name}", publisher_path(doc.publisher.to_param), {:class => "source"}
               = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
