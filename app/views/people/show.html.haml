@@ -6,17 +6,20 @@
     %h2
       ="#{@person.first_last}"
       %span=link_to "Edit", edit_person_path(@person)
-    = render :partial => "shared/vcard", :locals => {:o => @person}
+      %span=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
 
-    %div{:class => "span-5"}
-      %h3 Groups
-      %ul
-        - @person.groups.each do |g|
-          %li=link_to g.name, group_path(g)
+    %div{:class => "span-21", :style => "padding:1.5em"}
+      = render :partial => "shared/vcard", :locals => {:o => @person}
+
+      %div{:class => "span-5"}
+        %h3 Groups
+        %ul
+          - @person.groups.each do |g|
+            %li=link_to g.name, group_path(g)
           
-    %div{:class => "span-9 last"}
-      %h3 Research Focus
-      %p=@research_focus
+      %div{:class => "span-8 last"}
+        %h3 Research Focus
+        %p=@research_focus
 
   / Citations
   = render :partial => "shared/citations"

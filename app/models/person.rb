@@ -47,6 +47,10 @@ class Person < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
   
+  def last_first
+    "#{last_name}, #{first_name}"
+  end
+  
   def to_param
     param_name = first_last.gsub(" ", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
@@ -100,7 +104,10 @@ class Person < ActiveRecord::Base
   def image_url
     if !self.image.nil?
       self.image.public_filename
+    else
+      "man.jpg"
     end
+    
   end
 
   class << self

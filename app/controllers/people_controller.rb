@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   require 'redcloth'
   
   make_resourceful do 
-    build :all
+    build :index, :new, :create, :show, :edit, :update, :destroy
 
     before :index do
       @a_to_z = Person.letters.collect { |d| d.letter }
@@ -12,7 +12,11 @@ class PeopleController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Person.find(:all, :conditions => ["last_name like ?", "#{@page}%"])
+        @current_objects = Person.find(
+          :all, 
+          :conditions => ["last_name like ?", "#{@page}%"], 
+          :order => "last_name, first_name"
+        )
       end
       
       @title = "People"
@@ -27,10 +31,13 @@ class PeopleController < ApplicationController
     
     before :show do
       @query = @current_object.solr_id
+      @sort = params[:sort] || "year desc"
+      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@query, @filter)
-      @title = @current_object.first_last
+      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
+
+      @title = @current_object.name
       @research_focus = RedCloth.new(@current_object.research_focus).to_html
     end
   end
@@ -52,7 +59,12 @@ class PeopleController < ApplicationController
         logger.info "Base DN: #{config['base']}"
         logger.info "Search query: #{query}"
         
-        ldap = Net::LDAP.new(:host => config['host'], :port => config['port'].to_i, :base => config['base'])
+        ldap = Net::LDAP.new(
+          :host => config['host'], 
+          :port => config['port'].to_i, 
+          :base => config['base']
+        )
+        
         filt = Net::LDAP::Filter.eq("cn", "*#{query}*")
         res = Array.new
         return ldap.search( :filter => filt ).map{|entry| clean_ldap(entry)}

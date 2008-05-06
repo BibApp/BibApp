@@ -1,19 +1,10 @@
 %div{:class => "vcard span-8"}
   %div{:class => "span-4"}
-    - if !o.image_url.nil?
+    - if !o.image_url?
       - # Do nothing
-      = image_tag(o.image_url)
+      = image_tag(o.image_url, :size => "110x150", :style => "border:2px dashed #CCC; padding:3px;")
     - else
-      %img{:src => "/images/man.jpg"}
-    %div.image_link
-      -# If image already exists, we want to edit existing one!
-      image:
-      - if !o.image_url.nil?
-        = link_to "change", {:controller => "attachments", :action => "edit", :params => {"type" => "Image", "id" => o.image.id}}
-        |
-        = link_to "delete", attachment_path(o.image), :method => :delete
-      - else
-        = link_to "change", {:controller => "attachments", :action => "new", :params => {"asset_id" => o.id, "asset_type" => o.class.name.to_s, "type" => "Image"}}
+      =image_tag("man.jpg", :style => "border:2px dashed #CCC; padding:3px;")
   %a{:class => "fn url hide", :href => ""}
     =o.name
   %div{:class => "adr"}
