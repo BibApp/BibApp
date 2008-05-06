@@ -1,0 +1,17 @@
+/ === Contributorships === Admin ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %h2 ADMIN::Contributions
+    - if @contributorship == nil
+      %p Congrats!  Nothing to do here.
+    - else
+      = render :partial => "shared/citation", :locals => {:citation => @contributorship.citation}
+      %h4 Keywords
+      %p
+        - @contributorship.citation.keywords.each do |k|
+          %span{:id => "keyword-id-#{k.id}"}=k.name
+    
+      %div{:class => "span-22 prepend-1"}
+        %ol#claims
+          = render :partial => 'claim', :collection => @claims
