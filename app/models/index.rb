@@ -31,6 +31,7 @@ class Index
     :id => Proc.new{|record| record.solr_id},
     :title => :title_primary,
     :abstract => :abstract,
+    :year => Proc.new{|record| record.publication_date.year},
     :type_facet => Proc.new{|record| record[:type]},
     :year_facet => Proc.new{|record| record.publication_date.year},
     :title_t => :title_primary,
@@ -83,7 +84,7 @@ class Index
     
     #Reindex *everything* in Solr
     def index_all
-      records = Citation.find(:all)
+      records = Citation.find(:all, :conditions => ["citation_state_id = ?", 3])
       
       #Delete all existing records in Solr
       SOLRCONN.delete_by_query('*:*')
@@ -108,7 +109,7 @@ class Index
       SOLRCONN.commit
     end
 
-    def fetch (query_string, filter)
+    def fetch (query_string, filter, sort)
       if !filter.empty?
         q = SOLRCONN.query(
           query_string, {
@@ -152,7 +153,7 @@ class Index
                 :publisher_facet,
                 :publisher_id_facet,
                 :type_facet,
-                {:year_facet => {:sort => true}}
+                :year_facet
               ],
               :mincount => 1,
               :limit => 10
