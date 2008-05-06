@@ -12,7 +12,6 @@ $DEFAULT_STATE               = "WI"
 $DEFAULT_CITY                = "Madison"
 $DEFUALT_ZIP_CODE            = "53706"
 $UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
-#Logo should be placed in [bibapp]/public/images/
 $LOGO = "shield.gif"
 $LOGO_ALT_TEXT = "UW-Madison Shield W"
 
@@ -47,3 +46,14 @@ $LOGO_ALT_TEXT = "UW-Madison Shield W"
 ####
 $CITATION_BASE_URL           = "http://sfx.wisconsin.edu/wisc"
 $CITATION_SUFFIX             = "ctx_enc=info%3Aofi%2Fenc%3AUTF-8&amp;ctx_id=10_1&amp;ctx_tim=2006-5-11T13%3A11%3A1CDT&amp;ctx_ver=Z39.88-2004&amp;res_id=http%3A%2F%2Fsfx.wisconsin.edu%2Fwisc&amp;rft.atitle=[title]&amp;rft.date=[year]&amp;rft.issn=[issn]&amp;rft.issue=[issue]&amp;rft.volume=[vol]&amp;rft.spage=[fst]"
+
+####
+# Sherpa Color Explainations
+
+$SHERPA_COLORS = {
+  :green    => "Can archive pre-print and post-print",
+  :blue     => "Can archive post-print (ie final draft post-refereeing)",
+  :yellow   => "Can archive pre-print (ie pre-refereeing)",
+  :white    => "Archiving not formally supported",
+  :unknown  => "Could not determine from data"
+}

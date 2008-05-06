@@ -1,0 +1,43 @@
+/ === Contributorships === Archivable ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
+    %h2="Archival Analysis: #{@person.name}"
+    
+    %table
+      %thead
+        %tr
+          %td Count
+          %td Percentage
+          %td Color
+          %td Archiving Policy
+      %tbody
+        - @pub_table.each do |row|
+          %tr{:class => "#{row.color.downcase}"}
+            %td=row.count
+            %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
+            %td=row.color.capitalize
+            %td=$SHERPA_COLORS[row.color.downcase.to_sym]
+      %tfoot
+        %tr
+          %td=@pub_totals
+          %td Total
+          %td &nbsp;
+          %td &nbsp;
+
+    %h3 Publications
+    %table
+      %thead
+        %tr
+          %td Count
+          %td Color
+          %td Name
+          %td Publisher
+          
+      %tbody
+        - @publ_table.each do |row|
+          %tr{:class => row.color.downcase}
+            %td=row.count
+            %td=row.color.capitalize
+            %td=row.name
+            %td=row.pub_name
