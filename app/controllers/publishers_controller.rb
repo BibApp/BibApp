@@ -17,29 +17,24 @@ class PublishersController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publisher.find(:all, :conditions => ["name like ?", "#{@page}%"])
+        @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"], :order => "name")
       end
     end
 
     before :show do
-      @citations = Citation.paginate(
-        :all,
-        :conditions => ["publisher_id = ? and citation_state_id = ?", current_object.id, 3],
-        :order => "year DESC, title_primary",
-        :page => params[:page] || 1,
-        :per_page => 10
-      )
-
       @authority_for = Publisher.find(
         :all,
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
+
       @query = @current_object.solr_id
+      @sort = params[:sort] || "year desc"
+      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@query, @filter)
-      
+      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
+
       @title = @current_object.name
     end
 
