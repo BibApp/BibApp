@@ -37,6 +37,7 @@ class Citation < ActiveRecord::Base
   end
   
   def after_save
+    logger.debug("\n\n === After Save ===\n\n")
     deduplicate
     create_contributorships
     update_scoring_hash
@@ -313,7 +314,7 @@ class Citation < ActiveRecord::Base
     end
     #Create and assign publisher
     publisher = Publisher.find_or_create_by_name(publisher_name)
-    self.publisher = publisher
+    self.publisher = publisher.authority
    
     # We can have more than one Publisher name
     # Ex: [Physics of Plasmas, Phys Plasmas]
@@ -327,19 +328,19 @@ class Citation < ActiveRecord::Base
         publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
             :name => publication_name, 
             :issn_isbn => publication_hash[:issn_isbn], 
-            :publisher_id => publisher.id
+            :publisher_id => publisher.authority_id
         )
       elsif not(publisher.nil?)
         publication = Publication.find_or_create_by_name_and_publisher_id(
             :name => publication_name,  
-            :publisher_id => publisher.id
+            :publisher_id => publisher.authority_id
         )
       else
         publication = Publication.find_or_create_by_name(publication_name)
       end
 
       #save or update citation
-      self.publication = publication
+      self.publication = publication.authority
     end
   end
  
@@ -422,7 +423,7 @@ class Citation < ActiveRecord::Base
   def update_scoring_hash
     year = self.publication_date.year
     publication_id = self.publication_id
-    collaborator_ids = self.citation_name_strings.collect{|cns| cns.name_string_id}
+    collaborator_ids = self.name_strings.collect{|ns| ns.id}
     keyword_ids = self.keywords.collect{|k| k.id}
     
     # Return a hash comprising all the Contributorship scoring methods
