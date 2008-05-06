@@ -258,6 +258,7 @@
  <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
  <field name="title" type="text" indexed="true" stored="true"/>
  <field name="abstract" type="text" indexed="true" stored="true"/>
+ <field name="year" type="text" indexed="true" stored="true"/>
  <dynamicField name="*_i" type="integer" indexed="true" stored="false"/>
  <dynamicField name="*_t" type="text" indexed="true" stored="false"/>
  <dynamicField name="*_f" type="float" indexed="true" stored="false"/>
