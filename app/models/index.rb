@@ -90,7 +90,7 @@ class Index
       SOLRCONN.delete_by_query('*:*')
         
       #Reindex all citations again  
-      records = Citation.find(:all)  
+      records = Citation.find(:all, :conditions => ["citation_state_id = ?", 3])  
       records.each do |record|
         doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
         SOLRCONN.add(doc)
