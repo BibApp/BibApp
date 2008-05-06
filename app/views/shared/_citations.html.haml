@@ -7,9 +7,9 @@
       %ul.types
         -@facets[:types].each do |p|
           %li
-            =add_filter(@query,@filter,"type_facet",p.name,p.value)
+            =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value)
 
-    %ol.citations
+    %ol.citations.facets
       - @docs.each do |doc, score|
         %li
           =link_to "#{doc.title_primary}", citation_path(doc)
