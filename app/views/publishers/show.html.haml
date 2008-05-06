@@ -6,6 +6,18 @@
     %h2
       = @publisher.name
       %span=link_to "Edit", edit_publisher_path(@publisher)
+
+    / People
+    %div{:class => "span-22", :style => "padding:0em; margin:0em;"}
+      %ol.people
+        -@facets[:person_id].each do |p|
+          - person = object_by_facet_id(p.name)
+          %li.inline{:style => "margin:0; padding:0;"}
+            %div{:class => "span-3"}
+              = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
+              %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
+                %strong= p.value
+                %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
   
   / Citations
   = render :partial => "shared/citations"
@@ -21,8 +33,8 @@
         %h3=@publisher.name
         %p Authorized name for:
         %ul.authority-children
-          - @publisher.authority_for.each do |auth|
-            %li= auth.name
+          - @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
+            %li= auth
       - else
         %h3 Authorized Title
         %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)
