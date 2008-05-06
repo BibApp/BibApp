@@ -19,7 +19,11 @@ class PublicationsController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publication.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
+        @current_objects = Publication.find(
+          :all,
+          :conditions => ["publications.id = authority_id and name like ?", "#{@page}%"],
+          :order => "name"
+        )
       end
       
       @title = "Publications"
@@ -34,10 +38,12 @@ class PublicationsController < ApplicationController
       )
       
       @query = @current_object.solr_id
+      @sort = params[:sort] || "year desc"
+      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@query, @filter)
-      
+      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
+
       @title = @current_object.name
     end
 
@@ -55,7 +61,11 @@ class PublicationsController < ApplicationController
       @current_objects = current_objects
     else
       @page = params[:page] || @a_to_z[0]
-      @current_objects = Publication.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"])
+      @current_objects = Publication.find(
+        :all, 
+        :conditions => ["id = authority_id and name like ?", "#{@page}%"], 
+        :order => "name"
+      )
     end    
   end
   
