@@ -152,7 +152,7 @@ module ApplicationHelper
     return @archivable_count
   end
   
-  def add_filter(query, query_filter, facet, value, count)
+  def add_filter(query, sort, query_filter, facet, value, count)
     # TODO: Add Sort
     # If we have >1 filter, we need to join the facet_field:value
     if query_filter.size > 0 || !query_filter.empty?
@@ -168,12 +168,13 @@ module ApplicationHelper
     end
     
     link_to "#{value} (#{count})", {
-      :fq => prepped_filter,
-      :q => query
+      :q => query,
+      :sort => sort,
+      :fq => prepped_filter
     }
   end
   
-  def remove_filter(query, query_filter, value)
+  def remove_filter(query, sort, query_filter, value)
     # TODO: Add Sort
     
     prepped_filter = Array.new
@@ -182,8 +183,9 @@ module ApplicationHelper
     prepped_filter = prepped_filter.join("+>+")
     
     link_to "#{value}", {
-      :fq => prepped_filter,
-      :q => query
+      :q => query,
+      :sort => sort,
+      :fq => prepped_filter
     }
   end
 end

@@ -2,9 +2,11 @@ class SearchController < ApplicationController
   def index
     if params[:q]
       @query = params[:q]
+      @sort = params[:sort] || "score desc"
+      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@query, @filter)
+      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
 
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
