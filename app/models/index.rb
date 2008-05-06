@@ -84,8 +84,6 @@ class Index
     
     #Reindex *everything* in Solr
     def index_all
-      records = Citation.find(:all, :conditions => ["citation_state_id = ?", 3])
-      
       #Delete all existing records in Solr
       SOLRCONN.delete_by_query('*:*')
         
