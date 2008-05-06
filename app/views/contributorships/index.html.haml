@@ -22,13 +22,5 @@
         
     %div{:class => "column span-16"}
 
-      %h3
-        Citations (
-        %span#contributorship_total_entries
-          = @contributorships.total_entries
-        )
-        = link_to 'Add', new_citation_path
-
-      = will_paginate @contributorships
-
+      %h3="Contributorships (#{@contributorships.size})"
       = render :partial => 'contributorships'
