@@ -7,7 +7,7 @@
 
 - if @attachment.asset.kind_of?(Person)
   %div{:class => "column span-23"}
-    %h4="Attaching to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}"
+    %h4="Attached to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}"
   %div{:class => "column span-6"}
     Original Image
     %br/

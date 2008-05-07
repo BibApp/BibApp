@@ -14,7 +14,7 @@
     %h4="Attaching to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
 
 %div{:class => "column span-12"}  
-  - form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true } do |form|
+  - form_for :attachment, :url => attachments_path, :html => { :multipart => true } do |form|
     %br/
     %div#upload_files
       %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
@@ -24,8 +24,9 @@
       %br/ 
       = render :partial => 'upload_file', :locals => { :form => form }
     = hidden_field_tag :type, @attachment.class
-    - unless @asset.nil?
-      = hidden_field_tag :asset_id, @asset.id
-      = hidden_field_tag :asset_type, @asset.class
+    - if @asset.kind_of?(Citation)
+      = hidden_field_tag :citation_id, @asset.id
+    - elsif @asset.kind_of?(Person)
+      = hidden_field_tag :person_id, @asset.id
     %p.submit
       = submit_tag "Upload"    

@@ -4,18 +4,25 @@ class AttachmentsController < ApplicationController
     build :index, :show, :new, :edit
     
     #initialize variables used by 'new.html.haml'
-    before :new do  
+    before :new do 
+      
+      #load asset information
+      load_asset
+      
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]
       
+      # Default to Image for Person asset
+      # @TODO: Is there a better way to default this?
+      params[:type] = "Image" if @asset.kind_of?(Person)
+      
+      
       #initialize attachment subclass with any passed in attachment info
       @attachment = subklass_init(params[:type], params[:attachment])
-      
-      if params[:asset_type] and params[:asset_id]
-        #initialize asset this attachment is being added to
-        @asset = asset_find(params[:asset_type], params[:asset_id])
-      end
     end
+    
+    
+    
     
   end # end make_resourceful  
   
@@ -31,8 +38,8 @@ class AttachmentsController < ApplicationController
   #      - "asset_type" => Type of asset this attachment is "attached" to
   def create
     
-    #initialize asset this attachment is being added to
-    @asset = asset_find(params[:asset_type], params[:asset_id]) if params[:asset_type] and params[:asset_id]
+    #load asset this attachment is being added to
+    load_asset
     
     attachment_count=0
     
@@ -47,7 +54,7 @@ class AttachmentsController < ApplicationController
           if @asset.kind_of?(Citation)
             #Citations can have many files as attachments
             @asset.attachments << @attachment
-          elsif @asset.kind_of?(Person) or @asset.kind_of?(Group)
+          elsif @asset.kind_of?(Person)
             #Group or Person can only have one image attached
             @asset.image = @attachment
           end
@@ -131,13 +138,13 @@ class AttachmentsController < ApplicationController
       attachment = klass.new({:uploaded_data => file})
     end
   
-    # Finds an asset, based on information provided
-    def asset_find(asset_type, asset_id)
-      asset_type.sub!(" ", "") #remove spaces
-      asset_type.gsub!(/[()]/, "") #remove any parens
-      asset_class = asset_type.constantize #change into a class
-      
-      asset = asset_class.find(asset_id)
+    #Load the asset this attachment is attached to
+    def load_asset
+      if params[:citation_id]
+        @asset = Citation.find(params[:citation_id])
+      elsif params[:person_id]
+        @asset = Person.find(params[:person_id])
+      end
     end
   
     #determine redirect URL based on asset type
@@ -148,9 +155,6 @@ class AttachmentsController < ApplicationController
       elsif asset.kind_of?(Person)
         #return to Person page
         return person_url(asset)
-      elsif asset.kind_of?(Group)
-        #return to Group page
-        return group_url(asset)
       end
     end
   
