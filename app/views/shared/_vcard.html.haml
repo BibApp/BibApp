@@ -1,10 +1,6 @@
 %div{:class => "vcard span-8"}
   %div{:class => "span-4"}
-    - if !o.image_url?
-      - # Do nothing
-      = image_tag(o.image_url, :size => "110x150", :style => "border:2px dashed #CCC; padding:3px;")
-    - else
-      =image_tag("man.jpg", :style => "border:2px dashed #CCC; padding:3px;")
+    = render :partial => "shared/person_image", :locals => {:o => o}
   %a{:class => "fn url hide", :href => ""}
     =o.name
   %div{:class => "adr"}

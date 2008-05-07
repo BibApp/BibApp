@@ -15,13 +15,17 @@
 
 %div{:class => "column span-12"}  
   - form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true } do |form|
-    %p
+    %br/
+    %div#upload_files
       %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
-      = form.file_field :uploaded_data
-      = hidden_field_tag :type, @attachment.class
-      - unless @asset.nil?
-        = hidden_field_tag :asset_id, @asset.id
-        = hidden_field_tag :asset_type, @asset.class
+      -# Only allow multiple files for Citations
+      - if @asset.kind_of?(Citation)
+        = link_to_remote "[Add More Files]", :url =>{ :action => :add_upload_box, :form => form }
+      %br/ 
+      = render :partial => 'upload_file', :locals => { :form => form }
+    = hidden_field_tag :type, @attachment.class
+    - unless @asset.nil?
+      = hidden_field_tag :asset_id, @asset.id
+      = hidden_field_tag :asset_type, @asset.class
     %p.submit
-      = submit_tag "Upload"
-      
+      = submit_tag "Upload"    

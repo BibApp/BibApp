@@ -1,6 +1,14 @@
 %div{:class => "span-23"}
   %p.person-edit-actions
     = render :partial => "edit_actions", :locals => {@person => @person}
-    
+  %div{:class => "span-4"}
+    = render :partial => "shared/person_image", :locals => {:o => @person}
+    -if @person.image
+      = link_to "change", {:controller => "attachments", :action => "edit", :params => {"type" => "Image", "id" => @person.image.id}}
+      |
+      = link_to "delete", attachment_path(@person.image), :method => :delete
+    -else  
+      = link_to "upload image", {:controller => "attachments", :action => "new", :params => {"type" => "Image", "asset_id" => @person.id, "asset_type" => @person.class.name.to_s}}
+  
   %h3 Edit this Person
   = render :partial => 'form'

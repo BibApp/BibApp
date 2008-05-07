@@ -7,7 +7,7 @@
     %span
       = link_to "Edit", edit_citation_path
       | 
-      = link_to "Attach File", {:controller => "attachments", :action => "new", :params => {"asset_id" => @citation.id, "asset_type" => @citation.class.name.to_s}}
+      = link_to "Upload File(s)", {:controller => "attachments", :action => "new", :params => {"asset_id" => @citation.id, "asset_type" => @citation.class.name.to_s}}
     
 
   %div{:class => "column span-12"}

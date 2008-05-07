@@ -18,24 +18,55 @@ class AttachmentsController < ApplicationController
     end
     
   end # end make_resourceful  
-
-
+  
+  #Create one or more attachments
+  #
+  # Attachments are uploaded via a form with the
+  # following features:
+  # (1) Form must specify :multipart => true
+  # (2) One or more file_field_tags named "file[]"
+  # (3) Three hidden_field_tags:
+  #      - "type" => Type of Attachment
+  #      - "asset_id" => ID of asset this attachment is "attached" to
+  #      - "asset_type" => Type of asset this attachment is "attached" to
   def create
-    #initialize attachment based on form info
-    @attachment = subklass_init(params[:type], params[:attachment])
     
-    if params[:asset_type] and params[:asset_id]
-        #initialize asset this attachment is being added to
-        @asset = asset_find(params[:asset_type], params[:asset_id])
-        #add attachment to asset
-        @attachment.asset = @asset unless @asset.nil?
+    #initialize asset this attachment is being added to
+    @asset = asset_find(params[:asset_type], params[:asset_id]) if params[:asset_type] and params[:asset_id]
+    
+    attachment_count=0
+    
+    #initialize attachment(s) based on form info
+    #(This allows for multiple uploads)
+    unless params[:file].nil?
+      params[:file].each do |f|
+        if !f.nil? and f.size>0 #only upload if there's content to upload!
+          #initialize new attachment with uploaded file data
+          @attachment = subklass_init(params[:type], f)
+          #add attachment to asset
+          if @asset.kind_of?(Citation)
+            #Citations can have many files as attachments
+            @asset.attachments << @attachment
+          elsif @asset.kind_of?(Person) or @asset.kind_of?(Group)
+            #Group or Person can only have one image attached
+            @asset.image = @attachment
+          end
+          attachment_count+=1
+        end
+      end
     end
     
     respond_to do |format|
-      if @attachment.save
-        flash[:notice] = 'Attachment was successfully uploaded'
-        format.html {redirect_to attachment_url(@attachment)}
-        format.xml  {head :created, :location => attachment_url(@attachment)}    
+      if @asset.save
+        
+        if attachment_count==1
+          flash[:notice] = 'Attachment was successfully uploaded'
+        else
+          flash[:notice] = attachment_count.to_s + ' attachments were successfully uploaded'
+        end
+        
+        format.html {redirect_to get_response_url(@asset)}
+        format.xml  {head :created, :location => get_response_url(@asset)}
       else
         format.html {render :action => "new"}
         format.xml  {render :xml => @attachment.errors.to_xml}
@@ -52,8 +83,8 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       if @attachment.save
         flash[:notice] = 'Attachment was successfully uploaded'
-        format.html {redirect_to attachment_url(@attachment)}
-        format.xml  {head :created, :location => attachment_url(@attachment)}    
+        format.html {redirect_to get_response_url(@attachment.asset)}
+        format.xml  {head :created, :location => get_response_url(@attachment.asset)}    
       else
         format.html {render :action => "edit"}
         format.xml  {render :xml => @attachment.errors.to_xml}
@@ -68,15 +99,21 @@ class AttachmentsController < ApplicationController
     
     respond_to do |format|
       flash[:notice] = 'Attachment was successfully deleted'
-      # @TODO Is there a better way to redirect back to appropriate asset type?
-      if asset.kind_of?(Citation)
-        format.html { redirect_to citation_url(asset) }
-      elsif asset.kind_of?(Person)
-        format.html { redirect_to person_url(asset) }
-      end
-      format.xml {head :ok }
+      format.html {redirect_to get_response_url(asset)}
+      format.xml  {head :ok }
     end
   end
+
+  # Adds more file upload boxes to the web form,
+  # to allow for multi-uploads
+  def add_upload_box
+    form = params[:form]
+    #Add new upload field dynamically using Javascript
+    respond_to do |format|
+      format.js {  render :action => 'add_file_box', :locals => {:form => form} }
+    end
+  end
+
 
   ###
   # Private Methods
@@ -84,14 +121,14 @@ class AttachmentsController < ApplicationController
   private
 
     # Initializes a new attachment subclass, but doesn't create it in the database
-    def subklass_init(klass_type, attachment)
+    def subklass_init(klass_type, file)
       klass_type.sub!(" ", "") #remove spaces
       klass_type.gsub!(/[()]/, "") #remove any parens
       klass = klass_type.constantize #change into a class
       if klass.superclass != Attachment
         raise NameError.new("#{klass_type} is not a subclass of Attachment") and return
       end
-      attachment = klass.new(attachment)
+      attachment = klass.new({:uploaded_data => file})
     end
   
     # Finds an asset, based on information provided
@@ -101,6 +138,20 @@ class AttachmentsController < ApplicationController
       asset_class = asset_type.constantize #change into a class
       
       asset = asset_class.find(asset_id)
+    end
+  
+    #determine redirect URL based on asset type
+    def get_response_url(asset)
+      if asset.kind_of?(Citation)
+        #return to Citation page
+        return citation_url(asset)
+      elsif asset.kind_of?(Person)
+        #return to Person page
+        return person_url(asset)
+      elsif asset.kind_of?(Group)
+        #return to Group page
+        return group_url(asset)
+      end
     end
   
 end  
