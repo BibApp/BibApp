@@ -49,8 +49,18 @@ ActionController::Routing::Routes.draw do |map|
     :keywords,
     :keywordings,
     :attachments
-    
-  map.resources :contributorships, :member => { :verify => :put, :deny => :put }
+  
+  # Make URLs like /people/1/attachments/2 for Person Images
+  map.resources :people do |p|
+    p.resources :attachments
+  end
+  
+  # Make URLs like /citation/2/attachments/4 for Citation Content Files
+  map.resources :citations do |c|
+    c.resources :attachments
+  end
+  
+  map.resources :contributorships, :collection => { :admin => :get, :archivable => :get }, :member => { :verify => :put, :deny => :put } 
     
   map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put }
   map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }

@@ -4,11 +4,11 @@
   %div{:class => "span-4"}
     = render :partial => "shared/person_image", :locals => {:o => @person}
     -if @person.image
-      = link_to "change", {:controller => "attachments", :action => "edit", :params => {"type" => "Image", "id" => @person.image.id}}
+      = link_to "change", edit_person_attachment_path(@person, @person.image)
       |
       = link_to "delete", attachment_path(@person.image), :method => :delete
     -else  
-      = link_to "upload image", {:controller => "attachments", :action => "new", :params => {"type" => "Image", "asset_id" => @person.id, "asset_type" => @person.class.name.to_s}}
+      = link_to "upload image", new_person_attachment_path(@person), :params => {"type" => "Image"}
   
   %h3 Edit this Person
   = render :partial => 'form'
