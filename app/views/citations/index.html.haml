@@ -99,7 +99,7 @@
                 =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
               ="(#{doc.publication_date.year})"
               %br/
-              =link_to "#{doc.publisher.name}", publisher_path(doc.publisher.to_param), {:class => "source"}
+              =link_to "#{doc.publication.name}", publication_path(doc.publication.to_param), {:class => "source"}
               = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
 
       %li=link_to "More...", citations_path
