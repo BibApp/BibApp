@@ -31,15 +31,23 @@ class Citation < ActiveRecord::Base
   def after_create 
    	create_citation_name_strings
   	create_keywords
-    
     #save any changes to citation
     self.save_without_callbacks
   end
   
   def after_save
     logger.debug("\n\n === After Save ===\n\n")
+
+    # The Citation object needs to be reloaded into memory,
+    # otherwise the faux-accessors will *not* be available in the
+    # after_save callbacks.
+    self.reload
     deduplicate
+    
+    self.reload
     create_contributorships
+    
+    self.reload
     update_scoring_hash
   end
   
@@ -100,9 +108,14 @@ class Citation < ActiveRecord::Base
 
     # All the others are, by definition, dupes
     dupe_candidates.each do |dupe|
-      logger.debug "Saving dupe citation_states"
-      dupe.citation_state_id = 2 unless dupe.citation_state_id == 3
-      dupe.save_without_callbacks
+      logger.debug "Saving dupe citation_states: #{dupe.id}"
+      if dupe.citation_state_id == 3
+        # Do nothing
+      else
+        dupe.citation_state_id = 2
+        dupe.batch_index = 0
+        dupe.save_without_callbacks
+      end
     end
   end
 
@@ -300,7 +313,6 @@ class Citation < ActiveRecord::Base
   #  (not all hash values need be set)
   def publication_info=(publication_hash)
     logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
-    logger.debug("Publication info = #{publication_hash.inspect}")
     # If there is no publication name, set to Unknown
     publication_name = publication_hash[:name]
     if publication_name.nil? || publication_name.empty?
@@ -390,22 +402,25 @@ class Citation < ActiveRecord::Base
   end
   
   def create_contributorships
+    logger.debug "\n\n===== CREATE CONTRIBUTORSHIPS =====\n\n"
     # After save method
     # Ensures Contributorships are set for each CitationNameString claim
     # associated with the Citation.
+    logger.debug "Citation State: #{self.citation_state_id}\n"
+    logger.debug "CNS Size: #{self.citation_name_strings.size}"
     
-    if self.citation_state_id == 3 # Unique and a keeper
+    # Only create contributorships for accepted citations...
+    if self.citation_state_id == 3
       self.citation_name_strings.each do |cns|
         # Find all People with a matching PenName claim
         claims = PenName.find(:all, :conditions => ["name_string_id = ?", cns.name_string_id])
-      
+    
         # Debugger
-        logger.debug("===CREATE CONTRIBUTORSHIPS===")
         logger.debug("\n Claims: ")
         claims.each do |c| 
           logger.debug("#{c.person.name}")
         end
-      
+    
         # Find or create a Contributorship for each claim
         # @TODO: Incorporate a Person.blacklist?
         claims.each do |claim|
@@ -421,6 +436,7 @@ class Citation < ActiveRecord::Base
   end
 
   def update_scoring_hash
+    logger.debug "\n\n===== UPDATE SCORING HASH ===== \n\n"
     year = self.publication_date.year
     publication_id = self.publication_id
     collaborator_ids = self.name_strings.collect{|ns| ns.id}
