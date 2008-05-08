@@ -86,7 +86,7 @@ rake solr:start_win
 </pre>
 
 View your Solr install here:
-http://localhost:8982/solr/admin/
+http://localhost:8983/solr/admin/
 
 Stopping
 <pre>
