@@ -17,6 +17,27 @@ For more information on Atom or Atom Publishing Protocol (APP):
 http://tools.ietf.org/html/rfc4287 (Atom Syndication Format)
 http://tools.ietf.org/html/rfc5023 (Atom Publishing Protocol)
 
+Post-Installation
+==================
+
+During the install, a sword.yml file should have been copied into your
+/config/ directory.  Please reference this file for all necessary SWORD 
+Client configurations.  At a bare minimum, you will likely need to 
+customize the following configurations in sword.yml:
+
+* base_url => Base URL of SWORD Server to connect to
+              (default: "http://localhost:8080/sword-app")
+* service_doc_path => Path of SWORD Service Document on [base_url]
+                      (default: "/servicedocument")
+* deposit_path => Path of SWORD deposit script on [base_url] 
+                 (default: "/deposit")
+* username => Username to connect to SWORD server as
+* password => Password for user
+* default_collection_uri => The uri or path of default collection where 
+     your deposits should be made.  This option allows you to avoid
+     forcing users to choose a collection *before* they can deposit.
+     (e.g. "/123/456")
+     
 
 Example
 =======
@@ -24,12 +45,27 @@ Example
 NOTE: Each of the below numbered examples build off each other.  So pay 
 attention to the variable names!
 
+Although there are two methods shown for many tasks, it's recommended
+to just use the SwordClient class (rather than making calls to
+SwordClient::Connection).  The SwordClient class contains many methods
+which make it easier/quicker to obtain information from SWORD.  It also 
+has some basic caching of data (the SWORD Service Document especially), 
+which helps decrease the number of direct requests to your SWORD server.
+
 1. Initializing a basic Connection to a SWORD server (this doesn't actually connect, yet!):
 
-@connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
+* Initialize from loaded SWORD config (sword.yml) using SwordClient
+  @client = SwordClient.new
+  
+* Initialize via an options hash (by calling SwordClient::Connection directly) 
+  @connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
 
 2. Initializing a more complex, Proxy-based, Connection to a SWORD server (this doesn't actually connect, yet!):
 
+* Initialize from loaded SWORD config (sword.yml) using SwordClient
+  @client = SwordClient.new
+  
+* Initialize via an options hash (by calling SwordClient::Connection directly) 
 params = {  :username => @username,
             :password => @password,
             :on_behalf_of => @behalf_of_username,
@@ -42,20 +78,31 @@ params = {  :username => @username,
 
 3. Requesting the SWORD Service Document from an initialized Connection (@connection)
 
-@service_doc_xml = @connection.service_document
+* Request based on loaded SWORD config (sword.yml) using SwordClient
+  @service_doc_xml = @client.service_document
+  
+* Request via SwordClient::Connection (i.e. @connection)
+  @service_doc_xml = @connection.service_document
 
 4. Parsing the Atom-based SWORD Service Document to get a list of valid Collections to deposit to
 
-@collection_arr = SwordClient::Response.get_collections(@service_doc_xml)
+* Get collections using SwordClient from currently cached Service Doc
+  @collection_arr = @client.get_collections
+  
+* Parse collections from open service doc (using SwordClient::Response)
+  @collection_arr = SwordClient::Response.get_collections(@service_doc_xml)
 
 5. Posting a File for Deposit to a SWORD Server
 
-@post_response_doc = @connection.post_file("/path/to/sword-example.zip", @collection_arr[0][:deposit_url])
+* Post file based on loaded SWORD config (sword.yml) using SwordClient
+  @post_response_doc = @client.post_file("/path/to/sword-example.zip")
+  
+* Post file via SwordClient::Connection (i.e. @connection)
+  @post_response_doc = @connection.post_file("/path/to/sword-example.zip", @collection_arr[0][:deposit_url])
     
 6. Parsing the Atom-based response from the SWORD Server aftering posting a file
 
-@response_hash = SwordClient::Response.parse_post_response(@post_response_doc)
+  @response_hash = SwordClient::Response.parse_post_response(@post_response_doc)
 
 
-
-Copyright (c) 2008 BibApp (Tim Donohue), released under the MIT license
+Copyright (c) 2008 BibApp (written by Tim Donohue), released under the MIT license
