@@ -29,10 +29,11 @@ customize the following configurations in sword.yml:
               (default: "http://localhost:8080/sword-app/servicedocument") 
 * username => Username to connect to SWORD server as
 * password => Password for user
-* default_collection_uri => The uri or path of default collection where 
-     your deposits should be made.  This option allows you to avoid
+* default_collection_url => The deposit url of default collection where 
+     your deposits should be made.  This is the deposit url as returned
+     by the SWORD Service Document. This option allows you to avoid
      forcing users to choose a collection *before* they can deposit.
-     (e.g. "/123/456")
+     (e.g. "http://localhost:8080/sword-app/deposit/123/456")
      
 
 Example

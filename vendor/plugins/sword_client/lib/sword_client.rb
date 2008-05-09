@@ -15,16 +15,14 @@ class SwordException < Exception; end
 # and is loaded according to the <tt>RAILS_ENV</tt>.
 # The minimum connection options that you must specify depend
 # on the location of your SWORD server (and whether it requires
-# authentication).  Minimally, you likely need to check all
-# "SWORD Server Path Configs" and "SWORD Server Default Login"
+# authentication).  Minimally, you likely need to change
+# "SWORD Service Document URL" and "SWORD Server Default Login"
 #
 # Example production configuration (RAILS_ROOT/config/sword.yml)
 # 
 # production:
-#   # SWORD Server Path Configurations
-#   base_url: http://localhost:8080/sword-app
-#   service_doc_path: /servicedocument  
-#   deposit_path: /deposit
+#   # SWORD Server's Service Document URL
+#   service_doc_url: http://localhost:8080/sword-app/servicedocument
 #  
 #   # SWORD Server Default Login credentials
 #   username:
@@ -40,15 +38,16 @@ class SwordException < Exception; end
 #   proxy_password: myproxypass
 #  
 #   # Default Collection to deposit to
-#   #   (this is appended to the Base URL + Deposit Path)
+#   #   URL should correspond to the Deposit URL
+#   #   of a collection as returned by Service Document.
 #   #   If unspecified, then a user will need to
 #   #   select a collection *before* a deposit
 #   #   can be made via SWORD
 #   #
-#   #   Either specify the Name of the collection
-#   #   OR specify the Path (but not BOTH!)
-#   default_collection_path: /123456789/4
-#   #default_collection_name: My Collection 
+#   #   Either specify the Name of the Collection
+#   #   OR specify the URL (but not BOTH!)
+#   default_collection_url: http://localhost:8080/sword-app/deposit/123456789/4
+#   #default_collection_name: My Collection
 #
 #
 #
@@ -201,8 +200,8 @@ class SwordClient
     #locate our default collection, based on configs loaded from sword.yml
     default_collection = nil
     colls.each do |c|
-      if @config['default_collection_path']
-        default_collection = c if c[:deposit_url].to_s.include?(@config['default_collection_path'])
+      if @config['default_collection_url']
+        default_collection = c if c[:deposit_url].to_s == @config['default_collection_url']
         break #first matching collection wins!
       elsif @config['default_collection_name']
         default_collection = c if c[:title].to_s.downcase == @config['default_collection_name'].downcase
