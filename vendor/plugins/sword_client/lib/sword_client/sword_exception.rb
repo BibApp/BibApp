@@ -1,0 +1,1 @@
+class SwordClient::SwordException < Exception;  end
