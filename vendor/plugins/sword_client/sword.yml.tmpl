@@ -1,0 +1,68 @@
+##################################################
+# SWORD Client Configuration
+#
+# Configures the SWORDClient plugin, so that it
+# is able to send requests to an external SWORD
+# Server.  SWORD Servers are available
+# out-of-the-box with most current repository 
+# software (DSpace, Fedora, EPrints)
+#
+# More info on SWORD:
+#  http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
+##################################################
+
+production:
+  # SWORD Server URL & Path Configurations
+  base_url: http://localhost:8080/sword-app
+  service_doc_path: /servicedocument  
+  deposit_path: /deposit
+  
+  # SWORD Server default login credentials
+  username:
+  password:
+  
+  # Proxy Settings
+  #   Only necessary if you require a Proxy 
+  #   to connect to SWORD Server.  If using
+  #   a proxy, only the proxy_server is required.
+  proxy_server: my.proxy.edu
+  proxy_port: 80
+  proxy_username: myproxyuser
+  proxy_password: myproxypass
+  
+  # Default Collection to deposit to
+  #   (this is appended to the Base URL + Deposit Path)
+  #   If unspecified, then a user will need to
+  #   select a collection *before* a deposit
+  #   can be made via SWORD
+  #
+  #   Either specify the Name of the collection
+  #   OR specify the Path (but not BOTH!)
+  default_collection_path: /123456789/4
+  #default_collection_name: My Collection 
+
+development:
+  # SWORD Server URL & Path Configurations
+  base_url: http://localhost:8080/sword-app
+  service_doc_path: /servicedocument  
+  deposit_path: /deposit
+  
+  # SWORD Server default login credentials
+  username: 
+  password: 
+  
+  default_collection_path: /123456789/4
+  #default_collection_name: My Collection 
+
+test:
+  # SWORD Server URL & Path Configurations
+  base_url: http://localhost:8080/sword-app
+  service_doc_path: /servicedocument  
+  deposit_path: /deposit
+  
+  # SWORD Server default login credentials
+  username:
+  password:
+  
+  default_collection_path: /123456789/4
+  #default_collection_name: My Collection 

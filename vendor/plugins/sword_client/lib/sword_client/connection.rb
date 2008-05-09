@@ -12,7 +12,7 @@ class SwordClient::Connection
   
   # Timeout for our connection
   attr_reader :timeout
-
+  
   #User Name & Password to Authenticate with
   attr_writer :username, :password
   
@@ -79,6 +79,9 @@ class SwordClient::Connection
   #   of the connection (and begin with a slash).  
   #   Service document path defaults to "/servicedocument"
   #
+  # WARNING: this sends a NEW request to your SWORD server every time!
+  #   If you want caching, use SwordClient's service_document() method
+  #
   # This will return the service document (as an XML string) if found,
   # otherwise it throws a response error.
   def service_document(path="/servicedocument")
@@ -92,14 +95,14 @@ class SwordClient::Connection
   # Posts a file to the SWORD connection for deposit.
   #   Path of deposit should be relative to the base URL
   #   of the connection (and begin with a slash).  
-  #   Deposit path defaults to "http://localhost:8080/sword-app".  
+  #   Deposit path defaults to "http://localhost:8080/sword-app/deposit".  
   #   However, chances are you need to deposit to a specific 
   #   collection similar to:
   #   "http://localhost:8080/sword-app/deposit/123456789/1"
   #
   # This filepath should be a *local* filepath to file.  
   # MIME type is assumed to be "application/zip", unless specified otherwise
-  def post_file(file_path, deposit_url="http://localhost:8080/sword-app", mime_type="application/zip")
+  def post_file(file_path, deposit_url="http://localhost:8080/sword-app/deposit", mime_type="application/zip")
     
     #@TODO: ZIPPING FILES
     # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/

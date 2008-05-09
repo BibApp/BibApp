@@ -1,5 +1,12 @@
+#initialize environment
+ENV['RAILS_ENV'] = 'test'
+ENV['RAILS_ROOT'] ||= File.dirname(__FILE__) + '/../../../..'
+
 require 'test/unit'
 require 'sword_client'
+
+#load rails environment
+require File.expand_path(File.join(ENV['RAILS_ROOT'], 'config/environment.rb'))
 
 class SwordClientTest < Test::Unit::TestCase
   FIX_DIR = "#{File.expand_path(File.dirname(__FILE__))}/fixtures"
@@ -32,13 +39,23 @@ class SwordClientTest < Test::Unit::TestCase
   end
   
   def test_connection_options
-    connection = SwordClient::Connection.new(@sword_url, {:on_behalf_of => "someone_else"})
+    if !@sword_url or @sword_url.empty?
+      sword_path = "http://localhost:8080/sword-app/" 
+    else
+      sword_path = @sword_url
+    end
+    connection = SwordClient::Connection.new(sword_path, {:on_behalf_of => "someone_else"})
     
     assert_equal "someone_else", connection.on_behalf_of
   end
   
   def test_proxy_settings
-    connection = SwordClient::Connection.new(@sword_url, {:proxy_settings => {:server => "my.proxy.edu", :port => 80, :username => "username", :password=>"mypass"}})
+    if !@sword_url or @sword_url.empty?
+      sword_path = "http://localhost:8080/sword-app/" 
+    else
+      sword_path = @sword_url
+    end
+    connection = SwordClient::Connection.new(sword_path, {:proxy_settings => {:server => "my.proxy.edu", :port => 80, :username => "username", :password=>"mypass"}})
     
     assert_equal "my.proxy.edu", connection.proxy_settings[:server]
     assert_equal 80, connection.proxy_settings[:port]
@@ -50,10 +67,27 @@ class SwordClientTest < Test::Unit::TestCase
     connection = SwordClient::Connection.new("http://localhost:8080/my-sword-path")
     assert_equal '/my-sword-path', connection.url.path
   end
+  
+  def test_load_from_config
+    # tests initialization from RAILS_ROOT/config/sword.yml
+    client = SwordClient.new
+    
+    assert_instance_of SwordClient::Connection, client.connection
+    assert !client.connection.nil?
+    
+    assert client.config['base_url']  #base url should always be in config!
+    
+    assert client.connection.url()
+ 
+  end
    
   # By default SWORD usually requires authorization...
   # However, this test will FAIL if you turn off authorization  
   def test_require_auth
+    if @sword_url.empty? or @username.empty? or @password.empty?
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
+    end
+    
     connection = SwordClient::Connection.new(@sword_url)
     
     assert_raise(Net::HTTPServerException) do
@@ -62,6 +96,10 @@ class SwordClientTest < Test::Unit::TestCase
   end
   
   def test_invalid_service_doc
+    if @sword_url.empty? or @username.empty? or @password.empty?
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
+    end
+    
     connection = SwordClient::Connection.new(@sword_url)
     
     assert_raise(Net::HTTPServerException) do
@@ -70,6 +108,10 @@ class SwordClientTest < Test::Unit::TestCase
   end
   
   def test_invalid_login
+    if @sword_url.empty? or @username.empty? or @password.empty?
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
+    end
+    
     connection = SwordClient::Connection.new(@sword_url, {:username=>"not_a_user_name", :password=>"blahblahblah"})
     assert_raise(Net::HTTPServerException) do
       connection.service_document  
@@ -80,7 +122,7 @@ class SwordClientTest < Test::Unit::TestCase
   def test_valid_service_doc
     
     if @sword_url.empty? or @username.empty? or @password.empty?
-      flunk "This test will ALWAYS fail unless you provide it with a valid SWORD URL, username and password"
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
     end
   
     connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
@@ -98,7 +140,7 @@ class SwordClientTest < Test::Unit::TestCase
   def test_get_collections
    
     if @sword_url.empty? or @username.empty? or @password.empty?
-      flunk "This test will ALWAYS fail unless you provide it with a valid SWORD URL, username and password"
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
     end
   
     connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
@@ -120,7 +162,7 @@ class SwordClientTest < Test::Unit::TestCase
   def test_post_file
     
     if @sword_url.empty? or @username.empty? or @password.empty?
-      flunk "This test will ALWAYS fail unless you provide it with a valid SWORD URL, username and password"
+      flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
     end
   
     connection = SwordClient::Connection.new(@sword_url, {:username=>@username, :password=>@password})
@@ -158,5 +200,7 @@ class SwordClientTest < Test::Unit::TestCase
     assert response_hash[:title]
   
   end
+
+
   
 end
