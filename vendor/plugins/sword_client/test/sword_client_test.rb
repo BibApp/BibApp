@@ -15,10 +15,8 @@ class SwordClientTest < Test::Unit::TestCase
     
     # @TODO: ENTER IN A VALID SWORD URL, USERNAME AND PASSWORD TO TEST EVERYTHING!
     @service_doc_url = "http://localhost:8080/sword-app/servicedocument"
-    #@username = ""
-    #@password = ""
-    @username = "tdonohue@uiuc.edu"
-    @password = "uiucDspac3"
+    @username = ""
+    @password = ""
     
     @post_response_doc = nil
   end
