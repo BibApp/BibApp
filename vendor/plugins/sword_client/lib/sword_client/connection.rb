@@ -81,7 +81,7 @@ class SwordClient::Connection
   # otherwise it throws a response error.
   def service_document
     
-    response = fetch(@url.path)
+    response = fetch(@url.to_s)
     
     #service document should just be in body of request
     response.body
@@ -159,39 +159,41 @@ class SwordClient::Connection
   # (http://amazon.rubyforge.org/doc/)
   def request(verb, path, headers = {}, body = nil, attempts = 0, &block)
         
-        #If body was already read once, may need to rewind it
-        body.rewind if body.respond_to?(:rewind) unless attempts.zero?      
-        
-        #Build our "request" procedure
-        requester = Proc.new do 
-          
-          #init request type
-          request = request_method(verb).new(path, headers)
-          
-          #Check all our necessary request headers are set
-          add_user_agent!(request)
-          add_sword_headers!(request)
-          authenticate!(request)
-       
-          if body
-            #If body responds to 'read', it is a file which should be streamed
-            if body.respond_to?(:read)                                                                
-              request.body_stream    = body
-              add_file_info!(request, body)
-            else  
-              #Otherwise, we can just add the body to request as-is
-              request.body = body                                                                     
-            end                                                                                       
-          end
-          
-          @connection.request(request, &block)
-        end
-        
-        #actually start our request
-        @connection.start(&requester)
-      rescue Errno::EPIPE, Timeout::Error, Errno::EPIPE, Errno::EINVAL
-        #try 3 times before failing altogether
-        attempts == 3 ? raise : (attempts += 1; retry)
+    #If body was already read once, may need to rewind it
+    body.rewind if body.respond_to?(:rewind) unless attempts.zero?      
+    
+    #Build our "request" procedure
+    requester = Proc.new do 
+      
+      #init request type
+      request = request_method(verb).new(path, headers)
+      
+      #Check all our necessary request headers are set
+      add_user_agent!(request)
+      add_sword_headers!(request)
+      authenticate!(request)
+   
+      if body
+        #If body responds to 'read', it is a file which should be streamed
+        if body.respond_to?(:read)                                                                
+          request.body_stream    = body
+          add_file_info!(request, body)
+        else  
+          #Otherwise, we can just add the body to request as-is
+          request.body = body                                                                     
+        end                                                                                       
+      end
+      
+      @connection.request(request, &block)
+    end
+    
+    #actually start our request
+    @connection.start(&requester)
+  rescue Errno::EPIPE, Timeout::Error, Errno::EPIPE, Errno::EINVAL
+    #try 3 times before failing altogether
+    attempts == 3 ? raise : (attempts += 1; retry)
+  rescue Errno::ECONNREFUSED => error_msg
+    raise SwordException, "Connection to SWORD Server (path='#{path}') was refused!  Are you sure it's up?\n\nUnderlying error: " + error_msg
   end
   
   # If specified, add authentication information into Request

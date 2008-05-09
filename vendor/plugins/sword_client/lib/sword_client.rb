@@ -87,6 +87,9 @@ class SwordClient
     #Load our configurations
     @config = SwordClient.load_sword_config(config_path)
     
+    # Check for Service Document URL (service_doc_url), which is required
+    raise SwordException, "The SwordClient configuration file (sword.yml) exists, but the 'service_doc_url' is not set for your current environment." if !@config['service_doc_url'] or @config['service_doc_url'].empty?
+    
     #build our connection params from configurations
     params = {}
     params[:username] = @config['username'] if @config['username'] and !@config['username'].empty?
@@ -109,6 +112,17 @@ class SwordClient
     @connection = SwordClient::Connection.new(@config['service_doc_url'], params)
   end
 
+  #Tests if the SwordClient seems to be configured
+  # by attempting to initialize it based on sword.yml
+  def self.isConfigured?
+    begin
+      client = SwordClient.new
+      return true if client.kind_of?(SwordClient)
+    rescue SwordException, Exception
+      #rescue any exception, but do nothing
+    end
+    return false
+  end
 
   # Retrieve the SWORD Service Document for current connection,
   # based on configs read from sword.yml.
