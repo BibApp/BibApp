@@ -1,3 +1,6 @@
+#define a custom exception for Sword Client
+class SwordException < Exception; end
+
 # A Ruby-based SWORD Client
 #
 # This allows you to make requests (via HTTP) to an existing
@@ -5,7 +8,7 @@
 #
 # For more information on SWORD and the SWORD APP Profile:
 #  http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
-
+#
 # == Configuration
 #
 # Configuration is done via <tt>RAILS_ROOT/config/sword.yml</tt> 
@@ -77,7 +80,6 @@ class SwordClient
   # This only *initializes* a SWORDClient::Connection,
   # and doesn't connect to SWORD Server yet
   def initialize(config_path="#{RAILS_ROOT}/config/sword.yml")
-    require 'sword_client'
     
     #Load our configurations
     @config = SwordClient.load_sword_config(config_path)
@@ -101,7 +103,7 @@ class SwordClient
   
     #initialize our SWORD connection
     # (Note: this doesn't actually connect to SWORD, yet!)
-    @connection = SwordClient::Connection.new(@config['base_url'], params)
+    @connection = SwordClient::Connection.new(@config['service_doc_url'], params)
   end
 
 
@@ -126,11 +128,24 @@ class SwordClient
   # Posts a file to the SWORD connection for deposit.
   #   Paths are initialized based on configs read from sword.yml
   #
-  def post_file(file_path, mime_type="application/zip")
-    if @config['deposit_path'] and !@config['deposit_path'].empty?
-      @connection.post_file(file_path, @config['base_url']+@config['deposit_path'], mime_type)
-    else  
-      @connection.post_file(:file_path => file_path, :mime_type => mime_type)
+  # If deposit URL is unspecified, it posts to the 
+  # default collection (if one is specified in sword.yml)
+  def post_file(file_path, deposit_url=nil, mime_type="application/zip")
+    
+    #@TODO: ZIPPING FILES
+    # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/
+    
+    if deposit_url.nil?
+      #post to default collection, if there is one
+      default_col = get_default_collection
+      deposit_url = default_col[:deposit_url] if default_col
+    end
+    
+    #only post file if we have some sort of deposit url!
+    if deposit_url and !deposit_url.empty?
+      @connection.post_file(file_path, deposit_url, mime_type)
+    else
+      raise SwordException.new, "File '#{file_path}' could not be posted via SWORD as no deposit URL (or default collection) was specified!"
     end
   end
 
@@ -195,4 +210,3 @@ require 'sword_client/connection'
 require 'sword_client/source_doc_handler'
 require 'sword_client/post_response_handler'
 require 'sword_client/response'
-  

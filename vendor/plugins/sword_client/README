@@ -25,12 +25,8 @@ During the install, a sword.yml file should have been copied into your
 Client configurations.  At a bare minimum, you will likely need to 
 customize the following configurations in sword.yml:
 
-* base_url => Base URL of SWORD Server to connect to
-              (default: "http://localhost:8080/sword-app")
-* service_doc_path => Path of SWORD Service Document on [base_url]
-                      (default: "/servicedocument")
-* deposit_path => Path of SWORD deposit script on [base_url] 
-                 (default: "/deposit")
+* service_doc_url => URL of  SWORD Server's Service Document
+              (default: "http://localhost:8080/sword-app/servicedocument") 
 * username => Username to connect to SWORD server as
 * password => Password for user
 * default_collection_uri => The uri or path of default collection where 

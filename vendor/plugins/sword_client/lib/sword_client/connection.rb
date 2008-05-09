@@ -7,7 +7,7 @@ require 'net/http'
 
 class SwordClient::Connection
   
-  # Base URL of SWORD Server, and the persistent connection to it
+  # URL of SWORD Server (actually URL of service document), and the persistent connection to it
   attr_reader :url, :connection
   
   # Timeout for our connection
@@ -24,14 +24,12 @@ class SwordClient::Connection
   attr_accessor :proxy_settings
   
   
-  # Create a connection to a SWORD Server instance using the base url
+  # Initialize a connection to a SWORD Server instance, whose Service Document
+  #   is located at the URL specified.  This does *not* request the
+  #   Service Document, it just initializes a Connection with information.
+  #   Call 'service_document()' to actually request the contents of that Service Document
   #
-  #   conn = Sword::Connection.new("http://example.com:8080/sword-app")
-  #
-  # Note: The Base URL of the SWORD Server is *not* the same as the
-  #   Service Document.  Both the Service Document and Deposit script
-  #   are assumed to be available at a sub-path of that base url
-  #   (see the options below)
+  #   conn = Sword::Connection.new("http://example.com:8080/sword-app/servicedocument")
   #
   # Options available:
   #    :username => User name to connect as
@@ -45,10 +43,10 @@ class SwordClient::Connection
   #                       :username => login name for proxy server, 
   #                       :password => password for proxy server}
   #
-  def initialize(url="http://localhost:8080/sword-app", opts={})
-    @url = URI.parse(url)
+  def initialize(service_doc_url="http://localhost:8080/sword-app/servicedocument", opts={})
+    @url = URI.parse(service_doc_url)
     unless @url.kind_of? URI::HTTP
-      raise "invalid http url: #{url}"
+      raise SwordException, "URL for Service Document seems to be an invalid HTTP URL: #{service_doc_url}"
     end
   
     #Only load Username/Password/On_Behalf_Of, if specified
@@ -75,45 +73,40 @@ class SwordClient::Connection
   end
   
   # Retrieve the SWORD Service Document for this connection.
-  #   Path of service document should be relative to the base URL
-  #   of the connection (and begin with a slash).  
-  #   Service document path defaults to "/servicedocument"
   #
   # WARNING: this sends a NEW request to your SWORD server every time!
   #   If you want caching, use SwordClient's service_document() method
   #
   # This will return the service document (as an XML string) if found,
   # otherwise it throws a response error.
-  def service_document(path="/servicedocument")
+  def service_document
     
-    response = fetch(@url.path + path)
+    response = fetch(@url.path)
     
     #service document should just be in body of request
     response.body
   end
 
   # Posts a file to the SWORD connection for deposit.
-  #   Path of deposit should be relative to the base URL
-  #   of the connection (and begin with a slash).  
-  #   Deposit path defaults to "http://localhost:8080/sword-app/deposit".  
-  #   However, chances are you need to deposit to a specific 
-  #   collection similar to:
+  #   Deposit URL must be specified.  It should be a 
+  #   deposit URL of a specific collection to deposit to,
+  #   similar to:
   #   "http://localhost:8080/sword-app/deposit/123456789/1"
   #
   # This filepath should be a *local* filepath to file.  
   # MIME type is assumed to be "application/zip", unless specified otherwise
-  def post_file(file_path, deposit_url="http://localhost:8080/sword-app/deposit", mime_type="application/zip")
+  def post_file(file_path, deposit_url, mime_type="application/zip")
     
-    #@TODO: ZIPPING FILES
-    # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/
-
     # Make sure file exists
-    fail "Could not find file at " + file_path if(!File.exists?(file_path))
+    raise SwordException, "Could not find file at " + file_path if(!File.exists?(file_path))
+   
+    # Make sure we have a deposit URL
+    raise SwordException.new, "File '#{file_path}' could not be posted via SWORD as no deposit URL was specified!" if !deposit_url or deposit_url.empty?
    
     # Add content type to HTTP Request Headers
     headers = {'Content-Type' =>  mime_type}
     
-    if mime_type.match('^text\/.*') #check if begins with "text/"
+    if mime_type.match('^text\/.*') #check if MIME Type begins with "text/"
       file = File.open(file_path) # open as normal (text-based format)
     else
       file = File.open(file_path, 'rb') # force opening in Binary file mode
@@ -142,7 +135,7 @@ class SwordClient::Connection
   # and follow redirections down to 10 levels deep (by default)
   def fetch(path, limit = 10)
     
-    fail 'HTTP redirection is too deep...cannot retrieve requested path: ' + path if limit == 0
+    raise SwordException, 'HTTP redirection is too deep...cannot retrieve requested path: ' + path if limit == 0
 
     #make our GET request
     response = request("get", path)
