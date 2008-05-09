@@ -81,6 +81,9 @@ class SwordClient
   # and doesn't connect to SWORD Server yet
   def initialize(config_path="#{RAILS_ROOT}/config/sword.yml")
     
+    # Make sure sword.yml config exists
+    raise SwordException, "Could not find SwordClient configuration file at " + config_path if(!File.exists?(config_path))
+   
     #Load our configurations
     @config = SwordClient.load_sword_config(config_path)
     
