@@ -69,9 +69,9 @@ class SwordClient
   # Currently loaded SWORD service document
   attr_writer :service_doc
     
-  # Currently available collections parsed from service document
-  attr_writer :collections
-  
+  # Currently parsed SWORD service document
+  attr_writer :parsed_service_doc
+    
   #Initialize a SWORD Connection,
   # based on the configurations
   # read from sword.yml.
@@ -153,7 +153,7 @@ class SwordClient
       @parsed_service_doc = SwordClient::Response.parse_service_doc(doc)
     end
     
-    @parsed_service_doc
+    @parsed_service_doc  
   end
   
   
@@ -203,7 +203,7 @@ class SwordClient
   # for all SWORD deposits.  This pulls the information from
   # the currently loaded Service Document.
   #
-  # See SwordClient::Response.get_collections for hash structure. 
+  # See SwordClient::ParsedServiceDoc for hash structure. 
   def get_default_collection
     
     # get our available collections
