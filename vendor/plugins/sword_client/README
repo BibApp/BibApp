@@ -87,7 +87,8 @@ params = {  :username => @username,
   @collection_arr = @client.get_collections
   
 * Parse collections from open service doc (using SwordClient::Response)
-  @collection_arr = SwordClient::Response.get_collections(@service_doc_xml)
+  @parsed_doc = SwordClient::Response.parse_service_doc(@service_doc_xml)
+  @collection_arr = @parsed_doc.collections
 
 5. Posting a File for Deposit to a SWORD Server
 

@@ -11,6 +11,7 @@ require File.expand_path(File.join(ENV['RAILS_ROOT'], 'config/environment.rb'))
 class SwordClientTest < Test::Unit::TestCase
   FIX_DIR = "#{File.expand_path(File.dirname(__FILE__))}/fixtures"
 
+  #Required Setup for all tests
   def setup
     
     # @TODO: ENTER IN A VALID SWORD URL, USERNAME AND PASSWORD TO TEST EVERYTHING!
@@ -18,7 +19,6 @@ class SwordClientTest < Test::Unit::TestCase
     @username = ""
     @password = ""
     
-    @post_response_doc = nil
   end
  
   def test_bad_url_type
@@ -147,13 +147,16 @@ class SwordClientTest < Test::Unit::TestCase
   
     connection = SwordClient::Connection.new(@service_doc_url, {:username=>@username, :password=>@password})
     
-    #retrieve our available collections and check them out
+    #retrieve service doc and parse it
     doc = connection.service_document
-    collections = SwordClient::Response.get_collections(doc)
-    assert_instance_of Array, collections
+    parsed_doc = SwordClient::Response.parse_service_doc(doc)
+    assert_instance_of SwordClient::ParsedServiceDoc, parsed_doc
+      
+    #retrieve collections and check
+    assert_instance_of Array, parsed_doc.collections
     
     #check in more detail
-    collections.each do |c|
+    parsed_doc.collections.each do |c|
       #at very least each collection should have a title & URL
       assert c[:title]
       assert c[:deposit_url]
@@ -171,16 +174,16 @@ class SwordClientTest < Test::Unit::TestCase
     
     #get available collections
     doc = connection.service_document
-    collections = SwordClient::Response.get_collections(doc)
-    assert_instance_of Array, collections
-    assert !collections.empty?
+    parsed_doc = SwordClient::Response.parse_service_doc(doc)
+    assert_instance_of Array, parsed_doc.collections
+    assert !parsed_doc.collections.empty?
     
     puts "\n\nTesting Deposit"
     puts "\nFile: #{FIX_DIR}/sword-example.zip"
-    puts "\nDepositing to: " + collections[0][:deposit_url] + "\n"
+    puts "\nDepositing to: " + parsed_doc.collections[0][:deposit_url] + "\n"
     
     #as a test, we'll just post to first collection found
-    post_response_doc = connection.post_file("#{FIX_DIR}/sword-example.zip", collections[0][:deposit_url])
+    post_response_doc = connection.post_file("#{FIX_DIR}/sword-example.zip", parsed_doc.collections[0][:deposit_url])
     
     #Uncomment to see the ATOM response
     #puts post_response_doc
