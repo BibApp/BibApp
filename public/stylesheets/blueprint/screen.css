@@ -329,9 +329,11 @@ ul#navigation a {
 
 ol.facets {
 	list-style:none;
-	margin-left:0em;
+	margin-left:0px;
 	padding-left:0em;
+	float:left;
 }
+
 
 .formError{
 	display:inline;
