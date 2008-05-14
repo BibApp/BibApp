@@ -125,8 +125,6 @@ class SwordClient
 
   # Retrieve the SWORD Service Document for current connection,
   # based on configs read from sword.yml.
-  #
-  # Caches this service document for future requests using same client.
   def service_document
    
     if !@service_doc #use already cached service doc, if exists
@@ -138,6 +136,24 @@ class SwordClient
     end
     
     @service_doc
+  end
+  
+  # Retrieve and parse the SWORD Service Document for current connection,
+  # based on configs read from sword.yml.
+  #
+  # This returns a SwordClient::ParsedServiceDoc.  In addition, it caches
+  # this parsed service document for future requests using same client.
+  def parsed_service_document
+   
+    if !@parsed_service_doc  #use already cached service doc, if exists
+      #get service doc
+      doc = service_document
+        
+      #parse it into a SwordClient::ParsedServiceDoc
+      @parsed_service_doc = SwordClient::Response.parse_service_doc(doc)
+    end
+    
+    @parsed_service_doc
   end
   
   
@@ -171,18 +187,14 @@ class SwordClient
   # 
   # Caches this array of collections for future requests using same client.
   #
-  # See SwordClient::Response.get_collections for hash structure. 
+  # See SwordClient::ParsedServiceDoc for hash structure. 
   def get_collections
     
-    if !@collections #use already cached collections, if exists
-      # get service document
-      doc = service_document
+    #get parsed service document
+    parsed_doc = parsed_service_document
     
-      #parse out available collections
-     @collections = SwordClient::Response.get_collections(doc)
-    end
-   
-    @collections
+    #return parsed out collections
+    parsed_doc.collections
   end
   
   
@@ -211,6 +223,17 @@ class SwordClient
     
     default_collection
   end
+  
+  # Retrieve repository name from the currently loaded 
+  # SWORD Service Document.  
+  def get_repository_name
+    
+    #get parsed service document
+    parsed_doc = parsed_service_document
+    
+    #return parsed out repository name
+    parsed_doc.repository_name
+  end
 
   private
   
@@ -223,6 +246,7 @@ end
 
 #load SwordClient sub-classes
 require 'sword_client/connection'
-require 'sword_client/source_doc_handler'
+require 'sword_client/service_doc_handler'
 require 'sword_client/post_response_handler'
 require 'sword_client/response'
+require 'sword_client/parsed_service_doc'

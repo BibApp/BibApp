@@ -7,36 +7,25 @@ require 'rexml/document'
 
 class SwordClient::Response
   
-  # Retrieve list of available collections from the given 
-  # SWORD Service Document.  This list of available collections
-  # is based on the access permissions of the authenticated user
-  # (or the "on_behalf_of" user, if specified).
+  # Parse the given SWORD Service Document.  
   #
-  # This will return array of collections, where each
-  # collection is represented in a hash similar to
-  # (see SourceDocHandler for more details):
-  #
-  #   {:title => <Collection Title>,
-  #    :abstract => <Collection Description>,
-  #    :deposit_url => <Collection Deposit URL>,
-  #    :accepts => <Accepted MIME Types>,
-  #    :namespace => <SWORD namespace URI>,
-  #    :collectionPolicy => <Collection License / Policy> }
-  #
-  def self.get_collections(service_doc_response)
+  # Returns a SwordClient::ParsedServiceDoc which contains 
+  # all information which was able to be parsed from
+  # the SWORD Service Document
+  def self.parse_service_doc(service_doc_response)
     
     # We will use SAX Parsing with REXML
     src = REXML::Source.new service_doc_response
     
-    docHandler = SwordClient::SourceDocHandler.new
+    docHandler = SwordClient::ServiceDocHandler.new
     
     #parse Source Doc XML using our custom handler
     REXML::Document.parse_stream src, docHandler
     
-    #return discovered collections array   
-    docHandler.collections  
+    #return SwordClient::ParsedServiceDoc 
+    docHandler.parsed_service_doc
   end
-  
+ 
  
   # Parses the response from post_file() call into 
   # a Hash similar to the following
