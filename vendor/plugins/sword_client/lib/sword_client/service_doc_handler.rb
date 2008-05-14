@@ -28,7 +28,7 @@ class SwordClient::ServiceDocHandler
   @curr_collection = nil  #current collection's hash
   @curr_tag_name = nil    #name of current XML tag in <collection>
   
-  @in_workspace_title = false   # whether in <workspace><atom:title> tag
+  @in_repository_title = false   # whether in <workspace><atom:title> tag
   
   
   def initialize
@@ -47,9 +47,9 @@ class SwordClient::ServiceDocHandler
       #save current tag name for later
       #only save end of name (e.g. "atom:title" becomes "title")
       @curr_tag_name = name.gsub(/.*:/, '')
-    elsif @curr_tag_name=="workspace" and name=="title"  
+    elsif !@curr_collection and name=="atom:title"  
       #capture the repository's name, which is under <workspace><atom:title>...</workspace>
-      @in_workspace_title = true
+      @in_repository_title = true
     end
   end
   
@@ -60,7 +60,7 @@ class SwordClient::ServiceDocHandler
     # save the text as the value of the current XML tag
     if @curr_collection and @curr_tag_name and !@curr_tag_name.empty?
       @curr_collection[@curr_tag_name.to_sym] = text
-    elsif @in_workspace_title
+    elsif @in_repository_title
       #capture the repository's name
       @parsed_service_doc.repository_name = text
     end
@@ -79,6 +79,8 @@ class SwordClient::ServiceDocHandler
     
     #clear out current tag name, no matter what
     @curr_tag_name = ""
+    #clear out flag which tells us to grab repository's title/name
+    @in_repository_title = false
   end
  
 end
