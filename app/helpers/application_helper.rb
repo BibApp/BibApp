@@ -156,10 +156,13 @@ module ApplicationHelper
     # TODO: Add Sort
     # If we have >1 filter, we need to join the facet_field:value
     if query_filter.size > 0 || !query_filter.empty?
-      
       prepped_filter = Array.new
       prepped_filter << query_filter.dup
-      prepped_filter << '"' + value.to_s + '"'
+
+      if(!query_filter.include?('"' + value.to_s + '"'))
+        prepped_filter << '"' + value.to_s + '"'
+      end
+      
       prepped_filter = prepped_filter.join("+>+")
 
     # If we have no filters, we need to send the first
