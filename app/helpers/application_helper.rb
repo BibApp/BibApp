@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   require 'config/personalize.rb'
+  require 'htmlentities'
   
   def ajax_checkbox_toggle(model, person, selected)
     person = Person.find(person.id)
@@ -190,5 +191,17 @@ module ApplicationHelper
       :sort => sort,
       :fq => prepped_filter
     }
+  end
+  
+  #Encodes UTF-8 data such that it is valid in HTML
+  def encode_for_html(data)
+    code = HTMLEntities.new
+    code.encode(data, :decimal)
+  end
+  
+  #Encodes UTF-8 data such that it is valid in XML
+  def encode_for_xml(data)
+    code = HTMLEntities.new
+    code.encode(data, :basic)
   end
 end
