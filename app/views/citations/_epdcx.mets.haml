@@ -10,21 +10,21 @@
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/ScholarlyWork" }/
         -# TITLE (PRIMARY)
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
-          %epdcx:valueString=@citation.title_primary
+          %epdcx:valueString=encode_for_xml(@citation.title_primary)
         -# SUBJECTS (i.e. Keywords/Tags)  @TODO - Add Tags!!
         - if @citation.keywords
           - @citation.keywords.each do |kw|
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/subject" }
-              %epdcx:valueString=kw.name 
+              %epdcx:valueString=encode_for_xml(kw.name) 
         -# ABSTRACT
         - if @citation.abstract and !@citation.abstract.empty?
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/abstract" }
-            %epdcx:valueString=@citation.abstract
+            %epdcx:valueString=encode_for_xml(@citation.abstract)
         -# CREATOR (i.e. AUTHOR)
         - if @citation.author_name_strings 
           - @citation.author_name_strings.each do |ns|
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/creator" }
-              %epdcx:valueString=ns.name
+              %epdcx:valueString=encode_for_xml(ns.name)
         -# Reference to Expression of item (see below)
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isExpressedAs", 'epdcx:valueRef'=>"sword-mets-expr-#{@citation.id}" }/
       
@@ -34,14 +34,14 @@
         -# ADDITIONAL TITLES
         - if @citation.title_secondary and !@citation.title_secondary.empty?
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
-            %epdcx:valueString=@citation.title_secondary
+            %epdcx:valueString=encode_for_xml(@citation.title_secondary)
         - if @citation.title_tertiary and !@citation.title_tertiary.empty?
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
-            %epdcx:valueString=@citation.title_tertiary 
+            %epdcx:valueString=encode_for_xml(@citation.title_tertiary) 
         -# DESCRIPTION / NOTES
         - if @citation.notes and !@citation.notes.empty?
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/description" }
-            %epdcx:valueString=@citation.notes
+            %epdcx:valueString=encode_for_xml(@citation.notes)
         -# DATE AVAILABLE
         - if @citation.publication_date
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/available" }
@@ -49,7 +49,7 @@
         -# LANGUAGE
         - if @citation.language
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/language", 'epdcx:vesURI'=>"http://purl.org/dc/terms/RFC3066" }
-            %epdcx:valueString=@citation.language    
+            %epdcx:valueString=encode_for_xml(@citation.language)    
         -# TYPE (Based on EPrints Type Vocab or DCMI Types)
           -# Check if EPrints Type
         - if @citation.type_uri and @citation.type_uri.include? "eprint/type"
@@ -60,17 +60,17 @@
         -# COPYRIGHT HOLDER
         - if @citation.copyright_holder
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/copyrightHolder" }
-            %epdcx:valueString=@citation.copyright_holder
+            %epdcx:valueString=encode_for_xml(@citation.copyright_holder)
         -# EDITORS
         - if @citation.editor_name_strings 
           - @citation.editor_name_strings.each do |ns|
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://www.loc.gov/loc.terms/relators/EDT" }
-              %epdcx:valueString=ns.name
+              %epdcx:valueString=encode_for_xml(ns.name)
         
         -# BIBLIOGRAPHIC CITATION
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/bibliographicCitation" }
           -# Plain-text Citation in APA Citation Format
-          %epdcx:valueString=@citation.to_s
+          %epdcx:valueString=encode_for_xml(@citation.to_s)
           -# OpenURL ContextObject
           = render :partial => 'epdcx_openurl' 
           
@@ -85,11 +85,11 @@
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Manifestation" }/
           -# CONTENT TYPE
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/format", 'epdcx:valueURI'=>"http://purl.org/dc/terms/IMT" }
-            %epdcx:valueString=att.content_type
+            %epdcx:valueString=encode_for_xml(att.content_type)
           -# PUBLISHER
           - if @citation.publisher
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/publisher" }
-              %epdcx:valueString=@citation.publisher.authority.name
+              %epdcx:valueString=encode_for_xml(@citation.publisher.authority.name)
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> att.public_url(request) }/
         %epdcx:description{ 'epdcx:resourceURI'=>att.public_url(request) }
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Copy" }/
