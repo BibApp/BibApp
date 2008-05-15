@@ -24,6 +24,7 @@ class Citation < ActiveRecord::Base
     :dependent => :delete_all
   
   has_many :attachments, :as => :asset
+  belongs_to :citation_archive_state 
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states
@@ -49,6 +50,8 @@ class Citation < ActiveRecord::Base
     
     self.reload
     update_scoring_hash
+    
+    update_archive_state
   end
   
   #### Serialization ####
@@ -453,6 +456,23 @@ class Citation < ActiveRecord::Base
     self.save_without_callbacks
   end
   
+  #Update status if ready for archiving
+  def update_archive_state  
+    #check if citation has attachments
+    if !self.attachments.nil? and !self.attachments.empty?
+      #if attachments exist, change status to "ready to archive"
+      if self.citation_archive_state_id != 2
+        self.citation_archive_state_id = 2
+        self.save_without_callbacks
+      end
+    elsif self.citation_archive_state_id == 2 
+      #else if marked ready, but no attachments
+      #then, revert to initial status  
+      self.citation_archive_state_id = 1
+      self.save_without_callbacks
+    end
+  end
+  
   # Returns to citation Type URI based on the EPrints Application Profile's
   # Type vocabulary.  If the type is not available in the EPrints App Profile,
   # then the URI of the appropriate DCMI Type is returned.
@@ -673,4 +693,10 @@ class Citation < ActiveRecord::Base
     self.citation_name_strings = @citation_name_strings_cache if @citation_name_strings_cache
   end  
   
+end
+
+# Citation's Archive Status
+class CitationArchiveState < ActiveRecord::Base
+  #there are many citations in the same state
+  has_many :citations
 end
