@@ -1,21 +1,22 @@
 - if flash[:notice]
-  %div#flash= flash[:notice]
+  %div.success= flash[:notice]
 
-%div{:class => "column span-24"}
+%div{:class => "span-24"}
   %h3 
     = @citation.title_primary
     %span
       = link_to "Edit", edit_citation_path
       | 
-      = link_to "Upload File(s)", new_citation_attachment_path(@citation)
+      = link_to "Archive Research", new_citation_attachment_path(@citation)
 
-  %div{:class => "column span-12"}
+  %div{:class => "span-12 last"}
     %label APA Format:
     %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }  
 
-%div{:class => "column span-24"}
-  %div{:class => "column span-12"}  
+%div{:class => "span-24"}
+  %div{:class => "span-11"}  
     %fieldset
+      %legend Citation Information
       - if @citation.author_name_strings.size > 0
         %div.field
           %label Authors:
@@ -71,7 +72,6 @@
           %label Abstract:
           %span.field_value=@citation.abstract
   - if !@citation.attachments.nil? and !@citation.attachments.empty?               
-    %div{:class => "column span-12"}
+    %div{:class => "span-11"}
       = render :partial => 'attachments', :locals => { :files => @citation.attachments }
- 
                                 

@@ -1,9 +1,17 @@
+
 %fieldset
-  %legend Attached File(s)
-  
+  %legend Research File(s)
   - files.each do |f|
     %div.file
       = link_to "#{f.filename}", f.public_filename
       = "(#{f.filesize}) - "
       = link_to "remove", attachment_path(f), :method => :delete
+  -if SwordClient.isConfigured?
+    %br/
+    %p
+      The above files will be deposited in your local archive.
+    %div.field
+      %label Current Deposit Status:
+      %span.field_value=@citation.citation_archive_state.name
+  
     

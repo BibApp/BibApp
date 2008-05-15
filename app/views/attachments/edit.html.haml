@@ -6,17 +6,17 @@
 %h3="Upload #{@attachment.class.to_s.underscore.titleize}"
 
 - if @attachment.asset.kind_of?(Person)
-  %div{:class => "column span-23"}
+  %div{:class => "span-23 last"}
     %h4="Attached to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}"
   %div{:class => "column span-6"}
     Original Image
     %br/
     = link_to image_tag(@attachment.public_filename), @attachment.public_filename
-  %div{:class => "span-4"}
+  %div{:class => "span-4 last"}
     Resized Image
     %br/
     = render :partial => "shared/person_image", :locals => {:o => @attachment.asset}
-%div{:class => "column span-23"}  
+%div{:class => "span-23 last"}  
   - form_for :attachment, :url => attachment_path(@attachment), :html => { :method => :put, :multipart => true } do |form|
     %p
       %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
