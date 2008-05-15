@@ -1,0 +1,8 @@
+#content
+  %h3= "Ready to Archive: #{@citations.size} remain"
+
+  - if @citations.size > 0
+    = render :partial => "citations"
+  - else
+    %p 
+      No citations are marked "ready to archive"!
