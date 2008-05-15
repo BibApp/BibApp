@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   end
   
   #Find citations which are marked "Ready to Archive"
-  def archive
+  def ready_to_archive
     #@TODO: right now just listing 10 citations...this should be
     # more of a faceted view that allows you to find citations to archive next
     @citations = Citation.find(:all, 
