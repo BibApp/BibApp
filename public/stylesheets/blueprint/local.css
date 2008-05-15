@@ -29,3 +29,10 @@
 #footer a {
 	color:#990000;
 }
+
+/* Style for displaying Deposit License Agreement, etc. in nice scrollable div */
+.scrollarea {
+    width: 550px;
+    height: 250px;
+    overflow: scroll;
+}

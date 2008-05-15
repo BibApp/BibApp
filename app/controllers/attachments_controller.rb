@@ -1,3 +1,5 @@
+require 'sword_client'
+    
 class AttachmentsController < ApplicationController
   
   make_resourceful do
@@ -19,6 +21,13 @@ class AttachmentsController < ApplicationController
       
       #initialize attachment subclass with any passed in attachment info
       @attachment = subklass_init(params[:type], params[:attachment])
+      
+      #get SWORD information if SWORD is configured
+      if SwordClient.isConfigured?
+        get_sword_info  #gets License & Repository Name for View
+      else
+        flash[:error] = "SWORD does not seem to be configured in #{RAILS_ROOT}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+      end
     end
     
     
@@ -105,9 +114,33 @@ class AttachmentsController < ApplicationController
     @attachment.destroy if @attachment
     
     respond_to do |format|
-      flash[:notice] = 'Attachment was successfully deleted'
-      format.html {redirect_to get_response_url(asset)}
-      format.xml  {head :ok }
+      if asset.save! #make sure asset's after_save callbacks are called
+        flash[:notice] = 'Attachment was successfully deleted'
+        format.html {redirect_to get_response_url(asset)}
+        format.xml  {head :ok }
+      end  
+    end
+  end
+
+  
+  # Pull down necessary information
+  # from SWORD Server for the default collection
+  def get_sword_info
+    
+    #initialize SWORD client based on SWORD config (sword.yml)
+    sword_client = SwordClient.new
+   
+    #get our default collection info from SWORD service document
+    # (this automatically requests the service doc as necessary)
+    default_collection = sword_client.get_default_collection
+    
+    # @TODO, right now we are dependent on a default collection!
+    if !default_collection.nil?
+      #save license text for display in view
+      @license = default_collection[:collectionPolicy]
+      
+      #save repository name for display in view
+      @repository_name = sword_client.get_repository_name
     end
   end
 

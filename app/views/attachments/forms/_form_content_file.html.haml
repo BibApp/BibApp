@@ -1,0 +1,38 @@
+- form_for :attachment, :url => attachments_path, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
+  %div{:class => "span-14"}
+    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
+    %span.asset= render :partial => "citations/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
+
+  %div{:class => "box span-14"}
+    %div#upload_files{:class => "span-14"}
+      %label="Upload File(s):"
+      -# Allow uploading multiple files
+      = link_to_remote "[Add More Files]", :url =>{ :action => :add_upload_box, :form => form }
+      %br/ 
+      = render :partial => 'upload_file', :locals => { :form => form }
+
+    -# save asset id as citation_id  
+    = hidden_field_tag :citation_id, @asset.id
+
+    -# Save type of attachment
+    = hidden_field_tag :type, @attachment.class
+
+    -# Display deposit license from SWORD, if possible
+    - if @license
+      %p
+        = check_box_tag 'license_agree', 'yes' 
+        I agree to the terms of the 
+        = link_to_function "Deposit License", "$('license').toggle();"
+        for
+        - if @repository_name
+          =@repository_name
+        - else
+          my local repository
+      %div#license_warning{:style => "display: none;", :class => "notice"}
+        You must agree to the license terms before you can upload files.  
+      %div#license{:style => "display: none;", :class => "scrollarea span-12"}
+        = @license
+
+  %p.submit
+    = submit_tag "Upload file(s)", :disable_with => "Uploading files..."
+  

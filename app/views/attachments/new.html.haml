@@ -1,32 +1,11 @@
-- if flash[:notice]
-  %div#flash= flash[:notice]
+- if flash[:error]
+  %div.error= flash[:error]  
 
 = error_messages_for :attachment
 
 %h3="Upload #{@attachment.class.to_s.underscore.titleize}"
 
-- if @asset.kind_of?(Citation)
-  %div{:class => "column span-12"}
-    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
-    %span.asset= render :partial => "citations/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
-- elsif @asset.kind_of?(Person)
-  %div{:class => "column span-12"}
-    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
-
-%div{:class => "column span-12"}  
-  - form_for :attachment, :url => attachments_path, :html => { :multipart => true } do |form|
-    %br/
-    %div#upload_files
-      %label="Upload #{@attachment.class.to_s.underscore.humanize}:"
-      -# Only allow multiple files for Citations
-      - if @asset.kind_of?(Citation)
-        = link_to_remote "[Add More Files]", :url =>{ :action => :add_upload_box, :form => form }
-      %br/ 
-      = render :partial => 'upload_file', :locals => { :form => form }
-    = hidden_field_tag :type, @attachment.class
-    - if @asset.kind_of?(Citation)
-      = hidden_field_tag :citation_id, @asset.id
-    - elsif @asset.kind_of?(Person)
-      = hidden_field_tag :person_id, @asset.id
-    %p.submit
-      = submit_tag "Upload"    
+%div{:class => "column span-14"}  
+  = render :partial => "attachments/forms/form_#{@attachment.class.name.to_s.underscore}"
+    
+          
