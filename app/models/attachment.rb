@@ -43,4 +43,9 @@ class Attachment < ActiveRecord::Base
   def public_url(request)
     request.protocol+request.host_with_port+self.public_filename
   end 
+  
+  # Return the full path of the file on the local filesystem
+  def absolute_path
+    "#{RAILS_ROOT}/public/#{self.public_filename}"
+  end
 end
