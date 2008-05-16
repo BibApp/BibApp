@@ -65,8 +65,8 @@ class SwordClient::Connection
     end
 
     #set to SSL if HTTPS connection  (@TODO: NOT WORKING RIGHT NOW)
-    #@connection.use_ssl = @url.scheme == "https:" 
-    #@connection.verify_mode = OpenSSL::SSL::VERIFY_NONE #turn off SSL verify mode
+    @connection.use_ssl = @url.scheme == "https:" 
+    @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE #turn off SSL verify mode
     
     #setup connection timeout, if specified
     @connection.read_timeout = opts[:timeout] if opts[:timeout]
