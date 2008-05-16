@@ -81,6 +81,11 @@
       
       -##### Description of a MANIFESTATION of an expression of the item #####
       - citation.attachments.each do |att|
+        -# Check for flag to ONLY display file names (not paths)
+        - if filenames_only
+          - filepath = att.filename
+        - else
+          - filepath = att.public_url(request)  
         %epdcx:description{ 'epdcx:resourceId'=>"sword-mets-manifest-#{att.id}" }
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Manifestation" }/
           -# CONTENT TYPE
@@ -90,8 +95,8 @@
           - if citation.publisher
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/publisher" }
               %epdcx:valueString=encode_for_xml(citation.publisher.authority.name)
-          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> att.public_url(request) }/
-        %epdcx:description{ 'epdcx:resourceURI'=>att.public_url(request) }
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> filepath }/
+        %epdcx:description{ 'epdcx:resourceURI'=>filepath }
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Copy" }/
           
               
