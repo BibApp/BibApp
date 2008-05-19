@@ -1,17 +1,25 @@
 
 %fieldset
   %legend Research File(s)
-  - files.each do |f|
-    %div.file
-      = link_to "#{f.filename}", f.public_filename
-      = "(#{f.filesize}) - "
-      = link_to "remove", attachment_path(f), :method => :delete
-  -if SwordClient.isConfigured?
-    %br/
+  - if CitationArchiveState.archived?(@citation)
     %p
-      The above files will be deposited in your local archive.
-    %div.field
-      %label Current Deposit Status:
-      %span.field_value=@citation.citation_archive_state.name
+      Files have been permanently archived at the following location(s):
+    - @citation.external_system_uris.each do |s|
+      %div.file
+        = link_to "#{s.uri}", s.uri
+        = "(#{s.external_system.name})"
+  - else      
+    - files.each do |f|
+      %div.file
+        = link_to "#{f.filename}", f.public_filename
+        = "(#{f.filesize}) - "
+        = link_to "remove", attachment_path(f), :method => :delete
+    -if SwordClient.configured?
+      %br/
+      %p
+        The above files will be deposited in your local archive.
+      %div.field
+        %label Current Deposit Status:
+        %span.field_value=@citation.citation_archive_state.name
   
     
