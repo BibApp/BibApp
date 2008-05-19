@@ -3,7 +3,7 @@ class RisParser < CitationParser
   def parse(risdata)
     risdata = risdata.dup
     risdata.strip!
-    risdata.gsub!("\r", "\n")
+    risdata.gsub!("\r", "\n").gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
     if not risdata =~ /^ER  \-/
       return nil
     end
