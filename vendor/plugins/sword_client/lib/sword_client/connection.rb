@@ -64,7 +64,7 @@ class SwordClient::Connection
       @connection = Net::HTTP.new(@url.host, @url.port)
     end
 
-    #set to SSL if HTTPS connection  (@TODO: NOT WORKING RIGHT NOW)
+    #set to SSL if HTTPS connection
     @connection.use_ssl = @url.scheme == "https:" 
     @connection.verify_mode = OpenSSL::SSL::VERIFY_NONE #turn off SSL verify mode
     

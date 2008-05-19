@@ -80,11 +80,16 @@ class SwordClient::PostResponseHandler
       @response_hash[:server][:name] = text  
     else #just copy information into hash value which matches tag name
       if @curr_tag_name and !@curr_tag_name.empty?
-        #Make an array of values, just in case there's more than one
+        #Make an array of values, if there's more than one
         if @response_hash[@curr_tag_name.to_sym]
-           @response_hash[@curr_tag_name.to_sym].push(text)
+           #If not already an Array, change into an Array
+           if !@response_hash[@curr_tag_name.to_sym].kind_of?(Array)
+             curr_value = @response_hash[@curr_tag_name.to_sym]
+             @response_hash[@curr_tag_name.to_sym] = [ curr_value ]
+           end
+           @response_hash[@curr_tag_name.to_sym].push(text) #push on new value
         else
-           @response_hash[@curr_tag_name.to_sym] = [ text ]
+           @response_hash[@curr_tag_name.to_sym] = text
         end
       end
     end

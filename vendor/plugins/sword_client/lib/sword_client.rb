@@ -113,7 +113,7 @@ class SwordClient
 
   #Tests if the SwordClient seems to be configured
   # by attempting to initialize it based on sword.yml
-  def self.isConfigured?
+  def self.configured?
     begin
       client = SwordClient.new
       return true if client.kind_of?(SwordClient)
@@ -163,9 +163,6 @@ class SwordClient
   # If deposit URL is unspecified, it posts to the 
   # default collection (if one is specified in sword.yml)
   def post_file(file_path, deposit_url=nil, mime_type="application/zip")
-    
-    #@TODO: ZIPPING FILES
-    # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/
     
     if deposit_url.nil?
       #post to default collection, if there is one
