@@ -10,4 +10,5 @@
     = "#{citation.volume}(#{citation.issue}), #{citation.start_page}-#{citation.end_page}."
     %br/
     %strong Year:
-    ="#{citation.publication_date.year}"
+    -if citation.publication_date != nil
+      ="#{citation.publication_date.year}"
