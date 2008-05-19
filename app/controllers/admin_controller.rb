@@ -20,11 +20,11 @@ class AdminController < ApplicationController
   def deposit_via_sword
    
     #get our Citation
-    citation = Citation.find(params[:citation_id])
+    @citation = Citation.find(params[:citation_id])
  
     #Generate a SWORD package and deposit it. 
     # Receive back a hash of deposit information
-    @deposit = send_sword_package(citation)
+    @deposit = send_sword_package(@citation)
     
     logger.debug("DEPOSIT HASH =" + @deposit.inspect)
     
@@ -39,14 +39,14 @@ class AdminController < ApplicationController
     
     #Save the URI generated from our deposit
     ExternalSystemUri.find_or_create_by_citation_id_and_external_system_id_and_uri(
-                    :citation_id => citation.id,
+                    :citation_id => @citation.id,
                     :external_system_id => system.id,
                     :uri => @deposit[:deposit_url])
    
     
     #Save the date deposited to Citations table (this will also change the Archived State)
-    citation.archived_at = DateTime.parse(@deposit[:updated])
-    citation.save
+    @citation.archived_at = DateTime.parse(@deposit[:updated])
+    @citation.save
   end
   
   
