@@ -1,0 +1,31 @@
+- if flash[:notice]
+  %div#flash= flash[:notice]
+
+%div{:class => "column span-24"}
+  %h3="Attachment Information"
+  
+  
+  - if @asset and @asset.kind_of?(Citation)
+    %div{:class => "column span-12"}
+      %h4="Attached to #{@asset.class.to_s.underscore.humanize}:"
+      %span.asset= render :partial => "citations/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
+  - elsif @asset and @asset.kind_of?(Person)
+    %div{:class => "column span-12"}
+      %h4="Attached to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
+      
+  %div{:class => "column span-12"}
+    %fieldset
+      %legend Attachments
+      %ul
+        - @asset.attachments.each do |att|  
+          %li.attachment
+            - if @asset.kind_of?(Citation)
+              =link_to "#{att.filename}", citation_attachment_path(@asset, att)
+            - elsif @asset.kind_of?(Person) 
+              =link_to "#{att.filename}", person_attachment_path(@asset, att) 
+            %span.size="(#{att.size})"
+  %div{:class => "column span-12"}
+    - if @asset and @asset.kind_of?(Citation)
+      =link_to "Return to #{@asset.class.to_s.underscore.humanize}", citation_url(@asset)
+    - if @asset and @asset.kind_of?(Person)
+      =link_to "Return to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}", person_url(@asset)  
