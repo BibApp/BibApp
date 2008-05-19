@@ -6,8 +6,9 @@
     = @citation.title_primary
     %span
       = link_to "Edit", edit_citation_path
-      | 
-      = link_to "Archive Research", new_citation_attachment_path(@citation)
+      - if !CitationArchiveState.archived?(@citation)
+        | 
+        = link_to "Archive Research", new_citation_attachment_path(@citation)
 
   %div{:class => "span-12 last"}
     %label APA Format:
@@ -74,4 +75,6 @@
   - if !@citation.attachments.nil? and !@citation.attachments.empty?               
     %div{:class => "span-11"}
       = render :partial => 'attachments', :locals => { :files => @citation.attachments }
+  %div{:class => "span-11"}
+    = render :partial => 'admin'
                                 

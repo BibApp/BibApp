@@ -1,0 +1,24 @@
+#content
+  %h3= "SWORD Deposit results:"
+
+  - if @deposit
+    %p.success Deposit was successful!    
+    %fieldset
+      %legend Deposit Information
+      %div.field
+        %label Title:
+        %span.field_value=@deposit[:title] 
+      %div.field
+        %label Deposit ID:
+        %span.field_value=@deposit[:deposit_id]
+      %div.field
+        %label URL of Deposited Item:
+        %span.field_value
+          =link_to @deposit[:deposit_url], @deposit[:deposit_url]
+      %div.field
+        %label Repository:
+        %span.field_value
+          =link_to "#{@deposit[:server][:name]}", @deposit[:server][:uri]
+      %div.field
+        %label Date Deposited:
+        %span.field_value=@deposit[:updated]
