@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 37) do
+ActiveRecord::Schema.define(:version => 38) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(:version => 37) do
     t.text     "abstract"
     t.text     "notes"
     t.string   "links"
-    t.string   "local_archive_uri"
     t.string   "title_dupe_key"
     t.string   "issn_isbn_dupe_key"
     t.integer  "citation_state_id"
@@ -103,17 +102,17 @@ ActiveRecord::Schema.define(:version => 37) do
 
   add_index "contributorships", ["citation_id", "person_id"], :name => "author_citation_join", :unique => true
 
-  create_table "external_system_keys", :force => true do |t|
+  create_table "external_system_uris", :force => true do |t|
     t.integer "external_system_id"
     t.integer "citation_id"
-    t.string  "exernal_key_number"
+    t.string  "uri"
   end
 
   create_table "external_systems", :force => true do |t|
-    t.string "name"
+    t.text   "name"
     t.string "abbreviation"
-    t.string "base_url"
-    t.string "lookup_params"
+    t.text   "base_url"
+    t.text   "lookup_params"
   end
 
   create_table "groups", :force => true do |t|
