@@ -23,15 +23,17 @@ class AttachmentsController < ApplicationController
       @attachment = subklass_init(params[:type], params[:attachment])
       
       #get SWORD information if SWORD is configured
-      if SwordClient.isConfigured?
+      if SwordClient.configured?
         get_sword_info  #gets License & Repository Name for View
       else
         flash[:error] = "SWORD does not seem to be configured in #{RAILS_ROOT}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
       end
     end
     
-    
-    
+    before :index do
+      #load asset information
+      load_asset
+    end
     
   end # end make_resourceful  
   
