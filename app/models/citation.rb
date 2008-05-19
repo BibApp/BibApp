@@ -22,6 +22,8 @@ class Citation < ActiveRecord::Base
   has_many :keywordings,
     :dependent => :delete_all
   
+  has_many :external_system_uris
+  
   has_many :attachments, :as => :asset
   belongs_to :citation_archive_state 
 
@@ -355,7 +357,7 @@ class Citation < ActiveRecord::Base
   # All Citations begin unverified
   def set_initial_states
     self.citation_state_id = 1
-    self.citation_archive_state_id = 1
+    self.citation_archive_state = CitationArchiveState.initial
   end
 
   def solr_id
@@ -449,19 +451,24 @@ class Citation < ActiveRecord::Base
     self.save_without_callbacks
   end
   
-  #Update status if ready for archiving
+  #Update archive status of Citation
   def update_archive_state  
+    #if archived date set, its in archived state! 
+    if !self.archived_at.nil? 
+      #this citation is officially "archived"!
+      self.citation_archive_state = CitationArchiveState.archived
+      self.save_without_callbacks
     #check if citation has attachments
-    if !self.attachments.nil? and !self.attachments.empty?
+    elsif !self.attachments.nil? and !self.attachments.empty?
       #if attachments exist, change status to "ready to archive"
-      if self.citation_archive_state_id != 2
-        self.citation_archive_state_id = 2
+      if !CitationArchiveState.ready_to_archive?(self)
+        self.citation_archive_state = CitationArchiveState.ready_to_archive
         self.save_without_callbacks
       end
-    elsif self.citation_archive_state_id == 2 
+    elsif CitationArchiveState.ready_to_archive?(self) 
       #else if marked ready, but no attachments
       #then, revert to initial status  
-      self.citation_archive_state_id = 1
+      self.citation_archive_state = CitationArchiveState.initial
       self.save_without_callbacks
     end
   end
@@ -603,7 +610,6 @@ class Citation < ActiveRecord::Base
     
     citation_string
   end
-  
   
   ### PRIVATE METHODS ###
   private
