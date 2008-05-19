@@ -435,7 +435,12 @@ class Citation < ActiveRecord::Base
 
   def update_scoring_hash
     logger.debug "\n\n===== UPDATE SCORING HASH ===== \n\n"
-    year = self.publication_date.year
+    if self.publication_date != nil
+      year = self.publication_date.year
+    else
+      year = nil
+    end
+    
     publication_id = self.publication_id
     collaborator_ids = self.name_strings.collect{|ns| ns.id}
     keyword_ids = self.keywords.collect{|k| k.id}

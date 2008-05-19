@@ -55,5 +55,6 @@
             = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
             %br/
             %strong Year:
-            ="#{doc.publication_date.year}"
+            -if doc.publication_date != nil
+              ="#{doc.publication_date.year}"
             = #render :partial => "shared/coins", :locals => {:citation => doc}

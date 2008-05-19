@@ -67,6 +67,47 @@ class Index
     :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
   }
   
+  SOLR_MAPPING_NO_DATE = {
+    # Citation
+    :pk_i => :id,
+    :id => Proc.new{|record| record.solr_id},
+    :title => :title_primary,
+    :abstract => :abstract,
+    :type_facet => Proc.new{|record| record[:type]},
+    :title_t => :title_primary,
+    :abstract_t => :abstract,
+    :title_secondary_t => :title_secondary,
+    :citation_id_facet => Proc.new{|record| record.solr_id},
+
+    # SpellCheck
+    :word => :abstract,
+    
+    # NameString
+    :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
+    :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
+    
+    # Person
+    :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
+    :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
+    
+    # Group
+    :group_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
+    :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
+    
+    # Publication
+    :publication_facet => Proc.new{|record| record.publication.authority.name},
+    :publication_id_facet => Proc.new{|record| record.publication.authority.solr_id},
+    
+    # Publisher
+    :publisher_facet => Proc.new{|record| record.publisher.authority.name},
+    :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
+    
+    # Keyword
+    :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
+    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
+  }
+  
+  
   class << self
     def batch_index
       records = Citation.find(
@@ -74,7 +115,11 @@ class Index
         :conditions => ["citation_state_id = ? and batch_index = ?", 3, 1])
       
       records.each do |record|
-        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+        if record.publication_date != nil
+          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+        else
+          doc = Solr::Importer::Mapper.new(SOLR_MAPPING_NO_DATE).map(record)
+        end
         SOLRCONN.add(doc)
         record.batch_index = 0
         record.save_without_callbacks
