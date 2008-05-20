@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   make_resourceful do 
-    build :all
+    build :all, :update
 
     before :index do
       @a_to_z = Group.letters.collect { |g| g.letter }
@@ -22,5 +22,10 @@ class GroupsController < ApplicationController
 
       @title = @current_object.name
     end
+  end
+  
+  def create_group
+    @group = Group.find_or_create_by_name(params[:group][:name])
+    redirect_to new_group_path
   end
 end

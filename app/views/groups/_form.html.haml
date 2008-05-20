@@ -1,0 +1,5 @@
+%fieldset
+  %legend="Group"
+  - form_for :group, Group.new, :url => {:action => :create_group }, :method => :post do |form|
+    = form.text_field :name, :size => 20
+    = submit_tag "Add"
