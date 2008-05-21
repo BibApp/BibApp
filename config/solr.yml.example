@@ -1,10 +1,18 @@
-# Config file for the acts_as_solr plugin.
+# Config file for starting Solr (from /vendor/solr) in BibApp.
 #
-# If you change the host or port number here, make sure you update 
-# them in your Solr config file
+# Because BibApp uses Solr *very heavily*, we currently require
+# Solr run on 'localhost'.  Only the port is editable.
+#
+# Start Solr via:   
+#   rake solr:start  (Windows: rake solr:start_win)
+# Once started, the Solr Admin interface should be available at:
+#   http://localhost:[port]/solr/admin/
 
 development:
-  url: http://localhost:8982/solr
+  port: 8982
+  
+test:
+  port: 8984
   
 production:
-  url: http://localhost:8983/solr
+  port: 8983 
