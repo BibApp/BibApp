@@ -1,8 +1,3 @@
-production:
-  host: ldap.services.wisc.edu
-  port: 389
-  base: dc=wisc,dc=edu
-
 development:
   host: ldap.services.wisc.edu
   port: 389
@@ -12,3 +7,9 @@ test:
   host: ldap.services.wisc.edu
   port: 389
   base: dc=wisc,dc=edu
+
+production:
+  host: ldap.services.wisc.edu
+  port: 389
+  base: dc=wisc,dc=edu
+
