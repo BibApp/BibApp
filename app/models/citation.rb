@@ -218,7 +218,17 @@ class Citation < ActiveRecord::Base
       # Setting Keywords
       ###
       citation.keyword_strings = h[:keywords]
-	 
+
+      # Ensure publication_date is good
+      if h[:publication_date].nil? or h[:publication_date].empty?
+        h[:publication_date] = Date.new(1)
+      end
+      
+      # Clean the abstract
+      # @TODO we'll want to clean all data
+      code = HTMLEntities.new
+      h[:abstract] = code.encode(h[:abstract], :decimal)
+      
       # Clean the hash of non-Citation table data
       # Cleaning preps hash for AR insert
       h.delete(:klass)

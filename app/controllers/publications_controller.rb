@@ -38,11 +38,11 @@ class PublicationsController < ApplicationController
       )
       
       @query = @current_object.solr_id
-      @sort = params[:sort] || "year desc"
-      @fetch = @query + ";" + @sort
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
+      @sort = params[:sort] || "year"
+      @page = params[:page] || 0
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page)
 
       @title = @current_object.name
     end

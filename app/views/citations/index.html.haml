@@ -24,45 +24,8 @@
               ="(#{p.value})"
           %li=link_to "More...", people_path
 
-    %div{:class => "span-9 prepend-1 append-1 last"}
-      / Features! Because the BibApp loves people
-      / Example text
-      %h3{:style => "color:#990000; border-bottom:1px dotted #000; padding-bottom:0.5em"} Adaptive liquid microlenses activated by stimuli-responsive hydrogels
-      %div{:style => "float:right;padding:0.5em;margin:0.5em;"}
-        %div{:style => "text-align:center"}
-          %img{:src => "images/jiang_hongrui.gif", :alt => "Hongrui Jiang", :style => "float:right; border:2px dashed #CCC; padding:3px;", :height => "100px"}
-          %h5 Hongrui Jiang
-      %p When Hongrui Jiang looked into a fly's eye, he saw a way to make a tiny lens so "smart" that it can adapt its focal length from minus infinity to plus infinity — without external control.
-      %p 
-        Incorporating hydrogels that respond to physical, chemical or biological stimuli and actuate lens function, these liquid microlenses could advance lab-on-a-chip technologies, optical imaging, medical diagnostics and bio-optical microfluidic systems.
-        %a{:href => "http://www.engr.wisc.edu/news/headlines/2006/Aug02.html"} More...
-    
-      %div{:class => "span-10", :style => "margin-left:1.5em"}
-        / University communications articles
-
-        / One
-        %div{:class => "span-2", :style => "text-align:center"}
-          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px", :style => "float:right; border:2px dashed #CCC; padding:3px;" }
-          %h5 One
-
-        / Two
-        %div{:class => "span-2", :style => "text-align:center"}
-          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px", :style => "float:right; border:2px dashed #CCC; padding:3px;"}
-          %h5 Two
-
-        / Three
-        %div{:class => "span-2", :style => "text-align:center"}
-          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px", :style => "float:right; border:2px dashed #CCC; padding:3px;"}
-          %h5 Three
-
-        / Four
-        %div{:class => "span-2", :style => "text-align:center"}
-          %img{:src => "images/man.jpg", :alt => "John Smith", :height => "75px", :style => "float:right; border:2px dashed #CCC; padding:3px;"}
-          %h5 Four
-
-    %div{:class => "span-16 prepend-1"}
       / Publications
-      %div{:class => "span-7 last"}
+      %div{:class => "span-5 last"}
         %h3.heading=link_to "Publications", publications_url
         %ol.publications.facets
           -@facets[:publication_id].each do |p|
@@ -71,9 +34,9 @@
               =link_to publication.name, publication_path(publication)
               ="(#{p.value})"
           %li=link_to "More...", publications_path
-          
+
       / Publishers
-      %div{:class => "span-8 last"}
+      %div{:class => "span-5 last"}
         %h3.heading=link_to "Publishers", publishers_url
         %ol.publishers.facets
           -@facets[:publisher_id].each do |p|
@@ -82,24 +45,50 @@
               =link_to publisher.name, publisher_path(publisher)
               ="(#{p.value})"
           %li=link_to "More...", publishers_path
+
+    %div{:class => "span-9 prepend-1"}
+      / Features! Because the BibApp loves people
+      / Example text
+      %div{:class => "span-9", :style => "border-bottom:1px dotted #000; margin-bottom:1em;"}
+        %h3.headline Adaptive liquid microlenses activated by stimuli-responsive hydrogels
+        %img{:src => "images/jiang_hongrui.gif", :alt => "Hongrui Jiang", :height => "100px", :style => "float:right; border:2px dashed #CCC; padding:3px; margin-left:1em;" }
+        %p When Hongrui Jiang looked into a fly's eye, he saw a way to make a tiny lens so "smart" that it can adapt its focal length from minus infinity to plus infinity — without external control.
+        %p 
+          Incorporating hydrogels that respond to physical, chemical or biological stimuli and actuate lens function, these liquid microlenses could advance lab-on-a-chip technologies, optical imaging, medical diagnostics and bio-optical microfluidic systems.
+          %a{:href => "http://www.engr.wisc.edu/news/headlines/2006/Aug02.html"} More...
           
+        %p.links Read the paper | Meet the researcher
+    
+      %div{:class => "span-10"}
+        %div.span-9
+          / University communications articles
+          %h3.section-header More from Campus
+        
+          / One
+          %div{:class => "span-9", :style => "border-bottom:1px dotted #000; margin-bottom:1em;"}
+            %img{:src => "images/jahns_thomas.jpg", :alt => "Thomas Jahns", :height => "100px", :style => "float:right; border:2px dashed #CCC; padding:3px; margin-left:1em;" }
+            %h4.headline Department of Energy funds microgrid collaboration
+            %p In a $14 million project, University of Wisconsin-Madison engineers will collaborate with industrial and government partners to implement a microgrid power backup system at the nation’s fifth-largest incarceration facility—the Santa Rita Jail.
+
+          / Two
+          %div{:class => "span-9", :style => "border-bottom:1px dotted #000; margin-bottom:1em;"}
+            %img{:src => "images/oliva_michael.jpg", :alt => "Michael G. Oliva ", :height => "100px", :style => "float:right; border:2px dashed #CCC; padding:3px; margin-left:1em;" }
+            %h4.headline Engineering class infuses green ideas into local building projects
+            %p Earth Day is celebrated once a year, but University of Wisconsin-Madison Civil and Environmental Engineering students are working to create plans that offer sustainable benefits for years to come.
+
+        %div.span-10
+          / Library snippet
+          %div{:class => "span-9", :style => "border-bottom:1px dotted #000; margin-bottom:1em;"}
+            %h3.section-header From the Library
+            %img{:src => "images/leopold.jpg", :height => "200px", :alt => "Aldo Leopold", :style => "float:right; border:2px dashed #CCC; padding:3px; margin-left:1em;" }
+            %h4.headline The Aldo Leopold Collection
+            %p The first materials from the project to digitize the University Archives' complete collection of Aldo Leopold materials is now available to the public. The UW Digital Collections Center is managing the digitization, which includes hundreds of diaries, journals and photos from 1899 to 1948. Watch University Archivist David Null discuss the digitization project on WisconsinEye here.
+
   / Citations        
   %div{:class => "span-6 last"}
     %h3.heading=link_to "Citations", citations_url
     
     %ol.citations.facets
-      - counter = 0
-      - @docs.each do |doc, score|
-        - counter = counter + 1
-        - if counter < 6
-          %li{:style => "border-bottom:1px dotted #000; margin-bottom:1em;"}
-            =link_to "#{doc.title_primary}", citation_path(doc)
-            %p.metadata 
-              - doc.name_strings.each do |ns|
-                =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
-              ="(#{doc.publication_date.year})"
-              %br/
-              =link_to "#{doc.publication.name}", publication_path(doc.publication.to_param), {:class => "source"}
-              = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-
+      - @docs.each do |citation, score|
+        = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
       %li=link_to "More...", citations_path

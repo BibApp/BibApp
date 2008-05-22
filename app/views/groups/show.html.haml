@@ -35,26 +35,7 @@
 
   / Right - Citations
   %div{:class => "span-6 last"}    
-    %h3="Citations (#{@q.total_hits})"
-    - if !@filter.empty?
-      %h4
-        ="Remove Filters: "
-      - @filter.each do |f|
-        =remove_filter(@query,@filter,f)
-    %ol.citations
-      - @docs.each do |doc, score|
-        %li
-          =link_to "#{doc.title_primary}", citation_path(doc)
-          %p 
-            %strong NameStings:
-            - doc.name_strings.each do |ns|
-              =link_to "#{ns.name}", name_string_path(ns)
-            %br/
-            %strong Source:
-            =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
-            = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-            %br/
-            %strong Year:
-            -if doc.publication_date != nil
-              ="#{doc.publication_date.year}"
-            = #render :partial => "shared/coins", :locals => {:citation => doc}
+    %h3 Citations
+    %ol.citations.facets
+      - @docs.each do |citation, score|
+        = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}

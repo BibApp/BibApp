@@ -239,10 +239,16 @@ a:hover {
 p.metadata {
 	color:#737373;
 	font-size:0.85em;
+	padding:0;
+	margin:0.5em 0 0 0;
 }
 
 p.metadata a {
 	color:#737373;
+}
+
+.links {
+	margin-top:0.5em;
 }
 
 a.name_string {
@@ -290,6 +296,11 @@ h4 {color:#666666;}
 	color:#000;
 }
 
+ol.people {
+	padding:0em;
+	margin:0em;
+}
+
 .header-search-form {display:inline;}
 
 ul.actions li {
@@ -299,6 +310,10 @@ ul.actions li {
 ol.citations {
 	margin:0;
 	padding:0;
+}
+
+li.citation-details{
+	list-style:none;
 }
 ul.global-nav {
 	margin:0;
@@ -367,6 +382,7 @@ div.auto_complete ul {
   width:100%;
   list-style-type:none;
 }
+
 div.auto_complete ul li {
   margin:0;
   padding:3px;
@@ -374,6 +390,7 @@ div.auto_complete ul li {
 div.auto_complete ul li.selected {
   background-color: #ffb;
 }
+
 div.auto_complete ul strong.highlight {
   color: #800; 
   margin:0;
@@ -388,6 +405,9 @@ div.auto_complete ul strong.highlight {
 	margin-bottom:3em;
 }
 
+.pagination {
+	padding-bottom:1em;
+}
 .pagination a {
   padding: 2px 5px 2px 5px;
   margin: 2px;
@@ -415,6 +435,17 @@ tr.selected {
 .inline {
 	display:inline;
 	list-style:none;
+}
+
+.headline {
+	font-family:Georgia, Helvetica, "Lucida Grande", Arial;
+	color:#990000; 
+	padding-bottom:0.5em;
+	line-height:1.25em;
+}
+
+.section-header {
+	padding:0.25em; color:#FFF; background-color:#CCC;
 }
 
 .contributorship_actions_list {

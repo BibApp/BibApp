@@ -127,6 +127,14 @@ class Index
       SOLRCONN.commit
     end
     
+    def start(page)
+      if page.to_i < 2
+        start = 1
+      else 
+        start = ((page.to_i-1)*10)+1
+      end
+    end
+    
     #Reindex *everything* in Solr
     def index_all
       #Delete all existing records in Solr
@@ -152,11 +160,13 @@ class Index
       SOLRCONN.commit
     end
 
-    def fetch (query_string, filter, sort)
+    def fetch (query_string, filter, sort, page)
+      sort = "#{sort} desc" 
+      fetch = query_string + ";" + sort.downcase
       if !filter.empty?
         q = SOLRCONN.query(
-          query_string, {
-            :filter_queries => filter, 
+          fetch, {
+            :filter_queries => filter,
             :facets => {
               :fields => [
                 :group_facet,
@@ -176,11 +186,12 @@ class Index
               ], 
               :mincount => 1, 
               :limit => 10
-            }
+            },
+            :start => self.start(page)
           })
       else
         q = SOLRCONN.query(
-          query_string, {
+          fetch, {
             :facets => {
               :fields => [
                 :group_facet,
@@ -200,7 +211,8 @@ class Index
               ],
               :mincount => 1,
               :limit => 10
-            }
+            },
+            :start => self.start(page)
           })
       end
       
@@ -239,7 +251,26 @@ class Index
       if spelling_suggestions == query
         spelling_suggestions = nil
       end
+      
       return spelling_suggestions
+    end
+    
+    def recommendations(citation)
+      r = SOLRCONN.send(Solr::Request::Standard.new(
+        :query => "id:#{citation.solr_id}", 
+        :mlt => {
+          :count => 5, 
+          :field_list => ["abstract","title"]
+        })
+      )
+
+      docs = Array.new
+      r.data["moreLikeThis"]["#{citation.solr_id}"]["docs"].each do |doc|
+        citation = Citation.find(doc["pk_i"])
+        docs << [citation, doc['score']]
+      end
+      
+      return docs
     end
   end
 end
