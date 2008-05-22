@@ -2,6 +2,9 @@ class NameString < ActiveRecord::Base
   has_many :citations, 
     :through => :citation_name_strings
   has_many :citation_name_strings
+  has_many :people,
+    :through => :pen_names
+  has_many :pen_names
 
   def to_param
     param_name = name.gsub(" ", "_")

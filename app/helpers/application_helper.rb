@@ -40,11 +40,27 @@ module ApplicationHelper
     object
   end
   
+  def link_to_related_citations(citation)
+    #link_to "Related Citations", search_url(:q => "id:#{citation-solr_id}", :qt  => "mlt")
+    "Related Citations"
+  end
+  
+  def link_to_download_from_archive(citation)
+    #link_to "Download from #{$REPOSITORY_NAME}"
+    "Download from #{$REPOSITORY_NAME}"
+  end
+
   def link_to_findit(citation)
-  	
   	#start w/default suffix to "Find It!"
   	suffix = $CITATION_SUFFIX
-  	
+
+=begin
+  	logger.debug("IP: #{request.env["HTTP_X_FORWARDED_FOR"] }")
+  	client = ResolverRegistry::Client.new
+    institution = client.lookup(@remote_ip)
+    suffix = institution.resolver.base_url
+=end
+
 	#Substitute citation title
   	suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
   	

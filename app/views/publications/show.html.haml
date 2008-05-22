@@ -9,7 +9,7 @@
     %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
 
     / People
-    %div{:class => "span-17", :style => "padding:0em; margin:0em;"}
+    %div{:class => "span-16", :style => "padding:0em; margin:0em;"}
       %ol.people
         -@facets[:person_id].each do |p|
           - person = object_by_facet_id(p.name)
@@ -21,7 +21,7 @@
                 %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
 
     / Groups
-    %div{:class => "span-5"}
+    %div{:class => "span-6"}
       %h3.heading Groups
       %ol.groups.facets
         -@facets[:group_id].each do |g|

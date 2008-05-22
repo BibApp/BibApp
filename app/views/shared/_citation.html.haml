@@ -1,14 +1,16 @@
-%li
-  =link_to "#{citation.title_primary}", citation_path(citation)
-  %p 
-    %strong NameStrings:
-    - citation.name_strings.each do |ns|
-      =link_to "#{ns.name}", name_string_path(ns)
+%li{:style => "border-top:1px dotted black; padding:0.75em 0; margin-bottom:0.5em;"}
+  %strong=link_to "#{citation.title_primary}", citation_path(citation)
+  %p.metadata 
+    - citation.name_strings.first(5).each do |ns|
+      =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
+    - if citation.name_strings.size > 5
+      =link_to "more...", citation_path(citation)
     %br/
-    %strong Source:
-    =link_to "#{citation.publication.authority.name}", publication_path(citation.publication.authority.to_param)
-    = "#{citation.volume}(#{citation.issue}), #{citation.start_page}-#{citation.end_page}."
-    %br/
-    %strong Year:
-    -if citation.publication_date != nil
-      ="#{citation.publication_date.year}"
+    =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
+    ="(#{citation.publication_date.year})"
+    .links
+      =link_to_findit(citation) 
+      | 
+      =link_to_related_citations(citation)
+      | 
+      =link_to_download_from_archive(citation)

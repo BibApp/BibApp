@@ -24,12 +24,14 @@ class CitationsController < ApplicationController
     end
     
     before :index do
+      @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
       @query = "*:*"
-      @sort = params[:sort] || "year desc"
-      @fetch = @query + ";" + @sort
+      @sort = params[:sort] || "year"
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
-      @q,@docs,@facets = Index.fetch(@fetch, @filter, @sort)
+      @page = params[:page] || 0
+      
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page)
     end
 	
     #initialize variables used by 'new.html.haml'
@@ -39,7 +41,11 @@ class CitationsController < ApplicationController
 			
       #initialize citation subclass with any passed in citation info
       @citation = subklass_init(params[:type], params[:citation])		
-    end 
+    end
+    
+    before :show do
+      @recommendations = Index.recommendations(@current_object)
+    end
   end # end make_resourceful
   
   def create

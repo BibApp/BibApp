@@ -3,25 +3,29 @@
     %h3{:class => "span-12"}
       ="Citations (#{@q.total_hits})"
 
-    %div{:class => "span-12"}
+    %div{:class => "span-6"}
       %ul.types
         -@facets[:types].each do |p|
           %li
             =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value)
 
-    %ol.citations.facets
-      - @docs.each do |doc, score|
-        %li
-          =link_to "#{doc.title_primary}", citation_path(doc)
-          %p 
-            %strong NameStrings:
-            - doc.name_strings.each do |ns|
-              =link_to "#{ns.name}", name_string_path(ns)
-            %br/
-            %strong Source:
-            =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
-            = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-            %br/
-            %strong Year:
-            -if doc.publication_date != nil
-              ="#{doc.publication_date.year}"
+    %div{:class => "span-5 append-1 last", :style => "text-align:right;"}
+      - form_tag "", :method => :get do
+        = hidden_field_tag "q", @query
+        = hidden_field_tag "fq", @filter
+        - @page = 1 if @page == 0
+        = hidden_field_tag "page", @page
+        Sort by:
+        %select{:name => "sort"}
+          - ["year", "score"].each do |opt|
+            - if opt == @sort
+              %option{:name => "#{opt}", :selected => "selected", :value => "#{opt}"}= opt.titleize
+            - else
+              %option{:name => "#{opt}", :value => "#{opt}"}= opt.titleize
+        = submit_tag 'Go'
+
+    %div{:class => "span-11 pagination", :style => "text-align:center;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), 10, @q.total_hits)
+
+    %ol{:class => "span-11 citations facets"}
+      - @docs.each do |citation, score|
+        = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}

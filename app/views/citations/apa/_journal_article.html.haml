@@ -1,6 +1,4 @@
-%li{:class => "citation-#{c.class.name.to_s.underscore}"}
-  %span.citation-type="#{c[:type]}"
-  %br/
+%li{:class => "citation-#{c.class.name.to_s.underscore}", :style => "list-style:none;"}
   %span.name_strings
     - c.name_strings.each do |ns|
       %span.name_string=link_to "#{ns.name}", name_string_path(ns)
