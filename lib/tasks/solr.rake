@@ -18,7 +18,7 @@ namespace :solr do
       n.request_head('/').value
 
       rescue Net::HTTPServerException #responding
-        puts "Port #{SOLR_PORT} in use" and return
+        puts "Port #{SOLR_PORT} already in use" and return
 
       rescue Errno::ECONNREFUSED #not responding
         Dir.chdir(SOLR_PATH) do
@@ -46,7 +46,7 @@ namespace :solr do
         Dir.chdir(SOLR_PATH) do
           exec "java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
           sleep(5)
-          puts "#{ENV['RAILS_ENV']} Solr started sucessfuly on #{SOLR_PORT}, pid: #{pid}."
+          puts "#{ENV['RAILS_ENV']} Solr started sucessfuly on #{SOLR_PORT}"
         end
     end
   end
