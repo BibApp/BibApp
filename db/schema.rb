@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 39) do
+ActiveRecord::Schema.define(:version => 40) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -45,9 +45,9 @@ ActiveRecord::Schema.define(:version => 39) do
 
   create_table "citations", :force => true do |t|
     t.string   "type"
-    t.string   "title_primary"
-    t.string   "title_secondary"
-    t.string   "title_tertiary"
+    t.text     "title_primary"
+    t.text     "title_secondary"
+    t.text     "title_tertiary"
     t.text     "affiliation"
     t.string   "volume"
     t.string   "issue"
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(:version => 39) do
     t.string   "end_page"
     t.text     "abstract"
     t.text     "notes"
-    t.string   "links"
-    t.string   "title_dupe_key"
-    t.string   "issn_isbn_dupe_key"
+    t.text     "links"
+    t.text     "title_dupe_key"
+    t.text     "issn_isbn_dupe_key"
     t.integer  "citation_state_id"
     t.integer  "citation_archive_state_id"
     t.integer  "publication_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(:version => 39) do
     t.text     "scoring_hash"
     t.date     "publication_date"
     t.string   "language"
-    t.string   "copyright_holder"
+    t.text     "copyright_holder"
     t.boolean  "peer_reviewed"
   end
 
