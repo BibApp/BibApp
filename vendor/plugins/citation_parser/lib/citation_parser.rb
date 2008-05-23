@@ -22,11 +22,15 @@ class CitationParser
   def parse(data)
     @citations = Array.new
     @@parsers.each do |klass|
-      puts("\nKlass: #{klass}\n")
+      puts("\nTrying to parse using: #{klass}\n")
       parser = klass.new
       @citations = parser.parse(data)
       return @citations unless @citations.nil?
+      puts("\n Parsing was unsuccessful using: #{klass}\n")
     end
+    
+    raise Exception, 'Unable to find a Citation Parser to handle this data'
+
     return nil
   end
   
