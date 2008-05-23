@@ -1,11 +1,10 @@
 #content 
   %h2 Add a person
-  = render :partial => 'form'
-
+  
   - form_tag( {:action => :new}, {:method => :get} ) do
     %p
-      Search LDAP directory:
-    %p 
+      Search LDAP directory (to pre-populate person information):
+    %p
       = text_field_tag :q, params[:q]
       = submit_tag "Search"
     
@@ -17,3 +16,6 @@
     %script{ :type => "text/javascript" }
       - update_page do |p|
         = p.assign "ldap_results", @ldap_results
+        
+  = render :partial => 'form'
+  
