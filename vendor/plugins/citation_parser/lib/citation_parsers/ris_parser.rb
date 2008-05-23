@@ -3,11 +3,14 @@ class RisParser < CitationParser
   def parse(risdata)
     risdata = risdata.dup
     risdata.strip!
-    risdata.gsub!("\r", "\n").gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
+    risdata.gsub!("\r", "\n")
+    
+    #determine if this is RIS data or not
     if not risdata =~ /^ER  \-/
       return nil
     end
     
+    risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
       rec.strip!
