@@ -30,8 +30,9 @@ class CitationsController < ApplicationController
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
       @page = params[:page] || 0
+      @count = params[:count] || 15
       
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page)
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
     end
 	
     #initialize variables used by 'new.html.haml'

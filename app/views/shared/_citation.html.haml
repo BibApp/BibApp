@@ -1,4 +1,4 @@
-%li{:style => "border-top:1px dotted black; padding:0.75em 0; margin-bottom:0.5em;"}
+%li.citation
   %strong=link_to "#{citation.title_primary}", citation_path(citation)
   %p.metadata 
     - citation.name_strings.first(5).each do |ns|

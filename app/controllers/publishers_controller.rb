@@ -33,7 +33,9 @@ class PublishersController < ApplicationController
       @filter = @filter.split("+>+").each{|f| f.strip!}
       @sort = params[:sort] || "year"
       @page = params[:page] || 0
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page)
+      @count = params[:count] || 10
+      
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
 
       @title = @current_object.name
     end

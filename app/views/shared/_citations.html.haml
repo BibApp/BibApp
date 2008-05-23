@@ -1,14 +1,9 @@
-%div#citations{:class => "span-12 prepend-1"}
+%div#citations{:class => "span-14 prepend-1"}
   - if @q
-    %h3{:class => "span-12"}
-      ="Citations (#{@q.total_hits})"
+    %div{:class => "span-7"}
+      %h3="Citations (#{@q.total_hits})"
 
-    %div{:class => "span-6"}
-      %ul.types
-        -@facets[:types].each do |p|
-          %li
-            =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value)
-
+    / Sort Form
     %div{:class => "span-5 append-1 last", :style => "text-align:right;"}
       - form_tag "", :method => :get do
         = hidden_field_tag "q", @query
@@ -24,8 +19,17 @@
               %option{:name => "#{opt}", :value => "#{opt}"}= opt.titleize
         = submit_tag 'Go'
 
-    %div{:class => "span-11 pagination", :style => "text-align:center;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), 10, @q.total_hits)
+    / CitationType Filter
+    %div{:class => "span-14"}
+      %ul.types
+        -@facets[:types].each do |p|
+          %li
+            =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value)
 
-    %ol{:class => "span-11 citations facets"}
+    %div{:class => "span-12 pagination", :style => "text-align:center;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), 10, @q.total_hits)
+
+    %ol{:class => "span-12 citations", :style => "clear:both;"}
       - @docs.each do |citation, score|
         = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
+        
+    %div{:class => "span-12 pagination", :style => "text-align:center;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), 10, @q.total_hits)
