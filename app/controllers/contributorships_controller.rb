@@ -98,7 +98,7 @@ class ContributorshipsController < ApplicationController
         join publications publ on c.publication_id = publ.id
         join publishers pub on c.publisher_id = pub.id
         where p.id = ?
-        group by publ.name
+        group by publ.name, pub.name, pub.romeo_color
         order by count(ctrb.id) desc", @person.id]
       )
     
