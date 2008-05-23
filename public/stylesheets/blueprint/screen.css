@@ -282,15 +282,20 @@ h4 {color:#666666;}
 	padding-top:2em;
 }
 
-#facets {background-color:#F1F5FA; padding:1.5em;}
+#facets {padding:0em 1em;}
 #footer {margin-top:2em; padding:2em 0em 1em 0em;}
 
 #header a {
 	text-decoration:none;
 }
 
+#results {clear:both; padding-top:2em; border-top:1px dotted black;}
 #tagline {color:#000;}
 
+h4.heading {
+	padding-top:1em;
+	margin-bottom:0em;
+}
 .heading a {
 	text-decoration:none;
 	color:#000;
@@ -311,10 +316,17 @@ ol.citations {
 	margin:0;
 	padding:0;
 }
+.citation {
+	list-style: none; 
+	border-top:1px solid #ddd; 
+	padding:0.75em 0; 
+	margin-bottom:0.5em;
+}
 
 li.citation-details{
 	list-style:none;
 }
+
 ul.global-nav {
 	margin:0;
 	padding:0;
@@ -342,11 +354,10 @@ ul#navigation a {
 	margin:0em;
 }
 
-ol.facets {
+ol.filters {
 	list-style:none;
-	margin-left:0px;
-	padding-left:0em;
-	float:left;
+	padding:1em 0em;
+	margin:0em;
 }
 
 

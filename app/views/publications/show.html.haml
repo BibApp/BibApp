@@ -30,13 +30,12 @@
             =link_to group.name, group_path(group)
             ="(#{g.value})"
 
-  / Citations
-  = render :partial => "shared/citations"
+    %div#results{:class => "span-22"}
+      / Facets
+      = render :partial => "shared/facets"
 
-  / Facets
-  %h3#filter Filter
-  %div#facets{:class => "span-9 prepend-1 last"}
-    = render :partial => "shared/facets"
+      / Citations 
+      = render :partial => "shared/citations"
 
     / Authority
     %div{:class => "span-9"}

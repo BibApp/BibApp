@@ -1,40 +1,35 @@
-/ Filters
-- if !@filter.empty?
-  %h4
-    ="Remove Filters: "
-    - @filter.each do |f|
-      =remove_filter(@query,@sort,@filter,f)
+%div#facets{:class => "span-6 append-1"}
+  %h3#filter Filters
+  - if !@filter.empty?
+    %h4
+      ="Remove Filters: "
+      - @filter.each do |f|
+        =remove_filter(@query,@sort,@filter,f)
 
-/ Groups
-%div{:class => "span-4"}
+  / Groups
   %h4.heading Groups
-  %ol.groups
-    -@facets[:groups].each do |p|
+  %ol.filters.groups
+    -@facets[:groups].first(5).each do |p|
       %li
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
 
-/ People
-%div{:class => "span-5 last"}
+  / People
   %h4.heading People
-  %ol.years
-    -@facets[:people].each do |p|
+  %ol.filters.people
+    -@facets[:people].first(5).each do |p|
       %li
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
-%hr/
 
-/ Years
-%div{:class => "span-4"}
+  / Years
   %h4.heading Years
-  %ul.years
-    -@facets[:years].each do |p|
+  %ol.filters.years
+    -@facets[:years].first(5).each do |p|
       %li
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
 
-/ Publications
-%div{:class => "span-5 last"}
+  / Publications
   %h4.heading Publications
-  %ol.publications
-    -@facets[:publications].each do |p|
+  %ol.filters.publications
+    -@facets[:publications].first(5).each do |p|
       %li
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
-%hr/

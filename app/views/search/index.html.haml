@@ -19,6 +19,7 @@
 
       / People
       %div{:class => "span-16", :style => "padding:0em; margin:0em;"}
+        %h3.heading Our Experts
         %ol.people{:style => "padding:0em;margin:0em;"}
           -@facets[:person_id].each do |p|
             - person = object_by_facet_id(p.name)
@@ -32,17 +33,16 @@
       / Groups
       %div{:class => "span-6"}
         %h3.heading Groups
-        %ol.groups.facets
+        %ol.groups
           -@facets[:group_id].each do |g|
             - group = object_by_facet_id(g.name)
             %li
               =link_to group.name, group_path(group)
               ="(#{g.value})"
- 
-    / Citations
-    = render :partial => "shared/citations"
 
-    / Facets
-    %h3#filter Filter
-    %div#facets{:class => "span-9 prepend-1 last"}
-      = render :partial => "shared/facets"
+      %div#results{:class => "span-22"}
+        / Facets
+        = render :partial => "shared/facets"
+                    
+        / Citations 
+        = render :partial => "shared/citations"

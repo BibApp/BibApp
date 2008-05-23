@@ -35,7 +35,9 @@ class PeopleController < ApplicationController
       @filter = @filter.split("+>+").each{|f| f.strip!}
       @sort = params[:sort] || "year"
       @page = params[:page] || 0
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page)
+      @count = params[:count] || 10
+      
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
 
       @title = @current_object.name
       @research_focus = RedCloth.new(@current_object.research_focus).to_html

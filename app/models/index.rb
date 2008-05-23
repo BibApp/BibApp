@@ -160,7 +160,7 @@ class Index
       SOLRCONN.commit
     end
 
-    def fetch (query_string, filter, sort, page)
+    def fetch (query_string, filter, sort, page, count)
       sort = "#{sort} desc" 
       fetch = query_string + ";" + sort.downcase
       if !filter.empty?
@@ -210,7 +210,7 @@ class Index
                 :year_facet
               ],
               :mincount => 1,
-              :limit => 10
+              :limit => count
             },
             :start => self.start(page)
           })
