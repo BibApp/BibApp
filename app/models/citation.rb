@@ -136,6 +136,10 @@ class Citation < ActiveRecord::Base
     return (issn_dupes + title_dupes).uniq
   end
   
+  def year
+    publication_date.year
+  end
+  
   # Deduplication: set score
   def preferred_score
     # The highest score will win... currently, we like things from Engineering Village folders,
