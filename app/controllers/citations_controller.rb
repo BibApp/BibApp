@@ -4,7 +4,7 @@ class CitationsController < ApplicationController
   make_resourceful do
     build :index, :show, :new, :edit, :destroy
     
-    publish :yaml, :xml, :json, :attributes => [
+    publish :xml, :json, :yaml, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
       :year, :volume, :issue, :start_page, :end_page, :links, {
         :publication => [:id, :name]
@@ -21,6 +21,9 @@ class CitationsController < ApplicationController
     response_for :show do |format| 
       format.mets  #loads show.mets.haml
       format.html  #loads show.html.haml
+      format.xml
+      format.json
+      format.yaml
     end
     
     before :index do
