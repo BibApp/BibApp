@@ -31,6 +31,7 @@ class MembershipsController < ApplicationController
       format.js { render :action => :regen_lists }
       format.html { redirect_to new_membership_path(:person_id => @person.id) }
     end
+
   end
   
   def sort
@@ -45,6 +46,33 @@ class MembershipsController < ApplicationController
       format.html { redirect_to new_membership_path(:person_id => @person.id) }
     end
   end
+  
+  def edit_time
+    @person = Person.find_by_id(params[:person_id])
+    @group = Group.find_by_id(params[:group_id])
+    membership = Membership.find(params[:id])
+    membership.update_attributes(params[:membership])
+    
+    render :partial => 'group', :collection => @person.groups(true), :locals => {:selected => true}
+    
+  end
+  
+  def auto_complete_for_group_name
+    group_name = params[:group][:name].downcase
+    
+    #search at beginning of name
+    beginning_search = group_name + "%"
+    #search at beginning of any other words in name
+    word_search = "% " + group_name + "%"
+    
+    groups = Group.find(:all, 
+          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+      
+    render :partial => 'autocomplete_list', :locals => {:objects => groups}
+  end 
+  
   
   private
   def find_person

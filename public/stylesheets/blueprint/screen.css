@@ -464,6 +464,17 @@ tr.selected {
 	margin:0px;
 }
 
+#add_group {
+	float:right;
+}
+
+#edit_membership_active {
+	float:left;
+	overflow:hidden;
+	margin:5px;
+	padding:5px;
+}
+
 thead td {font-weight:bold;}
 .green {background-color:#80FF00;}
 .blue {background-color:#0080FF;}
