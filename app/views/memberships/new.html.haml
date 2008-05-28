@@ -1,14 +1,14 @@
 #content
   %h3="#{link_to @person.first_last, person_path(@person)}'s Memberships:"
-  %ol#current
-    = render :partial => "group", :collection => @person.groups(true), :locals => {:selected => true}
+  #edit_membership_active
+    %ol#current
+      = render :partial => "group", :collection => @person.groups(true), :locals => {:selected => true}
   
-  - remote_form_for :group, Group.new, :url => {:action => :create_group }, :method => :post do |form|
-    = form.text_field :name, :size => 20
-    = hidden_field_tag :person_id, @person.id
-    = submit_tag "Add"
+  #add_group
+    - remote_form_for :group, Group.new, :url => {:action => :create_group }, :method => :post do |form|
+      = text_field_with_auto_complete :group, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+      = hidden_field_tag :person_id, @person.id
+      = submit_tag "Add Group"
   
-  %ol#inactive
-    = render :partial => "group", :collection => @person.groups_not, :locals => {:selected => false}
 
   =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
