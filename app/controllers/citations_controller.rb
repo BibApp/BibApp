@@ -21,9 +21,6 @@ class CitationsController < ApplicationController
     response_for :show do |format| 
       format.mets  #loads show.mets.haml
       format.html  #loads show.html.haml
-      format.xml
-      format.json
-      format.yaml
     end
     
     before :index do

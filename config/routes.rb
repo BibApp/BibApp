@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
@@ -41,11 +41,9 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
     
   map.resources :name_strings,
-    :citations,
     :groups,
     :memberships,
     :pen_names,
-    :people,
     :keywords,
     :keywordings,
     :attachments
