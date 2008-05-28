@@ -40,6 +40,9 @@ ActionController::Routing::Routes.draw do |map|
   
  map.resources :memberships, 
                 :collection => {:auto_complete_for_group_name => :get}
+                
+ map.resources :groups, 
+                :collection => {:auto_complete_for_group_name => :get}
   
   # Install the default routes as the lowest priority.
     

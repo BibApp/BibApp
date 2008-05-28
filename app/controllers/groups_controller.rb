@@ -30,4 +30,21 @@ class GroupsController < ApplicationController
     @group = Group.find_or_create_by_name(params[:group][:name])
     redirect_to new_group_path
   end
+  
+  def auto_complete_for_group_name
+    group_name = params[:group][:name].downcase
+    
+    #search at beginning of name
+    beginning_search = group_name + "%"
+    #search at beginning of any other words in name
+    word_search = "% " + group_name + "%"
+    
+    groups = Group.find(:all, 
+          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+      
+    render :partial => 'autocomplete_list', :locals => {:objects => groups}
+  end 
+  
 end
