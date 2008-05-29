@@ -1,6 +1,9 @@
 # This controller signs up new users, and activates their accounts
 class UsersController < ApplicationController
   
+  # Don't write passwords as plain text to the log files  
+  filter_parameter_logging :password, :password_confirmation  
+   
   make_resourceful do 
     build :new, :edit
   end

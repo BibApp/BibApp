@@ -1,6 +1,9 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
   
+  # Don't write passwords as plain text to the log files  
+  filter_parameter_logging :password, :password_confirmation 
+  
   # load new.html.haml
   def new
   end
