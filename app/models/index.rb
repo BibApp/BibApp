@@ -129,9 +129,9 @@ class Index
     
     def start(page)
       if page.to_i < 2
-        start = 1
+        start = 0
       else 
-        start = ((page.to_i-1)*10)+1
+        start = ((page.to_i-1)*10)
       end
     end
     
