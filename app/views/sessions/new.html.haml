@@ -1,0 +1,24 @@
+#content 
+  %h2 Login
+  - if flash[:notice]
+    .notice= flash[:notice]
+  %fieldset
+    - form_tag sessions_path do
+      %p
+        %label="Username"
+        %br/
+        = text_field_tag 'login'
+      %p
+        %label="Password"
+        %br/
+        = password_field_tag 'password'
+      %p
+        = check_box_tag 'remember_me'
+        %label="Remember Me"
+        ="(requires browser cookies be enabled)"
+      %p
+        =link_to "Forgot Password", new_password_path
+        |
+        %a{:href => "signup"} Sign Up  
+      %p.submit
+        = submit_tag 'Log in'

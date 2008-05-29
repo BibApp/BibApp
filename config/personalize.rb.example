@@ -3,6 +3,7 @@
 ####
 
 $APPLICATION_NAME            = "UW BibApp"
+$APPLICATION_URL             = "http://localhost:3000/"
 $UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison" 
 $UNIVERSITY_SHORT_NAME       = "UW-Madison"
 $UNIVERSITY_URL              = "http://wisc.edu"

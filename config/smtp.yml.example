@@ -1,0 +1,20 @@
+development:
+  address: smtp.myu.edu
+  port: 25
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu
+
+test:
+  address: smtp.myu.edu
+  port: 25
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu
+
+production:
+  address: smtp.myu.edu
+  port: 25
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu
