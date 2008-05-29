@@ -34,15 +34,15 @@ module ResolverRegistry
       resolver.each_element('Z39.88-2004_CommunityProfile') { | profile | 
         @community_profiles << profile.get_text.value if profile.has_text?
       }    
-      resolver.elements['OpenURL_0.1_Identifiers'].elements.each { | id |
-        @identifiers << id.name
-      }
+      #resolver.elements['OpenURL_0.1_Identifiers'].elements.each { | id |
+        #@identifiers << id.name
+      #}
       resolver.each_element('Z39.88-2004_namespace') { | namespace |
         @namespaces << namespace.get_text.value if namespace.has_text?
       }
-      resolver.elements['OpenURL_0.1_genres'].elements.each { | genre |
-        @genres << genre.name
-      }    
+      #resolver.elements['OpenURL_0.1_genres'].elements.each { | genre |
+        #@genres << genre.name
+      #}    
       resolver.each_element('Z39.88-2004_metadataFormat') { | format |
         @metadata_formats << format.get_text.value if format.has_text?
       }

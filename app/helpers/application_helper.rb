@@ -51,35 +51,73 @@ module ApplicationHelper
   end
 
   def link_to_findit(citation)
-  	#start w/default suffix to "Find It!"
+    # Set the canonical resolver variables (personalize.rb)
   	suffix = $CITATION_SUFFIX
+  	base_url = $CITATION_BASE_URL
+    link_text = $CITATION_LINK_TEXT
 
-=begin
-  	logger.debug("IP: #{request.env["HTTP_X_FORWARDED_FOR"] }")
+    # Obtain the client IP Addess
+    ip = request.env["HTTP_X_FORWARDED_FOR"]
+    logger.debug("Client IP: #{ip}")
+
+    # Test UW-Madison 
+    #ip = "128.104.198.84"
+    
+    # Test UIUC 
+    #ip = "128.174.36.29"
+    
+    # Test Iowa
+    #ip = "128.255.56.180"
+
+    # Initialize ResolverRegistry
   	client = ResolverRegistry::Client.new
-    institution = client.lookup(@remote_ip)
-    suffix = institution.resolver.base_url
-=end
-
-	#Substitute citation title
-  	suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
   	
-	#Substitute citation year
-	suffix = (citation.publication_date.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.publication_date.year.to_s)
-	
-	#Substitute citation issue
-	suffix = (citation.issue.nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation.issue.to_s)	
-	
-	#Substitute citation volume
-	suffix = (citation.volume.nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation.volume.to_s)	
-	
-	#Substitute citation start-page
-	suffix = (citation.start_page.nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation.start_page)	
-		
-	#Substitute citation ISSN/ISBN
-	suffix = (citation.publication.nil? || citation.publication.issn_isbn.nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation.publication.issn_isbn)	
-		
-    link_to "Find it", "#{$CITATION_BASE_URL}?#{suffix}"
+  	# @TODO: Can this be improved?
+  	#
+  	# Steps for ResolverRegistry results
+  	# 1) Look up *all* the resolvers held for a university 
+  	# * Some universities have more than one resolver (Iowa has 4!)
+  	# * Some resolvers look specific to ILL
+  	# * Some resolvers are for "Ask a Librarian" type services
+  	#
+  	# 2) If there are no results use the personalize.rb defaults
+  	#
+  	# 3) Loop through results
+  	#
+  	# 4) Choose best resolver option
+  	# * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
+    
+    institution = client.lookup_all(ip)
+    
+    # Test the ResolverRegistry results...
+    # If the ResolverRegistry returns nil
+    if institution.nil?
+      # Use the default variables
+    # Else loop and choose the "best option" 
+    else
+      institution.each do |i|
+        if i.resolver.metadata_formats.empty?
+          base_url = i.resolver.base_url
+          link_text = i.resolver.link_text
+        end
+      end
+    end
+    
+    #Substitute citation title
+    suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
+    #Substitute citation year
+    suffix = (citation.publication_date.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.publication_date.year.to_s)
+    #Substitute citation issue
+    suffix = (citation.issue.nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation.issue.to_s)
+    #Substitute citation volume
+    suffix = (citation.volume.nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation.volume.to_s)
+    #Substitute citation start-page
+    suffix = (citation.start_page.nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation.start_page)
+    #Substitute citation ISSN/ISBN
+    suffix = (citation.publication.nil? || citation.publication.issn_isbn.nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation.publication.issn_isbn)
+
+    # Prepare link
+    link_to link_text, "#{base_url}?#{suffix}"
   end
   
   def coins(citation)
