@@ -7,7 +7,9 @@ class PublicationsController < ApplicationController
       :id, :name, :url, :issn_isbn, :publisher_id, {
         :publisher => [:id, :name]
         }, {
-        :authority_for => [:id, :name]
+        :authority => [:id, :name]
+        }, {
+        :citations => [:id]
         }
       ]
 

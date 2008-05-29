@@ -6,6 +6,10 @@ class PublishersController < ApplicationController
     publish :yaml, :xml, :json, :attributes => [
       :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
         :publications => [:id, :name]
+        }, {
+        :authority => [:id, :name]
+        }, {
+        :citations => [:id]
         }
       ]
 
