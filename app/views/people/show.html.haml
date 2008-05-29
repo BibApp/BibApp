@@ -1,12 +1,15 @@
 / === People === Show ===
 / Main
 %div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
+  %div{:class => "span-23 prepend-1"}
+    %ul.actions
+      %li=link_to "Edit", edit_person_path(@person)
+      |
+      %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
     
-    %h2
+    %h2{:class => "span-22"}
       ="#{@person.first_last}"
-      %span=link_to "Edit", edit_person_path(@person)
-      %span=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
+
 
     %div{:class => "span-21", :style => "padding:1.5em"}
       = render :partial => "shared/vcard", :locals => {:o => @person}
