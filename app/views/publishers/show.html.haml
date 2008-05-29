@@ -1,11 +1,12 @@
 / === Publisher === Show ===
 / Main
 %div{:class => "span-24"}
+  %div{:class => "span-23 prepend-1"}
+    %ul.actions
+      %li=link_to "Edit", edit_publisher_path(@publisher)
   %div{:class => "span-22 prepend-1"}
-    %p=link_to "Return to publisher List", publishers_url
-    %h2
-      = @publisher.name
-      %span=link_to "Edit", edit_publisher_path(@publisher)
+    %h2= @publisher.name
+
 
     / People
     %div{:class => "span-16", :style => "padding:0em; margin:0em;"}
