@@ -45,6 +45,7 @@ $REPOSITORY_NAME = "Minds@UW"
 # Below is an example of a suffix:
 # $CITATION_SUFFIX = "id=bibapp&amp;atitle=[title]&amp;date=[year]&amp;issn=[issn]&amp;issue=[issue]&amp;volume=[vol]&amp;spage=[fst]"
 ####
+$CITATION_LINK_TEXT          = "Find It"
 $CITATION_BASE_URL           = "http://sfx.wisconsin.edu/wisc"
 $CITATION_SUFFIX             = "ctx_enc=info%3Aofi%2Fenc%3AUTF-8&amp;ctx_id=10_1&amp;ctx_tim=2006-5-11T13%3A11%3A1CDT&amp;ctx_ver=Z39.88-2004&amp;res_id=http%3A%2F%2Fsfx.wisconsin.edu%2Fwisc&amp;rft.atitle=[title]&amp;rft.date=[year]&amp;rft.issn=[issn]&amp;rft.issue=[issue]&amp;rft.volume=[vol]&amp;rft.spage=[fst]"
 
