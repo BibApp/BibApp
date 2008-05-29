@@ -40,19 +40,23 @@ ActionController::Routing::Routes.draw do |map|
   
  map.resources :memberships, 
                 :collection => {:auto_complete_for_group_name => :get}
-                
+  
  map.resources :groups, 
                 :collection => {:auto_complete_for_group_name => :get}
   
   # Install the default routes as the lowest priority.
-    
   map.resources :name_strings,
     :groups,
     :memberships,
     :pen_names,
     :keywords,
     :keywordings,
-    :attachments
+    :attachments,
+    :sessions,
+    :passwords
+  
+  # Make URLs like /user/1/password/edit for Users managing their passwords
+  map.resources :users, :has_one => [:password]
   
   # Make URLs like /people/1/attachments/2 for Person Images
   map.resources :people do |p|
@@ -71,6 +75,21 @@ ActionController::Routing::Routes.draw do |map|
   
   map.search 'search', :controller => 'search', :action => 'index'
   
+  # Make easier routes for authentication (via restful_authentication)
+  map.signup '/signup',
+    :controller => 'users',
+    :action => 'new'
+  map.login '/login',
+    :controller => 'sessions',
+    :action => 'new'
+  map.logout '/logout',
+    :controller => 'sessions',
+    :action => 'destroy'
+  map.activate '/activate/:activation_code',
+    :controller => 'users',
+    :action => 'activate'
+  
+  # Default homepage to citations index action
   map.connect "/",
     :controller => 'citations',
     :action => 'index'

@@ -9,8 +9,11 @@
             %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
           %li
             %a{:href => "faq"} FAQ
-          %li
-            %a{:href => "login"} Login
+          - if logged_in?
+            %li=link_to "Profile: #{current_user.login}", edit_user_path(current_user)
+            %li=link_to "Logout", logout_path
+          - else
+            %li=link_to "Login", login_path
       %div{:class => "span-23"}
         %div{:class => "span-10"}
           %p#tagline

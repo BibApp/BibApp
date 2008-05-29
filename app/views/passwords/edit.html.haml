@@ -1,0 +1,20 @@
+#content 
+  %h2 Change Password
+  - if flash[:notice]
+    .notice= flash[:notice]
+  %fieldset
+    - form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
+      %p
+        %label="Old Password"
+        %br/
+        = password_field_tag :old_password
+      %p
+        %label="New Password"
+        %br/
+        = form.password_field :password
+      %p
+        %label="Confirm New Password"
+        %br/
+        = form.password_field :password_confirmation
+      %p.submit
+        = submit_tag 'Update Password'

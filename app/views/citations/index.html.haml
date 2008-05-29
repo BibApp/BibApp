@@ -1,6 +1,8 @@
 / === Citations === Index ===
 %div{:class => "column span-24"}
   %div{:class => "span-22 prepend-1"}
+    - if flash[:notice]
+      .notice= flash[:notice]
     %h2 
       At the library, we
       %span{:style => "color:#990000;"} &hearts; 
