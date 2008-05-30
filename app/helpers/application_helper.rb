@@ -86,21 +86,24 @@ module ApplicationHelper
   	#
   	# 4) Choose best resolver option
   	# * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
-    
-    institution = client.lookup_all(ip)
-    
-    # Test the ResolverRegistry results...
-    # If the ResolverRegistry returns nil
-    if institution.nil?
-      # Use the default variables
-    # Else loop and choose the "best option" 
-    else
-      institution.each do |i|
-        if i.resolver.metadata_formats.empty?
-          base_url = i.resolver.base_url
-          link_text = i.resolver.link_text
+    begin
+      institution = client.lookup_all(ip)
+      
+      # Test the ResolverRegistry results...
+      # If the ResolverRegistry returns nil
+      if institution.nil?
+        # Use the default variables
+      # Else loop and choose the "best option" 
+      else
+        institution.each do |i|
+          if i.resolver.metadata_formats.empty?
+            base_url = i.resolver.base_url
+            link_text = i.resolver.link_text
+          end
         end
       end
+    rescue
+      #If errors, do nothing - just use the defaults from personalize.rb
     end
     
     #Substitute citation title
