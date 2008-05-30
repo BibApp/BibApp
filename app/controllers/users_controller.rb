@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @user.save
     if @user.errors.empty?
       flash[:notice] = "Thanks for signing up!  You should receive an email (#{@user.email}) shortly which will allow you to activate your account."
-      redirect_back_or_default('/')
+      redirect_back_or_default($APPLICATION_URL)
     else
       render :action => 'new'
     end
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 
     if @user.errors.empty?
       flash[:notice] = "Your account was updated successfully."
-      redirect_back_or_default('/')
+      redirect_back_or_default($APPLICATION_URL)
     else
       render :action => 'edit'
     end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
       user.activate
       flash[:notice] = "Signup is complete!  You may now login using your username and password."
     end
-    redirect_back_or_default('/')
+    redirect_back_or_default($APPLICATION_URL)
   end
 
 end
