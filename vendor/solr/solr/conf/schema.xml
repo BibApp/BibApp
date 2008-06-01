@@ -257,8 +257,18 @@
  <field name="pk_s" type="string" indexed="true" stored="true"/>   
  <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
  <field name="title" type="text" indexed="true" stored="true"/>
+ <field name="title_secondary" type="text" indexed="true" stored="true"/>
+ <field name="title_tertiary" type="text" indexed="true" stored="true"/>
+ <field name="issn_isbn" type="text" indexed="true" stored="true"/>
+ <field name="publication" type="text" indexed="true" stored="true"/>
+ <field name="publisher" type="text" indexed="true" stored="true"/>
  <field name="abstract" type="text" indexed="true" stored="true"/>
  <field name="year" type="text" indexed="true" stored="true"/>
+ <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
+
  <dynamicField name="*_i" type="integer" indexed="true" stored="false"/>
  <dynamicField name="*_t" type="text" indexed="true" stored="false"/>
  <dynamicField name="*_f" type="float" indexed="true" stored="false"/>

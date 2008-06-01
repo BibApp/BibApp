@@ -374,16 +374,71 @@
      <str name="echoParams">explicit</str>
      <float name="tie">0.01</float>
      <str name="qf">
-        text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
+       pk_i^1.0
+       id^1.0
+       title^1.5
+       title_secondary^1.2
+       title_tertiary^1.2
+       issn_isbn^1.5
+       publication^1.2
+       publisher^1.2
+       abstract^1.1
+       year^1.1
+       name_strings^1.0
+       people^1.0
+       groups^1.0
+       keywords^1.0
+       type_facet^1.0
+       year_facet^1.0
+       citation_id_facet^1.0
+       name_string_facet^1.0
+       name_string_id_facet^1.0
+       person_facet^1.0
+       person_id_facet^1.0
+       group_facet^1.0
+       group_id_facet^1.0
+       publication_facet^1.0
+       publication_id_facet^1.0
+       publisher_facet^1.0
+       publisher_id_facet^1.0
+       keyword_facet^1.0
+       keyword_id_facet^1.0
      </str>
      <str name="pf">
-        text^0.2 features^1.1 name^1.5 manu^1.4 manu_exact^1.9
+        title^1.5 abstract^1.1 publication^1.1 publisher^1.1
      </str>
      <str name="bf">
-        ord(popularity)^0.5 recip(rord(price),1,1000,1000)^0.3
      </str>
      <str name="fl">
-        id,name,price,score
+       pk_i,
+       id,
+       title,
+       title_secondary,
+       title_tertiary,
+       issn_isbn,
+       publication,
+       publisher,
+       abstract,
+       year,
+       name_strings,
+       people,
+       groups,
+       keywords,
+       type_facet,
+       year_facet,
+       citation_id_facet,
+       name_string_facet,
+       name_string_id_facet,
+       person_facet,
+       person_id_facet,
+       group_facet,
+       group_id_facet,
+       publication_facet,
+       publication_id_facet,
+       publisher_facet,
+       publisher_id_facet,
+       keyword_facet,
+       keyword_id_facet
      </str>
      <str name="mm">
         2&lt;-1 5&lt;-2 6&lt;90%
@@ -391,7 +446,7 @@
      <int name="ps">100</int>
      <str name="q.alt">*:*</str>
      <!-- example highlighter config, enable per-query with hl=true -->     
-     <str name="hl.fl">text features name</str>
+     <str name="hl.fl">title abstract</str>
      <!-- for this field, we want no fragmenting, just highlighting -->
      <str name="f.name.hl.fragsize">0</str>
      <!-- instructs Solr to return the field itself if no query terms are
@@ -400,75 +455,6 @@
      <str name="f.text.hl.fragmenter">regex</str> <!-- defined below -->
     </lst>
   </requestHandler>
-
-  <!-- Note how you can register the same handler multiple times with
-       different names (and different init parameters)
-    -->
-  <requestHandler name="partitioned" class="solr.DisMaxRequestHandler" >
-    <lst name="defaults">
-     <str name="echoParams">explicit</str>
-     <str name="qf">text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0</str>
-     <str name="mm">2&lt;-1 5&lt;-2 6&lt;90%</str>
-     <!-- This is an example of using Date Math to specify a constantly
-          moving date range in a config...
-       -->
-     <str name="bq">incubationdate_dt:[* TO NOW/DAY-1MONTH]^2.2</str>
-    </lst>
-    <!-- In addition to defaults, "appends" params can be specified
-         to identify values which should be appended to the list of
-         multi-val params from the query (or the existing "defaults").
-
-         In this example, the param "fq=instock:true" will be appended to
-         any query time fq params the user may specify, as a mechanism for
-         partitioning the index, independent of any user selected filtering
-         that may also be desired (perhaps as a result of faceted searching).
-
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "appends" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <lst name="appends">
-      <str name="fq">inStock:true</str>
-    </lst>
-    <!-- "invariants" are a way of letting the Solr maintainer lock down
-         the options available to Solr clients.  Any params values
-         specified here are used regardless of what values may be specified
-         in either the query, the "defaults", or the "appends" params.
-
-         In this example, the facet.field and facet.query params are fixed,
-         limiting the facets clients can use.  Faceting is not turned on by
-         default - but if the client does specify facet=true in the request,
-         these are the only facets they will be able to see counts for;
-         regardless of what other facet.field or facet.query params they
-         may specify.
-
-         NOTE: there is *absolutely* nothing a client can do to prevent these
-         "invariants" values from being used, so don't use this mechanism
-         unless you are sure you always want it.
-      -->
-    <lst name="invariants">
-      <str name="facet.field">cat</str>
-      <str name="facet.field">manu_exact</str>
-      <str name="facet.query">price:[* TO 500]</str>
-      <str name="facet.query">price:[500 TO *]</str>
-    </lst>
-  </requestHandler>
-  
-  <requestHandler name="instock" class="solr.DisMaxRequestHandler" >
-    <!-- for legacy reasons, DisMaxRequestHandler will assume all init
-         params are "defaults" if you don't explicitly specify any defaults.
-      -->
-     <str name="fq">
-        inStock:true
-     </str>
-     <str name="qf">
-        text^0.5 features^1.0 name^1.2 sku^1.5 id^10.0 manu^1.1 cat^1.4
-     </str>
-     <str name="mm">
-        2&lt;-1 5&lt;-2 6&lt;90%
-     </str>
-  </requestHandler>
-
 
   <!-- SpellCheckerRequestHandler takes in a word (or several words) as the
        value of the "q" parameter and returns a list of alternative spelling
@@ -498,7 +484,7 @@
 
    <requestHandler name="/mlt" class="solr.MoreLikeThisHandler">
      <lst name="defaults">
-       <str name="mlt.fl">manu,cat</str>
+       <str name="mlt.fl">title,abstract</str>
        <int name="mlt.mindf">1</int>
      </lst>
    </requestHandler>

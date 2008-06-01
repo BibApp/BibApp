@@ -30,27 +30,33 @@ class Index
     :pk_i => :id,
     :id => Proc.new{|record| record.solr_id},
     :title => :title_primary,
+    :title_secondary => :title_secondary,
+    :title_tertiary => :title_tertiary,
     :abstract => :abstract,
     :year => Proc.new{|record| record.publication_date.year},
+    :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
+    :publication => Proc.new{|record| record.publication.authority.name},
+    :publisher => Proc.new{|record| record.publisher.authority.name},
+    
     :type_facet => Proc.new{|record| record[:type]},
     :year_facet => Proc.new{|record| record.publication_date.year},
-    :title_t => :title_primary,
-    :abstract_t => :abstract,
-    :title_secondary_t => :title_secondary,
     :citation_id_facet => Proc.new{|record| record.solr_id},
 
     # SpellCheck
     :word => :abstract,
     
-    # NameString
+    # NameStrings
+    :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
     
-    # Person
+    # People
+    :people => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
     
-    # Group
+    # Groups
+    :groups => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
     :group_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
     :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
     
@@ -62,7 +68,8 @@ class Index
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
     :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
     
-    # Keyword
+    # Keywords
+    :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
   }
@@ -72,25 +79,32 @@ class Index
     :pk_i => :id,
     :id => Proc.new{|record| record.solr_id},
     :title => :title_primary,
+    :title_secondary => :title_secondary,
+    :title_tertiary => :title_tertiary,
     :abstract => :abstract,
+    :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
+    :publication => Proc.new{|record| record.publication.authority.name},
+    :publisher => Proc.new{|record| record.publisher.authority.name},
+    
     :type_facet => Proc.new{|record| record[:type]},
-    :title_t => :title_primary,
-    :abstract_t => :abstract,
-    :title_secondary_t => :title_secondary,
+    :year_facet => Proc.new{|record| record.publication_date.year},
     :citation_id_facet => Proc.new{|record| record.solr_id},
-
+    
     # SpellCheck
     :word => :abstract,
     
-    # NameString
+    # NameStrings
+    :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
     
-    # Person
+    # People
+    :people => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
     
-    # Group
+    # Groups
+    :groups => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
     :group_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
     :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
     
@@ -102,7 +116,8 @@ class Index
     :publisher_facet => Proc.new{|record| record.publisher.authority.name},
     :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
     
-    # Keyword
+    # Keywords
+    :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
   }
@@ -161,11 +176,9 @@ class Index
     end
 
     def fetch (query_string, filter, sort, page, count)
-      sort = "#{sort} desc" 
-      fetch = query_string + ";" + sort.downcase
-      if !filter.empty?
-        q = SOLRCONN.query(
-          fetch, {
+      begin
+        q = SOLRCONN.send(Solr::Request::Standard.new(
+          :query => query_string,
             :filter_queries => filter,
             :facets => {
               :fields => [
@@ -185,37 +198,100 @@ class Index
                 :year_facet 
               ], 
               :mincount => 1, 
-              :limit => 10
-            },
-            :start => self.start(page)
-          })
-      else
-        q = SOLRCONN.query(
-          fetch, {
-            :facets => {
-              :fields => [
-                :group_facet,
-                :group_id_facet,
-                :keyword_facet,
-                :keyword_id_facet,
-                :name_string_facet,
-                :name_string_id_facet,
-                :person_facet,
-                :person_id_facet, 
-                :publication_facet,
-                :publication_id_facet,
-                :publisher_facet,
-                :publisher_id_facet,
-                :type_facet,
-                :year_facet
-              ],
-              :mincount => 1,
               :limit => count
             },
-            :start => self.start(page)
-          })
-      end
+            :start => self.start(page),
+            :sort => [{"#{sort}" => :descending}]
+          ))
+        
+        # Rerun our search if the StandardRequestHandler came up empty...
+        if q.data["response"]["docs"].size < 1
+          q = SOLRCONN.send(Solr::Request::Dismax.new(
+            :query => query_string,
+              :filter_queries => filter,
+              :facets => {
+                :fields => [
+                  :group_facet,
+                  :group_id_facet,
+                  :keyword_facet,
+                  :keyword_id_facet,
+                  :name_string_facet,
+                  :name_string_id_facet,
+                  :person_facet,
+                  :person_id_facet, 
+                  :publication_facet,
+                  :publication_id_facet,
+                  :publisher_facet,
+                  :publisher_id_facet,
+                  :type_facet,
+                  :year_facet 
+                ], 
+                :mincount => 1, 
+                :limit => count
+              },
+              :start => self.start(page),
+              :sort => [{"#{sort}" => :descending}]
+            ))
+        end
+        
+        # Processing returned docs:
+        # 1. Extract the IDs from Solr response
+        # 2. Find Citation objects via AR
+        # 2. Load objects and Solr score for view
       
+        docs = Array.new
+        q.data["response"]["docs"].each do |doc|
+          citation = Citation.find(doc["pk_i"])
+          docs << [citation, doc['score']]
+        end
+      
+        facets = {
+          :people         => q.field_facets("person_facet"),
+          :person_id      => q.field_facets("person_id_facet"),
+          :groups         => q.field_facets("group_facet"),
+          :group_id       => q.field_facets("group_id_facet"),
+          :names          => q.field_facets("name_string_facet"),
+          :name_id        => q.field_facets("name_string_id_facet"),
+          :publications   => q.field_facets("publication_facet"),
+          :publication_id => q.field_facets("publication_id_facet"),
+          :publishers     => q.field_facets("publisher_facet"),
+          :publisher_id   => q.field_facets("publisher_id_facet"),
+          :keywords       => q.field_facets("keyword_facet"),
+          :keyword_id     => q.field_facets("keyword_id_facet"),
+          :types          => q.field_facets("type_facet"),
+          :years          => q.field_facets("year_facet")
+        }
+    rescue
+      # If anything goes wrong (bad query terms for instance), we want to use the DismaxRequestHandler
+      # which will help parse the "junk" from users' queries... and will return 0 results.
+      
+      q = SOLRCONN.send(Solr::Request::Dismax.new(
+        :query => query_string,
+          :filter_queries => filter,
+          :facets => {
+            :fields => [
+              :group_facet,
+              :group_id_facet,
+              :keyword_facet,
+              :keyword_id_facet,
+              :name_string_facet,
+              :name_string_id_facet,
+              :person_facet,
+              :person_id_facet, 
+              :publication_facet,
+              :publication_id_facet,
+              :publisher_facet,
+              :publisher_id_facet,
+              :type_facet,
+              :year_facet 
+            ], 
+            :mincount => 1, 
+            :limit => count
+          },
+          :start => self.start(page),
+          :sort => [{"#{sort}" => :descending}]
+        ))
+        
       # Processing returned docs:
       # 1. Extract the IDs from Solr response
       # 2. Find Citation objects via AR
@@ -243,6 +319,7 @@ class Index
         :types          => q.field_facets("type_facet"),
         :years          => q.field_facets("year_facet")
       }
+    end
       return q,docs,facets
     end
     
