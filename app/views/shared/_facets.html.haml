@@ -1,35 +1,66 @@
 %div#facets{:class => "span-6 append-1"}
   %h3#filter Filters
   - if !@filter.empty?
-    %h4
-      ="Remove Filters: "
+    %ol.filters
       - @filter.each do |f|
-        =remove_filter(@query,@sort,@filter,f)
+        %li.active-filter=remove_filter(@query,@sort,@filter,f)
 
   / Groups
   %h4.heading Groups
-  %ol.filters.groups
+  %ol#top-five-groups.filters.groups
     -@facets[:groups].first(5).each do |p|
       %li
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
 
+  - if @facets[:groups].size > 5
+    %ol#all-groups.filters.groups{:style => "display:none"}
+      -@facets[:groups].each do |p|
+        %li.show
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+    =link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+
   / People
   %h4.heading People
-  %ol.filters.people
+  %ol#top-five-people.filters.people
     -@facets[:people].first(5).each do |p|
-      %li
+      %li.show
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+  - if @facets[:people].size > 5
+    %ol#all-people.filters.groups{:style => "display:none"}
+      -@facets[:people].each do |p|
+        %li.show
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+    =link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
   / Years
   %h4.heading Years
-  %ol.filters.years
+  %ol#top-five-years.filters.years
     -@facets[:years].first(5).each do |p|
-      %li
+      %li.show
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+  - if @facets[:years].size > 5
+    %ol#all-years.filters.groups{:style => "display:none"}
+      -@facets[:years].each do |p|
+        %li.show
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+    =link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
   / Publications
   %h4.heading Publications
-  %ol.filters.publications
+  %ol#top-five-publications.filters.publications
     -@facets[:publications].first(5).each do |p|
-      %li
+      %li.show
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+  - if @facets[:publications].size > 5
+    %ol#all-publications.filters.groups{:style => "display:none"}
+      -@facets[:publications].each do |p|
+        %li.show
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+
+    =link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"

@@ -481,3 +481,9 @@ thead td {font-weight:bold;}
 .yellow {background-color:#FFFF00;}
 .white {background-color:#FFFFFF;}
 .unknown {background-color:#E6E6E6;}
+
+li.active-filter {
+	list-style: none;
+	background: url('../../images/remove_facet.gif') left center no-repeat;
+	padding-left: 1.5em;
+}

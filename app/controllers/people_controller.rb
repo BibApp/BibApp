@@ -42,7 +42,7 @@ class PeopleController < ApplicationController
       @filter = @filter.split("+>+").each{|f| f.strip!}
       @sort = params[:sort] || "year"
       @page = params[:page] || 0
-      @count = params[:count] || 10
+      @count = params[:count] || 50
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
 
