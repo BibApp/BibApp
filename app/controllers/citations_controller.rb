@@ -30,7 +30,7 @@ class CitationsController < ApplicationController
       @filter = params[:fq] || ""
       @filter = @filter.split("+>+").each{|f| f.strip!}
       @page = params[:page] || 0
-      @count = params[:count] || 15
+      @count = params[:count] || 50
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
 

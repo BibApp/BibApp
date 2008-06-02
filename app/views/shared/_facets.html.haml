@@ -37,16 +37,22 @@
 
   / Years
   %h4.heading Years
-  %ol#top-five-years.filters.years
-    -@facets[:years].first(5).each do |p|
-      %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
+  
+  - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
+  - logger.debug("Sorted Hash: #{sorted_hash.inspect}")
 
-  - if @facets[:years].size > 5
+  %ol#top-five-years.filters.years
+    -sorted_hash.first(5).each do |key, value|
+      %li.show
+        =add_filter(@query,@sort,@filter,"year_facet",key,value,@view)
+
+  - if sorted_hash.size > 5
     %ol#all-years.filters.groups{:style => "display:none"}
-      -@facets[:years].each do |p|
+
+      
+      -sorted_hash.each do |key, value|
         %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
+          =add_filter(@query,@sort,@filter,"year_facet",key,value,@view)
 
     =link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
