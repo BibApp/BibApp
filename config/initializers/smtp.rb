@@ -7,12 +7,18 @@ SMTP_SETTINGS = YAML::load(File.read(SMTP_CONFIG))[RAILS_ENV]
 
 # Actually initialize our ActionMailer with proper settings
 if SMTP_SETTINGS and SMTP_SETTINGS['address']
+  #Always send mail via SMTP
   ActionMailer::Base.delivery_method = :smtp
   
-  if SMTP_SETTINGS['username']
+  # default port to 25
+  port = SMTP_SETTINGS['port'] ? SMTP_SETTINGS['port'].to_i : 25
+  
+  #determine if login required for SMTP server
+  if SMTP_SETTINGS['username'] and !SMTP_SETTINGS['username'].empty?
     ActionMailer::Base.smtp_settings = {
       :address => SMTP_SETTINGS['address'],
-      :port => SMTP_SETTINGS['port'].to_i,
+      :port => port,
+      :domain => SMTP_SETTINGS['domain'],
       :user_name => SMTP_SETTINGS['username'],
       :password => SMTP_SETTINGS['password'],
       :authentication => :login
@@ -20,7 +26,8 @@ if SMTP_SETTINGS and SMTP_SETTINGS['address']
   else
     ActionMailer::Base.smtp_settings = {
       :address => SMTP_SETTINGS['address'],
-      :port => SMTP_SETTINGS['port'].to_i
+      :port => port,
+      :domain => SMTP_SETTINGS['domain']
     }
   end
 end
