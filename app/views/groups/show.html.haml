@@ -6,7 +6,7 @@
     
     %div{:class => "span-23", :style => "padding:0em; margin:0em;"}
       / People
-      %div{:class => "span-15", :style => "padding:0em; margin:0em;"}
+      %div{:class => "span-16", :style => "padding:0em; margin:0em;"}
         %h3.heading=link_to "People", people_url
         %ol.people{:style => "padding:0em;margin:0em;"}
           -@group.people.each do |person|
@@ -17,43 +17,23 @@
                   %strong= person.citations.size
                   %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
 
-      / Citations
-      %div{:class => "span-7", :style => "padding-left:0.75em; margin-bottom:2em;"}
-        %h3.heading=link_to "Citations", citations_url
-        %ol{:class => "span-7 citations", :style => "clear:both;"}
-          - @docs.first(3).each do |citation, score|
-            = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
-
-    %div{:class => "span-23", :style => "padding:0em; margin:0em;"}
-      / Groups
+      / Sub-Groups
       %div{:class => "span-6"}
-        %h3.heading=link_to "Groups", groups_url
-        %ol.groups.filters
-          -@facets[:group_id].each do |g|
-            - group = object_by_facet_id(g.name)
-            %li
-              =link_to group.name, group_path(group)
-              ="(#{g.value})"
-          %li=link_to "More...", groups_path
+        - if !@group.parent.nil?
+          %h3.heading Belongs to:
+          %ul.parent-group
+            %li= link_to @group.parent.name, group_path(@group.parent)
+        - if !@group.children.empty?
+          %h3.heading Sub-Groups
+          %ul.sub-groups
+            -@group.children.each do |g|
+              %li
+                =link_to g.name, group_path(g)
+                ="(#{g.citations.size})"
 
-      / Publications
-      %div{:class => "span-7 prepend-1 append-1"}
-        %h3.heading=link_to "Publications", publications_url
-        %ol.publications.filters
-          -@facets[:publication_id].each do |p|
-            - publication = object_by_facet_id(p.name)
-            %li
-              =link_to publication.name, publication_path(publication)
-              ="(#{p.value})"
-          %li=link_to "More...", publications_path
+      %div#results{:class => "span-22"}
+        / Facets
+        = render :partial => "shared/facets"
 
-      / Publishers
-      %div{:class => "span-6 last"}
-        %h3.heading=link_to "Publishers", publishers_url
-        %ol.publishers.filters
-          -@facets[:publisher_id].each do |p|
-            - publisher = object_by_facet_id(p.name)
-            %li
-              =link_to publisher.name, publisher_path(publisher)
-              ="(#{p.value})"
-          %li=link_to "More...", publishers_path
+        / Citations 
+        = render :partial => "shared/citations"
