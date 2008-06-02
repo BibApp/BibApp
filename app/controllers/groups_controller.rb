@@ -21,8 +21,12 @@ class GroupsController < ApplicationController
       @count = params[:count] || 15
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
-
+      @view = "all"
       @title = @current_object.name
+    end
+    
+    before :new, :edit do 
+      @groups = Group.find(:all, :order => "name")
     end
   end
   

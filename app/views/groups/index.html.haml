@@ -1,6 +1,14 @@
+/ === Groups === Index ===
+/ Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="Groups (#{@page}) - #{link_to "Add", new_group_path}"
+    %ul.actions
+      %li=link_to "Add a Group", new_group_path
+    - if flash[:notice]
+      %div.success= flash[:notice]
+
+  %div{:class => "span-22 prepend-1"}
+    %h2="Groups (#{@page})"
     
     = render :partial => "shared/alpha_pagination"
 
