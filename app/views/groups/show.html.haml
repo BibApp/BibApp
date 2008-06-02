@@ -2,8 +2,20 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
+    %ul.actions
+      %li= link_to "Edit", edit_group_path
+      |
+      %li=link_to "Destroy", {:controller => "groups", :action => "destroy", :id => @group.id}, :confirm => "Are you sure?", :method => :delete
+      
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
+  %div{:class => "span-22 prepend-1"}
     %h2= @group.name
-    
+    - if !@group.url.nil?
+      %p
+        =link_to "Homepage", @group.url, {:target => "_blank"}
+
     %div{:class => "span-23", :style => "padding:0em; margin:0em;"}
       / People
       %div{:class => "span-16", :style => "padding:0em; margin:0em;"}
