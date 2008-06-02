@@ -49,7 +49,7 @@ class Publication < ActiveRecord::Base
   end
   
   def form_select
-    "#{name} - #{issn_isbn}"
+    "#{name.first(100)+"..."} - #{issn_isbn}"
   end
 
   def authority_for
