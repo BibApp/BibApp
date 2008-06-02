@@ -162,6 +162,11 @@ class Index
         SOLRCONN.add(doc)
       end
       SOLRCONN.commit
+      Index.build_spelling_suggestions
+    end
+    
+    def build_spelling_suggestions
+      SOLRCONN.send(Solr::Request::Spellcheck.new(:command => "rebuild", :query => "physcs"))
     end
   
     def update_solr(record)

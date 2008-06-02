@@ -89,4 +89,14 @@ namespace :solr do
     
     puts "Finished!"
   end
+  
+  desc 'Refresh Solr Spelling index'
+  task :refresh_spelling_suggestions do
+    puts "\nRefreshing BibApp spelling suggestions in Solr...\n"
+
+    #Call build_spelling_suggestions
+    Index.build_spelling_suggestions
+    
+    puts "Finished!"
+  end
 end
