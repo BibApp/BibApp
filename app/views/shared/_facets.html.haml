@@ -49,7 +49,6 @@
   - if sorted_hash.size > 5
     %ol#all-years.filters.groups{:style => "display:none"}
 
-      
       -sorted_hash.each do |key, value|
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",key,value,@view)

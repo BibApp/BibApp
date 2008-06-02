@@ -72,38 +72,6 @@ class Publisher < ActiveRecord::Base
     )
     return authority_for
   end
-    
-  def self.from_sherpa_api
-    # @TODO: Rewrite this using hpricot
-    
-    require 'hpricot'
-    require 'open-uri'
-
-    # SHERPA's API is not-cached! Opening the URI directly will likely 
-    # produce a ruby net/http timeout.
-    #
-    # @TODO: 
-    # 1. Offer a cached copy within /trunk?
-    # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
-    
-    data = Hpricot.XML(open("tmp/sherpa/publishers.xml"))
-
-    (data/'publisher').each do |pub|
-      sherpa_id = pub[:id].to_i
-      name = (pub/'name').inner_html
-      url = (pub/'homeurl').inner_html
-      romeo_color = (pub/'romeocolour').inner_html
-
-      add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
-      add.update_attributes!({
-        :name         => name,
-        :url          => url,
-        :romeo_color  => romeo_color,
-        :sherpa_id    => sherpa_id,
-        :source_id    => 1           
-      })
-    end
-  end
   
   class << self
     # return the first letter of each name, ordered alphabetically
@@ -122,5 +90,38 @@ class Publisher < ActiveRecord::Base
         update.save
       end
     end
+    
+    def update_sherpa_data
+      # @TODO: Rewrite this using hpricot
+
+      require 'hpricot'
+      require 'open-uri'
+
+      # SHERPA's API is not-cached! Opening the URI directly will likely 
+      # produce a ruby net/http timeout.
+      #
+      # @TODO: 
+      # 1. Offer a cached copy within /trunk?
+      # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
+
+      data = Hpricot.XML(open("public/sherpa/publishers.xml"))
+
+      (data/'publisher').each do |pub|
+        sherpa_id = pub[:id].to_i
+        name = (pub/'name').inner_html
+        url = (pub/'homeurl').inner_html
+        romeo_color = (pub/'romeocolour').inner_html
+
+        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+        add.update_attributes!({
+          :name         => name,
+          :url          => url,
+          :romeo_color  => romeo_color,
+          :sherpa_id    => sherpa_id,
+          :source_id    => 1           
+        })
+      end
+    end
+    
   end
 end
