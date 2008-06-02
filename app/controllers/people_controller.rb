@@ -45,7 +45,7 @@ class PeopleController < ApplicationController
       @count = params[:count] || 50
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
-
+      @view = "all"
       @title = @current_object.name
       @research_focus = RedCloth.new(@current_object.research_focus).to_html
     end

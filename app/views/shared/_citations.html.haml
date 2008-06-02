@@ -24,7 +24,7 @@
       %ul.types
         -@facets[:types].each do |p|
           %li
-            =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value)
+            =add_filter(@query,@sort,@filter,"type_facet",p.name,p.value,@view)
 
     %div{:class => "span-12 pagination", :style => "text-align:center;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), 10, @q.total_hits)
 

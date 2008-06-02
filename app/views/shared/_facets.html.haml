@@ -3,20 +3,20 @@
   - if !@filter.empty?
     %ol.filters
       - @filter.each do |f|
-        %li.active-filter=remove_filter(@query,@sort,@filter,f)
+        %li.active-filter=remove_filter(@query,@sort,@filter,f,@view)
 
   / Groups
   %h4.heading Groups
   %ol#top-five-groups.filters.groups
     -@facets[:groups].first(5).each do |p|
       %li
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
   - if @facets[:groups].size > 5
     %ol#all-groups.filters.groups{:style => "display:none"}
       -@facets[:groups].each do |p|
         %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
     =link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
@@ -25,13 +25,13 @@
   %ol#top-five-people.filters.people
     -@facets[:people].first(5).each do |p|
       %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
   - if @facets[:people].size > 5
     %ol#all-people.filters.groups{:style => "display:none"}
       -@facets[:people].each do |p|
         %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
     =link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
@@ -40,13 +40,13 @@
   %ol#top-five-years.filters.years
     -@facets[:years].first(5).each do |p|
       %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
   - if @facets[:years].size > 5
     %ol#all-years.filters.groups{:style => "display:none"}
       -@facets[:years].each do |p|
         %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
     =link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
@@ -55,12 +55,12 @@
   %ol#top-five-publications.filters.publications
     -@facets[:publications].first(5).each do |p|
       %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
   - if @facets[:publications].size > 5
     %ol#all-publications.filters.groups{:style => "display:none"}
       -@facets[:publications].each do |p|
         %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value)
+          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
     =link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"

@@ -40,7 +40,7 @@ class PublishersController < ApplicationController
       @count = params[:count] || 10
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
-
+      @view = "all"
       @title = @current_object.name
     end
 
