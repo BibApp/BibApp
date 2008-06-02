@@ -24,6 +24,6 @@
     %p
       %label Publication Authority Record
       %br/
-      = form.collection_select :authority_id, @publications, :id, :form_select
+      = form.collection_select :authority_id, @publications, :id, :form_select, {:width => "100"}
     %p.submit
       = submit_tag :save

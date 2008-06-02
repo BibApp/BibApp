@@ -1,6 +1,14 @@
+/ === Publications === Index ===
+/ Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="Publications (#{@page}) - #{link_to "Add", new_publication_path}"
+    %ul.actions
+      %li=link_to "Add a Publication", new_publication_path
+    - if flash[:notice]
+      %div.success= flash[:notice]
+    
+  %div{:class => "span-22 prepend-1"}
+    %h2="Publications (#{@page})"
     
     = render :partial => "shared/alpha_pagination"
 

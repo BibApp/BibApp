@@ -1,6 +1,16 @@
-%div{:class => "column span-24"}
+/ === Publishers === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %ul.actions
+      %li=link_to "Add a Publisher", new_publisher_path
+      |
+      %li=link_to "Refresh Sherpa Data"
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
   %div{:class => "column span-22 prepend-1"}
-    %h2="Publishers (#{@page}) - #{link_to "Add", new_publisher_path}"
+    %h2="Publishers (#{@page})"
 
     = render :partial => "shared/alpha_pagination"
     

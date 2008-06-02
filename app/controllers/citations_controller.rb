@@ -33,6 +33,8 @@ class CitationsController < ApplicationController
       @count = params[:count] || 15
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
+
+      @view = params[:view] || "splash"
     end
 	
     #initialize variables used by 'new.html.haml'

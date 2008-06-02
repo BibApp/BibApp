@@ -28,6 +28,7 @@
             = submit_tag 'Go'
       %div{:class => "span-21"}
         %ul#navigation
+          %li=link_to "Citations", citations_path(:view => "all")
           %li=link_to "Groups", groups_path
           %li=link_to "People", people_path
           %li=link_to "Publications", publications_path
