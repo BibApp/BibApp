@@ -200,7 +200,7 @@ class Index
                 :publisher_facet,
                 :publisher_id_facet,
                 :type_facet,
-                :year_facet 
+                {:year_facet => {:sort => :term}}
               ], 
               :mincount => 1, 
               :limit => count
@@ -229,7 +229,7 @@ class Index
                   :publisher_facet,
                   :publisher_id_facet,
                   :type_facet,
-                  :year_facet 
+                  {:year_facet => {:sort => :term}} 
                 ], 
                 :mincount => 1, 
                 :limit => count
@@ -288,7 +288,7 @@ class Index
               :publisher_facet,
               :publisher_id_facet,
               :type_facet,
-              :year_facet 
+              {:year_facet => {:sort => :term}}
             ], 
             :mincount => 1, 
             :limit => count
