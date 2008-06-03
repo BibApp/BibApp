@@ -2,5 +2,10 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h3 Enter a new publication
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %h2 Enter a new publication
+    
     = render :partial => 'form'
