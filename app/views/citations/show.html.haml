@@ -94,4 +94,6 @@
           %li{:style => "padding-bottom:0.5em"}
             =link_to rec.title_primary.titleize, citation_path(rec)
             %br/
-            ="#{rec.publication.authority.name} | #{rec.publication_date.year}"
+            ="#{rec.publication.authority.name} |" 
+            -if rec.publication_date
+              ="#{rec.publication_date.year}"
