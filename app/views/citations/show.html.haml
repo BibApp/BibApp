@@ -12,13 +12,13 @@
 
     %h3.headline
       = @citation.title_primary
-
-    %div{:class => "span-12 last"}
-      %label="APA Format: #{@citation.class.name.to_s.underscore.humanize}"
-      %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }  
-      .links
-        =link_to_findit(@citation)
-      %br/
+    -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
+      %div{:class => "span-12 last"}
+        %label="APA Format: #{@citation.class.name.to_s.underscore.humanize}"
+        %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }  
+        .links
+          =link_to_findit(@citation)
+        %br/
 
     %div{:class => "span-13"}  
       %fieldset
