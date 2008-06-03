@@ -1,8 +1,8 @@
-class RefworksXmlImporter < CitationImporter
+class RefworksDepricatedXmlImporter < CitationImporter
 
   class << self
     def import_formats
-      [:refworks_xml]
+      [:refworks_depricated_xml]
     end
   end
   
@@ -101,37 +101,37 @@ class RefworksXmlImporter < CitationImporter
     
     
     @type_map = {
-      "Abstract" => "Abstract",
-      "Artwork" =>	"Artwork",
-      "Bills/Resolutions" => "BillsResolutions",
-      "Book, Edited" => "BookEdited",
-      "Book, Section" => "BookSection",
-      "Book, Whole" => "BookWhole",
-      "Case/Court Decisions" => "CaseCourtDecisions",
-      "Computer Program" => "ComputerProgram",
-      "Conference Proceedings" => "ConferenceProceeding",
-      "Dissertation/Thesis" => "DissertationThesis",
-      "Dissertation/Thesis, Unpublished" => "DissertationThesis",
-      "Generic" => "Generic",
-      "Grant" => "Grant",
-      "Hearing" => "Hearing",
-      "Journal Article" => "JournalArticle",
-      "Journal, Electronic" => "JournalArticle",
-      "Laws/Statutes" => "LawsStatutes",
-      "Magazine Article" => "MagazineArticle",
-      "Map" => "Map",
-      "Monograph" => "Monograph",
-      "Motion Picture" => "MotionPicture",
-      "Music Score" => "MusicScore",
-      "Newspaper Article" => "NewspaperArticle",
-      "Online Discussion Forum/Blogs" => "OnlineDiscussionForum",
-      "Patent" => "Patent",
-      "Personal Communication" => "PersonalCommunication",
-      "Report" => "Report",
-      "Sound Recording" => "SoundRecording",
-      "Unpublished Material" => "UnpublishedMaterial",
-      "Video/DVD" => "Video",
-      "Web Page" => "WebPage"
+      "0"  => "Generic",
+      "1"  => "JournalArticle",
+      "2"  => "Abstract",
+      "3"  => "BookWhole",
+      "4"  => "BookSection",
+      "5"  => "ConferenceProceeding",
+      "6"  => "Patent",
+      "7"  => "Report",
+      "8"  => "Monograph",
+      "9"  => "DissertationThesis",
+      "10" => "WebPage",
+      "11" => "JournalArticle",
+      "12" => "NewspaperArticle",
+      "13" => "BookEdited",
+      "14" => "DissertationThesis",
+      "15" =>	"Artwork",
+      "16" => "Video",
+      "17" => "MagazineArticle",
+      "18" => "Map",
+      "19" => "MotionPicture",
+      "20" => "MusicScore",
+      "21" => "SoundRecording",
+      "22" => "PersonalCommunication",
+      "23" => "Grant",
+      "24" => "UnpublishedMaterial",
+      "25" => "OnlineDiscussionForum",
+      "26" => "CaseCourtDecisions",
+      "27" => "Hearing",
+      "28" => "LawsStatutes",
+      "29" => "BillsResolutions",
+      "30" => "ComputerProgram"
     }
   end
 end
