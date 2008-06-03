@@ -399,7 +399,7 @@ class Citation < ActiveRecord::Base
     if citation.title_primary.nil? or citation.publication_date.nil? or citation[:type].nil? or citation.start_page.nil?
       title_dupe_key = nil
     else 
-      title_dupe_key = citation.title_primary.downcase.gsub(/[^a-z]/,'')+citation.publication_date.year.to_s+citation[:type].to_s+citation.start_page.to_s
+      title_dupe_key = citation.title_primary.downcase.gsub(/[^a-z]/,'').first(200)+citation.publication_date.year.to_s+citation[:type].to_s+citation.start_page.to_s
     end
   end
  
