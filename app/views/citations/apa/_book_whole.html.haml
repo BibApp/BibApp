@@ -2,7 +2,7 @@
   %span.name_strings
     - c.name_strings.each do |ns|
       %span.name_strings=link_to "#{ns.name}", name_strings_path(ns)
-  -if c.publication_date. != nil
+  -if c.publication_date != nil
     %span.year="(#{c.publication_date.year}). "
   %span.title="#{c.title_primary}."
   %span.city-of-publication="#{c.city_of_publication}: "

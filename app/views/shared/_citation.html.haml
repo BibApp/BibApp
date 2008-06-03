@@ -7,7 +7,8 @@
       =link_to "more...", citation_path(citation)
     %br/
     =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
-    ="(#{citation.publication_date.year})"
+    -if citation.publication_date != nil
+      ="(#{citation.publication_date.year})"
     .links
       =link_to_findit(citation) 
       | 
