@@ -1,2 +1,11 @@
-%h3 Enter a new Publisher
-= render :partial => 'form'
+/ === Publishers === New ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %h2 Enter a new Publisher
+
+    = render :partial => 'form'

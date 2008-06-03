@@ -1,7 +1,10 @@
 / === Citations === Index ===
 / Main
 %div{:class => "column span-24"}
-
+  %div{:class => "span-22 prepend-1"}
+    - if flash[:notice]
+      %div.success= flash[:notice]
+          
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
   - if @view == "all"
@@ -31,7 +34,7 @@
         %div{:class => "span-15", :style => "padding:0em; margin:0em;"}
           %h3.heading=link_to "People", people_url
           %ol.people{:style => "padding:0em;margin:0em;"}
-            -@facets[:person_id].each do |p|
+            -@facets[:person_id].first(15).each do |p|
               - person = object_by_facet_id(p.name)
               %li.inline{:style => "margin:0; padding:0;"}
                 %div{:class => "span-3", :style => "padding:0em; margin:0em;"}
@@ -53,7 +56,7 @@
         %div{:class => "span-6"}
           %h3.heading=link_to "Groups", groups_url
           %ol.groups.filters
-            -@facets[:group_id].each do |g|
+            -@facets[:group_id].first(15).each do |g|
               - group = object_by_facet_id(g.name)
               %li
                 =link_to group.name, group_path(group)
@@ -64,7 +67,7 @@
         %div{:class => "span-7 prepend-1 append-1"}
           %h3.heading=link_to "Publications", publications_url
           %ol.publications.filters
-            -@facets[:publication_id].each do |p|
+            -@facets[:publication_id].first(15).each do |p|
               - publication = object_by_facet_id(p.name)
               %li
                 =link_to publication.name, publication_path(publication)
@@ -75,7 +78,7 @@
         %div{:class => "span-6 last"}
           %h3.heading=link_to "Publishers", publishers_url
           %ol.publishers.filters
-            -@facets[:publisher_id].each do |p|
+            -@facets[:publisher_id].first(15).each do |p|
               - publisher = object_by_facet_id(p.name)
               %li
                 =link_to publisher.name, publisher_path(publisher)

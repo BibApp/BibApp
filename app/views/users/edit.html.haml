@@ -1,21 +1,24 @@
-#content 
-  %h2 Edit My Account
+/ === Users === Edit ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %h2 Edit My Account
   
-  - if flash[:notice]
-    .notice= flash[:notice]
-  = error_messages_for :user, :class => 'notice'
+    - if flash[:notice]
+      .notice= flash[:notice]
+    = error_messages_for :user, :class => 'notice'
   
-  %fieldset
-    %legend="User Account"
-    - form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
-      %p
-        %label="Username:"
-        =@user.login       
-      %p
-        %label="Email:"
-        = form.text_field :email
-      %p
-        =link_to "Change Password", edit_user_password_path(@user)
-      %p.submit
-        = submit_tag 'Update'
+    %fieldset
+      %legend="User Account"
+      - form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
+        %p
+          %label="Username:"
+          =@user.login       
+        %p
+          %label="Email:"
+          = form.text_field :email
+        %p
+          =link_to "Change Password", edit_user_password_path(@user)
+        %p.submit
+          = submit_tag 'Update'
   

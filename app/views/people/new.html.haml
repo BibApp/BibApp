@@ -1,21 +1,28 @@
-#content 
-  %h2 Add a person
+/ === People === New ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %h2 Add a Person
   
-  - form_tag( {:action => :new}, {:method => :get} ) do
-    %p
-      Search LDAP directory (to pre-populate person information):
-    %p
-      = text_field_tag :q, params[:q]
-      = submit_tag "Search"
+    - form_tag( {:action => :new}, {:method => :get} ) do
+      %p
+        Search LDAP directory (to pre-populate person information):
+      %p
+        = text_field_tag :q, params[:q]
+        = submit_tag "Search"
     
-  - if @ldap_results
-    %ul#ldap_results
-      - @ldap_results.each_with_index do |l, i|
-        - # I don't know why :collection doesn't work here
-        = render :partial => "ldap_result", :object => l, :locals => {:i => i}
-    %script{ :type => "text/javascript" }
-      - update_page do |p|
-        = p.assign "ldap_results", @ldap_results
+    - if @ldap_results
+      %ul#ldap_results
+        - @ldap_results.each_with_index do |l, i|
+          - # I don't know why :collection doesn't work here
+          = render :partial => "ldap_result", :object => l, :locals => {:i => i}
+      %script{ :type => "text/javascript" }
+        - update_page do |p|
+          = p.assign "ldap_results", @ldap_results
         
-  = render :partial => 'form'
+    = render :partial => 'form'
   

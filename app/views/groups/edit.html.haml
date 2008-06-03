@@ -1,6 +1,11 @@
-/ === Group === Edit ===
+/ === Groups === Edit ===
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h3 Edit this Group
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %h2="Edit #{link_to @group.name, group_path(@group)}"
+    
     = render :partial => 'form'

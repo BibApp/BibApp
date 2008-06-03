@@ -1,6 +1,10 @@
-/ === Group === New ===
+/ === Groups === New ===
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h3 Enter a new Group
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+
+    %h2 Enter a new Group
     = render :partial => 'form'

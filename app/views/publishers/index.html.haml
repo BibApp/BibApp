@@ -5,7 +5,8 @@
     %ul.actions
       %li=link_to "Add a Publisher", new_publisher_path
       |
-      %li=link_to "Refresh Sherpa Data"
+      %li=link_to "Admin Publisher Authorities", authorities_publishers_path
+
     - if flash[:notice]
       %div.success= flash[:notice]
       

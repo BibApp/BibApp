@@ -1,14 +1,22 @@
-%div{:class => "span-23"}
-  %p.person-edit-actions
-    = render :partial => "edit_actions", :locals => {@person => @person}
-  %div{:class => "span-4"}
-    = render :partial => "shared/person_image", :locals => {:o => @person}
-    -if @person.image
-      = link_to "change", edit_person_attachment_path(@person, @person.image)
-      |
-      = link_to "delete", attachment_path(@person.image), :method => :delete
-    -else  
-      = link_to "upload image", new_person_attachment_path(@person), :params => {"type" => "Image"}
-  
-  %h3 Edit this Person
-  = render :partial => 'form'
+/ === People === Edit ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %p.person-edit-actions
+      = render :partial => "edit_actions", :locals => {@person => @person}
+  %div{:class => "span-22 prepend-1"}
+    %h2="Edit #{@person.name}"
+    %div{:class => "span-4"}
+      = render :partial => "shared/person_image", :locals => {:o => @person}
+      -if @person.image
+        = link_to "change", edit_person_attachment_path(@person, @person.image)
+        |
+        = link_to "delete", attachment_path(@person.image), :method => :delete
+      -else  
+        = link_to "upload image", new_person_attachment_path(@person), :params => {"type" => "Image"}
+    
+    = render :partial => 'form'
