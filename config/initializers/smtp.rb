@@ -3,7 +3,7 @@
 # SMTP_CONFIG - Load settings from [bibapp]/config/smtp.yml
 SMTP_CONFIG = "#{File.dirname(__FILE__)}/../../config/smtp.yml" unless defined? SMTP_CONFIG
 
-SMTP_SETTINGS = YAML::load(File.read(SMTP_CONFIG))[RAILS_ENV]
+SMTP_SETTINGS = YAML::load(File.read(SMTP_CONFIG))[RAILS_ENV] if File.exists?(SMTP_CONFIG)
 
 # Actually initialize our ActionMailer with proper settings
 if SMTP_SETTINGS and SMTP_SETTINGS['address']
