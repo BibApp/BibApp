@@ -26,22 +26,25 @@ class PublishersController < ApplicationController
     end
 
     before :show do
+      # Default SolrRuby params
+      @query        = @current_object.solr_id
+      @filter       = params[:fq] || ""
+      @filter       = @filter.split("+>+").each{|f| f.strip!}
+      @sort         = params[:sort] || "year"
+      @page         = params[:page] || 0
+      @facet_count  = params[:facet_count] || 10
+      @rows         = params[:rows] || 10
+      
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      
+      @view = "all"
+      @title = @current_object.name
+
       @authority_for = Publisher.find(
         :all,
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
-
-      @query = @current_object.solr_id
-      @filter = params[:fq] || ""
-      @filter = @filter.split("+>+").each{|f| f.strip!}
-      @sort = params[:sort] || "year"
-      @page = params[:page] || 0
-      @count = params[:count] || 10
-      
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
-      @view = "all"
-      @title = @current_object.name
     end
 
     before :new, :edit do
