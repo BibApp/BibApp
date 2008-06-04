@@ -30,6 +30,7 @@
         %span{:style => "color:#990000;"} &hearts; 
         our researchers.
       %div{:class => "span-23", :style => "padding:0em; margin:0em;"}
+        
         / People
         %div{:class => "span-15", :style => "padding:0em; margin:0em;"}
           %h3.heading=link_to "People", people_url
@@ -52,6 +53,7 @@
               = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
 
       %div{:class => "span-22", :style => "padding:0em; margin:0em;"}
+        
         / Groups
         %div{:class => "span-6"}
           %h3.heading=link_to "Groups", groups_url
@@ -69,6 +71,7 @@
           %ol.publications.filters
             -@facets[:publication_id].first(15).each do |p|
               - publication = object_by_facet_id(p.name)
+              - next if publication.name == "Unknown"
               %li
                 =link_to publication.name, publication_path(publication)
                 ="(#{p.value})"
@@ -80,6 +83,7 @@
           %ol.publishers.filters
             -@facets[:publisher_id].first(15).each do |p|
               - publisher = object_by_facet_id(p.name)
+              - next if publisher.name == "Unknown"
               %li
                 =link_to publisher.name, publisher_path(publisher)
                 ="(#{p.value})"
