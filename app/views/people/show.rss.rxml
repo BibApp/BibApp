@@ -1,0 +1,27 @@
+xml.instruct!
+xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
+  xml.channel do
+    xml.title 'Feed for ' + @person.name
+    xml.link url_for(:only_path => false,
+                      :controller => 'people',
+                      :action => 'show',
+                      :id => @person.id)
+    xml.image h($APPLICATION_URL + @person.image_url)
+    xml.description h("My latest scholarly work")
+    @person.citations.verified.each do |c|
+      xml.item do
+        xml.title c.title_primary
+        xml.link url_for(:only_path => false,
+                         :controller => 'citations',
+                         :action => 'show',
+                         :id => c.id)
+        xml.pubDate c.publication_date
+        xml.guid url_for(:only_path => false,
+                         :controller => 'citations',
+                         :action => 'show',
+                         :id => c.id)
+        xml.author h(@person.name)
+      end
+    end
+  end
+end

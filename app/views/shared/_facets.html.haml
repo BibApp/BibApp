@@ -1,9 +1,17 @@
 %div#facets{:class => "span-6 append-1"}
-  %h3#filter Filters
+  %h3{:style => "padding:0em; margin:1em 0em; color:#6884AB;"} Refine Results
   - if !@filter.empty?
     %ol.filters
       - @filter.each do |f|
         %li.active-filter=remove_filter(@query,@sort,@filter,f,@view)
+
+
+  / CitationType Filter
+  %h4.heading Formats
+  %ol.filters.types
+    -@facets[:types].each do |p|
+      %li
+        =add_filter(@query,@sort,@filter,"type_facet",p.name.underscore.humanize,p.value,@view)
 
   / Groups
   %h4.heading Groups
@@ -18,7 +26,7 @@
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
-    =link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+    %p.more=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
   / People
   %h4.heading People
@@ -33,7 +41,7 @@
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
-    =link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
+    %p.more=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
   / Years
   %h4.heading Years
@@ -53,7 +61,7 @@
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",key,value,@view)
 
-    =link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
+    %p.more=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
   / Publications
   %h4.heading Publications
@@ -68,4 +76,4 @@
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
-    =link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+    %p.more=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"

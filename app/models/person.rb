@@ -13,7 +13,7 @@ class Person < ActiveRecord::Base
     
     def verified
       # ContributorshipStateId 2 = Verifed
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2])
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :order => "publication_date desc")
     end
     
     def denied

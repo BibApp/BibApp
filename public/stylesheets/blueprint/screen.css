@@ -270,7 +270,7 @@ span.year {
 }
 
 h2 {border-bottom: 1px dotted #000;}
-h3 {color:#666666;}
+h3 {color:#000;}
 h4 {color:#666666;}
 
 .container {
@@ -289,19 +289,33 @@ h4 {color:#666666;}
 	text-decoration:none;
 }
 
-#results {clear:both; padding-top:2em;}
+#results {clear:both;}
+#citations {padding-top:1.5em;}
 #tagline {color:#000;}
 
 h4.heading {
 	padding-top:1em;
 	margin-bottom:0em;
+	color:#000;
+	border-bottom: 1px dotted black;
 }
 .heading a {
 	text-decoration:none;
 	color:#000;
 }
 
+#facets {
+	border:1px solid #CCC;
+	padding-bottom:1em;
+	background-color: #F1F5FA;
+}
 
+#facets li {
+	font-size:0.9em;
+	line-height:1.6em;
+}
+
+.more {font-size:0.9em;}
 .header-search-form {display:inline;}
 
 ul.actions li {
@@ -414,6 +428,8 @@ div.auto_complete ul strong.highlight {
 
 .pagination {
 	padding:1em 0em;
+	border-top:1px dotted black;
+	border-bottom:1px dotted black;
 }
 .pagination a {
   padding: 2px 5px 2px 5px;

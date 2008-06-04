@@ -180,7 +180,7 @@ class Index
       SOLRCONN.commit
     end
 
-    def fetch (query_string, filter, sort, page, count)
+    def fetch (query_string, filter, sort, page, facet_count, rows)
       begin
         q = SOLRCONN.send(Solr::Request::Standard.new(
           :query => query_string,
@@ -203,10 +203,11 @@ class Index
                 {:year_facet => {:sort => :term}}
               ], 
               :mincount => 1, 
-              :limit => count
+              :limit => facet_count
             },
             :start => self.start(page),
-            :sort => [{"#{sort}" => :descending}]
+            :sort => [{"#{sort}" => :descending}],
+            :rows => rows
           ))
         
         # Rerun our search if the StandardRequestHandler came up empty...
@@ -232,10 +233,11 @@ class Index
                   {:year_facet => {:sort => :term}} 
                 ], 
                 :mincount => 1, 
-                :limit => count
+                :limit => facet_count
               },
               :start => self.start(page),
-              :sort => [{"#{sort}" => :descending}]
+              :sort => [{"#{sort}" => :descending}],
+              :rows => rows
             ))
         end
         
@@ -291,10 +293,11 @@ class Index
               {:year_facet => {:sort => :term}}
             ], 
             :mincount => 1, 
-            :limit => count
+            :limit => facet_count
           },
           :start => self.start(page),
-          :sort => [{"#{sort}" => :descending}]
+          :sort => [{"#{sort}" => :descending}],
+          :rows => rows
         ))
         
       # Processing returned docs:

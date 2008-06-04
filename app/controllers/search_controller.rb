@@ -1,14 +1,16 @@
 class SearchController < ApplicationController  
   def index
     if params[:q]
-      @query = params[:q]
-      @filter = params[:fq] || ""
-      @filter = @filter.split("+>+").each{|f| f.strip!}
-      @sort = params[:sort] || "score"
-      @page = params[:page] || 0
-      @count = params[:count] || 50
+      # Default SolrRuby params
+      @query        = params[:q] # User query
+      @filter       = params[:fq] || ""
+      @filter       = @filter.split("+>+").each{|f| f.strip!}
+      @sort         = params[:sort] || "score"
+      @page         = params[:page] || 0
+      @facet_count  = params[:facet_count] || 50
+      @rows         = params[:rows] || 10
       
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 

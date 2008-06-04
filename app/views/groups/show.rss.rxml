@@ -1,0 +1,26 @@
+xml.instruct!
+xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
+  xml.channel do
+    xml.title 'Feed for ' + @group.name
+    xml.link url_for(:only_path => false,
+                      :controller => 'groups',
+                      :action => 'show',
+                      :id => @group.id)
+    xml.description h("My latest scholarly work")
+    @group.citations.each do |c|
+      xml.item do
+        xml.title c.title_primary
+        xml.link url_for(:only_path => false,
+                         :controller => 'citations',
+                         :action => 'show',
+                         :id => c.id)
+        xml.pubDate c.publication_date
+        xml.guid url_for(:only_path => false,
+                         :controller => 'citations',
+                         :action => 'show',
+                         :id => c.id)
+        xml.author h(@group.name)
+      end
+    end
+  end
+end

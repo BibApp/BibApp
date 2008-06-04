@@ -25,14 +25,17 @@ class CitationsController < ApplicationController
     
     before :index do
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
-      @query = "*:*"
-      @sort = params[:sort] || "year"
-      @filter = params[:fq] || ""
-      @filter = @filter.split("+>+").each{|f| f.strip!}
-      @page = params[:page] || 0
-      @count = params[:count] || 50
+
+      # Default SolrRuby params
+      @query        = "*:*" # Lucene syntax for "find everything"
+      @filter       = params[:fq] || ""
+      @filter       = @filter.split("+>+").each{|f| f.strip!}
+      @sort         = params[:sort] || "year"
+      @page         = params[:page] || 0
+      @facet_count  = params[:facet_count] || 15
+      @rows         = params[:rows] || 10
       
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @count)
+      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
       @view = params[:view] || "splash"
     end
