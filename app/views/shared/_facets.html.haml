@@ -67,12 +67,14 @@
   %h4.heading Publications
   %ol#top-five-publications.filters.publications
     -@facets[:publications].first(5).each do |p|
+      - next if p.name == "Unknown"
       %li.show
         =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
   - if @facets[:publications].size > 5
     %ol#all-publications.filters.groups{:style => "display:none"}
       -@facets[:publications].each do |p|
+        - next if p.name == "Unknown"
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view)
 
