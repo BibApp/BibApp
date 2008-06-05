@@ -10,12 +10,12 @@
         %em="#{@q.total_hits}"
         =" Results for:"
         %strong=" #{@query}"
+
       -if !@spelling_suggestions.empty?
-        Did you mean:
-        %ul#spelling-suggestions
+        %p{:class => "span-22"} 
+          Did you mean:
           - @spelling_suggestions.each do |suggestion|
-            %li
-              %em=link_to suggestion, {:controller => "search", :q => suggestion }
+            %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
 
       / People
       %div{:class => "span-16", :style => "padding:0em; margin:0em;"}

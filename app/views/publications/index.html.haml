@@ -2,9 +2,8 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li=link_to "Add a Publication", new_publication_path
-      |
       %li=link_to "Admin Publication Authorities", authorities_publications_path
       
     - if flash[:notice]
@@ -15,7 +14,7 @@
     
     = render :partial => "shared/alpha_pagination"
 
-    %ol.publications
+    %ol#publications
       -@current_objects.each do |publication|
         %li.publication
           =link_to "#{publication.name} - #{publication.issn_isbn}", publication

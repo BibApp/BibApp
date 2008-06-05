@@ -2,8 +2,9 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li=link_to "Add a Person", new_person_path
+      
     - if flash[:notice]
       %div.success= flash[:notice]
       
@@ -12,7 +13,7 @@
     
     = render :partial => "shared/alpha_pagination"
 
-    %ol.people
+    %ol#people
       -@current_objects.each do |person|
         %li.person
           =link_to "#{person.last_first}", person_path(person)

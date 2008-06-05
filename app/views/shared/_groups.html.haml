@@ -1,0 +1,8 @@
+%div{:class => "span-6"}
+  %h3.heading Groups
+  %ol.groups.facets
+    -@facets[:group_id].each do |g|
+      - group = object_by_facet_id(g.name)
+      %li
+        =link_to group.name, group_path(group)
+        ="(#{g.value})"

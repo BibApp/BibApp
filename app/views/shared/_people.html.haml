@@ -1,0 +1,12 @@
+%div{:class => "span-15"}
+  %h3.heading=link_to "People", people_url
+  
+  %ol#people
+    -@facets[:person_id].first(15).each do |p|
+      - person = object_by_facet_id(p.name)
+      %li.inline
+        %div.person{:class => "span-3"}
+          = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
+          %div.person-image-metadata
+            %strong= p.value
+            %h6.person-last-name=link_to person.last_name, person_path(person)
