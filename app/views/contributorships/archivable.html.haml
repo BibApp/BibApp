@@ -11,6 +11,12 @@
           %td Percentage
           %td Color
           %td Archiving Policy
+      %tfoot
+        %tr
+          %td=@pub_totals
+          %td Total
+          %td &nbsp;
+          %td &nbsp;
       %tbody
         - @pub_table.each do |row|
           %tr{:class => "#{row.color.downcase}"}
@@ -18,12 +24,7 @@
             %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
             %td=row.color.capitalize
             %td=$SHERPA_COLORS[row.color.downcase.to_sym]
-      %tfoot
-        %tr
-          %td=@pub_totals
-          %td Total
-          %td &nbsp;
-          %td &nbsp;
+
 
     %h3 Publications
     %table

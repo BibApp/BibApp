@@ -2,7 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li=link_to "Add a Group", new_group_path
     - if flash[:notice]
       %div.success= flash[:notice]
@@ -12,7 +12,7 @@
     
     = render :partial => "shared/alpha_pagination"
 
-    %ol.groups
+    %ol#groups
       -@current_objects.each do |group|
         %li.group
           =link_to group.name, group

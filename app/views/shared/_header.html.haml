@@ -1,35 +1,40 @@
-#main
-  #header{:class => "span-24"}
-    %div{:class => "span-23 prepend-1"}
-      %div{:class => "span-10"}
-        =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), citations_url)
-      %div{:class => "span-9 prepend-4 last"}
-        %ul{:class => "global-nav"}
-          %li
-            %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
-          %li
-            %a{:href => "faq"} FAQ
-          - if logged_in?
-            %li=link_to "Profile: #{current_user.login}", edit_user_path(current_user)
-            %li=link_to "Logout", logout_path
-          - else
-            %li=link_to "Login", login_path
-      %div{:class => "span-23"}
-        %div{:class => "span-10"}
-          %p#tagline
-            ="We're putting "
-            %strong="#{archivable_count} papers"
-            online, for free.
-            %strong="This is true."
-        %div{:class => "span-9 prepend-4 last"}
-          %strong#search{:style => "color:#000;"} Find an Expert:
-          - form_tag search_url, :method => :get, :class => "header-search-form" do
-            = text_field_tag(:q, value = nil, options = {})
-            = submit_tag 'Go'
-      %div{:class => "span-21"}
-        %ul#navigation
-          %li=link_to "Citations", citations_path(:view => "all")
-          %li=link_to "Groups", groups_path
-          %li=link_to "People", people_path
-          %li=link_to "Publications", publications_path
-          %li=link_to "Publishers", publishers_path
+#header{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    
+    %div{:class => "span-10"}
+      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), citations_url)
+    
+    %div{:class => "span-9 prepend-3 last"}
+      %ul.global-nav
+        %li
+          %a{:href => "#{$UNIVERSITY_URL}"}=$UNIVERSITY_SHORT_NAME
+        %li
+          %a{:href => "faq"} FAQ
+        - if logged_in?
+          %li=link_to "Profile: #{current_user.login}", edit_user_path(current_user)
+          %li=link_to "Logout", logout_path
+        - else
+          %li=link_to "Login", login_path
+    
+    %div{:class => "span-22"}
+      %p#tagline
+        ="We're putting "
+        %strong="#{archivable_count} papers"
+        online, for free.
+        %strong="This is true."
+    
+    %div{:class => "span-12"}
+      %ul#navigation
+        %li=link_to "Citations", citations_path(:view => "all")
+        %li=link_to "Groups", groups_path
+        %li=link_to "People", people_path
+        %li=link_to "Publications", publications_path
+        %li=link_to "Publishers", publishers_path
+
+    %div{:class => "span-10 last"}
+      - form_tag search_url, :method => :get, :class => "header-search-form" do
+
+        %div#search-box
+          %label{:style => "color:#000;"} Find an Expert:
+          = text_field_tag(:q, value = nil, options = {})
+          = submit_tag 'Go'

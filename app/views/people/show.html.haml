@@ -2,29 +2,27 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-23 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li=link_to "Edit", edit_person_path(@person)
-      |
       %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
     
     %h2{:class => "span-22"}
       ="#{@person.first_last}"
-
 
     %div{:class => "span-21", :style => "padding:1.5em"}
       = render :partial => "shared/vcard", :locals => {:o => @person}
 
       %div{:class => "span-5"}
         %h3 Groups
-        %ul
+        %ul#groups
           - @person.groups.each do |g|
             %li=link_to g.name, group_path(g)
           
       %div{:class => "span-8 last"}
         %h3 Research Focus
-        %p=@research_focus
+        #research-focus=@research_focus
 
-    %div#results{:class => "span-22"}
+    %div#results{:class => "span-23"}
       / Facets
       = render :partial => "shared/facets"
 

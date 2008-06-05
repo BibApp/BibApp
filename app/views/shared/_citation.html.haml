@@ -9,9 +9,9 @@
     =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
     -if citation.publication_date != nil
       ="(#{citation.publication_date.year})"
-    .links
-      =link_to_findit(citation) 
-      | 
-      =link_to_related_citations(citation)
-      | 
-      =link_to_download_from_archive(citation)
+  .links
+    =link_to_findit(citation) 
+    | 
+    =link_to_related_citations(citation)
+    | 
+    =link_to_download_from_archive(citation)

@@ -2,9 +2,8 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li=link_to "Add a Publisher", new_publisher_path
-      |
       %li=link_to "Admin Publisher Authorities", authorities_publishers_path
 
     - if flash[:notice]
@@ -15,9 +14,9 @@
 
     = render :partial => "shared/alpha_pagination"
     
-    %ol.publishers
+    %ol#publishers
       -@current_objects.each do |publisher|
-        %li
+        %li.publisher
           =link_to "#{publisher.name}", publisher_path(publisher)
     
   
