@@ -10,14 +10,14 @@
         = hidden_field_tag "fq", @filter
         - @page = 1 if @page == 0
         = hidden_field_tag "page", @page
-        Sort by:
+        || Sort by:
         %select{:name => "sort"}
           - ["year", "score"].each do |opt|
             - if opt == @sort
               %option{:name => "#{opt}", :selected => "selected", :value => "#{opt}"}= opt.titleize
             - else
               %option{:name => "#{opt}", :value => "#{opt}"}= opt.titleize
-        Show:
+        || Show:
         %select{:name => "rows"}
           - ["10", "20", "50", "100", "250", "500"].each do |opt|
             - if opt == @rows
