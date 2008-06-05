@@ -142,6 +142,16 @@ class Contributorship   < ActiveRecord::Base
     )
   end
 
+  def unverified
+    unverified = Contributorship.count(
+      :conditions => ["
+        citation_id = ? and contributorship_state_id = ?", 
+        self.citation_id,
+        1 # caluculated
+      ]
+    )
+  end
+
   def save_without_callbacks
     create_or_update_without_callbacks
   end
