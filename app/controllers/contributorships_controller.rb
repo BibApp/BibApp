@@ -5,10 +5,14 @@ class ContributorshipsController < ApplicationController
     before :index do
       if params[:person_id]
         @person = Person.find(params[:person_id])
-        @contributorships = @person.contributorships.to_show.paginate(
+        @page   = params[:page] || 1
+        @status = params[:status] || "unverified"
+        
+        @contributorships = @person.contributorships.send(@status).paginate(
           :page => params[:page] || 1,
           :per_page => 10
         )
+        
       end
     end
   end
@@ -39,14 +43,14 @@ class ContributorshipsController < ApplicationController
     @contributorship.update_attributes(:contributorship_state_id => 2)
     person.update_scoring_hash
     
-    @contributorship.person.contributorships.calculated.each do |c|
+    @contributorship.person.contributorships.unverified.each do |c|
       c.calculate_score
     end
     
     @contributorships = person.contributorships.to_show
     
     respond_to do |format|
-      format.html { redirect_to :action => :admin }
+      format.html { redirect_to :back }
       format.js   { render :action => :verify_contributorship }
     end
   end
@@ -65,7 +69,7 @@ class ContributorshipsController < ApplicationController
     
     # RJS action removes the denied citation from the view
     respond_to do |format|
-      format.html { redirect_to :action => :admin }
+      format.html { redirect_to :back }
       format.js   { render :action => :deny_contributorship }
     end
   end

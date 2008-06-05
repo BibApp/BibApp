@@ -11,6 +11,11 @@ class Person < ActiveRecord::Base
   
   has_many :citations, :through => :contributorships do 
     
+    def unverified
+      #ContributorshipStateId 1 = Calculated
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :order => "publication_date desc")
+    end
+    
     def verified
       # ContributorshipStateId 2 = Verifed
       find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :order => "publication_date desc")
@@ -27,18 +32,36 @@ class Person < ActiveRecord::Base
     # @TODO: Maybe include a "score" threshold here as well?
     # - Like > 50 we show on the person view, 'cuz they probably wrote it?
     # - Like < 50 we don't show, 'cuz maybe they didn't write it?
+
     def to_show 
-      find(:all, :conditions => ["contributorships.hide = ?", false], :include => [:citation])
+      find(
+        :all, 
+        :conditions => [
+          "contributorships.hide = ? and contributorships.contributorship_state_id = ?", 
+          false, 
+          2
+        ],
+        :include => [:citation]
+      )
     end
     
-    def calculated
-      find(:all, :conditions => ["contributorships.contributorship_state_id = 1"], :include => [:citation])
+    def unverified
+      find(:all, :conditions => ["contributorships.contributorship_state_id = 1"], :include => [:citation], :order => "citations.publication_date desc")
+    end
+    
+    def verified
+      # ContributorshipStateId 2 = Verifed
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :include => [:citation], :order => "citations.publication_date desc")
+    end
+    
+    def denied
+      # ContributorshipStateId 3 = Denied
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 3],:include => [:citation], :order => "citations.publication_date desc")
     end
   end
   
   has_one :image, :as => :asset
   
-
   def name
     "#{first_name} #{last_name}"
   end
