@@ -1,17 +1,23 @@
 %li.citation
-  %strong=link_to "#{citation.title_primary}", citation_path(citation)
-  %p.metadata 
-    - citation.name_strings.first(5).each do |ns|
-      =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
-    - if citation.name_strings.size > 5
-      =link_to "more...", citation_path(citation)
-    %br/
-    =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
-    -if citation.publication_date != nil
-      ="(#{citation.publication_date.year})"
-  .links
-    =link_to_findit(citation) 
-    | 
-    =link_to_related_citations(citation)
-    | 
-    =link_to_download_from_archive(citation)
+  %div.screen-format
+    %strong=link_to "#{citation.title_primary}", citation_path(citation)
+    %p.metadata 
+      - citation.name_strings.first(5).each do |ns|
+        =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
+      - if citation.name_strings.size > 5
+        =link_to "more...", citation_path(citation)
+      %br/
+      =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
+      -if citation.publication_date != nil
+        ="(#{citation.publication_date.year})"
+
+    .links
+      =link_to_findit(citation) 
+      | 
+      =link_to_related_citations(citation)
+      | 
+      =link_to_download_from_archive(citation)
+
+  %div.apa-format
+    = render :partial => "citations/apa/#{citation.class.name.to_s.underscore}", :locals => { :c => citation }
+
