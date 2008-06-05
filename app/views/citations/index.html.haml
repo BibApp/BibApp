@@ -9,10 +9,8 @@
   / params[:view] = "all"
   - if @view == "all"
     %div{:class => "span-22 prepend-1"}
-      %ul.actions
+      %ul#edit-actions
         %li=link_to "Add a Citation", new_citation_path
-      - if flash[:notice]
-        %div.success= flash[:notice]
       
       %h2="Citations"
       %div#results{:class => "span-22"}
@@ -23,8 +21,7 @@
         = render :partial => "shared/citations"
   - else
     %div{:class => "span-22 prepend-1"}
-      - if flash[:notice]
-        %div.success= flash[:notice]
+
       %h2 
         At the library, we
         %span{:style => "color:#990000;"} &hearts; 
