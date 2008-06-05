@@ -1,10 +1,9 @@
 / === Citations === Show ===
 %div{:class => "span-24"}
   %div{:class => "span-23 prepend-1"}
-    %ul.actions
+    %ul#edit-actions
       %li= link_to "Edit", edit_citation_path
       - if !CitationArchiveState.archived?(@citation)
-        | 
         %li= link_to "Archive Research", new_citation_attachment_path(@citation)
   %div{:class => "span-14 prepend-1"}
     - if flash[:notice]

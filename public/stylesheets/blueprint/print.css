@@ -27,13 +27,16 @@ blockquote {margin:1.5em;padding:1em;font-style:italic;font-size:.9em;}
 .hide {display:none;}
 
 a:link, a:visited {color:#000; text-decoration:none;}
-
+.citation{padding-bottom:2em;}
+span.publication {font-style:italic;}
+span.volume{font-style:italic;}
 #header {display:none;}
-.actions {display:none;}
+#edit-actions {display:none;}
 .vcard {display:none;}
 #groups {display:none;}
 #research-focus{display:none;}
 #sort-by {display:none;}
 .pagination {display:none;}
-#facets {display:none;}
+#filters {display:none;}
 .links {display:none;}
+.screen-format { display:none; }

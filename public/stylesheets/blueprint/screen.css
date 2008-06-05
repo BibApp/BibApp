@@ -365,6 +365,7 @@ ul#navigation a {
 	margin:0em;
 }
 
+.apa-format { display:none; }
 #authority {padding:2em 1em 1em 1em}
 #edit-actions {padding:1em;}
 #edit-actions li {display:inline; padding-right:1em;}
@@ -384,6 +385,7 @@ div.person { padding:0em; margin:0em; }
 #research-focus {}
 
 #sort-by { text-align:right; }
+
 #search-box { float:right; }
 #spelling-suggestions li {display:inline;}
 #tagline {color:#000;}
