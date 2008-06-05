@@ -18,6 +18,8 @@ class ContributorshipsController < ApplicationController
   end
   
   def admin
+    @unverified = Contributorship.count(:conditions => ["contributorship_state_id = 1"])
+
     @contributorship = Contributorship.find(
       :first, 
       :conditions => ["contributorship_state_id = ? and hide = ?", 1, false],

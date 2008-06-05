@@ -2,7 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2 ADMIN::Contributions
+    %h2="ADMIN::Contributions (#{@unverified} unverified)"
     - if @contributorship == nil
       %p Congrats!  Nothing to do here.
     - else
