@@ -10,17 +10,26 @@
       = link_to "Groups", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id}}
       | 
       = link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}
-        
-      %h2=link_to "#{@person.first_last}", person_path(@person)
-      = render :partial => "shared/vcard", :locals => {:o => @person}
     
-    %div{:class => "span-5 last"}
+
+    %h2="#{@status.capitalize} Contributorships for:  #{@person.name}"
+    %div{:class => "column span-14"}
+      %ul.actions
+        %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => @page))
+        |
+        %li=link_to_unless((@status.downcase == "verified"), "Verified (#{@person.contributorships.verified.size})", contributorships_path(:person_id => @person.id, :status => "verified", :page => @page))
+        |
+        %li=link_to_unless((@status.downcase == "denied"), "Denied (#{@person.contributorships.denied.size})", contributorships_path(:person_id => @person.id, :status => "denied", :page => @page))
+        
+      %div= will_paginate @contributorships
+      
+      = render :partial => 'contributorships'
+
+    %div{:class => "span-7 prepend-1 last"}
+      #picture{:class => "span-6"}
+        %p= render :partial => "shared/person_image", :locals => {:o => @person}
+
       %h3="Groups (#{@person.groups.size})"
       %ol.groups_alphabetical
         - @person.groups.each do |g|
           %li=link_to "#{g.name}", group_path(g)
-        
-    %div{:class => "column span-16"}
-
-      %h3="Contributorships (#{@contributorships.size})"
-      = render :partial => 'contributorships'
