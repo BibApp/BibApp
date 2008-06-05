@@ -14,12 +14,14 @@ class GroupsController < ApplicationController
     end
     
     before :index do
-      @a_to_z = Group.letters.collect { |g| g.letter }
+      # find first letter of group names (in uppercase, for paging mechanism)
+      @a_to_z = Group.letters.collect { |g| g.letter.upcase }
+      
       @page = params[:page] || @a_to_z[0]
       @current_objects = Group.find(
         :all, 
-        :conditions => ["name like ?", "#{@page}%"], 
-        :order => "name"
+        :conditions => ["upper(name) like ?", "#{@page}%"], 
+        :order => "upper(name)"
       )
     end
     

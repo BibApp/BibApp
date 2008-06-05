@@ -5,8 +5,26 @@ class UsersController < ApplicationController
   filter_parameter_logging :password, :password_confirmation  
    
   make_resourceful do 
-    build :new, :edit
+    build :index, :new, :edit
+    
+    before :index do
+      # find first letter of usernames (in uppercase, for paging mechanism)
+      @a_to_z = User.letters.collect { |d| d.letter.upcase }
+        
+      #get current page  
+      @page = params[:page] || @a_to_z[0]
+      
+      #get all objects for that current page
+      @current_objects = User.find(
+        :all, 
+        :conditions => ["upper(login) like ?", "#{@page}%"], 
+        :order => "upper(login)"
+      )
+    end
   end
+ 
+  
+ 
  
   # Create - signs up a new user
   def create

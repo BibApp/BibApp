@@ -14,7 +14,8 @@ class PublicationsController < ApplicationController
       ]
 
     before :index do
-      @a_to_z = Publication.letters.collect { |d| d.letter }
+      # find first letter of publication name (in uppercase, for paging mechanism)
+      @a_to_z = Publication.letters.collect { |d| d.letter.upcase }
       
       if params[:q]
         query = params[:q]
@@ -23,8 +24,8 @@ class PublicationsController < ApplicationController
         @page = params[:page] || @a_to_z[0]
         @current_objects = Publication.find(
           :all,
-          :conditions => ["publications.id = authority_id and name like ?", "#{@page}%"],
-          :order => "name"
+          :conditions => ["publications.id = authority_id and upper(name) like ?", "#{@page}%"],
+          :order => "upper(name)"
         )
       end
       

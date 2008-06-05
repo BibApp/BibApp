@@ -14,14 +14,15 @@ class PublishersController < ApplicationController
       ]
 
     before :index do
-      @a_to_z = Publisher.letters.collect { |d| d.letter }
+      # find first letter of publisher name (in uppercase, for paging mechanism)
+      @a_to_z = Publisher.letters.collect { |d| d.letter.upcase }
       
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and name like ?", "#{@page}%"], :order => "name")
+        @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and upper(name) like ?", "#{@page}%"], :order => "upper(name)")
       end
     end
 

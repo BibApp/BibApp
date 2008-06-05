@@ -18,7 +18,8 @@ class PeopleController < ApplicationController
     end
       
     before :index do
-      @a_to_z = Person.letters.collect { |d| d.letter }
+      # find first letter of last name (in uppercase, for paging mechanism)
+      @a_to_z = Person.letters.collect { |d| d.letter.upcase }
       
       if params[:q]
         query = params[:q]
@@ -27,8 +28,8 @@ class PeopleController < ApplicationController
         @page = params[:page] || @a_to_z[0]
         @current_objects = Person.find(
           :all, 
-          :conditions => ["last_name like ?", "#{@page}%"], 
-          :order => "last_name, first_name"
+          :conditions => ["upper(last_name) like ?", "#{@page}%"], 
+          :order => "upper(last_name), upper(first_name)"
         )
       end
       
