@@ -6,8 +6,9 @@
   = render :partial => 'editor_name_strings'
 
   %p
-    %label Year of Publication:
-    = form.text_field :year, :size => 4
+    %label Publication Date:
+    = date_select 'citation', 'publication_date', :start_year => 1950
+    -#= form.text_field :year, :size => 4
   %p
     %label Book Title*:
     = form.text_field :title_primary, :size => 40
