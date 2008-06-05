@@ -1,12 +1,24 @@
-%li{:class => "citation-#{c.class.name.to_s.underscore}", :style => "list-style:none;"}
-  %span.name_strings
-    - c.name_strings.each do |ns|
-      %span.name_string=link_to "#{ns.name}", name_string_path(ns)
-  -if c.publication_date != nil
-    %span.year="(#{c.publication_date.year}). "
-  %span.title="#{c.title_primary}. "
-  %span.publication=link_to "#{c.publication.name}", publication_path(c.publication.to_param)
-  %span.volume="#{c.volume}"
-  %span.issue="(#{c.issue}), "
-  %span.start-page="#{c.start_page}-"
-  %span.end-page="#{c.end_page}."
+/ Authors
+- if !c.name_strings.authors.empty?
+  %span.authors
+    - c.name_strings.authors.each do |ns|
+      %span.author=link_to "#{ns.name}", name_string_path(ns)
+
+/ Year
+-if c.publication_date != nil
+  %span.year="(#{c.publication_date.year}). "
+  
+/ Title
+%span.title="#{c.title_primary}. "
+
+/ Publication
+%span.publication=link_to "#{c.publication.name}", publication_path(c.publication.to_param)
+
+/ Volume
+%span.volume="#{c.volume}"
+
+/ Issue
+%span.issue="(#{c.issue}), "
+
+/ Pages
+%span.pages="#{c.start_page}-#{c.end_page}."

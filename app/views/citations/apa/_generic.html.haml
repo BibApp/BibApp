@@ -7,9 +7,6 @@
 / Year
 -if c.publication_date != nil
   %span.year="(#{c.publication_date.year}). "
-
+  
 / Title
-%span.title="#{c.title_primary}."
-
-/ Publisher
-%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path (c.publisher.authority.to_param)
+%span.title="#{c.title_primary}. "

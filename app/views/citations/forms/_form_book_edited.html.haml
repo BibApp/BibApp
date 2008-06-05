@@ -1,37 +1,38 @@
 %fieldset
-  %legend Conference Proceeding
+  %legend Book Edited
 
   = render :partial => 'author_name_strings'
 
   %p
     %label Publication Date:
     = date_select 'citation', 'publication_date', :start_year => 1950
+    -#= form.text_field :year, :size => 4
 
   %p
-    %label Article Title*:
+    %label Book Title*:
     = form.text_field :title_primary, :size => 40
-  
-  = render :partial => 'publication'
-  
-  %p
-    %label Volume:
-    = form.text_field :volume, :size => 4
-    %label Issue:
-    = form.text_field :issue, :size => 4
+
+  = render :partial => 'editor_name_strings'
+
   %p
     %label Start Page:
     = form.text_field :start_page, :size => 4
     %label End Page:
     = form.text_field :end_page, :size => 4
 
+  %p
+    %label Publisher:
+    = form.collection_select :publisher_id, @publisher_authorities, :id, :name
+
+
   = render :partial => 'keywords'
 
   %p
     %label Abstract:
     %br/
-    = form.text_area :abstract
+    = form.text_area :abstract 
 
-  = hidden_field_tag :type, 'ConferenceProceeding'
-
+  = hidden_field_tag :type, 'BookEdited'
+  
   %p.submit
     = submit_tag :save
