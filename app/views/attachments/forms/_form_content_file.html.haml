@@ -1,4 +1,4 @@
-- form_for :attachment, :url => attachments_path, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
+- form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div{:class => "span-14"}
     %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
     %span.asset= render :partial => "citations/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  

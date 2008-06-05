@@ -44,17 +44,6 @@ ActionController::Routing::Routes.draw do |map|
  map.resources :groups, 
                 :collection => {:auto_complete_for_group_name => :get}
   
-  # Install the default routes as the lowest priority.
-  map.resources :name_strings,
-    :groups,
-    :memberships,
-    :pen_names,
-    :keywords,
-    :keywordings,
-    :attachments,
-    :sessions,
-    :passwords
-  
   # Make URLs like /user/1/password/edit for Users managing their passwords
   map.resources :users, :has_one => [:password]
   
@@ -89,11 +78,22 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'users',
     :action => 'activate'
   
+  # Install the default routes as the lowest priority.
+  map.resources :name_strings,
+    :groups,
+    :memberships,
+    :pen_names,
+    :keywords,
+    :keywordings,
+    :sessions,
+    :passwords,
+    :attachments
+
   # Default homepage to citations index action
   map.connect "/",
     :controller => 'citations',
     :action => 'index'
-    
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   

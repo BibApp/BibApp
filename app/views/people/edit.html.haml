@@ -15,7 +15,7 @@
       -if @person.image
         = link_to "change", edit_person_attachment_path(@person, @person.image)
         |
-        = link_to "delete", attachment_path(@person.image), :method => :delete
+        = link_to "delete", {:controller => "attachments", :action => "destroy", :id => @person.image.id}, :method => :delete
       -else  
         = link_to "upload image", new_person_attachment_path(@person), :params => {"type" => "Image"}
     
