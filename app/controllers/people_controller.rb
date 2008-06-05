@@ -57,6 +57,13 @@ class PeopleController < ApplicationController
       @view = "all"
       @title = @current_object.name
       @research_focus = RedCloth.new(@current_object.research_focus).to_html
+      
+      @feeds = [{
+        :action => "show",
+        :id => @current_object.id,
+        :format => "rss"
+      }]
+      
     end
   end
 

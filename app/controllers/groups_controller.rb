@@ -37,6 +37,12 @@ class GroupsController < ApplicationController
       
       @view = "all"
       @title = @current_object.name
+      
+      @feeds = [{
+        :action => "show",
+        :id => @current_object.id,
+        :format => "rss"
+      }]
     end
     
     before :new, :edit do 
