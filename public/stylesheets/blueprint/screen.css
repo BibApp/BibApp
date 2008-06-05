@@ -278,7 +278,7 @@ h4 {color:#666666;}
 }
 
 #header {
-	margin-bottom:2em; 
+	margin-bottom:1em; 
 	padding-top:2em;
 }
 
@@ -289,8 +289,8 @@ h4 {color:#666666;}
 	text-decoration:none;
 }
 
-#results {clear:both;}
-#citations {padding-top:1.5em;}
+#results {clear:both; padding-top:1.5em;}
+#citations
 #tagline {color:#000;}
 
 h4.heading {
@@ -304,13 +304,13 @@ h4.heading {
 	color:#000;
 }
 
-#facets {
+#filters {
 	border:1px solid #CCC;
-	padding-bottom:1em;
+	padding:1em;
 	background-color: #F1F5FA;
 }
 
-#facets li {
+#filters li {
 	font-size:0.9em;
 	line-height:1.6em;
 }
@@ -340,7 +340,8 @@ li.citation-details{
 ul.global-nav {
 	margin:0;
 	padding:0;
-	text-align:center;
+	float-right;
+	text-align:right;
 }
 
 ul.global-nav li {
@@ -363,6 +364,29 @@ ul#navigation a {
 	padding: 0.5em 1.5em 0.5em 0em;
 	margin:0em;
 }
+
+#authority {padding:2em 1em 1em 1em}
+#edit-actions {padding:1em;}
+#edit-actions li {display:inline; padding-right:1em;}
+#facets { padding:0em; margin:0em; }
+#facets ol,ul {list-style:none; padding:0; margin:0;}
+#facets li {line-height:1.75em;}
+
+#people { padding:0em; margin:0em; }
+.people { padding:0em; margin:0em; }
+div.person { padding:0em; margin:0em; }
+.person-image { border:2px dashed #CCC; padding:3px; }
+.person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
+.person-last-name {padding-right:0.5em;}
+
+#publications {padding:0; margin:0;}
+#publishers {padding:0; margin:0;}
+#research-focus {}
+
+#sort-by { text-align:right; }
+#search-box { float:right; }
+#spelling-suggestions li {display:inline;}
+#tagline {color:#000;}
 
 ol.filters {
 	list-style:none;
@@ -430,6 +454,7 @@ div.auto_complete ul strong.highlight {
 	padding:1em 0em;
 	border-top:1px dotted black;
 	border-bottom:1px dotted black;
+	text-align:center;
 }
 .pagination a {
   padding: 2px 5px 2px 5px;
@@ -458,6 +483,7 @@ tr.selected {
 .inline {
 	display:inline;
 	list-style:none;
+	margin:0; padding:0;
 }
 
 .headline {
