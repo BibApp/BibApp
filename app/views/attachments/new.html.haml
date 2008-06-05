@@ -1,11 +1,19 @@
-- if flash[:error]
-  %div.error= flash[:error]  
+/ === Attachments === New ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    - if flash[:error]
+      %div.error= flash[:error]  
 
-= error_messages_for :attachment
+    = error_messages_for :attachment
 
-%h3="Upload #{@attachment.class.to_s.underscore.titleize}"
+    %h2="Upload #{@attachment.class.to_s.underscore.titleize}"
 
-%div{:class => "column span-14"}  
-  = render :partial => "attachments/forms/form_#{@attachment.class.name.to_s.underscore}"
+    %div{:class => "column span-14"}  
+      = render :partial => "attachments/forms/form_#{@attachment.class.name.to_s.underscore}"
     
           
