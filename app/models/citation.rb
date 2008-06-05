@@ -5,9 +5,19 @@ class Citation < ActiveRecord::Base
   #### Associations ####
   belongs_to :publication
   belongs_to :publisher
-  has_many :name_strings, 
-    :through => :citation_name_strings, 
-    :order => :position
+  
+  has_many :name_strings, :through => :citation_name_strings do 
+
+    # @TODO: Rails 2.1 named scope these methods
+    def authors
+      find(:all, :conditions => ["role = ?", "Author"], :order => :position)
+    end
+    
+    def editors
+      find(:all, :conditions => ["role = ?", "Editor"], :order => :position)      
+    end
+  end 
+  
   has_many :citation_name_strings,
     :dependent => :delete_all
   
@@ -69,12 +79,16 @@ class Citation < ActiveRecord::Base
 	  # "Conference Proceeding", 
 	  # "Book"
 	  # more...   	    			  
-	  types = [
-		  "Add Batch",
-		  "Journal Article", 
-		  "Conference Proceeding", 
-		  "Book (Whole)"		
-	  ]  
+    types = [
+      "Add Batch",
+      "Book (Edited)",
+      "Book (Section)",
+      "Book (Whole)",
+      "Conference Proceeding",
+      "Journal Article", 
+      "Report",
+      "Generic"
+    ]  
   end
   
   

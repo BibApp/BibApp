@@ -1,8 +1,9 @@
-/ Authors
-- if !c.name_strings.authors.empty?
+/ Editors
+- if !c.name_strings.editors.empty?
   %span.authors
     - c.name_strings.authors.each do |ns|
       %span.author=link_to "#{ns.name}", name_string_path(ns)
+(Eds.). 
 
 / Year
 -if c.publication_date != nil

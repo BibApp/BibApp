@@ -30,7 +30,7 @@
     = form.text_field :start_page, :size => 4
     %label End Page:
     = form.text_field :end_page, :size => 4
-    = hidden_field_tag :type, 'JournalArticle'
+
     
   = render :partial => 'keywords'
     
@@ -38,5 +38,8 @@
     %label Abstract:
     %br/
     = form.text_area :abstract 
+
+  = hidden_field_tag :type, 'JournalArticle'
+
   %p.submit
     = submit_tag :save
