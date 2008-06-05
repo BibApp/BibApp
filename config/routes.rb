@@ -30,40 +30,74 @@ ActionController::Routing::Routes.draw do |map|
 
   # See how all your routes lay out with "rake routes"
 
-  #Auto-Complete Routes for Web-Based Citation entry
-  map.resources :citations, 
+  #####
+  # Citation routes
+  ##### 
+  # Add Auto-Complete Routes for Web-Based Citation entry
+  map.resources :citations,
                 :collection => {:auto_complete_for_author_string => :get,
                         :auto_complete_for_editor_string => :get,
-                				:auto_complete_for_keyword_name => :get,
-								        :auto_complete_for_publication_name => :get,
-                        :auto_complete_for_publisher_name => :get}
-  
- map.resources :memberships, 
+                        :auto_complete_for_keyword_name => :get,
+                        :auto_complete_for_publication_name => :get,
+                        :auto_complete_for_publisher_name => :get} do |c|
+    # Make URLs like /citation/2/attachments/4 for Citation Content Files
+    c.resources :attachments
+  end
+
+  #####
+  # Person routes
+  #####
+  map.resources :people do |p|
+    # Make URLs like /people/1/attachments/2 for Person Images
+    p.resources :attachments
+  end
+ 
+  #####
+  # Group routes
+  ##### 
+  # Add Auto-Complete routes for adding new groups
+  map.resources :groups, 
+                :collection => {:auto_complete_for_group_name => :get}
+
+  #####
+  # Membership routes
+  #####
+  # Add Auto-Complete routes
+  map.resources :memberships, 
                 :collection => {:auto_complete_for_group_name => :get}
   
- map.resources :groups, 
-                :collection => {:auto_complete_for_group_name => :get}
+  #####
+  # Contributorship routes
+  #####
+  map.resources :contributorships, :collection => { :admin => :get, :archivable => :get }, :member => { :verify => :put, :deny => :put } 
+    
+  #####
+  # Publisher routes
+  #####   
+  map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put }
   
+  
+  #####
+  # Publication routes
+  #####
+  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }
+  
+  ####
+  # User routes
+  ####
   # Make URLs like /user/1/password/edit for Users managing their passwords
   map.resources :users, :has_one => [:password]
   
-  # Make URLs like /people/1/attachments/2 for Person Images
-  map.resources :people do |p|
-    p.resources :attachments
-  end
-  
-  # Make URLs like /citation/2/attachments/4 for Citation Content Files
-  map.resources :citations do |c|
-    c.resources :attachments
-  end
-  
-  map.resources :contributorships, :collection => { :admin => :get, :archivable => :get }, :member => { :verify => :put, :deny => :put } 
-    
-  map.resources :publishers,    :collection => { :authorities => :get, :update_multiple => :put }
-  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }
-  
+
+  ####
+  # Search route
+  ####
   map.search 'search', :controller => 'search', :action => 'index'
   
+  
+  ####
+  # Authentication routes
+  ####
   # Make easier routes for authentication (via restful_authentication)
   map.signup '/signup',
     :controller => 'users',
@@ -78,9 +112,11 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'users',
     :action => 'activate'
   
+  ####
+  # DEFAULT ROUTES 
+  ####
   # Install the default routes as the lowest priority.
   map.resources :name_strings,
-    :groups,
     :memberships,
     :pen_names,
     :keywords,
@@ -93,9 +129,10 @@ ActionController::Routing::Routes.draw do |map|
   map.connect "/",
     :controller => 'citations',
     :action => 'index'
-
+    
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+  
   
   
 end
