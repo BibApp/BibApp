@@ -6,7 +6,7 @@ xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
                       :controller => 'groups',
                       :action => 'show',
                       :id => @group.id)
-    xml.description h("My latest scholarly work")
+    xml.description h("Our latest scholarly work")
     @group.citations.each do |c|
       xml.item do
         xml.title c.title_primary
