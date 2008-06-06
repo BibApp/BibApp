@@ -2,7 +2,9 @@
 #   Code borrowed from: http://blog.compulsivoco.com/2008/03/24/how-to-change-or-reset-your-password-with-restful_authentication/
 class PasswordsController < ApplicationController
   
-   before_filter :login_from_cookie  
+   before_filter :login_from_cookie
+   
+   # require user is logged in, except for "forgot password" page
    before_filter :login_required, :except => [:create, :new]  
   
    # Don't write passwords as plain text to the log files  

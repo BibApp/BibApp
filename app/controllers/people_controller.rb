@@ -1,6 +1,9 @@
 class PeopleController < ApplicationController
   require 'redcloth'
   
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   make_resourceful do 
     build :index, :new, :create, :show, :edit, :update, :destroy
 

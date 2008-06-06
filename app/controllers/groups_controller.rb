@@ -1,6 +1,10 @@
 class GroupsController < ApplicationController
+  
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   make_resourceful do 
-    build :all, :update
+    build :all
 
     publish :xml, :json, :yaml, :attributes => [
       :id, :name, :url, :description,
@@ -47,7 +51,14 @@ class GroupsController < ApplicationController
       }]
     end
     
-    before :new, :edit do 
+    before :new do
+      @groups = Group.find(:all, :order => "name")
+    end
+    
+    before :edit do
+      #'editor' of group can edit that group
+      permit "editor of group"
+      
       @groups = Group.find(:all, :order => "name")
     end
   end

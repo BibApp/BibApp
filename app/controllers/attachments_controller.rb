@@ -2,6 +2,9 @@ require 'sword_client'
     
 class AttachmentsController < ApplicationController
   
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   make_resourceful do
     build :index, :show, :new, :edit
     
@@ -10,6 +13,9 @@ class AttachmentsController < ApplicationController
       
       #load asset information
       load_asset
+      
+      #only editors of this asset can attach files to it
+      permit "editor of asset"
       
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]
@@ -51,6 +57,9 @@ class AttachmentsController < ApplicationController
     
     #load asset this attachment is being added to
     load_asset
+    
+    #only editors of this asset can attach files to it
+    permit "editor of asset"
     
     attachment_count=0
     
@@ -96,6 +105,9 @@ class AttachmentsController < ApplicationController
     #load attachment based on form info
     @attachment = Attachment.find(params[:id])
     
+    #only editors of asset can update attachments
+    permit "editor of :asset", :asset => @attachment.asset
+    
     @attachment.attributes=params[:attachment]
     
     respond_to do |format|
@@ -113,8 +125,12 @@ class AttachmentsController < ApplicationController
   def destroy
     @attachment = Attachment.find(params[:id])
     asset = @attachment.asset
-    @attachment.destroy if @attachment
     
+    #only editors of asset can delete attachments
+    permit "editor of :asset", :asset => asset
+    
+    @attachment.destroy if @attachment
+      
     respond_to do |format|
       if asset.save! #make sure asset's after_save callbacks are called
         flash[:notice] = 'Attachment was successfully deleted'

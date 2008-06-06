@@ -1,4 +1,7 @@
 class AdminController < ApplicationController
+  #Only System Admins can access this controller's methods
+  permit "admin of System"
+  
   
   make_resourceful do
     build :all
