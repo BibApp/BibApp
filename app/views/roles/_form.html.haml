@@ -19,6 +19,10 @@
           %strong
             ="Already has #{@role_name} permissions "
             - if user.has_explicit_role? @role_name.downcase, @authorizable
-              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => @role_name, :user_id => user.id}, :method=>:delete
+              - form_tag({:action => "destroy"}) do
+                =hidden_field_tag :user_id, user.id
+                =hidden_field_tag :name, @role_name
+                =submit_tag "Delete Role"
+              
         - else
           =link_to "Add as #{@role_name}", {:controller => "roles", :action => "create", :name => @role_name, :user_id => user.id}, :method=>:post
