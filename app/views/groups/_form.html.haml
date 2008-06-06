@@ -16,6 +16,6 @@
     %p
       %label Parent Group
       %br/
-      = form.collection_select :parent_id, @groups, :id, :name
+      = form.collection_select :parent_id, @groups, :id, :name, :include_blank => true
     %p.submit
       = submit_tag :save
