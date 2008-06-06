@@ -18,10 +18,16 @@ class MembershipsController < ApplicationController
   
   def create_group
     @group = Group.find_or_create_by_name(params[:group][:name])
-    @person.groups << @group
-    respond_to do |format|
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
-      format.js { render :action => :regen_lists }
+    
+     @membership = Membership.find_by_person_id_and_group_id(
+     @person.id,
+     @group.id)
+    if(@membership == nil)
+      @person.groups << @group
+      respond_to do |format|
+        format.html { redirect_to new_membership_path(:person_id => @person.id) }
+        format.js { render :action => :regen_lists }
+      end
     end
   end
   
