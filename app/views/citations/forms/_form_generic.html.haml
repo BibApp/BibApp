@@ -11,7 +11,7 @@
     %label Primary Title*:
     = form.text_field :title_primary, :size => 40
   %p
-    %label Secondary Title*:
+    %label Secondary Title:
     = form.text_field :title_secondary, :size => 40
     
   = render :partial => 'publication'  
@@ -33,7 +33,6 @@
     = form.text_field :start_page, :size => 4
     %label End Page:
     = form.text_field :end_page, :size => 4
-    = hidden_field_tag :type, 'Unknown'
     
   = render :partial => 'keywords'
     
@@ -41,5 +40,7 @@
     %label Abstract:
     %br/
     = form.text_area :abstract 
+    
+    = hidden_field_tag :type, 'Generic'
   %p.submit
     = submit_tag :save
