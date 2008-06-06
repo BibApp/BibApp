@@ -9,6 +9,8 @@
     %h2 Administrative Tasks:
     %ul#tasks
       %li
-        = link_to "Prepare files for archiving", :action => "ready_to_archive"
+        = link_to "Update System Roles", :controller=>"roles", :action =>"index"
+      %li
+        = link_to "Prepare files for archiving", :action => "ready_to_archive"      
       %li
         = link_to "Verify/Deny contributorships", admin_contributorships_path
