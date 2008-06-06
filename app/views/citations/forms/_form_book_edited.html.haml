@@ -21,8 +21,7 @@
     = form.text_field :end_page, :size => 4
 
   %p
-    %label Publisher:
-    = form.collection_select :publisher_id, @publisher_authorities, :id, :name
+    = render :partial => 'publisher'
 
 
   = render :partial => 'keywords'
