@@ -14,7 +14,10 @@
     %div{:class => "span-12 last"}
       -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
         %h4="APA Format: #{@citation.class.name.to_s.underscore.humanize}"
-        %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }  
+        %span.citation= render :partial => "citations/apa/#{@citation.class.name.to_s.underscore}", :locals => { :c => @citation }
+      -else
+        %h4="APA Format: Generic"
+        %span.citation= render :partial => "citations/apa/generic", :locals => { :c => @citation }
       .links
         =link_to_findit(@citation)
       %br/

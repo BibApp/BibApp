@@ -57,9 +57,9 @@ class CitationsController < ApplicationController
   def create
     # @TODO: This step is dumb, we should map attrs in the SubClass::create method itself
     # If we have a Book object, we need to capture the Title as the new Publication Name
-    if params[:type] == 'Book'
-      params[:citation][:publication_full] = params[:citation][:title_primary]
-    end
+    #if params[:type] == 'BookWhole'
+      #params[:publication][:name] = params[:citation][:title_primary]
+    #end
     
     # If we need to add a batch
     if params[:type] == "AddBatch"
@@ -154,9 +154,17 @@ class CitationsController < ApplicationController
     ###
     issn_isbn = params[:issn_isbn]
     publication_info = Hash.new
-    publication_info = {:name => params[:publication][:name], 
+    
+    if params[:type] != 'BookWhole' && params[:type] != 'BookSection' && params[:type] != 'BookEdited'
+      publication_info = {:name => params[:publication][:name], 
                           :issn_isbn => issn_isbn,
                           :publisher_name => params[:publisher][:name]}
+    else
+      publication_info = {:name => params[:citation][:title_primary], 
+                          :issn_isbn => issn_isbn,
+                          :publisher_name => params[:publisher][:name]}
+    end    
+
 
     @citation.publication_info = publication_info
     
@@ -357,4 +365,5 @@ class CitationsController < ApplicationController
     @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
   end
+  
 end

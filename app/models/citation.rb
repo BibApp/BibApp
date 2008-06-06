@@ -395,7 +395,7 @@ class Citation < ActiveRecord::Base
   def self.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
     # Set issn_isbn_dupe_key
     logger.debug("\nCNS: #{citation_name_strings.inspect}\n")
-    if citation_name_strings 
+    if citation_name_strings[0] != nil 
       first_author = citation_name_strings[0][:name].split(",")[0]
     else
       first_author = nil

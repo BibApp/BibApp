@@ -12,9 +12,12 @@
   %p
     %label Book Title*:
     = form.text_field :title_primary, :size => 40
+    %p
+    %label ISBN:
+    - issn_isbn = @publication.issn_isbn unless @publication.nil?
+    = text_field_tag 'issn_isbn', issn_isbn, :size => 10
   %p
-    %label Publisher:
-    = form.collection_select :publisher_id, @publisher_authorities, :id, :name
+    = render :partial => 'publisher'
 
   = render :partial => 'keywords'
 

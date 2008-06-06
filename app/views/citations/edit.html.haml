@@ -9,4 +9,7 @@
     %div{:class => "column span-24"}
       %div{:class => "column span-16"}
         - form_for :citation, @citation, :url => citation_path(@citation), :html => {:method => :put} do |form|
-          = render :partial => "citations/forms/form_#{@citation.class.name.to_s.underscore}", :locals => { :form => form }
+          -if (File.exist?("#{RAILS_ROOT}/app/views/citations/forms/_form_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/forms/_form_#{@citation.class.name.to_s.underscore}.html"))
+            = render :partial => "citations/forms/form_#{@citation.class.name.to_s.underscore}", :locals => { :form => form }
+          -else
+            = render :partial => "citations/forms/form_generic", :locals => { :form => form }
