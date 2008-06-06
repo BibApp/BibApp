@@ -4,7 +4,7 @@ class Membership < ActiveRecord::Base
   
   acts_as_list  :scope => :person
 
-  after_save do |membership|
+  after_create do |membership|
     # Update Solr!
     # * Citations have many People...
     membership.person.contributorships.each do |c|
