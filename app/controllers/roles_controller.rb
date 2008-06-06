@@ -2,6 +2,9 @@
 # to individual users in BibApp system
 class RolesController < ApplicationController
 
+  #Require a user be logged in
+  before_filter :login_required
+  
   make_resourceful do
     build :index, :new, :show
   
@@ -12,6 +15,9 @@ class RolesController < ApplicationController
   
     before :new do
       load_authorizable #load the authorizable object this role will be assigned to
+      
+      #Only admins of the authorizable object can create roles
+      permit "admin of authorizable"
       
       @role_name = params[:name] if params[:name]
         
@@ -48,6 +54,9 @@ class RolesController < ApplicationController
     #get authorizable object from URL
     load_authorizable
     
+    #Only admins of the authorizable object can create roles
+    permit "admin of authorizable"
+    
     #get User
     user = User.find(params["user_id"])
     
@@ -70,6 +79,9 @@ class RolesController < ApplicationController
   def destroy
     #get authorizable object from URL
     load_authorizable
+    
+    #Only admins of the authorizable object can create roles
+    permit "admin of authorizable"
     
     #get User
     user = User.find(params["user_id"])

@@ -1,6 +1,9 @@
 # This controller signs up new users, and activates their accounts
 class UsersController < ApplicationController
   
+  # Require user be logged in for *everything* except signing up, or activating an account
+  before_filter :login_required, :except => [ :show, :new, :create, :activate ]
+  
   # Don't write passwords as plain text to the log files  
   filter_parameter_logging :password, :password_confirmation  
    
@@ -22,9 +25,7 @@ class UsersController < ApplicationController
       )
     end
   end
- 
-  
- 
+
  
   # Create - signs up a new user
   def create

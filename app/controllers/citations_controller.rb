@@ -1,4 +1,8 @@
 class CitationsController < ApplicationController
+  
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+   
   before_filter :find_authorities, :only => [:new, :edit]
 
   make_resourceful do
@@ -41,16 +45,29 @@ class CitationsController < ApplicationController
     end
 	
     #initialize variables used by 'new.html.haml'
-    before :new do  
+    before :new do
+      #Anyone with 'editor' role (anywhere) can add citations
+      permit "editor"
+      
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Citation.types[0]
-			
+  			
       #initialize citation subclass with any passed in citation info
-      @citation = subklass_init(params[:type], params[:citation])		
+      @citation = subklass_init(params[:type], params[:citation])
     end
     
     before :show do
       @recommendations = Index.recommendations(@current_object)
+    end
+    
+    before :edit do
+      #Anyone with 'editor' role on this citation can edit it
+      permit "editor on citation"
+    end
+    
+    before :destroy do
+      #Anyone with 'admin' role on this citation can destroy it
+      permit "admin on citation"
     end
   end # end make_resourceful
   
@@ -61,14 +78,17 @@ class CitationsController < ApplicationController
       #params[:publication][:name] = params[:citation][:title_primary]
     #end
     
+    #Anyone with 'editor' role (anywhere) can add citations
+    permit "editor"
+
     # If we need to add a batch
     if params[:type] == "AddBatch"
     	
 	  logger.debug("\n\n===ADDING BATCH CITATIONS===\n\n")	
-      @citation = Citation.import_batch!(params[:citation][:citations])
+      successful = import_batch!(params[:citation][:citations])
       
       respond_to do |format|
-        if @citation
+        if successful
           flash[:notice] = "Batch was successfully created."
           format.html {redirect_to new_citation_url}
           format.xml  {head :created, :location => citation_url(@citation)}
@@ -87,6 +107,9 @@ class CitationsController < ApplicationController
       #Update citation information based on inputs
       update_citation_info
     
+      # current user automatically gets 'admin' permissions on citation
+      @citation.accepts_role 'admin', current_user
+    
       respond_to do |format|
         if @citation.save and Index.update_solr(@citation)
           flash[:notice] = "Citation was successfully created."
@@ -103,6 +126,9 @@ class CitationsController < ApplicationController
   
   def update
     @citation = Citation.find(params[:id])
+    
+    #Anyone with 'editor' role on this citation can edit it
+    permit "editor on citation"
     
     #First, update citation attributes (ensures deduplication keys are updated)
     @citation.attributes=params[:citation]   
@@ -349,6 +375,102 @@ class CitationsController < ApplicationController
   end
   
   private
+  
+  # Batch import Citations
+  def import_batch!(data)    
+    
+    # Read the data
+    str = data
+    if data.respond_to? :read
+      str = data.read
+    elsif File.readable?(data)
+      str = File.read(data)
+    end
+    
+    # Init: Parser and Importer
+    p = CitationParser.new
+    i = CitationImporter.new
+
+    # Parse the data
+    pcites = p.parse(str)
+    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
+    return nil if pcites.nil?
+    
+    # Map Import hashes
+    attr_hashes = i.citation_attribute_hashes(pcites)
+    logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
+    
+    return [] if attr_hashes.nil?
+    all_cites = attr_hashes.map { |h|
+      
+      # Initialize the Citation
+      klass = h[:klass]
+      
+      # Are we working with a legit SubKlass?
+      klass = klass.constantize
+      if klass.superclass != Citation
+        raise NameError.new("#{klass_type} is not a subclass of Citation") and return
+      end
+      citation = klass.new
+      
+      ###
+      # Setting CitationNameStrings
+      ###
+      citation_name_strings = h[:citation_name_strings]
+      citation.citation_name_strings = citation_name_strings
+      
+      ###
+      # Setting Publication Info, including Publisher
+      ###
+      issn_isbn = h[:issn_isbn]
+      publication_info = Hash.new
+      publication_info = {:name => h[:publication], 
+                                    :issn_isbn => issn_isbn,
+                                    :publisher_name => h[:publisher]}
+
+      citation.publication_info = publication_info
+    
+      ###
+      # Setting Keywords
+      ###
+      citation.keyword_strings = h[:keywords]
+
+      # Ensure publication_date is good
+      if h[:publication_date].nil? or h[:publication_date].empty?
+        h[:publication_date] = Date.new(1)
+      end
+      
+      # Clean the abstract
+      # @TODO we'll want to clean all data
+      code = HTMLEntities.new
+      h[:abstract] = code.encode(h[:abstract], :decimal)
+      
+      # Clean the hash of non-Citation table data
+      # Cleaning preps hash for AR insert
+      h.delete(:klass)
+      h.delete(:citation_name_strings)
+      h.delete(:publisher)
+      h.delete(:publication)
+      h.delete(:publication_place)
+      h.delete(:issn_isbn)
+      h.delete(:keywords)
+      h.delete(:source)
+      # @TODO add external_systems to citation import
+      h.delete(:external_id)
+
+      #save remaining hash attributes
+      citation.attributes=h
+      citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
+      citation.title_dupe_key = Citation.set_title_dupe_key(citation)
+      citation.save_and_set_for_index
+      
+      # current user automatically gets 'admin' permissions on citation
+      citation.accepts_role 'admin', current_user
+    }
+    Index.batch_index
+  end
+  
+  
   
   # Initializes a new citation subclass, but doesn't create it in the database
   def subklass_init(klass_type, citation)

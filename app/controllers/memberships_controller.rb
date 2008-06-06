@@ -1,14 +1,26 @@
 class MembershipsController < ApplicationController
+  
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   before_filter :find_membership, :only => [:destroy]
   before_filter :find_person, :only => [:create, :create_group, :new, :destroy, :sort]
   before_filter :find_group,  :only => [:create, :create_group, :destroy]
   
   make_resourceful do 
     build :index, :show, :new, :update
+    
+    before :update do
+      #'editor' of person or group can update membership details
+      permit "editor of person or group"
+    end
   end
   
   
   def create
+    #'editor' of person or group can create a membership
+    permit "editor of person or group"
+    
     @person.groups << @group  
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -17,21 +29,27 @@ class MembershipsController < ApplicationController
   end
   
   def create_group
+    #'editor' of person can create new groups
+    permit "editor of person"
+    
     @group = Group.find_or_create_by_name(params[:group][:name])
     
-     @membership = Membership.find_by_person_id_and_group_id(
-     @person.id,
-     @group.id)
+    @membership = Membership.find_by_person_id_and_group_id(
+     		@person.id,
+     		@group.id)
     if(@membership == nil)
-      @person.groups << @group
-      respond_to do |format|
-        format.html { redirect_to new_membership_path(:person_id => @person.id) }
-        format.js { render :action => :regen_lists }
-      end
-    end
+    	@person.groups << @group
+    	respond_to do |format|
+      	format.html { redirect_to new_membership_path(:person_id => @person.id) }
+      	format.js { render :action => :regen_lists }
+    	end
+  	end
   end
   
   def destroy
+    #'editor' of person or group can destroy a membership
+    permit "editor of person or group"
+    
     @membership.destroy if @membership
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -56,6 +74,10 @@ class MembershipsController < ApplicationController
   def edit_time
     @person = Person.find_by_id(params[:person_id])
     @group = Group.find_by_id(params[:group_id])
+    
+    #'editor' of person or group can edit time-range for a person in a group
+    permit 'editor of person or group'
+    
     membership = Membership.find(params[:id])
     membership.update_attributes(params[:membership])
     

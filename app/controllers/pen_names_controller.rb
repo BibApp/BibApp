@@ -1,4 +1,8 @@
 class PenNamesController < ApplicationController
+  
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   before_filter :find_pen_name, :only => [:destroy]
   before_filter :find_person, :only => [:create, :create_name_string, :new, :destroy, :sort]
   before_filter :find_name_string,  :only => [:create, :create_name_string, :destroy]
@@ -7,16 +11,27 @@ class PenNamesController < ApplicationController
     build :index, :show, :new, :update
     
     before :new do 
+      #only 'editor' of person can assign a pen name
+      permit "editor of person"
+      
       @suggestions = NameString.find(
         :all, 
         :conditions => ["name like ?", "%" + @person.last_name + "%"],
         :order => :name
       )
     end
+    
+    before :update do
+      #only 'editor' of person can assign a pen name
+      permit "editor of person"
+    end
   end
 
 
   def create
+    #only 'editor' of person can assign a pen name
+    permit "editor of person"
+    
     @person.name_strings << @name_string
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -25,6 +40,9 @@ class PenNamesController < ApplicationController
   end
 
   def create_name_string
+    #only 'editor' of person can assign a pen name
+    permit "editor of person"
+    
     @name_string = NameString.find_or_create_by_name(params[:name_string][:name])
     @person.name_strings << @name_string
     respond_to do |format|
@@ -34,6 +52,9 @@ class PenNamesController < ApplicationController
   end
 
   def destroy
+    #only 'editor' of person can destroy a pen name
+    permit "editor of :person", :person => @pen_name.person
+    
     @pen_name.destroy if @pen_name
     respond_to do |format|
       format.js { render :action => :regen_lists }

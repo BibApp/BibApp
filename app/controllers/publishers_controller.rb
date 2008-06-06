@@ -1,5 +1,8 @@
 class PublishersController < ApplicationController
 
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   make_resourceful do 
     build :index, :show, :new, :edit, :create, :update
 
@@ -55,6 +58,9 @@ class PublishersController < ApplicationController
   end
   
   def authorities
+    #Only system-wide editors can assign authorities
+    permit "editor of System"
+    
     @a_to_z = Publisher.letters.collect { |d| d.letter }
     
     if params[:q]
@@ -67,6 +73,9 @@ class PublishersController < ApplicationController
   end
 
   def update_multiple
+    #Only system-wide editors can assign authorities
+    permit "editor of System"
+    
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]
     page = params[:page]

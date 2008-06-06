@@ -1,4 +1,8 @@
 class ContributorshipsController < ApplicationController
+  
+  #Require a user be logged in to create / update / destroy
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  
   make_resourceful do
     build :index
     
@@ -38,9 +42,11 @@ class ContributorshipsController < ApplicationController
   end
   
   def verify
-    # @TODO: Auth check here
     @contributorship = Contributorship.find(params[:id])
     person = @contributorship.person
+    
+    # only 'editor' of this person can verify contributorship   
+    permit "editor of :person", :person => person
     
     @contributorship.update_attributes(:contributorship_state_id => 2)
     person.update_scoring_hash
@@ -58,10 +64,12 @@ class ContributorshipsController < ApplicationController
   end
   
   def deny
-    # @TODO: Auth check here
     # Find Contributorship
     @contributorship = Contributorship.find(params[:id])
     @person = Person.find_by_id(@contributorship.person_id)
+    
+    # only 'editor' of this person can deny contributorship   
+    permit "editor of person"
     
     # Update Contributorship
     # 1. Set Contributorship.state to "Denied"
