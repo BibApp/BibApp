@@ -1,0 +1,42 @@
+/ === Roles === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %ul#edit-actions
+      %li= link_to "Update Administrators", {:controller=>"roles", :action=>"new_admin"} 
+      %li= link_to "Update Editors", {:controller=>"roles", :action=>"new_editor"}
+      
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
+  %div{:class => "span-22 prepend-1"}
+    - if @authorizable.is_a? Class and @authorizable==System
+      %h2="System-wide Roles: #{$APPLICATION_NAME}"
+    - elsif @authorizable.kind_of?(Group)
+      %h2="Roles for Group: #{link_to @authorizable.name, group_path(@authorizable)}"
+    - elsif @authorizable.kind_of?(Person)
+      %h2="Roles for Person: #{link_to @authorizable.name, person_path(@authorizable)}"
+      
+    %div{:class => "span-22 prepend-1"}
+      %h3="Administrators"
+      - if @authorizable.has_admins?
+        %ol.users
+          - @authorizable.has_admins.each do |user|
+            %li.user
+              ="#{user.login} (#{user.email}) "
+              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => "admin", :user_id => user.id}, :method=>:delete
+      - else
+        %p
+          No administrators currently assigned.
+            
+      %h3="Editors"
+      - if @authorizable.has_editors?
+        %ol.users
+          - @authorizable.has_editors.each do |user|
+            %li.user
+              ="#{user.login} (#{user.email})"
+              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => "editor", :user_id => user.id}, :method=>:delete
+      - else
+        %p
+          No editors currently assigned.
+          

@@ -1,0 +1,24 @@
+/ === Roles === Form ===
+%div{:class => "span-22 prepend-1"}
+  - if @authorizable.is_a? Class and @authorizable==System
+    %h2="Update System-wide #{@role_name}: #{$APPLICATION_NAME}"
+  - elsif @authorizable.kind_of?(Group)
+    %h2="Update #{@role_name} on Group: #{link_to @authorizable.name, group_path(@authorizable)}"
+  - elsif @authorizable.kind_of?(Person)
+    %h2="Update #{@role_name} on Person: #{link_to @authorizable.name, person_path(@authorizable)}"
+      
+  %h3="Users (#{@page})"
+    
+  = render :partial => "shared/alpha_pagination"
+ 
+  %ol.users
+    -@current_objects.each do |user|
+      %li.user
+        ="#{user.login} (#{user.email}) - "
+        - if user.has_role? @role_name.downcase, @authorizable
+          %strong
+            ="Already has #{@role_name} permissions "
+            - if user.has_explicit_role? @role_name.downcase, @authorizable
+              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => @role_name, :user_id => user.id}, :method=>:delete
+        - else
+          =link_to "Add as #{@role_name}", {:controller => "roles", :action => "create", :name => @role_name, :user_id => user.id}, :method=>:post

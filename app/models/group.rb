@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
   acts_as_tree :order => "name"
+  acts_as_authorizable  #some actions on groups require authorization
   
   has_many :people,
     :through => :memberships,

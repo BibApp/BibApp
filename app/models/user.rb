@@ -1,5 +1,10 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
+  
+  # Authorization plugin
+  acts_as_authorized_user
+  acts_as_authorizable
+  
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
@@ -17,6 +22,10 @@ class User < ActiveRecord::Base
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :password, :password_confirmation
 
+  #### Associations ####
+  has_and_belongs_to_many :roles
+  
+  
   # Activates the user in the database.
   def activate
     @activated = true
@@ -80,6 +89,116 @@ class User < ActiveRecord::Base
     @activated
   end
 
+  #Override has_role? in 'authorization' plugin
+  # to support cascading roles based on the
+  # role hierarchy defined for BibApp
+  #
+  # Returns if user has a specified role.
+  def has_role?( role_name, authorizable_obj = nil )
+    
+    ##################################################
+    # Cacade System Roles to everything!
+    ##################################################
+    unless authorizable_obj.is_a? Class and authorizable_obj.to_s == 'System'
+      #If user is a System Admin,
+        #then user has permissions to do ANYTHING 
+        return true if has_role?("admin", System) 
+      
+      #If user has this role System-Wide,
+      #then this role should cascade to everything else!
+      return true if has_role?(role_name, System)   
+    end 
+    
+    ##################################
+    # Setup Role Hierarchy for BibApp
+    ##################################    
+    #Cascade based on role hierarchy, so following is true:
+    #  - All Admins are also Editors
+    #  (@TODO: more roles may be added later)
+    case role_name
+      when "editor"
+      # Users with 'admin' role are also 'editors'
+      return true if has_role?("admin", authorizable_obj)
+    end
+    
+    ##################################
+    # Setup Class Hierarchy for BibApp
+    ##################################    
+    #Cascade based on Class hierarchy, so following is true:
+    #  (1) All Roles on a Group cascade to the People in that group (and their citations)
+    #  (2) All Roles on a Person cascade to their Citations
+    
+    # If this is a Class object, then cascade based on class types
+    if authorizable_obj.is_a? Class
+      case authorizable_obj.to_s
+      when "Person"
+        #Group class role cascades to Person class
+        return true if has_role?(role_name, Group)
+        
+        #If user has this role on any group in system, also return true
+        return true if has_any_role?(role_name, Group)      
+      when "Citation"
+        #Person class role cascades to Citation class
+        return true if has_role?(role_name, Person)
+        
+        #If user has this role on any person in system, also return true
+        return true if has_any_role?(role_name, Person)
+      end
+    elsif authorizable_obj #else if instance of a Class
+      case authorizable_obj.class.base_class.to_s
+      when "Person"
+        #Get groups of this person, and look for role on each group
+        authorizable_obj.groups.each do |group|
+          return true if has_role?(role_name, group)
+        end 
+      when "Citation"
+        #Get all People associated with this citation, and look for role on each person
+        authorizable_obj.people.each do |person|
+         return true if has_role?(role_name, person)
+        end        
+      end       
+    end     
+    
+    #call overridden has_role? method for default settings
+    super
+  end 
+  
+  
+  #Checks to see if user has a specified role on ANY instance
+  #of the passed in Class.
+  #
+  # (e.g.) has_any_role?('editor', Group) 
+  #
+  # The above would check if the user has the 'editor' role
+  # on ANY group within the system.
+  def has_any_role?( role_name, authorizable_class )
+    #loop through user's roles, to look for any that match
+    self.roles.each do |role|
+      if (role.name == role_name) and (role.authorizable_type == authorizable_class.to_s) 
+        return true
+      end
+    end
+    return false
+  end
+
+  # Checks to see if user explicitly has the specified role 
+  # In other words, it doesn't check parent objects or take
+  # into account any cascading of roles
+  #
+  # (e.g.) has_explicit_role?('editor', group) 
+  #
+  # The above would check if the user has the 'editor' role
+  # specified explicitly for the group (and not at a system-wide level)
+  def has_explicit_role?( role_name, authorizable_obj = nil )
+    
+    #loop through all roles explicitly defined for this object
+    self.roles_for(authorizable_obj).each do |role|
+      # if name of roles match up, then it's explicitly there!
+      return true if role.name.downcase == role_name.downcase
+    end
+    return false
+  end
+
   protected
     # before filter 
     def encrypt_password
@@ -96,5 +215,15 @@ class User < ActiveRecord::Base
 
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
     end
-    
+  
+  class << self
+    # return the first letter of each login (i.e. username), ordered alphabetically
+    def letters
+      find(
+          :all,
+          :select => 'DISTINCT SUBSTR(login, 1, 1) AS letter',
+          :order  => 'letter'
+        )
+    end
+  end  
 end

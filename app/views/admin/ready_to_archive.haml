@@ -1,8 +1,14 @@
-#content
-  %h3= "Ready to Archive: #{@citations.size} remain"
-
-  - if @citations.size > 0
-    = render :partial => "citations"
-  - else
-    %p 
-      No citations are marked "ready to archive"!
+/ === Admin === Ready to Archive ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div#flash= flash[:notice]
+      
+    %h2="Ready to Archive: #{@citations.size} remain"
+    - if @citations.size > 0
+      = render :partial => "citations"
+    - else
+      %p 
+        No citations are marked "ready to archive"!

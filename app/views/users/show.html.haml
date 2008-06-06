@@ -1,0 +1,25 @@
+/ === User === Show ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    %h2="User Account (#{@user.login})"
+  
+    - if flash[:notice]
+      .notice= flash[:notice]
+    = error_messages_for :user, :class => 'notice'
+  
+    %fieldset
+      %legend="Account Information"
+      %div.field
+        %label="Username:"
+        %span.field_value=@user.login       
+      %div.field
+        %label="Email:"
+        %span.field_value=@user.email
+      - if @user.roles and !@user.roles.empty?
+        %div.field
+          %label="Roles in #{$APPLICATION_NAME}:"
+          %ul.roles
+            -@user.roles.each do |role|
+              %li.role=role.description
+  

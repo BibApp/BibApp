@@ -1,5 +1,7 @@
 class Citation < ActiveRecord::Base
   
+  acts_as_authorizable  #some actions on citations require authorization
+  
   serialize :scoring_hash
   
   #### Associations ####
@@ -79,16 +81,16 @@ class Citation < ActiveRecord::Base
 	  # "Conference Proceeding", 
 	  # "Book"
 	  # more...   	    			  
-    types = [
-      "Add Batch",
+	  types = [
+		  "Add Batch",
       "Book (Edited)",
       "Book (Section)",
       "Book (Whole)",
       "Conference Proceeding",
-      "Journal Article", 
+		  "Journal Article", 
       "Report",
       "Generic"
-    ]  
+	  ]  
   end
   
   

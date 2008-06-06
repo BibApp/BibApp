@@ -1,5 +1,7 @@
 class Person < ActiveRecord::Base
-
+  
+  acts_as_authorizable  #some actions on people require authorization
+ 
   serialize :scoring_hash
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
@@ -32,7 +34,6 @@ class Person < ActiveRecord::Base
     # @TODO: Maybe include a "score" threshold here as well?
     # - Like > 50 we show on the person view, 'cuz they probably wrote it?
     # - Like < 50 we don't show, 'cuz maybe they didn't write it?
-
     def to_show 
       find(
         :all, 
@@ -62,6 +63,7 @@ class Person < ActiveRecord::Base
   
   has_one :image, :as => :asset
   
+
   def name
     "#{first_name} #{last_name}"
   end

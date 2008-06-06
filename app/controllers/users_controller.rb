@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   filter_parameter_logging :password, :password_confirmation  
    
   make_resourceful do 
-    build :index, :new, :edit
+    build :index, :show, :new, :edit
     
     before :index do
       # find first letter of usernames (in uppercase, for paging mechanism)
