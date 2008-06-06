@@ -28,8 +28,8 @@ LOGIN_REQUIRED_REDIRECTION = { :controller => 'sessions', :action => 'new' }
 PERMISSION_DENIED_REDIRECTION = { :controller => 'citations', :action => 'index' }
 
 # The method your authentication scheme uses to store the location to redirect back to
-# For BibApp we use restful_authentication which uses :return_to
-STORE_LOCATION_METHOD = :return_to
+# For BibApp we use restful_authentication which uses :store_location
+STORE_LOCATION_METHOD = :store_location
 #############
 
 Rails::Initializer.run do |config|
