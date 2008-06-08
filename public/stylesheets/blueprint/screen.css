@@ -375,7 +375,7 @@ ul#navigation a {
 #facets { padding:0em; margin:0em; }
 #facets ol,ul {list-style:none; padding:0; margin:0;}
 #facets li {line-height:1.75em;}
-
+.highlight { border:1px solid #CCC; padding:1em; background-color: #F1F5FA; }
 #people { padding:0em; margin:0em; }
 .people { padding:0em; margin:0em; }
 div.person { padding:0em; margin:0em; }
