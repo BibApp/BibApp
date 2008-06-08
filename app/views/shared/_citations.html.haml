@@ -31,10 +31,10 @@
 
           = submit_tag 'Go'
 
-    %div{:class => "span-12"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
+    %div{:class => "span-14"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
-    %ol{:class => "span-12 citations", :style => "clear:both;"}
+    %ol{:class => "span-14 citations", :style => "clear:both;"}
       - @docs.each do |citation, score|
         = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
         
-    %div{:class => "span-12"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
+    %div{:class => "span-14"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
