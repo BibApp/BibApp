@@ -367,6 +367,9 @@ ul#navigation a {
 
 .apa-format { display:none; }
 #authority {padding:2em 1em 1em 1em}
+#coauthors {padding:0;margin:0;width:100%;}
+#coauthors li {padding:0;margin:0;}
+#contact-info {font-size:0.5em; padding-left:1em;}
 #edit-actions {padding:1em;}
 #edit-actions li {display:inline; padding-right:1em;}
 #facets { padding:0em; margin:0em; }
@@ -376,7 +379,11 @@ ul#navigation a {
 #people { padding:0em; margin:0em; }
 .people { padding:0em; margin:0em; }
 div.person { padding:0em; margin:0em; }
+#person-details {margin-bottom:1em;}
+ul#person-details li {display:inline; font-size:1.5em; line-height:1; margin-bottom:1em; padding-right:1em;}
+#person-image {padding:1em; text-align:center;}
 .person-image { border:2px dashed #CCC; padding:3px; }
+
 .person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
 .person-last-name {padding-right:0.5em;}
 

@@ -13,10 +13,6 @@
 
     .links
       =link_to_findit(citation) 
-      | 
-      =link_to_related_citations(citation)
-      | 
-      =link_to_download_from_archive(citation)
 
   %div.apa-format
     -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
