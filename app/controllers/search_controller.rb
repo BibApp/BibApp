@@ -4,6 +4,7 @@ class SearchController < ApplicationController
       # Default SolrRuby params
       @query        = params[:q] # User query
       @filter       = params[:fq] || ""
+      @filter_no_strip = params[:fq] || ""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "score"
       @page         = params[:page] || 0
