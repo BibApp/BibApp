@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy]
   
   before_filter :find_membership, :only => [:destroy]
   before_filter :find_person, :only => [:create, :create_group, :new, :destroy, :sort]
@@ -71,13 +71,7 @@ class MembershipsController < ApplicationController
     end
   end
   
-  def edit_time
-    @person = Person.find_by_id(params[:person_id])
-    @group = Group.find_by_id(params[:group_id])
-    
-    #'editor' of person or group can edit time-range for a person in a group
-    permit 'editor of person or group'
-    
+  def update
     membership = Membership.find(params[:id])
     membership.update_attributes(params[:membership])
     

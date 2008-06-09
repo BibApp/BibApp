@@ -5,7 +5,7 @@
       =group.name
  
   -if selected != false
-    - remote_form_for :membership,  Membership.find_by_person_id_and_group_id(@person.id, group.id),  :url => {:action => :edit_time, :id => Membership.find_by_person_id_and_group_id(@person.id, group.id)}, :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 0.5), :html => {:method => :put} do |form|
+    - remote_form_for :membership,  Membership.find_by_person_id_and_group_id(@person.id, group.id),  :url => {:action => :update, :id => Membership.find_by_person_id_and_group_id(@person.id, group.id)}, :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 0.5), :html => {:method => :put} do |form|
     
       Title
       = form.text_field :title
