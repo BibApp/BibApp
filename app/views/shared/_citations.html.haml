@@ -24,7 +24,7 @@
                 %option{:value => "#{opt}"}= opt.titleize
 
           = hidden_field_tag "q", @query
-          = hidden_field_tag "fq", @filter
+          = hidden_field_tag "fq", @filter_no_strip
           = hidden_field_tag "view", "all"
           - @page = 1 if @page == 0
           = hidden_field_tag "page", @page              
