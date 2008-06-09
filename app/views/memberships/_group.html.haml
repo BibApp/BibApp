@@ -13,7 +13,7 @@
       %br/
 
       Year Joined:
-      = form.date_select 'start_date', :start_year => 1950, :discard_month => true, :include_blank => true
+      = form.date_select 'start_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
       Year Left:
-      = form.date_select 'end_date', :start_year => 1950, :discard_month => true, :include_blank => true 
+      = form.date_select 'end_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true 
       = submit_tag :save
