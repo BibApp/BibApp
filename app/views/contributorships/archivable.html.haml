@@ -4,6 +4,9 @@
   %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
     %h2="Archival Analysis: #{@person.name}"
     
+    -# Default colors to unknown
+    - color = "unknown"
+    
     %table
       %thead
         %tr
@@ -19,11 +22,12 @@
           %td &nbsp;
       %tbody
         - @pub_table.each do |row|
-          %tr{:class => "#{row.color.downcase}"}
+          - color = row.color.downcase if row.color
+          %tr{:class => "#{color}"}
             %td=row.count
             %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
-            %td=row.color.capitalize
-            %td=$SHERPA_COLORS[row.color.downcase.to_sym]
+            %td=color.capitalize
+            %td=$SHERPA_COLORS[color.downcase.to_sym]
 
 
     %h3 Publications
@@ -37,8 +41,9 @@
           
       %tbody
         - @publ_table.each do |row|
-          %tr{:class => row.color.downcase}
+          - color = row.color.downcase if row.color
+          %tr{:class => "#{color}"}
             %td=row.count
-            %td=row.color.capitalize
+            %td=color.capitalize
             %td=row.name
             %td=row.pub_name
