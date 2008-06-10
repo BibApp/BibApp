@@ -11,7 +11,7 @@
         %li
           %a{:href => "faq"} FAQ
         - if logged_in?
-          %li=link_to "Profile: #{current_user.login}", edit_user_path(current_user)
+          %li=link_to "Welcome: #{current_user.login}", edit_user_path(current_user)
           %li=link_to "Logout", logout_path
         - else
           %li=link_to "Login", login_path
@@ -25,6 +25,9 @@
     
     %div{:class => "span-12"}
       %ul#navigation
+        - if logged_in?
+          - if current_user.has_role?("admin", System)
+            %li=link_to "Admin", {:controller => "admin", :action => "index"}
         %li=link_to "Citations", citations_path(:view => "all")
         %li=link_to "Groups", groups_path
         %li=link_to "People", people_path
