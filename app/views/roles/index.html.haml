@@ -24,7 +24,11 @@
           - @authorizable.has_admins.each do |user|
             %li.user
               ="#{user.login} (#{user.email}) "
-              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => "admin", :user_id => user.user_id}, :method=>:delete
+              - form_tag({:action => "destroy"}) do
+                =hidden_field_tag :authorizable_type, @authorizable.class
+                =hidden_field_tag :authorizable_id, @authorizable.id
+                =hidden_field_tag :role_id, user.role_id
+                =submit_tag "remove"
       - else
         %p
           No administrators currently assigned.
@@ -35,7 +39,11 @@
           - @authorizable.has_editors.each do |user|
             %li.user
               ="#{user.login} (#{user.email})"
-              =link_to "[remove]", {:controller => "roles", :action => "destroy", :name => "editor", :user_id => user.user_id}, :method=>:delete
+              - form_tag({:action => "destroy"}) do
+                =hidden_field_tag :authorizable_type, @authorizable.class
+                =hidden_field_tag :authorizable_id, @authorizable.id
+                =hidden_field_tag :role_id, user.role_id
+                =submit_tag "remove"
       - else
         %p
           No editors currently assigned.

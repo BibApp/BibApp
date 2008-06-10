@@ -83,14 +83,8 @@ class RolesController < ApplicationController
     #Only admins of the authorizable object can create roles
     permit "admin of authorizable"
     
-    #get User
-    user = User.find(params["user_id"])
-    
-    #name of role (e.g. admin, editor, etc.)
-    name = params["name"].downcase
-    
-    #remove role from user on this authorizable object
-    @authorizable.accepts_no_role name, user
+    role = Role.find(params["role_id"])
+    role.destroy
     
     respond_to do |format|
         format.html { redirect_to :back }
@@ -104,7 +98,10 @@ class RolesController < ApplicationController
     #Load the authorizable object which this role is assigned to
     def load_authorizable
       # Currently Roles only are assigned to System, Groups or People
-      if params[:group_id]
+      if params[:authorizable_type] and params[:authorizable_id]
+        klass = params[:authorizable_type].constantize #change into a class
+        @authorizable = klass.find(params[:authorizable_id])
+      elsif params[:group_id]
         @authorizable = Group.find(params[:group_id])
       elsif params[:person_id]
         @authorizable = Person.find(params[:person_id])
