@@ -2,8 +2,10 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul#edit-actions
-      %li=link_to "Add a Group", new_group_path
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Group", new_group_path
+    
     - if flash[:notice]
       %div.success= flash[:notice]
 

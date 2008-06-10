@@ -2,14 +2,14 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor on citation")
+    - if logged_in? && current_user.has_role?("editor", @citation)
       %ul#edit-actions
         %li= link_to "Edit", edit_citation_path
         - if !CitationArchiveState.archived?(@citation)
           %li= link_to "Archive Research", new_citation_attachment_path(@citation)
 
-        - if flash[:notice]
-          %div.success= flash[:notice]
+      - if flash[:notice]
+        %div.success= flash[:notice]
 
     %h2.clear-both= @citation.title_primary
     %div{:class => "span-12"}

@@ -2,10 +2,14 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul#edit-actions
-      %li=link_to "Edit", edit_person_path(@person)
-      %li=link_to "Manage Roles", person_roles_path(@person)
-      %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
+    - if logged_in? && current_user.has_role?("editor", @person)
+      %ul#edit-actions
+        %li=link_to "Edit", edit_person_path(@person)
+        %li=link_to "Manage Roles", person_roles_path(@person)
+        %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
+        
+      - if flash[:notice]
+        %div.success= flash[:notice]
 
     %h2{:style => "margin-bottom:0.5em"}
       ="#{@person.first_last}"

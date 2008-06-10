@@ -2,11 +2,12 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul#edit-actions
-      %li=link_to "Add a Person", new_person_path
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Person", new_person_path
       
-    - if flash[:notice]
-      %div.success= flash[:notice]
+      - if flash[:notice]
+        %div.success= flash[:notice]
       
   %div{:class => "span-22 prepend-1"}
     %h2="People (#{@page})"
