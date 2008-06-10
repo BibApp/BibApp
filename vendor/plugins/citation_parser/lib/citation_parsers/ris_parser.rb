@@ -10,7 +10,8 @@ class RisParser < CitationParser
       return nil
     end
     
-    risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
+ #TODO make sure we excape all neccessary characters   
+ #   risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
       rec.strip!

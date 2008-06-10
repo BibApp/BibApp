@@ -52,17 +52,19 @@ class Contributorship   < ActiveRecord::Base
     person_sh = self.person.scoring_hash
     citation_sh = self.citation.scoring_hash
 
-    if person_sh && !person_sh.nil?
+    if person_sh && !person_sh.nil? && !citation_sh.nil?
       # Years
       year_score = 0
       years = Array.new
       # Build full array of publishing years
+
 
       logger.debug("Year: #{citation_sh[:year]}")
       
       person_sh[:years].sort.first.upto(person_sh[:years].sort.last){|y| years << y }
       logger.debug("Array: #{years.inspect}")
       year_score = 25 if years.include?(citation_sh[:year])
+
     
       # Publications
       publication_score = 0
