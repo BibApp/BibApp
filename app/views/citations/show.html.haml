@@ -5,11 +5,11 @@
       %li= link_to "Edit", edit_citation_path
       - if !CitationArchiveState.archived?(@citation)
         %li= link_to "Archive Research", new_citation_attachment_path(@citation)
-    %div{:class => "span-14 prepend-1"}
+
       - if flash[:notice]
         %div.success= flash[:notice]
 
-    %h2= @citation.title_primary
+    %h2.clear-both= @citation.title_primary
     %div{:class => "span-12"}
     
       -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
@@ -32,59 +32,59 @@
                 %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
                   %strong= person.citations.size
                   %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
+      %div.clear-both
+        %fieldset
+          %legend Citation Information
+          - if @citation.author_name_strings.size > 0
+            %div.field
+              %label Authors:
+              %span.field_value
+                - @citation.author_name_strings.each do |ns|
+                  =link_to "#{ns.name}", name_string_path(ns)
+          - if @citation.editor_name_strings.size > 0
+            %div.field
+              %label Editors:
+              %span.field_value
+                - @citation.editor_name_strings.each do |ns|
+                  =link_to "#{ns.name}", name_string_path(ns)
+          - if @citation.publication_date?
+            %div.field
+              %label Publication Date:
+              %span.field_value=@citation.publication_date
+          %div.field
+            %label Publication Type:
+            %span.field_value=@citation.type 
+          - if @citation.publication_id? and @citation.publication.name?
+            %div.field
+              %label Publication Source:
+              %span.field_value
+                =link_to @citation.publication.name, publication_path(@citation.publication)
+          - if @citation.publisher_id? and @citation.publisher.name?
+            %div.field
+              %label Publisher:
+              %span.field_value
+                =link_to @citation.publisher.name, publisher_path(@citation.publisher)
+          - if @citation.volume?
+            %div.field
+              %label Volume:
+              %span.field_value=@citation.volume
+          - if @citation.issue?
+            %div.field
+              %label Issue:
+              %span.field_value=@citation.issue
+          - if @citation.start_page?
+            %div.field
+              %label Page(s):
+              %span.field_value
+                =@citation.start_page
+                -if @citation.end_page?
+                  =" - #{@citation.end_page}"                   
 
-      %fieldset
-        %legend Citation Information
-        - if @citation.author_name_strings.size > 0
-          %div.field
-            %label Authors:
-            %span.field_value
-              - @citation.author_name_strings.each do |ns|
-                =link_to "#{ns.name}", name_string_path(ns)
-        - if @citation.editor_name_strings.size > 0
-          %div.field
-            %label Editors:
-            %span.field_value
-              - @citation.editor_name_strings.each do |ns|
-                =link_to "#{ns.name}", name_string_path(ns)
-        - if @citation.publication_date?
-          %div.field
-            %label Publication Date:
-            %span.field_value=@citation.publication_date
-        %div.field
-          %label Publication Type:
-          %span.field_value=@citation.type 
-        - if @citation.publication_id? and @citation.publication.name?
-          %div.field
-            %label Publication Source:
-            %span.field_value
-              =link_to @citation.publication.name, publication_path(@citation.publication)
-        - if @citation.publisher_id? and @citation.publisher.name?
-          %div.field
-            %label Publisher:
-            %span.field_value
-              =link_to @citation.publisher.name, publisher_path(@citation.publisher)
-        - if @citation.volume?
-          %div.field
-            %label Volume:
-            %span.field_value=@citation.volume
-        - if @citation.issue?
-          %div.field
-            %label Issue:
-            %span.field_value=@citation.issue
-        - if @citation.start_page?
-          %div.field
-            %label Page(s):
-            %span.field_value
-              =@citation.start_page
-              -if @citation.end_page?
-                =" - #{@citation.end_page}"                   
-
-    - if !@citation.attachments.nil? and !@citation.attachments.empty?               
-      = render :partial => 'attachments', :locals => { :files => @citation.attachments }
+      - if !@citation.attachments.nil? and !@citation.attachments.empty?               
+        = render :partial => 'attachments', :locals => { :files => @citation.attachments }
       
-      / Admin
-      = render :partial => 'admin'
+        / Admin
+        = render :partial => 'admin'
 
     %div{:class => "span-7 prepend-2 last"}
       %div.highlight
