@@ -33,6 +33,7 @@ class CitationsController < ApplicationController
       # Default SolrRuby params
       @query        = "*:*" # Lucene syntax for "find everything"
       @filter       = params[:fq] || ""
+      @filter_no_strip = @filter
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "year"
       @page         = params[:page] || 0
