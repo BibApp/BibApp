@@ -2,7 +2,7 @@
   %div{:class => "span-22 prepend-1"}
     
     %div{:class => "span-10"}
-      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), citations_url)
+      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), citations_path)
     
     %div{:class => "span-9 prepend-3 last"}
       %ul.global-nav
@@ -35,7 +35,7 @@
         %li=link_to "Publishers", publishers_path
 
     %div{:class => "span-10 last"}
-      - form_tag search_url, :method => :get, :class => "header-search-form" do
+      - form_tag search_path, :method => :get, :class => "header-search-form" do
 
         %div#search-box
           %label{:style => "color:#000;"} Find an Expert:
