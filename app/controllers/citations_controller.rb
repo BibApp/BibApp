@@ -467,7 +467,7 @@ class CitationsController < ApplicationController
       
       # current user automatically gets 'admin' permissions on citation
       # (only if he/she doesn't already have that role on the citation)
-      citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @citation)
+      citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', citation)
     }
     Index.batch_index
   end
