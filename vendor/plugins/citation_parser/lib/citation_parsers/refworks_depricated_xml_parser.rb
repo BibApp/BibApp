@@ -5,6 +5,9 @@ class RefworksDepricatedXmlParser < CitationParser
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
   def parse(data)
+    if data != nil
+      data.gsub("—", "-").gsub("ÿ", "y").gsub("’", "'")
+    end
     Hpricot.buffer_size = 204800
     xml = Hpricot.XML(data)
     row_count = (xml/'z:row').collect{|ref| ref.to_s}

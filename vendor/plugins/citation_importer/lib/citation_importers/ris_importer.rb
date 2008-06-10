@@ -104,9 +104,9 @@ class RisImporter < CitationImporter
        "ADVS"  => "Generic",  # Audiovisual material
        "ART"   => "ArtWork", # Art work
        "BILL"  => "BillResolution", # Bill/Resolution
-       "BOOK"  => "Book",  # Book, whole
+       "BOOK"  => "BookWhole",  # Book, whole
        "CASE"  => "Case", # Case
-       "CHAP"  => "BookChapter",  # Book chapter
+       "CHAP"  => "BookSection",  # Book chapter
        "COMP"  => "ComputerProgram", # Computer program
        "CONF"  => "ConferenceProceeding",  # Conference proceeding
        "CTLG"  => "Generic",  # Catalog
@@ -131,7 +131,7 @@ class RisImporter < CitationImporter
        "SLIDE" => "Generic",  # Slide
        "SOUND" => "SoundRecording", # Sound recording
        "STAT"  => "Statute", # Statute
-       "THES"  => "ThesisDissertation", # Thesis/Dissertation
+       "THES"  => "DissertationThesis", # Thesis/Dissertation
        "UNBILL"=> "UnenactedBillResolution", # Unenacted bill/resolution
        "UNPB"  => "UnpublishedWork", # Unpublished work
        "VIDEO" => "VideoRecording" # Video recording
@@ -139,25 +139,34 @@ class RisImporter < CitationImporter
   end
   
   def publication_date_parse(publication_date)
+    
     date = Hash.new
     
     # Split on the non-word characters (in this case, should be slashes /)
     # Expected format: "YYYY/MM/DD/other info"
     date_parts = publication_date.split(/[^A-Za-z0-9_]/)
     
-    # first part is year
-    year = date_parts[0].to_i
-    # then month (default to Jan)
-    month = 1
-    month = date_parts[1] if date_parts.length > 1
-    # then day (default to 1)
-    day = 1
-    day = date_parts[2] if date_parts.length > 2
+    if date_parts[0] != nil
+      # first part is year
+      year = date_parts[0].to_i
+      # then month (default to Jan)
+      month = 1
+ #     month = date_parts[1] if !date_parts[1].nil?
+      # then day (default to 1)
+      day = 1
+ #     day = date_parts[2] if !date_parts[2].nil?
     
-    # create a date suitable for saving
-    date[:publication_date] = Date.new(year,month,day).to_s
+      # create a date suitable for saving
+      date[:publication_date] = Date.new(year,month,day).to_s
     
-    return date
+      return date
+    else
+      return nil
+      
+    end
+  
+    
+    
   end
   
 end

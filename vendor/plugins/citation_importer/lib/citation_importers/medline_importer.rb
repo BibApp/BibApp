@@ -97,9 +97,9 @@ class MedlineImporter < CitationImporter
       "ADVS"                              => "Generic",  # Audiovisual material
       "ART"                               => "ArtWork", # Art work
       "BILL"                              => "BillResolution", # Bill/Resolution
-      "BOOK"                              => "Book",  # Book, whole
+      "BOOK"                              => "BookWhole",  # Book, whole
       "CASE"                              => "Case", # Case
-      "CHAP"                              => "BookChapter",  # Book chapter
+      "CHAP"                              => "BookSection",  # Book chapter
       "COMP"                              => "ComputerProgram", # Computer program
       "CONF"                              => "ConferenceProceeding",  # Conference proceeding
       "CTLG"                              => "Generic",  # Catalog
@@ -124,7 +124,7 @@ class MedlineImporter < CitationImporter
       "SLIDE"                             => "Generic",  # Slide
       "SOUND"                             => "SoundRecording", # Sound recording
       "STAT"                              => "Statute", # Statute
-      "THES"                              => "ThesisDissertation", # Thesis/Dissertation
+      "THES"                              => "DissertationThesis", # Thesis/Dissertation
       "UNBILL"                            => "UnenactedBillResolution", # Unenacted bill/resolution
       "UNPB"                              => "UnpublishedWork", # Unpublished work
       "VIDEO"                             => "VideoRecording", # Video recording
