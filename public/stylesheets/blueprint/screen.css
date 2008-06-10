@@ -367,6 +367,7 @@ ul#navigation a {
 
 .apa-format { display:none; }
 #authority {padding:2em 1em 1em 1em}
+.clear-both {clear:both;}
 #coauthors {padding:0;margin:0;width:100%;}
 #coauthors li {padding:0;margin:0;}
 #contact-info {font-size:0.5em; padding-left:1em;}
