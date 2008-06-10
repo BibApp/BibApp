@@ -108,7 +108,8 @@ class CitationsController < ApplicationController
       update_citation_info
     
       # current user automatically gets 'admin' permissions on citation
-      @citation.accepts_role 'admin', current_user
+      # (only if he/she doesn't already have that permission)
+      @citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @citation)
     
       respond_to do |format|
         if @citation.save and Index.update_solr(@citation)
@@ -465,7 +466,8 @@ class CitationsController < ApplicationController
       citation.save_and_set_for_index
       
       # current user automatically gets 'admin' permissions on citation
-      citation.accepts_role 'admin', current_user
+      # (only if he/she doesn't already have that role on the citation)
+      citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @citation)
     }
     Index.batch_index
   end
