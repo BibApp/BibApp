@@ -2,12 +2,12 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
+    - if flash[:notice]
+      %div.success= flash[:notice]
+
     - if logged_in? && current_user.has_role?("editor")
       %ul#edit-actions
         %li=link_to "Add a Citation", new_citation_path
-
-        - if flash[:notice]
-          %div.success= flash[:notice]
           
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"

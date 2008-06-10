@@ -2,12 +2,14 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %ul#edit-actions
-      %li=link_to "Add a Publication", new_publication_path
-      %li=link_to "Admin Publication Authorities", authorities_publications_path
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Publication", new_publication_path
+        - if current_user.has_role?("admin", System)
+          %li=link_to "Admin Publication Authorities", authorities_publications_path
       
-    - if flash[:notice]
-      %div.success= flash[:notice]
+      - if flash[:notice]
+        %div.success= flash[:notice]
     
   %div{:class => "span-22 prepend-1"}
     %h2="Publications (#{@page})"

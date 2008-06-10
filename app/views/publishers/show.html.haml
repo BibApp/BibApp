@@ -1,9 +1,13 @@
 / === Publisher === Show ===
 / Main
 %div{:class => "span-24"}
-  %div{:class => "span-23 prepend-1"}
-    %ul#edit-actions
-      %li=link_to "Edit", edit_publisher_path(@publisher)
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor", @publisher)
+      %ul#edit-actions
+        %li=link_to "Edit", edit_publisher_path(@publisher)
+        
+      - if flash[:notice]
+        %div.success= flash[:notice]
       
   %div{:class => "span-22 prepend-1"}
     %h2= @publisher.name
