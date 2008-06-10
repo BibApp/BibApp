@@ -58,10 +58,32 @@ class PublicationsController < ApplicationController
       )
     end
 
-    before :new, :edit do
+    before :new do
+      #Anyone with 'editor' role (anywhere) can add publications
+      permit "editor"
+      
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
       @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     end
+
+    before :create do
+      #Anyone with 'editor' role (anywhere) can add publications
+      permit "editor"
+    end
+    
+    before :edit do
+      #Anyone with 'editor' role (anywhere) can update publications
+      permit "editor"
+      
+      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+    end
+    
+    before :update do
+      #Anyone with 'editor' role (anywhere) can update publications
+      permit "editor"
+    end
+   
   end
 
   def authorities
