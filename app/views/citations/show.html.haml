@@ -1,7 +1,8 @@
 / === Citations === Show ===
+/ Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor")
+    - if logged_in? && current_user.has_role?("editor on citation")
       %ul#edit-actions
         %li= link_to "Edit", edit_citation_path
         - if !CitationArchiveState.archived?(@citation)
