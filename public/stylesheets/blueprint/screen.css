@@ -318,6 +318,9 @@ h4.heading {
 .more {font-size:0.9em;}
 .header-search-form {display:inline;}
 
+.inline-form {display:inline;}
+.inline-form div {display:inline;}
+
 ul.actions li {
 	display:inline;
 }
