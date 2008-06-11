@@ -3,8 +3,8 @@
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
     %ul#edit-actions
-      %li= link_to "Update Administrators", {:controller=>"roles", :action=>"new_admin"} 
-      %li= link_to "Update Editors", {:controller=>"roles", :action=>"new_editor"}
+      %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"} 
+      %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
       
     - if flash[:notice]
       %div.success= flash[:notice]
@@ -24,11 +24,16 @@
           - @authorizable.has_admins.each do |user|
             %li.user
               ="#{user.login} (#{user.email}) "
-              - form_tag({:action => "destroy"}) do
-                =hidden_field_tag :authorizable_type, @authorizable.class
-                =hidden_field_tag :authorizable_id, @authorizable.id
-                =hidden_field_tag :role_id, user.role_id
-                =submit_tag "remove"
+              - if user.login != "admin"
+                - form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
+                  - if @authorizable.is_a? Class
+                    =hidden_field_tag :authorizable_type, @authorizable.name
+                  - else
+                    =hidden_field_tag :authorizable_type, @authorizable.class
+                    =hidden_field_tag :authorizable_id, @authorizable.id
+                  =hidden_field_tag :user_id, user.user_id
+                  =hidden_field_tag :role_id, user.role_id
+                  =submit_tag "remove"
       - else
         %p
           No administrators currently assigned.
@@ -39,11 +44,16 @@
           - @authorizable.has_editors.each do |user|
             %li.user
               ="#{user.login} (#{user.email})"
-              - form_tag({:action => "destroy"}) do
-                =hidden_field_tag :authorizable_type, @authorizable.class
-                =hidden_field_tag :authorizable_id, @authorizable.id
-                =hidden_field_tag :role_id, user.role_id
-                =submit_tag "remove"
+              - if user.login != "admin"
+                - form_tag ({:action => "destroy", :method => :delete}, :class=>"inline-form") do
+                  - if @authorizable.is_a? Class
+                    =hidden_field_tag :authorizable_type, @authorizable.name
+                  - else
+                    =hidden_field_tag :authorizable_type, @authorizable.class
+                    =hidden_field_tag :authorizable_id, @authorizable.id
+                  =hidden_field_tag :user_id, user.user_id
+                  =hidden_field_tag :role_id, user.role_id
+                  =submit_tag "remove", :class=>"inline"
       - else
         %p
           No editors currently assigned.

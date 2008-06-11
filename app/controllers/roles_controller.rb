@@ -75,7 +75,7 @@ class RolesController < ApplicationController
     end
   end
   
-  # Removes a user to a given role on an object in the system
+  # Removes a user from a given role on an object in the system
   def destroy
     #get authorizable object from URL
     load_authorizable
@@ -83,8 +83,15 @@ class RolesController < ApplicationController
     #Only admins of the authorizable object can create roles
     permit "admin of authorizable"
     
+    #Get User and Role to remove from
+    user = User.find(params["user_id"])
     role = Role.find(params["role_id"])
-    role.destroy
+    
+    #delete user from role list
+    role.users.delete( user )
+    
+    #destroy role, if no users attached to it
+    role.destroy if role.users.empty?
     
     respond_to do |format|
         format.html { redirect_to :back }
@@ -101,6 +108,8 @@ class RolesController < ApplicationController
       if params[:authorizable_type] and params[:authorizable_id]
         klass = params[:authorizable_type].constantize #change into a class
         @authorizable = klass.find(params[:authorizable_id])
+      elsif params[:authorizable_type] #if no ID, authorizable obj is a Class
+        @authorizable = params[:authorizable_type].constantize #change into a class
       elsif params[:group_id]
         @authorizable = Group.find(params[:group_id])
       elsif params[:person_id]
