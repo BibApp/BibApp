@@ -7,8 +7,6 @@ class CitationFieldsToText < ActiveRecord::Migration
     change_column :citations, :title_secondary, :text
     change_column :citations, :title_tertiary, :text
     change_column :citations, :links, :text
-    change_column :citations, :title_dupe_key, :text
-    change_column :citations, :issn_isbn_dupe_key, :text
     change_column :citations, :copyright_holder, :text
     
   end
