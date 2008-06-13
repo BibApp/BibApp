@@ -1,3 +1,0 @@
-page.hide "contributorship_id-#{@contributorship.id}"
-page.replace_html "contributorship_total_entries", @person.contributorships.to_show.size
-page.visual_effect :highlight, "contributorship_total_entries"
