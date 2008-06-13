@@ -1,15 +1,27 @@
+# Config file for local LDAP settings.
+# Your local LDAP can be used to pre-populate information
+# about a Person in BibApp.  This means you won't have to 
+# type in all their information by hand!
+#
+# Required settings:
+#   'host' => Host of local LDAP server
+#   'port'  => Port of local LDAP server (usually port 389)
+#   'base' => Base Distinguished Name (Base DN) which BibApp 
+#             will search for people matching a particular name.
+#             This is usually similar to "dc=myu,dc=edu" for universities.
+#
 development:
-  host: ldap.services.wisc.edu
+  host: ldap.services.myu.edu
   port: 389
-  base: dc=wisc,dc=edu
+  base: dc=myu,dc=edu
 
 test:
-  host: ldap.services.wisc.edu
+  host: ldap.services.myu.edu
   port: 389
-  base: dc=wisc,dc=edu
+  base: dc=myu,dc=edu
 
 production:
-  host: ldap.services.wisc.edu
+  host: ldap.services.myu.edu
   port: 389
-  base: dc=wisc,dc=edu
+  base: dc=myu,dc=edu
 
