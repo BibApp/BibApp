@@ -1,0 +1,20 @@
+/ === Groups === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Group", new_group_path
+    
+    - if flash[:notice]
+      %div.success= flash[:notice]
+
+  %div{:class => "span-22 prepend-1"}
+    %h2="Groups (#{@page})"
+    
+    = render :partial => "shared/alpha_pagination"
+
+    %ol#groups
+      -@current_objects.each do |group|
+        %li.group
+          =link_to group.name, group

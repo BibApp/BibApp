@@ -1,0 +1,20 @@
+/ === People === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Person", new_person_path
+      
+      - if flash[:notice]
+        %div.success= flash[:notice]
+      
+  %div{:class => "span-22 prepend-1"}
+    %h2="People (#{@page})"
+    
+    = render :partial => "shared/alpha_pagination"
+
+    %ol#people
+      -@current_objects.each do |person|
+        %li.person
+          =link_to "#{person.last_first}", person_path(person)

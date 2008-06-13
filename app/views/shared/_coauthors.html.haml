@@ -1,0 +1,13 @@
+- if @facets[:person_id].size > 1
+  %h3{:style => "padding-top:1em;"}
+    ="Co-authors at #{$UNIVERSITY_SHORT_NAME}"
+  %ol#coauthors{:style => "span-6 append-1"}
+    -@facets[:person_id].each do |p|
+      - person = object_by_facet_id(p.name)
+      - next if person.id == @person.id
+      %li.inline
+        %div.person{:style => "float:left; padding-right:0.75em;"}
+          = link_to(image_tag(person.image_url, :size => "56x75", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
+          %div.person-image-metadata
+            %strong= p.value
+            %h6.person-last-name=link_to person.last_name, person_path(person)
