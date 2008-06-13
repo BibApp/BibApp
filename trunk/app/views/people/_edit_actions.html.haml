@@ -1,0 +1,9 @@
+%strong
+  Edit: 
+= link_to @person.first_last, edit_person_path(@person)
+|
+= link_to "Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
+| 
+= link_to "Groups", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id}}
+| 
+= link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}

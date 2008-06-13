@@ -1,0 +1,36 @@
+# Config file for sending Registration emails via SMTP
+# for BibApp
+#
+# Required settings:
+#   'address' => Address of SMTP server
+#   'domain'  => Domain accepted by your SMTP server (usually just web address of your application)
+#   'from_email' => "From:" email address for all emails sent by BibApp
+#
+# Optional Settings:
+#   'port'     => Port on SMTP server (defaults to 25)
+#   'username' => username to login to SMTP server with (if required)
+#   'password' => password to login to SMTP server with (if required)
+#
+development:
+  address: smtp.myu.edu
+  port: 25
+  domain: www.library.myu.edu
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu
+
+test:
+  address: smtp.myu.edu
+  port: 25
+  domain: www.library.myu.edu
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu
+
+production:
+  address: smtp.myu.edu
+  port: 25
+  domain: www.library.myu.edu
+  username:
+  password:
+  from_email: bibapp-noreply@myu.edu

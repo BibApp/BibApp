@@ -1,0 +1,1101 @@
+<xml xmlns:s="uuid:BDC6E3F0-6DA3-11d1-A2A3-00AA00C14882"
+    xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:rs="urn:schemas-microsoft-com:rowset"
+    xmlns:z="#RowsetSchema">
+    <s:Schema id="RowsetSchema">
+        <s:ElementType name="row" content="eltOnly" rs:CommandTimeout="30" rs:updatable="true">
+            <s:AttributeType name="UserID" rs:number="1" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="UserID"
+                rs:keycolumn="true">
+                <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"
+                    rs:maybenull="false"/>
+            </s:AttributeType>
+            <s:AttributeType name="InternalRefID" rs:number="2" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="InternalRefID" rs:keycolumn="true">
+                <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="Created" rs:number="3" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Created">
+
+                <s:datatype dt:type="dateTime" rs:dbtype="timestamp" dt:maxLength="16" rs:scale="3"
+                    rs:precision="23" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="LastModified" rs:number="4" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="LastModified">
+                <s:datatype dt:type="dateTime" rs:dbtype="timestamp" dt:maxLength="16" rs:scale="3"
+                    rs:precision="23" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="Marked" rs:number="5" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Marked">
+                <s:datatype dt:type="string" dt:maxLength="10" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="UserRefID" rs:number="6" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="UserRefID" rs:keycolumn="true">
+
+                <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="RefType" rs:number="7" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="RefType">
+                <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="AuthorPrimary" rs:number="8" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AuthorPrimary">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="AuthorSecondary" rs:number="9" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AuthorSecondary">
+
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="AuthorTertiary" rs:number="10" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AuthorTertiary">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="TitlePrimary" rs:number="11" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="TitlePrimary">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="TitleSecondary" rs:number="12" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="TitleSecondary">
+
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="TitleTertiary" rs:number="13" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="TitleTertiary">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="Keyword" rs:number="14" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Keyword">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="PubYear" rs:number="15" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="PubYear">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="PubDateFreeForm" rs:number="16" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="PubDateFreeForm">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="PeriodicalFull" rs:number="17" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="PeriodicalFull">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="PeriodicalAbbrev" rs:number="18" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="PeriodicalAbbrev">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Volume" rs:number="19" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Volume">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Issue" rs:number="20" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Issue">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="StartPage" rs:number="21" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="StartPage">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="OtherPages" rs:number="22" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="OtherPages">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Edition" rs:number="23" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Edition">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Publisher" rs:number="24" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Publisher">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="PlaceOfPublication" rs:number="25" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="PlaceOfPublication">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="ISSN_ISBN" rs:number="26" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="ISSN_ISBN">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Availability" rs:number="27" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Availability">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Author_Address_Affiliation" rs:number="28" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Author_Address_Affiliation">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="AccessionNumber" rs:number="29" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AccessionNumber">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Language" rs:number="30" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Language">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Classification" rs:number="31" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Classification">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="SubFile_Database" rs:number="32" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="SubFile_Database">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="OriginalForeignTitle" rs:number="33" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="OriginalForeignTitle">
+
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="Links" rs:number="34" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Links">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="DOI" rs:number="35" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="DOI">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="Abstract" rs:number="36" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Abstract">
+
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="Notes" rs:number="37" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Notes">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="Folder" rs:number="38" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Folder">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="User1" rs:number="39" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="User1">
+
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="User2" rs:number="40" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="User2">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="User3" rs:number="41" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="User3">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="User4" rs:number="42" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="User4">
+
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="User5" rs:number="43" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="User5">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="CallNumber" rs:number="44" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="CallNumber">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="DatabaseName" rs:number="45" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="DatabaseName">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="DataSource" rs:number="46" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="DataSource">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="IdentifyingPhrase" rs:number="47" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="IdentifyingPhrase">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="RetrievedDate" rs:number="48" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="RetrievedDate">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="ShortenedTitle" rs:number="49" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="ShortenedTitle">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="TextAttributes" rs:number="50" rs:nullable="true"
+                rs:maydefer="true" rs:writeunknown="true" rs:basecatalog="refworks"
+                rs:basetable="refs" rs:basecolumn="TextAttributes">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="AuthorQuaternary" rs:number="51" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AuthorQuaternary">
+
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="AuthorQuinary" rs:number="52" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="AuthorQuinary">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="LinkVendorData" rs:number="53" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="LinkVendorData">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="URL" rs:number="54" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="URL">
+
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="SponsoringLibrary" rs:number="55" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="SponsoringLibrary">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="SponsoringLibraryLocation" rs:number="56" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="SponsoringLibraryLocation">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="CitedRefs" rs:number="57" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="CitedRefs">
+
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="WebsiteTitle" rs:number="58" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="WebsiteTitle">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="WebsiteEditor" rs:number="59" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="WebsiteEditor">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="WebsiteVersion" rs:number="60" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="WebsiteVersion">
+
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="PubDateElectronic" rs:number="61" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="PubDateElectronic">
+                <s:datatype dt:type="string" dt:maxLength="256"/>
+            </s:AttributeType>
+            <s:AttributeType name="SourceType" rs:number="62" rs:nullable="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="SourceType" rs:keycolumn="true">
+                <s:datatype dt:type="int" dt:maxLength="4" rs:precision="10" rs:fixedlength="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="OverFlow" rs:number="63" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Overflow">
+
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:AttributeType name="Objects" rs:number="64" rs:nullable="true" rs:writeunknown="true"
+                rs:basecatalog="refworks" rs:basetable="refs" rs:basecolumn="Objects">
+                <s:datatype dt:type="string" dt:maxLength="2000"/>
+            </s:AttributeType>
+            <s:AttributeType name="Comments" rs:number="65" rs:nullable="true" rs:maydefer="true"
+                rs:writeunknown="true" rs:basecatalog="refworks" rs:basetable="refs"
+                rs:basecolumn="Comments">
+                <s:datatype dt:type="string" dt:maxLength="1073741823" rs:long="true"/>
+            </s:AttributeType>
+            <s:extends type="rs:rowbase"/>
+
+        </s:ElementType>
+    </s:Schema>
+    <rs:data>
+        <z:row UserID="10852" InternalRefID="1" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:54" Marked="0         " UserRefID="67" RefType="1"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Controlling power systems with price signals" TitleSecondary=""
+            TitleTertiary=""
+            Keyword="Electric power systems|Marketing|Costs|Control systems|Decision support systems|Stability"
+            PubYear="2005" PubDateFreeForm="" PeriodicalFull="Decision Support Systems"
+            PeriodicalAbbrev="Decis.Support Syst." Volume="40" Issue="3-4 SPEC ISS" StartPage="495"
+            OtherPages="504" Edition="" Publisher="Elsevier, Amsterdam, 1000 AE, Netherlands"
+            PlaceOfPublication="" ISSN_ISBN="0167-9236" Availability=""
+            Author_Address_Affiliation="ECE Department, University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1016/j.dss.2004.05.012" DOI=""
+            Abstract="This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats. &#x26;copy; 2004 Published by Elsevier B.V."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="05399386576"
+            User2="Real time pricing; Congestion management; Optimal power flow; OPF; RTP" User3=""
+            User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="2" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="68" RefType="5"
+            AuthorPrimary="Watts,David|Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Futures market impacts on electricity prices"
+            TitleSecondary="2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004"
+            TitleTertiary="2004 International Conference on Probabilistic Methods Applied to Power Systems"
+            Keyword="Electric rates|Electricity|Electric industry|Marketing|Costs|Decision making|Computer simulation|Customer satisfaction|Probability distributions|Mathematical models"
+            PubYear="2004" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="20" OtherPages="25" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States"
+            PlaceOfPublication="Ames, IA, United States" ISSN_ISBN="0976131919" Availability=""
+            Author_Address_Affiliation="University of Wisconsin Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="The power system and the real-time market operation are closely coupled with the future market positions taken by market participants. Assessing the stability of the real-time market is critical because an unstable market will be characterized not only by fluctuating prices that do not settle to constant values, but more worrisome, it could create the possibility of inducing slow electromechanical oscillations if left unchecked. We study the relation between the real-time market, potential market power exercise and the stability of equilibrium. We conclude that the role of futures markets on the real time market is closely related with market power mitigation and risk hedging. The stability of the clearing prices and generator output is not directly tied to future market positions taken by market participants. We finally conclude that market power potential has a significant impact on the stability of the market, raising a new tradeoff between market efficiency and market dynamics."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="05108877235"
+            User2="Pricing; Market design; Power market; Dynamic stability; Market dynamics; Electro mechanical dynamics"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="3" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="69" RefType="5"
+            AuthorPrimary="Cain,Mary B.|Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="The impact of uncertainty on incentives to collude in electricity markets"
+            TitleSecondary="2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004"
+            TitleTertiary="2004 International Conference on Probabilistic Methods Applied to Power Systems"
+            Keyword="Electricity|Uncertain systems|Marketing|Competition|Electric power transmission|Probability|Electric generators|Decision making"
+            PubYear="2004" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="433" OtherPages="438" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States"
+            PlaceOfPublication="Ames, IA, United States" ISSN_ISBN="0976131919" Availability=""
+            Author_Address_Affiliation="Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a non-competitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="05108877304"
+            User2="Market power; Power system economics; Market prices; Generator capacity" User3=""
+            User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="4" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="70" RefType="5"
+            AuthorPrimary="Cain,M.B.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="The impact of uncertainty on incentives to collude in electricity markets"
+            TitleSecondary="2004 International Conference on Probabilistic Methods Applied to Power Systems, 12-16 Sept. 2004"
+            TitleTertiary="2004 International Conference on Probabilistic Methods Applied to Power Systems (IEEE Cat. No.04EX853)"
+            Keyword="power generation economics|power markets|pricing" PubYear="2004"
+            PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="" Issue=""
+            StartPage="433" OtherPages="8" Edition="" Publisher="IEEE"
+            PlaceOfPublication="Ames, IA, USA" ISSN_ISBN="0 9761319 1 9" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a noncompetitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="8331625"
+            User2="uncertainty; incentives; electricity markets; physics; generators; tacit collusion; competitive bid; noncompetitive bid; threshold levels; uniform price; discriminatory price auctions; power system economics"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="5" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="71" RefType="5"
+            AuthorPrimary="Cain,Mary B.|Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Implications of cost and bid format on electricity market studies: Linear versus quadratic costs"
+            TitleSecondary="2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow, Jul 28-30 2004"
+            TitleTertiary="2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow"
+            Keyword="Electric industry|Industrial economics|Electricity|Marketing|Costs|Quadratic programming|Piecewise linear techniques|Electric generators|Electric transformers|Graph theory"
+            PubYear="2004" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="2" OtherPages="6" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States"
+            PlaceOfPublication="Halifax, NS, United States" ISSN_ISBN="0780383869" Availability=""
+            Author_Address_Affiliation="Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent costs and bids. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators will bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions are particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="05108874542"
+            User2="Power system economics; Pricing; Market design; Marginal costs" User3="" User4=""
+            User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="6" Created="2006-06-27T11:10:05"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="72" RefType="5"
+            AuthorPrimary="Cain,M.B.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Implications of cost and bid format on electricity market studies: linear versus quadratic costs"
+            TitleSecondary="2004 Large Engineering Systems Conference on Power Engineering, 28-30 July 2004"
+            TitleTertiary="2004 Large Engineering Systems Conference on Power Engineering (IEEE Cat. No.04EX819)"
+            Keyword="costing|piecewise linear techniques|power markets|power system economics"
+            PubYear="2004" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="2" OtherPages="6" Edition="" Publisher="IEEE"
+            PlaceOfPublication="Halifax, NS, Canada" ISSN_ISBN="0 7803 8386 9" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent cost and bid. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions arc particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="8169790"
+            User2="bid format; electricity market studies; quadratic costs; linear costs; economic theory; piecewise linear bid curves; electricity generators; quadratic bid curves; calculus-based analysis; profit calculations"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="7" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:55" Marked="0         " UserRefID="73" RefType="1"
+            AuthorPrimary="Zhang,Jianfeng|Dobson,Ian|Alvarado,Fernando L." AuthorSecondary=""
+            AuthorTertiary="" TitlePrimary="Quantifying transmission reliability margin"
+            TitleSecondary="" TitleTertiary=""
+            Keyword="Electric power transmission|Electric power systems|Uncertain systems|Reliability theory|Probability|Monte Carlo methods|Computer simulation"
+            PubYear="2004" PubDateFreeForm=""
+            PeriodicalFull="International Journal of Electrical Power and Energy System"
+            PeriodicalAbbrev="Int J Electr Power Energy Syst" Volume="26" Issue="9" StartPage="697"
+            OtherPages="702" Edition="" Publisher="Elsevier Ltd, Oxford, United Kingdom"
+            PlaceOfPublication="" ISSN_ISBN="0142-0615" Availability=""
+            Author_Address_Affiliation="Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1016/j.ijepes.2004.05.002" DOI=""
+            Abstract="In bulk electric power transfer capability computations, the transmission reliability margin accounts for uncertainties related to the transmission system conditions, contingencies, and parameter values. We propose a formula which quantifies transmission reliability margin based on transfer capability sensitivities and a probabilistic characterization of the various uncertainties. The formula is verified by comparison with results from two systems small enough to permit accurate Monte Carlo simulations. The formula contributes to more accurate and defensible transfer capability calculations. &#x26;copy; 2004 Elsevier Ltd. All rights reserved."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="04358327498"
+            User2="Transfer capability; Uncertainty; Power transmission reliability; Power system models"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+
+        <z:row UserID="10852" InternalRefID="8" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:56" Marked="0         " UserRefID="74" RefType="5"
+            AuthorPrimary="Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Is system control entirely by price feasible?"
+            TitleSecondary="36th Hawaii International Conference on Systems Sciences, 6-9 Jan. 2003"
+            TitleTertiary="36th Hawaii International Conference on Systems Sciences"
+            Keyword="load regulation|power markets|power system control|power system economics"
+            PubYear="2003" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="6" OtherPages="" Edition="" Publisher="IEEE Comput. Soc"
+            PlaceOfPublication="Big Island, HI, USA" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Wisconsin-Madison Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power, and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="8150266"
+            User2="price feasibility; power system control; price signals; linear cost structures; response delays; varying costs; market power; stability problems; market interactions; system interactions"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="9" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:56" Marked="0         " UserRefID="75" RefType="5"
+            AuthorPrimary="Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Nodal pricing versus flowgate pricing"
+            TitleSecondary="2003 IEEE Power Engineering Society General Meeting, 13-17 July 2003"
+            TitleTertiary="2003 IEEE Power Engineering Society General Meeting (IEEE Cat. No.03CH37491)"
+            Keyword="power transmission economics|pricing" PubYear="2003" PubDateFreeForm="/"
+            PeriodicalFull="" PeriodicalAbbrev="" Volume="Vol. 1" Issue="" StartPage="39 Vol. 1"
+            OtherPages="" Edition="" Publisher="IEEE" PlaceOfPublication="Toronto, Ont., Canada"
+            ISSN_ISBN="0 7803 7989 6" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Summary form only given. Nodal pricing and flowgate pricing are fundamentally two ways of mapping the same effective quantity: the value of a transmission line when it is congested. This presentation argues for the merits of nodal pricing over flowgate pricing on the grounds of how the risk of system changes affects the various parties engaging in transactions based on nodal pricing, and further describes other advantages of nodal pricing. It also presents a number of practical examples, and shows the virtues and limitations of a hybrid system for the coexistence of both approaches, including an analysis of arbitrage opportunities that may arise if improperly done"
+            Notes="Also available on CD-ROM in PDF format"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7978966"
+            User2="nodal pricing; flowgate pricing; transmission line; hybrid system" User3=""
+            User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="10" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:56" Marked="0         " UserRefID="76" RefType="1"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Converting system limits to market signals" TitleSecondary=""
+            TitleTertiary=""
+            Keyword="Electric power systems|Electric power transmission|Electric power distribution|Marketing|Deregulation"
+            PubYear="2003" PubDateFreeForm="" PeriodicalFull="IEEE Transactions on Power Systems"
+            PeriodicalAbbrev="IEEE Trans.Power Syst." Volume="18" Issue="2" StartPage="422"
+            OtherPages="427" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc" PlaceOfPublication=""
+            ISSN_ISBN="0885-8950" Availability=""
+            Author_Address_Affiliation="University of Wisconsin, Christensen Associates, Madison, WI 53705, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/TPWRS.2003.810669" DOI=""
+            Abstract="This paper compares methods for converting system limits into market signals. One classification of methods is according to reliability driven (TLR and similar) versus market driven (LMP and similar) methods. A second classification is according to direct versus indirect methods. Direct methods deal with individual limits and constraints. Indirect methods include various ways of converting one type of limit to another, equivalent limit for purposes of making the handling of the limit more expeditious. An example of an indirect method is the conversion of a voltage limit to either a flow limit or an interface limit. Another example is the use of flow limits on interfaces as surrogates for stability limits. These transformed limits are often represented by nomograms. Conversion of one type of limit to another and the construction of nomograms has the advantage of reducing the problem of imposing system limits within a market context to a &#x22;previously solved&#x22; market problem. If a market already has learned how to cope with an import limit into a load pocket, conversion of a voltage limit into a load pocket import limit makes it easy for a market to react and respond to the condition. However, any conversion from one type of limit to another entails an approximation. This paper discusses the nature of some of these approximations."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03267515869"
+            User2="Available transfer capability; Locational marginal pricing; Stability limits; Transfer limits; Transmission limits; Voltage limits"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="11" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:56" Marked="0         " UserRefID="77" RefType="1"
+            AuthorPrimary="Greene,S.|Dobson,I.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Sensitivity of transfer capability margins with a fast formula"
+            TitleSecondary="" TitleTertiary="IEEE Trans. Power Syst. (USA)"
+            Keyword="load flow|power system analysis computing|power system interconnection|power system security|sensitivity analysis|transmission network calculations"
+            PubYear="2002" PubDateFreeForm="02/" PeriodicalFull="IEEE Transactions on Power Systems"
+            PeriodicalAbbrev="IEEE Trans.Power Syst." Volume="17" Issue="1" StartPage="34"
+            OtherPages="40" Edition="" Publisher="IEEE" PlaceOfPublication="" ISSN_ISBN="0885-8950"
+            Availability=""
+            Author_Address_Affiliation="L. R. Christensen Associates, Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/59.982190" DOI=""
+            Abstract="Bulk power transfers in electric power systems are limited by transmission network security. Transfer capability measures the maximum power transfer permissible under certain assumptions. Once a transfer capability has been computed for one set of assumptions, it is useful to quickly estimate the effect on the transfer capability of modifying those assumptions. This paper presents a computationally efficient formula for the first order sensitivity of the transfer capability with respect to the variation of any parameters. The sensitivity formula is very fast to evaluate. The approach is consistent with the current industrial practice of using DC load flow models and significantly generalizes that practice to more detailed AC power system models that include voltage and reive power limits. The computation is illustrated and tested on a 3357 bus power system"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7180897"
+            User2="transfer capability margins sensitivity; bulk power transfers; transmission network security; maximum power transfer; first order sensitivity; parameters variation; sensitivity formula; DC load flow models; voltage limits; reactive power limits; computer simulation"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="12" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="78" RefType="5"
+            AuthorPrimary="Fahrioglu,Murat|Alvarado,Fernando L." AuthorSecondary=""
+            AuthorTertiary=""
+            TitlePrimary="Using utility information to calibrate customer demand management behavior models"
+            TitleSecondary="2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric industry|Electric load management|Customer satisfaction|Optimization|Cost effectiveness"
+            PubYear="2002" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="" StartPage="26" OtherPages="" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="New York, NY" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electrical and Comp. Eng., University of Wisconsin - Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESW.2002.984935" DOI=""
+            Abstract="In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="02277002786"
+            User2="Customer demand management" User3="" User4="" User5="" CallNumber=""
+            DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate="" ShortenedTitle=""
+            TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="13" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="79" RefType="5"
+            AuthorPrimary="Alvarado,F.L.|Meng,J.|DeMarco,C.L.|Mota,W.S." AuthorSecondary=""
+            AuthorTertiary=""
+            TitlePrimary="Stability analysis of interconnected power systems coupled with market dynamics"
+            TitleSecondary="2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric power system interconnection|System stability|Electric power distribution|Electric utilities|Industrial economics|Electric power generation|Eigenvalues and eigenfunctions"
+            PubYear="2002" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="2"
+            Issue="" StartPage="1009" OtherPages="" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="New York, NY" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Department of Elec. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESW.2002.985160" DOI=""
+            Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch up-dates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="02277003004" User2="Market dynamics"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="14" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="80" RefType="5"
+            AuthorPrimary="Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Spectral analysis of energy-constrained reserves"
+            TitleSecondary="Proceedings of the 35th Annual Hawaii International Conference on System Sciences, 7-10 Jan. 2002"
+            TitleTertiary="Proceedings of the 35th Annual Hawaii International Conference on System Sciences"
+            Keyword="frequency-domain analysis|power supply quality|power system measurement|power system simulation|spectral analysis"
+            PubYear="2002" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="749" OtherPages="56" Edition="" Publisher="IEEE Comput. Soc"
+            PlaceOfPublication="Big Island, HI, USA" ISSN_ISBN="0 7695 1435 9" Availability=""
+            Author_Address_Affiliation="Wisconsin Univ., Madison, WI, USA" AccessionNumber=""
+            Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+            Links="http://dx.doi.org/10.1109/HICSS.2002.993957" DOI=""
+            Abstract="The definition of a service is key to the ability to meter it, measure it, regulate it, price it, or otherwise take it into consideration. Reserves (a form of power supply insurance) are key to power system operability. Traditionally, reserves have been characterized in terms of time-domain quantities, such as ramping rate capabilities and the like. Also, traditionally such measures have not considered the possibility that some of the reserve services may be energy- or otherwise time-limited. This paper illustrates how to take into consideration energy-constrained reserve services, and also how to classify and measure both the need for reserves as well as the ability to provide them in terms of frequency-domain techniques. In a sense, the use of frequency-domain quantities is more &#x22;natural&#x22; for this problem where the characterization of the speed of response is in fact quite important. The paper illustrates a number of numerical examples"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7198063"
+            User2="spectral analysis; energy-constrained reserve services; service definition; power supply insurance; power system operability; ramping rate capabilities; time-domain quantities; frequency-domain quantities; time-limited reserves; response speed"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="15" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="81" RefType="5"
+            AuthorPrimary="Alvarado,Fernando" AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Interdependencies in networks"
+            TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric power transmission networks|Electric utilities|Electric power transmission|Electric power systems|Graph theory|Matrix algebra|Electric fault location"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="WITER MEETIG" StartPage="199" OtherPages="" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="Columbus, OH, United States" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Electrical and Computer Engineering, University of Wisconsin-Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="The interdependencies that exist in large scale infrastructure often have a network structure. This tructure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control, and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk will describe recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03307562424"
+            User2="Interdependencies; Electric infrastructure" User3="" User4="" User5=""
+            CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase="" RetrievedDate=""
+            ShortenedTitle="" TextAttributes="" AuthorQuaternary="" AuthorQuinary="" URL=""
+            SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle=""
+            WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow=""
+            Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="16" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="82" RefType="5"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Locational aspects of distributed generation"
+            TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric power distribution|Electric power system interconnection|Electric load management|Voltage control|Reliability|Electric power transmission|Availability"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="WITER MEETIG" StartPage="140" OtherPages="" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="Columbus, OH, United States" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="The University of Wisconsin, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESW.2001.917017" DOI=""
+            Abstract="From the perspective of the bulk power supply transmission system, the value of a specific &#x22;nominal&#x22; distributed generation resource as a function of time and as a function of location within the grid was examined. In making the assessment, the comparisons will include not only the value of the energy, but also the value of the reliability levels that may or may not be attainable and without the distributed resource. This paper discusses the principles that can be ued in rational selection of sites for distriburted resources, as well asthetypes of resources that might best serve a particular location."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03307562401"
+            User2="Distributed generator; Demand management program; End-user reliability" User3=""
+            User4="" User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+
+        <z:row UserID="10852" InternalRefID="17" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="83" RefType="5"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Why are TLR&#x27;s inefficient and how to correct them with locational prices"
+            TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric rates|Electric power transmission|Electric load management|Economic and social effects|Marketing|Cost effectiveness"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="WITER MEETIG" StartPage="163" OtherPages="" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="Columbus, OH, United States" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="ECE Department, The University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESW.2001.917026" DOI=""
+            Abstract="Transmission Loading Relief (TLR) as a means forattaining secure operation is a methodology advocated and implemented by the North American Electric Reliability Council (NERC). The methodology is based on the design of a procedure for selecting and ordering curtailments of transactions as they occur. While the arbitrary formula is effective for purposes of load relief, it can benefit a highly distortive economic effect on the system. This formula leads to inefficient operation, possible price spikes and potential gaming opportunities."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03307562411"
+            User2="Transmission loading relief; Locational prices; Transmission congestion contract"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="18" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:57" Marked="0         " UserRefID="84" RefType="5"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="State estimation for the detection of market parameters"
+            TitleSecondary="2001 IEEE Power Engineering Society Summer Meeting, Jul 15-19 2001"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric power distribution|Electric network parameters|State estimation|Deregulation|Standardization|Electric utilities|Voltage control|Electric load flow|SCADA systems"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="SUMMER" StartPage="442" OtherPages="447" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="Vancouver, BC, Canada" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="The University of Wisconsin, Madison, WI 53706, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESS.2001.970065" DOI=""
+            Abstract="Deregulation of electric utilities has led to a new competitive regime for utilities. In traditional systems, the main objective is to estimate voltages and flows. Estimators that include the ability to determine system parameters along with system conditions have been developed. In the evolving deregulated environment there are a host of new estimation needs. The various costs of the participants, estimation of the degree of market power, estimation of the price elasticities of the participants, and estimation of the volatilities of prices. This paper addresses two estimation needs. It defines the problem of estimation system status based on the knowledge of published PTDFs (Power Transfer Distribution Factors) by describing a new procedure for estimating parameters. It also reformulates a previously presented but not much publicized method for estimating the cost elasticities of generators."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03097384085"
+            User2="Power transfer distribution factors; Spot pricing; International Organization for Standardization"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="19" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:58" Marked="0         " UserRefID="85" RefType="1"
+            AuthorPrimary="Alvarado,Fernando L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Solving power flow problems with a Matlab implementation of the Power System Applications Data Dictionary"
+            TitleSecondary="" TitleTertiary=""
+            Keyword="Electric power systems|Database systems|Data communication systems|Data structures|Computer software|Interfaces (computer)|Computer systems programming"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="Decision Support Systems"
+            PeriodicalAbbrev="Decis.Support Syst." Volume="30" Issue="3" StartPage="243"
+            OtherPages="254" Edition="" Publisher="Elsevier Science B.V., Amsterdam, Netherlands"
+            PlaceOfPublication="" ISSN_ISBN="0167-9236" Availability=""
+            Author_Address_Affiliation="Univ of Wisconsin, Madison, WI, USA" AccessionNumber=""
+            Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+            Links="http://dx.doi.org/10.1016/S0167-9236(00)00102-0" DOI=""
+            Abstract="This paper implements a power flow application and variations using the IEEE Power System Application Data Dictionary (PSADD) within a Matlab environment. It describes a number of useful data and implementation techniques for a variety of applications. The techniques include the use of very compact and efficient code for the computation of Power Transfer Distribution Factors (PTDF). PTDF are an important element of present and proposed congestion management strategies for power systems, particularly when these systems must operate in a deregulated environment."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="01015462613"
+            User2="Software package Matlab; Power Transfer Distribution Factors (PTDF); Power System Application Data Dictionary (PSADD); Common information model (CIM)"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="20" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:58" Marked="0         " UserRefID="86" RefType="1"
+            AuthorPrimary="Alvarado,F.L.|Meng,J.|DeMarco,C.L.|Mota,W.S." AuthorSecondary=""
+            AuthorTertiary=""
+            TitlePrimary="Stability analysis of interconnected power systems coupled with market dynamics"
+            TitleSecondary="" TitleTertiary=""
+            Keyword="Electric power system interconnection|System stability|Economic and social effects|Eigenvalues and eigenfunctions|Electric power generation|Electric load dispatching|Power control"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="IEEE Transactions on Power Systems"
+            PeriodicalAbbrev="IEEE Trans.Power Syst." Volume="16" Issue="4" StartPage="695"
+            OtherPages="701" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc" PlaceOfPublication=""
+            ISSN_ISBN="0885-8950" Availability=""
+            Author_Address_Affiliation="Dept. of Elect. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/59.962415" DOI=""
+            Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch updates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="01546796424"
+            User2="Market dynamics; Detailed generator dynamics; Detailed turbin dynamics; Detailed governor dynamics; Physical generator controls"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="21" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:58" Marked="0         " UserRefID="87" RefType="5"
+            AuthorPrimary="Alvarado,F." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Interdependencies in networks"
+            TitleSecondary="Proceedings of 2001 Winter Meeting of the IEEE Power Engineering Society, 28 Jan.-1 Feb. 2001"
+            TitleTertiary="2001 IEEE Power Engineering Society Winter Meeting. Conference Proceedings (Cat. No.01CH37194)"
+            Keyword="failure analysis|graph theory|power system interconnection|power system reliability|sparse matrices|transmission networks"
+            PubYear="2001" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="199 vol.1" OtherPages="" Edition="" Publisher="IEEE"
+            PlaceOfPublication="Columbus, OH, USA" ISSN_ISBN="0 7803 6672 7" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Summary form only, as given. The interdependencies that exist in a large scale infrastructure often have a network structure. This structure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk describes recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7022754"
+            User2="large scale infrastructure interdependencies; electric power system; transmission system; network graph; sparse matrices; graph structure; failures; power grids"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="22" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:58" Marked="0         " UserRefID="88" RefType="1"
+            AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Using utility information to calibrate customer demand management behavior models"
+            TitleSecondary="" TitleTertiary=""
+            Keyword="Electric load management|Electric utilities|Electric power utilization|Electric rates|Costs|Outages|Mathematical models|Electric load shedding|Reliability"
+            PubYear="2001" PubDateFreeForm="" PeriodicalFull="IEEE Transactions on Power Systems"
+            PeriodicalAbbrev="IEEE Trans.Power Syst." Volume="16" Issue="2" StartPage="317"
+            OtherPages="323" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc" PlaceOfPublication=""
+            ISSN_ISBN="0885-8950" Availability=""
+            Author_Address_Affiliation="Dept. of Elec. and Computer Engr., The University of Wisconsin-Madison, WI Madison, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/59.918305" DOI=""
+            Abstract="In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="01266555043"
+            User2="Contract design; Customer cost; Data calibration; Load curtailment; System security"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="23" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="89" RefType="5"
+            AuthorPrimary="Alvarado,F.L.|Meng,J.|Mota,W.S.|DeMarco,C.L." AuthorSecondary=""
+            AuthorTertiary=""
+            TitlePrimary="Dynamic coupling between power markets and power systems"
+            TitleSecondary="Proceedings of the 2000 Power Engineering Society Summer Meeting, Jul 16-20 2000"
+            TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"
+            Keyword="Electric industry|Electric power systems|Marketing|Mathematical models|Electric power generation|Electric loads|Governors|Turbines|Electric generators|Convergence of numerical methods|Electromechanical devices|Eigenvalues and eigenfunctions|Electric utilities"
+            PubYear="2000" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="4"
+            Issue="" StartPage="2201" OtherPages="2205" Edition=""
+            Publisher="Institute of Electrical and Electronics Engineers Inc"
+            PlaceOfPublication="Seattle, WA, United States" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Elec. and Comp. Engineering, University of Wisconsin-Madison, Madison, WI, United States"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESS.2000.866987" DOI=""
+            Abstract="Dynamic representation of power markets provide insight into market behavior that is not available in static models. Under the assumption of continuous market updates, this work examines the coupled system that results when market driven response of generation and load interacts with the physical dynamics of governors, turbines, and generators, and the network power flow. Numerical stability analyses are performed for the New England 39 bus test system, and plausible scenarios are presented in which the decoupled components (market dynamics alone, physical dynamics alone) are each stable, yet the coupled system is unstable. The general observation that two individual stable systems may be coupled to create an unstable system is commonplace. However, the existence of such scenarios in realistic models of power markets coupled with grid dynamics has significant policy implications for ongoing efforts to design power markets structures and electromechanical system controls complementary to these markets."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="03307562215"
+            User2="Power markets; Network power flow; Electromechanical system; Power system dynamics"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="24" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="90" RefType="5"
+            AuthorPrimary="Meng,J.|DeMarco,C.L.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Stability of time-delay power markets"
+            TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000"
+            TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"
+            Keyword="delays|eigenvalues and eigenfunctions|electricity supply industry|matrix algebra|power generation dispatch|power system analysis computing|power system dynamic stability|power system economics"
+            PubYear="2000" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="6" OtherPages="36" Edition="" Publisher="Univ. Waterloo"
+            PlaceOfPublication="Waterloo, Ont., Canada" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. Dynamic equations provide insight into the behavior and stability of markets which are not available from static models. The updating of price based on system conditions is often a periodic computation, based on recent but past snapshot of system operating state. Moreover, once computed, there is often delay in communication of this price to market participants. This paper studies such a time delay on the stability of power markets. Both the precise matrix pencil and the Pade approximation methods are used to illustrate the stability of time delay power market dynamics using the New England 39 bus system as the test example. Finally the Smith predictor scheme is used to improve the stability of power market dynamics"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7327172"
+            User2="power markets; time delay; stability; generation dispatch; economic efficiency; market updates; dynamic equations; system operating state; price communication; market participants; precise matrix pencil; Pade approximation; New England 39 bus system; Smith predictor scheme; eigenvalues"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="25" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="91" RefType="5"
+            AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Packaging demand management contracts for deregulated environments"
+            TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000"
+            TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"
+            Keyword="contracts|costing|demand side management|electricity supply industry|power system reliability|power system security"
+            PubYear="2000" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="1" OtherPages="1" Edition="" Publisher="Univ. Waterloo"
+            PlaceOfPublication="Waterloo, Ont., Canada" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Demand management can be a tool that help utilities and other energy serving entities as well as independent system operators solve various system problems. The main job of an ISO is to maintain a reliable grid in the interest of all buyers and sellers of electricity. Hence it is the ISO&#x27;s responsibility to avoid congestion and keep the &#x26;ldquo;available transfer capacity&#x26;rdquo; (ATC) at a high level. During times of congestion a loss of economic surplus occurs. To relieve congestion, ISOs will have a choice between congestion pricing, mandatory transmission load relief or the use of interruptible power contracts. Interruptible power contracts are &#x26;ldquo;standing&#x26;rdquo; offers for power &#x26;ldquo;delivery&#x26;rdquo; at a given price. Hence interruptible customers participate in a spot market by designating their power as interruptible. The idea is that the power market itself should resolve congestion issues. However when the market is too slow or cannot help relieve congestion, demand management can help solve the problem. Another tool the ISO requires for security purposes is reserves. Even though demand management contracts may not be a good substitute for spinning reserves, they are adequate to augment or replace supplemental and backup reserves. A demand management program permits the packaging of a uniform product with well determined parameters"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7327133"
+            User2="uniform product packaging; demand management contracts; deregulated environments; utilities; energy serving entities; independent system operators; ISO; reliable grid; electricity buyers; electricity sellers; congestion relief; available transfer capacity; congestion time; congestion pricing; transmission load relief; interruptible power contracts; power delivery; interruptible customers; spot market; power market; security; backup reserves; well defined parameters"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+
+        <z:row UserID="10852" InternalRefID="26" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="92" RefType="5"
+            AuthorPrimary="Zhang,J.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Cascading contingency analysis"
+            TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000"
+            TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"
+            Keyword="approximation theory|power transmission faults|power transmission lines|probability|recursive estimation|sensitivity analysis"
+            PubYear="2000" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="1" OtherPages="11" Edition="" Publisher="Univ. Waterloo"
+            PlaceOfPublication="Waterloo, Ont., Canada" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Cascading contingency is one of the possible reasons to cause system blackout. This paper uses an efficient recursive algorithm to find significant cascading contingencies and calculate their probabilities. The algorithm is compared with an importance sampling based algorithm. The paper also proposes a fast approximation method to find the probability sensitivity to system parameters"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="7327135"
+            User2="cascading contingency analysis; system blackout; recursive algorithm; fast approximation method; probability sensitivity; system parameters; line tripping probability"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="27" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="93" RefType="1"
+            AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Designing incentive compatible contracts for effective demand management"
+            TitleSecondary="" TitleTertiary="IEEE Trans. Power Syst. (USA)"
+            Keyword="contracts|demand side management|electricity supply industry|game theory|power system economics|power system faults|power system security|tariffs"
+            PubYear="2000" PubDateFreeForm="11/" PeriodicalFull="IEEE Transactions on Power Systems"
+            PeriodicalAbbrev="IEEE Trans.Power Syst." Volume="15" Issue="4" StartPage="1255"
+            OtherPages="60" Edition="" Publisher="IEEE" PlaceOfPublication="" ISSN_ISBN="0885-8950"
+            Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/59.898098" DOI=""
+            Abstract="Demand relief from customers can help a utility (or any &#x26;ldquo;load serving entity&#x26;rdquo;) solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed, and to do so in a cost effective way. Customers sign up for programs when the benefits they derive in the form of up front payments, demand discounts and interruption payments exceed their cost of interruption. In order to design such contracts, mechanism design with the revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design an incentive structure that encourages customers to sign up for the right contract and reveal their true value of power (and thus, the value of power interruptibility)"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6843712"
+            User2="demand management; incentive compatible contracts design; demand relief; load serving entity; up front payments; demand discounts; interruption payments; interruption costs; revelation principle; game theory; incentive structure"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="28" Created="2006-06-27T11:10:06"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="94" RefType="5"
+            AuthorPrimary="Alvarado,F.L.|Rajaraman,R." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Understanding price volatility in electricity markets"
+            TitleSecondary="Proceedings of the 33rd Annual Hawaii International Conference on System Sciences, 4-7 Jan. 2000"
+            TitleTertiary="Proceedings of the 33rd Annual Hawaii International Conference on Systems Sciences"
+            Keyword="costing|frequency-domain analysis|parameter estimation|power system economics|power system simulation|random processes"
+            PubYear="2000" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="5" OtherPages="" Edition="" Publisher="IEEE Comput. Soc"
+            PlaceOfPublication="Maui, HI, USA" ISSN_ISBN="0 7695 0493 0" Availability=""
+            Author_Address_Affiliation="Wisconsin Univ., WI, USA" AccessionNumber="" Language=""
+            Classification="" SubFile_Database="" OriginalForeignTitle="" Links="" DOI=""
+            Abstract="The paper illustrates notions of volatility associated with power systems spot prices for electricity. The paper demonstrates a frequency-domain method useful to separate out periodic price variations from random variations. It then uses actual observed price data to estimate parameters such as volatility and the coefficient of mean reversion associated with the random variation of prices. It also examines spatial volatility of prices"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6598125"
+            User2="price volatility; electricity markets; power systems spot prices; frequency-domain method; periodic price variations; random variations; observed price data; parameter estimation; volatility; mean reversion coefficient; random price variation; spatial volatility"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="29" Created="2006-06-27T11:10:07"
+            LastModified="2006-08-21T07:29:59" Marked="0         " UserRefID="95" RefType="5"
+            AuthorPrimary="Ronghai Wang|Lasseter,R.H.|Jiangping Meng|Alvarado,F.L."
+            AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Fast determination of simultaneous available transfer capability (ATC)"
+            TitleSecondary="Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999"
+            TitleTertiary="Proceedings Thirty-First Annual North American Power Symposium"
+            Keyword="estimation theory|iterative methods|load flow|power system analysis computing"
+            PubYear="1999" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume=""
+            Issue="" StartPage="177" OtherPages="82" Edition=""
+            Publisher="California Polytech. State Univ"
+            PlaceOfPublication="San Luis Obispo, CA, USA" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="This paper proposes a novel fast computational method to determine the simultaneous power available transfer capability (ATC) in a power system. This method consists of a fast estimation algorithm and a constrained power flow iteration. The ATC limiting factors considered in the method are: line thermal limits; bus voltage limits; and generator reactive power limits. When combined with the first line contingency considerations, this method gives the fastest ATC computing. The feature of this method is that it uses only one steady state power flow result for the fast estimation algorithm. Without further time consuming power flow iterations, it is the fastest estimation algorithm available. Based on the fast estimation, with a few more constrained power flow iterations, precise ATC value can be obtained. This method can be used to improve the speed of many available ATC programs. Especially, it may be used in addition to the widely used DC power flow program or simply replace it to provide additional voltage and var information, since DC power flow generally ignore voltage or var problems. This method can help the independent system operator (ISO) to determine the validity of the bidding results in an open access deregulated electricity market when timely ATC information is very important. It can also help the power market participants to place bids strategically when congestion happens"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6512107"
+            User2="simultaneous available transfer capability determination; fast computational method; fast estimation algorithm; constrained power flow iteration; line thermal limits; bus voltage limits; generator reactive power limits; independent system operator; open access deregulated electricity market; power market participants"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="30" Created="2006-06-27T11:10:07"
+            LastModified="2006-08-21T07:30:00" Marked="0         " UserRefID="96" RefType="5"
+            AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Designing cost effective demand management contracts using game theory"
+            TitleSecondary="IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999"
+            TitleTertiary="IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)"
+            Keyword="contracts|demand side management|electricity supply industry|game theory|power system economics|power system reliability|sensitivity analysis"
+            PubYear="1999" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="427" OtherPages="32" Edition="" Publisher="IEEE"
+            PlaceOfPublication="New York, NY, USA" ISSN_ISBN="0 7803 4893 1" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="http://dx.doi.org/10.1109/PESW.1999.747493" DOI=""
+            Abstract="Demand relief from customers can help an electric utility solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed. If the contracts are designed to be cost effective they can help the utility reduce costs. Customers sign up for programs when the benefits they derive in the form of up front payments and interruption payments exceeds their cost of interruption. In order to design such contracts, mechanism design with revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design a program incentive structure that encourages customers to reveal their true value of power (and thus, the value of power interruptibility) without the need to explicitly have customers declare the value. This economic analysis is combined with power system sensitivity analysis to help determine the value of interruptibility for each system location"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6209738"
+            User2="cost-effective demand management contracts design; game theory; electric utility; load relief; up front payments; interruption payments; power interruptibility value; economic analysis; power system sensitivity analysis; DSM"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="31" Created="2006-06-27T11:10:07"
+            LastModified="2006-08-21T07:30:00" Marked="0         " UserRefID="97" RefType="5"
+            AuthorPrimary="Alvarado,Fernando L.|Overbye,Thomas" AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Measuring reactive market power"
+            TitleSecondary="Proceedings of the 1999 Winter Meeting of IEEE Power Engineering Society. Part 1 (of 2), Jan 31-Feb 4 1999"
+            TitleTertiary="IEEE Engineering Society, Winter Meeting"
+            Keyword="Reactive power|Marketing|Utility rates|Electric utilities|Electric power systems|Electric power transmission"
+            PubYear="1999" PubDateFreeForm="" PeriodicalFull="" PeriodicalAbbrev="" Volume="1"
+            Issue="" StartPage="294" OtherPages="296" Edition=""
+            Publisher="IEEE, Piscataway, NJ, USA" PlaceOfPublication="New York, NY, USA"
+            ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Univ of Wisconsin, Madison, WI, USA" AccessionNumber=""
+            Language="" Classification="" SubFile_Database="" OriginalForeignTitle="" Links=""
+            DOI=""
+            Abstract="Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example."
+            Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved"
+            Folder="Alvarado F* - ev|Alvarado F* - comb" User1="99044630790"
+            User2="Market concentration" User3="" User4="" User5="" CallNumber="" DatabaseName=""
+            DataSource="" IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="32" Created="2006-06-27T11:10:07"
+            LastModified="2006-08-21T07:30:00" Marked="0         " UserRefID="98" RefType="5"
+            AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="On the importance of customer location in demand management contracts"
+            TitleSecondary="Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999"
+            TitleTertiary="Proceedings Thirty-First Annual North American Power Symposium"
+            Keyword="demand side management|power system security" PubYear="1999"
+            PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="" Issue=""
+            StartPage="33" OtherPages="7" Edition="" Publisher="California Polytech. State Univ"
+            PlaceOfPublication="San Luis Obispo, CA, USA" ISSN_ISBN="" Availability=""
+            Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA"
+            AccessionNumber="" Language="" Classification="" SubFile_Database=""
+            OriginalForeignTitle="" Links="" DOI=""
+            Abstract="Demand management programs can help alleviate the stress brought on the system by events and contingencies. Some problems can be solved by system-wide load reduction, and other problems need location specific attention. If a utility has demand management contracts with the customers at critical locations, most problems can be solved more efficiently. This paper illustrates how locational attributes of customers incorporated into demand management contract design, can have a significant impact in solving system problems. Having locational variance in demand management programs can help improve both the engineering and economic analysis of the system. Demand management contracts become more efficient economically, bringing more monetary benefits to the utility, and system security issues are addressed more efficiently"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6512084"
+            User2="customer location; demand management contracts; demand management programs; system-wide load reduction; location specific attention; critical locations; locational variance; economic analysis; engineering analysis; system security issues; sensitivity analysis"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="33" Created="2006-06-27T11:10:07"
+            LastModified="2006-08-21T07:30:01" Marked="0         " UserRefID="99" RefType="5"
+            AuthorPrimary="Alvarado,F.L.|Overbye,T." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Measuring reactive market power"
+            TitleSecondary="IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999"
+            TitleTertiary="IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)"
+            Keyword="commerce|electricity supply industry|marketing|power system economics|reactive power|tariffs"
+            PubYear="1999" PubDateFreeForm="/" PeriodicalFull="" PeriodicalAbbrev="" Volume="vol.1"
+            Issue="" StartPage="294" OtherPages="6" Edition="" Publisher="IEEE"
+            PlaceOfPublication="New York, NY, USA" ISSN_ISBN="0 7803 4893 1" Availability=""
+            Author_Address_Affiliation="Wisconsin Univ., Madison, WI, USA" AccessionNumber=""
+            Language="" Classification="" SubFile_Database="" OriginalForeignTitle=""
+            Links="http://dx.doi.org/10.1109/PESW.1999.747469" DOI=""
+            Abstract="Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example"
+            Notes="" Folder="Alvarado F* - ev|Alvarado F* - comb" User1="6209713"
+            User2="reactive market power measurement; electricity service providers; market concentration degree; market power analysis; Herfindahl-Hirschman Index"
+            User3="" User4="" User5="" CallNumber="" DatabaseName="" DataSource=""
+            IdentifyingPhrase="" RetrievedDate="" ShortenedTitle="" TextAttributes=""
+            AuthorQuaternary="" AuthorQuinary="" URL="" SponsoringLibrary=""
+            SponsoringLibraryLocation="" CitedRefs="" WebsiteTitle="" WebsiteEditor=""
+            WebsiteVersion="" PubDateElectronic="" SourceType="0" OverFlow="" Objects="" Comments=""/>
+        <z:row UserID="10852" InternalRefID="212" Created="2006-07-17T07:05:37"
+            LastModified="2006-08-21T07:31:00" Marked="0         " UserRefID="4948" RefType="1"
+            AuthorPrimary="MALONEY,T.J.|ALVARADO,F.L." AuthorSecondary="" AuthorTertiary=""
+            TitlePrimary="Digital Method for Dc Motor Speed Control" TitleSecondary=""
+            TitleTertiary=""
+            Keyword="Automation &#x26; Control Systems|Engineering, Electrical &#x26; Electronic|Instruments &#x26; Instrumentation"
+            PubYear="1976" PubDateFreeForm=""
+            PeriodicalFull="Ieee Transactions on Industrial Electronics and Control Instrumentation"
+            PeriodicalAbbrev="" Volume="23" Issue="1" StartPage="44" OtherPages="46" Edition=""
+            Publisher="IEEE-INST ELECTRICAL ELECTRONICS ENGINEERS INC"
+            PlaceOfPublication="NEW YORK; 345 E 47TH ST, NEW YORK, NY 10017-2394"
+            ISSN_ISBN="0018-9421" Availability=""
+            Author_Address_Affiliation="MONROE CTY COMMUNITY COLL,MONROE,MI 48161. UNIV WISCONSIN,MADISON,WI 53706."
+            AccessionNumber="" Language="English" Classification="" SubFile_Database="DT: Article"
+            OriginalForeignTitle="" Links="" DOI="" Abstract=""
+            Notes="PT: J; CR: HAWKINS J, 1972, IEEE T IND APPL, V21, P155 KUSKO A, 1972, IEEE SPECTRUM OCT, P54 MASON J, 1964, MACHINE DESIGN 1008, P157 MESNIAEFF PG, 1972, CONTROL ENGINEER MAY, P56 REASON J, 1972, AUTOMATION NOV, P58; NR: 5; TC: 13; J9: IEEE TRANS IND ELECTRON CONTR; PG: 3; GA: BD818; UT: ISI:A1976BD81800010"
+            Folder="Alvarado F* - wos|Alvarado F* - comb" User1="" User2="" User3="" User4=""
+            User5="" CallNumber="" DatabaseName="" DataSource="" IdentifyingPhrase=""
+            RetrievedDate="" ShortenedTitle="" TextAttributes="" AuthorQuaternary=""
+            AuthorQuinary="" URL="" SponsoringLibrary="" SponsoringLibraryLocation="" CitedRefs=""
+            WebsiteTitle="" WebsiteEditor="" WebsiteVersion="" PubDateElectronic="" SourceType="0"
+            OverFlow="" Objects="" Comments=""/>
+    </rs:data>
+</xml>
