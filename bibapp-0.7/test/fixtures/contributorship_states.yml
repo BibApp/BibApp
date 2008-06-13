@@ -1,0 +1,11 @@
+calculated:
+  id: 1
+  name: "Calculated"
+
+verified:
+  id: 2
+  name: "Verified"
+  
+denied:
+  id: 3
+  name: "Denied"

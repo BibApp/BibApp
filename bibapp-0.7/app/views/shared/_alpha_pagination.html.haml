@@ -1,0 +1,8 @@
+%ol#alpha-nav.pagination
+  - ('A'..'Z').each do |letter|
+    - current = false
+    - if letter == @page
+      - current = true
+      = letter_link_for(@a_to_z, letter, current)
+    - else
+      = letter_link_for(@a_to_z, letter, current)

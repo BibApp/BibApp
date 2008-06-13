@@ -1,0 +1,20 @@
+/ === Admin === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    / Flash notice
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
+    %h2 Administrative Tasks:
+    %ul#tasks
+      %li
+        = link_to "Update System Roles", :controller=>"roles", :action =>"index"
+      %li
+        = link_to "Prepare files for archiving", :action => "ready_to_archive"      
+      %li
+        = link_to "Verify/Deny contributorships", admin_contributorships_path
+      %li
+        = link_to "Update Publication authorities", authorities_publications_path
+      %li
+        = link_to "Update Publisher authorities", authorities_publishers_path

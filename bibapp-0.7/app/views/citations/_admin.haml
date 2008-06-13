@@ -1,0 +1,7 @@
+-#If SWORD is configured, and citation is "Ready for Archiving"
+-if SwordClient.configured? and CitationArchiveState.ready_to_archive?(@citation)
+  %fieldset
+    %legend Administrative Tasks
+    %ul#tasks
+      %li
+        = link_to "Deposit Immediately via SWORD", :controller => "admin", :action => "deposit_via_sword", :citation_id => @citation    

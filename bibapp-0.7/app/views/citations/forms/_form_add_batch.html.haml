@@ -1,0 +1,10 @@
+%fieldset
+  %legend Add Batch
+
+  %p
+    %label Paste Citations (RIS | Medline | Refworks XML)
+    %br/
+    = form.text_area :citations
+    = hidden_field_tag :type, 'AddBatch'
+  %p.submit
+    = submit_tag :save

@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require File.dirname(__FILE__) + '/../config/environment'
+
+puts "\n**** This is gonna take a long time. Word to yr mother.\n\n"
+
+Dir.glob("tmp/batch_import/*") do |file|
+  data = File.open(file)
+  Citation.import_batch!(data)
+end

@@ -1,0 +1,16 @@
+/ Editors
+- if !c.name_strings.editors.empty?
+  %span.authors
+    - c.name_strings.authors.each do |ns|
+      %span.author=link_to "#{ns.name}", name_string_path(ns)
+(Eds.). 
+
+/ Year
+-if c.publication_date != nil
+  %span.year="(#{c.publication_date.year}). "
+
+/ Title
+%span.title="#{c.title_primary}."
+
+/ Publisher
+%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path (c.publisher.authority.to_param)

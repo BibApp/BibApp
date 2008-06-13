@@ -1,0 +1,24 @@
+/ === Publishers === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Publisher", new_publisher_path
+        - if current_user.has_role?("admin", System)
+          %li=link_to "Admin Publisher Authorities", authorities_publishers_path
+
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
+  %div{:class => "column span-22 prepend-1"}
+    %h2="Publishers (#{@page})"
+
+    = render :partial => "shared/alpha_pagination"
+    
+    %ol#publishers
+      -@current_objects.each do |publisher|
+        %li.publisher
+          =link_to "#{publisher.name}", publisher_path(publisher)
+    
+  
