@@ -153,7 +153,11 @@ class Citation < ActiveRecord::Base
   end
   
   def year
-    publication_date.year
+    if publication_date != nil
+      publication_date.year
+    else
+      nil
+    end
   end
   
   # Deduplication: set score
