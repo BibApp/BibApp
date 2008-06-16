@@ -61,6 +61,7 @@ class Contributorship   < ActiveRecord::Base
 
       logger.debug("Year: #{citation_sh[:year]}")
       
+      
       person_sh[:years].sort.first.upto(person_sh[:years].sort.last){|y| years << y }
       logger.debug("Array: #{years.inspect}")
       year_score = 25 if years.include?(citation_sh[:year])

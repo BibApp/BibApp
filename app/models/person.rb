@@ -110,7 +110,15 @@ class Person < ActiveRecord::Base
   
   def update_scoring_hash
     vps = self.verified_publications
-    known_years = vps.collect{|vp| vp.citation.publication_date.year}.uniq
+    
+    known_years = vps.collect{|vp| 
+                 if !vp.citation.publication_date.nil?
+                   vp.citation.publication_date.year 
+                 end
+                   }.uniq
+   known_years.delete(nil)
+
+    
     known_publication_ids = vps.collect{|vp| vp.citation.publication.id}.uniq
     known_collaborator_ids = vps.collect{|vp| vp.citation.name_strings.collect{|ns| ns.id}}.flatten.uniq
     known_keyword_ids = vps.collect{|vp| vp.citation.keywords.collect{|k| k.id}}.flatten.uniq
