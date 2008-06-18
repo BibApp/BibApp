@@ -52,8 +52,9 @@ class GroupsController < ApplicationController
     end
     
     before :new do
-      @groups = Group.find(:all, :order => "name")
+     @groups = Group.find(:all, :order => "name")
     end
+   
     
     before :edit do
       #'editor' of group can edit that group
@@ -64,8 +65,23 @@ class GroupsController < ApplicationController
   end
   
   def create_group
-    @group = Group.find_or_create_by_name(params[:group][:name])
-    redirect_to new_group_path
+    
+    @duplicategroup = Group.find(:first, :conditions => ["name LIKE ?", params[:group][:name]])
+   
+    
+    if @duplicategroup.nil?
+      @group = Group.find_or_create_by_name(params[:group][:name])
+     
+      respond_to do |format|
+       flash[:notice] = "Group was successfully created."
+       format.html {redirect_to group_url(@group)}
+      end
+    else
+      respond_to do |format|
+       flash[:notice] = "This group already exists"
+       format.html {redirect_to new_group_path}
+      end
+    end
   end
   
   def auto_complete_for_group_name
