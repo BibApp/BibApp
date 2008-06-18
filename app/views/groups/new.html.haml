@@ -4,7 +4,7 @@
   %div{:class => "span-22 prepend-1"}
     / Flash notice
     - if flash[:notice]
-      %div#flash= flash[:notice]
+      .notice= flash[:notice]
 
     %h2 Add a Group
     = render :partial => 'form'

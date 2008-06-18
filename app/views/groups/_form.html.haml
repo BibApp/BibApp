@@ -1,6 +1,6 @@
 %fieldset
   %legend="Group"
-  - form_for @group do |form|
+  - form_for @group, :url => { :action => "create_group" } do |form|
     %p
       %label Name
       %br/
