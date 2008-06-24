@@ -94,7 +94,8 @@ class CitationsController < ApplicationController
           format.html {redirect_to new_citation_url}
           format.xml  {head :created, :location => citation_url(@citation)}
         else
-          format.html {render :action => "new"}
+          flash[:unsuccessful] = "Citation format is unsupported"
+          format.html {redirect_to new_citation_url}
           format.xml  {render :xml => @citation.errors.to_xml}
         end
       end
@@ -395,8 +396,8 @@ class CitationsController < ApplicationController
 
     # Parse the data
     pcites = p.parse(str)
-    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
     return nil if pcites.nil?
+    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
     
     # Map Import hashes
     attr_hashes = i.citation_attribute_hashes(pcites)

@@ -5,6 +5,9 @@
 
     - if flash[:notice]
       %div.success= flash[:notice]
+    
+    - if flash[:unsuccessful]
+      %div.notice= flash[:unsuccessful]
 
     %ul#error_list
 
