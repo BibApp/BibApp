@@ -3,7 +3,13 @@ class MedlineParser < CitationParser
   def parse(data)
     data = data.dup
     data.strip!
-    data.gsub!("\r", "\n").gsub!("\t", " ")
+    
+    if !data.nil?
+      data.gsub!("\r", "\n")
+    end
+    if !data.nil?
+      data.gsub!("\t", " ")
+    end
     if not data =~ /^PMID/
       return nil
     end
