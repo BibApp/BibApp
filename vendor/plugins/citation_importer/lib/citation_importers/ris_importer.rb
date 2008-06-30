@@ -52,7 +52,7 @@ class RisImporter < CitationImporter
       end
       
     end
-    puts "\n\nMapped Hash: #{r_hash.inspect}\n\n"
+   # puts "\n\nMapped Hash: #{r_hash.inspect}\n\n"
     return r_hash
   end
   
