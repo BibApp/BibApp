@@ -28,7 +28,7 @@ class CitationParser
         
         if !@citations.nil?
           puts("\n Parsing was successful using: #{klass}!\n")
-          return @citations          
+          return @citations, 1 #Return 1 to indicate everything went fine          
         end       
       end
     
@@ -36,10 +36,10 @@ class CitationParser
 
 
     rescue
-      return nil
+      return nil, -1 #Return -1 to indicate there was a error
       
     end
-    return nil
+    return nil, 0 #Return 0 to indicate that no citations were parsed
   end
   
   protected

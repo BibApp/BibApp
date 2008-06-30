@@ -45,7 +45,7 @@ class MedlineImporter < CitationImporter
       end
     end
     
-    puts "Mapped Hash: #{r_hash.inspect}"
+    #puts "Mapped Hash: #{r_hash.inspect}"
     return r_hash
   end
   

@@ -10,7 +10,8 @@ class RisParser < CitationParser
       return nil
     end
     
- #TODO make sure we excape all neccessary characters   
+    
+ #TODO make sure we escape all neccessary characters   
  #   risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
@@ -25,6 +26,7 @@ class RisParser < CitationParser
         key, val = component.split(/\s+\-\s+/, 2)
         key = key.strip.downcase.to_sym
         # Skip components we can't parse
+        
         next unless key and val
         cite.properties[key] = Array.new if cite.properties[key].nil?
         cite.properties[key] << val.strip
@@ -34,9 +36,11 @@ class RisParser < CitationParser
       cite.properties["original_data"] = rec
       @citations << cite
     end
+   
+    puts("\nNumber of Successfully Parsed Citations: #{@citations.size}\n")
+ 
     
-    puts("\nCitations Size: #{@citations.size}\n")
-    puts("\nRISParser says:#{@citations.each{|c| c.inspect}}\n")
+    # puts("\nRISParser says:#{@citations.each{|c| c.inspect}}\n")
     @citations
   end  
 end

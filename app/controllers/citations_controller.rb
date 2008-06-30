@@ -89,14 +89,22 @@ class CitationsController < ApplicationController
       successful = import_batch!(params[:citation][:citations])
       
       respond_to do |format|
-        if successful
+        if successful == 1
           flash[:notice] = "Batch was successfully created."
           format.html {redirect_to new_citation_url}
           format.xml  {head :created, :location => citation_url(@citation)}
-        else
-          flash[:unsuccessful] = "Citation format is unsupported"
+        elsif successful == 2
+          flash[:unsuccessful] = "There was an unrecoverable error caused by the input!"
           format.html {redirect_to new_citation_url}
           format.xml  {render :xml => @citation.errors.to_xml}
+        elsif successful == 3
+          flash[:unsuccessful] = "Batch import successful, but some citations were missing a required field"
+          format.html {redirect_to new_citation_url}
+          format.xml  {render :xml => @citation.errors.to_xml}
+        else
+          flash[:unsuccessful] = "Citation format unsupported or there were no citations to import!"
+          format.html {redirect_to new_citation_url}
+          format.xml  {render :xml => @citation.errors.to_xml}        
         end
       end
 
@@ -382,96 +390,125 @@ class CitationsController < ApplicationController
   # Batch import Citations
   def import_batch!(data)    
     
-    # Read the data
-    str = data
-    if data.respond_to? :read
-      str = data.read
-    elsif File.readable?(data)
-      str = File.read(data)
-    end
+    #Return 1 if successful with no errors
+    #Return 2 if there was an unrecoverable error
+    #Return 3 if the import was successful, but some citations were missing a required field
+    #Return 4 if the citation format is not supported or there were no citations to parse
+    success = 1 
     
-    # Init: Parser and Importer
-    p = CitationParser.new
-    i = CitationImporter.new
-
-    # Parse the data
-    pcites = p.parse(str)
-    return nil if pcites.nil?
-    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-    
-    # Map Import hashes
-    attr_hashes = i.citation_attribute_hashes(pcites)
-    logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
-    
-    return [] if attr_hashes.nil?
-    all_cites = attr_hashes.map { |h|
-      
-      # Initialize the Citation
-      klass = h[:klass]
-      
-      # Are we working with a legit SubKlass?
-      klass = klass.constantize
-      if klass.superclass != Citation
-        raise NameError.new("#{klass_type} is not a subclass of Citation") and return
+    begin 
+      # Read the data
+      str = data
+      if data.respond_to? :read
+        str = data.read
+      elsif File.readable?(data)
+        str = File.read(data)
       end
-      citation = klass.new
+    
+      # Init: Parser and Importer
+      p = CitationParser.new
+      i = CitationImporter.new
+
+      # Parse the data
+      pcites, errorCheck = p.parse(str)
       
-      ###
-      # Setting CitationNameStrings
-      ###
-      citation_name_strings = h[:citation_name_strings]
-      citation.citation_name_strings = citation_name_strings
+      if errorCheck == 0
+        return 4
+      end
+      if errorCheck == -1
+        return 2
+      end
+      logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
+    
+      # Map Import hashes
+      attr_hashes = i.citation_attribute_hashes(pcites)
+      logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
+    
+      return 4 if attr_hashes.nil?
+      all_cites = attr_hashes.map { |h|
       
-      ###
-      # Setting Publication Info, including Publisher
-      ###
-      issn_isbn = h[:issn_isbn]
-      publication_info = Hash.new
-      publication_info = {:name => h[:publication], 
+        # Initialize the Citation
+        klass = h[:klass]
+      
+        # Are we working with a legit SubKlass?
+        klass = klass.constantize
+        if klass.superclass != Citation
+          raise NameError.new("#{klass_type} is not a subclass of Citation") and return
+        end
+        citation = klass.new
+      
+        ###
+        # Setting CitationNameStrings
+        ###
+        citation_name_strings = h[:citation_name_strings]
+        citation.citation_name_strings = citation_name_strings
+      
+        ###
+        # Setting Publication Info, including Publisher
+        ###
+        issn_isbn = h[:issn_isbn]
+        publication_info = Hash.new
+        publication_info = {:name => h[:publication], 
                                     :issn_isbn => issn_isbn,
                                     :publisher_name => h[:publisher]}
 
-      citation.publication_info = publication_info
+        citation.publication_info = publication_info
     
-      ###
-      # Setting Keywords
-      ###
-      citation.keyword_strings = h[:keywords]
+        if h[:title_primary].nil? or h[:title_primary] == ""
+          puts("\nThe following citation does not have a title and cannot be imported!\n #{h}\n\n")
+          puts("End Citation \n\n")
+          success = 3
+        else
+      
+    
+        ###
+        # Setting Keywords
+        ###
+        citation.keyword_strings = h[:keywords]
 
-      # Ensure publication_date is good
-      if h[:publication_date].nil? or h[:publication_date].empty?
-        h[:publication_date] = Date.new(1)
-      end
+        # Ensure publication_date is good
+        if h[:publication_date].nil? or h[:publication_date].empty?
+          h[:publication_date] = Date.new(1)
+        end
       
-      # Clean the abstract
-      # @TODO we'll want to clean all data
-      code = HTMLEntities.new
-      h[:abstract] = code.encode(h[:abstract], :decimal)
+        # Clean the abstract
+        # @TODO we'll want to clean all data
+        code = HTMLEntities.new
+        h[:abstract] = code.encode(h[:abstract], :decimal)
       
-      # Clean the hash of non-Citation table data
-      # Cleaning preps hash for AR insert
-      h.delete(:klass)
-      h.delete(:citation_name_strings)
-      h.delete(:publisher)
-      h.delete(:publication)
-      h.delete(:publication_place)
-      h.delete(:issn_isbn)
-      h.delete(:keywords)
-      h.delete(:source)
-      # @TODO add external_systems to citation import
-      h.delete(:external_id)
+        # Clean the hash of non-Citation table data
+        # Cleaning preps hash for AR insert
+        h.delete(:klass)
+        h.delete(:citation_name_strings)
+        h.delete(:publisher)
+        h.delete(:publication)
+        h.delete(:publication_place)
+        h.delete(:issn_isbn)
+        h.delete(:keywords)
+        h.delete(:source)
+        # @TODO add external_systems to citation import
+        h.delete(:external_id)
 
-      #save remaining hash attributes
-      citation.attributes=h
-      citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
-      citation.title_dupe_key = Citation.set_title_dupe_key(citation)
-      citation.save_and_set_for_index
+
+
+          #save remaining hash attributes
+          citation.attributes=h
+          citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
+          citation.title_dupe_key = Citation.set_title_dupe_key(citation)
+          citation.save_and_set_for_index
       
-      # current user automatically gets 'admin' permissions on citation
-      # (only if he/she doesn't already have that role on the citation)
-      citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', citation)
-    }
-    Index.batch_index
+          # current user automatically gets 'admin' permissions on citation
+          # (only if he/she doesn't already have that role on the citation)
+          citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', citation)
+        end
+      }
+      Index.batch_index
+    rescue
+      success = 4
+      puts("\nThere was an unrecoverable error on the batch import!!\n")
+      return success
+    end
+    return success
   end
   
   
