@@ -36,9 +36,10 @@
         %ol.groups
           -@facets[:group_id].first(10).each do |g|
             - group = object_by_facet_id(g.name)
-            %li
-              =link_to group.name, group_path(group)
-              ="(#{g.value})"
+            -if group.hide != true
+              %li
+                =link_to group.name, group_path(group)
+                ="(#{g.value})"
 
       %div#results{:class => "span-22"}
         / Facets

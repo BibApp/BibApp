@@ -16,15 +16,22 @@
   / Groups
   %h4.heading Groups
   %ol#top-five-groups.filters.groups
-    -@facets[:groups].first(5).each do |p|
+    -active = Array.new
+    -@facets[:group_id].each do |g|
+      - group = object_by_facet_id(g.name)
+      - if group.hide != true
+        - active << [group, g.value]
+    -active.first(5).each do |group, value|    
       %li
-        =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view,@rows)
+        =add_filter(@query,@sort,@filter,"year_facet",group.name,value,@view,@rows)
 
-  - if @facets[:groups].size > 5
+  - if active.size > 5
     %ol#all-groups.filters.groups{:style => "display:none"}
-      -@facets[:groups].each do |p|
-        %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",p.name,p.value,@view,@rows)
+      -@facets[:group_id].each do |g|
+        - group = object_by_facet_id(g.name)
+        -if group.hide != true
+          %li.show
+            =add_filter(@query,@sort,@filter,"year_facet",group.name,g.value,@view,@rows)
 
     %p.more=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 

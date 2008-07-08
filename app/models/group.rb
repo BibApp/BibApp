@@ -28,7 +28,8 @@ class Group < ActiveRecord::Base
       find(
         :all,
         :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
-        :order  => 'letter'
+        :order  => 'letter',
+        :conditions => 'hide <> TRUE'
       )
     end
   end

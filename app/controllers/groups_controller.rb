@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :hide ]
   
   make_resourceful do 
     build :all
@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
       @page = params[:page] || @a_to_z[0]
       @current_objects = Group.find(
         :all, 
-        :conditions => ["upper(name) like ?", "#{@page}%"], 
+        :conditions => ["upper(name) like ? AND hide <> TRUE", "#{@page}%"], 
         :order => "upper(name)"
       )
     end
@@ -71,6 +71,8 @@ class GroupsController < ApplicationController
     
     if @duplicategroup.nil?
       @group = Group.find_or_create_by_name(params[:group][:name])
+      @group.hide = false
+      @group.save
      
       respond_to do |format|
        flash[:notice] = "Group was successfully created."
@@ -99,5 +101,15 @@ class GroupsController < ApplicationController
       
     render :partial => 'autocomplete_list', :locals => {:objects => groups}
   end 
+  
+  def hide
+    @group = Group.find(params[:id])
+    @group.hide = true
+    @group.save
+      respond_to do |format|
+       flash[:notice] = "Group was successfully removed."
+       format.html {redirect_to :action => "index"}
+      end
+  end
   
 end

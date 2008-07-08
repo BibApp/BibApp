@@ -33,6 +33,8 @@ class MembershipsController < ApplicationController
     permit "editor of person"
     
     @group = Group.find_or_create_by_name(params[:group][:name])
+    @group.hide = false
+    @group.save
     
     @membership = Membership.find_by_person_id_and_group_id(
      		@person.id,
@@ -88,7 +90,7 @@ class MembershipsController < ApplicationController
     word_search = "% " + group_name + "%"
     
     groups = Group.find(:all, 
-          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+          :conditions => [ "(LOWER(name) LIKE ? OR LOWER(name) LIKE ?) AND hide <> TRUE", beginning_search, word_search ], 
         :order => 'name ASC',
         :limit => 8)
       

@@ -8,4 +8,6 @@
       
     %h2="Edit #{link_to @group.name, group_path(@group)}"
     
+    %h5=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+    
     = render :partial => 'form'
