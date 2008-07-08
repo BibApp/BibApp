@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   serialize :scoring_hash
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
-  has_many :groups, :through => :memberships
+  has_many :groups, :through => :memberships, :conditions => ["groups.hide <> TRUE"]
   has_many :memberships
   
   # Association Extensions - Read more here:

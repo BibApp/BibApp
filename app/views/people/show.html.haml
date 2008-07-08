@@ -33,8 +33,9 @@
       %h3 Groups
       %ul#groups
         - @person.memberships.each do |m|
-          %li{:style => "display:inline; padding-right:1em"}
-            =link_to m.group.name, group_path(m.group)
+          -if m.group.hide == false
+            %li{:style => "display:inline; padding-right:1em"}
+              =link_to m.group.name, group_path(m.group)
 
       = render :partial => "shared/coauthors"
 
