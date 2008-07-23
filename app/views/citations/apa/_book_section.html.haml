@@ -1,7 +1,7 @@
 / Authors
-- if !c.name_strings.authors.empty?
+- if !c.name_strings.author.empty?
   %span.authors
-    - c.name_strings.authors.each do |ns|
+    - c.name_strings.author.each do |ns|
       %span.author=link_to "#{ns.name}", name_string_path(ns)
 
 / Year
@@ -13,9 +13,9 @@
 
 / BookTitle
 In 
-- if !c.name_strings.editors.empty?
+- if !c.name_strings.editor.empty?
   %span.editors
-    - c.name_strings.editors.each do |ns|
+    - c.name_strings.editor.each do |ns|
       %span.editor=link_to "#{ns.name}", name_string_path(ns)
     (Eds.), 
 
@@ -27,4 +27,4 @@ In
 / @TODO: Missing place of publication
 
 / Publisher
-%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path (c.publisher.authority.to_param)
+%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path(c.publisher.authority.to_param)

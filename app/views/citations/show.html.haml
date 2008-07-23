@@ -37,17 +37,17 @@
       %div.clear-both
         %fieldset
           %legend Citation Information
-          - if @citation.author_name_strings.size > 0
+          - if @citation.name_strings.author.size > 0
             %div.field
               %label Authors:
               %span.field_value
-                - @citation.author_name_strings.each do |ns|
+                - @citation.name_strings.author.each do |ns|
                   =link_to "#{ns.name}", name_string_path(ns)
-          - if @citation.editor_name_strings.size > 0
+          - if @citation.name_strings.editor.size > 0
             %div.field
               %label Editors:
               %span.field_value
-                - @citation.editor_name_strings.each do |ns|
+                - @citation.name_strings.editor.each do |ns|
                   =link_to "#{ns.name}", name_string_path(ns)
           - if @citation.publication_date?
             %div.field

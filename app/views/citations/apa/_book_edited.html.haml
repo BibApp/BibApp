@@ -1,7 +1,7 @@
 / Editors
-- if !c.name_strings.editors.empty?
+- if !c.name_strings.editor.empty?
   %span.authors
-    - c.name_strings.authors.each do |ns|
+    - c.name_strings.author.each do |ns|
       %span.author=link_to "#{ns.name}", name_string_path(ns)
 (Eds.). 
 
@@ -13,4 +13,4 @@
 %span.title="#{c.title_primary}."
 
 / Publisher
-%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path (c.publisher.authority.to_param)
+%span.publisher=link_to "#{c.publisher.authority.name}", publisher_path(c.publisher.authority.to_param)

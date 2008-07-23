@@ -10,6 +10,6 @@
     - if @author_name_strings
       - @author_name_strings.each do |name|
         = render :partial => 'list_item', :locals => {:item_name => 'author_name_strings', :item_value => name, :selected => true}  
-    - elsif @citation.author_name_strings
-      - @citation.author_name_strings.each do |ns|
+    - elsif @citation.name_strings.author
+      - @citation.name_strings.author.each do |ns|
         = render :partial => 'list_item', :locals => {:item_name => 'author_name_strings', :item_value => ns.name, :selected => true}    
