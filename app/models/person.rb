@@ -11,24 +11,8 @@ class Person < ActiveRecord::Base
   # Association Extensions - Read more here:
   # http://blog.hasmanythrough.com/2006/3/1/association-goodness-2
   
-  has_many :citations, :through => :contributorships do 
-    
-    def unverified
-      #ContributorshipStateId 1 = Calculated
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :order => "publication_date desc")
-    end
-    
-    def verified
-      # ContributorshipStateId 2 = Verifed
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :order => "publication_date desc")
-    end
-    
-    def denied
-      # ContributorshipStateId 3 = Denied
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 3])
-    end
-  end
-  
+  has_many :citations, :through => :contributorships 
+
   has_many :contributorships do 
     # Show only non-hidden contributorships
     # @TODO: Maybe include a "score" threshold here as well?

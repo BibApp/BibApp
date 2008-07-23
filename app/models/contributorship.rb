@@ -1,11 +1,22 @@
 class Contributorship   < ActiveRecord::Base
+ 
+  #### Associations ####
   belongs_to :person
   belongs_to :citation
   belongs_to :pen_name
   
+  #### Named Scopes ####
+  #Various Contributorship statuses
+  named_scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
+  named_scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
+  named_scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
+  named_scope :visible, :conditions => ["hide = ?", false]
+  
+  #### Validations ####
   validates_presence_of :person_id, :citation_id, :pen_name_id
   validates_uniqueness_of :citation_id, :scope => :person_id
   
+  #### Callbacks ####
   before_validation_on_create :set_initial_states
   after_create :calculate_score
   
@@ -136,23 +147,17 @@ class Contributorship   < ActiveRecord::Base
   end
   
   def verified
-    verified = Contributorship.count(
-      :conditions => ["
-        citation_id = ? and contributorship_state_id = ?", 
-        self.citation_id,
-        2 # caluculated
-      ]
-    )
+    verified = Contributorship.verified.count(:conditions => ["
+        citation_id = ?", 
+        self.citation_id
+      ])
   end
 
   def unverified
-    unverified = Contributorship.count(
-      :conditions => ["
-        citation_id = ? and contributorship_state_id = ?", 
-        self.citation_id,
-        1 # caluculated
-      ]
-    )
+    unverified = Contributorship.unverified.count(:conditions => ["
+        citation_id = ?", 
+        self.citation_id
+      ])
   end
 
   def save_without_callbacks

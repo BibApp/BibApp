@@ -22,20 +22,18 @@ class ContributorshipsController < ApplicationController
   end
   
   def admin
-    @unverified = Contributorship.count(:conditions => ["contributorship_state_id = 1"])
-
-    @contributorship = Contributorship.find(
-      :first, 
-      :conditions => ["contributorship_state_id = ? and hide = ?", 1, false],
-      :order => "citation_id"
-    )
+    
+    #find all visible, unverified contributorships
+    @unverified = Contributorship.unverified.visible
+    
+    @contributorship = @unverified.first
     
     if @contributorship == nil
       # Do Nothing
     else
-      @claims = Contributorship.find(
+      @claims = Contributorship.unverified.visible.find(
         :all, 
-        :conditions => ["citation_id = ? and contributorship_state_id = ? and hide = ?", @contributorship.citation_id, 1, false],
+        :conditions => ["citation_id = ?", @contributorship.citation_id],
         :order => "score desc"
       )
     end
