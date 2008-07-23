@@ -8,17 +8,7 @@ class Citation < ActiveRecord::Base
   belongs_to :publication
   belongs_to :publisher
   
-  has_many :name_strings, :through => :citation_name_strings do 
-
-    # @TODO: Rails 2.1 named scope these methods
-    def authors
-      find(:all, :conditions => ["role = ?", "Author"], :order => :position)
-    end
-    
-    def editors
-      find(:all, :conditions => ["role = ?", "Editor"], :order => :position)      
-    end
-  end 
+  has_many :name_strings, :through => :citation_name_strings 
   
   has_many :citation_name_strings,
     :dependent => :delete_all
@@ -335,16 +325,6 @@ class Citation < ActiveRecord::Base
     end
   end
  
-  #Get all Author Strings of a citation, return as NameString objects
-  def author_name_strings
-    self.name_strings.find(:all, :conditions => [ 'role=?', 'Author'])
-  end 
-  
-   #Get all Editor Strings of a citation, return as NameString objects
-  def editor_name_strings
-    self.name_strings.find(:all, :conditions => [ 'role=?', 'Editor'])
-  end
-  
   def create_contributorships
     logger.debug "\n\n===== CREATE CONTRIBUTORSHIPS =====\n\n"
     # After save method
@@ -493,7 +473,7 @@ class Citation < ActiveRecord::Base
     # All APA Citation formats start out the same:
     #---------------------------------------------
     #Add authors
-    self.author_name_strings.each do |ns|
+    self.name_strings.author.each do |ns|
       if citation_string == ""
         citation_string << ns.name
       else
@@ -502,15 +482,15 @@ class Citation < ActiveRecord::Base
     end
     
     #Add editors
-    self.editor_name_strings.each do |ns|
+    self.name_strings.editor.each do |ns|
       if citation_string == ""
         citation_string << ns.name
       else
         citation_string << ", #{ns.name}"
       end 
     end
-    citation_string << " (Ed.)." if self.editor_name_strings.size == 1
-    citation_string << " (Eds.)." if self.editor_name_strings.size > 1
+    citation_string << " (Ed.)." if self.name_strings.editor.size == 1
+    citation_string << " (Eds.)." if self.name_strings.editor.size > 1
     
     #Publication year
     citation_string << " (#{self.publication_date.year})" if self.publication_date

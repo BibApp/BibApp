@@ -1,7 +1,7 @@
 / Authors
-- if !c.name_strings.authors.empty?
+- if !c.name_strings.author.empty?
   %span.authors
-    - c.name_strings.authors.each do |ns|
+    - c.name_strings.author.each do |ns|
       %span.author=link_to "#{ns.name}", name_string_path(ns)
 
 / Year
