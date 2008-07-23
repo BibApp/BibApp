@@ -1,3 +1,5 @@
+require 'solr'
+
 # Solr Path (in /vendor/solr)
 SOLR_PATH = "#{File.dirname(__FILE__)}/../../vendor/solr" unless defined? SOLR_PATH
 
