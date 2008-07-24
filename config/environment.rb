@@ -42,6 +42,15 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named.
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
+
+  # Gem Dependencies for BibApp
+  #   rake gems - to see required application Gems (and which are missing)
+  #   rake gems:install - installs any necessary application Gems
+  #   rake gems:unpack - unpacks the gems into /vendor/gems/
+  #   rake gems:build - builds gems that require local building
+  config.gem "hpricot", :version=>">=0.6", :source=>"http://code.whytheluckystiff.net"
+
+
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/citation_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
