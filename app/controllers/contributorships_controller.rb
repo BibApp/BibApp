@@ -102,7 +102,8 @@ class ContributorshipsController < ApplicationController
     # Build query which groups all citations (of this person) 
     # under appropriate Romeo Colors (based on publisher)
     # and retrieves a total number of each Romeo Color.
-    Contributorship.all(:select => "count(contributorships.id) as count, publishers.romeo_color as color", 
+    Contributorship.verified.all(
+                         :select => "count(contributorships.id) as count, publishers.romeo_color as color", 
                          :joins => "JOIN citations ON contributorships.citation_id=citations.id
                                     JOIN people ON contributorships.person_id=people.id
                                     JOIN publishers ON citations.publisher_id=publishers.id",
@@ -116,7 +117,8 @@ class ContributorshipsController < ApplicationController
     # Build query which groups all citations (of this person) 
     # by the Journal/Publication and Publisher
     # and retrieves a total number of each Journal/Publication
-    Contributorship.all(:select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color", 
+    Contributorship.verified.all(
+                         :select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color", 
                          :joins => "JOIN citations ON contributorships.citation_id=citations.id
                                     JOIN people ON contributorships.person_id=people.id
                                     JOIN publications ON citations.publication_id = publications.id
