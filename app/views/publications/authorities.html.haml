@@ -30,7 +30,6 @@
     Event.addBehavior({
       'a.add:click': function() {
         var id = this.up('tr').id;
-        console.log(id);
       
         if (this.innerHTML == "remove") {
           $(id).removeClassName("selected");
@@ -42,7 +41,6 @@
       },
       'a.update:click': function() {
         var auth_id = this.up('tr').id;
-        console.log(auth_id);
         
         if (this.innerHTML == "make authority") {
           $(auth_id).addClassName("authority");
