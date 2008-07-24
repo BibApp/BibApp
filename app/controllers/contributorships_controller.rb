@@ -87,32 +87,43 @@ class ContributorshipsController < ApplicationController
     @person = Person.find(params[:person_id])
     
     # Collect data for Sherpa color table
-    @pub_table = Contributorship.find_by_sql(
-      ["select count(ctrb.id) as count, pub.romeo_color as color
-      from contributorships ctrb
-      join citations c on ctrb.citation_id = c.id
-      join people p on ctrb.person_id = p.id
-      join publishers pub on c.publisher_id = pub.id
-      where p.id = ?
-      group by pub.romeo_color
-      order by pub.romeo_color", @person.id]
-    )
+    @pub_table = romeo_color_count
     
     # Calculate the sum of each Sherpa color
     @pub_totals = @pub_table.collect{|c| c.count}.inject{|sum, n| sum.to_i + n.to_i}
     
     # Collect data for Publication table
-    @publ_table = Contributorship.find_by_sql(
-        ["select count(ctrb.id) as count, publ.name as name, pub.name as pub_name, pub.romeo_color as color
-        from contributorships ctrb
-        join citations c on ctrb.citation_id = c.id
-        join people p on ctrb.person_id = p.id
-        join publications publ on c.publication_id = publ.id
-        join publishers pub on c.publisher_id = pub.id
-        where p.id = ?
-        group by publ.name, pub.name, pub.romeo_color
-        order by count(ctrb.id) desc", @person.id]
-      )
-    
+    @publ_table = publication_count
   end
+  
+  private
+  
+  def romeo_color_count
+    # Build query which groups all citations (of this person) 
+    # under appropriate Romeo Colors (based on publisher)
+    # and retrieves a total number of each Romeo Color.
+    Contributorship.all(:select => "count(contributorships.id) as count, publishers.romeo_color as color", 
+                         :joins => "JOIN citations ON contributorships.citation_id=citations.id
+                                    JOIN people ON contributorships.person_id=people.id
+                                    JOIN publishers ON citations.publisher_id=publishers.id",
+                         :conditions => ["people.id = ?", @person.id],
+                         :group => "publishers.romeo_color",
+                         :order => "publishers.romeo_color")
+  end
+  
+  
+  def publication_count
+    # Build query which groups all citations (of this person) 
+    # by the Journal/Publication and Publisher
+    # and retrieves a total number of each Journal/Publication
+    Contributorship.all(:select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color", 
+                         :joins => "JOIN citations ON contributorships.citation_id=citations.id
+                                    JOIN people ON contributorships.person_id=people.id
+                                    JOIN publications ON citations.publication_id = publications.id
+                                    JOIN publishers ON citations.publisher_id=publishers.id",
+                         :conditions => ["people.id = ?", @person.id],
+                         :group => "publications.name, publishers.name, publishers.romeo_color",
+                         :order => "count(contributorships.id) desc")
+  end
+  
 end
