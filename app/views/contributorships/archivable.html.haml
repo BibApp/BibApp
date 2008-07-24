@@ -4,9 +4,6 @@
   %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
     %h2="Archival Analysis: #{@person.name}"
     
-    -# Default colors to unknown
-    - color = "unknown"
-    
     %table
       %thead
         %tr
@@ -22,6 +19,8 @@
           %td &nbsp;
       %tbody
         - @pub_table.each do |row|
+          -# Default colors to unknown
+          - color = "unknown"
           - color = row.color.downcase if row.color
           %tr{:class => "#{color}"}
             %td=row.count
@@ -41,6 +40,8 @@
           
       %tbody
         - @publ_table.each do |row|
+          -# Default colors to unknown
+          - color = "unknown"
           - color = row.color.downcase if row.color
           %tr{:class => "#{color}"}
             %td=row.count
