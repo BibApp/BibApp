@@ -17,10 +17,17 @@ namespace :solr do
       n = Net::HTTP.new('localhost', SOLR_PORT)
       n.request_head('/').value
 
-      rescue Net::HTTPServerException #responding
-        puts "Port #{SOLR_PORT} already in use" and return
+    rescue Net::HTTPServerException #responding
+      puts "Port #{SOLR_PORT} already in use" and return
 
-      rescue Errno::ECONNREFUSED #not responding
+    rescue Errno::ECONNREFUSED, Errno::EBADF #not responding
+      #If Windows
+      if RUBY_PLATFORM.include?('mswin32')
+        Dir.chdir(SOLR_PATH) do
+          exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
+          puts "#{ENV['RAILS_ENV']} Solr started sucessfully on #{SOLR_PORT}."
+        end
+      else #Else if Linux, Mac OSX, etc.
         Dir.chdir(SOLR_PATH) do
           pid = fork do
             #STDERR.close
@@ -30,41 +37,34 @@ namespace :solr do
           File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
           puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}, pid: #{pid}."
         end
-    end
-  end
-
-  desc 'Starts Solr on Windows. Options accepted: RAILS_ENV=your_env, PORT=XX. Defaults to development if none.'
-  task :start_win do
-    begin
-      n = Net::HTTP.new('localhost', SOLR_PORT)
-      n.request_head('/').value
-
-      rescue Net::HTTPServerException #responding
-        puts "Port #{SOLR_PORT} in use" and return
-
-      rescue Errno::EBADF, Errno::ECONNREFUSED #not responding
-        Dir.chdir(SOLR_PATH) do
-          exec "java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
-          sleep(5)
-          puts "#{ENV['RAILS_ENV']} Solr started sucessfuly on #{SOLR_PORT}"
-        end
+      end
+    rescue
+      puts "Unexpected Error: #{$!.class.to_s} #{$!}"
+      raise
     end
   end
 
   desc 'Stops Solr. Specify the environment by using: RAILS_ENV=your_env. Defaults to development if none.'
   task :stop do
-    fork do
-      file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
-      if File.exists?(file_path)
-        File.open(file_path, "r") do |f|
-          pid = f.readline
-          Process.kill('TERM', pid.to_i)
+    #If Windows
+    if RUBY_PLATFORM.include?('mswin32')
+      #taskkill is only available in Windows XP
+      exec "taskkill /im java.exe /fi #{'"'}Windowtitle eq solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} "
+      Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
+    else #Else if Linux, Mac OSX, etc.
+      fork do
+        file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
+        if File.exists?(file_path)
+          File.open(file_path, "r") do |f|
+            pid = f.readline
+            Process.kill('TERM', pid.to_i)
+          end
+          File.unlink(file_path)
+          Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
+          puts "Solr shutdown successfully."
+        else
+          puts "Solr is not running. I haven't done anything."
         end
-        File.unlink(file_path)
-        Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
-        puts "Solr shutdown successfully."
-      else
-        puts "Solr is not running. I haven't done anything."
       end
     end
   end
