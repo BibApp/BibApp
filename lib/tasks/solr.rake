@@ -43,6 +43,11 @@ namespace :solr do
       raise
     end
   end
+  
+  desc 'OBSOLETE task (used to be necessary for Solr on Windows'
+  task :start_win do
+    puts "The command 'rake solr:start_win' is now obsolete.  Instead, please use 'rake solr:start' and 'rake solr:stop' to start/stop Solr on Windows."
+  end
 
   desc 'Stops Solr. Specify the environment by using: RAILS_ENV=your_env. Defaults to development if none.'
   task :stop do
