@@ -25,7 +25,12 @@
     %label End Page:
     = form.text_field :end_page, :size => 4
 
-  = render :partial => 'keywords'
+  - if current_user.has_role?("admin", System)
+    %p 
+      = render :partial => 'keywords'
+    
+  %p
+    = render :partial => 'tags'
 
   %p
     %label Abstract:

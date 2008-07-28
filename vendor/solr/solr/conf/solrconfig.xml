@@ -388,6 +388,7 @@
        people^1.0
        groups^1.0
        keywords^1.0
+	   tags^1.0
        type_facet^1.0
        year_facet^1.0
        citation_id_facet^1.0
@@ -403,6 +404,8 @@
        publisher_id_facet^1.0
        keyword_facet^1.0
        keyword_id_facet^1.0
+       tag_facet^1.0
+       tag_id_facet^1.0
      </str>
      <str name="pf">
         title^1.5 abstract^1.1 publication^1.1 publisher^1.1
@@ -424,6 +427,7 @@
        people,
        groups,
        keywords,
+	   tags,
        type_facet,
        year_facet,
        citation_id_facet,
@@ -439,6 +443,8 @@
        publisher_id_facet,
        keyword_facet,
        keyword_id_facet
+       tag_facet,
+       tag_id_facet
      </str>
      <str name="mm">
         2&lt;-1 5&lt;-2 6&lt;90%

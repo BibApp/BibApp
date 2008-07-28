@@ -19,7 +19,12 @@
   %p
     = render :partial => 'publisher'
 
-  = render :partial => 'keywords'
+  - if current_user.has_role?("admin", System)
+    %p 
+      = render :partial => 'keywords'
+    
+  %p
+    = render :partial => 'tags'
 
   %p
     %label Abstract:

@@ -268,6 +268,7 @@
  <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
 
  <dynamicField name="*_i" type="integer" indexed="true" stored="false"/>
  <dynamicField name="*_t" type="text" indexed="true" stored="false"/>

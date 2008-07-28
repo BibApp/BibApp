@@ -10,7 +10,7 @@ class CitationsController < ApplicationController
     
     publish :xml, :json, :yaml, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
-      :year, :volume, :issue, :start_page, :end_page, :links, {
+      :year, :volume, :issue, :start_page, :end_page, :links, :tags, {
         :publication => [:id, :name]
         }, {
         :publisher => [:id, :name]
@@ -26,7 +26,10 @@ class CitationsController < ApplicationController
       format.mets  #loads show.mets.haml
       format.html  #loads show.html.haml
     end
-    
+
+
+
+
     before :index do
       @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
 
@@ -114,6 +117,7 @@ class CitationsController < ApplicationController
       # Create the basic Citation SubKlass
       @citation = subklass_init(params[:type], params[:citation])
     
+    
       #Update citation information based on inputs
       update_citation_info
     
@@ -144,18 +148,20 @@ class CitationsController < ApplicationController
     #First, update citation attributes (ensures deduplication keys are updated)
     @citation.attributes=params[:citation]   
 
+  #  @citation.save
+
     #Then, update other citation information
     update_citation_info
    
     respond_to do |format|
-      if @citation.save and Index.update_solr(@citation)
+      #if @citation.save and Index.update_solr(@citation)
         flash[:notice] = "Citation was successfully updated."
         format.html {redirect_to citation_url(@citation)}
         format.xml  {head :ok}
-      else
-        format.html {render :action => "edit"}
-        format.xml  {render :xml => @citation.errors.to_xml}
-      end
+   #   else
+    #    format.html {render :action => "edit"}
+    #    format.xml  {render :xml => @citation.errors.to_xml}
+    #  end
     end
   end
   
@@ -169,13 +175,20 @@ class CitationsController < ApplicationController
 
     #default to empty array of author strings
     params[:author_name_strings] ||= [] 
+    params[:editor_name_strings] ||= [] 
             
     #Set Author NameStrings for this Citation
     @author_name_strings = params[:author_name_strings]
+    @editor_name_strings = params[:editor_name_strings]
     citation_name_strings = Array.new
     @author_name_strings.each do |name|
       citation_name_strings << {:name => name, :role => "Author"}
     end
+    
+    @editor_name_strings.each do |name|
+      citation_name_strings << {:name => name, :role => "Editor"}
+    end
+    
     @citation.citation_name_strings = citation_name_strings 
       
     ###
@@ -187,10 +200,20 @@ class CitationsController < ApplicationController
     @citation.keyword_strings = @keywords
     
     ###
+    # Setting Tags
+    ###
+    # Save tags to instance variable @tags,
+    # in case any errors should occur in saving citation    
+    @tags = params[:tags]
+    @citation.tag_strings = @tags
+
+    ###
     # Setting Publication Info, including Publisher
     ###
     issn_isbn = params[:issn_isbn]
     publication_info = Hash.new
+    
+
     
     if params[:type] != 'BookWhole' && params[:type] != 'BookSection' && params[:type] != 'BookEdited'
       publication_info = {:name => params[:publication][:name], 
@@ -200,7 +223,8 @@ class CitationsController < ApplicationController
       publication_info = {:name => params[:citation][:title_primary], 
                           :issn_isbn => issn_isbn,
                           :publisher_name => params[:publisher][:name]}
-    end    
+ 
+    end
 
 
     @citation.publication_info = publication_info
@@ -276,13 +300,18 @@ class CitationsController < ApplicationController
       :order => 'name ASC',
       :limit => 8)
       
-    render :partial => 'autocomplete_list', :locals => {:objects => name_strings}
+    names = Array.new  
+    name_strings.each do |obj|
+      names << obj.name
+    end
+    
+    render :partial => 'autocomplete_list', :locals => {:objects => names}
   end
   
   
   #Auto-Complete for entering Keywords in Web-based Citation entry
   #  This method provides users with a list of matching Keywords
-  #  already in BibApp.
+  #  already in BibApp.  This also include Tags.
   def auto_complete_for_keyword_name
    	keyword = params[:keyword][:name].downcase
 	  
@@ -291,13 +320,70 @@ class CitationsController < ApplicationController
     #search at beginning of any other words
     word_search = "% " + keyword + "%"	
 	  
+    #Search both keyworks and tags
+    
     keywords = Keyword.find(:all, 
 			  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
 			  :order => 'name ASC',
 			  :limit => 8)
+        
+
+
+    tags =  Tag.find(:all, 
+        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+    
+    #Combine both lists
+    keywordsandtags = Array.new
+    keywords.each do |obj|
+      keywordsandtags << obj.name
+    end
+    
+    tags.each do |obj|
+      keywordsandtags << obj.name
+    end         
 			
-    render :partial => 'autocomplete_list', :locals => {:objects => keywords}
-  end    
+    render :partial => 'autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
+  end  
+  
+  
+  #This is the same as for keywords, except this is used with tags
+  def auto_complete_for_tag_name
+    tag = params[:tag][:name].downcase
+    
+    
+    #search at beginning of word
+    beginning_search = tag + "%"
+    #search at beginning of any other words
+    word_search = "% " + tag + "%"  
+    
+    #Search both keyworks and tags
+    
+    keywords = Keyword.find(:all, 
+        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+        
+
+
+    tags =  Tag.find(:all, 
+        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+        :order => 'name ASC',
+        :limit => 8)
+    
+    #Combine both lists
+    keywordsandtags = Array.new
+    keywords.each do |obj|
+      keywordsandtags << obj.name
+    end
+    
+    tags.each do |obj|
+      keywordsandtags << obj.name
+    end         
+      
+    render :partial => 'autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
+  end  
   
   #Auto-Complete for entering Publication Titles in Web-based Citation entry
   #  This method provides users with a list of matching Publications
@@ -382,6 +468,28 @@ class CitationsController < ApplicationController
     #remove item value from list dynamically using Javascript
     respond_to do |format|
       format.js { render :action => :item_list }
+    end
+  end
+  
+  def update_tags
+    @citation = Citation.find(params[:id])
+    ###
+    # Setting Tags
+    ###
+    # Save tags to instance variable @tags,
+    # in case any errors should occur in saving citation    
+    @tags = params[:tags]
+    @citation.tag_strings = @tags
+
+    respond_to do |format|
+      if @citation.save and Index.update_solr(@citation)
+        flash[:notice] = "Citation was successfully updated."
+        format.html {redirect_to citation_url(@citation)}
+        format.xml  {head :ok}
+      else
+        format.html {render :action => "edit"}
+        format.xml  {render :xml => @citation.errors.to_xml}
+      end
     end
   end
   
@@ -528,5 +636,7 @@ class CitationsController < ApplicationController
     @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
   end
+  
+
   
 end
