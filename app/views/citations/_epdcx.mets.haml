@@ -12,8 +12,8 @@
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/title" }
           %epdcx:valueString=encode_for_xml(citation.title_primary)
         -# SUBJECTS (i.e. Keywords/Tags)  @TODO - Add Tags!!
-        - if citation.keywords
-          - citation.keywords.each do |kw|
+        - if citation.tags
+          - citation.tags.each do |kw|
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/subject" }
               %epdcx:valueString=encode_for_xml(kw.name) 
         -# ABSTRACT

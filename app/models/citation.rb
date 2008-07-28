@@ -2,6 +2,9 @@ class Citation < ActiveRecord::Base
   
   acts_as_authorizable  #some actions on citations require authorization
   
+
+  cattr_accessor :current_user
+  
   serialize :scoring_hash
   
   #### Associations ####
@@ -23,7 +26,14 @@ class Citation < ActiveRecord::Base
   has_many :keywords, :through => :keywordings
   has_many :keywordings,
     :dependent => :delete_all
-  
+
+#  has_many :taggings, :dependent => :delete_all, :as => "taggable"
+#  has_many :tags, :source => :taggable, :through => :taggings, :source_type => "citation", :class_name => "Tag"
+
+  has_many :taggings, :as => :taggable, :dependent => :delete_all
+  has_many :tags, :through => :taggings
+  has_many :users, :through => :taggings
+
   has_many :external_system_uris
   
   has_many :attachments, :as => :asset
@@ -35,8 +45,11 @@ class Citation < ActiveRecord::Base
   def after_create 
    	create_citation_name_strings
   	create_keywords
+    create_tags
     #save any changes to citation
     self.save_without_callbacks
+    
+   
   end
   
   def after_save
@@ -161,7 +174,7 @@ class Citation < ActiveRecord::Base
   end
   
   def save_without_callbacks
-    create_or_update_without_callbacks
+    update_without_callbacks
   end
   
   def save_and_set_for_index_without_callbacks
@@ -191,6 +204,21 @@ class Citation < ActiveRecord::Base
     #save or update citation
     self.keywords = keywords   
   end 
+  
+  
+  def tag_strings=(tag_strings)
+    #default to empty array of keywords
+    tag_strings ||= []  
+          
+    #Initialize keywords
+    tags = Array.new
+    tag_strings.to_a.uniq.each do |add|
+      tags << Tag.find_or_initialize_by_name(add)
+    end
+    
+    #save or update citation
+    self.tags = tags   
+  end 
 
   # Updates keywords for the current citation
   # If this citation is still a *new* record (i.e. it hasn't been created
@@ -213,6 +241,18 @@ class Citation < ActiveRecord::Base
 		end
   end  
   
+  
+  def tags=(tags)
+    logger.debug("\n\n===SET TAGS===\n\n")
+    logger.debug("Tags= #{tags.inspect}")
+    if self.new_record?
+      #Defer saving to Citation object directly, until it is created
+      @tags_cache = tags
+    else
+      # Create keywords and save to database
+      Citation.update_taggings(self, tags)  
+    end
+  end  
   
   # Updates citation name strings
   # (from a hash of "name" and "role" values)
@@ -573,6 +613,31 @@ class Citation < ActiveRecord::Base
     logger.debug("Citation Keywords Saved= #{citation.keywords.inspect}")
   end   
   
+  def self.update_taggings(citation, tags)
+    logger.debug("\n\n===UPDATE TAGS===\n\n")
+    
+    unless tags.nil?
+      #first, remove any tag(s) that are no longer in list
+      citation.taggings.each do |kw|
+        kw.destroy unless tags.include?(kw.tag)
+        tags.delete(kw.tag)
+      end
+      #next, add any new tag(s) to list
+      tags.each do |tag|
+        #if this is a brand new tag, we must save it first
+        if tag.new_record?
+          tag.save
+        end
+        #add it to this citation
+        citation.tags << tag
+        
+      end
+      
+    end #end unless no tags
+
+    logger.debug("Citation Tags Saved= #{citation.tags.inspect}")
+  end   
+  
   # Create keywords, after a Citation is created successfully
   #  Called by 'after_create' callback
   def create_keywords
@@ -582,7 +647,14 @@ class Citation < ActiveRecord::Base
     self.keywords = @keywords_cache if @keywords_cache
   end  
  
-  
+ 
+  def create_tags
+    logger.debug("===CREATE TAGS===") 
+    logger.debug("Cached Tags= #{@tags_cache.inspect}")
+    #Create any initialized tags and save to Citation
+    self.tags = @tags_cache if @tags_cache
+  end 
+
   # Updates citation name strings
   # (from a hash of "name" and "role" values)
   # and saves them to the given citation object

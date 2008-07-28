@@ -71,7 +71,12 @@ class Index
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
-    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
+    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}},
+    
+    # Tags
+    :tags => Proc.new{|record| record.tags.collect{|k| k.name}},
+    :tag_facet => Proc.new{|record| record.tags.collect{|k| k.name}},
+    :tag_id_facet => Proc.new{|record| record.tags.collect{|k| k.solr_id}}
   }
   
   SOLR_MAPPING_NO_DATE = {
@@ -118,7 +123,12 @@ class Index
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
-    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}}
+    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}},
+    
+    # Tags
+    :tags => Proc.new{|record| record.tags.collect{|k| k.name}},
+    :tag_facet => Proc.new{|record| record.tags.collect{|k| k.name}},
+    :tag_id_facet => Proc.new{|record| record.tags.collect{|k| k.solr_id}}
   }
   
   
@@ -200,6 +210,8 @@ class Index
                 :group_id_facet,
                 :keyword_facet,
                 :keyword_id_facet,
+                :tag_facet,
+                :tag_id_facet,
                 :name_string_facet,
                 :name_string_id_facet,
                 :person_facet,
@@ -230,6 +242,8 @@ class Index
                   :group_id_facet,
                   :keyword_facet,
                   :keyword_id_facet,
+                  :tag_facet,
+                  :tag_id_facet,
                   :name_string_facet,
                   :name_string_id_facet,
                   :person_facet,
@@ -274,6 +288,8 @@ class Index
           :publisher_id   => q.field_facets("publisher_id_facet"),
           :keywords       => q.field_facets("keyword_facet"),
           :keyword_id     => q.field_facets("keyword_id_facet"),
+          :tags       => q.field_facets("tag_facet"),
+          :tag_id     => q.field_facets("tag_id_facet"),
           :types          => q.field_facets("type_facet"),
           :years          => q.field_facets("year_facet")
         }
@@ -290,6 +306,8 @@ class Index
               :group_id_facet,
               :keyword_facet,
               :keyword_id_facet,
+              :tag_facet,
+              :tag_id_facet,
               :name_string_facet,
               :name_string_id_facet,
               :person_facet,
@@ -333,6 +351,8 @@ class Index
         :publisher_id   => q.field_facets("publisher_id_facet"),
         :keywords       => q.field_facets("keyword_facet"),
         :keyword_id     => q.field_facets("keyword_id_facet"),
+        :tags           => q.field_facets("tag_facet"),
+        :tag_id         => q.field_facets("tag_id_facet"),
         :types          => q.field_facets("type_facet"),
         :years          => q.field_facets("year_facet")
       }

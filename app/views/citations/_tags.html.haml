@@ -1,0 +1,13 @@
+-#Add tags field, with Auto-Complete
+-# Also adds a list of existing tags
+#tag_field
+  %label Tag(s):
+  = text_field_with_auto_complete :tag, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+  = link_to_remote "Add Tag to List", :url => { :action => :add_item_to_list}, :condition => "$('tag_name').value.length > 0", :with => "'item_name=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
+  %ul#tags_list
+    - if @tags
+      - @tags.each do |name|
+        = render :partial => 'list_item', :locals => {:item_name => 'tags', :item_value => name, :selected => true}
+    - elsif @citation.tags
+      - @citation.tags.each do |tg|
+        = render :partial => 'list_item', :locals => {:item_name => 'tags', :item_value => tg.name, :selected => true}

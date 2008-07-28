@@ -24,7 +24,10 @@ class User < ActiveRecord::Base
 
   #### Associations ####
   has_and_belongs_to_many :roles
-  
+    
+  has_many :taggings, :dependent => :delete_all
+  has_many :tags, :through => :taggings
+  has_many :users, :through => :taggings
   
   # Activates the user in the database.
   def activate

@@ -7,6 +7,10 @@
         %li= link_to "Edit", edit_citation_path
         - if !CitationArchiveState.archived?(@citation)
           %li= link_to "Archive Research", new_citation_attachment_path(@citation)
+    - elsif logged_in?
+      %ul#edit-actions
+        %li= link_to "Edit Tags", {:controller => "citations", :action => "edit_tags", :id => @citation.id}
+      
 
       - if flash[:notice]
         %div.success= flash[:notice]
@@ -80,7 +84,17 @@
               %span.field_value
                 =@citation.start_page
                 -if @citation.end_page?
-                  =" - #{@citation.end_page}"                   
+                  =" - #{@citation.end_page}"          
+          - if @citation.tags != nil
+            %div.field
+              %label Tag(s):
+              - @citation.tags.each do |tg|
+                - if tg.name != @citation.tags.last.name
+                  ="#{tg.name};"
+                - else
+                  ="#{tg.name}"
+   
+                    
 
       - if !@citation.attachments.nil? and !@citation.attachments.empty?               
         = render :partial => 'attachments', :locals => { :files => @citation.attachments }

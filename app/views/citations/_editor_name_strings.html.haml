@@ -8,3 +8,6 @@
     - if @editor_name_strings
       - @editor_name_strings.each do |ns|
         = render :partial => 'list_item', :locals => {:item_name => 'editor_name_strings', :item_value => ns.name, :selected => true}
+    - elsif @citation.name_strings.editor
+      - @citation.name_strings.editor.each do |ns|
+        = render :partial => 'list_item', :locals => {:item_name => 'editor_name_strings', :item_value => ns.name, :selected => true}    
