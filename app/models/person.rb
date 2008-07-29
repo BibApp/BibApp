@@ -5,7 +5,7 @@ class Person < ActiveRecord::Base
   serialize :scoring_hash
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
-  has_many :groups, :through => :memberships, :conditions => ["groups.hide <> TRUE"]
+  has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false]
   has_many :memberships
   
   # Association Extensions - Read more here:
@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
     end
     
     def unverified
-      find(:all, :conditions => ["contributorships.contributorship_state_id = 1"], :include => [:citation], :order => "citations.publication_date desc")
+      find(:all, :conditions => ["contributorships.contributorship_state_id = >", 1], :include => [:citation], :order => "citations.publication_date desc")
     end
     
     def verified
