@@ -29,7 +29,7 @@ class Group < ActiveRecord::Base
         :all,
         :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
         :order  => 'letter',
-        :conditions => 'hide <> TRUE'
+        :conditions => ["hide = ?", false]
       )
     end
   end

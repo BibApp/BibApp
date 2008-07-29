@@ -24,7 +24,7 @@ class GroupsController < ApplicationController
       @page = params[:page] || @a_to_z[0]
       @current_objects = Group.find(
         :all, 
-        :conditions => ["upper(name) like ? AND hide <> TRUE", "#{@page}%"], 
+        :conditions => ["upper(name) like ? AND hide = ?", "#{@page}%", false], 
         :order => "upper(name)"
       )
     end
