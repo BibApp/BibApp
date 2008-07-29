@@ -1,0 +1,62 @@
+{
+ "a": {
+    "type": "newspaperArticle",
+    "dateIssued": "2007-01-01",
+    "title": "Some Title",
+    "containerTitle": "Journal News",
+    "pages": "A5",
+    "url": "http://ex.net/1",
+    "dateAccessed": "2007-11-12"
+  },
+ "b": {
+    "type": "book",
+    "dateIssued": "2000",
+    "title": "Splitting the Difference",
+    "publisher": "University of Chicago Press",
+    "publisherPlace": "Chicago",
+    "authors": [
+         { "name": "Doniger, Wendy" }
+      ]
+  },
+ "c": {
+    "type": "book",
+    "dateIssued": "1994",
+    "title": "The social organization of sexuality: Sexual practices in the United States",
+    "publisher": "University of Chicago Press",
+    "publisherPlace": "Chicago",
+    "authors": [
+         { "name": "Laumann, Edward O." },
+         { "name": "Gagnon, John H." },
+         { "name": "Michael, Robert T." },
+         { "name": "Michaels, Stuart" }
+      ]
+  },
+ "d": {
+    "type": "journalArticle",
+    "dateIssued": "1998",
+    "title": "The origin of altruism",
+    "containerTitle": "Nature",
+    "issue": "393",
+    "pages": "639–640",
+    "authors": [
+         { "name": "Smith, John Maynard" }
+      ]
+  },
+ "e": {
+    "type": "chapter",
+    "dateIssued": "2000",
+    "title": "Introduction: A Chapter Title",
+    "containerTitle": "Edited Book Title",
+    "collectionTitle": "Series Title",
+    "publisher": "ABC Books",
+    "publisherPlace": "New York",
+    "authors": [
+         { "name": "Doe, Jane" },
+         { "name": "Smith, John" }
+      ],
+    "editors": [
+         { "name": "Doe, Jane" },
+         { "name": "Smith, John" }
+      ]
+  }
+}

@@ -1,0 +1,25 @@
+TODO:
+
+Parser:
+ - Validation
+
+BaseFormatter:
+ - Some conditions
+ - Add more types - need to compare bibliontology classes with CSL types
+ - Mark-up option - a bit clumsy
+ - Sorting
+ - Options
+ - Tests and fixtures
+ - Document
+ - Dynamic InputFilter ?
+ - Spacing issues
+
+InputFilter:
+ - Better name (Resolver, Mapper)?
+
+OutputFilter:
+ - Support differential mark-up (at least: XHTML/XSL-FO)
+
+Bibliontology
+ - Revise: ensure all CSL variables, types etc are supported 
+
