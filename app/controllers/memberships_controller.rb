@@ -90,7 +90,7 @@ class MembershipsController < ApplicationController
     word_search = "% " + group_name + "%"
     
     groups = Group.find(:all, 
-          :conditions => [ "(LOWER(name) LIKE ? OR LOWER(name) LIKE ?) AND hide <> TRUE", beginning_search, word_search ], 
+          :conditions => [ "(LOWER(name) LIKE ? OR LOWER(name) LIKE ?) AND hide = ?", beginning_search, word_search, false ], 
         :order => 'name ASC',
         :limit => 8)
       
