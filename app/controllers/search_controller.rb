@@ -7,9 +7,11 @@ class SearchController < ApplicationController
       @filter_no_strip = params[:fq] || ""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "score"
+      @sort         = "score" if @sort.empty?
       @page         = params[:page] || 0
       @facet_count  = params[:facet_count] || 50
       @rows         = params[:rows] || 10
+      @export       = params[:export] || ""
       
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
@@ -20,6 +22,16 @@ class SearchController < ApplicationController
         if suggestion.downcase == @query.downcase
           @spelling_suggestions.delete(suggestion)
         end
+      end
+      
+      @citations = Array.new
+      @docs.each do |citation, score|
+        @citations << citation
+      end
+      
+      if @export && !@export.empty?
+        x = CitationExport.new
+        @citations = x.drive_csl(@export, @citations)
       end
     else
       @q = nil

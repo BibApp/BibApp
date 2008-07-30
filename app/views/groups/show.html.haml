@@ -1,52 +1,59 @@
 / === Groups === Show ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor", @group)
-      %ul#edit-actions
-        %li= link_to "Edit", edit_group_path
-        %li=link_to "Manage Roles", group_roles_path(@group)
+- if !@export.empty?
+  %div{:class => "span-24"}
+    %div{:class => "span-22 prepend-1"}
+      %h2 Citations
+      = @citations
+
+- else
+  %div{:class => "span-24"}
+    %div{:class => "span-22 prepend-1"}
+      - if logged_in? && current_user.has_role?("editor", @group)
+        %ul#edit-actions
+          %li= link_to "Edit", edit_group_path
+          %li=link_to "Manage Roles", group_roles_path(@group)
       
-    - if flash[:notice]
-      %div.success= flash[:notice]
+      - if flash[:notice]
+        %div.success= flash[:notice]
       
-  %div{:class => "span-22 prepend-1"}
-    %h2= @group.name
-    - if !@group.url.nil?
-      %p
-        =link_to "Homepage", @group.url
+    %div{:class => "span-22 prepend-1"}
+      %h2= @group.name
+      - if !@group.url.nil?
+        %p
+          =link_to "Homepage", @group.url
 
-    %div{:class => "span-23"}
-      / People
-      %div#people{:class => "span-15"}
-        %h3.heading=link_to "People", people_url
+      %div{:class => "span-23"}
+        / People
+        %div#people{:class => "span-15"}
+          %h3.heading=link_to "People", people_url
       
-        %ol.people
-          -@group.people.each do |person|
-            %li.inline
-              %div.person{:class => "span-3"}
-                = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
-                %div.person-image-metadata
-                  %strong= person.citations.size
-                  %h6.person-last-name=link_to person.last_name, person_path(person)
+          %ol.people
+            -@group.people.each do |person|
+              %li.inline
+                %div.person{:class => "span-3"}
+                  = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
+                  %div.person-image-metadata
+                    %strong= person.citations.size
+                    %h6.person-last-name=link_to person.last_name, person_path(person)
 
-      / Sub-Groups
-      %div{:class => "span-6"}
-        - if !@group.parent.nil?
-          %h3.heading Belongs to:
-          %ul.parent-group
-            %li= link_to @group.parent.name, group_path(@group.parent)
-        - if !@group.children.empty?
-          %h3.heading Sub-Groups
-          %ul.sub-groups
-            -@group.children.each do |g|
-              %li
-                =link_to g.name, group_path(g)
-                ="(#{g.citations.size})"
+        / Sub-Groups
+        %div{:class => "span-6"}
+          - if !@group.parent.nil?
+            %h3.heading Belongs to:
+            %ul.parent-group
+              %li= link_to @group.parent.name, group_path(@group.parent)
+          - if !@group.children.empty?
+            %h3.heading Sub-Groups
+            %ul.sub-groups
+              -@group.children.each do |g|
+                %li
+                  =link_to g.name, group_path(g)
+                  ="(#{g.citations.size})"
 
-      %div#results{:class => "span-22"}
-        / Facets
-        = render :partial => "shared/facets"
+        %div#results{:class => "span-22"}
+          / Facets
+          = render :partial => "shared/facets"
 
-        / Citations 
-        = render :partial => "shared/citations"
+          / Citations 
+          = render :partial => "shared/citations"

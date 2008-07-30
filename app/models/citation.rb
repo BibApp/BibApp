@@ -581,6 +581,30 @@ class Citation < ActiveRecord::Base
     
     citation_string
   end
+
+  
+  ##### CSL Simple Citation Variables #####
+
+  #Get all Author names on a citation, return as an array of hashes
+  def authors
+    authors = Array.new
+    names = self.name_strings.find(:all, :conditions => [ 'role=?', 'Author']).collect{|ns| ns.name}
+    names.each do |name|
+      authors << {:name => name}
+    end
+    return authors
+  end
+  
+   #Get all Editor Strings of a citation, return as an array of hashes
+  def editors
+    editors = Array.new
+    names = self.name_strings.find(:all, :conditions => [ 'role=?', 'Editor']).collect{|ns| ns.name}
+    names.each do |name|
+      editors << {:name => name}
+    end
+    return editors
+  end
+  
   
   ### PRIVATE METHODS ###
   private
@@ -693,6 +717,5 @@ class Citation < ActiveRecord::Base
     
     #Create any initialized name_strings and save to Citation
     self.citation_name_strings = @citation_name_strings_cache if @citation_name_strings_cache
-  end  
-  
+  end
 end

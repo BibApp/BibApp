@@ -33,13 +33,26 @@ class PublishersController < ApplicationController
       # Default SolrRuby params
       @query        = @current_object.solr_id
       @filter       = params[:fq] || ""
+      @filter_no_strip = params[:fq] || ""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "year"
+      @sort         = "year" if @sort.empty?
       @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 10
+      @facet_count  = params[:facet_count] || 50
       @rows         = params[:rows] || 10
-      
+      @export       = params[:export] || ""
+
       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+
+      @citations = Array.new
+      @docs.each do |citation, score|
+        @citations << citation
+      end
+
+      if @export && !@export.empty?
+        x = CitationExport.new
+        @citations = x.drive_csl(@export, @citations)
+      end
       
       @view = "all"
       @title = @current_object.name
