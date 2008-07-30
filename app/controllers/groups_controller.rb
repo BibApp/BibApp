@@ -31,24 +31,37 @@ class GroupsController < ApplicationController
     
     before :show do
       # Default SolrRuby params
-      @query        = @current_object.solr_id
-      @filter       = params[:fq] || ""
-      @filter       = @filter.split("+>+").each{|f| f.strip!}
-      @sort         = params[:sort] || "year"
-      @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 50
-      @rows         = params[:rows] || 10
+       @query        = @current_object.solr_id
+       @filter       = params[:fq] || ""
+       @filter_no_strip = params[:fq] || ""
+       @filter       = @filter.split("+>+").each{|f| f.strip!}
+       @sort         = params[:sort] || "year"
+       @sort         = "year" if @sort.empty?
+       @page         = params[:page] || 0
+       @facet_count  = params[:facet_count] || 50
+       @rows         = params[:rows] || 10
+       @export       = params[:export] || ""
+
+       @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+
+       @citations = Array.new
+       @docs.each do |citation, score|
+         @citations << citation
+       end
+
+       if @export && !@export.empty?
+         x = CitationExport.new
+         @citations = x.drive_csl(@export, @citations)
+       end
       
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+        @view = "all"
+        @title = @current_object.name
       
-      @view = "all"
-      @title = @current_object.name
-      
-      @feeds = [{
-        :action => "show",
-        :id => @current_object.id,
-        :format => "rss"
-      }]
+        @feeds = [{
+          :action => "show",
+          :id => @current_object.id,
+          :format => "rss"
+        }]
     end
     
     before :new do

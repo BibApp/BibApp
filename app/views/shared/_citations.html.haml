@@ -4,17 +4,9 @@
       %h3="Citations (#{@q.total_hits})"
 
     / Sort Form
-    %div{:class => "span-8 append-1 last"}
-      - form_tag "", :method => :get do
+    %div{:class => "span-9 append-1 last"}
+      - form_tag "#citations", :method => :get do
         #sort-by
-          %label Sort by:
-          %select{:name => "sort"}
-            - ["year", "score"].each do |opt|
-              - if opt == @sort
-                %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-              - else
-                %option{:value => "#{opt}"}= opt.titleize
-          
           %label Show:
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
@@ -22,7 +14,18 @@
                 %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
               - else
                 %option{:value => "#{opt}"}= opt.titleize
-
+          %label Sort by:
+          %select{:name => "sort"}
+            - ["", "Year", "Score"].each do |opt|
+              - if opt.downcase == @sort
+                %option{:selected => "selected", :value => "#{opt.downcase}"}= opt.titleize
+              - else
+                %option{:value => "#{opt.downcase}"}= opt
+          %label Send to:
+          %select{:name => "export"}
+            - ["", "APA", "IEEE"].each do |opt|
+              %option{:value => "#{opt.downcase}"}=opt
+              
           = hidden_field_tag "q", @query
           = hidden_field_tag "fq", @filter_no_strip
           = hidden_field_tag "view", "all"

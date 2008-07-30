@@ -11,7 +11,7 @@
           
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
-  - if @view == "all"
+  - if @view == "all" && @export.empty?
     %div{:class => "span-22 prepend-1"}
       
       %h2="Citations"
@@ -21,6 +21,13 @@
 
         / Citations 
         = render :partial => "shared/citations"
+
+  - elsif !@export.empty?
+    %div{:class => "span-24"}
+      %div{:class => "span-22 prepend-1"}
+        %h2 Citations
+        = @citations
+
   - else
     %div{:class => "span-22 prepend-1"}
 

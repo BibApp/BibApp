@@ -6,7 +6,7 @@ class CitationsController < ApplicationController
   before_filter :find_authorities, :only => [:new, :edit]
 
   make_resourceful do
-    build :index, :show, :new, :edit, :destroy
+    build :show, :new, :edit, :destroy
     
     publish :xml, :json, :yaml, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
@@ -27,27 +27,6 @@ class CitationsController < ApplicationController
       format.html  #loads show.html.haml
     end
 
-
-
-
-    before :index do
-      @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
-
-      # Default SolrRuby params
-      @query        = "*:*" # Lucene syntax for "find everything"
-      @filter       = params[:fq] || ""
-      @filter_no_strip = @filter
-      @filter       = @filter.split("+>+").each{|f| f.strip!}
-      @sort         = params[:sort] || "year"
-      @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 50
-      @rows         = params[:rows] || 10
-      
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
-
-      @view = params[:view] || "splash"
-    end
-	
     #initialize variables used by 'new.html.haml'
     before :new do
       #Anyone with 'editor' role (anywhere) can add citations
@@ -55,7 +34,7 @@ class CitationsController < ApplicationController
       
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Citation.types[0]
-  			
+
       #initialize citation subclass with any passed in citation info
       @citation = subklass_init(params[:type], params[:citation])
     end
@@ -74,6 +53,36 @@ class CitationsController < ApplicationController
       permit "admin on citation"
     end
   end # end make_resourceful
+
+  def index
+    @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
+
+    # Default SolrRuby params
+    @query        = "*:*" # Lucene syntax for "find everything"
+    @filter       = params[:fq] || ""
+    @filter_no_strip = params[:fq] || ""
+    @filter       = @filter.split("+>+").each{|f| f.strip!}
+    @sort         = params[:sort] || "year"
+    @sort         = "year" if @sort.empty?
+    @page         = params[:page] || 0
+    @facet_count  = params[:facet_count] || 50
+    @rows         = params[:rows] || 10
+    @export       = params[:export] || ""
+
+    @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+
+    @citations = Array.new
+    @docs.each do |citation, score|
+      @citations << citation
+    end
+
+    if @export && !@export.empty?
+      x = CitationExport.new
+      @citations = x.drive_csl(@export, @citations)
+    end
+    
+    @view = params[:view] || "splash"
+  end
   
   def create
     # @TODO: This step is dumb, we should map attrs in the SubClass::create method itself
@@ -636,7 +645,5 @@ class CitationsController < ApplicationController
     @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
   end
-  
-
   
 end

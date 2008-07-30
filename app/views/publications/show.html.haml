@@ -1,39 +1,46 @@
 / === Publications === Show ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-23 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor", @publication)
-      %ul#edit-actions
-        %li=link_to "Edit", edit_publication_path(@publication)
+- if !@export.empty?
+  %div{:class => "span-24"}
+    %div{:class => "span-22 prepend-1"}
+      %h2 Citations
+      = @citations
 
-      - if flash[:notice]
-        %div.success= flash[:notice]
+- else
+  %div{:class => "span-24"}
+    %div{:class => "span-23 prepend-1"}
+      - if logged_in? && current_user.has_role?("editor", @publication)
+        %ul#edit-actions
+          %li=link_to "Edit", edit_publication_path(@publication)
 
-  %div{:class => "span-22 prepend-1" }
-    %h2= @publication.name
-    %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
+        - if flash[:notice]
+          %div.success= flash[:notice]
 
-    / People
-    = render :partial => "shared/people"
+    %div{:class => "span-22 prepend-1" }
+      %h2= @publication.name
+      %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
 
-    / Groups
-    = render :partial => "shared/groups"
+      / People
+      = render :partial => "shared/people"
 
-    %div#results{:class => "span-22"}
-      / Facets
-      = render :partial => "shared/facets"
+      / Groups
+      = render :partial => "shared/groups"
 
-      / Citations 
-      = render :partial => "shared/citations"
+      %div#results{:class => "span-22"}
+        / Facets
+        = render :partial => "shared/facets"
 
-    / Authority
-    %div#authority{:class => "span-9"}
-      - if @publication.authority_for.size > 0
-        %h3=@publication.name
-        %p Authorized name for:
-        %ul.authority-children
-          - @publication.authority_for.collect{|c| c.name}.uniq.each do |auth|
-            %li= auth
-      - else
-        %h3 Authorized Title
-        %p=link_to @publication.authority.name, publication_path(@publication.authority)
+        / Citations 
+        = render :partial => "shared/citations"
+
+      / Authority
+      %div#authority{:class => "span-9"}
+        - if @publication.authority_for.size > 0
+          %h3=@publication.name
+          %p Authorized name for:
+          %ul.authority-children
+            - @publication.authority_for.collect{|c| c.name}.uniq.each do |auth|
+              %li= auth
+        - else
+          %h3 Authorized Title
+          %p=link_to @publication.authority.name, publication_path(@publication.authority)

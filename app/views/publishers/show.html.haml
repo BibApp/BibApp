@@ -1,38 +1,45 @@
-/ === Publisher === Show ===
+/ === Publishers === Show ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor", @publisher)
-      %ul#edit-actions
-        %li=link_to "Edit", edit_publisher_path(@publisher)
+- if !@export.empty?
+  %div{:class => "span-24"}
+    %div{:class => "span-22 prepend-1"}
+      %h2 Citations
+      = @citations
+
+- else
+  %div{:class => "span-24"}
+    %div{:class => "span-22 prepend-1"}
+      - if logged_in? && current_user.has_role?("editor", @publisher)
+        %ul#edit-actions
+          %li=link_to "Edit", edit_publisher_path(@publisher)
         
-      - if flash[:notice]
-        %div.success= flash[:notice]
+        - if flash[:notice]
+          %div.success= flash[:notice]
       
-  %div{:class => "span-22 prepend-1"}
-    %h2= @publisher.name
+    %div{:class => "span-22 prepend-1"}
+      %h2= @publisher.name
 
-    / People
-    = render :partial => "shared/people"
+      / People
+      = render :partial => "shared/people"
 
-    / Groups
-    = render :partial => "shared/groups"
+      / Groups
+      = render :partial => "shared/groups"
 
-    %div#results{:class => "span-22"}
-      / Facets
-      = render :partial => "shared/facets"
+      %div#results{:class => "span-22"}
+        / Facets
+        = render :partial => "shared/facets"
 
-      / Citations 
-      = render :partial => "shared/citations"
+        / Citations 
+        = render :partial => "shared/citations"
   
-    / Authority
-    %div#authority{:class => "span-9"}
-      - if @publisher.authority_for.size > 0
-        %h3=@publisher.name
-        %p Authorized name for:
-        %ul.authority-children
-          - @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
-            %li= auth
-      - else
-        %h3 Authorized Title
-        %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)
+      / Authority
+      %div#authority{:class => "span-9"}
+        - if @publisher.authority_for.size > 0
+          %h3=@publisher.name
+          %p Authorized name for:
+          %ul.authority-children
+            - @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
+              %li= auth
+        - else
+          %h3 Authorized Title
+          %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)
