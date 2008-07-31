@@ -23,7 +23,7 @@
         online, for free.
         %strong="This is true."
     
-    %div{:class => "span-12"}
+    %div{:class => "span-14"}
       %ul#navigation
         - if logged_in?
           - if current_user.has_role?("admin", System)
@@ -33,8 +33,10 @@
         %li=link_to "People", people_path
         %li=link_to "Publications", publications_path
         %li=link_to "Publishers", publishers_path
+        - if !session[:cart].nil? && session[:cart].items.size > 0
+          %li=link_to "Saved (#{session[:cart].items.size})", cart_path
 
-    %div{:class => "span-10 last"}
+    %div{:class => "span-8 last"}
       - form_tag search_path, :method => :get, :class => "header-search-form" do
 
         %div#search-box

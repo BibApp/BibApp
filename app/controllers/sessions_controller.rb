@@ -32,4 +32,8 @@ class SessionsController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default($APPLICATION_URL)
   end
+  
+  def cart
+    @cart = session[:cart]
+  end
 end

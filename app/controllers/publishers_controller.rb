@@ -2,6 +2,9 @@ class PublishersController < ApplicationController
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+
+  # Find the @cart variable, used to display "add" or "remove" links for saved citations  
+  before_filter :find_cart, :only => [:show]
   
   make_resourceful do 
     build :index, :show, :new, :edit, :create, :update
@@ -124,6 +127,11 @@ class PublishersController < ApplicationController
   end
 
   private
+  
+  def find_cart
+    @cart = session[:cart] ||= Cart.new
+  end
+  
   def current_objects
     if params[:q]
       query = '%' + params[:q] + '%'

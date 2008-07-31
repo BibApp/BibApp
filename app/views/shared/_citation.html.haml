@@ -12,7 +12,14 @@
         ="(#{citation.publication_date.year})"
 
     .links
-      =link_to_findit(citation) 
+      =link_to_findit(citation)
+      | 
+      - if !@cart.nil? && !@cart.items.nil?
+        - if @cart.items.include?(citation.id.to_i)
+          =link_to_remove_from_cart(citation)
+      - if @cart.nil? || !@cart.items.include?(citation.id.to_i)
+        =link_to_add_to_cart(citation)
+
 
   %div.apa-format
     -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
