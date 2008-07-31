@@ -2,6 +2,9 @@ class GroupsController < ApplicationController
   
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :hide ]
+
+  # Find the @cart variable, used to display "add" or "remove" links for saved citations 
+  before_filter :find_cart, :only => [:show]
   
   make_resourceful do 
     build :all
@@ -125,4 +128,9 @@ class GroupsController < ApplicationController
       end
   end
   
+  private
+  
+  def find_cart
+    @cart = session[:cart] ||= Cart.new
+  end
 end

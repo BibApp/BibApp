@@ -5,6 +5,9 @@ class CitationsController < ApplicationController
    
   before_filter :find_authorities, :only => [:new, :edit]
 
+  # Find the @cart variable, used to display "add" or "remove" links for saved citations
+  before_filter :find_cart, :only => [:index, :show]
+
   make_resourceful do
     build :show, :new, :edit, :destroy
     
@@ -82,6 +85,7 @@ class CitationsController < ApplicationController
     end
     
     @view = params[:view] || "splash"
+
   end
   
   def create
@@ -503,6 +507,10 @@ class CitationsController < ApplicationController
   end
   
   private
+  
+  def find_cart
+    @cart = session[:cart] ||= Cart.new
+  end
   
   # Batch import Citations
   def import_batch!(data)    

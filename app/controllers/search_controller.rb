@@ -1,4 +1,8 @@
-class SearchController < ApplicationController  
+class SearchController < ApplicationController
+
+  # Find the @cart variable, used to display "add" or "remove" links for saved citations  
+  before_filter :find_cart, :only => [:index]
+  
   def index
     if params[:q]
       # Default SolrRuby params
@@ -37,5 +41,11 @@ class SearchController < ApplicationController
       @q = nil
       # There's nothing to return
     end
+  end
+  
+  private
+  
+  def find_cart
+    @cart = session[:cart] ||= Cart.new
   end
 end

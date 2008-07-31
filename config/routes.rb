@@ -100,6 +100,16 @@ ActionController::Routing::Routes.draw do |map|
   ####
   map.search 'search', :controller => 'search', :action => 'index'
   
+  ####
+  # Cart routes
+  ####
+  map.cart '/cart',
+    :controller => 'sessions',
+    :action => 'cart'
+  map.delete_cart '/sessions/delete_cart',
+    :controller => 'sessions',
+    :action => 'delete_cart'
+    
   
   ####
   # Authentication routes
@@ -138,7 +148,5 @@ ActionController::Routing::Routes.draw do |map|
     
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-  
-  
   
 end

@@ -123,6 +123,18 @@ module ApplicationHelper
     link_to link_text, "#{base_url}?#{suffix}"
   end
   
+  def link_to_add_to_cart(citation)
+    link_to "Add to cart", :action => "add_to_cart", :id => citation.id
+  end
+  
+  def link_to_remove_from_cart(citation)
+    link_to "Remove from cart ", :action => "remove_from_cart", :id => citation.id
+  end
+  
+  def link_to_deletecart
+    link_to "Empty cart?", :controller => "sessions", :action => "delete_cart"
+  end
+  
   def coins(citation)
     coins = "ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.btitle=The+Wind+in+the+Willows&amp;rft.au=Grahame,+Kenneth"
 =begin
