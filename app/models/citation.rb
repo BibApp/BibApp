@@ -39,6 +39,13 @@ class Citation < ActiveRecord::Base
   has_many :attachments, :as => :asset
   belongs_to :citation_archive_state 
 
+  #### Named Scopes ####
+  #Various Citation Statuses
+  named_scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]
+  named_scope :verified, :include => :contributorships,:conditions => ["contributorships.contributorship_state_id = ?", 2]
+  named_scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
+  named_scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
+  
   #### Callbacks ####
   before_validation_on_create :set_initial_states
 
