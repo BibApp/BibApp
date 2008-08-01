@@ -16,8 +16,8 @@ class GroupsController < ApplicationController
     
     #Add a response for RSS
     response_for :show do |format| 
-      format.rss  #loads show.rss.rxml
-      format.html  #loads show.html.haml
+      format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
+      format.rss   #loads show.rss.rxml
     end
     
     before :index do
