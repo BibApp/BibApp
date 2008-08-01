@@ -62,7 +62,7 @@ Rails::Initializer.run do |config|
   config.gem "namecase", :version=>"~>1.0.2"
   
   #RedCloth - converts plain text or textile to HTML (also used by HAML)
-  config.gem "RedCloth", :lib=>"redcloth", :version=>"~>3.0.4", :source=>"http://code.whytheluckystiff.net/"
+  config.gem "RedCloth", :lib=>"redcloth", :version=>"~>3.0.4"
 
   #Ruby-Net-LDAP - used to perform LDAP queries
   config.gem "ruby-net-ldap", :lib=>"net/ldap", :version=>"~>0.0.4"
