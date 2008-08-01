@@ -26,8 +26,8 @@ class CitationsController < ApplicationController
     
     #Add a response for METS!
     response_for :show do |format| 
+      format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
       format.mets  #loads show.mets.haml
-      format.html  #loads show.html.haml
     end
 
     #initialize variables used by 'new.html.haml'
