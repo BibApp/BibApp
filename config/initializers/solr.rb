@@ -1,4 +1,7 @@
-require 'solr'
+#Require Solr, if it's defined.  
+# This allows us to make solr-ruby a Gem Dependency, as suggested in this blog:
+# http://www.webficient.com/2008/7/11/rails-gem-dependencies-and-plugin-errors
+require 'solr' if defined? Solr
 
 # Solr Path (in /vendor/solr)
 SOLR_PATH = "#{File.dirname(__FILE__)}/../../vendor/solr" unless defined? SOLR_PATH
