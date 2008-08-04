@@ -73,6 +73,10 @@ Rails::Initializer.run do |config|
   #Solr-Ruby - Solr connections for ruby
   config.gem "solr-ruby", :lib=>"solr", :version=>"~>0.0.6"
   
+  #Will Paginate - for fancy pagination
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
+
+  
   
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/citation_subclasses )
