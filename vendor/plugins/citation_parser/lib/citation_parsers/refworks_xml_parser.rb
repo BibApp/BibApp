@@ -1,6 +1,6 @@
 class RefworksXmlParser < CitationParser
-  require 'hpricot'
-  require 'htmlentities'
+  require 'hpricot' if defined? Hpricot
+  require 'htmlentities' if defined? HTMLEntities
     
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
