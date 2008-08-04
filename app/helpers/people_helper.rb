@@ -1,5 +1,8 @@
 module PeopleHelper
-  require 'namecase'
+  #Require namecase gem, if it's defined.  
+  # This allows us to make solr-ruby a Gem Dependency, as suggested in this blog:
+  # http://www.webficient.com/2008/7/11/rails-gem-dependencies-and-plugin-errors
+  require 'namecase' if defined? NameCase
   
   def pretty_ldap_person(ldap_result)
     NameCase.new("#{ldap_result[:givenname]} #{ldap_result[:sn]} ") +
