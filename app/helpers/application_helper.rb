@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   require 'config/personalize.rb'
-  require 'htmlentities'
+  require 'htmlentities' if defined? HTMLEntities
   
   def ajax_checkbox_toggle(model, person, selected)
     person = Person.find(person.id)
