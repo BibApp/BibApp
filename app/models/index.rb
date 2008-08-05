@@ -38,46 +38,36 @@ class Index
     :title_tertiary => :title_tertiary,
     :abstract => :abstract,
     :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
-    :publication => Proc.new{|record| record.publication.authority.name},
-    :publisher => Proc.new{|record| record.publisher.authority.name},
     
     :type_facet => Proc.new{|record| record[:type]},
     :citation_id_facet => Proc.new{|record| record.solr_id},
 
-    # SpellCheck
-    :word => :abstract,
-    
     # NameStrings
     :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
-    :name_string_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
     :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
     
     # People
     :people => Proc.new{|record| record.people.collect{|p| p.first_last}},
-    :person_facet => Proc.new{|record| record.people.collect{|p| p.first_last}},
     :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
     
     # Groups
     :groups => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
-    :group_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
     :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
     
     # Publication
-    :publication_facet => Proc.new{|record| record.publication.authority.name},
+    :publication => Proc.new{|record| record.publication.authority.name},
     :publication_id_facet => Proc.new{|record| record.publication.authority.solr_id},
     
     # Publisher
-    :publisher_facet => Proc.new{|record| record.publisher.authority.name},
+    :publisher => Proc.new{|record| record.publisher.authority.name},
     :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
     
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
-    :keyword_facet => Proc.new{|record| record.keywords.collect{|k| k.name}},
     :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}},
     
     # Tags
     :tags => Proc.new{|record| record.tags.collect{|k| k.name}},
-    :tag_facet => Proc.new{|record| record.tags.collect{|k| k.name}},
     :tag_id_facet => Proc.new{|record| record.tags.collect{|k| k.solr_id}}
   }
   
@@ -85,8 +75,7 @@ class Index
   #   Since dates are occasionally null they are only passed to Solr
   #   if the publication_date is *not* null.
   SOLR_DATE_MAPPING = {
-    :year => Proc.new{|record| record.publication_date.year},
-    :year_facet => Proc.new{|record| record.publication_date.year}
+    :year => Proc.new{|record| record.publication_date.year}
   }
   
   
