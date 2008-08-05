@@ -215,9 +215,9 @@ module ApplicationHelper
       pub_ids << p.auth
     end
 
-    @archivable_count = Citation.count(
+    @archivable_count = Citation.accepted.count(
       :all, 
-      :conditions => ["publisher_id in (#{pub_ids.join(", ")}) and citation_state_id = 3"]
+      :conditions => ["publisher_id in (?)", pub_ids.join(", ")]
     )
     return @archivable_count
   end
