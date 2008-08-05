@@ -252,10 +252,9 @@
  </types>
 
 <fields>
+  <!--==== Primary BibApp Fields stored in Solr ====-->
  <field name="id" type="string" indexed="true" stored="true" required="true" /> 
  <field name="pk_i" type="integer" indexed="true" stored="true"/>
- <field name="pk_s" type="string" indexed="true" stored="true"/>   
- <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
  <field name="title" type="text" indexed="true" stored="true"/>
  <field name="title_secondary" type="text" indexed="true" stored="true"/>
  <field name="title_tertiary" type="text" indexed="true" stored="true"/>
@@ -270,33 +269,39 @@
  <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
 
- <dynamicField name="*_i" type="integer" indexed="true" stored="false"/>
- <dynamicField name="*_t" type="text" indexed="true" stored="false"/>
- <dynamicField name="*_f" type="float" indexed="true" stored="false"/>
- <dynamicField name="*_b" type="boolean" indexed="true" stored="false"/>
- <dynamicField name="*_d" type="date" indexed="true" stored="false"/>
- <dynamicField name="*_s" type="string" indexed="true" stored="false"/>
- <dynamicField name="*_ri" type="sint" indexed="true" stored="false"/>
- <dynamicField name="*_rf" type="sfloat" indexed="true" stored="false"/>
- <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_i_mv" type="integer" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_t_mv" type="text" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_f_mv" type="float" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_b_mv" type="boolean" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_d_mv" type="date" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_s_mv" type="string" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_ri_mv" type="sint" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_rf_mv" type="sfloat" indexed="true" stored="false" multiValued="true"/>
- <dynamicField name="*_display" type="text" indexed="false" stored="true" multiValued="true"/>
+ <!--====Special Fields====-->
+ <!--'text' is used as default search field (see below)-->
+ <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
+ <!--'word' is used to spell check against -->
  <field name="word" type="spell" indexed="true" stored="true"/>
 
+ <!-- All our facets (*_facet fields) are matched by this dynamic field -->
+ <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>
 </fields>
 
+<!-- Field to use to determine and enforce document uniqueness. -->
 <uniqueKey>id</uniqueKey>
+
+<!-- Field for the QueryParser to use when an explicit fieldname is absent -->
 <defaultSearchField>text</defaultSearchField>
 
-<copyField source="*_t" dest="text"/>
-<copyField source="*_facet" dest="text"/>
+<!-- Default all searches to "AND" based searches -->
 <solrQueryParser defaultOperator="AND"/>
+
+<!--Copy major fields over to 'facets', to avoid sending same data twice during indexing-->
+<copyField source="name_strings" dest="name_string_facet"/>
+<copyField source="people" dest="person_facet"/>
+<copyField source="groups" dest="group_facet"/>
+<copyField source="publication" dest="publication_facet"/>
+<copyField source="publisher" dest="publisher_facet"/>
+<copyField source="keywords" dest="keyword_facet"/>
+<copyField source="tags" dest="tag_facet"/>
+<copyField source="year" dest="year_facet"/>
+
+<!--Copy all facet fields over to 'text', so they are searched by default-->
+<copyField source="*_facet" dest="text"/>
+
+<!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
+<copyField source="abstract" dest="word"/>
 
 </schema>
