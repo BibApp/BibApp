@@ -21,17 +21,20 @@ namespace :solr do
       puts "Port #{SOLR_PORT} already in use" and return
 
     rescue Errno::ECONNREFUSED, Errno::EBADF #not responding
+  
+      SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
+      
       #If Windows
       if RUBY_PLATFORM.include?('mswin32')
         Dir.chdir(SOLR_PATH) do
-          exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
+          exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java #{SOLR_STARTUP_OPTS} -jar start.jar"
           puts "#{ENV['RAILS_ENV']} Solr started sucessfully on #{SOLR_PORT}."
         end
       else #Else if Linux, Mac OSX, etc.
         Dir.chdir(SOLR_PATH) do
           pid = fork do
             #STDERR.close
-            exec "java -Dsolr.data.dir=solr/data/#{ENV['RAILS_ENV']} -Djetty.port=#{SOLR_PORT} -jar start.jar"
+            exec "java #{SOLR_STARTUP_OPTS} -jar start.jar"
           end
           sleep(5)
           File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
@@ -58,7 +61,7 @@ namespace :solr do
       Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
     else #Else if Linux, Mac OSX, etc.
       fork do
-        file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
+        file_path = "#{SOLR_HOME_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
         if File.exists?(file_path)
           File.open(file_path, "r") do |f|
             pid = f.readline
@@ -77,9 +80,9 @@ namespace :solr do
   desc 'Remove Solr index'
   task :destroy_index do
     raise "In production mode. I'm not going to delete the index, sorry." if ENV['RAILS_ENV'] == "production"
-    if File.exists?("#{SOLR_PATH}/solr/data/#{ENV['RAILS_ENV']}")
-      Dir[ SOLR_PATH + "/solr/data/#{ENV['RAILS_ENV']}/index/*"].each{|f| File.unlink(f)}
-      Dir.rmdir(SOLR_PATH + "/solr/data/#{ENV['RAILS_ENV']}/index")
+    if File.exists?("#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}")
+      Dir[ SOLR_HOME_PATH + "/data/#{ENV['RAILS_ENV']}/index/*"].each{|f| File.unlink(f)}
+      Dir.rmdir(SOLR_HOME_PATH + "/data/#{ENV['RAILS_ENV']}/index")
       puts "Index files removed under " + ENV['RAILS_ENV'] + " environment"
     end
   end

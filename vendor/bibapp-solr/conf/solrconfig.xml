@@ -373,6 +373,8 @@
     <lst name="defaults">
      <str name="echoParams">explicit</str>
      <float name="tie">0.01</float>
+	 <!--Query Fields (qf) and their weights.
+	     This boosts docs based on query terms found in fields.-->
      <str name="qf">
        pk_i^1.0
        id^1.0
@@ -407,11 +409,14 @@
        tag_facet^1.0
        tag_id_facet^1.0
      </str>
+	 <!--Phrase Fields (pf) and their weights.
+	     This boosts docs based on phrases in query which are found in fields-->
      <str name="pf">
         title^1.5 abstract^1.1 publication^1.1 publisher^1.1
      </str>
      <str name="bf">
      </str>
+	 <!--Field List (fl).  List of default fields to return for matching docs-->
      <str name="fl">
        pk_i,
        id,
@@ -446,19 +451,24 @@
        tag_facet,
        tag_id_facet
      </str>
+	 <!--Minimum 'Should' Match (mm)
+	     2 or less terms = match all terms
+		 3 to 5 terms    = match at least one less than total terms
+		 6 terms         = match at least two less than total terms
+		 more than 6     = match 90% of terms-->
      <str name="mm">
         2&lt;-1 5&lt;-2 6&lt;90%
      </str>
      <int name="ps">100</int>
      <str name="q.alt">*:*</str>
-     <!-- example highlighter config, enable per-query with hl=true -->     
+     <!-- Highlighted Fields (hl.fl) = fields to generate highlighted snippets for. -->     
      <str name="hl.fl">title abstract</str>
      <!-- for this field, we want no fragmenting, just highlighting -->
-     <str name="f.name.hl.fragsize">0</str>
+     <!--<str name="f.name.hl.fragsize">0</str>-->
      <!-- instructs Solr to return the field itself if no query terms are
           found -->
-     <str name="f.name.hl.alternateField">name</str>
-     <str name="f.text.hl.fragmenter">regex</str> <!-- defined below -->
+     <!--<str name="f.name.hl.alternateField">name</str>
+     <str name="f.text.hl.fragmenter">regex</str>--> <!-- defined below -->
     </lst>
   </requestHandler>
 
