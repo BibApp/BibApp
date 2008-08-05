@@ -515,6 +515,14 @@ class CitationsController < ApplicationController
   # Batch import Citations
   def import_batch!(data)    
     
+    #The recorded error messages on citations will be displayed as follows:
+      #1. List of citations (or junk data) which is inconsistent with the citation format
+      #2. The number of successfully parsed citations
+      #3. A list of citations which parsed fine, but are missing a required field
+    
+
+
+
     #Return 1 if successful with no errors
     #Return 2 if there was an unrecoverable error
     #Return 3 if the import was successful, but some citations were missing a required field
@@ -537,9 +545,14 @@ class CitationsController < ApplicationController
       # Parse the data
       pcites, errorCheck = p.parse(str)
       
+      #Check to make sure there were not errors while parsing the data.
+      
+      #No citations were parsed
       if errorCheck == 0
         return 4
       end
+      
+      #An error occured while parsing the data
       if errorCheck == -1
         return 2
       end
@@ -549,9 +562,12 @@ class CitationsController < ApplicationController
       attr_hashes = i.citation_attribute_hashes(pcites)
       logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
     
+      #Make sure there is data in the Attribute Hash
       return 4 if attr_hashes.nil?
-      all_cites = attr_hashes.map { |h|
       
+      
+      all_cites = attr_hashes.map { |h|
+       
         # Initialize the Citation
         klass = h[:klass]
       
@@ -560,7 +576,9 @@ class CitationsController < ApplicationController
         if klass.superclass != Citation
           raise NameError.new("#{klass_type} is not a subclass of Citation") and return
         end
+      
         citation = klass.new
+      
       
         ###
         # Setting CitationNameStrings
@@ -616,23 +634,32 @@ class CitationsController < ApplicationController
 
 
 
-          #save remaining hash attributes
-          citation.attributes=h
-          citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
-          citation.title_dupe_key = Citation.set_title_dupe_key(citation)
-          citation.save_and_set_for_index
+        #save remaining hash attributes
+        citation.attributes=h
+        citation.issn_isbn_dupe_key = Citation.set_issn_isbn_dupe_key(citation, citation_name_strings, issn_isbn)
+        citation.title_dupe_key = Citation.set_title_dupe_key(citation)
+        citation.save_and_set_for_index
+   
       
-          # current user automatically gets 'admin' permissions on citation
-          # (only if he/she doesn't already have that role on the citation)
-          citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', citation)
+        # current user automatically gets 'admin' permissions on citation
+        # (only if he/she doesn't already have that role on the citation)
+        citation.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', citation)
         end
       }
       Index.batch_index
+      
+    #This error occurs if the citations were parsed, but some bad data
+    #was entered which caused an error to occur when saving the data
+    #to the database.
     rescue
-      success = 4
-      puts("\nThere was an unrecoverable error on the batch import!!\n")
+      puts("\nThere was an unrecoverable error on the batch import!!\n") 
+      
+      success = 2
+      
       return success
     end
+   
+    #At this point, some or all of the citations were saved to the database successfully.
     return success
   end
   

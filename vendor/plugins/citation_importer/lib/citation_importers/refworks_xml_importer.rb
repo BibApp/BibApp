@@ -7,7 +7,7 @@ class RefworksXmlImporter < CitationImporter
   end
   
   def generate_attribute_hash(parsed_citation)
-    puts("\n\n Parsed Citation: #{parsed_citation}\n\n")
+
     r_hash = Hash.new
     return false if !self.class.import_formats.include?(parsed_citation.citation_type)
     props = parsed_citation.properties
