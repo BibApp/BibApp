@@ -28,14 +28,8 @@ class RefworksDepricatedXmlParser < CitationParser
       @citations << c
     }
     
-    @citations.each do |c|
-      puts("\n\nCitation: #{c.inspect}\n\n")
-    end
     
-    puts("\nCitations Size: #{@citations.size}\n")
-    puts("\nRefworksParser says:#{@citations.each{|c| c.inspect}}\n")
-    
-    #Return @citations
+
     @citations
   end
   

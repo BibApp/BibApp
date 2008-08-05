@@ -28,14 +28,14 @@ class CitationParser
         
         if !@citations.nil?
           puts("\n Parsing was successful using: #{klass}!\n")
+          puts("\nNumber of Successfully Parsed Citations: #{@citations.size}\n")
           return @citations, 1 #Return 1 to indicate everything went fine          
         end       
       end
     
-   #   raise Exception, 'Unable to find a Citation Parser to handle this data'
-
 
     rescue
+    #This error happens when we cannot recover from an error during the parsing.
       return nil, -1 #Return -1 to indicate there was a error
       
     end

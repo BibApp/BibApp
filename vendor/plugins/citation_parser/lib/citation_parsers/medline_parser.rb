@@ -15,6 +15,7 @@ class MedlineParser < CitationParser
     end
     data = data.split(/(?=^PMID\-)/)
     data.each do |rec|
+      errorCheck = 1
       rec.strip!
       cite = ParsedCitation.new(:medline)
       # Use a lookahead -- if the regex consumes characters, split() will
@@ -25,17 +26,23 @@ class MedlineParser < CitationParser
         key = key.strip.downcase.to_sym
         # Skip components we can't parse
         next unless key and val
+        errorCheck = 0
         cite.properties[key] = Array.new if cite.properties[key].nil?
         cite.properties[key] << val.strip
-      end
-
+        end
       # Map original data for inclusion in database
       cite.properties["original_data"] = rec
-      @citations << cite
+      
+      # The following error should only occur if no part of the citation
+      # is consistent with the Medline format. 
+      if errorCheck == 1
+        puts("\n There was an error on the following citation:\n #{rec}\n\n")
+      else
+        @citations << cite
+      end
+      
     end
     
-    puts("\nCitations Size: #{@citations.size}\n")
-    puts("\nMEDLINEParser says:#{@citations.each{|c| c.inspect}}\n")
     
     @citations
   end

@@ -15,8 +15,11 @@ class RisParser < CitationParser
  #   risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
-      rec.strip!
+      errorCheck = 1
+      rec.strip!  
       cite = ParsedCitation.new(:ris)
+      # Map original data for inclusion in database
+      cite.properties["original_data"] = rec
       # Use a lookahead -- if the regex consumes characters, split() will
       # filter them out.
       # Keys (or 'tags') are specified by the following regex.
@@ -28,19 +31,21 @@ class RisParser < CitationParser
         # Skip components we can't parse
         
         next unless key and val
+        errorCheck = 0
         cite.properties[key] = Array.new if cite.properties[key].nil?
         cite.properties[key] << val.strip
       end
 
-      # Map original data for inclusion in database
-      cite.properties["original_data"] = rec
-      @citations << cite
+      # The following error should only occur if no part of the citation
+      # is consistent with the RIS format. 
+      if errorCheck == 1
+        puts("\n There was an error on the following citation:\n #{rec}\n\n")
+      else
+        @citations << cite
+      end
     end
-   
-    puts("\nNumber of Successfully Parsed Citations: #{@citations.size}\n")
+  
  
-    
-    # puts("\nRISParser says:#{@citations.each{|c| c.inspect}}\n")
     @citations
   end  
 end
