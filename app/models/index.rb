@@ -128,9 +128,11 @@ class Index
       records = Citation.find(:all, :conditions => ["citation_state_id = ?", 3])  
       records.each do |record|
         if record.publication_date != nil
-          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+          #add dates to our mapping
+          mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
+          doc = Solr::Importer::Mapper.new(mapping).map(record)
         else
-          doc = Solr::Importer::Mapper.new(SOLR_MAPPING_NO_DATE).map(record)
+          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
         end
         
         SOLRCONN.add(doc)
@@ -145,9 +147,11 @@ class Index
   
     def update_solr(record)
       if record.publication_date != nil
-        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+          #add dates to our mapping
+          mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
+          doc = Solr::Importer::Mapper.new(mapping).map(record)
       else
-        doc = Solr::Importer::Mapper.new(SOLR_MAPPING_NO_DATE).map(record)
+          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
       end
       
       SOLRCONN.add(doc)
