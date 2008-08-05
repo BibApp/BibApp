@@ -92,9 +92,7 @@ class Index
   
   class << self
     def batch_index
-      records = Citation.find(
-        :all, 
-        :conditions => ["citation_state_id = ? and batch_index = ?", 3, 1])
+      records = Citation.accepted.to_batch_index
       
       records.each do |record|
         if record.publication_date != nil
@@ -125,7 +123,7 @@ class Index
       SOLRCONN.delete_by_query('*:*')
         
       #Reindex all citations again  
-      records = Citation.find(:all, :conditions => ["citation_state_id = ?", 3])  
+      records = Citation.accepted
       records.each do |record|
         if record.publication_date != nil
           #add dates to our mapping

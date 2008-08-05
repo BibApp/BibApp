@@ -41,10 +41,22 @@ class Citation < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Citation Statuses
+  named_scope :in_process, :conditions => ["citation_state_id = ?", 1]
+  named_scope :duplicate, :conditions => ["citation_state_id = ?", 2]
+  named_scope :accepted, :conditions => ["citation_state_id = ?", 3]
+  named_scope :incomplete, :conditions => ["citation_state_id = ?", 4]
+  named_scope :deleted, :conditions => ["citation_state_id = ?", 5]
+  
+  # Citation flagged for batch indexing
+  named_scope :to_batch_index, :conditions => ["batch_index = ?", 1]
+  
+  #Various Citation Contribution Statuses
   named_scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]
   named_scope :verified, :include => :contributorships,:conditions => ["contributorships.contributorship_state_id = ?", 2]
   named_scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
   named_scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
+  
+  
   
   #### Callbacks ####
   before_validation_on_create :set_initial_states
