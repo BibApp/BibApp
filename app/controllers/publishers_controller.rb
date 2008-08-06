@@ -34,9 +34,9 @@ class PublishersController < ApplicationController
 
     before :show do
       # Default SolrRuby params
-      @query        = @current_object.solr_id
-      @filter       = params[:fq] || ""
-      @filter_no_strip = params[:fq] || ""
+      @query        = params[:q] || "*:*"
+      @filter       = params[:fq] || "publisher_facet:\"#{@current_object.name}\""
+      @filter_no_strip = params[:fq] || "publisher_facet:\"#{@current_object.name}\""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "year"
       @sort         = "year" if @sort.empty?

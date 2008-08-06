@@ -17,10 +17,6 @@ class Group < ActiveRecord::Base
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
   end 
-  
-  def solr_id
-    "Group-#{id}"
-  end
 
   class << self
     # return the first letter of each name, ordered alphabetically
