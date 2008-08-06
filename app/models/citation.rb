@@ -351,6 +351,7 @@ class Citation < ActiveRecord::Base
     self.citation_archive_state = CitationArchiveState.initial
   end
 
+  #Build a unique ID for this citation in Solr
   def solr_id
     "Citation-#{id}"
   end

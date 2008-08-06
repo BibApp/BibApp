@@ -44,10 +44,6 @@ class Publication < ActiveRecord::Base
     "#{id}-#{param_name}"
   end
 
-  def solr_id
-    "Publication-#{id}"
-  end
-  
   def form_select
     "#{name.first(100)+"..."} - #{issn_isbn}"
   end

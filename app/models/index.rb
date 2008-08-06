@@ -31,44 +31,44 @@ class Index
   # Default Solr Mapping 
   SOLR_MAPPING = {
     # Citation
-    :pk_i => :id,
-    :id => Proc.new{|record| record.solr_id},
+    :pk_i => :id,  #store Citation ID as pk_i in Solr
+    :id => Proc.new{|record| record.solr_id}, #create a unique Solr ID for Citation
     :title => :title_primary,
     :title_secondary => :title_secondary,
     :title_tertiary => :title_tertiary,
     :abstract => :abstract,
     :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
     
-    :type_facet => Proc.new{|record| record[:type]},
-    :citation_id_facet => Proc.new{|record| record.solr_id},
-
+    # Citation Type (index as "Journal article" rather than "JournalArticle")
+    :type_facet => Proc.new{|record| record[:type].underscore.humanize},
+    
     # NameStrings
     :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
-    :name_string_id_facet => Proc.new{|record| record.name_strings.collect{|ns| ns.solr_id}},
+    :name_string_facet_id => Proc.new{|record| record.name_strings.collect{|ns| build_facet_id(ns)}},
     
     # People
     :people => Proc.new{|record| record.people.collect{|p| p.first_last}},
-    :person_id_facet => Proc.new{|record| record.people.collect{|p| p.solr_id}},
+    :person_facet_id => Proc.new{|record| record.people.collect{|p| build_facet_id(p)}},
     
     # Groups
     :groups => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
-    :group_id_facet => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.solr_id}}.uniq.flatten},
+    :group_facet_id => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| build_facet_id(g)}}.uniq.flatten},
     
     # Publication
     :publication => Proc.new{|record| record.publication.authority.name},
-    :publication_id_facet => Proc.new{|record| record.publication.authority.solr_id},
+    :publication_facet_id => Proc.new{|record| build_facet_id(record.publication.authority)},
     
     # Publisher
     :publisher => Proc.new{|record| record.publisher.authority.name},
-    :publisher_id_facet => Proc.new{|record| record.publisher.authority.solr_id},
+    :publisher_facet_id => Proc.new{|record| build_facet_id(record.publisher.authority)},
     
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
-    :keyword_id_facet => Proc.new{|record| record.keywords.collect{|k| k.solr_id}},
+    :keyword_facet_id => Proc.new{|record| record.keywords.collect{|k| build_facet_id(k)}},
     
     # Tags
     :tags => Proc.new{|record| record.tags.collect{|k| k.name}},
-    :tag_id_facet => Proc.new{|record| record.tags.collect{|k| k.solr_id}}
+    :tag_facet_id => Proc.new{|record| record.tags.collect{|k| build_facet_id(k)}}
   }
   
   # Mapping specific to dates
@@ -161,19 +161,19 @@ class Index
             :facets => {
               :fields => [
                 :group_facet,
-                :group_id_facet,
+                :group_facet_id,
                 :keyword_facet,
-                :keyword_id_facet,
+                :keyword_facet_id,
                 :tag_facet,
-                :tag_id_facet,
+                :tag_facet_id,
                 :name_string_facet,
-                :name_string_id_facet,
+                :name_string_facet_id,
                 :person_facet,
-                :person_id_facet, 
+                :person_facet_id, 
                 :publication_facet,
-                :publication_id_facet,
+                :publication_facet_id,
                 :publisher_facet,
-                :publisher_id_facet,
+                :publisher_facet_id,
                 :type_facet,
                 {:year_facet => {:sort => :term}}
               ], 
@@ -240,6 +240,11 @@ class Index
       return docs
     end
     
+    #Generate a unique Solr Facet ID for the given object
+    def build_facet_id(object)
+      "#{object.class.name}-#{object.id}"
+    end
+    
     private
     
     #Process the documents returned from a Solr query, 
@@ -256,22 +261,24 @@ class Index
         docs << [citation, doc['score']]
       end
       
-      # Extract our facets from the query response
+      # Extract our facets from the query response.
+      #  These come back as arrays of Solr::Response::Standard::FacetValue 
+      #  objects (e.g.) {:name="Sage Publications", 'value'=20}
       facets = {
         :people         => query_response.field_facets("person_facet"),
-        :person_id      => query_response.field_facets("person_id_facet"),
+        :person_id      => query_response.field_facets("person_facet_id"),
         :groups         => query_response.field_facets("group_facet"),
-        :group_id       => query_response.field_facets("group_id_facet"),
+        :group_id       => query_response.field_facets("group_facet_id"),
         :names          => query_response.field_facets("name_string_facet"),
-        :name_id        => query_response.field_facets("name_string_id_facet"),
+        :name_id        => query_response.field_facets("name_string_facet_id"),
         :publications   => query_response.field_facets("publication_facet"),
-        :publication_id => query_response.field_facets("publication_id_facet"),
+        :publication_id => query_response.field_facets("publication_facet_id"),
         :publishers     => query_response.field_facets("publisher_facet"),
-        :publisher_id   => query_response.field_facets("publisher_id_facet"),
+        :publisher_id   => query_response.field_facets("publisher_facet_id"),
         :keywords       => query_response.field_facets("keyword_facet"),
-        :keyword_id     => query_response.field_facets("keyword_id_facet"),
+        :keyword_id     => query_response.field_facets("keyword_facet_id"),
         :tags           => query_response.field_facets("tag_facet"),
-        :tag_id         => query_response.field_facets("tag_id_facet"),
+        :tag_id         => query_response.field_facets("tag_facet_id"),
         :types          => query_response.field_facets("type_facet"),
         :years          => query_response.field_facets("year_facet")
       }

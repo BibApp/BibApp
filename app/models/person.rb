@@ -66,10 +66,6 @@ class Person < ActiveRecord::Base
     "#{id}-#{param_name}"
   end
 
-  def solr_id
-    "Person-#{id}"
-  end  
-
   def groups_not
     all_groups = Group.find(:all, :order => "name")
     # TODO: do this right. The vector subtraction is dumb.

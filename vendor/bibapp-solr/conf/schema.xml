@@ -275,8 +275,12 @@
  <!--'word' is used to spell check against -->
  <field name="word" type="spell" indexed="true" stored="true"/>
 
+ <!-- All our facet_id (*_facet_id fields) are matched by this dynamic field -->
+ <dynamicField name="*_facet_id" type="string" indexed="true" stored="false" multiValued="true"/>
+ 
  <!-- All our facets (*_facet fields) are matched by this dynamic field -->
  <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>
+ 
 </fields>
 
 <!-- Field to use to determine and enforce document uniqueness. -->

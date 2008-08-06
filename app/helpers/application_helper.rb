@@ -34,6 +34,9 @@ module ApplicationHelper
     end
   end
   
+  
+  #Retrieve an object based on Solr Unique Facet ID,
+  # generated from Index.build_facet_id()
   def object_by_facet_id(name)
     klass,id = name.split("-")
     object = klass.constantize.find(id)
@@ -229,15 +232,15 @@ module ApplicationHelper
       prepped_filter = Array.new
       prepped_filter << query_filter.dup
 
-      if(!query_filter.include?('"' + value.to_s + '"'))
-        prepped_filter << '"' + value.to_s + '"'
+      if(!query_filter.include?(facet + ':"' + value.to_s + '"'))
+        prepped_filter << facet + ':"' + value.to_s + '"'
       end
       
       prepped_filter = prepped_filter.join("+>+")
 
     # If we have no filters, we need to send the first
     else
-      prepped_filter = '"' + value.to_s + '"'
+      prepped_filter = facet + ':"' + value.to_s + '"'
     end
     
     link_to "#{value} (#{count})", {
@@ -257,7 +260,10 @@ module ApplicationHelper
     prepped_filter.delete_at(prepped_filter.index(value))
     prepped_filter = prepped_filter.join("+>+")
     
-    link_to "#{value}", {
+    #display value of filter is everything *after* the colon
+    display_value = value.split(':')[1]
+    
+    link_to "#{display_value}", {
       :q => query,
       :sort => sort,
       :fq => prepped_filter,

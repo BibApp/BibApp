@@ -61,10 +61,6 @@ class Publisher < ActiveRecord::Base
     "#{id}-#{param_name}"
   end
   
-  def solr_id
-    "Publisher-#{id}"
-  end
-    
   def authority_for
     authority_for = Publisher.find(
       :all, 
