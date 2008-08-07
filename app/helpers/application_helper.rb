@@ -47,60 +47,9 @@ module ApplicationHelper
   #Generate a "Find It!" OpenURL link, 
   # based on citation information as received from Solr
   def link_to_findit(citation)
-    # Set the canonical resolver variables (personalize.rb)
-  	suffix = $CITATION_SUFFIX
-  	base_url = $CITATION_BASE_URL
-    link_text = $CITATION_LINK_TEXT
-
-    # Obtain the client IP Addess
-    ip = request.env["HTTP_X_FORWARDED_FOR"]
-    logger.debug("Client IP: #{ip}")
-
-    # Test UW-Madison 
-    #ip = "128.104.198.84"
     
-    # Test UIUC 
-    #ip = "128.174.36.29"
-    
-    # Test Iowa
-    #ip = "128.255.56.180"
-
-    # Initialize ResolverRegistry
-  	client = ResolverRegistry::Client.new
-  	
-  	# @TODO: Can this be improved? (ESPECIALLY via caching!)
-  	#
-  	# Steps for ResolverRegistry results
-  	# 1) Look up *all* the resolvers held for a university 
-  	# * Some universities have more than one resolver (Iowa has 4!)
-  	# * Some resolvers look specific to ILL
-  	# * Some resolvers are for "Ask a Librarian" type services
-  	#
-  	# 2) If there are no results use the personalize.rb defaults
-  	#
-  	# 3) Loop through results
-  	#
-  	# 4) Choose best resolver option
-  	# * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
-    begin
-      institution = client.lookup_all(ip)
-      
-      # Test the ResolverRegistry results...
-      # If the ResolverRegistry returns nil
-      if institution.nil?
-        # Use the default variables
-      # Else loop and choose the "best option" 
-      else
-        institution.each do |i|
-          if i.resolver.metadata_formats.empty?
-            base_url = i.resolver.base_url
-            link_text = i.resolver.link_text
-          end
-        end
-      end
-    rescue
-      #If errors, do nothing - just use the defaults from personalize.rb
-    end
+    #Get our OpenURL information
+    link_text, base_url, suffix = find_openurl_info
     
     #Substitute citation title
     suffix = (citation['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation['title'].gsub(" ", "+"))
@@ -276,5 +225,81 @@ module ApplicationHelper
   def encode_for_xml(data)
     code = HTMLEntities.new
     code.encode(data, :basic)
+  end
+  
+  private
+  
+  #Find information necessary to build our OpenURL query
+  #  In particular:
+  #    OpenURL link text, base url, and query suffixes
+  def find_openurl_info
+    # Set the canonical resolver variables (from personalize.rb)
+    link_text = $CITATION_LINK_TEXT
+    base_url = $CITATION_BASE_URL
+    suffix = $CITATION_SUFFIX
+    
+    #If we've already found this info for
+    # the current session, return it immediately
+    if session[:openurl_info]
+      link_text = session[:openurl_link_text] if session[:openurl_link_text]
+      base_url = session[:openurl_base_url] if session[:openurl_base_url]
+    else 
+      # Obtain the client IP Addess
+      ip = request.env["HTTP_X_FORWARDED_FOR"]
+      logger.debug("Client IP: #{ip}")
+  
+      # Test UW-Madison 
+      #ip = "128.104.198.84"
+      
+      # Test UIUC 
+      #ip = "128.174.36.29"
+      
+      # Test Iowa
+      #ip = "128.255.56.180"
+  
+      # Initialize ResolverRegistry
+      client = ResolverRegistry::Client.new
+      
+      # @TODO: Can this be improved?
+      #
+      # Steps for ResolverRegistry results
+      # 1) Look up *all* the resolvers held for a university 
+      # * Some universities have more than one resolver (Iowa has 4!)
+      # * Some resolvers look specific to ILL
+      # * Some resolvers are for "Ask a Librarian" type services
+      #
+      # 2) If there are no results use the personalize.rb defaults
+      #
+      # 3) Loop through results
+      #
+      # 4) Choose best resolver option
+      # * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
+      begin
+        institution = client.lookup_all(ip)
+        
+        # Test the ResolverRegistry results...
+        # If the ResolverRegistry returns nil
+        if institution.nil?
+          # Use the default variables
+        # Else loop and choose the "best option" 
+        else
+          institution.each do |i|
+            if i.resolver.metadata_formats.empty?
+              base_url = i.resolver.base_url
+              link_text = i.resolver.link_text
+              session[:openurl_link_text] = link_text
+              session[:openurl_base_url] = base_url
+            end
+          end
+        end
+      rescue
+        #If errors, do nothing - just use the defaults from personalize.rb
+      end #end begin
+      
+      # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
+      session[:openurl_info] = true
+    end #end if session[:openurl_info]
+    
+    return link_text, base_url, suffix
   end
 end
