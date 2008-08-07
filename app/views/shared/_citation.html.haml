@@ -1,29 +1,27 @@
+-#
+-# Render Single Citation from Solr data
+-#
 %li.citation
   %div.screen-format
-    %strong=link_to "#{citation.title_primary}", citation_path(citation)
+    %strong=link_to "#{citation['title']}", citation_path(citation['pk_i'])
     %p.metadata 
-      - citation.name_strings.first(5).each do |ns|
-        =link_to "#{ns.name}", name_string_path(ns), {:class => "name_string"}
-      - if citation.name_strings.size > 5
-        =link_to "more...", citation_path(citation)
+      - citation['name_strings_data'].first(5).each do |ns|
+        - name, id = NameString.parse_solr_data(ns)
+        =link_to "#{name}", name_string_path(id), {:class => "name_string"}
+      - if citation['name_strings'].size > 5
+        =link_to "more...", citation_path(citation['pk_i'])
       %br/
-      =link_to "#{citation.publication.name}", publication_path(citation.publication.to_param), {:class => "source"}
-      -if citation.publication_date != nil
-        ="(#{citation.publication_date.year})"
+      - pub_name, pub_id = Publication.parse_solr_data(citation['publication_data'])
+      =link_to "#{pub_name}", publication_path(pub_id), {:class => "source"}
+      -if citation['publication_date'] != nil
+        ="(#{citation['publication_date']})"
 
     .links
       =link_to_findit(citation)
       | 
       - if !@cart.nil? && !@cart.items.nil?
-        - if @cart.items.include?(citation.id.to_i)
-          =link_to_remove_from_cart(citation)
-      - if @cart.nil? || !@cart.items.include?(citation.id.to_i)
-        =link_to_add_to_cart(citation)
-
-
-  %div.apa-format
-    -if (File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/citations/apa/_#{@citation.class.name.to_s.underscore}.html"))
-      = render :partial => "citations/apa/#{citation.class.name.to_s.underscore}", :locals => { :c => citation }
-    -else
-      = render :partial => "citations/apa/generic", :locals => { :c => citation }
+        - if @cart.items.include?(citation['pk_i'].to_i)
+          =link_to_remove_from_cart(citation['pk_i'])
+      - if @cart.nil? || !@cart.items.include?(citation['pk_i'].to_i)
+        =link_to_add_to_cart(citation['pk_i'])
       

@@ -72,13 +72,9 @@ class CitationsController < ApplicationController
     @rows         = params[:rows] || 10
     @export       = params[:export] || ""
 
-    @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+    @q,@citations,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
-    @citations = Array.new
-    @docs.each do |citation, score|
-      @citations << citation
-    end
-
+    #@TODO: This WILL need updating as we don't have *ALL* citation info from Solr!
     if @export && !@export.empty?
       x = CitationExport.new
       @citations = x.drive_csl(@export, @citations)

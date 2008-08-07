@@ -122,6 +122,11 @@ class Person < ActiveRecord::Base
     end
     
   end
+  
+  # Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{last_name}||#{id}||#{image_url}"
+  end
 
   class << self
     # return the first letter of each name, ordered alphabetically
@@ -131,6 +136,17 @@ class Person < ActiveRecord::Base
         :select => 'DISTINCT SUBSTR(last_name, 1, 1) AS letter',
         :order  => 'letter'
       )
+    end
+    
+    #Parse Solr data (produced by to_solr_data)
+    # return Person last_name, ID, and Image URL
+    def parse_solr_data(person_data)
+      data = person_data.split("||")
+      last_name = data[0]
+      id = data[1]  
+      image_url = data[2]
+      
+      return last_name, id, image_url
     end
   end
 end

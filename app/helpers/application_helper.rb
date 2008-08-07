@@ -34,15 +34,6 @@ module ApplicationHelper
     end
   end
   
-  
-  #Retrieve an object based on Solr Unique Facet ID,
-  # generated from Index.build_facet_id()
-  def object_by_facet_id(name)
-    klass,id = name.split("-")
-    object = klass.constantize.find(id)
-    object
-  end
-  
   def link_to_related_citations(citation)
     #link_to "Related Citations", search_url(:q => "id:#{citation-solr_id}", :qt  => "mlt")
     "Related Citations"
@@ -53,6 +44,8 @@ module ApplicationHelper
     "Download from #{$REPOSITORY_NAME}"
   end
 
+  #Generate a "Find It!" OpenURL link, 
+  # based on citation information as received from Solr
   def link_to_findit(citation)
     # Set the canonical resolver variables (personalize.rb)
   	suffix = $CITATION_SUFFIX
@@ -75,7 +68,7 @@ module ApplicationHelper
     # Initialize ResolverRegistry
   	client = ResolverRegistry::Client.new
   	
-  	# @TODO: Can this be improved?
+  	# @TODO: Can this be improved? (ESPECIALLY via caching!)
   	#
   	# Steps for ResolverRegistry results
   	# 1) Look up *all* the resolvers held for a university 
@@ -110,28 +103,28 @@ module ApplicationHelper
     end
     
     #Substitute citation title
-    suffix = (citation.title_primary.nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation.title_primary.to_s.sub(" ", "+"))
+    suffix = (citation['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation['title'].gsub(" ", "+"))
     #Substitute citation year
-    suffix = (citation.publication_date.nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation.publication_date.year.to_s)
+    suffix = (citation['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation['year'])
     #Substitute citation issue
-    suffix = (citation.issue.nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation.issue.to_s)
+    suffix = (citation['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation['issue'])
     #Substitute citation volume
-    suffix = (citation.volume.nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation.volume.to_s)
+    suffix = (citation['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation['volume'])
     #Substitute citation start-page
-    suffix = (citation.start_page.nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation.start_page)
+    suffix = (citation['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation['start_page'])
     #Substitute citation ISSN/ISBN
-    suffix = (citation.publication.nil? || citation.publication.issn_isbn.nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation.publication.issn_isbn)
+    suffix = (citation['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation['issn_isbn'])
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
   end
   
-  def link_to_add_to_cart(citation)
-    link_to "Add to cart", :action => "add_to_cart", :id => citation.id
+  def link_to_add_to_cart(id)
+    link_to "Add to cart", :action => "add_to_cart", :id => id
   end
   
-  def link_to_remove_from_cart(citation)
-    link_to "Remove from cart ", :action => "remove_from_cart", :id => citation.id
+  def link_to_remove_from_cart(id)
+    link_to "Remove from cart ", :action => "remove_from_cart", :id => id
   end
   
   def link_to_deletecart

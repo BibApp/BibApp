@@ -19,9 +19,26 @@ class NameString < ActiveRecord::Base
     "#{id}-#{param_name}"
   end
 
+  # Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{name}||#{id}"
+  end 
+
   #return what looks to be the last name in this name string
   def last_name
     names = self.name.split(',')
     names[0]
+  end
+  
+  class << self
+    #Parse Solr data (produced by to_solr_data)
+    # return NameString name and ID
+    def parse_solr_data(name_string_data)
+      data = name_string_data.split("||")
+      name = data[0]
+      id = data[1]  
+      
+      return name, id
+    end
   end
 end
