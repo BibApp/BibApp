@@ -23,7 +23,7 @@
   %ol#top-five-groups.filters.groups
     -@facets[:groups].first(5).each do |g|
       %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",g.name,g.value,@view,@rows)
+        =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
 
     - if @facets[:groups].size > 5
       %ol#all-groups.filters.groups{:style => "display:none"}
