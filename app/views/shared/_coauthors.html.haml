@@ -1,13 +1,16 @@
-- if @facets[:person_id].size > 1
+-#
+-# Render Co-Author facets from Solr data
+-#
+- if @facets[:people_data].size > 1
   %h3{:style => "padding-top:1em;"}
     ="Co-authors at #{$UNIVERSITY_SHORT_NAME}"
   %ol#coauthors{:style => "span-6 append-1"}
-    -@facets[:person_id].each do |p|
-      - person = object_by_facet_id(p.name)
-      - next if person.id == @person.id
+    -@facets[:people_data].each do |p|
+      - last_name, id, image_url = Person.parse_solr_data(p.name)
+      - next if id == @person.id
       %li.inline
         %div.person{:style => "float:left; padding-right:0.75em;"}
-          = link_to(image_tag(person.image_url, :size => "56x75", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
+          = link_to(image_tag(image_url, :size => "56x75", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           %div.person-image-metadata
             %strong= p.value
-            %h6.person-last-name=link_to person.last_name, person_path(person)
+            %h6.person-last-name=link_to last_name, person_path(id)

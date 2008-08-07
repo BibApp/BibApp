@@ -33,9 +33,10 @@
       %div#person-image{:class => "span-6 append-1"}  
         =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "150x200")
 
-      %div{:class => "span-14 prepend-1 last"}
-        %h3{:style => "padding-top:1em"}Research Focus
-        #research_focus=@research_focus
+      -if @research_focus.strip.length > 0
+        %div{:class => "span-14 prepend-1 last"}
+          %h3{:style => "padding-top:1em"}Research Focus
+          #research_focus=@research_focus
 
       %h3 Groups
       %ul#groups

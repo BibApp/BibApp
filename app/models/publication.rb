@@ -43,6 +43,11 @@ class Publication < ActiveRecord::Base
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
   end
+  
+  # Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{name}||#{id}"
+  end
 
   def form_select
     "#{name.first(100)+"..."} - #{issn_isbn}"
@@ -73,6 +78,16 @@ class Publication < ActiveRecord::Base
         update.authority_id = auth_id
         update.save
       end
+    end
+    
+    #Parse Solr data (produced by to_solr_data)
+    # return Publication name and ID
+    def parse_solr_data(publication_data)
+      data = publication_data.split("||")
+      name = data[0]
+      id = data[1]  
+      
+      return name, id
     end
   end
 end

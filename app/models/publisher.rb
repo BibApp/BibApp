@@ -61,6 +61,11 @@ class Publisher < ActiveRecord::Base
     "#{id}-#{param_name}"
   end
   
+  # Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{name}||#{id}"
+  end
+  
   def authority_for
     authority_for = Publisher.find(
       :all, 
@@ -117,6 +122,16 @@ class Publisher < ActiveRecord::Base
           :source_id    => 1           
         })
       end
+    end
+    
+    #Parse Solr data (produced by to_solr_data)
+    # return Publisher name and ID
+    def parse_solr_data(publisher_data)
+      data = publisher_data.split("||")
+      name = data[0]
+      id = data[1]  
+      
+      return name, id
     end
     
   end

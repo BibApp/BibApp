@@ -1,3 +1,6 @@
+-#
+-# Render List of Citations with paging & sorting options
+-#
 %div#citations{:class => "span-14 prepend-1"}
   - if @q
     %div{:class => "span-4"}
@@ -37,7 +40,7 @@
     %div{:class => "span-14"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
     %ol{:class => "span-14 citations", :style => "clear:both;"}
-      - @docs.each do |citation, score|
-        = render :partial => "shared/citation", :locals => {:citation => citation, :score => score}
+      - @citations.each do |citation|
+        = render :partial => "shared/citation", :locals => {:citation => citation}
         
     %div{:class => "span-14"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

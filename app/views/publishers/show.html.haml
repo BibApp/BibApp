@@ -20,10 +20,10 @@
       %h2= @publisher.name
 
       / People
-      = render :partial => "shared/people"
+      = render :partial => "shared/people", :locals => {:count => 10}
 
       / Groups
-      = render :partial => "shared/groups"
+      = render :partial => "shared/groups", :locals => {:count => 10}
 
       %div#results{:class => "span-22"}
         / Facets

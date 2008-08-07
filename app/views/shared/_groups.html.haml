@@ -1,13 +1,13 @@
+-#
+-# Render Group facets from Solr data
+-#
 %div{:class => "span-6"}
   %h3.heading Groups
-  %ol.groups.facets        
-    -active = Array.new
-    -@facets[:group_id].each do |g|
-      - group = object_by_facet_id(g.name)
-      - if group.hide != true
-        - active << [group, g.value]
-    -active.first(15).each do |group, value|
+  %ol#groups
+    -# if there's a count specified, only show the first few
+    -groups = count!=nil ? @facets[:groups_data].first(count) : @facets[:groups_data]
+    -groups.each do |g|
+      - name, id = Group.parse_solr_data(g.name)
       %li
-        =link_to group.name, group_path(group)
-        ="(#{value})"
-    %li=link_to "More...", groups_path
+        =link_to name, group_path(id)
+        ="(#{g.value})"
