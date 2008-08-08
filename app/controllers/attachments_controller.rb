@@ -28,11 +28,15 @@ class AttachmentsController < ApplicationController
       #initialize attachment subclass with any passed in attachment info
       @attachment = subklass_init(params[:type], params[:attachment])
       
-      #get SWORD information if SWORD is configured
-      if SwordClient.configured?
-        get_sword_info  #gets License & Repository Name for View
-      else
-        flash[:error] = "SWORD does not seem to be configured in #{RAILS_ROOT}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+      
+      #SWORD Client is only applicable for ContentFile attachments
+      if @asset.kind_of?(ContentFile)
+        #get SWORD information if SWORD is configured
+        if SwordClient.configured?
+          get_sword_info  #gets License & Repository Name for View
+        else
+          flash[:error] = "SWORD does not seem to be configured in #{RAILS_ROOT}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+        end
       end
     end
     

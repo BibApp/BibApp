@@ -7,7 +7,7 @@
       %div#flash= flash[:notice]
       
     %p.person-edit-actions
-      = render :partial => "edit_actions", :locals => {@person => @person}
+      = render :partial => "edit_actions"
   %div{:class => "span-22 prepend-1"}
     %h2="Edit #{@person.name}"
     %div{:class => "span-4"}
