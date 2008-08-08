@@ -10,6 +10,9 @@
         - if @current_object!=nil and !f.include?('"' + @current_object.name + '"')
           %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
 
+        - if @current_object.nil?
+          %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
+
 
   / CitationType Filter
   %h4.heading Formats
