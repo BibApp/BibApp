@@ -34,7 +34,7 @@
         %li=link_to "Publications", publications_path
         %li=link_to "Publishers", publishers_path
         - if !session[:cart].nil? && session[:cart].items.size > 0
-          %li=link_to "Saved (#{session[:cart].items.size})", cart_path
+          %li=link_to "Cart (#{session[:cart].items.size})", cart_path
 
     %div{:class => "span-8 last"}
       - form_tag search_path, :method => :get, :class => "header-search-form" do

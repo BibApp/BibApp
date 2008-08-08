@@ -2,14 +2,13 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if @cart.nil? || @cart.items.empty?
-      %h2 Citations
-      %p Nothing saved yet.
+    - if @citations.nil? || @citations.empty?
+      %h2 Cart
+      %p Nothing added yet.
     - else
-      %h2 
-        Citations
-        %span.little=link_to_deletecart
-      - @cart.items.each do |citation|
-        - citation = Citation.find(citation)
-        = render :partial => "shared/citation", :locals => {:citation => citation}
+      %ul#edit-actions
+        %li=link_to_deletecart
       
+      %h2 Cart
+      - @citations.each do |citation|
+        = render :partial => "shared/citation", :locals => {:citation => citation}
