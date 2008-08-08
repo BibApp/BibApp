@@ -5,6 +5,7 @@ class SearchController < ApplicationController
   
   def index
     if params[:q]
+
       # Default SolrRuby params
       @query        = params[:q] # User query
       @filter       = params[:fq] || ""
@@ -17,7 +18,7 @@ class SearchController < ApplicationController
       @rows         = params[:rows] || 10
       @export       = params[:export] || ""
       
-      @q,@docs,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      @q,@citations,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
@@ -26,11 +27,6 @@ class SearchController < ApplicationController
         if suggestion.downcase == @query.downcase
           @spelling_suggestions.delete(suggestion)
         end
-      end
-      
-      @citations = Array.new
-      @docs.each do |citation, score|
-        @citations << citation
       end
       
       if @export && !@export.empty?
