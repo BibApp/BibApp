@@ -222,6 +222,10 @@ class Index
       return spelling_suggestions
     end
     
+    def fetch_by_solr_id(solr_id)
+      docs = SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).data["response"]["docs"]
+    end
+    
     # Retrieve recommendations from Solr, based on current citation
     def recommendations(citation)
       r = SOLRCONN.send(Solr::Request::Standard.new(

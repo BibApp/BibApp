@@ -35,5 +35,8 @@ class SessionsController < ApplicationController
   
   def cart
     @cart = session[:cart]
+    if !@cart.nil?
+      @citations = @cart.items.collect{|citation_id| Index.fetch_by_solr_id("Citation-#{citation_id}")}.flatten
+    end
   end
 end
