@@ -14,7 +14,7 @@ class CitationExport
 
 
   def drive_csl(format, input)
-    @input = input
+    @input = input.collect{|c| Citation.find(c['pk_i'])}
     csl_style(format)
     load_citations
     load_csl
