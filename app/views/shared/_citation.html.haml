@@ -13,8 +13,8 @@
       %br/
       - pub_name, pub_id = Publication.parse_solr_data(citation['publication_data'])
       =link_to "#{pub_name}", publication_path(pub_id), {:class => "source"}
-      -if citation['publication_date'] != nil
-        ="(#{citation['publication_date']})"
+      -if citation['year'] != nil
+        ="(#{citation['year']})"
 
     .links
       =link_to_findit(citation)
