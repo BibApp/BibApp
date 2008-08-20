@@ -26,7 +26,7 @@
                 %option{:value => "#{opt.downcase}"}= opt
           %label Send to:
           %select{:name => "export"}
-            - ["", "APA", "IEEE"].each do |opt|
+            - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
               %option{:value => "#{opt.downcase}"}=opt
               
           = hidden_field_tag "q", @query

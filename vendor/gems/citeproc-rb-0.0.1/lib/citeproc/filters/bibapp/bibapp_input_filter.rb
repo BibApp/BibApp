@@ -22,7 +22,7 @@ module Bibapp
       content_type = params[:content_type]
 
       results = YAML.load(io)
-
+      results = [results].flatten
       results.each do |row|
         citation = load_citation_from_hash(row)
         @citations[row.id] = citation
@@ -34,13 +34,12 @@ module Bibapp
     # Loads an individual citation from the +hash+ object
     def load_citation_from_hash(row)
       citation = SimpleCitation.new
-      citation.type = "journalArticle"
+      citation.type = row.class.name
       citation.title = row.title_primary
       citation.container_title = row.publication.name
       citation.collection_title = row.title_tertiary
       citation.date_issued = row.year.to_s
       citation.publisher = row.publisher.name
-      citation.publisher_place = "Madison, WI"
       citation.issue = row.issue
       citation.url = row.links
       citation.pages = "#{row.start_page}-#{row.end_page}"
@@ -58,11 +57,50 @@ module Bibapp
       end
     end
     
-    
-    
     # Tests the document class, and returns the corresponding CSL type
     def resolve_type
-      @current_citation.type
+      csl_types = Hash.new
+      csl_types = {
+        "BookSection" => "chapter",
+        "BookWhole" => "book",
+        "ConferenceProceeding" => "paper-conference",
+        "JournalArticle" => "article",
+        "Report" => "report"
+=begin        "article-magazine",
+        "article-newspaper", 
+        "article-journal", 
+        "bill", 
+        "book", 
+        "chapter", 
+        "entry", 
+        "entry-dictionary", 
+        "entry-encylopedia", 
+        "figure", 
+        "graphic", 
+        "interview", 
+        "legislation", 
+        "legal_case", 
+        "manuscript", 
+        "map", 
+        "motion_picture", 
+        "musical_score", 
+        "pamphlet", 
+        "paper-conference", 
+        "patent", 
+        "post", 
+        "post-weblog", 
+        "personal_communication", 
+        "report",
+        "review",
+        "review-book",
+        "song",
+        "speech",
+        "thesis",
+        "treaty",
+        "webpage"
+=end
+      }
+      return @current_citation.type = csl_types[@current_citation].class.name
     end
     
     def extract_date(variable)
