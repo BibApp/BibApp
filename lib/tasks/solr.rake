@@ -61,7 +61,7 @@ namespace :solr do
       Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
     else #Else if Linux, Mac OSX, etc.
       fork do
-        file_path = "#{SOLR_HOME_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
+        file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
         if File.exists?(file_path)
           File.open(file_path, "r") do |f|
             pid = f.readline
