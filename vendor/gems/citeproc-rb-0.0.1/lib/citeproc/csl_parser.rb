@@ -42,14 +42,10 @@ module Citeproc
 
     private
     def build(source)
-      begin
-        if source.kind_of?(String)
-          @document = REXML::Document.new(open(source))
-        elsif source.kind_of?(IO)
-          @document = REXML::Document.new(source)
-        end
-      rescue
+      if source.kind_of?(String)
         @document = REXML::Document.new(open(source))
+      elsif source.kind_of?(IO)
+        @document = REXML::Document.new(source)
       end
       if @document.elements["style"]
         build_style

@@ -1,52 +1,51 @@
 / === People === Show ===
 / Main
-- if !@export.empty?
-  %div{:class => "span-24"}
-    %div{:class => "span-22 prepend-1"}
-      %h2 Citations
-      = @citations
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor", @person)
+      %ul#edit-actions
+        %li=link_to "Edit", edit_person_path(@person)
+        %li=link_to "Manage Roles", person_roles_path(@person)
+        %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
+      
+      - if flash[:notice]
+        %div.success= flash[:notice]
 
-- else
-  %div{:class => "span-24"}
-    %div{:class => "span-22 prepend-1"}
-      - if logged_in? && current_user.has_role?("editor", @person)
-        %ul#edit-actions
-          %li=link_to "Edit", edit_person_path(@person)
-          %li=link_to "Manage Roles", person_roles_path(@person)
-          %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
-        
-        - if flash[:notice]
-          %div.success= flash[:notice]
+    %h2{:style => "margin-bottom:0.5em"}
+      ="#{@person.first_last}"
+  
+      %span#contact-info
+        %strong
+          Email: 
+        =link_to @person.email, "mailto:#{@person.email}"
+        &#183; 
+        %strong
+          Phone:
+        = @person.phone
 
-      %h2{:style => "margin-bottom:0.5em"}
-        ="#{@person.first_last}"
-    
-        %span#contact-info
-          %strong
-            Email: 
-          =link_to @person.email, "mailto:#{@person.email}"
-          &#183; 
-          %strong
-            Phone:
-          = @person.phone
+    %div#person-image{:class => "span-6 append-1"}  
+      =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "150x200")
 
-      %div#person-image{:class => "span-6 append-1"}  
-        =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "150x200")
+    -if @research_focus.strip.length > 0
+      %div{:class => "span-14 prepend-1 last"}
+        %h3{:style => "padding-top:1em"}Research Focus
+        #research_focus=@research_focus
 
-      -if @research_focus.strip.length > 0
-        %div{:class => "span-14 prepend-1 last"}
-          %h3{:style => "padding-top:1em"}Research Focus
-          #research_focus=@research_focus
-
-      %h3 Groups
-      %ul#groups
-        - @person.memberships.each do |m|
-          -if m.group.hide == false
-            %li{:style => "display:inline; padding-right:1em"}
-              =link_to m.group.name, group_path(m.group)
+        %h3 Groups
+        %ul#groups
+          - @person.memberships.each do |m|
+            -if m.group.hide == false
+              %li{:style => "display:inline; padding-right:1em"}
+                =link_to m.group.name, group_path(m.group)
 
         = render :partial => "shared/coauthors"
 
+    - if !@export.empty?
+      %div#results{:class => "span-22"}
+        %h2 Citations
+        = @citations
+
+    - else
       %div#results{:class => "span-23"}
         / Facets
         = render :partial => "shared/facets"

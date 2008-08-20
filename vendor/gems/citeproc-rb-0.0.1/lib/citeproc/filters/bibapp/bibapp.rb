@@ -4,7 +4,7 @@
 #
 #  == Author
 #
-#  Eric Larson
+#  Eric Larson (using Liam's CSL Citation example)
 #
 #  == Copyright
 #
@@ -71,16 +71,7 @@ module Bibapp
     
     def contributors(role = nil, sort_key = nil)
       results = @contributors.collect{|c| c if c.role and c.role == role }.compact
-      if sort_key
-        if sort_key == "first"
-          results.sort!{ |a, b| a.given_name <=> b.given_name }
-        else
-          results.sort!{ |a, b| a.name <=> b.name }
-        end
-      end
-      results
     end
-    
     
     def add_contributor_name(name, role = "author")
       c = ContributingAgent.new

@@ -54,9 +54,15 @@ class PublicationsController < ApplicationController
       @q,@citations,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
       #@TODO: This WILL need updating as we don't have *ALL* citation info from Solr!
+      # Process:
+      # 1) Get AR objects (citations) from Solr results
+      # 2) Init the CitationExport class
+      # 3) Pass the export variable and citations to Citeproc for processing
+
       if @export && !@export.empty?
-        x = CitationExport.new
-        @citations = x.drive_csl(@export, @citations)
+        citations = Citation.find(@citations.collect{|c| c["pk_i"]}, :order => "publication_date desc")
+        ce = CitationExport.new
+        @citations = ce.drive_csl(@export,citations)
       end
       
       @view = "all"

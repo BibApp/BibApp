@@ -14,7 +14,7 @@ class CitationExport
 
 
   def drive_csl(format, input)
-    @input = input.collect{|c| Citation.find(c['pk_i'])}
+    @input = input
     csl_style(format)
     load_citations
     load_csl
@@ -30,9 +30,19 @@ class CitationExport
   def csl_style(format)
     case format.downcase
     when "apa"
-      @csl = "http://www.zotero.org/styles/apa"
+      @csl = "#{$APPLICATION_URL}/csl_styles/apa.csl"
+    when "chicago"
+      @csl = "#{$APPLICATION_URL}/csl_styles/chicago.csl"
+    when "harvard"      
+      @csl = "#{$APPLICATION_URL}/csl_styles/harvard.csl"
     when "ieee"
-      @csl = "http://www.zotero.org/styles/ieee"
+      @csl = "#{$APPLICATION_URL}/csl_styles/ieee.csl"
+    when "mla"
+      @csl = "#{$APPLICATION_URL}/csl_styles/mla.csl"
+    when "nature"
+      @csl = "#{$APPLICATION_URL}/csl_styles/nature.csl"
+    when "nlm"
+      @csl = "#{$APPLICATION_URL}/csl_styles/nlm.csl"
     end
   end
 
