@@ -30,7 +30,7 @@ class AttachmentsController < ApplicationController
       
       
       #SWORD Client is only applicable for ContentFile attachments
-      if @asset.kind_of?(ContentFile)
+      if @attachment.kind_of?(ContentFile)
         #get SWORD information if SWORD is configured
         if SwordClient.configured?
           get_sword_info  #gets License & Repository Name for View
