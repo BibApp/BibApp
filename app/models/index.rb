@@ -145,6 +145,30 @@ class Index
       SOLRCONN.add(doc)
       SOLRCONN.commit
     end
+    
+    #Batch update several records with a single request to Solr
+    def batch_update_solr(records)
+      
+      docs = Array.new
+      records.each do |record|
+        if record.publication_date != nil
+          #add dates to our mapping
+          mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
+          doc = Solr::Importer::Mapper.new(mapping).map(record)
+        else
+          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+        end
+        
+        #append to array of docs to update
+        docs << doc
+      end
+       
+      #Send one update request for all docs!
+      request = Solr::Request::AddDocument.new(docs)
+      SOLRCONN.send(request)
+      SOLRCONN.commit
+    end
+    
   
     def remove_from_solr(record)
       SOLRCONN.delete(record.solr_id)

@@ -10,9 +10,9 @@ RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-
 #############
-# Authorization plugin settings for role based access control
+# Authorization plugin (http://code.google.com/p/rails-authorization-plugin/)
+# settings for BibApp's role based access control
 # You can override default authorization system constants here.
 
 # Can be 'object roles' (uses Database) or 'hardwired'
@@ -32,6 +32,7 @@ PERMISSION_DENIED_REDIRECTION = { :controller => 'citations', :action => 'index'
 STORE_LOCATION_METHOD = :store_location
 #############
 
+#Initialize Rails, load all plugins, check gem dependencies, etc.
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here
 
@@ -77,7 +78,6 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
 
   
-  
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/citation_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
@@ -108,7 +108,7 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  config.active_record.observers = :index_observer, :user_observer
+  config.active_record.observers = :index_observer, :user_observer, :person_observer
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
@@ -118,3 +118,23 @@ Rails::Initializer.run do |config|
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory is automatically loaded
 end
+
+
+#Initialize Workling plugin (http://github.com/purzelrakete/workling/)
+#  By default, BibApp uses the Spawn plugin for simple backend processing
+#  However, if you want more scalability/speed, you may want to 
+#  switch to using Starling (http://rubyforge.org/projects/starling/)
+#  To switch to Starling (UNTESTED)
+#    1. Install Starling & startup
+#    2. Startup Workling's script/workling_starling_client
+#    3. Use this config instead:
+#       Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
+
+# Unfortunately, Windows doesn't work consistently with Spawn.  So, we cannot support
+# backend processing for Windows.  Poor Windows :(
+if RUBY_PLATFORM.include?('mswin32')
+  Workling::Remote.dispatcher = Workling::Remote::Runners::NotRemoteRunner.new
+else  
+  Workling::Remote.dispatcher = Workling::Remote::Runners::SpawnRunner.new
+end
+
