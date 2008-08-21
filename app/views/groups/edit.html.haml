@@ -10,4 +10,6 @@
     
     %h5=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
     
-    = render :partial => 'form'
+    %div{:class => "column span-16"}
+      - form_for :group, @group, :url => group_path(@group), :html => {:method => :put} do |form|
+        = render :partial => 'form', :locals => { :form => form }
