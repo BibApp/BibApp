@@ -33,8 +33,8 @@ namespace :solr do
       else #Else if Linux, Mac OSX, etc.
         Dir.chdir(SOLR_PATH) do
           pid = fork do
-            #STDERR.close
-            exec "java #{SOLR_STARTUP_OPTS} -jar start.jar"
+            #Start Solr and tell Jetty to listen on specified port for "stop" commands
+            exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop #{SOLR_STARTUP_OPTS} -jar start.jar"
           end
           sleep(5)
           File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
@@ -60,21 +60,31 @@ namespace :solr do
       exec "taskkill /im java.exe /fi #{'"'}Windowtitle eq solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} "
       Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
     else #Else if Linux, Mac OSX, etc.
-      fork do
+      Dir.chdir(SOLR_PATH) do
         file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
         if File.exists?(file_path)
-          File.open(file_path, "r") do |f|
-            pid = f.readline
-            Process.kill('TERM', pid.to_i)
+          puts "Sending SHUTDOWN command to Solr..."
+          fork do
+            # We don't want to 'kill' Solr via PID as this doesn't seem
+            # to work on Ubuntu, where the PID in this file is always wrong!
+            #File.open(file_path, "r") do |f|
+            #  pid = f.readline
+            #  Process.kill('TERM', pid.to_i)
+            #end
+
+            #Stop Solr by sending Jetty the "stop" command on port 8079
+            exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop -jar start.jar --stop"  
           end
+
+          Process.wait #wait for forked process to complete
           File.unlink(file_path)
           Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
           puts "Solr shutdown successfully."
         else
           puts "Solr is not running. I haven't done anything."
         end
-      end
-    end
+      end #end change dir
+    end #end task :stop
   end
 
   desc 'Remove Solr index'
