@@ -32,6 +32,11 @@ SOLR_SETTINGS = YAML::load(File.read(SOLR_CONFIG))[RAILS_ENV] if File.exists?(SO
 SOLR_PORT = SOLR_SETTINGS['port'] if SOLR_SETTINGS and SOLR_SETTINGS['port']
 SOLR_PORT = "8983" unless defined? SOLR_PORT
 
+# Port used to send "stop" command to Jetty in order to shutdown Solr nicely
+# (This SOLR_STOP_PORT variable is used by /lib/tasks/solr.rake when stopping Solr)
+SOLR_STOP_PORT = SOLR_SETTINGS['stop_port'] if SOLR_SETTINGS and SOLR_SETTINGS['stop_port']
+SOLR_STOP_PORT = "8079" unless defined? SOLR_STOP_PORT
+
 # Build our Solr URL (used by Solr Connection below)
 SOLR_URL = "http://localhost:#{SOLR_PORT}/solr" unless defined? SOLR_URL
 
