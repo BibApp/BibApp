@@ -7,4 +7,6 @@
       .notice= flash[:notice]
 
     %h2 Add a Group
-    = render :partial => 'form'
+
+    - form_for :group, @group, :url => {:controller => "groups", :action => "create"}, :html => {:method => :post} do |form|
+      = render :partial => 'form', :locals => { :form => form }
