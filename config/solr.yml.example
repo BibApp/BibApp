@@ -5,7 +5,7 @@
 #
 #   port:       Port on which Solr will run
 #   stop_port:  Port on which Solr will listen for 'stop' requests.  This is 
-#               used to shutdown Solr nicely.
+#               used to shutdown Solr nicely. (Not used for Windows)
 #
 # If you need to make more major changes to how Solr runs, you can override
 # Solr's initialization settings (from config/initializers/solr.rb) in your
