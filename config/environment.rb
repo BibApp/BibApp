@@ -121,7 +121,8 @@ end
 
 
 #Initialize Workling plugin (http://github.com/purzelrakete/workling/)
-#  By default, BibApp uses the Spawn plugin for simple backend processing
+#  By default, BibApp uses the Spawn plugin (http://rubyforge.org/projects/spawn) 
+#  for simple backend processing.
 #  However, if you want more scalability/speed, you may want to 
 #  switch to using Starling (http://rubyforge.org/projects/starling/)
 #  To switch to Starling (UNTESTED)
