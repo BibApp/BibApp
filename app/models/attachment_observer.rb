@@ -11,8 +11,8 @@ class AttachmentObserver < ActiveRecord::Observer
     end
   end
   
-  # If a Person is ever destroyed, we need to also update Solr index
-  #  for all of his/her verified citations
+  # If an Attachment is destroyed, we need to check and see
+  # if Solr needs to do reindexing
   def before_destroy(attachment)
     #Only update index if this is an Image attachment for a Person
     if attachment.asset.kind_of?(Person) and attachment.kind_of?(Image)
