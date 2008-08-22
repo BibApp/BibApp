@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
     end
     
     def unverified
-      find(:all, :conditions => ["contributorships.contributorship_state_id = >", 1], :include => [:citation], :order => "citations.publication_date desc")
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :include => [:citation], :order => "citations.publication_date desc")
     end
     
     def verified
