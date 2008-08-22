@@ -9,7 +9,7 @@
     %p.person-edit-actions
       = render :partial => "edit_actions"
   %div{:class => "span-22 prepend-1"}
-    %h2="Edit #{@person.name}"
+    %h2="Edit #{link_to @person.name, person_path(@person)}"
     %div{:class => "span-4"}
       = render :partial => "shared/person_image", :locals => {:o => @person}
       -if @person.image

@@ -1,6 +1,6 @@
 %strong
   Edit: 
-= link_to @person.first_last, edit_person_path(@person)
+= link_to "Personal Info", edit_person_path(@person)
 |
 = link_to "Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
 | 

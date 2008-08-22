@@ -3,7 +3,7 @@
     %p.edit_person_actions
       %strong
         Edit: 
-      = link_to @person.first_last, edit_person_path(@person)
+      = link_to "Personal Info", edit_person_path(@person)
       |
       = link_to "Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
       | 
@@ -12,7 +12,7 @@
       = link_to "Pen Names", {:controller => "pen_names", :action => "new", :params => {"person_id", @person.id}}
     
 
-    %h2="#{@status.capitalize} Contributorships for:  #{@person.name}"
+    %h2="#{@status.capitalize} Contributorships for: #{link_to @person.name, person_path(@person)}"
     %div{:class => "column span-14"}
       %ul.actions
         %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => @page))
