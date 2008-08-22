@@ -33,9 +33,9 @@ class Contributorship   < ActiveRecord::Base
     end
   end
   
-  after_destroy do |contributorship|
-    Index.update_solr(contributorship.citation)
-  end
+  ## Note: no 'after_destroy' is necessary here, as PenNameObserver 
+  ## takes care of updating Solr before destroying Contributorships
+  ## associated with a PenName.
 
   def calculate_score
     

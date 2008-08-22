@@ -109,7 +109,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   config.active_record.observers = :index_observer, :user_observer, 
-                                   :person_observer, :group_observer,
+                                   :person_observer, :pen_name_observer,
+                                   :group_observer,
                                    :publication_observer, :publisher_observer,
                                    :attachment_observer
                                    
