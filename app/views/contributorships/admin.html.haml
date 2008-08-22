@@ -6,7 +6,7 @@
     - if @contributorship == nil
       %p Congrats!  Nothing to do here.
     - else
-      = render :partial => "shared/citation", :locals => {:citation => @contributorship.citation}
+      = render :partial => "shared/citation", :locals => {:citation => Index.citation_to_solr_hash(@contributorship.citation)}
       %h4 Keywords
       %p
         - @contributorship.citation.keywords.each do |k|
