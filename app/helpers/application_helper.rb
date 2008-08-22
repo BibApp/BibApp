@@ -54,15 +54,15 @@ module ApplicationHelper
     #Substitute citation title
     suffix = (citation['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation['title'].gsub(" ", "+"))
     #Substitute citation year
-    suffix = (citation['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation['year'])
+    suffix = (citation['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation['year'].to_s)
     #Substitute citation issue
-    suffix = (citation['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation['issue'])
+    suffix = (citation['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation['issue'].to_s)
     #Substitute citation volume
-    suffix = (citation['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation['volume'])
+    suffix = (citation['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation['volume'].to_s)
     #Substitute citation start-page
-    suffix = (citation['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation['start_page'])
+    suffix = (citation['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation['start_page'].to_s)
     #Substitute citation ISSN/ISBN
-    suffix = (citation['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation['issn_isbn'])
+    suffix = (citation['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation['issn_isbn'].to_s)
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"

@@ -269,6 +269,31 @@ class Index
       return docs
     end
     
+    
+    # Output a citation as if it came directly from Solr index
+    # This is useful if a View has the full Citation object
+    # but still wants to take advantage of the
+    # '/views/shared/citation' partial (which expects the
+    # citation data to be in the Hash format Solr returns).
+    def citation_to_solr_hash(citation)
+      # Transform Citation using our Solr Mapping
+      if citation.publication_date != nil
+        #add dates to our mapping
+        mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
+        doc = Solr::Importer::Mapper.new(mapping).map(citation)
+      else
+        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(citation)
+      end
+      
+      # We now have a hash with symbols (e.g. :title) for keys.
+      # However, we need one with strings (e.g. "title") for keys.
+      # So, we use HashWithIndifferentAccess to convert to a 
+      # hash which has strings for keys.
+      solr_hash = HashWithIndifferentAccess.new(doc).to_hash
+      
+      return solr_hash
+    end
+    
     private
     
     #Process the response returned from a Solr query, 
