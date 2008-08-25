@@ -1,4 +1,4 @@
-class RefworksDepricatedXmlParser < CitationParser
+class RefworksDeprecatedXmlParser < CitationParser
   require 'hpricot' if defined? Hpricot
   require 'htmlentities' if defined? HTMLEntities
     
@@ -6,7 +6,7 @@ class RefworksDepricatedXmlParser < CitationParser
   # using Hpricot to parse the Refworks XML format
   def parse(data)
     if data != nil
-      data.gsub("—", "-").gsub("ÿ", "y").gsub("’", "'")
+      data.gsub("ï¿½", "-").gsub("ï¿½", "y").gsub("ï¿½", "'")
     end
     Hpricot.buffer_size = 204800
     xml = Hpricot.XML(data)
@@ -17,7 +17,7 @@ class RefworksDepricatedXmlParser < CitationParser
   
     (xml/'z:row').each { |ref|
       # add the citation to the database
-      c = ParsedCitation.new(:refworks_depricated_xml)
+      c = ParsedCitation.new(:refworks_deprecated_xml)
 
       # escape and parse troublesome keywords
       keywords = HTMLEntities.new
