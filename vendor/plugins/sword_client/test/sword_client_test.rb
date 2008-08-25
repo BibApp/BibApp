@@ -1,12 +1,9 @@
 #initialize environment
-ENV['RAILS_ENV'] = 'test'
-ENV['RAILS_ROOT'] ||= File.dirname(__FILE__) + '/../../../..'
+RAILS_ENV = 'test'
 
 require 'test/unit'
 require 'sword_client'
-
-#load rails environment
-require File.expand_path(File.join(ENV['RAILS_ROOT'], 'config/environment.rb'))
+require 'yaml'
 
 class SwordClientTest < Test::Unit::TestCase
   FIX_DIR = "#{File.expand_path(File.dirname(__FILE__))}/fixtures"
@@ -71,13 +68,16 @@ class SwordClientTest < Test::Unit::TestCase
   end
   
   def test_load_from_config
-    # tests initialization from RAILS_ROOT/config/sword.yml
-    client = SwordClient.new
+    # tests initialization from test/fixtures/sword.yml
+    client = SwordClient.new("#{FIX_DIR}/sword.yml")
     
     assert_not_nil client.connection
     assert_instance_of SwordClient::Connection, client.connection
     
     assert client.config['service_doc_url']  #service_doc_url should always be in config!
+    
+    assert_equal client.config['service_doc_url'], "http://localhost:8080/sword-app/servicedocument"
+    assert_equal client.config['username'], "myusername"
     
     assert client.connection.url()
  
