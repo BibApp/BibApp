@@ -48,7 +48,16 @@ class Citation < ActiveRecord::Base
   named_scope :deleted, :conditions => ["citation_state_id = ?", 5]
   
   # Citation flagged for batch indexing
-  named_scope :to_batch_index, :conditions => ["batch_index = ?", 1]
+  named_scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
+    # Method to mark all these citations as 'indexed'
+    # by resetting 'batch_index' flag to false
+    def indexed
+      each do |citation|
+        citation.batch_index=0
+        citation.save_without_callbacks
+      end
+    end
+  end
   
   #Various Citation Contribution Statuses
   named_scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]

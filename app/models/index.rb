@@ -81,21 +81,18 @@ class Index
   
   
   class << self
+    
+    # Index all accepted citations which have been flagged for batch indexing
     def batch_index
       records = Citation.accepted.to_batch_index
       
-      records.each do |record|
-        if record.publication_date != nil
-          #add dates to our mapping
-          mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-          doc = Solr::Importer::Mapper.new(mapping).map(record)
-        else
-          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-        end
-        SOLRCONN.add(doc)
-        record.batch_index = 0
-        record.save_without_callbacks
+      #Batch index 100 records at a time...wait to commit till the end.
+      records.each_slice(100) do |records_slice|
+        batch_update_solr(records_slice, false)
       end
+      
+      #Mark all these citations as indexed & commit changes to Solr
+      records.indexed
       SOLRCONN.commit
     end
     
@@ -107,24 +104,21 @@ class Index
       end
     end
     
-    #Reindex *everything* in Solr
+    #Re-index *everything* in Solr
+    #  This method is useful in case your Solr index 
+    #  gets out of sync with your DB
     def index_all
       #Delete all existing records in Solr
       SOLRCONN.delete_by_query('*:*')
         
-      #Reindex all citations again  
+      #Reindex all accepted citations again  
       records = Citation.accepted
-      records.each do |record|
-        if record.publication_date != nil
-          #add dates to our mapping
-          mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-          doc = Solr::Importer::Mapper.new(mapping).map(record)
-        else
-          doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-        end
-        
-        SOLRCONN.add(doc)
+      
+      #Do a batch update, 100 records at a time...wait to commit till the end.
+      records.each_slice(100) do |records_slice|
+        batch_update_solr(records_slice, false)
       end
+      
       SOLRCONN.commit
       Index.build_spelling_suggestions
     end
@@ -133,7 +127,9 @@ class Index
       SOLRCONN.send(Solr::Request::Spellcheck.new(:command => "rebuild", :query => "physcs"))
     end
   
-    def update_solr(record)
+    #Update a single record in Solr
+    # (for bulk updating, use 'batch_update_solr', as it is faster)
+    def update_solr(record, commit_records=true)
       if record.publication_date != nil
           #add dates to our mapping
           mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
@@ -143,12 +139,11 @@ class Index
       end
       
       SOLRCONN.add(doc)
-      SOLRCONN.commit
+      SOLRCONN.commit if commit_records
     end
     
     #Batch update several records with a single request to Solr
-    def batch_update_solr(records)
-      
+    def batch_update_solr(records, commit_records=true)
       docs = Array.new
       records.each do |record|
         if record.publication_date != nil
@@ -166,10 +161,10 @@ class Index
       #Send one update request for all docs!
       request = Solr::Request::AddDocument.new(docs)
       SOLRCONN.send(request)
-      SOLRCONN.commit
+      SOLRCONN.commit if commit_records
     end
     
-  
+    #Remove a single record from Solr
     def remove_from_solr(record)
       SOLRCONN.delete(record.solr_id)
       SOLRCONN.commit
