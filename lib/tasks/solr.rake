@@ -99,13 +99,26 @@ namespace :solr do
   
   desc 'Refresh Solr index'
   task :refresh_index do
-    puts "\nRe-indexing all BibApp Citations in Solr...\n"
-    puts "\n**** This may take a long time.\n\n"
+    puts "\nRe-indexing all BibApp Citations in Solr...\n\n"
+    puts "**** Depending on the number of citations, \n"
+    puts "**** this may take a long time.\n\n"
 
+    start_time = Time.now
+    puts "Start time: #{start_time.localtime}"
+    
     #Call index_all, which re-indexes *everything* in BibApp
     Index.index_all
     
-    puts "Finished!"
+    end_time = Time.now
+    puts "End time: #{end_time.localtime}"
+    
+    #Caculate total indexing time
+    total = end_time.to_i - start_time.to_i
+    time = "#{total.div(60).to_s} minutes" if total >=120
+    time = "#{total.div(60).to_s} minute, #{total.remainder(60).to_s} seconds" if total >= 60 and total < 120
+    time = "#{(total).to_s} seconds" if total < 60
+    
+    puts "Finished indexing!  Total indexing time: #{time}" 
   end
   
   desc 'Refresh Solr Spelling index'
@@ -117,4 +130,5 @@ namespace :solr do
     
     puts "Finished!"
   end
+
 end
