@@ -3,7 +3,7 @@
 # This is the core class which communicates with the SWORD Server
 # and sends GET or POST requests via HTTP
 
-require 'net/http'
+require 'net/https'
 
 class SwordClient::Connection
   
