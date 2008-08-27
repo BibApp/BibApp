@@ -4,7 +4,7 @@ class PersonObserver < ActiveRecord::Observer
   #  we need to tell Solr to reindex his/her citations
   def after_save(person)
     #Only update index if Person info that Solr uses is updated
-    if person.first_name_changed? or person.last_name_changed?
+    if person.first_name_changed? or person.last_name_changed? or person.image_changed?
       #Asynchronously update Solr index for verified citations
       #  (This uses the Workling Plugin for asynchronization)
       IndexWorker.async_update_index(person.citations.verified)
