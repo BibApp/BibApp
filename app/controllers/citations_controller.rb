@@ -102,9 +102,16 @@ class CitationsController < ApplicationController
 
     # If we need to add a batch
     if params[:type] == "AddBatch"
-    	
-	  logger.debug("\n\n===ADDING BATCH CITATIONS===\n\n")	
-      successful = import_batch!(params[:citation][:citations])
+    
+      logger.debug("\n\n===ADDING BATCH CITATIONS===\n\n")
+      unless params[:citation][:citations_file].nil? or params[:citation][:citations_file].kind_of?String
+        #user uploaded a file of citations
+        successful = import_batch!(params[:citation][:citations_file])
+      else 
+        #user used cut & paste to add citations
+        successful = import_batch!(params[:citation][:citations])
+      end
+      
       
       respond_to do |format|
         if successful == 1
@@ -653,8 +660,10 @@ class CitationsController < ApplicationController
     #This error occurs if the citations were parsed, but some bad data
     #was entered which caused an error to occur when saving the data
     #to the database.
-    rescue
+    rescue Exception => e
       puts("\nThere was an unrecoverable error on the batch import!!\n") 
+      puts("\nUnderlying error: #{e.to_s}\n")
+      puts("\nError Trace: #{e.backtrace.join("\n")}")
       
       success = 2
       
