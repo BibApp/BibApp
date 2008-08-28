@@ -91,12 +91,6 @@ class CitationsController < ApplicationController
   end
   
   def create
-    # @TODO: This step is dumb, we should map attrs in the SubClass::create method itself
-    # If we have a Book object, we need to capture the Title as the new Publication Name
-    #if params[:type] == 'BookWhole'
-      #params[:publication][:name] = params[:citation][:title_primary]
-    #end
-    
     #Anyone with 'editor' role (anywhere) can add citations
     permit "editor"
 
@@ -170,20 +164,13 @@ class CitationsController < ApplicationController
     #First, update citation attributes (ensures deduplication keys are updated)
     @citation.attributes=params[:citation]   
 
-  #  @citation.save
-
     #Then, update other citation information
     update_citation_info
    
     respond_to do |format|
-      #if @citation.save and Index.update_solr(@citation)
-        flash[:notice] = "Citation was successfully updated."
-        format.html {redirect_to citation_url(@citation)}
-        format.xml  {head :ok}
-   #   else
-    #    format.html {render :action => "edit"}
-    #    format.xml  {render :xml => @citation.errors.to_xml}
-    #  end
+      flash[:notice] = "Citation was successfully updated."
+      format.html {redirect_to citation_url(@citation)}
+      format.xml  {head :ok}
     end
   end
   
