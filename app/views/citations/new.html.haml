@@ -17,5 +17,5 @@
         %li
           =link_to ct, new_citation_path(:type => ct)
 
-    - form_for :citation, @citation, :url => {:controller => "citations", :action => "create"}, :html => {:method => :post} do |form|
+    - form_for :citation, @citation, :url => {:controller => "citations", :action => "create"}, :html => {:method => :post, :multipart => true} do |form|
       = render :partial => "citations/forms/form_#{@citation.class.name.to_s.underscore}", :locals => { :form => form }
