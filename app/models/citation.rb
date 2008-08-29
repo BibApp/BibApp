@@ -726,14 +726,15 @@ class Citation < ActiveRecord::Base
       name_strings_hash.flatten.each do |cns|
         #if this is a brand new name_string, we must save it first
         logger.debug("CNS: #{cns.inspect}")
-        name_string = NameString.find_or_create_by_name(cns[:name])
+        machine_name = cns[:name].gsub(".", " ").gsub(",", " ").gsub(/ +/, " ").strip.downcase
+        name_string = NameString.find_or_create_by_machine_name(machine_name)
         
         #add it to this citation
         CitationNameString.create(
-                                  :citation_id => citation.id,
-                                  :name_string_id => name_string.id, 
-                                  :role => cns[:role]
-                               )
+          :citation_id => citation.id,
+          :name_string_id => name_string.id, 
+          :role => cns[:role]
+        )
       end
     end
   end    

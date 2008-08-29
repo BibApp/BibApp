@@ -5,5 +5,6 @@
       %label="Name"
       %br/
       = form.text_field :name
+      = form.hidden_field :cleaned, :value => true
     %p.submit
       = submit_tag :save

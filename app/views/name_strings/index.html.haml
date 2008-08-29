@@ -1,7 +1,21 @@
-%h3="NameStrings - #{link_to 'Add', new_name_string_path}"
-%ul.name_strings
-  -@name_strings.each do |ns|
-    %li
-      ="#{ns.name}"
-      = render :partial => "actions", :locals => { :ns => ns }
+/ === NameStrings === Index ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a NameString", new_name_string_path
+
+    - if flash[:notice]
+      %div.success= flash[:notice]
+      
+  %div{:class => "column span-22 prepend-1"}
+    %h2="NameStrings (#{@page})"
+
+    = render :partial => "shared/alpha_pagination"
+    
+    %ol#name_strings
+      -@current_objects.each do |name_string|
+        %li.name_string
+          =link_to "#{name_string.name}", name_string_path(name_string)
   
