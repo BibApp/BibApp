@@ -31,14 +31,15 @@
         %h3{:style => "padding-top:1em"}Research Focus
         #research_focus=@research_focus
 
-        %h3 Groups
-        %ul#groups
-          - @person.memberships.each do |m|
-            -if m.group.hide == false
-              %li{:style => "display:inline; padding-right:1em"}
-                =link_to m.group.name, group_path(m.group)
+    - if !@person.memberships.empty?
+      %h3 Groups
+      %ul#groups
+        - @person.memberships.each do |m|
+          -if m.group.hide == false
+            %li{:style => "display:inline; padding-right:1em"}
+              =link_to m.group.name, group_path(m.group)
 
-        = render :partial => "shared/coauthors"
+    = render :partial => "shared/coauthors"
 
     - if !@export.empty?
       %div#results{:class => "span-22"}
