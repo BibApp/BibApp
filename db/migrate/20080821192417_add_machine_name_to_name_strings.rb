@@ -39,11 +39,11 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
     # 5) Delete duplicate
     
     puts "Unique duplicate names: #{duplicates.size}"
-    duplicates.each do |dc|
-      puts "Cleaning: #{dc}"
+    duplicates.each do |dupe|
+      puts "Cleaning: #{dupe}"
       # Find all duplicates
-      dupe_candidates = NameString.find(:all, :conditions => ["machine_name = ?", dc])
-      puts "Count for #{dc}: #{dupe_candidates.size}"
+      dupe_candidates = NameString.find(:all, :conditions => ["machine_name = ?", dupe])
+      puts "Count for #{dupe}: #{dupe_candidates.size}"
       
       # Clean them up - first is keeper, rest are dupes
       count = 0
