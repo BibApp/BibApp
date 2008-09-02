@@ -2,87 +2,93 @@
 -# Build Refine Results sidebar, using facet information from Solr
 -# 
 %div#filters{:class => "span-6 append-1"}
-  %h3{:style => "padding:0em; margin:1em 0em; color:#6884AB;"} Refine Results
+  %h3{:style => "color:#6884AB;"} Refine Results
+  -# Delete any filters pertaining to current object from removal list
+  -@filter.delete_if{ |f| !@current_object.nil? and f.include?('"' + @current_object.id.to_s + '"') }
   - if !@filter.empty?
     %ol.filters
       - @filter.each do |f|
-        -# allow removal of all filters except a filter pertaining to current object
-        - if @current_object!=nil and !f.include?('"' + @current_object.name + '"')
-          %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
-
-        - if @current_object.nil?
-          %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
+        %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
 
 
   / CitationType Filter
-  %h4.heading Formats
-  %ol.filters.types
-    -@facets[:types].each do |p|
-      %li
-        =add_filter(@query,@sort,@filter,"type_facet",p.name.underscore.humanize,p.value,@view,@rows)
+  -if !@facets[:types].empty?
+    %h4.heading Formats
+    %ol.filters.types
+      -@facets[:types].each do |p|
+        %li
+          =add_filter(@query,@sort,@filter,"type_facet",p.name.underscore.humanize,p.value,@view,@rows)
 
   / Groups
-  %h4.heading Groups
-  %ol#top-five-groups.filters.groups
-    -@facets[:groups].first(5).each do |g|
-      %li.show
-        =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
+  -#Remove group facet that represents the current group
+  -@facets[:groups].delete_if{ |g| @current_object.kind_of?(Group) and @current_object.name==g.name }
+  -if !@facets[:groups].empty?
+    %h4.heading Groups
+    %ol#top-five-groups.filters.groups
+      -@facets[:groups].first(5).each do |g|
+        %li.show
+          =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
 
-    - if @facets[:groups].size > 5
-      %ol#all-groups.filters.groups{:style => "display:none"}
-        -@facets[:groups].each do |g|
-          %li.show
-            =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
+      - if @facets[:groups].size > 5
+        %ol#all-groups.filters.groups{:style => "display:none"}
+          -@facets[:groups].each do |g|
+            %li.show
+              =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
 
-      %p.more=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+        %p.more=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
   / People
-  %h4.heading People
-  %ol#top-five-people.filters.people
-    -@facets[:people].first(5).each do |p|
-      %li.show
-        =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
-
-  - if @facets[:people].size > 5
-    %ol#all-people.filters.groups{:style => "display:none"}
-      -@facets[:people].each do |p|
+  -#Remove person facet that represents the current person
+  -@facets[:people].delete_if{ |p| @current_object.kind_of?(Person) and @current_object.name==p.name }
+  -if !@facets[:people].empty?
+    %h4.heading People
+    %ol#top-five-people.filters.people
+      -@facets[:people].first(5).each do |p|
         %li.show
           =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
 
-    %p.more=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
+    - if @facets[:people].size > 5
+      %ol#all-people.filters.groups{:style => "display:none"}
+        -@facets[:people].each do |p|
+          %li.show
+            =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
+
+      %p.more=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
   / Years
-  %h4.heading Years
-  
-  - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
+  -if !@facets[:years].empty?
+    %h4.heading Years
 
-  %ol#top-five-years.filters.years
-    -sorted_hash.first(5).each do |key, value|
-      %li.show
-        =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
+    - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
 
-  - if sorted_hash.size > 5
-    %ol#all-years.filters.groups{:style => "display:none"}
-
-      -sorted_hash.each do |key, value|
+    %ol#top-five-years.filters.years
+      -sorted_hash.first(5).each do |key, value|
         %li.show
           =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
 
-    %p.more=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
+    - if sorted_hash.size > 5
+      %ol#all-years.filters.groups{:style => "display:none"}
+
+        -sorted_hash.each do |key, value|
+          %li.show
+            =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
+
+      %p.more=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
   / Publications
-  %h4.heading Publications
-  %ol#top-five-publications.filters.publications
-    -@facets[:publications].first(5).each do |p|
-      - next if p.name == "Unknown"
-      %li.show
-        =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
-
-  - if @facets[:publications].size > 5
-    %ol#all-publications.filters.groups{:style => "display:none"}
-      -@facets[:publications].each do |p|
-        - next if p.name == "Unknown"
+  -#Remove Publication facets that represents the current publication or "Unknown"
+  -@facets[:publications].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publication) and @current_object.name==p.name) }
+  -if !@facets[:publications].empty?
+    %h4.heading Publications
+    %ol#top-five-publications.filters.publications
+      -@facets[:publications].first(5).each do |p|
         %li.show
           =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
 
-    %p.more=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+    - if @facets[:publications].size > 5
+      %ol#all-publications.filters.groups{:style => "display:none"}
+        -@facets[:publications].each do |p|
+          %li.show
+            =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
+
+      %p.more=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"

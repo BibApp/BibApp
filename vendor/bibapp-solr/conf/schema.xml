@@ -254,7 +254,7 @@
 <fields>
   <!--==== Primary BibApp Fields stored in Solr ====-->
  <field name="id" type="string" indexed="true" stored="true" required="true" /> 
- <field name="pk_i" type="integer" indexed="true" stored="true"/>
+ <field name="pk_i" type="long" indexed="true" stored="true"/>
  <field name="title" type="text" indexed="true" stored="true"/>
  <field name="title_secondary" type="text" indexed="true" stored="true"/>
  <field name="title_tertiary" type="text" indexed="true" stored="true"/>
@@ -289,6 +289,13 @@
  <dynamicField name="*_data" type="string" indexed="false" stored="true" multiValued="true"/>
 
 
+ <!--====ID Fields====-->
+ <!-- This dynamic field indexes all of the BibApp database IDs.  These database IDs are
+      used as the primary filter to generate individual Person/Group/Publication/Publisher pages.
+      Using ID as primary filter ensures that, e.g. if a Person changes his/her name, the immediate
+      citation results are still the same from Solr (even if backend indexing hasn't fully updated after name change)-->
+ <dynamicField name="*_id" type="long" indexed="true" stored="false" multiValued='true'/>
+ 
  <!--===Dynamic Faceting Fields==-->
  <!-- All our facets (*_facet fields) are matched by this dynamic field -->
  <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>

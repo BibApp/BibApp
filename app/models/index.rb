@@ -47,29 +47,36 @@ class Index
     
     # NameStrings
     :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
+    :name_string_id => Proc.new{|record| record.name_strings.collect{|ns| ns.id}},
     :name_strings_data => Proc.new{|record| record.name_strings.collect{|ns| ns.to_solr_data}},
     
     # People
     :people => Proc.new{|record| record.people.collect{|p| p.first_last}},
+    :person_id => Proc.new{|record| record.people.collect{|p| p.id}},
     :people_data => Proc.new{|record| record.people.collect{|p| p.to_solr_data}},
     
     # Groups
     :groups => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.name}}.uniq.flatten},
+    :group_id => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.id}}.uniq.flatten},
     :groups_data => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.to_solr_data}}.uniq.flatten},
     
     # Publication
     :publication => Proc.new{|record| record.publication.authority.name},
+    :publication_id => Proc.new{|record| record.publication.authority.id},
     :publication_data => Proc.new{|record| record.publication.authority.to_solr_data},
     
     # Publisher
     :publisher => Proc.new{|record| record.publisher.authority.name},
+    :publisher_id => Proc.new{|record| record.publisher.authority.id},
     :publisher_data => Proc.new{|record| record.publisher.authority.to_solr_data},
     
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},
+    :keyword_id => Proc.new{|record| record.keywords.collect{|k| k.id}},
     
     # Tags
-    :tags => Proc.new{|record| record.tags.collect{|k| k.name}}
+    :tags => Proc.new{|record| record.tags.collect{|t| t.name}},
+    :tag_id => Proc.new{|record| record.tags.collect{|t| t.id}}
   }
   
   # Mapping specific to dates
