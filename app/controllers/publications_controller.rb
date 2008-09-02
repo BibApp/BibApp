@@ -41,8 +41,8 @@ class PublicationsController < ApplicationController
     before :show do
       # Default SolrRuby params
       @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
-      @filter       = params[:fq] || "publication_facet:\"#{@current_object.name}\""
-      @filter_no_strip = params[:fq] || "publication_facet:\"#{@current_object.name}\""
+      @filter       = params[:fq] || "publication_id:\"#{@current_object.id}\""
+      @filter_no_strip = params[:fq] || "publication_id:\"#{@current_object.id}\""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
       @sort         = params[:sort] || "year"
       @sort         = "year" if @sort.empty?
