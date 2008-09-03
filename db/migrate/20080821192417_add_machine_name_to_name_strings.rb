@@ -60,12 +60,15 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
             cns.update_attribute(:name_string_id, dupe_candidates[0].id)
           }
           
-          if dc.citation_name_strings.size == 0
+          #Refresh our dupe candidate, so we can check if it now has no citation_name_strings
+          dc.reload
+          
+          if dc.citation_name_strings.empty?
             # Destroy the dupe
             puts "Destroying NameString: #{dc.id}"
             dc.destroy
           else
-            puts "Trouble cleaning NameString: #{dc.id}"
+            puts "Trouble cleaning NameString: #{dc.id} It still has #{dc.citation_name_strings.size} CitationNameStrings associated."
           end
         end
       end
