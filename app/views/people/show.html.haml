@@ -28,8 +28,8 @@
 
     %div{:class => "span-14 prepend-1 last"}
       - if @research_focus.strip.length > 0
-          %h3{:style => "padding-top:1em"}Research Focus
-          #research_focus=@research_focus
+        %h3{:style => "padding-top:1em"}Research Focus
+        #research_focus=@research_focus
 
       - if !@person.memberships.empty?
         %h3 Groups
