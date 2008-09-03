@@ -26,20 +26,20 @@
     %div#person-image{:class => "span-6 append-1"}  
       =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "150x200")
 
-    -if @research_focus.strip.length > 0
-      %div{:class => "span-14 prepend-1 last"}
-        %h3{:style => "padding-top:1em"}Research Focus
-        #research_focus=@research_focus
+    %div{:class => "span-14 prepend-1 last"}
+      - if @research_focus.strip.length > 0
+          %h3{:style => "padding-top:1em"}Research Focus
+          #research_focus=@research_focus
 
-    - if !@person.memberships.empty?
-      %h3 Groups
-      %ul#groups
-        - @person.memberships.each do |m|
-          -if m.group.hide == false
-            %li{:style => "display:inline; padding-right:1em"}
-              =link_to m.group.name, group_path(m.group)
+      - if !@person.memberships.empty?
+        %h3 Groups
+        %ul#groups
+          - @person.memberships.each do |m|
+            -if m.group.hide == false
+              %li{:style => "display:inline; padding-right:1em"}
+                =link_to m.group.name, group_path(m.group)
 
-    = render :partial => "shared/coauthors"
+      = render :partial => "shared/coauthors"
 
     - if !@export.empty?
       %div#results{:class => "span-22"}
