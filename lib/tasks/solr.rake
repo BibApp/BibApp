@@ -99,8 +99,8 @@ namespace :solr do
   
   desc 'Refresh Solr index'
   task :refresh_index do
-    puts "\nRe-indexing all BibApp Citations in Solr...\n\n"
-    puts "**** Depending on the number of citations, \n"
+    puts "\nRe-indexing all BibApp Works in Solr...\n\n"
+    puts "**** Depending on the number of works, \n"
     puts "**** this may take a long time.\n\n"
 
     start_time = Time.now

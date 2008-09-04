@@ -5,9 +5,9 @@ class AttachmentObserver < ActiveRecord::Observer
   def after_save(attachment)
     #Only update index if this is an Image attachment for a Person
     if attachment.asset.kind_of?(Person) and attachment.kind_of?(Image)
-      #Asynchronously update Solr index for Person's verified citations
+      #Asynchronously update Solr index for Person's verified works
       #  (This uses the Workling Plugin for asynchronization)
-      IndexWorker.async_update_index(attachment.asset.citations.verified) 
+      IndexWorker.async_update_index(attachment.asset.works.verified) 
     end
   end
   
@@ -16,7 +16,7 @@ class AttachmentObserver < ActiveRecord::Observer
   def before_destroy(attachment)
     #Only update index if this is an Image attachment for a Person
     if attachment.asset.kind_of?(Person) and attachment.kind_of?(Image)
-      IndexWorker.async_update_index(attachment.asset.citations.verified)
+      IndexWorker.async_update_index(attachment.asset.works.verified)
     end
   end
     

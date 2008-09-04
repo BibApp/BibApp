@@ -20,19 +20,19 @@ class Index
 
   # DELETE INDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
-  ## citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
-  ## citations.each{|c| Index.remove_from_solr(c)} 
+  ## works = Work.find(:all, :conditions => ["work_state_id = 3"])
+  ## works.each{|c| Index.remove_from_solr(c)} 
 
   # REINDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
-  ## citations = Citation.find(:all, :conditions => ["citation_state_id = 3"])
-  ## citations.each{|c| Index.update_solr(c)}
+  ## works = Work.find(:all, :conditions => ["work_state_id = 3"])
+  ## works.each{|c| Index.update_solr(c)}
   
   # Default Solr Mapping 
   SOLR_MAPPING = {
-    # Citation
-    :pk_i => :id,  #store Citation ID as pk_i in Solr
-    :id => Proc.new{|record| record.solr_id}, #create a unique Solr ID for Citation
+    # Work
+    :pk_i => :id,  #store Work ID as pk_i in Solr
+    :id => Proc.new{|record| record.solr_id}, #create a unique Solr ID for Work
     :title => :title_primary,
     :title_secondary => :title_secondary,
     :title_tertiary => :title_tertiary,
@@ -42,7 +42,7 @@ class Index
     :abstract => :abstract,
     :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
     
-    # Citation Type (index as "Journal article" rather than "JournalArticle")
+    # Work Type (index as "Journal article" rather than "JournalArticle")
     :type_facet => Proc.new{|record| record[:type].underscore.humanize},
     
     # NameStrings
@@ -89,16 +89,16 @@ class Index
   
   class << self
     
-    # Index all accepted citations which have been flagged for batch indexing
+    # Index all accepted Works which have been flagged for batch indexing
     def batch_index
-      records = Citation.accepted.to_batch_index
+      records = Work.accepted.to_batch_index
       
       #Batch index 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
         batch_update_solr(records_slice, false)
       end
       
-      #Mark all these citations as indexed & commit changes to Solr
+      #Mark all these Works as indexed & commit changes to Solr
       records.indexed
       SOLRCONN.commit
     end
@@ -118,8 +118,8 @@ class Index
       #Delete all existing records in Solr
       SOLRCONN.delete_by_query('*:*')
         
-      #Reindex all accepted citations again  
-      records = Citation.accepted
+      #Reindex all accepted Works again  
+      records = Work.accepted
       
       #Do a batch update, 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
@@ -252,10 +252,10 @@ class Index
       docs = SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).data["response"]["docs"]
     end
     
-    # Retrieve recommendations from Solr, based on current citation
-    def recommendations(citation)
+    # Retrieve recommendations from Solr, based on current Work
+    def recommendations(work)
       r = SOLRCONN.send(Solr::Request::Standard.new(
-        :query => "id:#{citation.solr_id}", 
+        :query => "id:#{work.solr_id}", 
         :mlt => {
           :count => 5, 
           :field_list => ["abstract","title"]
@@ -263,28 +263,28 @@ class Index
       )
 
       docs = Array.new
-      r.data["moreLikeThis"]["#{citation.solr_id}"]["docs"].each do |doc|
-        citation = Citation.find(doc["pk_i"])
-        docs << [citation, doc['score']]
+      r.data["moreLikeThis"]["#{work.solr_id}"]["docs"].each do |doc|
+        work = Work.find(doc["pk_i"])
+        docs << [work, doc['score']]
       end
       
       return docs
     end
     
     
-    # Output a citation as if it came directly from Solr index
-    # This is useful if a View has the full Citation object
+    # Output a Work as if it came directly from Solr index
+    # This is useful if a View has the full Work object
     # but still wants to take advantage of the
-    # '/views/shared/citation' partial (which expects the
-    # citation data to be in the Hash format Solr returns).
-    def citation_to_solr_hash(citation)
-      # Transform Citation using our Solr Mapping
-      if citation.publication_date != nil
+    # '/views/shared/work' partial (which expects the
+    # work data to be in the Hash format Solr returns).
+    def work_to_solr_hash(work)
+      # Transform Work using our Solr Mapping
+      if work.publication_date != nil
         #add dates to our mapping
         mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-        doc = Solr::Importer::Mapper.new(mapping).map(citation)
+        doc = Solr::Importer::Mapper.new(mapping).map(work)
       else
-        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(citation)
+        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(work)
       end
       
       # We now have a hash with symbols (e.g. :title) for keys.

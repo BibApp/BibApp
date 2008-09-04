@@ -11,31 +11,31 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery :secret => '6ef4f4bba39aae6ef1a1da02e1ace6d8'
   
-  # Adds a citation.id to the session[:cart] array
+  # Adds a work.id to the session[:cart] array
   def add_to_cart
     @cart = find_cart
-    citation = Citation.find(params[:id])
-    @cart.add_citation(citation)
+    work = Work.find(params[:id])
+    @cart.add_work(work)
     redirect_to :back
   end
   
   def add_many_to_cart
     @cart = find_cart
     
-    citations = Index.fetch_all_ids(params[:query],params[:facets],params[:sort],params[:rows])
+    works = Index.fetch_all_ids(params[:query],params[:facets],params[:sort],params[:rows])
     
-    citations.each do |citation|
-      citation = Citation.find(citation)
-      @cart.add_citation(citation)
+    works.each do |work|
+      work = Work.find(work)
+      @cart.add_work(work)
     end
     
     redirect_to :back
   end
 
-  # Removes a citation.id to the session[:cart] array  
+  # Removes a work.id to the session[:cart] array  
   def remove_from_cart
     @cart = find_cart
-    @cart.remove_citation(params[:id].to_i)
+    @cart.remove_work(params[:id].to_i)
     redirect_to :back
   end
 

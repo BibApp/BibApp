@@ -1,0 +1,45 @@
+-# OpenURL ContextObject KEV (Key/Encoded-Value) syntax
+-#   Used in the EPrints Application Profile's 'bibliographicCitation' field
+-#   See: http://www.ukoln.ac.uk/repositories/digirep/index/Eprints_Application_Profile
+-#   Also: http://dublincore.org/documents/dc-citation-guidelines/
+
+%epdcx:valueString{ 'epdcx:sesURI'=>"info:ofi/fmt:kev:mtx:ctx" }
+  - case work.class.to_s
+    -# OpenURL ContextObject for Journal Article
+    - when "JournalArticle"
+      = h(URI.escape("&ctx_ver=Z39.88-2004" |
+        "&rft_val_fmt=info:ofi/fmt:kev:mtx:journal" |
+        "&rft.genre=article" |
+        "&rft.atitle=#{work.title_primary}" |
+        "&rft.jtitle=#{work.publication.authority.name}" |
+        "&rft.volume=#{work.volume}" |
+        "&rft.issue=#{work.issue}" |
+        "&rft.spage=#{work.start_page}" |
+        "&rft.date=#{work.publication_date.year}" |
+        "&rft.issn=#{work.publication.authority.issn_isbn}" |
+        "&rft.aulast=#{work.name_strings[0].last_name}" |
+        )) |
+    -# OpenURL ContextObject for Conference Proceeding   
+    - when "ConferenceProceeding"
+      = h(URI.escape("&ctx_ver=Z39.88-2004" |
+        "&rft_val_fmt=info:ofi/fmt:kev:mtx:journal" |
+        "&rft.genre=proceeding" |
+        "&rft.atitle=#{work.title_primary}" |
+        "&rft.jtitle=#{work.publication.authority.name}" |
+        "&rft.volume=#{work.volume}" |
+        "&rft.issue=#{work.issue}" |
+        "&rft.spage=#{work.start_page}" |
+        "&rft.date=#{work.publication_date.year}" |
+        "&rft.issn=#{work.publication.authority.issn_isbn}" |
+        "&rft.aulast=#{work.name_strings[0].last_name}" |
+        )) |
+    -# OpenURL ContextObject for Book    
+    - when "BookWhole", "BookEdited"
+      = h(URI.escape("&ctx_ver=Z39.88-2004" |
+        "&rft_val_fmt=info:ofi/fmt:kev:mtx:book" |
+        "&rft.genre=book" |
+        "&rft.btitle=#{work.title_primary}" |
+        "&rft.date=#{work.publication_date.year}" |
+        "&rft.isbn=#{work.publication.authority.issn_isbn}" |
+        "&rft.aulast=#{work.name_strings[0].last_name}" |
+        )) |                      

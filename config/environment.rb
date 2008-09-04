@@ -25,7 +25,7 @@ AUTHORIZATION_MIXIN = "object roles"
 # This can be set to a hash or to an explicit path like '/login'
 #
 LOGIN_REQUIRED_REDIRECTION = { :controller => 'sessions', :action => 'new' }
-PERMISSION_DENIED_REDIRECTION = { :controller => 'citations', :action => 'index' }
+PERMISSION_DENIED_REDIRECTION = { :controller => 'works', :action => 'index' }
 
 # The method your authentication scheme uses to store the location to redirect back to
 # For BibApp we use restful_authentication which uses :store_location
@@ -79,7 +79,7 @@ Rails::Initializer.run do |config|
 
   
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( #{RAILS_ROOT}/app/models/citation_subclasses )
+  config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
   config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
     File.directory?(lib = "#{dir}/lib") ? lib : dir

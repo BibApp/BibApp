@@ -29,8 +29,8 @@ blockquote {margin:1.5em;padding:1em;font-style:italic;font-size:.9em;}
 a:link, a:visited {color:#000; text-decoration:none;}
 
 
-#citations {clear:both; width:100%;}
-.citation{padding-bottom:2em;}
+#works {clear:both; width:100%;}
+.work{padding-bottom:2em;}
 
 #coauthors {padding:0;margin:0;width:100%;}
 #coauthors li {padding:0;margin:0; list-style:none;}

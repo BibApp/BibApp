@@ -33,7 +33,7 @@ class ContributorshipsController < ApplicationController
     else
       @claims = Contributorship.unverified.visible.find(
         :all, 
-        :conditions => ["citation_id = ?", @contributorship.citation_id],
+        :conditions => ["work_id = ?", @contributorship.work_id],
         :order => "score desc"
       )
     end
@@ -75,7 +75,7 @@ class ContributorshipsController < ApplicationController
     # 3. Set Contributorship.score to "zero"
     @contributorship.update_attributes(:contributorship_state_id => 3, :hide => 1, :score => 0)
     
-    # RJS action removes the denied citation from the view
+    # RJS action removes the denied Work from the view
     respond_to do |format|
       format.html { redirect_to :back }
       format.js   { render :action => :deny_contributorship }
@@ -99,14 +99,14 @@ class ContributorshipsController < ApplicationController
   private
   
   def romeo_color_count
-    # Build query which groups all citations (of this person) 
+    # Build query which groups all Works (of this person) 
     # under appropriate Romeo Colors (based on publisher)
     # and retrieves a total number of each Romeo Color.
     Contributorship.verified.all(
                          :select => "count(contributorships.id) as count, publishers.romeo_color as color", 
-                         :joins => "JOIN citations ON contributorships.citation_id=citations.id
+                         :joins => "JOIN works ON contributorships.work_id=works.id
                                     JOIN people ON contributorships.person_id=people.id
-                                    JOIN publishers ON citations.publisher_id=publishers.id",
+                                    JOIN publishers ON works.publisher_id=publishers.id",
                          :conditions => ["people.id = ?", @person.id],
                          :group => "publishers.romeo_color",
                          :order => "publishers.romeo_color")
@@ -114,15 +114,15 @@ class ContributorshipsController < ApplicationController
   
   
   def publication_count
-    # Build query which groups all citations (of this person) 
+    # Build query which groups all works (of this person) 
     # by the Journal/Publication and Publisher
     # and retrieves a total number of each Journal/Publication
     Contributorship.verified.all(
                          :select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color", 
-                         :joins => "JOIN citations ON contributorships.citation_id=citations.id
+                         :joins => "JOIN works ON contributorships.work_id=works.id
                                     JOIN people ON contributorships.person_id=people.id
-                                    JOIN publications ON citations.publication_id = publications.id
-                                    JOIN publishers ON citations.publisher_id=publishers.id",
+                                    JOIN publications ON works.publication_id = publications.id
+                                    JOIN publishers ON works.publisher_id=publishers.id",
                          :conditions => ["people.id = ?", @person.id],
                          :group => "publications.name, publishers.name, publishers.romeo_color",
                          :order => "count(contributorships.id) desc")

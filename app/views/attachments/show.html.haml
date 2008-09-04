@@ -5,10 +5,10 @@
   %h3="#{@attachment.class.name.to_s} Information"
   
   
-  - if @attachment.asset and @attachment.asset.kind_of?(Citation)
+  - if @attachment.asset and @attachment.asset.kind_of?(Work)
     %div{:class => "column span-12"}
       %h4="Attached to #{@attachment.asset.class.to_s.underscore.humanize}:"
-      %span.asset= render :partial => "citations/apa/#{@attachment.asset.class.name.to_s.underscore}", :locals => { :c => @attachment.asset }  
+      %span.asset= render :partial => "works/apa/#{@attachment.asset.class.name.to_s.underscore}", :locals => { :c => @attachment.asset }  
   - elsif @attachment.asset and @attachment.asset.kind_of?(Person)
     %div{:class => "column span-12"}
       %h4="Attached to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}"
@@ -26,7 +26,7 @@
         %label Content Type:
         %span.field_value=@attachment.content_type  
   %div{:class => "column span-12"}
-    - if @attachment.asset and @attachment.asset.kind_of?(Citation)
-      =link_to "Return to #{@attachment.asset.class.to_s.underscore.humanize}", citation_url(@attachment.asset)
+    - if @attachment.asset and @attachment.asset.kind_of?(Work)
+      =link_to "Return to #{@attachment.asset.class.to_s.underscore.humanize}", work_url(@attachment.asset)
     - if @attachment.asset and @attachment.asset.kind_of?(Person)
       =link_to "Return to #{@attachment.asset.class.to_s.underscore.humanize}: #{@attachment.asset.name}", person_url(@attachment.asset)  

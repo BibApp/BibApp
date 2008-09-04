@@ -75,8 +75,8 @@ class AttachmentsController < ApplicationController
           #initialize new attachment with uploaded file data
           @attachment = subklass_init(params[:type], f)
           #add attachment to asset
-          if @asset.kind_of?(Citation)
-            #Citations can have many files as attachments
+          if @asset.kind_of?(Work)
+            #Works can have many files as attachments
             @asset.attachments << @attachment
           elsif @asset.kind_of?(Person)
             #Group or Person can only have one image attached
@@ -195,8 +195,8 @@ class AttachmentsController < ApplicationController
   
     #Load the asset this attachment is attached to
     def load_asset
-      if params[:citation_id]
-        @asset = Citation.find(params[:citation_id])
+      if params[:work_id]
+        @asset = Work.find(params[:work_id])
       elsif params[:person_id]
         @asset = Person.find(params[:person_id])
       end
@@ -204,9 +204,9 @@ class AttachmentsController < ApplicationController
   
     #determine redirect URL based on asset type
     def get_response_url(asset)
-      if asset.kind_of?(Citation)
-        #return to Citation page
-        return citation_url(asset)
+      if asset.kind_of?(Work)
+        #return to Work page
+        return work_url(asset)
       elsif asset.kind_of?(Person)
         #return to Person page
         return person_url(asset)

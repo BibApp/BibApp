@@ -2,7 +2,7 @@ class Contributorship   < ActiveRecord::Base
  
   #### Associations ####
   belongs_to :person
-  belongs_to :citation
+  belongs_to :work
   belongs_to :pen_name
   
   #### Named Scopes ####
@@ -13,8 +13,8 @@ class Contributorship   < ActiveRecord::Base
   named_scope :visible, :conditions => ["hide = ?", false]
   
   #### Validations ####
-  validates_presence_of :person_id, :citation_id, :pen_name_id
-  validates_uniqueness_of :citation_id, :scope => :person_id
+  validates_presence_of :person_id, :work_id, :pen_name_id
+  validates_uniqueness_of :work_id, :scope => :person_id
   
   #### Callbacks ####
   before_validation_on_create :set_initial_states
@@ -27,9 +27,9 @@ class Contributorship   < ActiveRecord::Base
     
     if contributorship.contributorship_state_id == 2    
       # Update Solr!
-      # * Citations have many People...
+      # * Works have many People...
       # * But, only if contributorship_state_id == 2 (verified)
-      Index.update_solr(contributorship.citation)
+      Index.update_solr(contributorship.work)
     end
   end
   
@@ -40,7 +40,7 @@ class Contributorship   < ActiveRecord::Base
   def calculate_score
     
     # Build the calcuated Contributorship.score attribute--a rough
-    # guess whether we think the Person has written the Citation
+    # guess whether we think the Person has written the Work
     #
     # Field           Value   Scoring Algorithm
     # ---------------------------------------------
@@ -57,36 +57,36 @@ class Contributorship   < ActiveRecord::Base
     # The two faculty really separate between Collaborators and Keywords
     
     # @TODO:
-    # 1. Stop reloading self.person.scoring_hash for each citation (super slow, 100s of queries)
+    # 1. Stop reloading self.person.scoring_hash for each Work (super slow, 100s of queries)
     # 2. Crontask / Asynchtask to periodically adjust scores
          
     person_sh = self.person.scoring_hash
-    citation_sh = self.citation.scoring_hash
+    work_sh = self.work.scoring_hash
 
-    if person_sh && !person_sh.nil? && !citation_sh.nil?
+    if person_sh && !person_sh.nil? && !work_sh.nil?
       # Years
       year_score = 0
       years = Array.new
       # Build full array of publishing years
 
 
-      logger.debug("Year: #{citation_sh[:year]}")
+      logger.debug("Year: #{work_sh[:year]}")
       
       
       person_sh[:years].sort.first.upto(person_sh[:years].sort.last){|y| years << y }
       logger.debug("Array: #{years.inspect}")
-      year_score = 25 if years.include?(citation_sh[:year])
+      year_score = 25 if years.include?(work_sh[:year])
 
     
       # Publications
       publication_score = 0
-      publication_score = 25 if person_sh[:publication_ids].include?(citation_sh[:publication_id])
+      publication_score = 25 if person_sh[:publication_ids].include?(work_sh[:publication_id])
     
       # Collaborators
-      col_poss = citation_sh[:collaborator_ids].size
+      col_poss = work_sh[:collaborator_ids].size
       col_matches = 0
 
-      citation_sh[:collaborator_ids].each do |ns|
+      work_sh[:collaborator_ids].each do |ns|
         col_matches = (col_matches + 1) if person_sh[:collaborator_ids].include?(ns)
       end
     
@@ -94,10 +94,10 @@ class Contributorship   < ActiveRecord::Base
       collaborator_score = ((25/col_poss)*col_matches) if col_poss != 0
     
       # Keywords
-      key_poss = citation_sh[:keyword_ids].size
+      key_poss = work_sh[:keyword_ids].size
       key_matches = 0
     
-      citation_sh[:keyword_ids].each do |k|
+      work_sh[:keyword_ids].each do |k|
         key_matches = (key_matches + 1) if person_sh[:keyword_ids].include?(k)
       end
     
@@ -133,8 +133,8 @@ class Contributorship   < ActiveRecord::Base
   def candidates
     candidates = Contributorship.count(
       :conditions => ["
-        citation_id = ? and contributorship_state_id = ?", 
-        self.citation_id,
+        work_id = ? and contributorship_state_id = ?", 
+        self.work_id,
         1 # caluculated
       ]
     )
@@ -142,21 +142,21 @@ class Contributorship   < ActiveRecord::Base
   
   def possibilities
     count = Array.new
-    possibilities = self.citation.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
+    possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
     return count.size
   end
   
   def verified
     verified = Contributorship.verified.count(:conditions => ["
-        citation_id = ?", 
-        self.citation_id
+        work_id = ?", 
+        self.work_id
       ])
   end
 
   def unverified
     unverified = Contributorship.unverified.count(:conditions => ["
-        citation_id = ?", 
-        self.citation_id
+        work_id = ?", 
+        self.work_id
       ])
   end
 
@@ -174,8 +174,8 @@ class Contributorship   < ActiveRecord::Base
       refresh = Contributorship.find(
         :all, 
         :conditions => [
-          "citation_id = ? and contributorship_state_id = ? and id <> ?", 
-          self.citation_id,
+          "work_id = ? and contributorship_state_id = ? and id <> ?", 
+          self.work_id,
           1,
           self.id
         ]

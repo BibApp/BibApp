@@ -290,7 +290,7 @@ h4 {color:#666666;}
 }
 
 #results {clear:both; padding-top:1.5em;}
-#citations
+#works
 #tagline {color:#000;}
 
 h4.heading {
@@ -325,18 +325,18 @@ ul.actions li {
 	display:inline;
 }
 
-ol.citations {
+ol.works {
 	margin:0;
 	padding:0;
 }
-.citation {
+.work {
 	list-style: none; 
 	border-bottom:1px solid #ddd; 
 	padding:0.75em 0; 
 	margin-bottom:0.5em;
 }
 
-li.citation-details{
+li.work-details{
 	list-style:none;
 }
 
@@ -424,9 +424,9 @@ ol.filters {
 	margin-top:2em;
 }
 
-.citation-journal_article .publication{font-style:italic;}
-.citation-journal_article .volume{font-style:italic;}
-.citation_book .title{font-style:italic;}
+.work-journal_article .publication{font-style:italic;}
+.work-journal_article .volume{font-style:italic;}
+.work_book .title{font-style:italic;}
 
 /* Auto-Complete */
 div.auto_complete {

@@ -6,10 +6,10 @@
     - if @contributorship == nil
       %p Congrats!  Nothing to do here.
     - else
-      = render :partial => "shared/citation", :locals => {:citation => Index.citation_to_solr_hash(@contributorship.citation)}
+      = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(@contributorship.work)}
       %h4 Keywords
       %p
-        - @contributorship.citation.keywords.each do |k|
+        - @contributorship.work.keywords.each do |k|
           %span{:id => "keyword-id-#{k.id}"}=k.name
     
       %div{:class => "span-22 prepend-1"}

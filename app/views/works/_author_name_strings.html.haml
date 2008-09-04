@@ -1,0 +1,15 @@
+-# Add an Author field, with Auto-Complete.
+-# Also adds a list of existing Authors
+#names_field
+  %label Author(s):
+  = text_field_with_auto_complete :author, :string, {}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+  = link_to_remote "Add Author to List", :url => { :action => :add_item_to_list}, :condition => "$('author_string').value.length > 0", :with => "'item_name=author_name_strings&item_value='+$F('author_string')+'&clear_field=author_string'"
+  %ul#author_name_strings_list
+    -#Check for @author_name_strings instance variable, in case of errors
+    -#Also check if this Work already has Author WorkNameStrings assigned
+    - if @author_name_strings
+      - @author_name_strings.each do |name|
+        = render :partial => 'list_item', :locals => {:item_name => 'author_name_strings', :item_value => name, :selected => true}  
+    - elsif @work.name_strings.author
+      - @work.name_strings.author.each do |ns|
+        = render :partial => 'list_item', :locals => {:item_name => 'author_name_strings', :item_value => ns.name, :selected => true}    

@@ -1,10 +1,10 @@
 class IndexObserver < ActiveRecord::Observer
   require 'index.rb'
   
-  observe Citation
+  observe Work
   
   def after_save(record)
-    if record.batch_index? || record.citation_state_id != 3
+    if record.batch_index? || record.work_state_id != 3
       # Do not update
     else
       Index.update_solr(record)

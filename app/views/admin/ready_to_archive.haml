@@ -6,9 +6,9 @@
     - if flash[:notice]
       %div#flash= flash[:notice]
       
-    %h2="Ready to Archive: #{@citations.size} remain"
-    - if @citations.size > 0
-      = render :partial => "citations"
+    %h2="Ready to Archive: #{@works.size} remain"
+    - if @works.size > 0
+      = render :partial => "works"
     - else
       %p 
-        No citations are marked "ready to archive"!
+        No works are marked "ready to archive"!
