@@ -4,7 +4,7 @@ class PeopleController < ApplicationController
   # Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
   
-  # Find the @cart variable, used to display "add" or "remove" links for saved citations
+  # Find the @cart variable, used to display "add" or "remove" links for saved Works
   before_filter :find_cart, :only => [:show]
   
   make_resourceful do 
@@ -14,7 +14,7 @@ class PeopleController < ApplicationController
       :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus,
        {:name_strings => [:id, :name]},
        {:groups => [:id, :name]},
-       {:contributorships => [:citation_id]}
+       {:contributorships => [:work_id]}
     ]
 
     #Add a response for RSS
@@ -62,18 +62,18 @@ class PeopleController < ApplicationController
       @rows         = params[:rows] || 10
       @export       = params[:export] || ""
 
-      @q,@citations,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
-      #@TODO: This WILL need updating as we don't have *ALL* citation info from Solr!
+      #@TODO: This WILL need updating as we don't have *ALL* Work info from Solr!
       # Process:
-      # 1) Get AR objects (citations) from Solr results
-      # 2) Init the CitationExport class
-      # 3) Pass the export variable and citations to Citeproc for processing
+      # 1) Get AR objects (works) from Solr results
+      # 2) Init the WorkExport class
+      # 3) Pass the export variable and works to Citeproc for processing
 
       if @export && !@export.empty?
-        citations = Citation.find(@citations.collect{|c| c["pk_i"]}, :order => "publication_date desc")
-        ce = CitationExport.new
-        @citations = ce.drive_csl(@export,citations)
+        works = Work.find(@works.collect{|c| c["pk_i"]}, :order => "publication_date desc")
+        ce = WorkExport.new
+        @works = ce.drive_csl(@export,works)
       end
 
       @view = "all"

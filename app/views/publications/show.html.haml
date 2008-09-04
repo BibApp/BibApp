@@ -3,8 +3,8 @@
 - if !@export.empty?
   %div{:class => "span-24"}
     %div{:class => "span-22 prepend-1"}
-      %h2 Citations
-      = @citations
+      %h2 Works
+      = @works
 
 - else
   %div{:class => "span-24"}
@@ -30,8 +30,8 @@
         / Facets
         = render :partial => "shared/facets"
 
-        / Citations 
-        = render :partial => "shared/citations"
+        / Works 
+        = render :partial => "shared/works"
 
       / Authority
       %div#authority{:class => "span-9"}

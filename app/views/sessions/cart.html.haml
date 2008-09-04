@@ -2,7 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if @citations.nil? || @citations.empty?
+    - if @works.nil? || @works.empty?
       %h2 Cart
       %p Nothing added yet.
     - else
@@ -10,5 +10,5 @@
         %li=link_to_deletecart
       
       %h2 Cart
-      - @citations.each do |citation|
-        = render :partial => "shared/citation", :locals => {:citation => citation}
+      - @works.each do |work|
+        = render :partial => "shared/work", :locals => {:work => work}

@@ -1,0 +1,17 @@
+%fieldset
+  %legend Add Batch (RIS | Medline | Refworks XML)
+
+  %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
+  
+  %p
+    %label Upload File of Citations
+    %br/
+    = form.file_field :works_file
+
+  %p
+    %label Or, Paste Citations below
+    %br/
+    = form.text_area :works
+    = hidden_field_tag :type, 'AddBatch'
+  %p.submit
+    = submit_tag :save

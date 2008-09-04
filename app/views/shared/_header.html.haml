@@ -2,7 +2,7 @@
   %div{:class => "span-22 prepend-1"}
     
     %div{:class => "span-10"}
-      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), citations_path)
+      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), works_path)
     
     %div{:class => "span-9 prepend-3 last"}
       %ul.global-nav
@@ -28,7 +28,7 @@
         - if logged_in?
           - if current_user.has_role?("admin", System)
             %li=link_to "Admin", {:controller => "admin", :action => "index"}
-        %li=link_to "Citations", citations_path(:view => "all")
+        %li=link_to "Works", works_path(:view => "all")
         %li=link_to "Groups", groups_path
         %li=link_to "People", people_path
         %li=link_to "Publications", publications_path

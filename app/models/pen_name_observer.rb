@@ -2,7 +2,7 @@ class PenNameObserver < ActiveRecord::Observer
 
   # PenName Notes:
   # 1. Person has a new PenName
-  # * Create a Contributorship row for each unique Citation associated with PenName
+  # * Create a Contributorship row for each unique Work associated with PenName
   # * Set Contributorship.score to calculated (options: calculated (0), verified (1), denied (2))
   #
   # 2. More than one Person claims same PenName
@@ -13,43 +13,43 @@ class PenNameObserver < ActiveRecord::Observer
   
   
   # Anytime a Person claims a PenName, we need to do several things:
-  #  1. Create a Contributorship row for each unique Citation associated with PenName
-  #  2. Re-index all those associated Citations in Solr
+  #  1. Create a Contributorship row for each unique Work associated with PenName
+  #  2. Re-index all those associated Works in Solr
   def after_save(pen_name)
     
     # create new contributorships
     contributorships = set_contributorships(pen_name)
    
-    #Asynchronously update Solr index for affected citations
+    #Asynchronously update Solr index for affected Works
     #  (This uses the Workling Plugin for asynchronization)
-    citations = contributorships.collect{|contrib| contrib.citation}
-    IndexWorker.async_update_index(citations)
+    works = contributorships.collect{|contrib| contrib.work}
+    IndexWorker.async_update_index(works)
   end
   
   # Anytime a PenName is removed, we need to do the following:
-  # 1. Re-index all Citations associated with that PenName in Solr
+  # 1. Re-index all Works associated with that PenName in Solr
   # 2. Remove all related Contributorship rows
   def before_destroy(pen_name)
     #find all contributorships associated with PenName
     contributorships = find_contributorships(pen_name)
     
-    #Asynchronously update Solr index for affected citations
-    citations = contributorships.collect{|contrib| contrib.citation}
-    IndexWorker.async_update_index(citations)
+    #Asynchronously update Solr index for affected Works
+    works = contributorships.collect{|contrib| contrib.work}
+    IndexWorker.async_update_index(works)
     
     #Finally, destroy all these contributorships
     contributorships.each{|c| c.destroy}
   end
   
-  # Create a Contributorship row for each unique Citation associated with PenName
+  # Create a Contributorship row for each unique Work associated with PenName
   #   Returns a list of contributorships created
   def set_contributorships(pen_name)
     contributorships = Array.new
-    pen_name.name_string.citation_name_strings.each do |cns|
-      #only create Contributorship for "accepted" citations
-      if cns.citation.citation_state_id == 3
-        contributorships << Contributorship.find_or_create_by_citation_id_and_person_id_and_pen_name_id_and_role(
-            cns.citation.id, 
+    pen_name.name_string.work_name_strings.each do |cns|
+      #only create Contributorship for "accepted" works
+      if cns.work.work_state_id == 3
+        contributorships << Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
+            cns.work.id, 
             pen_name.person_id, 
             pen_name.id,
             cns.role

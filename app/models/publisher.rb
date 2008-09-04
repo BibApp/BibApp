@@ -8,7 +8,7 @@ class Publisher < ActiveRecord::Base
     :class_name => "PublisherSource",
     :foreign_key => :source_id
 
-  has_many :citations, :conditions => ["citation_state_id = 3"]
+  has_many :works, :conditions => ["work_state_id = 3"]
 
   before_validation_on_create :set_initial_states
   
@@ -39,11 +39,11 @@ class Publisher < ActiveRecord::Base
         publication.save
       end
       
-      # Update citations
-      logger.debug("\n\n===Updating Citations===\n\n")
-      publisher.citations.each do |citation|
-        citation.publisher_id = publisher.authority_id
-        citation.save_and_set_for_index_without_callbacks
+      # Update Works
+      logger.debug("\n\n===Updating Works===\n\n")
+      publisher.works.each do |work|
+        work.publisher_id = publisher.authority_id
+        work.save_and_set_for_index_without_callbacks
       end
       
       #@TODO: AsyncObserver

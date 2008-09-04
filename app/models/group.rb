@@ -7,9 +7,9 @@ class Group < ActiveRecord::Base
     :order => "last_name, first_name"
   has_many :memberships
 
-  def citations
+  def works
     # @TODO: Do this the Rails way.
-    self.people.collect{|p| p.citations.verified}.uniq.flatten
+    self.people.collect{|p| p.works.verified}.uniq.flatten
   end
 
   def to_param

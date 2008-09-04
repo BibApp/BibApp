@@ -3,7 +3,7 @@ class Publication < ActiveRecord::Base
   belongs_to :authority,
     :class_name => "Publication",
     :foreign_key => :authority_id
-  has_many :citations, :conditions => ["citation_state_id = 3"]
+  has_many :works, :conditions => ["work_state_id = 3"]
   
   after_create do |publication|
     publication.authority_id = publication.id
@@ -25,12 +25,12 @@ class Publication < ActiveRecord::Base
         pub.save
       end
       
-      # Update citations
-      logger.debug("\n\n===Updating Citations===\n\n")
-      publication.citations.each do |citation|
-        citation.publication_id = publication.authority_id
-        citation.publisher_id = publication.publisher.authority_id
-        citation.save
+      # Update works
+      logger.debug("\n\n===Updating Works===\n\n")
+      publication.works.each do |work|
+        work.publication_id = publication.authority_id
+        work.publisher_id = publication.publisher.authority_id
+        work.save
       end
       
       #TODO: AsyncObserver

@@ -1,6 +1,6 @@
 class Keyword < ActiveRecord::Base
   has_many :keywordings
-  has_many :citations,
+  has_many :works,
     :through => :keywordings
 
 end

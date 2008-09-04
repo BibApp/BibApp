@@ -1,0 +1,2 @@
+class WorkNameStringsController < ApplicationController
+end

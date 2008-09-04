@@ -34,35 +34,35 @@ module ApplicationHelper
     end
   end
   
-  def link_to_related_citations(citation)
-    #link_to "Related Citations", search_url(:q => "id:#{citation-solr_id}", :qt  => "mlt")
-    "Related Citations"
+  def link_to_related_works(work)
+    #link_to "Related Works", search_url(:q => "id:#{work-solr_id}", :qt  => "mlt")
+    "Related Works"
   end
   
-  def link_to_download_from_archive(citation)
+  def link_to_download_from_archive(work)
     #link_to "Download from #{$REPOSITORY_NAME}"
     "Download from #{$REPOSITORY_NAME}"
   end
 
   #Generate a "Find It!" OpenURL link, 
-  # based on citation information as received from Solr
-  def link_to_findit(citation)
+  # based on Work information as received from Solr
+  def link_to_findit(work)
     
     #Get our OpenURL information
     link_text, base_url, suffix = find_openurl_info
     
-    #Substitute citation title
-    suffix = (citation['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", citation['title'].gsub(" ", "+"))
-    #Substitute citation year
-    suffix = (citation['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", citation['year'].to_s)
-    #Substitute citation issue
-    suffix = (citation['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", citation['issue'].to_s)
-    #Substitute citation volume
-    suffix = (citation['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", citation['volume'].to_s)
-    #Substitute citation start-page
-    suffix = (citation['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", citation['start_page'].to_s)
-    #Substitute citation ISSN/ISBN
-    suffix = (citation['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", citation['issn_isbn'].to_s)
+    #Substitute Work title
+    suffix = (work['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", work['title'].gsub(" ", "+"))
+    #Substitute Work year
+    suffix = (work['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", work['year'].to_s)
+    #Substitute Work issue
+    suffix = (work['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", work['issue'].to_s)
+    #Substitute Work volume
+    suffix = (work['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", work['volume'].to_s)
+    #Substitute Work start-page
+    suffix = (work['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", work['start_page'].to_s)
+    #Substitute Work ISSN/ISBN
+    suffix = (work['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", work['issn_isbn'].to_s)
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
@@ -80,7 +80,7 @@ module ApplicationHelper
     link_to "Empty cart?", :controller => "sessions", :action => "delete_cart"
   end
   
-  def coins(citation)
+  def coins(work)
     coins = "ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.btitle=The+Wind+in+the+Willows&amp;rft.au=Grahame,+Kenneth"
 =begin
     # Journal - http://ocoins.info/cobg.html
@@ -160,7 +160,7 @@ module ApplicationHelper
       pub_ids << p.auth
     end
 
-    @archivable_count = Citation.accepted.count(
+    @archivable_count = Work.accepted.count(
       :all, 
       :conditions => ["publisher_id in (?)", pub_ids.join(", ")]
     )
@@ -191,7 +191,7 @@ module ApplicationHelper
       :fq => prepped_filter,
       :view => view,
       :rows => rows,
-      :anchor => "citations"
+      :anchor => "works"
     }
   end
   
@@ -211,7 +211,7 @@ module ApplicationHelper
       :fq => prepped_filter,
       :view => view,
       :rows => rows,
-      :anchor => "citations"
+      :anchor => "works"
     }
   end
   
@@ -234,9 +234,9 @@ module ApplicationHelper
   #    OpenURL link text, base url, and query suffixes
   def find_openurl_info
     # Set the canonical resolver variables (from personalize.rb)
-    link_text = $CITATION_LINK_TEXT
-    base_url = $CITATION_BASE_URL
-    suffix = $CITATION_SUFFIX
+    link_text = $WORK_LINK_TEXT
+    base_url = $WORK_BASE_URL
+    suffix = $WORK_SUFFIX
     
     #If we've already found this info for
     # the current session, return it immediately

@@ -31,17 +31,17 @@ ActionController::Routing::Routes.draw do |map|
   # See how all your routes lay out with "rake routes"
 
   #####
-  # Citation routes
+  # Work routes
   ##### 
-  # Add Auto-Complete Routes for Web-Based Citation entry
-  map.resources :citations,
+  # Add Auto-Complete Routes for Web-Based Work entry
+  map.resources :works,
                 :collection => {:auto_complete_for_author_string => :get,
                         :auto_complete_for_editor_string => :get,
                         :auto_complete_for_keyword_name => :get,
                         :auto_complete_for_publication_name => :get,
                         :auto_complete_for_publisher_name => :get,
                         :auto_complete_for_tag_name => :get} do |c|
-    # Make URLs like /citation/2/attachments/4 for Citation Content Files
+    # Make URLs like /work/2/attachments/4 for Work Content Files
     c.resources :attachments
   end
 
@@ -143,9 +143,9 @@ ActionController::Routing::Routes.draw do |map|
     :passwords,
     :attachments
 
-  # Default homepage to citations index action
+  # Default homepage to works index action
   map.connect "/",
-    :controller => 'citations',
+    :controller => 'works',
     :action => 'index'
     
   map.connect ':controller/:action/:id'

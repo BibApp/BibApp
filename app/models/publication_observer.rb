@@ -5,16 +5,16 @@ class PublicationObserver < ActiveRecord::Observer
   def after_save(publication)
     #Only update index if Publication name or Authority has changed
     if publication.authority_id_changed? or publication.name_changed?
-      #Asynchronously update Solr index for citations
+      #Asynchronously update Solr index for Works
       #  (This uses the Workling Plugin for asynchronization)
-      IndexWorker.async_update_index(publication.citations)
+      IndexWorker.async_update_index(publication.works)
     end
   end
   
   # If a Publication is ever destroyed, we need to update Solr index
-  #  for all citations associated with that publication
+  #  for all Works associated with that publication
   def before_destroy(publication)
-    IndexWorker.async_update_index(publication.citations)
+    IndexWorker.async_update_index(publication.works)
   end
     
 end

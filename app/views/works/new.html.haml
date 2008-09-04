@@ -1,0 +1,21 @@
+/ === Works === New ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+
+    - if flash[:notice]
+      %div.success= flash[:notice]
+    
+    - if flash[:unsuccessful]
+      %div.notice= flash[:unsuccessful]
+
+    %ul#error_list
+
+    %h2 Add a Work
+    %ul
+      - Work.types.each do |ct|
+        %li
+          =link_to ct, new_work_path(:type => ct)
+
+    - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:method => :post, :multipart => true} do |form|
+      = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }

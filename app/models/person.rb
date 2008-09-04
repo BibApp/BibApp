@@ -11,7 +11,7 @@ class Person < ActiveRecord::Base
   # Association Extensions - Read more here:
   # http://blog.hasmanythrough.com/2006/3/1/association-goodness-2
   
-  has_many :citations, :through => :contributorships 
+  has_many :works, :through => :contributorships 
 
   has_many :contributorships do 
     # Show only non-hidden contributorships
@@ -26,22 +26,22 @@ class Person < ActiveRecord::Base
           false, 
           2
         ],
-        :include => [:citation]
+        :include => [:work]
       )
     end
     
     def unverified
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :include => [:citation], :order => "citations.publication_date desc")
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :include => [:work], :order => "works.publication_date desc")
     end
     
     def verified
       # ContributorshipStateId 2 = Verifed
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :include => [:citation], :order => "citations.publication_date desc")
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :include => [:work], :order => "works.publication_date desc")
     end
     
     def denied
       # ContributorshipStateId 3 = Denied
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 3],:include => [:citation], :order => "citations.publication_date desc")
+      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 3],:include => [:work], :order => "works.publication_date desc")
     end
   end
   
@@ -130,23 +130,23 @@ class Person < ActiveRecord::Base
   
   # Person Contributorship Calculation Fields
   def verified_publications
-    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2,:include=>[:citation])
+    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2,:include=>[:work])
   end
   
   def update_scoring_hash
     vps = self.verified_publications
     
     known_years = vps.collect{|vp| 
-                 if !vp.citation.publication_date.nil?
-                   vp.citation.publication_date.year 
+                 if !vp.work.publication_date.nil?
+                   vp.work.publication_date.year 
                  end
                    }.uniq
    known_years.delete(nil)
 
     
-    known_publication_ids = vps.collect{|vp| vp.citation.publication.id}.uniq
-    known_collaborator_ids = vps.collect{|vp| vp.citation.name_strings.collect{|ns| ns.id}}.flatten.uniq
-    known_keyword_ids = vps.collect{|vp| vp.citation.keywords.collect{|k| k.id}}.flatten.uniq
+    known_publication_ids = vps.collect{|vp| vp.work.publication.id}.uniq
+    known_collaborator_ids = vps.collect{|vp| vp.work.name_strings.collect{|ns| ns.id}}.flatten.uniq
+    known_keyword_ids = vps.collect{|vp| vp.work.keywords.collect{|k| k.id}}.flatten.uniq
     
     # Return a hash comprising all the Contributorship scoring methods
     scoring_hash = {

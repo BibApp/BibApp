@@ -1,0 +1,24 @@
+%fieldset
+  %legend Research File(s)
+  - if WorkArchiveState.archived?(@work)
+    %p
+      Files have been permanently archived at the following location(s):
+    - @work.external_system_uris.each do |s|
+      %div.file
+        = link_to "#{s.uri}", s.uri
+        = "(#{s.external_system.name})"
+  - else      
+    - files.each do |f|
+      %div.file
+        = link_to "#{f.filename}", f.public_filename
+        = "(#{f.filesize}) - "
+        = link_to "remove", {:controller => "attachments", :action => "destroy", :id => f.id}, :method => :delete
+    -if SwordClient.configured?
+      %br/
+      %p
+        The above files will be deposited in your local archive.
+      %div.field
+        %label Current Deposit Status:
+        %span.field_value=@work.work_archive_state.name
+  
+    

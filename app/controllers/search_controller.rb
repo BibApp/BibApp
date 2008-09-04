@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
 
-  # Find the @cart variable, used to display "add" or "remove" links for saved citations  
+  # Find the @cart variable, used to display "add" or "remove" links for saved Works  
   before_filter :find_cart, :only => [:index]
   
   def index
@@ -18,7 +18,7 @@ class SearchController < ApplicationController
       @rows         = params[:rows] || 10
       @export       = params[:export] || ""
       
-      @q,@citations,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
 
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
@@ -29,16 +29,16 @@ class SearchController < ApplicationController
         end
       end
       
-      #@TODO: This WILL need updating as we don't have *ALL* citation info from Solr!
+      #@TODO: This WILL need updating as we don't have *ALL* Work info from Solr!
       # Process:
-      # 1) Get AR objects (citations) from Solr results
-      # 2) Init the CitationExport class
-      # 3) Pass the export variable and citations to Citeproc for processing
+      # 1) Get AR objects (works) from Solr results
+      # 2) Init the WorkExport class
+      # 3) Pass the export variable and Works to Citeproc for processing
 
       if @export && !@export.empty?
-        citations = Citation.find(@citations.collect{|c| c["pk_i"]}, :order => "publication_date desc")
-        ce = CitationExport.new
-        @citations = ce.drive_csl(@export,citations)
+        works = Work.find(@works.collect{|c| c["pk_i"]}, :order => "publication_date desc")
+        ce = WorkExport.new
+        @works = ce.drive_csl(@export,works)
       end
       
     else

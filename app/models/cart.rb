@@ -7,12 +7,12 @@ class Cart
     @items = []
   end
   
-  def add_citation(citation)
-    @items << citation.id
+  def add_work(work)
+    @items << work.id
     @items.uniq!
   end
   
-  def remove_citation(citation)
-    @items.delete(citation)
+  def remove_work(work)
+    @items.delete(work)
   end
 end

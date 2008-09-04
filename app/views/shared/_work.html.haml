@@ -1,0 +1,27 @@
+-#
+-# Render Single Work from Solr data
+-#
+%li.work
+  %div.screen-format
+    %strong=link_to "#{work['title']}", work_path(work['pk_i'])
+    %p.metadata 
+      - work['name_strings_data'].first(5).each do |ns|
+        - name, id = NameString.parse_solr_data(ns)
+        =link_to "#{name}", name_string_path(id), {:class => "name_string"}
+      - if work['name_strings'].size > 5
+        =link_to "more...", work_path(work['pk_i'])
+      %br/
+      - pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
+      =link_to "#{pub_name}", publication_path(pub_id), {:class => "source"}
+      -if work['year'] != nil
+        ="(#{work['year']})"
+
+    .links
+      =link_to_findit(work)
+      | 
+      - if !@cart.nil? && !@cart.items.nil?
+        - if @cart.items.include?(work['pk_i'].to_i)
+          =link_to_remove_from_cart(work['pk_i'])
+      - if @cart.nil? || !@cart.items.include?(work['pk_i'].to_i)
+        =link_to_add_to_cart(work['pk_i'])
+      

@@ -2,9 +2,9 @@ class NameString < ActiveRecord::Base
   require 'namecase'
   
   #### Associations ####
-  has_many :citations, 
-    :through => :citation_name_strings
-  has_many :citation_name_strings
+  has_many :works, 
+    :through => :work_name_strings
+  has_many :work_name_strings
   has_many :people,
     :through => :pen_names
   has_many :pen_names

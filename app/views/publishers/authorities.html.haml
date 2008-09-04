@@ -17,7 +17,7 @@
           %tr.publisher{:id => "publisher_#{publisher.id}"}
             %td
               %a.add select
-            %td=link_to "#{publisher.name} - #{publisher.citations.size}", edit_publisher_path(publisher)
+            %td=link_to "#{publisher.name} - #{publisher.works.size}", edit_publisher_path(publisher)
             %td= publisher.publisher_source.name
             %td
               %a.update make authority

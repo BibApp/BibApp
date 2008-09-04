@@ -128,8 +128,8 @@ class User < ActiveRecord::Base
     # Setup Class Hierarchy for BibApp
     ##################################    
     #Cascade based on Class hierarchy, so following is true:
-    #  (1) All Roles on a Group cascade to the People in that group (and their citations)
-    #  (2) All Roles on a Person cascade to their Citations
+    #  (1) All Roles on a Group cascade to the People in that group (and their Works)
+    #  (2) All Roles on a Person cascade to their Works
     
     # If this is a Class object, then cascade based on class types
     if authorizable_obj.is_a? Class
@@ -140,8 +140,8 @@ class User < ActiveRecord::Base
         
         #If user has this role on any group in system, also return true
         return true if has_any_role?(role_name, Group)      
-      when "Citation"
-        #Person class role cascades to Citation class
+      when "Work"
+        #Person class role cascades to Work class
         return true if has_role?(role_name, Person)
         
         #If user has this role on any person in system, also return true
@@ -154,8 +154,8 @@ class User < ActiveRecord::Base
         authorizable_obj.groups.each do |group|
           return true if has_role?(role_name, group)
         end 
-      when "Citation"
-        #Get all People associated with this citation, and look for role on each person
+      when "Work"
+        #Get all People associated with this Work, and look for role on each person
         authorizable_obj.people.each do |person|
          return true if has_role?(role_name, person)
         end        

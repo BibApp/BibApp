@@ -3,8 +3,8 @@
 - if !@export.empty?
   %div{:class => "span-24"}
     %div{:class => "span-22 prepend-1"}
-      %h2 Citations
-      = @citations
+      %h2 Works
+      = @works
 
 - else
   %div{:class => "span-24"}
@@ -34,7 +34,7 @@
                 %div.person{:class => "span-3"}
                   = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :class => "person-image"), person_path(person))
                   %div.person-image-metadata
-                    %strong= person.citations.verified.size
+                    %strong= person.works.verified.size
                     %h6.person-last-name=link_to person.last_name, person_path(person)
 
         / Sub-Groups
@@ -49,11 +49,11 @@
               -@group.children.each do |g|
                 %li
                   =link_to g.name, group_path(g)
-                  ="(#{g.citations.size})"
+                  ="(#{g.works.size})"
 
         %div#results{:class => "span-22"}
           / Facets
           = render :partial => "shared/facets"
 
-          / Citations 
-          = render :partial => "shared/citations"
+          / Works 
+          = render :partial => "shared/works"
