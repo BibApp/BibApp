@@ -47,6 +47,51 @@ class Person < ActiveRecord::Base
   
   has_one :image, :as => :asset
   
+  #### Callbacks ####
+  
+  def after_create
+    set_pen_names
+  end
+
+  def set_pen_names
+    # Accept Person.new form name field params and autogenerate pen_name associations 
+    
+    # Example is me...
+    # first_name   => "John"
+    # middle_name  => "William"
+    # last_name    => "Smith"
+
+    # Generate machine_name and pretty_name (name) for each machine_name
+    # => Smith, John William => smith john william
+    # => Smith, John W       => smith john w
+    # => Smith, John         => smith john
+    # => Smith, J W          => smith j w
+    # => Smith, J            => smith j
+    
+    # First, Middle and Last are all cleaned the same, not DRY, but there may 
+    # be a reason later to refactor. Removing periods and commas, replacing
+    # with spaces and making sure double-spaces are reduced to single spaces
+    
+    # Clean first name "John"
+    first_name = self.first_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+
+    # Clean middle name "William"
+    middle_name = self.middle_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+
+    # Clean last name "Smith" 
+    last_name = self.last_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+    
+    # Collect the variant possibilities
+    variants = Array.new
+    variants << (last_name + " " + first_name + " " + middle_name).downcase.strip
+    variants << (last_name + " " + first_name + " " + middle_name.first(1)).downcase.strip
+    variants << (last_name + " " + first_name).downcase.strip
+    variants << (last_name + " " + first_name.first(1) + " " + middle_name.first(1)).strip
+    variants << (last_name + " " + first_name.first(1)).downcase.strip
+
+    # Find or create
+    variants.uniq.each{|v| self.name_strings << NameString.find_or_create_by_machine_name(v)}
+  end
 
   def name
     "#{first_name} #{last_name}"
@@ -143,7 +188,7 @@ class Person < ActiveRecord::Base
     def parse_solr_data(person_data)
       data = person_data.split("||")
       last_name = data[0]
-      id = data[1]  
+      id = data[1].to_i
       image_url = data[2]
       
       return last_name, id, image_url
