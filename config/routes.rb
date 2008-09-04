@@ -109,7 +109,9 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_cart '/sessions/delete_cart',
     :controller => 'sessions',
     :action => 'delete_cart'
-    
+  map.add_many_to_cart '/sessions/add_many_to_cart',
+    :controller => 'sessions',
+    :action => 'add_many_to_cart'
   
   ####
   # Authentication routes
