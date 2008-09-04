@@ -18,6 +18,19 @@ class ApplicationController < ActionController::Base
     @cart.add_citation(citation)
     redirect_to :back
   end
+  
+  def add_many_to_cart
+    @cart = find_cart
+    
+    citations = Index.fetch_all_ids(params[:query],params[:facets],params[:sort],params[:rows])
+    
+    citations.each do |citation|
+      citation = Citation.find(citation)
+      @cart.add_citation(citation)
+    end
+    
+    redirect_to :back
+  end
 
   # Removes a citation.id to the session[:cart] array  
   def remove_from_cart
