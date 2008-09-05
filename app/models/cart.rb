@@ -1,6 +1,6 @@
 # Cart model captures session-based citation.ids as "items", allowing users
 # to create ad-hoc lists of citations for export 
-class Cart
+class Cart < ActiveRecord::BaseWithoutTable
   attr_reader :items
   
   def initialize
