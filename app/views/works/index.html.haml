@@ -44,7 +44,7 @@
         / Works
         %div{:class => "span-7", :style => "padding-left:0.75em; margin-bottom:2em;"}
           %h3.heading
-            =link_to "Works", works_url(:view => "all")
+            =link_to "Recent additions", works_url(:view => "all")
           %ol#works{:class => "span-7 works", :style => "clear:both;"}
             - @works.first(3).each do |work|
               = render :partial => "shared/work", :locals => {:work => work}
