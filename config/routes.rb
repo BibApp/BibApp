@@ -148,6 +148,10 @@ ActionController::Routing::Routes.draw do |map|
     :controller => 'works',
     :action => 'index'
     
+  map.connect "citations",
+    :controller => 'works',
+    :action => 'index'
+    
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   
