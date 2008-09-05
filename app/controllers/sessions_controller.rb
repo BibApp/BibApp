@@ -34,9 +34,23 @@ class SessionsController < ApplicationController
   end
   
   def cart
-    @cart = session[:cart]
+    @cart   = session[:cart]
+    @page   = params[:page] || 1
+    @rows   = params[:rows] || 10
+    @export = params[:export] || ""
+    
     if !@cart.nil?
-      @works = @cart.items.collect{|work_id| Index.fetch_by_solr_id("Work-#{work_id}")}.flatten
+      @works = Work.paginate(
+        :page => @page, 
+        :per_page => @rows,
+        :conditions => ["id in (?)", @cart.items]
+      )
+    end
+    
+    if @export && !@export.empty?
+      works = Work.find(@works.collect{|c| c.id}, :order => "publication_date desc")
+      ce = WorkExport.new
+      @works = ce.drive_csl(@export,works)
     end
   end
 end

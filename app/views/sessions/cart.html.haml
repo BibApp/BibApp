@@ -5,10 +5,43 @@
     - if @works.nil? || @works.empty?
       %h2 Cart
       %p Nothing added yet.
+
+    - elsif !@export.empty?
+      %h2 Works
+      = @works
+
     - else
       %ul#edit-actions
         %li=link_to_deletecart
       
-      %h2 Cart
-      - @works.each do |work|
-        = render :partial => "shared/work", :locals => {:work => work}
+      %h2="Cart (#{@cart.items.size})"
+
+      / Sort Form
+      %div{:class => "span-13 append-1 last"}
+        - form_tag "#works", :method => :get do
+          #sort-by
+            %label Show:
+            %select{:name => "rows"}
+              - ["10", "20", "50", "100", "250", "500"].each do |opt|
+                - if opt == @rows
+                  %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
+                - else
+                  %option{:value => "#{opt}"}= opt.titleize
+            
+            %label Send to:
+            %select{:name => "export"}
+              - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
+                %option{:value => "#{opt.downcase}"}=opt
+
+            - @page = 1 if @page == 0
+            = hidden_field_tag "page", @page              
+
+            = submit_tag 'Go'
+      
+        %div{:class => "span-14"}= will_paginate @works
+
+        %ol{:class => "span-14 works", :style => "clear:both;"}
+          - @works.each do |work|
+            = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
+
+        %div{:class => "span-14"}= will_paginate @works

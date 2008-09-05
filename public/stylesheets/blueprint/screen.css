@@ -369,6 +369,8 @@ ul#navigation a {
 }
 
 .apa-format {display:none;}
+.citation {margin:1em;}
+
 #authority {padding:2em 1em 1em 1em}
 .clear-both {clear:both;}
 #coauthors {padding:0;margin:0;width:100%;}
