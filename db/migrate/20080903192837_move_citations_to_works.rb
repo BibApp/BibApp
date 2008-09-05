@@ -36,7 +36,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     rename_table(:citation_archive_states, :work_archive_states)
     
     # CitationNameStrings => WorkNameStrings
-    remove_index(:citation_name_strings, :name => "citation_name_string_join")
+    #remove_index(:citation_name_strings, :name => "citation_name_string_join")
     
     rename_column(:citation_name_strings, :citation_id, :work_id)
     rename_table(:citation_name_strings, :work_name_strings)
@@ -64,10 +64,10 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     add_index(:keywordings, [:work_id, :keyword_id], :name => "work_keyword_join", :unique => true)
     
     # Taggings
-    # Update taggings set taggable_type = "Work" where asset_type = "Citation"
+    # Update taggings set taggable_type = "Work" where taggable_type = "Citation"
     taggings = Tagging.find(:all).each do |t|
-      if t.asset_type == "Citation"
-        t.asset_type = "Work"
+      if t.taggable_type == "Citation"
+        t.taggable_type = "Work"
         t.save_without_callbacks
       end
     end
