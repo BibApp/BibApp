@@ -108,11 +108,11 @@ class WorksController < ApplicationController
       
       respond_to do |format|
         if successful == 1
-          flash[:notice] = "Batch was successfully created."
+          flash[:notice] = "Batch creation completed successfully."
           format.html {redirect_to new_work_url}
           format.xml  {head :created, :location => work_url(@work)}
         elsif successful == 2
-          flash[:unsuccessful] = "There was an unrecoverable error caused by the input!"
+          flash[:unsuccessful] = "There was an unrecoverable error caused by the input!  Please contact your Administrator and let them know about this problem."
           format.html {redirect_to new_work_url}
           format.xml  {render :xml => @work.errors.to_xml}
         elsif successful == 3
@@ -120,7 +120,7 @@ class WorksController < ApplicationController
           format.html {redirect_to new_work_url}
           format.xml  {render :xml => @work.errors.to_xml}
         else
-          flash[:unsuccessful] = "Work format unsupported or there were no works to import!"
+          flash[:unsuccessful] = "The format of the file was unrecognized or unsupported.  Supported formats include: RIS, MedLine and Refworks XML"
           format.html {redirect_to new_work_url}
           format.xml  {render :xml => @work.errors.to_xml}        
         end
@@ -537,20 +537,28 @@ class WorksController < ApplicationController
       p = CitationParser.new
       i = CitationImporter.new
 
-      # Parse the data
-      pcites, errorCheck = p.parse(str)
-      
+      begin
+        #Attempt to parse the data
+        pcites = p.parse(str)
+        
+      #Rescue any errors in parsing  
+      rescue Exception => e
+        #Log entire error backtrace
+        logger.error("An error occurred during Citation Parsing: #{e.message}\n")
+        logger.error("\nError Trace: #{e.backtrace.join("\n")}")
+        
+        #Return that there was an unrecoverable error
+        return 2
+      end
+        
+        
       #Check to make sure there were not errors while parsing the data.
       
       #No citations were parsed
-      if errorCheck == 0
+      if pcites.nil? || pcites.empty?
         return 4
       end
       
-      #An error occured while parsing the data
-      if errorCheck == -1
-        return 2
-      end
       logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
     
       # Map Import hashes

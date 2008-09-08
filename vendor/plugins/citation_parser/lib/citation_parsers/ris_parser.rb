@@ -1,5 +1,9 @@
 class RisParser < CitationParser
   
+  def logger
+    CitationParser.logger
+  end
+  
   def parse(risdata)
     risdata = risdata.dup
     risdata.strip!
@@ -9,10 +13,10 @@ class RisParser < CitationParser
     if not risdata =~ /^ER  \-/
       return nil
     end
-    
+    logger.debug("This file is RIS format.")
     
  #TODO make sure we escape all neccessary characters   
- #   risdata.gsub!("—", "-").gsub!("ÿ", "y").gsub!("’", "'")
+ #   risdata.gsub!("ï¿½", "-").gsub!("ï¿½", "y").gsub!("ï¿½", "'")
     risdata = risdata.split(/^ER\s.*/i)
     risdata.each do |rec|
       errorCheck = 1
@@ -39,7 +43,7 @@ class RisParser < CitationParser
       # The following error should only occur if no part of the citation
       # is consistent with the RIS format. 
       if errorCheck == 1
-        puts("\n There was an error on the following citation:\n #{rec}\n\n")
+        logger.error("\n There was an error on the following citation:\n #{rec}\n\n")
       else
         @citations << cite
       end

@@ -1,16 +1,21 @@
 class RefworksXmlParser < CitationParser
   require 'hpricot' if defined? Hpricot
   require 'htmlentities' if defined? HTMLEntities
-    
+  
+  def logger
+    CitationParser.logger
+  end
+  
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
   def parse(data)
     Hpricot.buffer_size = 204800
     xml = Hpricot.XML(data)
-    row_count = (xml/:reference).collect{|ref| ref.to_s}
+    row_count = (xml/:reference).collect{|ref| ref.to_s} 
     if row_count.size < 1
       return nil
     end
+    logger.debug("This file is the Refworks XML format.")
   
     (xml/:reference).each { |ref|
       # add the citation to the database
@@ -19,12 +24,7 @@ class RefworksXmlParser < CitationParser
       @citations << c
     }
     
-    @citations.each do |c|
-      puts("\n\nCitation: #{c.inspect}\n\n")
-    end
-    
-    puts("\nCitations Size: #{@citations.size}\n")
-    puts("\nRefworksParser says:#{@citations.each{|c| c.inspect}}\n")
+    logger.debug("\nCitations Size: #{@citations.size}\n")
     
     #Return @citations
     @citations

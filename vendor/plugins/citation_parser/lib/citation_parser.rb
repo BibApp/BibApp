@@ -10,6 +10,11 @@ class CitationParser
     def parsers
       @@parsers
     end
+    
+    def logger
+      #Use RAILS_DEFAULT_LOGGER by default for all logging
+      @@logger ||= ::RAILS_DEFAULT_LOGGER
+    end
   end
   
   attr_reader :citations
@@ -21,25 +26,18 @@ class CitationParser
   
   def parse(data)
     @citations = Array.new
-    begin
-      @@parsers.each do |klass|
-        parser = klass.new
-        @citations = parser.parse(data)
-        
-        if !@citations.nil?
-          puts("\n Parsing was successful using: #{klass}!\n")
-          puts("\nNumber of Successfully Parsed Citations: #{@citations.size}\n")
-          return @citations, 1 #Return 1 to indicate everything went fine          
-        end       
-      end
     
+    @@parsers.each do |klass|
+      parser = klass.new
+      @citations = parser.parse(data)
 
-    rescue
-    #This error happens when we cannot recover from an error during the parsing.
-      return nil, -1 #Return -1 to indicate there was a error
-      
+      if !@citations.nil?
+        CitationParser.logger.debug("\n Successfully parsed #{@citations.size} citations using: #{klass}!\n")
+        return @citations          
+      end       
     end
-    return nil, 0 #Return 0 to indicate that no citations were parsed
+   
+    return nil
   end
   
   protected

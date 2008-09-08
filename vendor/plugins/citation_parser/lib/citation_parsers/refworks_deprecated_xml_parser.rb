@@ -1,7 +1,11 @@
 class RefworksDeprecatedXmlParser < CitationParser
   require 'hpricot' if defined? Hpricot
   require 'htmlentities' if defined? HTMLEntities
-    
+  
+  def logger
+    CitationParser.logger
+  end
+  
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
   def parse(data)
@@ -14,6 +18,7 @@ class RefworksDeprecatedXmlParser < CitationParser
     if row_count.size < 1
       return nil
     end
+    logger.debug("This file is the Refworks Deprecated XML format.")
   
     (xml/'z:row').each { |ref|
       # add the citation to the database
