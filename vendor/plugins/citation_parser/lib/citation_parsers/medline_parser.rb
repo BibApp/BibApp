@@ -1,5 +1,9 @@
 class MedlineParser < CitationParser
   
+  def logger
+    CitationParser.logger
+  end
+  
   def parse(data)
     data = data.dup
     data.strip!
@@ -13,6 +17,8 @@ class MedlineParser < CitationParser
     if not data =~ /^PMID/
       return nil
     end
+    logger.debug("This file is Medline format.")
+    
     data = data.split(/(?=^PMID\-)/)
     data.each do |rec|
       errorCheck = 1
@@ -36,7 +42,7 @@ class MedlineParser < CitationParser
       # The following error should only occur if no part of the citation
       # is consistent with the Medline format. 
       if errorCheck == 1
-        puts("\n There was an error on the following citation:\n #{rec}\n\n")
+        logger.error("\n There was an error on the following citation:\n #{rec}\n\n")
       else
         @citations << cite
       end
