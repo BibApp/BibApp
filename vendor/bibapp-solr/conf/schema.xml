@@ -253,6 +253,7 @@
 
 <fields>
   <!--==== Primary BibApp Fields stored in Solr ====-->
+  <!-- See models/index.rb for how these Solr fields are populated from the database-->
  <field name="id" type="string" indexed="true" stored="true" required="true" /> 
  <field name="pk_i" type="long" indexed="true" stored="true"/>
  <field name="title" type="text" indexed="true" stored="true"/>
@@ -262,6 +263,7 @@
  <field name="volume" type="text" indexed="true" stored="true"/>
  <field name="start_page" type="text" indexed="true" stored="true"/>
  <field name="abstract" type="text" indexed="true" stored="true"/>
+ <field name="status" type="long" indexed="true" stored="true"/>
  <field name="issn_isbn" type="text" indexed="true" stored="true"/>
  <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>

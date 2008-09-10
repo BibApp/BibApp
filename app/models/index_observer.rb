@@ -4,7 +4,7 @@ class IndexObserver < ActiveRecord::Observer
   observe Work
   
   def after_save(record)
-    if record.batch_index? || record.work_state_id != 3
+    if record.batch_index? || !record.accepted?
       # Do not update
     else
       Index.update_solr(record)

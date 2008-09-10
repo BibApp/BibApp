@@ -227,6 +227,12 @@ module ApplicationHelper
     code.encode(data, :basic)
   end
   
+  #Determines the pretty name of a particular Work
+  def work_state_name(work_state_id)
+    #Load Work States hash from personalize.rb
+    return $WORK_STATUS[work_state_id]
+  end
+  
   private
   
   #Find information necessary to build our OpenURL query

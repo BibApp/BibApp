@@ -9,12 +9,6 @@ class AdminController < ApplicationController
   
   #Find Works which are marked "Ready to Archive"
   def ready_to_archive
-    #@TODO: right now just listing 10 Works...this should be
-    # more of a faceted view that allows you to find Works to archive next
-    #@works = Work.find(:all, 
-    #  :conditions => ["work_archive_state_id = ? and work_state_id = ?", 2, 3], 
-    #  :limit => 10)
-    
     @works = WorkArchiveState.ready_to_archive.works
   end
   

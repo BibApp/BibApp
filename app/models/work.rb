@@ -35,7 +35,6 @@ class Work < ActiveRecord::Base
   
   has_many :attachments, :as => :asset
   belongs_to :work_archive_state
-  belongs_to :work_state
 
   #### Named Scopes ####
   #Various Work Statuses
@@ -97,21 +96,40 @@ class Work < ActiveRecord::Base
   #### Serialization ####
   serialize :serialized_data
 
-  ########## Methods ##########
-  # Rule #1: Comment H-E-A-V-I-L-Y
-  # Rule #2: Include @TODOs
-  
+ 
+  ##### Work State Methods #####
   def in_process?
     return true if self.work_state_id==1
+  end
+  
+  def is_in_process
+    self.work_state_id=1
   end
   
   def duplicate?
     return true if self.work_state_id==2
   end
   
+  def is_duplicate
+    self.work_state_id=2
+  end
+  
   def accepted?
     return true if self.work_state_id==3
   end
+  
+  def is_accepted
+    self.work_state_id=3
+  end
+  
+  
+  
+  
+  
+  ########## Methods ##########
+  # Rule #1: Comment H-E-A-V-I-L-Y
+  # Rule #2: Include @TODOs
+
     
   # List of all currently enabled Work Types
   def self.types
@@ -141,13 +159,13 @@ class Work < ActiveRecord::Base
     logger.debug("\nDuplicates: #{duplicates.size}")
 
     if dupe_candidates.empty?
-      self.work_state_id = 3
+      self.is_accepted
       self.save_without_callbacks
       return
     end
     
     if dupe_candidates.size < 2
-      self.work_state_id = 3
+      self.is_accepted
       self.save_without_callbacks
       return
     end
@@ -159,19 +177,19 @@ class Work < ActiveRecord::Base
       end
     end
 
-    unless best.work_state_id == 2
+    unless best.duplicate?
       # Flag and save this as the canonical beast.
-      best.work_state_id = 3
+      best.is_accepted
       best.save_without_callbacks
     end
 
     # All the others are, by definition, dupes
     dupe_candidates.each do |dupe|
       logger.debug "Saving dupe work_states: #{dupe.id}"
-      if dupe.work_state_id == 3
+      if dupe.accepted?
         # Do nothing
       else
-        dupe.work_state_id = 2
+        dupe.is_duplicate
         dupe.batch_index = 0
         dupe.save_without_callbacks
       end
@@ -205,7 +223,7 @@ class Work < ActiveRecord::Base
     # and really like things that are already accepted.
     score = 0
     #score = 1 if (folder["- ev"])
-    score = 10 if work_state_id == 3
+    score = 10 if self.accepted?
     score
   end
   
@@ -364,7 +382,7 @@ class Work < ActiveRecord::Base
  
   # All Works begin unverified
   def set_initial_states
-    self.work_state_id = 1
+    self.is_in_process
     self.work_archive_state = WorkArchiveState.initial
   end
 
@@ -411,7 +429,7 @@ class Work < ActiveRecord::Base
     logger.debug "CNS Size: #{self.work_name_strings.size}"
     
     # Only create contributorships for accepted Works...
-    if self.work_state_id == 3
+    if self.accepted?
       self.work_name_strings.each do |cns|
         # Find all People with a matching PenName claim
         claims = PenName.find(:all, :conditions => ["name_string_id = ?", cns.name_string_id])

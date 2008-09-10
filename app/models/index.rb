@@ -20,12 +20,10 @@ class Index
 
   # DELETE INDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
-  ## works = Work.find(:all, :conditions => ["work_state_id = 3"])
   ## works.each{|c| Index.remove_from_solr(c)} 
 
   # REINDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
-  ## works = Work.find(:all, :conditions => ["work_state_id = 3"])
   ## works.each{|c| Index.update_solr(c)}
   
   # Default Solr Mapping 
@@ -40,6 +38,7 @@ class Index
     :volume => :volume,
     :start_page => :start_page,
     :abstract => :abstract,
+    :status => :work_state_id,
     :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
     
     # Work Type (index as "Journal article" rather than "JournalArticle")
@@ -293,10 +292,6 @@ class Index
       # hash which has strings for keys.
       solr_hash = HashWithIndifferentAccess.new(doc).to_hash
       
-      # Add a few custom fields which we don't index in Solr
-      unless work.work_state.nil?
-         solr_hash["status"] = work.work_state.name
-      end
       return solr_hash
     end
     
