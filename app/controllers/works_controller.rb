@@ -180,8 +180,9 @@ class WorksController < ApplicationController
     if !@work_batch.nil? and !@work_batch.empty?
       
       #determine number of duplicates in batch
-      @work_batch.each do |w| 
-        @dupe_count+=1 if w.duplicate?
+      @work_batch.each do |work_id|
+        work = Work.find(work_id)
+        @dupe_count+=1 if !work.nil? and work.duplicate?
       end
       
       @works = Work.paginate(
@@ -737,7 +738,7 @@ class WorksController < ApplicationController
           work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', work)
         
           #add to batch of works created
-          works_added << work
+          works_added << work.id
         end #end if no title
       }
       #index everything in Solr
@@ -751,8 +752,9 @@ class WorksController < ApplicationController
       logger.error("\nError Trace: #{e.backtrace.join("\n")}")
 
       #remove anything already added to the database (i.e. rollback ALL changes)
-      works_added.each do |work| 
-        work.destroy      
+      works_added.each do |work_id|
+        work = Work.find(work_id)
+        work.destroy unless work.nil?     
       end
       #re-initialize batch in order to clear it from session
       works_added = init_last_batch 
@@ -796,12 +798,12 @@ class WorksController < ApplicationController
   end
   
   # Find the last batch of works that was added during
-  # this current user's session
+  # this current user's session.  Only work_ids are stored.
   def find_last_batch
     session[:works_batch] ||= Array.new
     
     # Quick cleanup of batch...remove any items which have been deleted
-    session[:works_batch].delete_if{|work| !Work.exists?(work.id)}
+    session[:works_batch].delete_if{|work_id| !Work.exists?(work_id)}
   end
   
 end
