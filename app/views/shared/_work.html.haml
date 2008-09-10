@@ -1,9 +1,33 @@
 -#
 -# Render Single Work from Solr data
+-# This template can also be used with @work objects by calling Index.work_to_solr_hash(@work)
 -#
+-# Possible Input Variables:
+-#    :work         => work to display (REQUIRED)
+-#    :allow_select => whether or not to display checkbox next to displayed work
+-#    :show_status  => display status of work in BibApp (dupe, accepted, etc.)
+-#    :links_array  => Array of default links to display under the work
+-#                     Valid values: {:find_it, (local library "find it" link)
+-#                                    :cart,    (adds/removes from cart)
+-#                                    :edit}    (edit work)
+                                 
+
+-# Initialize optional input variables
+- allow_select ||= false
+- show_status ||= false
+- links_array ||= [:find_it, :cart]  #default to just 'find_it' and 'cart' links
+
 %li.work
+  -#If work can be selected (and user is logged in), add a checkbox
+  - if allow_select && logged_in?
+    %div.select_multiple
+      = check_box_tag "work_id[]", "#{work['pk_i']}"
+
+  -#Display the work
   %div.screen-format
     %strong=link_to "#{work['title']}", work_path(work['pk_i'])
+    -#display status of a work, if specified
+    = render :partial => "shared/work_status", :locals => {:work => work} if show_status
     %p.metadata 
       - work['name_strings_data'].first(5).each do |ns|
         - name, id = NameString.parse_solr_data(ns)
@@ -17,11 +41,27 @@
         ="(#{work['year']})"
 
     .links
-      =link_to_findit(work)
-      | 
-      - if !@cart.nil? && !@cart.items.nil?
-        - if @cart.items.include?(work['pk_i'].to_i)
-          =link_to_remove_from_cart(work['pk_i'])
-      - if @cart.nil? || !@cart.items.include?(work['pk_i'].to_i)
-        =link_to_add_to_cart(work['pk_i'])
-      
+      -links_array.each do |link|
+
+        -#"Find It" Link
+        -if link==:find_it
+          =link_to_findit(work)
+
+        -#"Add to Cart" and "Remove from Cart" links
+        -if link==:cart
+          - if !@cart.nil? && !@cart.items.nil?
+            - if @cart.items.include?(work['pk_i'].to_i)
+              =link_to_remove_from_cart(work['pk_i'])
+          - if @cart.nil? || !@cart.items.include?(work['pk_i'].to_i)
+            =link_to_add_to_cart(work['pk_i'])
+
+        -#"Edit" link
+        -if link==:edit
+          -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
+            =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path, :return_page=>@return_page)
+          -if @return_path.nil?
+            =link_to "Edit", edit_work_path(work['pk_i'])
+
+        -#As long as not last link, add a vertical pipe between links
+        -unless link==links_array.last
+          ="|"

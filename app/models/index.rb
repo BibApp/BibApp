@@ -293,6 +293,9 @@ class Index
       # hash which has strings for keys.
       solr_hash = HashWithIndifferentAccess.new(doc).to_hash
       
+      # Add a few custom fields which we don't index in Solr
+      solr_hash["status"] = work.work_state.name
+      
       return solr_hash
     end
     

@@ -26,10 +26,7 @@ class Work < ActiveRecord::Base
   has_many :keywords, :through => :keywordings
   has_many :keywordings,
     :dependent => :delete_all
-
-#  has_many :taggings, :dependent => :delete_all, :as => "taggable"
-#  has_many :tags, :source => :taggable, :through => :taggings, :source_type => "work", :class_name => "Tag"
-
+  
   has_many :taggings, :as => :taggable, :dependent => :delete_all
   has_many :tags, :through => :taggings
   has_many :users, :through => :taggings
@@ -37,15 +34,14 @@ class Work < ActiveRecord::Base
   has_many :external_system_uris
   
   has_many :attachments, :as => :asset
-  belongs_to :work_archive_state 
+  belongs_to :work_archive_state
+  belongs_to :work_state
 
   #### Named Scopes ####
   #Various Work Statuses
   named_scope :in_process, :conditions => ["work_state_id = ?", 1]
   named_scope :duplicate, :conditions => ["work_state_id = ?", 2]
   named_scope :accepted, :conditions => ["work_state_id = ?", 3]
-  named_scope :incomplete, :conditions => ["work_state_id = ?", 4]
-  named_scope :deleted, :conditions => ["work_state_id = ?", 5]
   
   # Work flagged for batch indexing
   named_scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
@@ -105,6 +101,18 @@ class Work < ActiveRecord::Base
   # Rule #1: Comment H-E-A-V-I-L-Y
   # Rule #2: Include @TODOs
   
+  def in_process?
+    return true if self.work_state_id==1
+  end
+  
+  def duplicate?
+    return true if self.work_state_id==2
+  end
+  
+  def accepted?
+    return true if self.work_state_id==3
+  end
+    
   # List of all currently enabled Work Types
   def self.types
   	# @TODO: Add each work subklass to this array
@@ -748,4 +756,5 @@ class Work < ActiveRecord::Base
     #Create any initialized name_strings and save to Work
     self.work_name_strings = @work_name_strings_cache if @work_name_strings_cache
   end
+  
 end
