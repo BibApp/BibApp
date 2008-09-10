@@ -61,7 +61,7 @@ $WORK_BASE_URL           = "http://sfx.wisconsin.edu/wisc"
 $WORK_SUFFIX             = "ctx_enc=info%3Aofi%2Fenc%3AUTF-8&amp;ctx_id=10_1&amp;ctx_tim=2006-5-11T13%3A11%3A1CDT&amp;ctx_ver=Z39.88-2004&amp;res_id=http%3A%2F%2Fsfx.wisconsin.edu%2Fwisc&amp;rft.atitle=[title]&amp;rft.date=[year]&amp;rft.issn=[issn]&amp;rft.issue=[issue]&amp;rft.volume=[vol]&amp;rft.spage=[fst]"
 
 ####
-# Sherpa Color Explainations
+# Sherpa Color Explanations
 #
 # These are the out-of-the-box explanations for each of
 # the SHERPA RoMEO "color" rankings for publishers/publications. 
@@ -71,4 +71,15 @@ $SHERPA_COLORS = {
   :yellow   => "Can archive pre-print (ie pre-refereeing)",
   :white    => "Archiving not formally supported",
   :unknown  => "Could not determine from data"
+}
+
+####
+# BibApp Status Explanations
+#
+# These are the out-of-the-box explanations for each of
+# the states that a work in the BibApp system can go through.
+$WORK_STATUS = {
+  1 => "Processing",
+  2 => "Duplicate",
+  3 => "Accepted"
 }

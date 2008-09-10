@@ -47,7 +47,7 @@ class PenNameObserver < ActiveRecord::Observer
     contributorships = Array.new
     pen_name.name_string.work_name_strings.each do |cns|
       #only create Contributorship for "accepted" works
-      if cns.work.work_state_id == 3
+      if cns.work.accepted?
         contributorships << Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
             cns.work.id, 
             pen_name.person_id, 
