@@ -25,7 +25,7 @@ class RefworksXmlImporter < CitationImporter
         end
       else
         if r_hash.has_key?(r_key)
-          r_hash[r_key] = r_hash[r_key].to_a << r_val
+          r_hash[r_key] = Array(r_hash[r_key]) << r_val
           next
         end
         r_hash[r_key] = r_val
@@ -90,13 +90,13 @@ class RefworksXmlImporter < CitationImporter
       :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+    @attr_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}
     @attr_translators[:author_primary] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     @attr_translators[:author_secondary] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    @attr_translators[:ref_type] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
+    @attr_translators[:ref_type] = lambda { |val_arr| Array(@type_map[val_arr[0]]) }
     @attr_translators[:pub_year] = lambda { |val_arr| val_arr.collect!{|n| Date.new(n.to_i)}}
     
     

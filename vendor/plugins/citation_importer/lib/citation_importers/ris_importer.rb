@@ -24,7 +24,7 @@ class RisImporter < CitationImporter
         end
       else
         if r_hash.has_key?(r_key)
-          r_hash[r_key] = r_hash[r_key].to_a << r_val
+          r_hash[r_key] = Array(r_hash[r_key]) << r_val
           next
         end
         r_hash[r_key] = r_val
@@ -89,13 +89,13 @@ class RisImporter < CitationImporter
        :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+    @attr_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}
     @attr_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     @attr_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    @attr_translators[:ty] = lambda { |val_arr| @type_map[val_arr[0]].to_a }
+    @attr_translators[:ty] = lambda { |val_arr| Array(@type_map[val_arr[0]]) }
     @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     @attr_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0])}
     
