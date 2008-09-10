@@ -23,7 +23,7 @@ class MedlineImporter < CitationImporter
         end
       else
         if r_hash.has_key?(r_key)
-          r_hash[r_key] = r_hash[r_key].to_a << r_val
+          r_hash[r_key] = Array(r_hash[r_key]) << r_val
           next
         end
         r_hash[r_key] = r_val
@@ -76,7 +76,7 @@ class MedlineImporter < CitationImporter
        :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| val_arr.to_a })
+    @attr_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
     
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}
