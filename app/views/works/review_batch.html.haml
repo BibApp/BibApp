@@ -2,11 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if flash[:notice]
-      %div.success= flash[:notice]
-
-    - if flash[:warning]
-      %div.notice= flash[:warning]
+    = render :partial => "shared/flash_messages"
 
     - if @works.nil? || @works.empty?
       %h2 Review Batch
@@ -35,7 +31,6 @@
                   %option{:value => "#{opt}"}= opt.titleize
             
             - @page = 1 if @page == 0
-            = hidden_field_tag "return_page", @return_page
             = hidden_field_tag "return_path", @return_path
             -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
             = hidden_field_tag "authenticity_token", form_authenticity_token

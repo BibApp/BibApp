@@ -2,8 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    - if flash[:notice]
-      %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
 
     - if logged_in? && current_user.has_role?("editor")
       %ul#edit-actions

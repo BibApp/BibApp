@@ -7,8 +7,7 @@
       %ul#edit-actions
         %li=link_to "Edit", edit_name_string_path(@name_string)
       
-      - if flash[:notice]
-        %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
 
   %div{:class => "span-22 prepend-1"}
     %h2

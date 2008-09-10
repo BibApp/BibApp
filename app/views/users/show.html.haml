@@ -2,11 +2,10 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="User Account (#{@user.login})"
-  
-    - if flash[:notice]
-      .notice= flash[:notice]
+    = render :partial => "shared/flash_messages"
     = error_messages_for :user, :class => 'notice'
+
+    %h2="User Account (#{@user.login})"
   
     %fieldset
       %legend="Account Information"

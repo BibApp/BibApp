@@ -6,8 +6,7 @@
       %ul#edit-actions
         %li=link_to "Add a NameString", new_name_string_path
 
-    - if flash[:notice]
-      %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
       
   %div{:class => "column span-22 prepend-1"}
     %h2="NameStrings (#{@page})"

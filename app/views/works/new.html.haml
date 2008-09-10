@@ -3,16 +3,7 @@
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
 
-    - if flash[:notice]
-      %div.success= flash[:notice]
-    
-    - if flash[:warning]
-      %div.notice= flash[:warning]
-    
-    - if flash[:error]
-      %div.error= flash[:error]
-
-    %ul#error_list
+    = render :partial => "shared/flash_messages"
 
     %h2 Add a Work
     %ul

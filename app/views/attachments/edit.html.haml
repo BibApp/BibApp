@@ -1,5 +1,4 @@
-- if flash[:notice]
-  %div#flash= flash[:notice]
+= render :partial => "shared/flash_messages"
 
 = error_messages_for :attachment
 

@@ -1,17 +1,20 @@
-#content 
-  %h2 Forgot Password
-  - if flash[:notice]
-    .notice= flash[:notice]
-  %fieldset
-    %legend="Request New Password"
-    - form_for :password, :url => passwords_path do |form|
-      %p
-        %label="Username"
-        %br/
-        = text_field_tag 'login'
-      %p
-        %label="Email"
-        %br/
-        = text_field_tag 'email'
-      %p.submit
-        = submit_tag 'Send Password'
+/ === Passwords === New (Forgot Password) ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    = render :partial => "shared/flash_messages"
+
+    %h2 Forgot Password
+    %fieldset
+      %legend="Request New Password"
+      - form_for :password, :url => passwords_path do |form|
+        %p
+          %label="Username"
+          %br/
+          = text_field_tag 'login'
+        %p
+          %label="Email"
+          %br/
+          = text_field_tag 'email'
+        %p.submit
+          = submit_tag 'Send Password'
