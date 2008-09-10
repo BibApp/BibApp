@@ -343,7 +343,7 @@ li.work-details{
 ul.global-nav {
 	margin:0;
 	padding:0;
-	float-right;
+	float: right;
 	text-align:right;
 }
 
@@ -482,6 +482,18 @@ div.auto_complete ul strong.highlight {
 .pagination a.none {
 	border:none;
 }
+
+/* Styles for bulk activities */
+.select_multiple 
+{
+  float:left;
+}
+#bulk_links
+{
+  float:left;
+  padding:2px;
+}
+
 
 tr.selected {
 	background-color:#FFFF99;

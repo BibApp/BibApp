@@ -1,0 +1,8 @@
+
+-#
+-# Render Work State information in a pretty format
+-#
+-# This template only renders something if work["status"] is defined!
+
+- unless work['status'].nil?
+  %strong="[#{work['status']}]"

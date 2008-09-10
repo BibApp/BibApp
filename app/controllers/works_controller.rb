@@ -1,7 +1,7 @@
 class WorksController < ApplicationController
   
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :destroy_multiple ]
    
   before_filter :find_authorities, :only => [:new, :edit]
 
@@ -40,6 +40,10 @@ class WorksController < ApplicationController
 
       #initialize work subclass with any passed in work info
       @work = subklass_init(params[:type], params[:work])
+      
+      #check if there was a batch created previously
+      # (if so, we'll provide a link to review that batch)
+      @last_batch = find_last_batch
     end
     
     before :show do
@@ -49,6 +53,10 @@ class WorksController < ApplicationController
     before :edit do
       #Anyone with 'editor' role on this work can edit it
       permit "editor on work"
+      
+      #Check if there was a path and page passed along to return to
+      @return_path = params[:return_path]
+      @return_page = params[:return_page]
     end
     
     before :destroy do
@@ -97,32 +105,37 @@ class WorksController < ApplicationController
     if params[:type] == "AddBatch"
     
       logger.debug("\n\n===ADDING BATCH WORKS===\n\n")
-      unless params[:work][:works_file].nil? or params[:work][:works_file].kind_of?String
-        #user uploaded a file of works
-        successful = import_batch!(params[:work][:works_file])
-      else 
-        #user used cut & paste to add works
-        successful = import_batch!(params[:work][:works])
+      unrecoverable_error = false
+      begin
+        unless params[:work][:works_file].nil? or params[:work][:works_file].kind_of?String
+          #user uploaded a file of works
+          @works_batch, @batch_errors = import_batch!(params[:work][:works_file])
+        else 
+          #user used cut & paste to add works
+          @works_batch, @batch_errors = import_batch!(params[:work][:works])
+        end
+      rescue
+        #We just display an "unrecoverable error" message for now
+        unrecoverable_error = true
       end
       
-      
       respond_to do |format|
-        if successful == 1
+        if unrecoverable_error
+          flash[:error] = "There was an unrecoverable error caused by the input!  Please contact the Administrators and let them know about this problem."
+          format.html {redirect_to new_work_url}
+          format.xml  {render :xml => @works_batch.errors.to_xml}
+        elsif !@batch_errors.nil? and !@batch_errors.empty?
+          flash[:warning] = "Batch creation was successful for some works.  However, we encountered the following problems with other works:<br/>#{@batch_errors.join('<br/>')}"
+          format.html {redirect_to review_batch_works_url}
+          format.xml  {render :xml => @works_batch.errors.to_xml}
+        elsif !@works_batch.nil? and !@works_batch.empty?
           flash[:notice] = "Batch creation completed successfully."
+          format.html {redirect_to review_batch_works_url}
+          format.xml  {head :created}
+        else #otherwise, we ended up with nothing imported!
+          flash[:warning] = "The format of the input was unrecognized or unsupported.  Supported formats include: RIS, MedLine and Refworks XML"
           format.html {redirect_to new_work_url}
-          format.xml  {head :created, :location => work_url(@work)}
-        elsif successful == 2
-          flash[:unsuccessful] = "There was an unrecoverable error caused by the input!  Please contact your Administrator and let them know about this problem."
-          format.html {redirect_to new_work_url}
-          format.xml  {render :xml => @work.errors.to_xml}
-        elsif successful == 3
-          flash[:unsuccessful] = "Batch import successful, but some works were missing a required field"
-          format.html {redirect_to new_work_url}
-          format.xml  {render :xml => @work.errors.to_xml}
-        else
-          flash[:unsuccessful] = "The format of the file was unrecognized or unsupported.  Supported formats include: RIS, MedLine and Refworks XML"
-          format.html {redirect_to new_work_url}
-          format.xml  {render :xml => @work.errors.to_xml}        
+          format.xml  {render :xml => @works_batch.errors.to_xml}        
         end
       end
 
@@ -153,9 +166,44 @@ class WorksController < ApplicationController
     end # If we need to add a batch
   end
   
+  # Generates a form which allows individuals to review the citations
+  # that were just bulk loaded *before* they make it into the system.
+  def review_batch
+    @page = params[:page] || 1
+    @rows = params[:rows] || 10
+    
+    #load last batch from session
+    @work_batch = find_last_batch
+   
+    @dupe_count = 0
+      
+    #As long as we have a batch of works to review, paginate them
+    if !@work_batch.nil? and !@work_batch.empty?
+      
+      #determine number of duplicates in batch
+      @work_batch.each do |w| 
+        @dupe_count+=1 if w.duplicate?
+      end
+      
+      @works = Work.paginate(
+        :page => @page, 
+        :per_page => @rows,
+        :conditions => ["id in (?)", @work_batch]
+      )
+    end
+    
+    #Return path & page for any actions that take place on 'Review Batch' page
+    @return_path = review_batch_works_path
+    @return_page = @page
+    
+  end
+  
   
   def update
     @work = Work.find(params[:id])
+    #Check if there was a path and page passed along to return to
+    return_path = params[:return_path]
+    return_page = params[:return_page]
     
     #Anyone with 'editor' role on this work can edit it
     permit "editor on work"
@@ -168,7 +216,12 @@ class WorksController < ApplicationController
    
     respond_to do |format|
       flash[:notice] = "Work was successfully updated."
-      format.html {redirect_to work_url(@work)}
+      unless return_path.nil?
+        format.html {redirect_to return_path, :page => return_page}
+      else
+        #default to returning to work page
+        format.html {redirect_to work_url(@work)}
+      end
       format.xml  {head :ok}
     end
   end
@@ -243,6 +296,45 @@ class WorksController < ApplicationController
     @work.issn_isbn_dupe_key = Work.set_issn_isbn_dupe_key(@work, work_name_strings, issn_isbn)
     @work.title_dupe_key = Work.set_title_dupe_key(@work)
     
+  end
+  
+  
+  def destroy_multiple    
+    #Anyone who is minimally an admin (on anything in system) can delete works
+    #(NOTE: User will actually have to be an 'admin' on all works in this batch, 
+    #       otherwise he/she will not be able to destroy *all* the works)
+    permit "admin"
+
+    work_ids = params[:work_id]
+    return_path = params[:return_path]
+    return_page = params[:return_page]
+    
+    full_success = true
+    
+    unless work_ids.nil? or work_ids.empty?
+      #Destroy each work one by one, so we can be sure user has 'admin' rights on all
+      work_ids.each do |work_id|
+        work = Work.find_by_id(work_id)
+
+        #One final check...only an admin on this work can destroy it
+        if logged_in? && current_user.has_role?("admin", work)
+          work.destroy
+        else
+          full_success = false
+        end
+      end
+    end
+    
+    respond_to do |format|
+      if full_success
+        flash[:notice] = "Works were successfully deleted."
+      else
+        flash[:warning] = "One or more works could not be deleted, as you have insufficient privileges"
+      end
+      #forward back to path which was specified in params
+      format.html {redirect_to return_path, :page => return_page }
+      format.xml  {head :ok}
+    end
   end
   
   
@@ -510,66 +602,69 @@ class WorksController < ApplicationController
   # Batch import Works
   def import_batch!(data)    
     
-    #The recorded error messages on works will be displayed as follows:
-      #1. List of works (or junk data) which is inconsistent with the work format
-      #2. The number of successfully parsed works
-      #3. A list of works which parsed fine, but are missing a required field
+    #default errors to none
+    errors = Array.new
     
-
-
-
-    #Return 1 if successful with no errors
-    #Return 2 if there was an unrecoverable error
-    #Return 3 if the import was successful, but some works were missing a required field
-    #Return 4 if the work format is not supported or there were no works to parse
-    success = 1 
-    
+    # (1) Read the data
     begin 
-      # Read the data
       str = data
       if data.respond_to? :read
         str = data.read
       elsif File.readable?(data)
         str = File.read(data)
       end
+    rescue Exception =>e
+       #Log entire error backtrace
+      logger.error("An error occurred reading the input data: #{e.message}\n")
+      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
+      #re-raise this exception to create()
+      raise
+    end
     
-      # Init: Parser and Importer
-      p = CitationParser.new
-      i = CitationImporter.new
+    # Init: Parser and Importer
+    p = CitationParser.new
+    i = CitationImporter.new
 
-      begin
-        #Attempt to parse the data
-        pcites = p.parse(str)
+    # (2) Parse the data using CitationParser plugin
+    begin
+      #Attempt to parse the data
+      pcites = p.parse(str)
+
+    #Rescue any errors in parsing  
+    rescue Exception => e
+      #Log entire error backtrace
+      logger.error("An error occurred during Citation Parsing: #{e.message}\n")
+      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
+
+      #re-raise this exception to create()
+      raise
+    end
         
-      #Rescue any errors in parsing  
-      rescue Exception => e
-        #Log entire error backtrace
-        logger.error("An error occurred during Citation Parsing: #{e.message}\n")
-        logger.error("\nError Trace: #{e.backtrace.join("\n")}")
         
-        #Return that there was an unrecoverable error
-        return 2
-      end
-        
-        
-      #Check to make sure there were not errors while parsing the data.
-      
-      #No citations were parsed
-      if pcites.nil? || pcites.empty?
-        return 4
-      end
-      
-      logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-    
+    #Check to make sure there were not errors while parsing the data.
+
+    #No citations were parsed
+    if pcites.nil? || pcites.empty?
+      return nil
+    end
+
+    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
+
+    # (3) Import the data using CitationImporter Plugin
+    begin
       # Map Import hashes
       attr_hashes = i.citation_attribute_hashes(pcites)
       logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
-    
+
       #Make sure there is data in the Attribute Hash
-      return 4 if attr_hashes.nil?
+      return nil if attr_hashes.nil?
       
+     
+      #initialize an array of all the works we create in this batch
+      works_added = init_last_batch 
       
-      all_cites = attr_hashes.map { |h|
+      # Now, actually *create* these works in database
+      attr_hashes.map { |h|
        
         # Initialize the Work
         klass = h[:klass]
@@ -581,7 +676,6 @@ class WorksController < ApplicationController
         end
       
         work = klass.new
-      
       
         ###
         # Setting WorkNameStrings
@@ -600,72 +694,79 @@ class WorksController < ApplicationController
 
         work.publication_info = publication_info
     
+        # Very minimal validation -- just check that we have a title
         if h[:title_primary].nil? or h[:title_primary] == ""
-          puts("\nThe following work does not have a title and cannot be imported!\n #{h}\n\n")
-          puts("End Citation \n\n")
-          success = 3
+          errors << "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
+          
+          logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
+          logger.warn("End Work \n\n")
         else
+     
+          ###
+          # Setting Keywords
+          ###
+          work.keyword_strings = h[:keywords]
+
+          # Ensure publication_date is good
+          if h[:publication_date].nil? or h[:publication_date].empty?
+            h[:publication_date] = Date.new(1)
+          end
       
-    
-        ###
-        # Setting Keywords
-        ###
-        work.keyword_strings = h[:keywords]
+          # Clean the abstract
+          # @TODO we'll want to clean all data
+          code = HTMLEntities.new
+          h[:abstract] = code.encode(h[:abstract], :decimal)
 
-        # Ensure publication_date is good
-        if h[:publication_date].nil? or h[:publication_date].empty?
-          h[:publication_date] = Date.new(1)
-        end
-      
-        # Clean the abstract
-        # @TODO we'll want to clean all data
-        code = HTMLEntities.new
-        h[:abstract] = code.encode(h[:abstract], :decimal)
-      
-        # Clean the hash of non-Work table data
-        # Cleaning preps hash for AR insert
-        h.delete(:klass)
-        h.delete(:work_name_strings)
-        h.delete(:publisher)
-        h.delete(:publication)
-        h.delete(:publication_place)
-        h.delete(:issn_isbn)
-        h.delete(:keywords)
-        h.delete(:source)
-        # @TODO add external_systems to work import
-        h.delete(:external_id)
-
-
-
-        #save remaining hash attributes
-        work.attributes=h
-        work.issn_isbn_dupe_key = Work.set_issn_isbn_dupe_key(work, work_name_strings, issn_isbn)
-        work.title_dupe_key = Work.set_title_dupe_key(work)
-        work.save_and_set_for_index
+          # Clean the hash of non-Work table data
+          # Cleaning preps hash for AR insert
+          h.delete(:klass)
+          h.delete(:work_name_strings)
+          h.delete(:publisher)
+          h.delete(:publication)
+          h.delete(:publication_place)
+          h.delete(:issn_isbn)
+          h.delete(:keywords)
+          h.delete(:source)
+          # @TODO add external_systems to work import
+          h.delete(:external_id)
+          
+          #save remaining hash attributes
+          work.attributes=h
+          work.issn_isbn_dupe_key = Work.set_issn_isbn_dupe_key(work, work_name_strings, issn_isbn)
+          work.title_dupe_key = Work.set_title_dupe_key(work)
+          work.save_and_set_for_index
    
-      
-        # current user automatically gets 'admin' permissions on work
-        # (only if he/she doesn't already have that role on the work)
-        work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', work)
-        end
+          # current user automatically gets 'admin' permissions on work
+          # (only if he/she doesn't already have that role on the work)
+          work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', work)
+        
+          #add to batch of works created
+          works_added << work
+        end #end if no title
       }
+      #index everything in Solr
       Index.batch_index
       
     #This error occurs if the works were parsed, but some bad data
     #was entered which caused an error to occur when saving the data
     #to the database.
     rescue Exception => e
-      puts("\nThere was an unrecoverable error on the batch import!!\n") 
-      puts("\nUnderlying error: #{e.to_s}\n")
-      puts("\nError Trace: #{e.backtrace.join("\n")}")
+      logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
+      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
+
+      #remove anything already added to the database (i.e. rollback ALL changes)
+      works_added.each do |work| 
+        work.destroy      
+      end
+      #re-initialize batch in order to clear it from session
+      works_added = init_last_batch 
       
-      success = 2
-      
-      return success
+      #reraise the error to create()
+      raise
     end
    
     #At this point, some or all of the works were saved to the database successfully.
-    return success
+    return works_added, errors
   end
   
   
@@ -684,6 +785,27 @@ class WorksController < ApplicationController
   def find_authorities
     @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+  end
+  
+  # Initialize information about the last batch of works
+  # that was added during this current user's session
+  def init_last_batch 
+    last_batch = find_last_batch
+    
+    #clear last batch if not empty
+    last_batch.clear unless last_batch.empty?
+    
+    #return cleared batch
+    return last_batch
+  end
+  
+  # Find the last batch of works that was added during
+  # this current user's session
+  def find_last_batch
+    session[:works_batch] ||= Array.new
+    
+    # Quick cleanup of batch...remove any items which have been deleted
+    session[:works_batch].delete_if{|work| !Work.exists?(work.id)}
   end
   
 end

@@ -1,6 +1,10 @@
 %fieldset
   %legend Add Batch (RIS | Medline | Refworks XML)
 
+  - unless @last_batch.nil? or @last_batch.empty?
+    %p
+      %strong=link_to "Review your previously added Batch", review_batch_works_path
+
   %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
   
   %p
@@ -14,4 +18,4 @@
     = form.text_area :works
     = hidden_field_tag :type, 'AddBatch'
   %p.submit
-    = submit_tag :save
+    = submit_tag "Add Batch"
