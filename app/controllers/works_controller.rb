@@ -304,7 +304,6 @@ class WorksController < ApplicationController
 
     work_ids = params[:work_id]
     return_path = params[:return_path]
-    return_page = params[:return_page]
     
     full_success = true
     
@@ -329,7 +328,7 @@ class WorksController < ApplicationController
         flash[:warning] = "One or more works could not be deleted, as you have insufficient privileges"
       end
       #forward back to path which was specified in params
-      format.html {redirect_to return_path, :page => return_page }
+      format.html {redirect_to return_path }
       format.xml  {head :ok}
     end
   end
