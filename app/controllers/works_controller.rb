@@ -54,9 +54,8 @@ class WorksController < ApplicationController
       #Anyone with 'editor' role on this work can edit it
       permit "editor on work"
       
-      #Check if there was a path and page passed along to return to
+      #Check if there was a path passed along to return to
       @return_path = params[:return_path]
-      @return_page = params[:return_page]
     end
     
     before :destroy do
@@ -192,9 +191,8 @@ class WorksController < ApplicationController
       )
     end
     
-    #Return path & page for any actions that take place on 'Review Batch' page
-    @return_path = review_batch_works_path
-    @return_page = @page
+    #Return path for any actions that take place on 'Review Batch' page
+    @return_path = review_batch_works_path(:page=>@page, :rows=>@rows)
     
   end
   
@@ -203,7 +201,6 @@ class WorksController < ApplicationController
     @work = Work.find(params[:id])
     #Check if there was a path and page passed along to return to
     return_path = params[:return_path]
-    return_page = params[:return_page]
     
     #Anyone with 'editor' role on this work can edit it
     permit "editor on work"
@@ -217,7 +214,7 @@ class WorksController < ApplicationController
     respond_to do |format|
       flash[:notice] = "Work was successfully updated."
       unless return_path.nil?
-        format.html {redirect_to return_path, :page => return_page}
+        format.html {redirect_to return_path}
       else
         #default to returning to work page
         format.html {redirect_to work_url(@work)}
