@@ -1,5 +1,4 @@
-- if flash[:notice]
-  %div#flash= flash[:notice]
+= render :partial => "shared/flash_messages"
 
 %div{:class => "column span-24"}
   %h3="Attachment Information"

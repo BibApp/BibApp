@@ -13,8 +13,7 @@
         %ul#edit-actions
           %li=link_to "Edit", edit_publication_path(@publication)
 
-        - if flash[:notice]
-          %div.success= flash[:notice]
+      = render :partial => "shared/flash_messages"
 
     %div{:class => "span-22 prepend-1" }
       %h2= @publication.name

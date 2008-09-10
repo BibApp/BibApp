@@ -1,20 +1,23 @@
-#content 
-  %h2 Change Password
-  - if flash[:notice]
-    .notice= flash[:notice]
-  %fieldset
-    - form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
-      %p
-        %label="Old Password"
-        %br/
-        = password_field_tag :old_password
-      %p
-        %label="New Password"
-        %br/
-        = form.password_field :password
-      %p
-        %label="Confirm New Password"
-        %br/
-        = form.password_field :password_confirmation
-      %p.submit
-        = submit_tag 'Update Password'
+/ === Passwords === Change ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+    = render :partial => "shared/flash_messages"
+
+    %h2 Change Password
+    %fieldset
+      - form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
+        %p
+          %label="Old Password"
+          %br/
+          = password_field_tag :old_password
+        %p
+          %label="New Password"
+          %br/
+          = form.password_field :password
+        %p
+          %label="Confirm New Password"
+          %br/
+          = form.password_field :password_confirmation
+        %p.submit
+          = submit_tag 'Update Password'

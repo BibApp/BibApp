@@ -6,8 +6,7 @@
       %ul#edit-actions
         %li=link_to "Add a Group", new_group_path
     
-    - if flash[:notice]
-      %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
 
   %div{:class => "span-22 prepend-1"}
     %h2="Groups (#{@page})"

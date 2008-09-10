@@ -6,8 +6,7 @@
       %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"} 
       %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
       
-    - if flash[:notice]
-      %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
       
   %div{:class => "span-22 prepend-1"}
     - if @authorizable.is_a? Class and @authorizable==System

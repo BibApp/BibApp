@@ -12,8 +12,7 @@
         %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
       
 
-      - if flash[:notice]
-        %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
 
     %h2.clear-both= @work.title_primary
     %div{:class => "span-12"}

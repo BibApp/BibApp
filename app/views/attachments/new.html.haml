@@ -2,12 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    / Flash notice
-    - if flash[:notice]
-      %div#flash= flash[:notice]
-      
-    - if flash[:error]
-      %div.error= flash[:error]  
+    = render :partial => "shared/flash_messages"  
 
     = error_messages_for :attachment
 

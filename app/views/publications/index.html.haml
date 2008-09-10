@@ -8,8 +8,7 @@
         - if current_user.has_role?("admin", System)
           %li=link_to "Admin Publication Authorities", authorities_publications_path
       
-      - if flash[:notice]
-        %div.success= flash[:notice]
+    = render :partial => "shared/flash_messages"
     
   %div{:class => "span-22 prepend-1"}
     %h2="Publications (#{@page})"
