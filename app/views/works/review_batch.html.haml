@@ -10,7 +10,7 @@
       %p=link_to "Add a new batch", new_work_path
 
     - else      
-      %h2="Review Batch (#{@work_batch.size} works added, #{@dupe_count} duplicates found)"
+      %h2="Review Batch (#{pluralize(@work_batch.size, "work")} added, #{pluralize(@dupe_count, "duplicate")} found)"
 
       / Sort Form
       %div{:class => "span-13 append-1 last"}
