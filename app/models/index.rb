@@ -294,8 +294,9 @@ class Index
       solr_hash = HashWithIndifferentAccess.new(doc).to_hash
       
       # Add a few custom fields which we don't index in Solr
-      solr_hash["status"] = work.work_state.name
-      
+      unless work.work_state.nil?
+         solr_hash["status"] = work.work_state.name
+      end
       return solr_hash
     end
     
