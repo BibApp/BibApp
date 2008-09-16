@@ -11,7 +11,8 @@ class Work < ActiveRecord::Base
   belongs_to :publication
   belongs_to :publisher
   
-  has_many :name_strings, :through => :work_name_strings 
+  has_many :name_strings, :through => :work_name_strings,
+    :order => "position"
   
   has_many :work_name_strings,
     :dependent => :delete_all
