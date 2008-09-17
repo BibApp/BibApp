@@ -83,3 +83,15 @@ $WORK_STATUS = {
   2 => "Duplicate",
   3 => "Accepted"
 }
+
+####
+# BibApp Archival Status Explanations
+#
+# These are the out-of-the-box explanations for each of
+# the archival states associated with a work whose file(s)
+# are being preserved in a repository.
+$WORK_ARCHIVE_STATUS = {
+  1 => "Not Ready, rights unknown",
+  2 => "Ready for archiving",
+  3 => "Repository record created, URL known"
+}

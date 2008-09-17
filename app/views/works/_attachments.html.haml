@@ -1,4 +1,4 @@
-- if WorkArchiveState.archived?(@work)
+- if @work.archived?
   - @work.external_system_uris.each do |s|
     %div.file
       %strong="Download Page: #{link_to(s.uri, s.uri)}"

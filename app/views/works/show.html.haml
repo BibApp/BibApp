@@ -5,7 +5,7 @@
     - if logged_in? && current_user.has_role?("editor", @work)
       %ul#edit-actions
         %li= link_to "Edit", edit_work_path
-        - if !WorkArchiveState.archived?(@work)
+        - if !@work.archived?
           %li= link_to "Archive Research", new_work_attachment_path(@work)
     - elsif logged_in?
       %ul#edit-actions
