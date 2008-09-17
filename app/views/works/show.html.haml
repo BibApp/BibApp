@@ -12,103 +12,68 @@
         %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
       
 
-    = render :partial => "shared/flash_messages"
+      - if flash[:notice]
+        %div.success= flash[:notice]
 
-    %h2.clear-both= @work.title_primary
-    %div{:class => "span-12"}
-    
-      -if (File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html"))
-        %h4="APA Format: #{@work.class.name.to_s.underscore.humanize}"
-        %span= render :partial => "works/apa/#{@work.class.name.to_s.underscore}", :locals => { :c => @work }
-      -else
-        %h4="APA Format: Generic"
-        %span= render :partial => "works/apa/generic", :locals => { :c => @work }
-      .links
-        =link_to_findit(@work)
-      %br/
-
-      %div{:class => "span-12"}
-        %h3="#{$UNIVERSITY_SHORT_NAME} Authors"
-        %ol.people
-          -@work.people.each do |person|
-            %li.inline{:style => "margin:0; padding:0;"}
-              %div{:class => "span-3"}
-                = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
-                %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
-                  %strong= person.works.verified.size
-                  %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
-      %div.clear-both
-        %fieldset
-          %legend Work Information
-          - if @work.name_strings.author.size > 0
-            %div.field
-              %label Authors:
-              %span.field_value
-                - @work.name_strings.author.each do |ns|
-                  =link_to "#{ns.name}", name_string_path(ns)
-          - if @work.name_strings.editor.size > 0
-            %div.field
-              %label Editors:
-              %span.field_value
-                - @work.name_strings.editor.each do |ns|
-                  =link_to "#{ns.name}", name_string_path(ns)
-          - if @work.publication_date?
-            %div.field
-              %label Publication Date:
-              %span.field_value=@work.publication_date
-          %div.field
-            %label Publication Type:
-            %span.field_value=@work.type 
-          - if @work.publication_id? and @work.publication.name?
-            %div.field
-              %label Publication Source:
-              %span.field_value
-                =link_to @work.publication.name, publication_path(@work.publication)
-          - if @work.publisher_id? and @work.publisher.name?
-            %div.field
-              %label Publisher:
-              %span.field_value
-                =link_to @work.publisher.name, publisher_path(@work.publisher)
-          - if @work.volume?
-            %div.field
-              %label Volume:
-              %span.field_value=@work.volume
-          - if @work.issue?
-            %div.field
-              %label Issue:
-              %span.field_value=@work.issue
-          - if @work.start_page?
-            %div.field
-              %label Page(s):
-              %span.field_value
-                =@work.start_page
-                -if @work.end_page?
-                  =" - #{@work.end_page}"          
-          - if @work.tags != nil
-            %div.field
-              %label Tag(s):
-              - @work.tags.each do |tg|
-                - if tg.name != @work.tags.last.name
-                  ="#{tg.name};"
-                - else
-                  ="#{tg.name}"
-   
-                    
-
+    %h2= @work.title_primary
+    %div{:class => "span-14", :style => "min-height:600px"}
+      %p{:style => "margin-top:-1em;"}
+        =link_to @work.publication.name, publication_path(@work.publication.id)
+        ="&#149; #{@work.publication_date.year} #{@work.volume}(#{@work.issue}), #{@work.start_page}-#{@work.end_page}."
+        
+      %p{:style => "font-size:1.25em;"}= @work.name_strings.author.collect{|ns| link_to(ns.name, name_string_path(ns.id))}.join(", ").to_s
+      
       - if !@work.attachments.nil? and !@work.attachments.empty?               
         = render :partial => 'attachments', :locals => { :files => @work.attachments }
-      
         / Admin
         = render :partial => 'admin'
+          
+      - else
+        .links
+          %strong=link_to_findit(Index.work_to_solr_hash(@work))
+        %br/
 
-    %div{:class => "span-7 prepend-2 last"}
-      %div.highlight
-        %h3="Related #{$UNIVERSITY_SHORT_NAME} Articles"
-        %ul.recommendations
-          - @recommendations.each do |rec, score|
-            %li{:style => "padding-bottom:0.5em"}
-              =link_to rec.title_primary.titleize, work_path(rec)
-              %p.metadata
-                ="#{rec.publication.authority.name} |" 
-                -if rec.publication_date
-                  ="#{rec.publication_date.year}"
+      / Admin
+      = #render :partial => 'admin'
+
+      %p{:style => "padding-top:1em;"}= @work.abstract
+    
+      -if (File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html"))
+        %h4{:style => "margin-bottom:0.5em;"}="APA Format: #{@work.class.name.to_s.underscore.humanize}"
+        %p.apa_citation= render :partial => "works/apa/#{@work.class.name.to_s.underscore}", :locals => { :c => @work }
+      -else
+        %h4="APA Format: Generic"
+        %p.apa_citation= render :partial => "works/apa/generic", :locals => { :c => @work }
+
+      - if @work.tags.size > 0
+        %div.field
+          %label
+            = pluralize(@work.tags.size, "Tag: ", "Tags: ")
+          - @work.tags.each do |tg|
+            - filter = 'tags:' + '"' + tg.name + '"'
+            %a{:href => search_path(:fq => filter, :qt => "standard") }= tg.name
+
+    %div{:class => "span-7 prepend-1 last", :style => "margin-top:2em;"}
+      - if @work.people.size > 0
+        %div{:style => "width: 100%; margin:0.5em;"}
+          %h4{:style => "text-align:center; background-color: #EEEEEE;padding:0.5em; border:1px solid #CCC"}="#{$UNIVERSITY_SHORT_NAME} Authors"
+          %ol.people
+            -@work.people.each do |person|
+              %li.inline{:style => "margin:0; padding:0;"}
+                %div{:class => "span-3"}
+                  = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
+                  %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
+                    %strong= person.works.verified.size
+                    %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
+
+        - if @recommendations.size > 0
+          %div{:style => "clear:both; width: 100%; border:1px solid #CCC; margin:0.5em;"}
+            %h4{:style => "text-align:center; background-color: #EEEEEE; padding:0.5em; margin-top: 0; border-top:1px solid #CCC; border-bottom:1px solid #CCC;"}="Related #{$UNIVERSITY_SHORT_NAME} Works"
+            %ul.recommendations
+              - @recommendations.each do |rec, score|
+                %li{:style => "padding:0.5em"}
+                  %p.metadata=link_to rec.title_primary.titleize, work_path(rec)
+                  %p.metadata
+                    ="#{rec.publication.authority.name} |" 
+                    -if rec.publication_date
+                      ="#{rec.publication_date.year}"

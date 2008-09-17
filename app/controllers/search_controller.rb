@@ -4,10 +4,10 @@ class SearchController < ApplicationController
   before_filter :find_cart, :only => [:index]
   
   def index
-    if params[:q]
+    if params[:q] || params[:fq]
 
       # Default SolrRuby params
-      @query        = params[:q] # User query
+      @query        = params[:q] || "" # User query
       @filter       = params[:fq] || ""
       @filter_no_strip = params[:fq] || ""
       @filter       = @filter.split("+>+").each{|f| f.strip!}
@@ -19,14 +19,18 @@ class SearchController < ApplicationController
       @export       = params[:export] || ""
       
       @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      
+      if !@query.empty?
+        @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
-      @spelling_suggestions = Index.get_spelling_suggestions(@query)
-
-      @spelling_suggestions.each do |suggestion|
-        # if suggestion matches query don't suggest...
-        if suggestion.downcase == @query.downcase
-          @spelling_suggestions.delete(suggestion)
+        @spelling_suggestions.each do |suggestion|
+          # if suggestion matches query don't suggest...
+          if suggestion.downcase == @query.downcase
+            @spelling_suggestions.delete(suggestion)
+          end
         end
+      else
+        @spelling_suggestions = ""
       end
       
       #@TODO: This WILL need updating as we don't have *ALL* Work info from Solr!
