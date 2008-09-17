@@ -253,6 +253,8 @@ class Index
     
     # Retrieve recommendations from Solr, based on current Work
     def recommendations(work)
+      
+      #Send a "more like this" query to Solr
       r = SOLRCONN.send(Solr::Request::Standard.new(
         :query => "id:#{work.solr_id}", 
         :mlt => {
@@ -260,13 +262,17 @@ class Index
           :field_list => ["abstract","title"]
         })
       )
-
+   
       docs = Array.new
-      r.data["moreLikeThis"]["#{work.solr_id}"]["docs"].each do |doc|
-        work = Work.find(doc["pk_i"])
-        docs << [work, doc['score']]
-      end
       
+      #Add related docs to an array, if any like this one were found
+      unless r.data["moreLikeThis"].empty? or r.data["moreLikeThis"]["#{work.solr_id}"].empty?
+        r.data["moreLikeThis"]["#{work.solr_id}"]["docs"].each do |doc|
+          work = Work.find(doc["pk_i"])
+          docs << [work, doc['score']]
+        end
+      end
+       
       return docs
     end
     
