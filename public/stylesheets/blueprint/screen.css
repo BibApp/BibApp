@@ -245,10 +245,6 @@ p.metadata {
 	margin:0.5em 0 0 0;
 }
 
-p.metadata a {
-	color:#737373;
-}
-
 .links {
 	margin-top:0.5em;
 }
@@ -266,14 +262,8 @@ a.source {
 	margin-top:2em;
 }
 
-span.year {
-	color:#737373;
-	font-size:0.75em;
-}
-
 h2 {border-bottom: 1px dotted #000;}
 h3 {color:#000;}
-h4 {color:#666666;}
 
 .container {
 	background-color:#FFF;
@@ -554,3 +544,4 @@ li.active-filter {
 	background: url('../../images/remove_facet.gif') left center no-repeat;
 	padding-left: 1.5em;
 }
+

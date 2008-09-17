@@ -1,8 +1,12 @@
 / Authors
 - if !c.name_strings.author.empty?
   %span.authors
+    - authors = Array.new
     - c.name_strings.author.each do |ns|
-      %span.author=link_to "#{ns.name}", name_string_path(ns)
+      - authors << ns.name
+    - if authors.size > 5
+      - authors = authors.first(6) << "et al."
+    = authors.join(", ")
 
 / Year
 -if c.publication_date != nil
@@ -12,7 +16,7 @@
 %span.title="#{c.title_primary}. "
 
 / Publication
-%span.publication=link_to "#{c.publication.name}", publication_path(c.publication.to_param)
+%span.publication=c.publication.name
 
 / Volume
 %span.volume="#{c.volume}"
