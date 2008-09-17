@@ -227,10 +227,16 @@ module ApplicationHelper
     code.encode(data, :basic)
   end
   
-  #Determines the pretty name of a particular Work
+  #Determines the pretty name of a particular Work Status
   def work_state_name(work_state_id)
     #Load Work States hash from personalize.rb
     return $WORK_STATUS[work_state_id]
+  end
+  
+  #Determines the pretty name of a particular Work Archival Status
+  def work_archive_state_name(work_archive_state_id)
+    #Load Work States hash from personalize.rb
+    return $WORK_ARCHIVE_STATUS[work_archive_state_id]
   end
   
   private

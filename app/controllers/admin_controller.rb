@@ -9,7 +9,7 @@ class AdminController < ApplicationController
   
   #Find Works which are marked "Ready to Archive"
   def ready_to_archive
-    @works = WorkArchiveState.ready_to_archive.works
+    @works = Work.ready_to_archive
   end
   
  
@@ -28,7 +28,10 @@ class AdminController < ApplicationController
     #Publisher.find_or_create_by_name(publisher_name)
     #Find ExternalSystem corresponding to SWORD Server
     system = ExternalSystem.find_by_name(@deposit[:server][:name])
-    if system.nil? #if it doesn't exist by name, create it
+    #If not found by name, try finding by URL
+    system = ExternalSystem.find_by_base_url(@deposit[:server][:uri]) if system.nil?
+    
+    if system.nil? #if it doesn't exist , create it
       system = ExternalSystem.find_or_create_by_name_and_base_url(
                      :name      => @deposit[:server][:name],
                      :base_url  => @deposit[:server][:uri])

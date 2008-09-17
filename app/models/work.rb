@@ -43,6 +43,10 @@ class Work < ActiveRecord::Base
   named_scope :duplicate, :conditions => ["work_state_id = ?", 2]
   named_scope :accepted, :conditions => ["work_state_id = ?", 3]
   
+  #Various Work Archival Statuses
+  named_scope :ready_to_archive, :conditions => ["work_archive_state_id = ?", 2]
+  named_scope :archived, :conditions => ["work_archive_state_id = ?", 3]
+ 
   # Work flagged for batch indexing
   named_scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
     # Method to mark all these Works as 'indexed'
@@ -123,7 +127,26 @@ class Work < ActiveRecord::Base
     self.work_state_id=3
   end
   
+  ##### Work Archival State Methods #####
+  def init_archive_status
+    self.work_archive_state_id=1
+  end
   
+  def ready_to_archive?
+    return true if self.work_archive_state_id==2
+  end
+  
+  def is_ready_to_archive
+    self.work_archive_state_id=2
+  end
+  
+  def archived?
+    return true if self.work_archive_state_id==3
+  end
+  
+   def is_archived
+    self.work_archive_state_id=3
+  end
   
   
   
@@ -384,7 +407,7 @@ class Work < ActiveRecord::Base
   # All Works begin unverified
   def set_initial_states
     self.is_in_process
-    self.work_archive_state = WorkArchiveState.initial
+    self.init_archive_status
   end
 
   #Build a unique ID for this Work in Solr
@@ -483,19 +506,19 @@ class Work < ActiveRecord::Base
     #if archived date set, its in archived state! 
     if !self.archived_at.nil? 
       #this Work is officially "archived"!
-      self.work_archive_state = WorkArchiveState.archived
+      self.is_archived
       self.save_without_callbacks
     #check if Work has attachments
     elsif !self.attachments.nil? and !self.attachments.empty?
       #if attachments exist, change status to "ready to archive"
-      if !WorkArchiveState.ready_to_archive?(self)
-        self.work_archive_state = WorkArchiveState.ready_to_archive
+      if !self.ready_to_archive?
+        self.is_ready_to_archive
         self.save_without_callbacks
       end
-    elsif WorkArchiveState.ready_to_archive?(self) 
+    elsif self.ready_to_archive? 
       #else if marked ready, but no attachments
       #then, revert to initial status  
-      self.work_archive_state = WorkArchiveState.initial
+      self.init_archive_status
       self.save_without_callbacks
     end
   end
