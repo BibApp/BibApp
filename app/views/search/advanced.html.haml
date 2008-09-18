@@ -1,0 +1,48 @@
+/ === Search === Advanced ===
+/ Main
+%div{:class => "span-24"}
+  %div{:class => "span-20 prepend-2"}
+    - form_tag advanced_search_path, :method => :get do
+
+      %fieldset.span-17.prepend-2
+        %legend Advanced Search
+        %div.span-17
+          .span-8
+            %label.span-4 Keywords
+            %p Return items with these words appearing anywhere
+          
+          = text_field_tag(:keywords, value = nil, options = {:size => 40})
+          %p ex. plasma confinement physics
+
+        %div.span-17        
+          .span-8
+            %label.span-4 Title
+            %p Return items with these words in the title
+          = text_field_tag(:title, value = nil, options = {:size => 40})
+          %p ex. Transport Phenomena
+        
+        %div.span-17        
+          .span-8
+            %label.span-4 Authors
+            %p Return items by author
+          = text_field_tag(:authors, value = nil, options = {:size => 40})
+          %p ex. Corradini, Michael
+          
+        %div.span-17        
+          .span-8
+            %label.span-4 Groups
+            %p Return items by groups
+          = text_field_tag(:groups, value = nil, options = {:size => 40})
+          %p ex. Engineering Physics
+            
+        %div.span-17        
+          .span-8
+            %label.span-4 ISSN or ISBN
+            %p Return item associated with the standard number
+          = text_field_tag(:issn_isbn, value = nil, options = {:size => 40})
+          %p ex. 0003-018X
+          
+        %div.span-17        
+          .span-8
+            &nbsp;
+          = submit_tag 'Search'

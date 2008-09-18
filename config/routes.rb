@@ -101,6 +101,7 @@ ActionController::Routing::Routes.draw do |map|
   # Search route
   ####
   map.search 'search', :controller => 'search', :action => 'index'
+  map.advanced_search 'search/advanced', :controller => 'search', :action => 'advanced'
   
   ####
   # Cart routes

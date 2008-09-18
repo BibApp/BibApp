@@ -14,8 +14,7 @@
     - else
       %div{:class => "span-22 prepend-1"}
         %h2
-          %em="#{@q.total_hits}"
-          =" Results for:"
+          ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
           %strong=" #{@query}"
 
         -if !@spelling_suggestions.empty?
