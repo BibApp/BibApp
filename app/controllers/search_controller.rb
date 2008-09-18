@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
 
   # Find the @cart variable, used to display "add" or "remove" links for saved Works  
-  before_filter :find_cart, :only => [:index]
+  before_filter :find_cart, :only => [:index, :advanced]
   
   def index
     if params[:q] || params[:fq]
@@ -48,6 +48,49 @@ class SearchController < ApplicationController
     else
       @q = nil
       # There's nothing to return
+    end
+  end
+  
+  def advanced
+    if !params[:keywords].nil? || !params[:title].nil? || !params[:authors].nil? || !params[:issn_isbn].nil? || !params[:groups].nil?
+      
+      logger.debug(params.inspect)
+      # Process the params and redirect to /search
+      @q = Array.new
+      
+      logger.debug(@q.inspect)
+      # Add keywords to query
+      if !params[:keywords].nil? && !params[:keywords].empty?
+        @q << params[:keywords]
+      end
+
+      # Add title to query
+      if !params[:title].nil? && !params[:title].empty?
+        @q << "title:#{params[:title]}"
+      end
+
+      # Add author to query
+      if !params[:authors].nil? && !params[:authors].empty?
+        @q << "authors:#{params[:authors]}"
+      end
+      
+      # Add group to query
+      if !params[:groups].nil? && !params[:groups].empty?
+        @q << "groups:#{params[:groups]}"
+      end
+      
+      # Add issn_isbn to query
+      if !params[:issn_isbn].nil? && !params[:issn_isbn].empty?
+        logger.debug(params[:issn_isbn].inspect)
+        @q << "issn_isbn:#{params[:issn_isbn]}"
+      end
+
+      logger.debug(@q.inspect)      
+      # Redirect to /search with properly formated solr standard request params
+      redirect_to search_path(:q => @q.join(", "))
+    else
+      @q = nil
+      # There's nothing to return, show them the search form
     end
   end
   

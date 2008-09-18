@@ -266,6 +266,8 @@
  <field name="status" type="long" indexed="true" stored="true"/>
  <field name="issn_isbn" type="text" indexed="true" stored="true"/>
  <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
+  <!-- authors are a synonym for name_strings -->
+  <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="publication" type="text" indexed="true" stored="true"/>
@@ -337,9 +339,21 @@
 <copyField source="publisher_data" dest="publisher_facet_data"/>
 
 <!--Copy all facet fields over to 'text', so they are searched by default-->
-<copyField source="*_facet" dest="text"/>
+<copyField source="name_strings" dest="text"/>
+<copyField source="people" dest="text"/>
+<copyField source="groups" dest="text"/>
+<copyField source="publication" dest="text"/>
+<copyField source="publisher" dest="text"/>
+<copyField source="keywords" dest="text"/>
+<copyField source="tags" dest="text"/>
+<copyField source="year" dest="text"/>
+<copyField source="abstract" dest="text"/>
+<copyField source="title" dest="text"/>
 
 <!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
 <copyField source="abstract" dest="word"/>
+
+<!--Copy name_strings into the 'authors' field, this keeps name_strings from appearing in our interface and our get params-->
+<copyField source="name_strings" dest="authors"/>
 
 </schema>
