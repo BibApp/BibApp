@@ -218,120 +218,33 @@ input.text, input.title {width:300px;padding:5px;}
 input.title {font-size:1.5em;}
 textarea {width:390px;height:250px;padding:5px;}
 
-/* Flash Messages */
-.error, .notice, .warning {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
-.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
-.warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
-.notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
-.error a {color:#8a1f11;}
-.warning a {color:#514721;}
-.notice a {color:#264409;}
 
-/* BibApp */
+/* ==== BibApp Header / Footer / Navigation ==== */
 
-a {
-	color:#163F68;
-	text-decoration:none;
-}
-
-a:hover {
-	text-decoration:underline;
-}
-
-p.metadata {
-	color:#737373;
-	font-size:0.85em;
-	padding:0;
-	margin:0.5em 0 0 0;
-}
-
-.links {
-	margin-top:0.5em;
-}
-
-a.name_string {
-	text-decoration:none;
-}
-
-a.name_string:hover {
-	text-decoration:underline;
-}
-
-a.source {
-	font-style:italic;
-	margin-top:2em;
-}
-
-h2 {border-bottom: 1px dotted #000;}
-h3 {color:#000;}
-
+/* Primary container for all content */
 .container {
 	background-color:#FFF;
 }
+
 
 #header {
 	margin-bottom:1em; 
 	padding-top:2em;
 }
 
-#facets {padding:0em 1em;}
 #footer {margin-top:2em; padding:2em 0em 1em 0em;}
 
 #header a {
 	text-decoration:none;
 }
 
-#results {clear:both; padding-top:1.5em;}
-#works
 #tagline {color:#000;}
 
-h4.heading {
-	padding-top:1em;
-	margin-bottom:0em;
-	color:#000;
-	border-bottom: 1px dotted black;
-}
-.heading a {
-	text-decoration:none;
-	color:#000;
-}
-
-#filters {
-	border:1px solid #CCC;
-	padding:1em;
-	background-color: #F1F5FA;
-}
-
-#filters li {
-	font-size:0.9em;
-	line-height:1.6em;
-}
-
-.more {font-size:0.9em;}
+/* Global Search Styles */
 .header-search-form {display:inline;}
+#search-box { float:right; }
 
-.inline-form {display:inline;}
-.inline-form div {display:inline;}
-
-ul.actions li {
-	display:inline;
-}
-
-ol.works {
-	margin:0;
-	padding:0;
-}
-.work {
-	list-style: none; 
-	border-bottom:1px solid #ddd; 
-	padding:0.75em 0; 
-	margin-bottom:0.5em;
-}
-
-li.work-details{
-	list-style:none;
-}
-
+/* Global Navigation (e.g. FAQ, Login, etc.) */
 ul.global-nav {
 	margin:0;
 	padding:0;
@@ -344,6 +257,7 @@ ul.global-nav li {
 	padding: 0.5em;
 }
 
+/* Primary Navigation (e.g. Works | Groups | People | etc.) */
 ul#navigation {
 	padding:0.5em;
 	margin:0em;
@@ -360,48 +274,127 @@ ul#navigation a {
 	margin:0em;
 }
 
-.apa-format {display:none;}
-.citation {margin:1em;}
 
-#authority {padding:2em 1em 1em 1em}
-.clear-both {clear:both;}
-#coauthors {padding:0;margin:0;width:100%;}
-#coauthors li {padding:0;margin:0;}
-#contact-info {font-size:0.5em; padding-left:1em;}
-#edit-actions {padding:1em;}
-#edit-actions li {display:inline; padding-right:1em;}
-#facets { padding:0em; margin:0em; }
-#facets ol,ul {list-style:none; padding:0; margin:0;}
-#facets li {line-height:1.75em;}
-.highlight { border:1px solid #CCC; padding:1em; background-color: #F1F5FA; }
-#people { padding:0em; margin:0em; }
-.people { padding:0em; margin:0em; }
-div.person { padding:0em; margin:0em; }
-#person-details {margin-bottom:1em;}
-ul#person-details li {display:inline; font-size:1.5em; line-height:1; margin-bottom:1em; padding-right:1em;}
-#person-image {padding:1em; text-align:center;}
-.person-image { border:2px dashed #CCC; padding:3px; }
+/* =========== Flash Messages ============== */
+.error, .notice, .warning {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+.warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
+.error a {color:#8a1f11;}
+.warning a {color:#514721;}
+.notice a {color:#264409;}
 
-.person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
-.person-last-name {padding-right:0.5em;}
+/* ============ Left/Right Side Menus ========== */
+/* (e.g. filters, related works, authors, etc.) */
 
-#publications {padding:0; margin:0;}
-#publishers {padding:0; margin:0;}
-#research-focus {}
+/*Box to right of main content (e.g. related works)*/
+div.right_box {
+    clear:both; 
+    width: 100%; 
+    border-left:1px solid #CCC;
+    border-right:1px solid #CCC;
+    border-bottom:1px solid #CCC;        
+    margin:0.5em;
+}
+div.right_box_no_border {
+    clear:both; 
+    width: 100%; 
+    margin:0.5em;
+}
+/*Box to left of main content (e.g. facet filters) */
+div.left_box {
+    border-left:1px solid #CCC;
+    border-right:1px solid #CCC;
+    border-bottom:1px solid #CCC;        
+    margin:0.5em;
+}
+div.left_box_no_border {        
+    margin:0.5em;
+}
 
-#sort-by { text-align:right; }
-
-#search-box { float:right; }
-#spelling-suggestions li {display:inline;}
-#tagline {color:#000;}
-
-ol.filters {
-	list-style:none;
-	padding:1em 0em;
-	margin:0em;
+/* Heading for the box of content */
+div.box_heading {
+    text-align:center; 
+    background-color: #EEEEEE; 
+    padding:0.5em; 
+    margin-top: 0;
+    margin-bottom: 1.25em; 
+    border:1px solid #CCC; 
+    height: 1.25em;
+    line-height: 1.25;
+    color: #111111;
+    font-size: 1.2em;
+    font-weight:normal;
 }
 
 
+/*========== Facet Filters =========== */
+
+/*Division for individual facet*/
+div.facet {
+    padding:0em 1em;
+}
+/*heading for individual facet*/
+div.facet_heading {
+    padding-left:0.5em;
+    padding-top:1em;
+    margin-bottom:0em;
+    color:#000;
+    border-bottom: 1px dotted black;
+    font-size: 1.2em;
+    height: 1.25em;
+    line-height: 1.25em;
+}
+/* Filter value listing*/
+ol.facet_filters {
+    list-style:none;
+    padding:1em 0em;
+    margin:0em;
+}
+ol.facet_filters li{
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+/* Active filter (which can be removed) */
+li.active-filter {
+    list-style: none;
+    background: url('../../images/remove_facet.gif') left center no-repeat;
+    padding-left: 1.5em;
+}
+
+/* Link to display more filters */
+.more_filters {font-size:0.9em;}
+
+
+
+/* =========== Work Styles ========== */
+/* Used by shared/works.html.haml and shared/work.html.haml */
+ol.works {
+	margin:0;
+	padding:0;
+}
+.work {
+	list-style: none; 
+	border-bottom:1px solid #ddd; 
+	padding:0.75em 0; 
+	margin-bottom:0.5em;
+}
+
+a.name_string {
+	text-decoration:none;
+}
+
+a.name_string:hover {
+	text-decoration:underline;
+}
+
+a.source {
+	font-style:italic;
+	margin-top:2em;
+}
+
+
+/* ==== Form Styles ==== */
 .formError{
 	display:inline;
 	padding:1em;
@@ -418,11 +411,11 @@ ol.filters {
 	margin-top:2em;
 }
 
-.work-journal_article .publication{font-style:italic;}
-.work-journal_article .volume{font-style:italic;}
-.work_book .title{font-style:italic;}
+.inline-form {display:inline;}
+.inline-form div {display:inline;}
 
-/* Auto-Complete */
+
+/* ==== Auto-Complete Styles ====*/
 div.auto_complete {
   width: 350px;
   background: #fff;
@@ -449,7 +442,7 @@ div.auto_complete ul strong.highlight {
   padding:0;
 }
 
-/* Pagination */
+/* =====  Pagination Styles ======= */
 #alpha-nav li {
 	display:inline;
 }
@@ -475,7 +468,9 @@ div.auto_complete ul strong.highlight {
 	border:none;
 }
 
-/* Styles for bulk activities */
+#sort-by { text-align:right; }
+
+/* ==== Styles for bulk activities (e.g. bulk selectboxes ==== */
 .select_multiple 
 {
   float:left;
@@ -486,6 +481,75 @@ div.auto_complete ul strong.highlight {
   padding:2px;
 }
 
+/* ==== BibApp General Styles ==== */
+
+a {
+	color:#163F68;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+p.metadata {
+	color:#737373;
+	font-size:0.85em;
+	padding:0;
+	margin:0.5em 0 0 0;
+}
+
+.links {
+	margin-top:0.5em;
+}
+
+/* Styles for related work recommendations */
+ul.recommendations {
+    list-style: none; 
+}
+
+
+
+h2 {border-bottom: 1px dotted #000;}
+h3 {color:#000;}
+
+
+#results {clear:both; padding-top:1.5em;}
+
+
+#authority {padding:2em 1em 1em 1em}
+.clear-both {clear:both;}
+#coauthors {padding:0;margin:0;width:100%;}
+#coauthors li {padding:0;margin:0;}
+#contact-info {font-size:0.5em; padding-left:1em;}
+#edit-actions {padding:1em;}
+#edit-actions li {display:inline; padding-right:1em;}
+.highlight { border:1px solid #CCC; padding:1em; background-color: #F1F5FA; }
+#people { padding:0em; margin:0em; }
+.people { padding:0em; margin:0em; }
+div.person { padding:0em; margin:0em; }
+#person-details {margin-bottom:1em;}
+ul#person-details li {display:inline; font-size:1.5em; line-height:1; margin-bottom:1em; padding-right:1em;}
+#person-image {padding:1em; text-align:center;}
+.person-image { border:2px dashed #CCC; padding:3px; }
+
+.person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
+.person-last-name {padding-right:0.5em;}
+
+#publications {padding:0; margin:0;}
+#publishers {padding:0; margin:0;}
+#research-focus {}
+
+#spelling-suggestions li {display:inline;}
+
+.heading a {
+	text-decoration:none;
+	color:#000;
+}
+
+ul.actions li {
+	display:inline;
+}
 
 tr.selected {
 	background-color:#FFFF99;
@@ -503,17 +567,6 @@ tr.selected {
 	display:inline;
 	list-style:none;
 	margin:0; padding:0;
-}
-
-.headline {
-	font-family:Georgia, Helvetica, "Lucida Grande", Arial;
-	color:#990000; 
-	padding-bottom:0.5em;
-	line-height:1.25em;
-}
-
-.section-header {
-	padding:0.25em; color:#FFF; background-color:#CCC;
 }
 
 .contributorship_actions_list {
@@ -539,9 +592,4 @@ thead td {font-weight:bold;}
 .white {background-color:#FFFFFF;}
 .unknown {background-color:#E6E6E6;}
 
-li.active-filter {
-	list-style: none;
-	background: url('../../images/remove_facet.gif') left center no-repeat;
-	padding-left: 1.5em;
-}
 

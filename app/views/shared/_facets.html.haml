@@ -1,94 +1,104 @@
 -#
 -# Build Refine Results sidebar, using facet information from Solr
 -# 
-%div#filters{:class => "span-6 append-1"}
-  %h3{:style => "color:#6884AB;"} Refine Results
-  -# Delete any filters pertaining to current object from removal list
-  -@filter.delete_if{ |f| !@current_object.nil? and f.include?('"' + @current_object.id.to_s + '"') }
-  - if !@filter.empty?
-    %ol.filters
-      - @filter.each do |f|
-        %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
+%div{:class => "span-6"}
+  %div.left_box
+    %div.box_heading Refine Results
+
+    / Remove Filter(s)
+    - remove_filter = @filter.clone
+    -# Delete any filters pertaining to current object from removal list
+    - remove_filter.delete_if{ |f| !@current_object.nil? and f.include?('"' + @current_object.id.to_s + '"') }
+    - if !remove_filter.empty?
+      %div.facet
+        %ol.facet_filters
+          - remove_filter.each do |f|
+            %li.active-filter=remove_filter(@query,@sort,@filter,f,@view,@rows)
 
 
-  / WorkType Filter
-  -if !@facets[:types].empty?
-    %h4.heading Formats
-    %ol.filters.types
-      -@facets[:types].each do |p|
-        %li
-          =add_filter(@query,@sort,@filter,"type_facet",p.name.underscore.humanize,p.value,@view,@rows)
+    / WorkType Filter
+    -if !@facets[:types].empty?
+      %div.facet
+        %div.facet_heading Formats
+        %ol.facet_filters
+          -@facets[:types].each do |p|
+            %li
+              =add_filter(@query,@sort,@filter,"type_facet",p.name.underscore.humanize,p.value,@view,@rows)
 
-  / Groups
-  -#Remove group facet that represents the current group
-  -@facets[:groups].delete_if{ |g| @current_object.kind_of?(Group) and @current_object.name==g.name }
-  -if !@facets[:groups].empty?
-    %h4.heading Groups
-    %ol#top-five-groups.filters.groups
-      -@facets[:groups].first(5).each do |g|
-        %li.show
-          =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
-
-      - if @facets[:groups].size > 5
-        %ol#all-groups.filters.groups{:style => "display:none"}
-          -@facets[:groups].each do |g|
+    / Groups
+    -#Remove group facet that represents the current group
+    -@facets[:groups].delete_if{ |g| @current_object.kind_of?(Group) and @current_object.name==g.name }
+    -if !@facets[:groups].empty?
+      %div.facet
+        %div.facet_heading Groups
+        %ol#top-five-groups.facet_filters
+          -@facets[:groups].first(5).each do |g|
             %li.show
               =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
 
-        %p.more=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+          - if @facets[:groups].size > 5
+            %ol#all-groups.facet_filters{:style => "display:none"}
+              -@facets[:groups].each do |g|
+                %li.show
+                  =add_filter(@query,@sort,@filter,"group_facet",g.name,g.value,@view,@rows)
 
-  / People
-  -#Remove person facet that represents the current person
-  -@facets[:people].delete_if{ |p| @current_object.kind_of?(Person) and @current_object.name==p.name }
-  -if !@facets[:people].empty?
-    %h4.heading People
-    %ol#top-five-people.filters.people
-      -@facets[:people].first(5).each do |p|
-        %li.show
-          =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
+            %p.more_filters=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
-    - if @facets[:people].size > 5
-      %ol#all-people.filters.groups{:style => "display:none"}
-        -@facets[:people].each do |p|
-          %li.show
-            =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
+    / People
+    -#Remove person facet that represents the current person
+    -@facets[:people].delete_if{ |p| @current_object.kind_of?(Person) and @current_object.name==p.name }
+    -if !@facets[:people].empty?
+      %div.facet
+        %div.facet_heading People
+        %ol#top-five-people.facet_filters
+          -@facets[:people].first(5).each do |p|
+            %li.show
+              =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
 
-      %p.more=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
+        - if @facets[:people].size > 5
+          %ol#all-people.facet_filters{:style => "display:none"}
+            -@facets[:people].each do |p|
+              %li.show
+                =add_filter(@query,@sort,@filter,"person_facet",p.name,p.value,@view,@rows)
 
-  / Years
-  -if !@facets[:years].empty?
-    %h4.heading Years
+          %p.more_filters=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
-    - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
+    / Years
+    -if !@facets[:years].empty?
+      %div.facet
+        %div.facet_heading Years
 
-    %ol#top-five-years.filters.years
-      -sorted_hash.first(5).each do |key, value|
-        %li.show
-          =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
+        - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
 
-    - if sorted_hash.size > 5
-      %ol#all-years.filters.groups{:style => "display:none"}
+        %ol#top-five-years.facet_filters
+          -sorted_hash.first(5).each do |key, value|
+            %li.show
+              =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
 
-        -sorted_hash.each do |key, value|
-          %li.show
-            =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
+        - if sorted_hash.size > 5
+          %ol#all-years.facet_filters{:style => "display:none"}
 
-      %p.more=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
+            -sorted_hash.each do |key, value|
+              %li.show
+                =add_filter(@query,@sort,@filter,"year_facet",key,value,@view,@rows)
 
-  / Publications
-  -#Remove Publication facets that represents the current publication or "Unknown"
-  -@facets[:publications].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publication) and @current_object.name==p.name) }
-  -if !@facets[:publications].empty?
-    %h4.heading Publications
-    %ol#top-five-publications.filters.publications
-      -@facets[:publications].first(5).each do |p|
-        %li.show
-          =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
+          %p.more_filters=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
-    - if @facets[:publications].size > 5
-      %ol#all-publications.filters.groups{:style => "display:none"}
-        -@facets[:publications].each do |p|
-          %li.show
-            =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
+    / Publications
+    -#Remove Publication facets that represents the current publication or "Unknown"
+    -@facets[:publications].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publication) and @current_object.name==p.name) }
+    -if !@facets[:publications].empty?
+      %div.facet
+        %div.facet_heading Publications
+        %ol#top-five-publications.facet_filters
+          -@facets[:publications].first(5).each do |p|
+            %li.show
+              =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
 
-      %p.more=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+        - if @facets[:publications].size > 5
+          %ol#all-publications.facet_filters{:style => "display:none"}
+            -@facets[:publications].each do |p|
+              %li.show
+                =add_filter(@query,@sort,@filter,"publication_facet",p.name,p.value,@view,@rows)
+
+          %p.more_filters=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
