@@ -55,8 +55,8 @@
 
     %div{:class => "span-7 prepend-1 last", :style => "margin-top:2em;"}
       - if @work.people.size > 0
-        %div{:style => "width: 100%; margin:0.5em;"}
-          %h4{:style => "text-align:center; background-color: #EEEEEE;padding:0.5em; border:1px solid #CCC"}="#{$UNIVERSITY_SHORT_NAME} Authors"
+        %div.right_box_no_border
+          %div.box_heading="#{$UNIVERSITY_SHORT_NAME} Authors"
           %ol.people
             -@work.people.each do |person|
               %li.inline{:style => "margin:0; padding:0;"}
@@ -67,8 +67,8 @@
                     %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
 
         - if @recommendations.size > 0
-          %div{:style => "clear:both; width: 100%; border:1px solid #CCC; margin:0.5em;"}
-            %h4{:style => "text-align:center; background-color: #EEEEEE; padding:0.5em; margin-top: 0; border-top:1px solid #CCC; border-bottom:1px solid #CCC;"}="Related #{$UNIVERSITY_SHORT_NAME} Works"
+          %div.right_box
+            %div.box_heading="Related #{$UNIVERSITY_SHORT_NAME} Work"
             %ul.recommendations
               - @recommendations.each do |rec, score|
                 %li{:style => "padding:0.5em"}
