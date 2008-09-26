@@ -763,7 +763,7 @@ class Work < ActiveRecord::Base
   # and saves them to the given Work object
   # Arguments:
   #  * Work object
-  #  * Array of hashes {:name => "Donohue, t>", :role=> "Author | Editor" }
+  #  * Array of hashes {:name => "Donohue, Tim", :role=> "Author | Editor" }
   def self.update_work_name_strings(work, name_strings_hash)
     logger.debug("\n\n===UPDATE WORK_NAME_STRINGS===\n\n")
     unless name_strings_hash.nil?
@@ -771,7 +771,7 @@ class Work < ActiveRecord::Base
       work.work_name_strings.each do |cns| # Current CNSs
         cns.destroy unless name_strings_hash.collect{|c| c[:name]}.include?(cns.name_string.name)
       end
-       
+        
       #next, add any new name string(s) to list
       name_strings_hash.flatten.each do |cns|
         #if this is a brand new name_string, we must save it first

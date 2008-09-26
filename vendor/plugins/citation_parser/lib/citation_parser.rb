@@ -56,16 +56,16 @@ class CitationParser
         end
 
         #If we have an empty Array or Hash for a value, remove it
-        if (value.class.to_s=="Array" or value.class.to_s=="Hash") and value.empty?
-          hash.delete(key)
-          next
-        end
-
-        #If we have an Array of Strings with only a single value,
-        # just return the first String as the value
-        if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
-          value = value[0].to_s
-        end
+#        if (value.class.to_s=="Array" or value.class.to_s=="Hash") and value.empty?
+#          hash.delete(key)
+#          next
+#        end
+#
+#        #If we have an Array of Strings with only a single value,
+#        # just return the first String as the value
+#        if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
+#          value = value[0].to_s
+#        end
 
         #Flatten any arrays within arrays, etc.
         if value.respond_to? :flatten

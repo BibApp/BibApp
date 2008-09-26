@@ -52,7 +52,7 @@ class BaseImporter < CitationImporter
       end
     end
     #copy the entire citation into "original_data"
-    r_hash["original_data"] = parsed_citation.properties["original_data"]
+    r_hash["original_data"] = parsed_citation.properties["original_data"].to_s
     
     #Note: At this point, we have a hash where some values are
     # Arrays.  However, we'll want to clean them up a bit, as we
@@ -75,9 +75,16 @@ class BaseImporter < CitationImporter
         next
       end
       
-      #If we only have a single value Array, there's no need to keep it as an Array
-      if value.class.to_s=="Array" and value.size==1
-        value = value[0]
+      #If we have an empty Array or Hash for a value, remove it
+      if (value.class.to_s=="Array" or value.class.to_s=="Hash")  and value.empty?
+        hash.delete(key)
+        next
+      end
+      
+      #If we have an Array of Strings with only a single value,
+      # just return the first String as the value
+      if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
+        value = value[0].to_s
       end
       
       #Flatten any arrays within arrays, etc.

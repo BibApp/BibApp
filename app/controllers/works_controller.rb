@@ -706,10 +706,11 @@ class WorksController < ApplicationController
           ###
           work.keyword_strings = h[:keywords]
 
+          # @TODO: DO we still need a date set?
           # Ensure publication_date is good
-          if h[:publication_date].nil? or h[:publication_date].empty?
-            h[:publication_date] = Date.new(1)
-          end
+          #if h[:publication_date].nil? or h[:publication_date].empty?
+          #  h[:publication_date] = Date.new(1)
+          #end
       
           # Clean the abstract
           # @TODO we'll want to clean all data

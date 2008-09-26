@@ -2,22 +2,39 @@
 - !ruby/object:ParsedCitation 
   citation_type: :ris
   properties: 
-    :a3: 
-    - Anonymous
     :is: 
     - "3"
-    :jf: 
-    - Hormones and behavior
-    :vl: 
-    - "45"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Horm.Behav.
-    :cy: 
-    - United States
     :y1: 
     - "2004"
+    :n1: 
+    - "LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish"
+    :ab: 
+    - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
+    :sp: 
+    - "168"
+    :m1: 
+    - Journal
+    :kw: 
+    - Androgens/metabolism
+    - Animals
+    - Brain/metabolism
+    - Estrogens/metabolism
+    - Humans
+    - Ligands
+    - Progestins/metabolism
+    - Receptors, Androgen/metabolism
+    - Receptors, Estrogen/metabolism
+    - Receptors, Progesterone/metabolism
+    - Receptors, Steroid/classification/metabolism
+    - Reproductive Behavior/physiology
+    - Sexual Behavior, Animal/physiology
+    - Signal Transduction/physiology
+    :y2: 
+    - Mar
+    :ad: 
+    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+    :ep: 
+    - "172"
     original_data: |-
       TY  - JOUR
       ID  - 116
@@ -52,62 +69,61 @@
       JF  - Hormones and behavior
       JA  - Horm.Behav.
       M1  - Journal
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish"
-    :ab: 
-    - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
+    :a3: 
+    - Anonymous
     :t1: 
     - Steroid receptor control of reproductive behavior
     :a1: 
     - Auger,A. P.
-    :sp: 
-    - "168"
-    :m1: 
-    - Journal
-    :kw: 
-    - Androgens/metabolism
-    - Animals
-    - Brain/metabolism
-    - Estrogens/metabolism
-    - Humans
-    - Ligands
-    - Progestins/metabolism
-    - Receptors, Androgen/metabolism
-    - Receptors, Estrogen/metabolism
-    - Receptors, Progesterone/metabolism
-    - Receptors, Steroid/classification/metabolism
-    - Reproductive Behavior/physiology
-    - Sexual Behavior, Animal/physiology
-    - Signal Transduction/physiology
-    :y2: 
-    - Mar
+    :jf: 
+    - Hormones and behavior
+    :vl: 
+    - "45"
     :id: 
     - "116"
-    :ad: 
-    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-    :sn: 
-    - 0018-506X
-    :ep: 
-    - "172"
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :a3: 
-    - Anonymous
-    :is: 
-    - "6"
-    :jf: 
-    - Journal of neuroendocrinology
-    :vl: 
-    - "15"
     :ty: 
     - JOUR
     :ja: 
-    - J.Neuroendocrinol.
+    - Horm.Behav.
+    :sn: 
+    - 0018-506X
     :cy: 
-    - England
+    - United States
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :is: 
+    - "6"
     :y1: 
     - "2003"
+    :n1: 
+    - "LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish"
+    :ab: 
+    - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
+    :sp: 
+    - "622"
+    :m1: 
+    - Journal
+    :kw: 
+    - Animals
+    - Brain/growth & development/metabolism
+    - CREB-Binding Protein
+    - Cyclic AMP Response Element-Binding Protein/metabolism
+    - Female
+    - Male
+    - Nuclear Proteins/metabolism
+    - Phosphorylation
+    - Rats
+    - Sex Characteristics
+    - Sexual Behavior/physiology
+    - Signal Transduction
+    - Trans-Activators/metabolism
+    :y2: 
+    - Jun
+    :ad: 
+    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+    :ep: 
+    - "627"
     original_data: |-
       TY  - JOUR
       ID  - 117
@@ -141,61 +157,58 @@
       JF  - Journal of neuroendocrinology
       JA  - J.Neuroendocrinol.
       M1  - Journal
-    :n1: 
-    - "LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish"
-    :ab: 
-    - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
+    :a3: 
+    - Anonymous
     :t1: 
     - "Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein"
     :a1: 
     - Auger,A. P.
+    :jf: 
+    - Journal of neuroendocrinology
+    :vl: 
+    - "15"
+    :id: 
+    - "117"
+    :ty: 
+    - JOUR
+    :ja: 
+    - J.Neuroendocrinol.
+    :sn: 
+    - 0953-8194
+    :cy: 
+    - England
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :is: 
+    - "1"
+    :y1: 
+    - "2006"
+    :n1: 
+    - "PUBM: Print-Electronic; DEP: 20051227; JID: 0045503; 0 (DNA Primers); 0 (Nerve Tissue Proteins); 57-83-0 (Progesterone); 2005/06/10 [received]; 2005/10/07 [revised]; 2005/10/16 [accepted]; 2005/12/27 [aheadofprint]; ppublish"
+    :ab: 
+    - Progesterone can influence various behaviors in adult male rats, however, little is known about which particular genes are regulated by progesterone in the male rat brain. Using focused microarray technology, we where able to define a subset of genes that are responsive to progesterone. Nylon membrane-based cDNA microarrays were used to profile gene expression patterns in the preoptic area/mediobasal hypothalamus (POA/MBH) of male rat brain 7 h following a single injection of progesterone. RNA was isolated from the brains of 6 male rats injected with progesterone and 6 male rats injected with sesame oil. Next, we hybridized the RNA from each animal to individual cDNA microarrays that contained more than 100 target genes, all of which are involved in cAMP and or calcium signaling pathways. Direct side-by-side comparison of all 12 arrays revealed differences in the expression patterns of 12 different genes. We confirmed the data gathered from the arrays on 4 different genes using Real-Time PCR. These data begin to outline the important role played by progesterone in mediating changes in gene expression within the male brain.
     :sp: 
-    - "622"
+    - "58"
     :m1: 
     - Journal
     :kw: 
     - Animals
-    - Brain/growth & development/metabolism
-    - CREB-Binding Protein
-    - Cyclic AMP Response Element-Binding Protein/metabolism
-    - Female
+    - DNA Primers
+    - Gene Expression Profiling
+    - Gene Expression Regulation/drug effects
     - Male
-    - Nuclear Proteins/metabolism
-    - Phosphorylation
+    - Nerve Tissue Proteins/genetics
+    - Oligonucleotide Array Sequence Analysis
+    - Progesterone/pharmacology
     - Rats
-    - Sex Characteristics
-    - Sexual Behavior/physiology
-    - Signal Transduction
-    - Trans-Activators/metabolism
+    - Rats, Sprague-Dawley
     :y2: 
-    - Jun
-    :id: 
-    - "117"
+    - Jan 5
     :ad: 
-    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-    :sn: 
-    - 0953-8194
+    - Department of Zoology, Birge Hall, 430 Lincoln Drive, University of Wisconsin, Madison, WI 53706, USA. cauger@wisc.edu
     :ep: 
-    - "627"
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :a3: 
-    - Anonymous
-    :is: 
-    - "1"
-    :jf: 
-    - Brain research
-    :vl: 
-    - "1067"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Brain Res.
-    :cy: 
-    - Netherlands
-    :y1: 
-    - "2006"
+    - "66"
     original_data: |-
       TY  - JOUR
       ID  - 112
@@ -228,52 +241,43 @@
       JF  - Brain research
       JA  - Brain Res.
       M1  - Journal
-    :n1: 
-    - "PUBM: Print-Electronic; DEP: 20051227; JID: 0045503; 0 (DNA Primers); 0 (Nerve Tissue Proteins); 57-83-0 (Progesterone); 2005/06/10 [received]; 2005/10/07 [revised]; 2005/10/16 [accepted]; 2005/12/27 [aheadofprint]; ppublish"
-    :ab: 
-    - Progesterone can influence various behaviors in adult male rats, however, little is known about which particular genes are regulated by progesterone in the male rat brain. Using focused microarray technology, we where able to define a subset of genes that are responsive to progesterone. Nylon membrane-based cDNA microarrays were used to profile gene expression patterns in the preoptic area/mediobasal hypothalamus (POA/MBH) of male rat brain 7 h following a single injection of progesterone. RNA was isolated from the brains of 6 male rats injected with progesterone and 6 male rats injected with sesame oil. Next, we hybridized the RNA from each animal to individual cDNA microarrays that contained more than 100 target genes, all of which are involved in cAMP and or calcium signaling pathways. Direct side-by-side comparison of all 12 arrays revealed differences in the expression patterns of 12 different genes. We confirmed the data gathered from the arrays on 4 different genes using Real-Time PCR. These data begin to outline the important role played by progesterone in mediating changes in gene expression within the male brain.
+    :a3: 
+    - Anonymous
     :t1: 
     - Microarray profiling of gene expression patterns in adult male rat brain following acute progesterone treatment
     :a1: 
     - Auger,C. J.
     - Jessen,H. M.
     - Auger,A. P.
-    :sp: 
-    - "58"
-    :m1: 
-    - Journal
-    :kw: 
-    - Animals
-    - DNA Primers
-    - Gene Expression Profiling
-    - Gene Expression Regulation/drug effects
-    - Male
-    - Nerve Tissue Proteins/genetics
-    - Oligonucleotide Array Sequence Analysis
-    - Progesterone/pharmacology
-    - Rats
-    - Rats, Sprague-Dawley
-    :y2: 
-    - Jan 5
+    :jf: 
+    - Brain research
+    :vl: 
+    - "1067"
     :id: 
     - "112"
-    :ad: 
-    - Department of Zoology, Birge Hall, 430 Lincoln Drive, University of Wisconsin, Madison, WI 53706, USA. cauger@wisc.edu
-    :sn: 
-    - 0006-8993
-    :ep: 
-    - "66"
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :a3: 
-    - Anonymous
     :ty: 
     - JOUR
     :ja: 
-    - Genes Brain Behav.
+    - Brain Res.
+    :sn: 
+    - 0006-8993
+    :cy: 
+    - Netherlands
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
     :y1: 
     - "2006"
+    :n1: 
+    - "PUBM: Print-Electronic; DEP: 20060829; JID: 101129617; aheadofprint"
+    :ab: 
+    - "We previously applied selective breeding on outbred mice to increase maternal aggression (maternal defense). In this study, we compared gene expression within a continuous region of the central nervous system (CNS) involved in maternal aggression (hypothalamus and preoptic regions) between lactating selected (S) and nonselected control (C) mice (n= 6 per group). Using microarrays representing over 40 000 genes or expressed sequence tags, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray and the probe logarithmic intensity error method. Approximately 200 genes were identified as significant using an intersection from both techniques. A subset of genes was examined for confirmation by real-time polymerase chain reaction (PCR). Significant decreases were found in S mice for neurotensin and neuropeptide Y receptor Y2 (both confirmed by PCR). Significant increases were found in S mice for neuronal nitric oxide synthase (confirmed by PCR), the K+ channel subunit, Kcna1 (confirmed by PCR), corticotrophin releasing factor binding protein (just above significance using PCR; P= 0.051) and GABA A receptor subunit 1A (not confirmed by PCR, but similar direction). S mice also exhibited significantly higher levels of the neurotransmitter receptor, adenosine A1 receptor and the transcription factors, c-Fos, and Egr-1. Interestingly, for 24 genes related to metabolism, all were significantly elevated in S mice, suggesting altered metabolism in these mice. Together, this study provides a list of candidate genes (some previously implicated in maternal aggression and some novel) that may play an important role in the production of this behavior."
+    :m1: 
+    - Journal
+    :y2: 
+    - Aug 29
+    :ad: 
+    - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
     original_data: |-
       TY  - JOUR
       ID  - 111
@@ -293,10 +297,8 @@
       AD  - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
       JA  - Genes Brain Behav.
       M1  - Journal
-    :n1: 
-    - "PUBM: Print-Electronic; DEP: 20060829; JID: 101129617; aheadofprint"
-    :ab: 
-    - "We previously applied selective breeding on outbred mice to increase maternal aggression (maternal defense). In this study, we compared gene expression within a continuous region of the central nervous system (CNS) involved in maternal aggression (hypothalamus and preoptic regions) between lactating selected (S) and nonselected control (C) mice (n= 6 per group). Using microarrays representing over 40 000 genes or expressed sequence tags, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray and the probe logarithmic intensity error method. Approximately 200 genes were identified as significant using an intersection from both techniques. A subset of genes was examined for confirmation by real-time polymerase chain reaction (PCR). Significant decreases were found in S mice for neurotensin and neuropeptide Y receptor Y2 (both confirmed by PCR). Significant increases were found in S mice for neuronal nitric oxide synthase (confirmed by PCR), the K+ channel subunit, Kcna1 (confirmed by PCR), corticotrophin releasing factor binding protein (just above significance using PCR; P= 0.051) and GABA A receptor subunit 1A (not confirmed by PCR, but similar direction). S mice also exhibited significantly higher levels of the neurotransmitter receptor, adenosine A1 receptor and the transcription factors, c-Fos, and Egr-1. Interestingly, for 24 genes related to metabolism, all were significantly elevated in S mice, suggesting altered metabolism in these mice. Together, this study provides a list of candidate genes (some previously implicated in maternal aggression and some novel) that may play an important role in the production of this behavior."
+    :a3: 
+    - Anonymous
     :t1: 
     - Altered gene expression in mice selected for high maternal aggression
     :a1: 
@@ -306,35 +308,48 @@
     - Vanzo,R. J.
     - Awad,T. A.
     - Stevenson,S. A.
-    :m1: 
-    - Journal
-    :y2: 
-    - Aug 29
     :id: 
     - "111"
-    :ad: 
-    - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
+    :ty: 
+    - JOUR
+    :ja: 
+    - Genes Brain Behav.
     :sn: 
     - 1601-1848
 - !ruby/object:ParsedCitation 
   citation_type: :ris
   properties: 
-    :a3: 
-    - Anonymous
     :is: 
     - "2"
-    :jf: 
-    - Brain research.Molecular brain research
-    :vl: 
-    - "139"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Brain Res.Mol.Brain Res.
-    :cy: 
-    - Netherlands
     :y1: 
     - "2005"
+    :n1: 
+    - "LR: 20061115; PUBM: Print; JID: 8908640; 0 (Neuropeptide Y); 66796-54-1 (Pro-Opiomelanocortin); 2004/10/13 [received]; 2005/04/20 [revised]; 2005/05/12 [accepted]; ppublish"
+    :ab: 
+    - "A dramatic example of neuronal and physiological plasticity in adult mammals occurs during the transition from a non-maternal to a maternal, lactating state. In this study, we compared gene expression within a large continuous region of the CNS involved in maternal behaviors (hypothalamus, preoptic regions, and nucleus accumbens) between lactating (L) (postpartum Day 7) and randomly cycling virgin (V) outbred mice. Using high-density oligonucleotide arrays representing 11,904 genes, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray (P < 0.001) (n = 92 genes) and significance analysis of microarrays using a 10% false discover rate (n = 114 genes). 27 common genes were identified as significant using both techniques. A subset of genes (n = 5) were selected and examined by real-time PCR. Our findings were consistent with previous published work. For example, neuropeptide Y (NPY) and proenkephalin were elevated in L mice, whereas POMC was decreased. Increased levels of NPY Y2 receptor and polo-like kinase and decreased levels of endothelin receptor type b in L mice are examples of novel gene expression changes not previously identified. Expression differences occurred in broad classes. Together, our findings provide possible new material on gene expression changes that may support maternal behaviors. The advantages and drawbacks of sampling large CNS regions using arrays are discussed."
+    :sp: 
+    - "201"
+    :m1: 
+    - Journal
+    :kw: 
+    - Animals
+    - Central Nervous System/anatomy & histology/metabolism
+    - Female
+    - Gene Expression/physiology
+    - Gene Expression Profiling
+    - Lactation/physiology
+    - Male
+    - Maternal Behavior/physiology
+    - Mice
+    - Mice, Inbred ICR
+    - Neuropeptide Y/genetics/metabolism
+    - Pro-Opiomelanocortin/genetics/metabolism
+    :y2: 
+    - Oct 3
+    :ad: 
+    - Department of Zoology, University of Wisconsin, 1117 W. Johnson Street, Madison, WI 53706, USA. scgammie@wisc.edu
+    :ep: 
+    - "211"
     original_data: |-
       TY  - JOUR
       ID  - 113
@@ -373,10 +388,8 @@
       JF  - Brain research.Molecular brain research
       JA  - Brain Res.Mol.Brain Res.
       M1  - Journal
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 8908640; 0 (Neuropeptide Y); 66796-54-1 (Pro-Opiomelanocortin); 2004/10/13 [received]; 2005/04/20 [revised]; 2005/05/12 [accepted]; ppublish"
-    :ab: 
-    - "A dramatic example of neuronal and physiological plasticity in adult mammals occurs during the transition from a non-maternal to a maternal, lactating state. In this study, we compared gene expression within a large continuous region of the CNS involved in maternal behaviors (hypothalamus, preoptic regions, and nucleus accumbens) between lactating (L) (postpartum Day 7) and randomly cycling virgin (V) outbred mice. Using high-density oligonucleotide arrays representing 11,904 genes, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray (P < 0.001) (n = 92 genes) and significance analysis of microarrays using a 10% false discover rate (n = 114 genes). 27 common genes were identified as significant using both techniques. A subset of genes (n = 5) were selected and examined by real-time PCR. Our findings were consistent with previous published work. For example, neuropeptide Y (NPY) and proenkephalin were elevated in L mice, whereas POMC was decreased. Increased levels of NPY Y2 receptor and polo-like kinase and decreased levels of endothelin receptor type b in L mice are examples of novel gene expression changes not previously identified. Expression differences occurred in broad classes. Together, our findings provide possible new material on gene expression changes that may support maternal behaviors. The advantages and drawbacks of sampling large CNS regions using arrays are discussed."
+    :a3: 
+    - Anonymous
     :t1: 
     - Gene array profiling of large hypothalamic CNS regions in lactating and randomly cycling virgin mice
     :a1: 
@@ -387,52 +400,54 @@
     - Jessen,H. M.
     - Panksepp,J. B.
     - Bronikowski,A. M.
-    :sp: 
-    - "201"
-    :m1: 
-    - Journal
-    :kw: 
-    - Animals
-    - Central Nervous System/anatomy & histology/metabolism
-    - Female
-    - Gene Expression/physiology
-    - Gene Expression Profiling
-    - Lactation/physiology
-    - Male
-    - Maternal Behavior/physiology
-    - Mice
-    - Mice, Inbred ICR
-    - Neuropeptide Y/genetics/metabolism
-    - Pro-Opiomelanocortin/genetics/metabolism
-    :y2: 
-    - Oct 3
+    :jf: 
+    - Brain research.Molecular brain research
+    :vl: 
+    - "139"
     :id: 
     - "113"
-    :ad: 
-    - Department of Zoology, University of Wisconsin, 1117 W. Johnson Street, Madison, WI 53706, USA. scgammie@wisc.edu
-    :sn: 
-    - 0169-328X
-    :ep: 
-    - "211"
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :a3: 
-    - Anonymous
-    :is: 
-    - "4"
-    :jf: 
-    - Journal of neuroendocrinology
-    :vl: 
-    - "17"
     :ty: 
     - JOUR
     :ja: 
-    - J.Neuroendocrinol.
+    - Brain Res.Mol.Brain Res.
+    :sn: 
+    - 0169-328X
     :cy: 
-    - England
+    - Netherlands
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :is: 
+    - "4"
     :y1: 
     - "2005"
+    :n1: 
+    - "LR: 20061115; PUBM: Print; JID: 8913461; 0 (Gonadal Steroid Hormones); 0 (Proto-Oncogene Proteins c-fos); 0 (Transcription Factors); ppublish"
+    :ab: 
+    - Sex differences in the brain and behaviour are mostly a result of transient increases in testosterone during the perinatal period. Testosterone influences brain development primarily through aromatization to oestradiol and subsequent binding to oestrogen receptors. Although some studies report that steroid hormones regulate the expression of the inducible transcription factor, Fos, in developing brain, it is not known if there is a sex difference in Fos expression. Changes in Fos protein can be used as an indicator of neuronal/genomic activity. Thus, it provides a useful tool to identify brain regions responding directly or indirectly to steroid hormones. In a first experiment, we examined Fos protein expression in the developing male and female rat brain using western immunoblotting. Dissections were taken from male and female rat pups on the day of birth (postnatal day 0; PN 0), PN1, PN5, PN11 or PN20. Although there was no difference on PN 0, males expressed significantly greater levels of Fos protein on PN1, PN5 and PN20. In a second experiment, we localized the sex difference in Fos protein expression using immunocytochemistry. We found that males expressed significantly higher levels of Fos within a variety of brain regions. These data indicate a sex difference in Fos protein expression during brain development, suggesting a potential role for Fos in differentiating male from female rat brain.
+    :sp: 
+    - "255"
+    :m1: 
+    - Journal
+    :kw: 
+    - Age Factors
+    - Animals
+    - Animals, Newborn/growth & development/metabolism
+    - Brain/growth & development/metabolism
+    - Female
+    - Gonadal Steroid Hormones/physiology
+    - Male
+    - Proto-Oncogene Proteins c-fos/metabolism
+    - Rats
+    - Rats, Sprague-Dawley
+    - Sex Characteristics
+    - Transcription Factors/metabolism
+    :y2: 
+    - Apr
+    :ad: 
+    - Department of Psychology, University of Wisconsin, Madison, WI 53706, USA.
+    :ep: 
+    - "261"
     original_data: |-
       TY  - JOUR
       ID  - 115
@@ -466,61 +481,69 @@
       JF  - Journal of neuroendocrinology
       JA  - J.Neuroendocrinol.
       M1  - Journal
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 8913461; 0 (Gonadal Steroid Hormones); 0 (Proto-Oncogene Proteins c-fos); 0 (Transcription Factors); ppublish"
-    :ab: 
-    - Sex differences in the brain and behaviour are mostly a result of transient increases in testosterone during the perinatal period. Testosterone influences brain development primarily through aromatization to oestradiol and subsequent binding to oestrogen receptors. Although some studies report that steroid hormones regulate the expression of the inducible transcription factor, Fos, in developing brain, it is not known if there is a sex difference in Fos expression. Changes in Fos protein can be used as an indicator of neuronal/genomic activity. Thus, it provides a useful tool to identify brain regions responding directly or indirectly to steroid hormones. In a first experiment, we examined Fos protein expression in the developing male and female rat brain using western immunoblotting. Dissections were taken from male and female rat pups on the day of birth (postnatal day 0; PN 0), PN1, PN5, PN11 or PN20. Although there was no difference on PN 0, males expressed significantly greater levels of Fos protein on PN1, PN5 and PN20. In a second experiment, we localized the sex difference in Fos protein expression using immunocytochemistry. We found that males expressed significantly higher levels of Fos within a variety of brain regions. These data indicate a sex difference in Fos protein expression during brain development, suggesting a potential role for Fos in differentiating male from female rat brain.
+    :a3: 
+    - Anonymous
     :t1: 
     - Sex differences in Fos protein expression in the neonatal rat brain
     :a1: 
     - Olesen,K. M.
     - Auger,A. P.
-    :sp: 
-    - "255"
-    :m1: 
-    - Journal
-    :kw: 
-    - Age Factors
-    - Animals
-    - Animals, Newborn/growth & development/metabolism
-    - Brain/growth & development/metabolism
-    - Female
-    - Gonadal Steroid Hormones/physiology
-    - Male
-    - Proto-Oncogene Proteins c-fos/metabolism
-    - Rats
-    - Rats, Sprague-Dawley
-    - Sex Characteristics
-    - Transcription Factors/metabolism
-    :y2: 
-    - Apr
+    :jf: 
+    - Journal of neuroendocrinology
+    :vl: 
+    - "17"
     :id: 
     - "115"
-    :ad: 
-    - Department of Psychology, University of Wisconsin, Madison, WI 53706, USA.
-    :sn: 
-    - 0953-8194
-    :ep: 
-    - "261"
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :a3: 
-    - Anonymous
-    :is: 
-    - "9"
-    :jf: 
-    - Endocrinology
-    :vl: 
-    - "146"
     :ty: 
     - JOUR
     :ja: 
-    - Endocrinology
+    - J.Neuroendocrinol.
+    :sn: 
+    - 0953-8194
     :cy: 
-    - United States
+    - England
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :is: 
+    - "9"
     :y1: 
     - "2005"
+    :n1: 
+    - "LR: 20061115; PUBM: Print-Electronic; DEP: 20050526; JID: 0375040; 0 (Dopamine Agonists); 0 (Estrogen Antagonists); 0 (Estrogen Receptor alpha); 0 (Receptors, Dopamine D1); 0 (Receptors, Progesterone); 10540-29-1 (Tamoxifen); 50-28-2 (Estradiol); 51-61-6 (Dopamine); 67287-49-4 (2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine); CIN: Endocrinology. 2005 Sep;146(9):3702-4. PMID: 16105829; 2005/05/26 [aheadofprint]; ppublish"
+    :ab: 
+    - Steroid receptor activation in developing brain influences a variety of cellular processes that endure into adulthood, altering both behavior and physiology. We report that estrogen receptors can be activated in a ligand-independent manner within developing brain by membrane dopamine receptors. Neonatal treatment with either estradiol or a dopamine D1 receptor agonist can increase the expression of an estrogen receptor-regulated gene (i.e. progestin receptors) and later juvenile social play. More importantly, increases in social play behavior induced by neonatal treatment with estradiol or a dopamine D1 receptor agonist can be prevented by prior treatment with an estrogen receptor antagonist. This suggests that changes in dopamine transmission in developing brain can activate estrogen receptors in a ligand-independent manner to influence gene expression and have lasting consequences on social behavior.
+    :sp: 
+    - "3705"
+    :m1: 
+    - Journal
+    :kw: 
+    - 2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine/pharmacology
+    - Animals
+    - Animals, Newborn
+    - Behavior, Animal/drug effects/physiology
+    - Brain/growth & development/metabolism
+    - Dopamine/metabolism
+    - Dopamine Agonists/pharmacology
+    - Estradiol/pharmacology
+    - Estrogen Antagonists/pharmacology
+    - Estrogen Receptor alpha/antagonists & inhibitors/metabolism
+    - Female
+    - Male
+    - Play and Playthings
+    - Pregnancy
+    - Rats
+    - Rats, Sprague-Dawley
+    - Receptors, Dopamine D1/agonists/metabolism
+    - Receptors, Progesterone/metabolism
+    - Social Behavior
+    - Tamoxifen/pharmacology
+    :y2: 
+    - Sep
+    :ad: 
+    - Department of Psychology, University of Wisconsin, Madison, 1202 West Johnson Street, Madison, Wisconsin 53706, USA.
+    :ep: 
+    - "3712"
     original_data: |-
       TY  - JOUR
       ID  - 114
@@ -564,10 +587,8 @@
       JF  - Endocrinology
       JA  - Endocrinology
       M1  - Journal
-    :n1: 
-    - "LR: 20061115; PUBM: Print-Electronic; DEP: 20050526; JID: 0375040; 0 (Dopamine Agonists); 0 (Estrogen Antagonists); 0 (Estrogen Receptor alpha); 0 (Receptors, Dopamine D1); 0 (Receptors, Progesterone); 10540-29-1 (Tamoxifen); 50-28-2 (Estradiol); 51-61-6 (Dopamine); 67287-49-4 (2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine); CIN: Endocrinology. 2005 Sep;146(9):3702-4. PMID: 16105829; 2005/05/26 [aheadofprint]; ppublish"
-    :ab: 
-    - Steroid receptor activation in developing brain influences a variety of cellular processes that endure into adulthood, altering both behavior and physiology. We report that estrogen receptors can be activated in a ligand-independent manner within developing brain by membrane dopamine receptors. Neonatal treatment with either estradiol or a dopamine D1 receptor agonist can increase the expression of an estrogen receptor-regulated gene (i.e. progestin receptors) and later juvenile social play. More importantly, increases in social play behavior induced by neonatal treatment with estradiol or a dopamine D1 receptor agonist can be prevented by prior treatment with an estrogen receptor antagonist. This suggests that changes in dopamine transmission in developing brain can activate estrogen receptors in a ligand-independent manner to influence gene expression and have lasting consequences on social behavior.
+    :a3: 
+    - Anonymous
     :t1: 
     - Dopaminergic activation of estrogen receptors in neonatal brain alters progestin receptor expression and juvenile social play behavior
     :a1: 
@@ -575,38 +596,17 @@
     - Jessen,H. M.
     - Auger,C. J.
     - Auger,A. P.
-    :sp: 
-    - "3705"
-    :m1: 
-    - Journal
-    :kw: 
-    - 2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine/pharmacology
-    - Animals
-    - Animals, Newborn
-    - Behavior, Animal/drug effects/physiology
-    - Brain/growth & development/metabolism
-    - Dopamine/metabolism
-    - Dopamine Agonists/pharmacology
-    - Estradiol/pharmacology
-    - Estrogen Antagonists/pharmacology
-    - Estrogen Receptor alpha/antagonists & inhibitors/metabolism
-    - Female
-    - Male
-    - Play and Playthings
-    - Pregnancy
-    - Rats
-    - Rats, Sprague-Dawley
-    - Receptors, Dopamine D1/agonists/metabolism
-    - Receptors, Progesterone/metabolism
-    - Social Behavior
-    - Tamoxifen/pharmacology
-    :y2: 
-    - Sep
+    :jf: 
+    - Endocrinology
+    :vl: 
+    - "146"
     :id: 
     - "114"
-    :ad: 
-    - Department of Psychology, University of Wisconsin, Madison, 1202 West Johnson Street, Madison, Wisconsin 53706, USA.
+    :ty: 
+    - JOUR
+    :ja: 
+    - Endocrinology
     :sn: 
     - 0013-7227
-    :ep: 
-    - "3712"
+    :cy: 
+    - United States
