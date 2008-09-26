@@ -1,0 +1,409 @@
+/* -------------------------------------------------------------- 
+  
+   bibapp.css
+   * Style specific to BibApp (http://bibapp.googlecode.com/)
+   
+   See the Readme file in this folder for additional instructions.
+
+-------------------------------------------------------------- */
+
+
+/* ============================================= */
+/* ==== BibApp Header / Footer / Navigation ==== */
+/* ============================================= */
+/* Primary container for all content */
+.container {
+	background-color:#FFF;
+}
+
+
+#header {
+	margin-bottom:1em; 
+	padding-top:2em;
+}
+
+#footer {margin-top:2em; padding:2em 0em 1em 0em;}
+
+#header a {
+	text-decoration:none;
+}
+
+#tagline {color:#000;}
+
+/* Global Search Styles */
+.header-search-form {display:inline;}
+#search-box { float:right; }
+
+/* Global Navigation (e.g. FAQ, Login, etc.) */
+ul.global-nav {
+	margin:0;
+	padding:0;
+	float: right;
+	text-align:right;
+}
+
+ul.global-nav li {
+	display:inline;
+	padding: 0.5em;
+}
+
+/* Primary Navigation (e.g. Works | Groups | People | etc.) */
+ul#navigation {
+	padding:0.5em;
+	margin:0em;
+}
+
+ul#navigation li {
+	display: inline;
+	padding-right:0.5em;
+	margin:0em;
+}
+
+ul#navigation a {
+	padding: 0.5em 1.5em 0.5em 0em;
+	margin:0em;
+}
+
+
+/* ======================================= */
+/* =========== Flash Messages ============ */
+/* ======================================= */
+.error, .notice, .warning {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
+.warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
+.error a {color:#8a1f11;}
+.warning a {color:#514721;}
+.notice a {color:#264409;}
+
+
+
+/* ============================================= */
+/* ============ Left/Right Side Menus ========== */
+/* ============================================= */
+/* (e.g. filters, related works, authors, etc.) */
+
+/*Box to right of main content (e.g. related works)*/
+div.right_box {
+    clear:both; 
+    width: 100%; 
+    border-left:1px solid #CCC;
+    border-right:1px solid #CCC;
+    border-bottom:1px solid #CCC;        
+    margin:0.5em;
+}
+div.right_box_no_border {
+    clear:both; 
+    width: 100%; 
+    margin:0.5em;
+}
+/*Box to left of main content (e.g. facet filters) */
+div.left_box {
+    border-left:1px solid #CCC;
+    border-right:1px solid #CCC;
+    border-bottom:1px solid #CCC;        
+    margin:0.5em;
+}
+div.left_box_no_border {        
+    margin:0.5em;
+}
+
+/* Heading for the box of content */
+div.box_heading {
+    text-align:center; 
+    background-color: #EEEEEE; 
+    padding:0.5em; 
+    margin-top: 0;
+    margin-bottom: 1.25em; 
+    border:1px solid #CCC; 
+    height: 1.25em;
+    line-height: 1.25;
+    color: #111111;
+    font-size: 1.2em;
+    font-weight:normal;
+}
+
+/* ===================================================== */
+/* ========== Facet / Refine Results Styles ============ */
+/* ===================================================== */
+/*Division around entire "Refine Results" box*/
+#results {clear:both; padding-top:1.5em;}
+
+/*Division for individual facet*/
+div.facet {
+    padding:0em 1em;
+}
+/*heading for individual facet*/
+div.facet_heading {
+    padding-left:0.5em;
+    padding-top:1em;
+    margin-bottom:0em;
+    color:#000;
+    border-bottom: 1px dotted black;
+    font-size: 1.2em;
+    height: 1.25em;
+    line-height: 1.25em;
+}
+/* Filter value listing*/
+ol.facet_filters {
+    list-style:none;
+    padding:1em 0em;
+    margin:0em;
+}
+ol.facet_filters li{
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+/* Active filter (which can be removed) */
+li.active-filter {
+    list-style: none;
+    background: url('../../images/remove_facet.gif') left center no-repeat;
+    padding-left: 1.5em;
+}
+
+/* Link to display more filters */
+.more_filters {font-size:0.9em;}
+
+
+/* =============================== */
+/* ========= Form Styles ========= */
+/* =============================== */
+.formError{
+	display:inline;
+	padding:1em;
+	margin:1em;
+	color:red;
+}
+.fieldWithErrors{
+	display:inline;
+	border:1px solid red;
+	padding:1em;
+	margin:1em;
+}
+.submit{
+	margin-top:2em;
+}
+
+.inline-form {display:inline;}
+.inline-form div {display:inline;}
+
+ul.form_item_list {list-style-type:none;}
+
+input.smallbox {width:40px;}
+
+/* =============================== */
+/* ==== Auto-Complete Styles ===== */
+/* =============================== */
+div.auto_complete {
+  width: 350px;
+  background: #fff;
+}
+div.auto_complete ul {
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+
+div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+}
+div.auto_complete ul li.selected {
+  background-color: #ffb;
+}
+
+div.auto_complete ul strong.highlight {
+  color: #800; 
+  margin:0;
+  padding:0;
+}
+
+/* ================================ */
+/* ====== Pagination Styles ======= */
+/* ================================ */
+#alpha-nav li {
+	display:inline;
+}
+#alpha-nav.pagination {
+	margin-bottom:3em;
+}
+
+.pagination {
+	padding:1em 0em;
+	border-top:1px dotted black;
+	border-bottom:1px dotted black;
+	text-align:center;
+}
+.pagination a {
+  padding: 2px 5px 2px 5px;
+  margin: 2px;
+  border: 1px solid #aaaadd;
+  text-decoration: none;
+  color: #000099;
+}
+
+.pagination a.none {
+	border:none;
+}
+
+#sort-by { text-align:right; }
+
+/* ========================================= */
+/* ====== Styles for bulk activities  ====== */
+/* ========================================= */
+/* (e.g. bulk selectboxes) */
+
+.select_multiple 
+{
+  float:left;
+}
+#bulk_links
+{
+  float:left;
+  padding:2px;
+}
+
+/* ======================================= */
+/* =========== Work View Styles ========== */
+/* ======================================= */
+/* Used by shared/works.html.haml and shared/work.html.haml */
+ol.works {
+	margin:0;
+	padding:0;
+}
+.work {
+	list-style: none; 
+	border-bottom:1px solid #ddd; 
+	padding:0.75em 0; 
+	margin-bottom:0.5em;
+}
+
+a.name_string {
+	text-decoration:none;
+}
+
+a.name_string:hover {
+	text-decoration:underline;
+}
+
+a.source {
+	font-style:italic;
+	margin-top:2em;
+}
+
+/* Style for related work recommendations */
+ul.recommendations {
+    list-style: none; 
+}
+
+/* ===================================== */
+/* ======== Person View Styles ========= */
+/* ===================================== */
+#coauthors {padding:0;margin:0;width:100%;}
+#coauthors li {padding:0;margin:0;}
+
+#contact-info {font-size:0.5em; padding-left:1em;}
+
+#person-image {padding:1em; text-align:center;}
+
+
+/* ================================================ */
+/* ==== Shared Styles (i.e. partial templates) ==== */
+/* ================================================ */
+
+/*Work metadata*/
+p.metadata {
+	color:#737373;
+	font-size:0.85em;
+	padding:0;
+	margin:0.5em 0 0 0;
+}
+
+/*Links under a listed work*/
+.links {
+	margin-top:0.5em;
+}
+
+/*lists of people */
+#people { padding:0em; margin:0em; }
+.people { padding:0em; margin:0em; }
+div.person { padding:0em; margin:0em; }
+
+.person-image { border:2px dashed #CCC; padding:3px; }
+.person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
+
+.person-last-name {padding-right:0.5em;}
+
+/* lists of publications/publishers*/
+#publications {padding:0; margin:0;}
+#publishers {padding:0; margin:0;}
+
+.heading a {
+	text-decoration:none;
+	color:#000;
+}
+
+/*list of actions on a specific page*/
+ul.actions li {
+	display:inline;
+}
+
+/* =============================== */
+/* ==== BibApp General Styles ==== */
+/* =============================== */
+a {
+	color:#163F68;
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+h2 {border-bottom: 1px dotted #000;}
+h3 {color:#000;}
+
+thead td {font-weight:bold;}
+
+.clear-both {clear:both;}
+
+/* Authorities for Publications/Publishers */
+#authority {padding:2em 1em 1em 1em}
+/* Selected authorities */
+tr.selected {
+	background-color:#FFFF99;
+}
+
+
+/* Any editing actions for views */
+#edit-actions {padding:1em;}
+#edit-actions li {display:inline; padding-right:1em;}
+
+/* display a list inline */
+.inline {
+	display:inline;
+	list-style:none;
+	margin:0; padding:0;
+}
+
+
+/* Editing Membership */
+#add_group {
+	float:right;
+}
+
+#edit_membership_active {
+	float:left;
+	overflow:hidden;
+	margin:5px;
+	padding:5px;
+}
+
+/* SHERPA Colors */
+.green {background-color:#80FF00;}
+.blue {background-color:#0080FF;}
+.yellow {background-color:#FFFF00;}
+.white {background-color:#FFFFFF;}
+.unknown {background-color:#E6E6E6;}
