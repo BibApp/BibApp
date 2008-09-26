@@ -31,7 +31,8 @@ class CitationParser
       parser = klass.new
       @citations = parser.parse(data)
 
-      if !@citations.nil?
+      unless @citations.nil?
+        @citations = cleanup_cites(@citations)
         CitationParser.logger.debug("\n Successfully parsed #{@citations.size} citations using: #{klass}!\n")
         return @citations          
       end       
@@ -39,6 +40,45 @@ class CitationParser
    
     return nil
   end
+  
+  ## Cleanup the citation attribute hash
+  def cleanup_cites(cites)
+    
+    cites.each do |cite|
+      hash = cite.properties
+      #cleanup our citation properties
+      hash.each do |key, value|
+
+        #remove key's which have nil values
+        if value.nil?
+          hash.delete(key)
+          next
+        end
+
+        #If we have an empty Array or Hash for a value, remove it
+        if (value.class.to_s=="Array" or value.class.to_s=="Hash") and value.empty?
+          hash.delete(key)
+          next
+        end
+
+        #If we have an Array of Strings with only a single value,
+        # just return the first String as the value
+        if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
+          value = value[0].to_s
+        end
+
+        #Flatten any arrays within arrays, etc.
+        if value.respond_to? :flatten
+          value = value.flatten
+        end
+
+        #save cleaned value
+        hash[key] = value
+      end
+    end  
+    return cites
+  end
+  
   
   protected
   attr_writer :citations
