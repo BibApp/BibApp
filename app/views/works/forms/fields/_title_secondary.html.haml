@@ -1,0 +1,12 @@
+-# Title (Secondary) field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Primary Title)
+
+-# Initialize optional input variables
+- label ||= "Secondary Title"
+  
+%p
+  %label="#{label}:"
+  = form.text_field :title_secondary, :class=>'text'

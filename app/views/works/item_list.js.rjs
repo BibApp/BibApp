@@ -3,7 +3,7 @@ page << 'if (' + (!@remove.nil?).to_s + ') {'
 page.remove @item_value
 #Otherwise, add item value to bottom of list of items
 page << '} else {'
-page.insert_html :bottom, @item_name+'_list', :partial => "list_item", :locals => {:item_name => @item_name, :item_value => @item_value, :selected => true}
+page.insert_html :bottom, @item_name+'_list', :partial => "works/forms/fields/list_item", :locals => {:item_name => @item_name, :item_value => @item_value, :selected => true}
 page << '}'
 
 #If 'clear_field' was passed in, clear the value of that field

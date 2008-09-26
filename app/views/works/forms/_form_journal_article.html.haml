@@ -1,50 +1,31 @@
 %fieldset
   %legend Journal Article
 
-  = render :partial => 'author_name_strings'
+  = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Article Title", :form => form}
+
+  = render :partial => 'works/forms/fields/author_name_strings'
  
-  %p
-    %label Publication Date:
-    = date_select 'work', 'publication_date', :start_year => 1950, :end_year => Time.now.year
+  = render :partial => 'works/forms/fields/publication_date'
 
-  %p
-    %label Article Title*:
-    = form.text_field :title_primary, :size => 40
-    
-  = render :partial => 'publication'  
-  = render :partial => 'publisher'
   
-  %p
-    %label ISSN:
-    - issn_isbn = @publication.issn_isbn unless @publication.nil?
-    = text_field_tag 'issn_isbn', issn_isbn, :size => 10
-    
-  
-  %p
-    %label Volume:
-    = form.text_field :volume, :size => 4
-    %label Issue:
-    = form.text_field :issue, :size => 4
-  %p
-    %label Start Page:
-    = form.text_field :start_page, :size => 4
-    %label End Page:
-    = form.text_field :end_page, :size => 4
+  = render :partial => 'works/forms/fields/publication'
 
+  = render :partial => 'works/forms/fields/publisher'
+  
+  = render :partial => 'works/forms/fields/issn_isbn', :locals => {:issn => true}
     
+  = render :partial => 'works/forms/fields/volume_issue', :locals => {:form => form} 
+  
+  = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
+
+  -#Only Admin can add/edit keywords  
   - if current_user.has_role?("admin", System)
-    %p 
-      = render :partial => 'keywords'
+    = render :partial => 'works/forms/fields/keywords' 
     
-  %p
-    = render :partial => 'tags'
+  = render :partial => 'works/forms/fields/tags'
     
-  %p
-    %label Abstract:
-    %br/
-    = form.text_area :abstract 
+  = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
 
   = hidden_field_tag :type, 'JournalArticle'
 
-  %p.submit
-    = submit_tag :save
+  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 
