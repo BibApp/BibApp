@@ -113,7 +113,9 @@ class WorksController < ApplicationController
           #user used cut & paste to add works
           @works_batch, @batch_errors = import_batch!(params[:work][:works])
         end
-      rescue
+      rescue Exception => e
+        logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
+        logger.error("\nError Trace: #{e.backtrace.join("\n")}")
         #We just display an "unrecoverable error" message for now
         unrecoverable_error = true
       end
@@ -402,7 +404,7 @@ class WorksController < ApplicationController
       names << obj.name
     end
     
-    render :partial => 'autocomplete_list', :locals => {:objects => names}
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
   end
   
   
@@ -441,7 +443,7 @@ class WorksController < ApplicationController
       keywordsandtags << obj.name
     end         
 			
-    render :partial => 'autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
   end  
   
   
@@ -479,27 +481,27 @@ class WorksController < ApplicationController
       keywordsandtags << obj.name
     end         
       
-    render :partial => 'autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
   end  
   
   #Auto-Complete for entering Publication Titles in Web-based Work entry
   #  This method provides users with a list of matching Publications
   #  already in BibApp.
   def auto_complete_for_publication_name
-	  publication_name = params[:publication][:name].downcase
-	  
-	  #search at beginning of name
-	  beginning_search = publication_name + "%"
-	  #search at beginning of any other words in name
-	  word_search = "% " + publication_name + "%"
-	  
-	  publications = Publication.find(:all, 
-	  		  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-			  :order => 'name ASC',
-			  :limit => 8)
-			
-	  render :partial => 'publication_autocomplete_list', :locals => {:publications => publications}
-	end 
+    publication_name = params[:publication][:name].downcase
+
+    #search at beginning of name
+    beginning_search = publication_name + "%"
+    #search at beginning of any other words in name
+    word_search = "% " + publication_name + "%"
+
+    publications = Publication.find(:all, 
+                    :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
+                    :order => 'name ASC',
+                    :limit => 8)
+
+    render :partial => 'works/forms/fields/publication_autocomplete_list', :locals => {:publications => publications}
+  end 
  
   #Auto-Complete for entering Publisher Name in Web-based Work entry
   #  This method provides users with a list of matching Publishers
@@ -517,7 +519,7 @@ class WorksController < ApplicationController
         :order => 'name ASC',
         :limit => 8)
       
-    render :partial => 'autocomplete_list', :locals => {:objects => publishers}
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
   end      
         
   #Adds a single item value to list of items in Web-based Work entry
@@ -651,7 +653,7 @@ class WorksController < ApplicationController
     begin
       # Map Import hashes
       attr_hashes = i.citation_attribute_hashes(pcites)
-      logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
+      #logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
 
       #Make sure there is data in the Attribute Hash
       return nil if attr_hashes.nil?
@@ -748,18 +750,16 @@ class WorksController < ApplicationController
     #was entered which caused an error to occur when saving the data
     #to the database.
     rescue Exception => e
-      logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
-      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
-
       #remove anything already added to the database (i.e. rollback ALL changes)
-      works_added.each do |work_id|
-        work = Work.find(work_id)
-        work.destroy unless work.nil?     
+      unless works_added.nil?
+        works_added.each do |work_id|
+          work = Work.find(work_id)
+          work.destroy unless work.nil?     
+        end
+        #re-initialize batch in order to clear it from session
+        works_added = init_last_batch 
       end
-      #re-initialize batch in order to clear it from session
-      works_added = init_last_batch 
-      
-      #reraise the error to create()
+      #reraise the error to create(), which will make sure it is logged
       raise
     end
    

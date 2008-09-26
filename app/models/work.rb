@@ -763,7 +763,7 @@ class Work < ActiveRecord::Base
   # and saves them to the given Work object
   # Arguments:
   #  * Work object
-  #  * hash {:name => "Donohue, t>", :role=> "Author | Editor" }
+  #  * Array of hashes {:name => "Donohue, t>", :role=> "Author | Editor" }
   def self.update_work_name_strings(work, name_strings_hash)
     logger.debug("\n\n===UPDATE WORK_NAME_STRINGS===\n\n")
     unless name_strings_hash.nil?

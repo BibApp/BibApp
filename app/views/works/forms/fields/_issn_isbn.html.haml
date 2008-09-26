@@ -1,0 +1,21 @@
+-# ISSN/ISBN field
+-#   Defaults to displaying ISSN/ISBN
+-#
+-# Possible Input Variables:
+-#    :isbn         => if true, displays ISBN heading 
+-#    :issn         => if true, displays ISSN heading
+
+-# Initialize optional input variables
+- isbn ||= false
+- issn ||= false
+
+%p
+  - if isbn
+    %label ISBN:
+  - if issn
+    %label ISSN:
+  - if !issn and !isbn
+    %label ISSN/ISBN:
+
+  - issn_isbn = @publication.issn_isbn unless @publication.nil?
+  = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'
