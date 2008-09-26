@@ -1,4 +1,15 @@
-class MedlineImporter < CitationImporter
+#
+# Medline format importer for BibApp
+# 
+# Initializes attribute mapping & value translators,
+# used to generate a valid BibApp attribute Hash.
+# 
+# For the actual processing & attribute hash creation,
+# see the BaseImporter.
+#
+class MedlineImporter < BaseImporter
+  
+  attr_reader :type_mapping
   
   class << self
     def import_formats
@@ -6,51 +17,11 @@ class MedlineImporter < CitationImporter
     end
   end
 
-  def generate_attribute_hash(parsed_citation)
-    r_hash = Hash.new
-    return false if !self.class.import_formats.include?(parsed_citation.citation_type)
-    props = parsed_citation.properties
-    props.each do |key, values|
-      # Key
-      r_key = @attr_map[key]
-      next if r_key.nil? or @attr_translators[r_key].nil?
-      # Value
-      r_val = @attr_translators[key].call(values)
-      
-      if r_val.respond_to? :keys
-        r_val.each do |s_key, s_val|
-          r_hash[s_key] = s_val
-        end
-      else
-        if r_hash.has_key?(r_key)
-          r_hash[r_key] = Array(r_hash[r_key]) << r_val
-          next
-        end
-        r_hash[r_key] = r_val
-      end
-      r_hash["original_data"] = props["original_data"]
-    end
-
-    r_hash.each do |key, value|
-
-      if value and value.size < 2
-        r_hash[key] = value.to_s
-       
-      end
-      
-      if value.class.to_s == "String" || "Fixnum"
-        # Do nothing, we're already flat.
-      else 
-        r_hash[key] = value.flatten
-      end
-    end
-    
-    #puts "Mapped Hash: #{r_hash.inspect}"
-    return r_hash
-  end
-  
+  #Initialize our Medline Importer  
   def initialize
-    @attr_map = {
+    
+    #Mapping of Medline Attributes => BibApp Attributes
+    @attribute_mapping = {
        :pt => :klass,
        :ti => :title_primary,
        :au => :work_name_strings,
@@ -76,24 +47,33 @@ class MedlineImporter < CitationImporter
        :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
+    #Initialize our Value Translators (which will translate values from normal Medline files)
+    @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
     
     # Map NameString and CitationNameStringType
-    # example {:name => "Larson, EW", :type=> "Author"}
-    @attr_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
-    @attr_translators[:fau] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
-        
-    @attr_translators[:pt] = lambda { |val_arr| @type_map[val_arr[0].downcase] }
-    @attr_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0])}
-    @attr_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0])}
-    @attr_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0])}
-    @attr_translators[:ti] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @attr_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @attr_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @attr_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @attr_translators[:ta] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    # example {:name => "Larson, EW", :role=> "Author"}
+    @value_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @value_translators[:fau] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    
+    # Map publication types (see @type_mapping)    
+    @value_translators[:pt] = lambda { |val_arr| @type_mapping[val_arr[0].downcase] }
+    
+    # Parse start/end page from page-range field
+    @value_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0])}
+    
+    # Parse publication date & ISSN
+    @value_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    @value_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0])}
+    
+    # Strip line breaks from Title, Abstract, Affiliation, Publication
+    @value_translators[:ti] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    @value_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    @value_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    @value_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    @value_translators[:ta] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
 
-    @type_map = {                         
+    #Mapping of Medline Types => valid BibApp Types
+    @type_mapping = {                         
       "abst"                              => "Abstract",  # Abstract
       "advs"                              => "Generic",  # Audiovisual material
       "art"                               => "ArtWork", # Art work
@@ -273,7 +253,9 @@ class MedlineImporter < CitationImporter
   
   def publication_date_parse(publication_date)
     date = Hash.new
-    date[:publication_date] = Date.parse(publication_date).to_s
+    
+    date[:publication_date] = parse_date(publication_date)
+    
     return date
   end
   

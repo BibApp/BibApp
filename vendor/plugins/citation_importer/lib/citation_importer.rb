@@ -1,8 +1,15 @@
+#
+# This class calls our defined Citation Importers to actually
+# generate a valid attribute hash for the BibApp database:
+# http://bibapp.googlecode.com/
+#
 class CitationImporter
   
   @@importers = Array.new
   
   class << self
+    # Callback method for subclasses
+    # Adds all subclasses to our array of importers
     def inherited(subclass)
       @@importers << subclass unless @@importers.include?(subclass)
     end
@@ -24,8 +31,15 @@ class CitationImporter
     return hashes
   end
   
+  # Generate a valid BibApp attribute Hash from a parsed citation
   def citation_attribute_hash(parsed_citation)
-    importer_obj(parsed_citation.citation_type).generate_attribute_hash(parsed_citation)
+    
+    importer = importer_obj(parsed_citation.citation_type)
+    
+    #generate our hash (performed by BaseImporter)
+    hash = importer.generate_attribute_hash(parsed_citation)
+    
+    return hash
   end
   
   def importer_obj(type)
@@ -46,7 +60,7 @@ class CitationImporter
       end
     end
   end
-
+  
 end
 
 Dir["#{File.expand_path(File.dirname(__FILE__))}/citation_importers/*_importer.rb"].each { |p| require p }

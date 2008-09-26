@@ -1,64 +1,26 @@
-class RisImporter < CitationImporter
+#
+# RIS format importer for BibApp
+# 
+# Initializes attribute mapping & value translators,
+# used to generate a valid BibApp attribute Hash.
+# 
+# For the actual processing & attribute hash creation,
+# see the BaseImporter.
+#
+class RisImporter < BaseImporter
+  
+  attr_reader :type_mapping
   
   class << self
     def import_formats
       [:ris]
     end
   end
-
-  def generate_attribute_hash(parsed_citation)
-    r_hash = Hash.new
-    return false if !self.class.import_formats.include?(parsed_citation.citation_type)
-    props = parsed_citation.properties
-    props.each do |key, values|
-      
-      # Key
-      r_key = @attr_map[key]
-      next if r_key.nil? or @attr_translators[r_key].nil?
-      # Value
-      r_val = @attr_translators[key].call(values)
-      
-      if r_val.respond_to? :keys
-        r_val.each do |s_key, s_val|
-          r_hash[s_key] = s_val
-        end
-      else
-        if r_hash.has_key?(r_key)
-          r_hash[r_key] = Array(r_hash[r_key]) << r_val
-          next
-        end
-        r_hash[r_key] = r_val
-      end
-      r_hash["original_data"] = props["original_data"]
-    end
-
-    r_hash.each do |key, value|
-      
-      if value.class.to_s == "Array"
-        value = value.flatten
-      end
-      
-      if value[0].class.to_s == "Hash"
-        r_hash[key] = value.flatten
-        next
-      end
-      
-      if value.size < 2 || value.class.to_s == "String"
-        r_hash[key] = value.to_s
-      end
-      
-      if value.size >= 2 && value.class.to_s == "Array"
-        r_hash[key] = value.flatten
-      end
-      
-    end
-   # puts "\n\nMapped Hash: #{r_hash.inspect}\n\n"
-    return r_hash
-  end
   
+  #Initialize our RIS Importer
   def initialize
-    # Todo: improve Publication and Publisher handling
-    @attr_map = {
+    #Mapping of RIS Attributes => BibApp Attributes
+    @attribute_mapping = {
        :ty => :klass,
        :t1 => :title_primary,
        :ti => :title_primary,
@@ -89,17 +51,24 @@ class RisImporter < CitationImporter
        :original_data => :original_data
     }
   
-    @attr_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
+    #Initialize our Value Translators (which will translate values from normal Medline files)
+    @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}
-    @attr_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
-    @attr_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    @attr_translators[:ty] = lambda { |val_arr| Array(@type_map[val_arr[0]]) }
-    @attr_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
-    @attr_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    @value_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @value_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     
-    @type_map = {
+    # Map publication types (see @type_mapping)    
+    @value_translators[:ty] = lambda { |val_arr| Array(@type_mapping[val_arr[0]]) }
+    
+    # Parse publication dates
+    @value_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    @value_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    
+    
+    #Mapping of RIS Publication Types => valid BibApp Types
+    @type_mapping = {
        "ABST"  => "Abstract",  # Abstract
        "ADVS"  => "Generic",  # Audiovisual material
        "ART"   => "ArtWork", # Art work
@@ -138,35 +107,13 @@ class RisImporter < CitationImporter
     }
   end
   
+  
   def publication_date_parse(publication_date)
-    
     date = Hash.new
     
-    # Split on the non-word characters (in this case, should be slashes /)
-    # Expected format: "YYYY/MM/DD/other info"
-    date_parts = publication_date.split(/[^A-Za-z0-9_]/)
+    date[:publication_date] = parse_date(publication_date)
     
-    if date_parts[0] != nil
-      # first part is year
-      year = date_parts[0].to_i
-      # then month (default to Jan)
-      month = 1
- #     month = date_parts[1] if !date_parts[1].nil?
-      # then day (default to 1)
-      day = 1
- #     day = date_parts[2] if !date_parts[2].nil?
-    
-      # create a date suitable for saving
-      date[:publication_date] = Date.new(year,month,day).to_s
-    
-      return date
-    else
-      return nil
-      
-    end
-  
-    
-    
+    return date
   end
   
 end
