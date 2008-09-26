@@ -94,7 +94,7 @@ class RefworksDeprecatedXmlParser < CitationParser
       :source_type => xml[:SourceType].to_a,
       :over_flow => xml[:OverFlow].to_a,
       :objects => xml[:Objects].to_a,
-      :original_data => xml
+      :original_data => xml.to_s
     }
   end 
 end

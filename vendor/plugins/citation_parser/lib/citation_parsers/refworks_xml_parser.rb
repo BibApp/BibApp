@@ -65,7 +65,7 @@ class RefworksXmlParser < CitationParser
       :user_3 => (xml/:u3).inner_html.to_a,
       :user_4 => (xml/:u4).inner_html.to_a,
       :user_5 => (xml/:u5).inner_html.to_a,
-      :original_data => xml
+      :original_data => xml.to_s
     }
   end 
 end
