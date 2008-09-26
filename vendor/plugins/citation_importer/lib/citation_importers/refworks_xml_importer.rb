@@ -63,7 +63,7 @@ class RefworksXmlImporter < BaseImporter
     @value_translators[:ref_type] = lambda { |val_arr| Array(@type_mapping[val_arr[0]]) }
     
     # Convert publication year into a date
-    @value_translators[:pub_year] = lambda { |val_arr| val_arr.collect!{|n| Date.new(n.to_i)}}
+    @value_translators[:pub_year] = lambda { |val_arr| val_arr.collect!{|n| Date.new(n.to_i).to_s}}
     
     #Mapping of RefWorks XML Publication Types => valid BibApp Types
     @type_mapping = {
