@@ -142,8 +142,9 @@ module ApplicationHelper
 =end
   end
   
+  # NOT USED BY BIBAPP, by Default
   def archivable_count
-    if Publisher.find(:all, :conditions => ["publisher_copy = '1'"]).empty?
+    if Publisher.find(:all, :conditions => ["publisher_copy = ?", true]).empty?
       return @archivable_count = 0
     end
     
@@ -152,7 +153,7 @@ module ApplicationHelper
       :select => "pub1.id, pub2.id as auth", 
       :from => "publishers pub1", 
       :joins => "join publishers pub2 on pub1.id = pub2.authority_id", 
-      :conditions => "pub1.publisher_copy = 1"
+      :conditions => ["pub1.publisher_copy = ?", true]
     )
 
     pub_ids = Array.new

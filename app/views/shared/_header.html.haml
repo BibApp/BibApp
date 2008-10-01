@@ -2,7 +2,7 @@
   %div{:class => "span-22 prepend-1"}
     
     %div{:class => "span-10"}
-      =link_to(image_tag("bibapp.png", :alt => $APPLICATION_NAME), works_path)
+      =link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)
     
     %div{:class => "span-9 prepend-3 last"}
       %ul.global-nav
@@ -18,10 +18,7 @@
     
     %div{:class => "span-22"}
       %p#tagline
-        ="We're putting "
-        %strong="#{archivable_count} papers"
-        online, for free.
-        %strong="This is true."
+        ="#{$APPLICATION_TAGLINE}"
     
     %div{:class => "span-14"}
       %ul#navigation
