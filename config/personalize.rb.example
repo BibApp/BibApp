@@ -5,6 +5,9 @@
 # Name & base URL of your BibApp Application
 $APPLICATION_NAME            = "UW BibApp"
 $APPLICATION_URL             = "http://localhost:3000/"
+$APPLICATION_TAGLINE         = "Find experts on campus... Promote their research... Archive their work"
+#Logo - place image in [bibapp]/public/images/
+$APPLICATION_LOGO            = "bibapp.png"
 
 # Name of your University and University URL
 $UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison" 
@@ -20,12 +23,11 @@ $DEFAULT_STATE               = "WI"
 $DEFAULT_CITY                = "Madison"
 $DEFUALT_ZIP_CODE            = "53706"
 
-# Full Address / Contact infor of Unit running BibApp
+# Full Address / Contact info of Unit running BibApp
 $UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
 
 # Name of your local institutional repository
-# (NOT CURRENTLY USED IN BIBAPP 0.7)
-#$REPOSITORY_NAME = "Minds@UW"
+$REPOSITORY_NAME = "Minds@UW"
 
 ####
 # Linking To Publications
