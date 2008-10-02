@@ -63,4 +63,6 @@ class CitationImporter
   
 end
 
+#Load BaseImporter, and all format-specific citation importers.
+require 'base_importer.rb'
 Dir["#{File.expand_path(File.dirname(__FILE__))}/citation_importers/*_importer.rb"].each { |p| require p }

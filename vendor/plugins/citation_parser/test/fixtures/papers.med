@@ -479,3 +479,61 @@ AID - 10.1016/j.jfms.2006.05.001 [doi]
 PST - ppublish
 SO  - J Feline Med Surg. 2006 Dec;8(6):420-3. Epub 2006 Jul 18.
 
+PMID- 16604696
+OWN - NLM
+STAT- MEDLINE
+DA  - 20060410
+DCOM- 20060505
+LR  - 20061115
+PUBM- Print
+IS  - 0144-8420 (Print)
+VI  - 116
+IP  - 1-4 Pt 2
+DP  - 2005
+TI  - Simulation of medical electron linac bremsstrahlung beam transport in typical
+      shielding materials.
+PG  - 547-52
+AB  - The Monte Carlo N-particle code MCNP version 4C3 was used to investigate the
+      backscattering and transmission of high-energy photons in concrete, iron and lead
+      at deep penetration. A typical bremsstrahlung beam from a 24 MV linac was used,
+      and the transmission up to 15 mean-free paths was studied. Broad beam slab
+      geometry was used. Estimates of the transmission in terms of absorbed dose to
+      tissue ratio and air kerma ratio were performed for the primary and secondary
+      components of the transmitted beam in the three materials. The tissue dose and
+      air kerma buildup factors were calculated and fitted to Berger's equation.
+      Finally, the differential dose albedo values for common reflected angles were
+      determined.
+AD  - Department of Medical Physics, University of Wisconsin-Madison, 1530 MSC, 1300
+      University Avenue, Madison, WI 53706-1532, USA. maavilarodri@wisc.edu
+FAU - Avila-Rodriguez, Miguel A
+AU  - Avila-Rodriguez MA
+FAU - DeLuca, Paul M Jr
+AU  - DeLuca PM Jr
+FAU - Bohm, Tim D
+AU  - Bohm TD
+LA  - eng
+PT  - Comparative Study
+PT  - Evaluation Studies
+PT  - Journal Article
+PL  - England
+TA  - Radiat Prot Dosimetry
+JT  - Radiation protection dosimetry
+JID - 8109958
+SB  - IM
+MH  - Computer Simulation
+MH  - Construction Materials/*analysis
+MH  - Electrons
+MH  - Linear Energy Transfer
+MH  - Materials Testing/methods
+MH  - *Models, Statistical
+MH  - Monte Carlo Method
+MH  - Particle Accelerators/*instrumentation
+MH  - Photons/*therapeutic use
+MH  - Radiation Dosage
+MH  - Radiation Protection/*instrumentation/*methods
+MH  - Radiometry/*methods
+MH  - Software
+EDAT- 2006/04/11 09:00
+MHDA- 2006/05/06 09:00
+PST - ppublish
+SO  - Radiat Prot Dosimetry. 2005;116(1-4 Pt 2):547-52. 
