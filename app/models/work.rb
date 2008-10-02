@@ -378,25 +378,24 @@ class Work < ActiveRecord::Base
    
     # We can have more than one Publisher name
     # Ex: [Physics of Plasmas, Phys Plasmas]
-    
-    publication_name.each do |publication_name|
+    publication_name.each do |pub_name|
       # Initialize our publication, as best we can,
       # based on the information provided
 
       # English: If you have an issn or isbn and good publisher data 
       if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
         publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
-            :name => publication_name, 
+            :name => pub_name, 
             :issn_isbn => publication_hash[:issn_isbn], 
             :publisher_id => publisher.authority_id
         )
       elsif not(publisher.nil?)
         publication = Publication.find_or_create_by_name_and_publisher_id(
-            :name => publication_name,  
+            :name => pub_name,  
             :publisher_id => publisher.authority_id
         )
       else
-        publication = Publication.find_or_create_by_name(publication_name)
+        publication = Publication.find_or_create_by_name(pub_name)
       end
 
       #save or update Work
