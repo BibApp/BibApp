@@ -34,8 +34,6 @@ class PublicationsController < ApplicationController
           :order => "upper(name)"
         )
       end
-      
-      @title = "Publications"
     end
 
     before :show do
