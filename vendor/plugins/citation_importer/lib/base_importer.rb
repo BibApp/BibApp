@@ -144,7 +144,8 @@ class BaseImporter < CitationImporter
       if date.nil?
         #try to parse out a year (i.e. look for 4 digits in a row)
         year = date_string.match(/\d{4}/)
-        date = year[0].to_s unless year.nil?
+        #take first matching "year", and make a date out of it
+        date = Date.strptime(year[0], "%Y") rescue nil unless year.nil?
       end  
     end
     

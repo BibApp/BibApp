@@ -50,7 +50,7 @@ class CitationImporterTest < Test::Unit::TestCase
     
     #First citation has a valid RIS date ("2004///Spring"), which Ruby normally doesn't handle
     h = hashes.first
-    assert_equal "2004", h[:publication_date]
+    assert_equal "2004-01-01", h[:publication_date]
     
     #Second citation has invalid date in the date field
     h = hashes.fetch(1)
@@ -72,7 +72,7 @@ class CitationImporterTest < Test::Unit::TestCase
   
   def test_med_hash_generation
     hashes = @importer.citation_attribute_hashes(@med_cites)
-    assert_equal 7, hashes.size
+    assert_equal 8, hashes.size
   end
   
   def test_med_fields
@@ -91,7 +91,7 @@ class CitationImporterTest < Test::Unit::TestCase
     
     #First citation has approximate date ("Fall 2007") instead of actual date
     h = hashes.first
-    assert_equal "2007", h[:publication_date]
+    assert_equal "2007-01-01", h[:publication_date]
     
     #Second citation has invalid date in the date field
     h = hashes.fetch(1)

@@ -50,7 +50,7 @@ class CitationParserTest < Test::Unit::TestCase
   def test_medline_parser
     citations = @parser.parse(@med_data)
     assert_not_nil citations
-    assert_equal citations.size, 7
+    assert_equal citations.size, 8
    
     citations.each do |c|
       assert_equal :medline, c.citation_type
