@@ -61,3 +61,19 @@ Produces a Ruby Hash of the structure:
 }
  
 The above Ruby Hash can then be used as a valid input to the 'citation_importer' plugin.
+
+
+==========
+Testing:
+==========
+
+If you would like to see more sample outputs of this CitationParser plugin,
+there is a rake task to do so.  From your Rails Application ([rails-app])
+root directory run:
+
+rake citation_parser:test_dump
+
+This will run through all Test Fixtures (in [citation_parser]/test/fixtures/)
+and write the output to YAML files in your [rails-app]/tmp/ directory
+(with the extension ".yml" appended).
+

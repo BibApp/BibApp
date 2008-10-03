@@ -18,7 +18,7 @@
     - United States
     :y1: 
     - "2004///Spring"
-    original_data: |-
+    :original_data: |-
       TY  - JOUR
       ID  - 116
       A1  - Auger,A. P.
@@ -108,7 +108,7 @@
     - England
     :y1: 
     - "20-This is an invalid date"
-    original_data: |-
+    :original_data: |-
       TY  - JOUR
       ID  - 117
       A1  - Auger,A. P.

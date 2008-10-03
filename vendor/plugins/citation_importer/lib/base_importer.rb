@@ -29,7 +29,7 @@ class BaseImporter < CitationImporter
       # Map the key (using our attribute mapping)
       r_key = self.attribute_mapping[key]
       
-      # skip to next key if the mapping didn't work
+      # skip to next key if the mapping didn't work or no value translation necessary
       next if r_key.nil? or self.value_translators[r_key].nil?
       
       # Perform any translation of value(s) (using our value translators)
@@ -51,8 +51,9 @@ class BaseImporter < CitationImporter
         r_hash[r_key] = r_val
       end
     end
-    #copy the entire citation into "original_data"
-    r_hash["original_data"] = parsed_citation.properties["original_data"].to_s
+   
+    #if not already taken care of, copy the entire citation into :original_data
+    r_hash[:original_data] = parsed_citation.properties[:original_data].to_s if r_hash[:original_data].nil?
     
     #Note: At this point, we have a hash where some values are
     # Arrays.  However, we'll want to clean them up a bit, as we
@@ -69,14 +70,14 @@ class BaseImporter < CitationImporter
     #Final cleanup of our Hash values
     hash.each do |key, value|
       
-      #remove key's which have nil values
-      if value.nil?
-        hash.delete(key)
-        next
+      #First, flatten any arrays within arrays, etc.
+      if !value.nil? and value.respond_to? :flatten
+        value = value.flatten
       end
       
-      #If we have an empty Array or Hash for a value, remove it
-      if (value.class.to_s=="Array" or value.class.to_s=="Hash")  and value.empty?
+      #remove keys which have nil or empty values
+      #This removes empty Arrays, Hashes and Strings
+      if value.nil? or value.empty?
         hash.delete(key)
         next
       end
@@ -84,12 +85,13 @@ class BaseImporter < CitationImporter
       #If we have an Array of Strings with only a single value,
       # just return the first String as the value
       if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
-        value = value[0].to_s
-      end
-      
-      #Flatten any arrays within arrays, etc.
-      if value.respond_to? :flatten
-        value = value.flatten
+        value = value[0].to_s.strip
+        
+        #if this is an empty string, remove it
+        if value.empty?
+          hash.delete(key)
+          next
+        end
       end
       
       #save cleaned value
