@@ -40,6 +40,7 @@ class CitationImporterTest < Test::Unit::TestCase
       assert_not_nil h[:title_primary], "Missing Title Primary: #{h.inspect}"
       assert_not_nil h[:work_name_strings], "Missing Authors: #{h.inspect}"
       assert_not_nil h[:publication_date], "Missing Publication Date: #{h.inspect}"
+      assert_not_nil h[:original_data], "Missing Original Data: #{h.inspect}"
     end
   end
   
@@ -81,6 +82,7 @@ class CitationImporterTest < Test::Unit::TestCase
       assert_not_nil h[:title_primary], "Missing Title Primary: #{h.inspect}"
       assert_not_nil h[:work_name_strings], "Missing Authors (work_name_strings): #{h.inspect}"
       assert_not_nil h[:publication_date], "Missing Publication Date: #{h.inspect}"
+      assert_not_nil h[:original_data], "Missing Original Data: #{h.inspect}"
     end
   end
    
@@ -110,6 +112,7 @@ class CitationImporterTest < Test::Unit::TestCase
       assert_not_nil h[:title_primary], "Missing Title Primary: #{h.inspect}"
       assert_not_nil h[:work_name_strings], "Missing Authors (work_name_strings): #{h.inspect}"
       assert_not_nil h[:publication_date], "Missing Publication Date: #{h.inspect}"
+      assert_not_nil h[:original_data], "Missing Original Data: #{h.inspect}"
     end
   end
   
@@ -124,6 +127,7 @@ class CitationImporterTest < Test::Unit::TestCase
       assert_not_nil h[:title_primary], "Missing Title Primary: #{h.inspect}"
       assert_not_nil h[:work_name_strings], "Missing Authors (work_name_strings): #{h.inspect}"
       assert_not_nil h[:publication_date], "Missing Publication Date: #{h.inspect}"
+      assert_not_nil h[:original_data], "Missing Original Data: #{h.inspect}"
     end
   end
   

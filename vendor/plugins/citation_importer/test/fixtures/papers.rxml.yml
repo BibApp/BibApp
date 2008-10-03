@@ -2,44 +2,24 @@
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
+    :place_of_publication: 
+    - Thousand Oaks, CA
     :author_secondary: 
     - Knapp,M. L.
     - " Daly,J. A."
-    :accession_number: []
-
     :pub_year: 
     - "2002"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Interpersonal relations
+    - Influences
     :start_page: 
     - "425"
     :title_primary: 
     - Interpersonal influence
-    :issn_isbn: []
-
-    :keyword: 
-    - Interpersonal relations
-    - Influences
-    :language: []
-
     :other_pages: 
     - "474"
     :title_secondary: 
     - Handbook of interpersonal communication
-    :author_address_affiliations: []
-
-    :periodical_full: []
-
-    :ref_type: 
-    - Book, Section
     :original_data: |-
       <reference>
       <rt>Book, Section</rt>
@@ -60,76 +40,32 @@
       <pb>Sage Publications, Inc.</pb>
       <pp>Thousand Oaks, CA</pp>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :ref_type: 
+    - Book, Section
+    :edition: 
+    - 3rd ed.
     :author_primary: 
     - Dillard,J. P.
     - Anderson,J.
     - Knobloch,L. K.
-    :links: []
-
     :publisher: 
     - Sage Publications, Inc.
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: 
-    - 3rd ed.
-    :volume: []
-
-    :user_5: []
-
-    :place_of_publication: 
-    - Thousand Oaks, CA
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
+    :place_of_publication: 
+    - Mahwah, NJ
     :author_secondary: 
     - Spitzberg,B.
     - " Cupach,W."
-    :accession_number: []
-
     :pub_year: 
     - "2007"
-    :user_3: []
-
-    :user_2: []
-
-    :start_page: []
-
-    :title_primary: 
-    - "The dark side of relational uncertainty: Obstacle or opportunity"
-    :issn_isbn: []
-
     :keyword: 
     - Relational uncertainty
-    :language: []
-
-    :other_pages: []
-
+    :title_primary: 
+    - "The dark side of relational uncertainty: Obstacle or opportunity"
     :title_secondary: 
     - The dark side of interpersonal communication
-    :author_address_affiliations: []
-
-    :periodical_full: []
-
-    :ref_type: 
-    - Book, Section
     :original_data: |-
       <reference>
       <rt>Book, Section</rt>
@@ -145,75 +81,39 @@
       <pb>Lawrence Erlbaum Associates, Inc.</pb>
       <pp>Mahwah, NJ</pp>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
-    :author_primary: 
-    - Knobloch,L. K.
-    :links: []
-
-    :publisher: 
-    - Lawrence Erlbaum Associates, Inc.
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
+    :ref_type: 
+    - Book, Section
     :edition: 
     - 2nd ed.
-    :volume: []
-
-    :user_5: []
-
-    :place_of_publication: 
-    - Mahwah, NJ
+    :author_primary: 
+    - Knobloch,L. K.
+    :publisher: 
+    - Lawrence Erlbaum Associates, Inc.
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - This paper theorizes about how relational uncertainty may predict features of date request messages within courtship. It reports a study in which 248 individuals role played leaving a date request voice mail message for their partner. Relational uncertainty was negatively associated with the fluency (H1), affiliativeness (H2), relationship focus (H3), explicitness (H4), and perceived effectiveness (H5) of messages. Also, as expected, relational uncertainty was negatively associated with people&amp;#39;s perceptions of the effectiveness of their messages after covarying the judgments of independent observers (H6). Relational uncertainty continued to predict features of messages when length of romantic interest was covaried (RQ1). The paper concludes by discussing the implications of the results for understanding the link between relational uncertainty and message production.
     :subfile_database: 
     - Journal Article
+    :volume: 
+    - "32"
+    :abstract: 
+    - This paper theorizes about how relational uncertainty may predict features of date request messages within courtship. It reports a study in which 248 individuals role played leaving a date request voice mail message for their partner. Relational uncertainty was negatively associated with the fluency (H1), affiliativeness (H2), relationship focus (H3), explicitness (H4), and perceived effectiveness (H5) of messages. Also, as expected, relational uncertainty was negatively associated with people&amp;#39;s perceptions of the effectiveness of their messages after covarying the judgments of independent observers (H6). Relational uncertainty continued to predict features of messages when length of romantic interest was covaried (RQ1). The paper concludes by discussing the implications of the results for understanding the link between relational uncertainty and message production.
     :issue: 
     - "3"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2006"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational uncertainty
+    - message effectiveness
+    - communication theory
     :start_page: 
     - "244"
     :title_primary: 
     - "Relational uncertainty and message production with courtship: Features of date request messages"
     :issn_isbn: 
     - 0360-3989
-    :keyword: 
-    - Relational uncertainty
-    - message effectiveness
-    - communication theory
-    :language: []
-
     :other_pages: 
     - "273"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Human Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -237,59 +137,29 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Human Communication Research
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "32"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - This study formulates and tests a contextual model of communication about events that increase relational uncertainty within courtship (N = 278 participants). Intimacy is examined as a feature of the distal context, and appraisals and emotions are investigated as features of the proximal context. As expected, intimacy coincided with positively valenced behaviors (Hypothesis 1). Appraisals also explained variance in behaviors (Hypothesis 2), especially attentional activity, relevance, obstacle, power, and legitimacy (Research Question 1). With some exceptions, emotions predicted behaviors beyond the effects of appraisals (Hypothesis 3, Research Question 2). Emotions partially mediated the association between appraisals and behaviors (Hypothesis 4), and intimacy did not moderate the effects of appraisals or emotions on behaviors (Research Question 3). Although the pattern of covariation was consistent across the self-reported and hypothetical events, the self-reported events generated more negatively valenced appraisals, emotions, and behaviors than the hypothetical events (Research Question 4). The discussion examines how knowledge can accumulate by assimilating features of the distal and proximal contexts.
     :subfile_database: 
     - Journal Article
-    :issue: 
-    - "1"
-    :author_secondary: []
-
+    :volume: 
+    - "31"
     :accession_number: 
     - CAX0280040001349
+    :abstract: 
+    - This study formulates and tests a contextual model of communication about events that increase relational uncertainty within courtship (N = 278 participants). Intimacy is examined as a feature of the distal context, and appraisals and emotions are investigated as features of the proximal context. As expected, intimacy coincided with positively valenced behaviors (Hypothesis 1). Appraisals also explained variance in behaviors (Hypothesis 2), especially attentional activity, relevance, obstacle, power, and legitimacy (Research Question 1). With some exceptions, emotions predicted behaviors beyond the effects of appraisals (Hypothesis 3, Research Question 2). Emotions partially mediated the association between appraisals and behaviors (Hypothesis 4), and intimacy did not moderate the effects of appraisals or emotions on behaviors (Research Question 3). Although the pattern of covariation was consistent across the self-reported and hypothetical events, the self-reported events generated more negatively valenced appraisals, emotions, and behaviors than the hypothetical events (Research Question 4). The discussion examines how knowledge can accumulate by assimilating features of the distal and proximal contexts.
+    :issue: 
+    - "1"
     :pub_year: 
     - "2005"
-    :user_3: []
-
-    :user_2: []
-
-    :start_page: 
-    - "60"
-    :title_primary: 
-    - "Evaluating a contextual model of responses to relational uncertainty increasing events: The role of intimacy, appraisals, and emotions"
-    :issn_isbn: 
-    - 0360-3989
     :keyword: 
     - Models
     - Emotions
@@ -298,18 +168,14 @@
     - Knowledge
     - Communication Behavior
     - Communication Research
-    :language: []
-
+    :start_page: 
+    - "60"
+    :title_primary: 
+    - "Evaluating a contextual model of responses to relational uncertainty increasing events: The role of intimacy, appraisals, and emotions"
+    :issn_isbn: 
+    - 0360-3989
     :other_pages: 
     - "101"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Human Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -339,77 +205,39 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Human Communication Research
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "31"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
+    :volume: 
+    - "31"
     :abstract: 
     - People&amp;#39;s decisions to engage in or refrain from communication with a partner are of central concern to the study of interpersonal communication. Topic avoidance, defined as purposefully evading communication with a partner about an issue, is embedded in a host of basic communication processes-negotiating the rewards and costs of disclosure, balancing openness and closedness, and managing boundaries around private information. Recent work has called for a better understanding of how topic avoidance corresponds with relationship progression. The authors employ a model of relationship development to deduce predictions about topic avoidance in terms of the number of topics people avoid and the outcomes they anticipate from communicating about those avoided topics. They report a cross-sectional study in which 216 individuals identified and evaluated topics they avoid within a romantic relationship. With some exceptions, results supported hypotheses predicting that (1) intimacy and topic avoidance share a convex curvilinear association, (2) relational uncertainty and topic avoidance share a convex curvilinear association, and (3) relational uncertainty mediates the association between intimacy and topic avoidance. They discuss how their findings illuminate topic avoidance within courtship.
-    :subfile_database: []
-
     :issue: 
     - "2"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2004"
-    :user_3: []
-
-    :user_2: []
-
-    :start_page: 
-    - "173"
-    :title_primary: 
-    - "Topic avoidance in developing romantic relationships: associations with intimacy and relational uncertainty"
-    :issn_isbn: 
-    - 0093-6502
     :keyword: 
     - Interpersonal communication
     - Communication behavior
     - Communication studies
     - Avoidance
     - Romantic Relations
-    :language: []
-
+    :start_page: 
+    - "173"
+    :title_primary: 
+    - "Topic avoidance in developing romantic relationships: associations with intimacy and relational uncertainty"
+    :issn_isbn: 
+    - 0093-6502
     :other_pages: 
     - "205"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -436,76 +264,38 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Communication Research
     :pub_date: 
     - April
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Carpenter-Theune,K. E.
-    :links: []
-
     :publisher: 
     - Sage Publications
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "31"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
+    :volume: 
+    - "13"
     :issue: 
     - "3"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2006"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - network
+    - relational turbulence model
+    - romantic relations
     :start_page: 
     - "281"
     :title_primary: 
     - "Perceived involvement of network members in courtships: A test of the relational turbulence model"
     :issn_isbn: 
     - 1350-4126
-    :keyword: 
-    - network
-    - relational turbulence model
-    - romantic relations
-    :language: []
-
     :other_pages: 
     - "302"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -528,75 +318,35 @@
       <sn>1350-4126</sn>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Personal Relationships
     :pub_date: 
     - SEP
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Donovan-Kicken,E.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "13"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
-    :author_secondary: []
-
-    :accession_number: []
-
+    :volume: 
+    - "14"
     :pub_year: 
     - "2007"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational turbulence model
+    - romantic relations
     :start_page: 
     - "91"
     :title_primary: 
     - Using the relational turbulence model to understand negative emotion within courtship
     :issn_isbn: 
     - 1350-4126
-    :keyword: 
-    - Relational turbulence model
-    - romantic relations
-    :language: []
-
     :other_pages: 
     - "112"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -616,76 +366,36 @@
       <pb>Blackwell Publishing</pb>
       <sn>1350-4126</sn>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Personal Relationships
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Miller,L. E.
     - Carpenter,K. E.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "14"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
+    :place_of_publication: 
+    - Mahwah, NJ
     :author_secondary: 
     - Manusov,V.
-    :accession_number: []
-
     :pub_year: 
     - "2005"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Conversational equality
+    - Relations
     :start_page: 
     - "295"
     :title_primary: 
     - Measuring conversational equality at the relational level
-    :issn_isbn: []
-
-    :keyword: 
-    - Conversational equality
-    - Relations
-    :language: []
-
     :other_pages: 
     - "307"
     :title_secondary: 
     - "The sourcebook of nonverbal measures: Going beyond words"
-    :author_address_affiliations: []
-
-    :periodical_full: []
-
-    :ref_type: 
-    - Book, Section
     :original_data: |-
       <reference>
       <rt>Book, Section</rt>
@@ -704,75 +414,39 @@
       <pb>Lawrence Erlbaum Associates, Inc.</pb>
       <pp>Mahwah, NJ</pp>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :ref_type: 
+    - Book, Section
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Lawrence Erlbaum Associates, Inc.
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: []
-
-    :user_5: []
-
-    :place_of_publication: 
-    - Mahwah, NJ
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - This article seeks to understand how relational uncertainty coincides with people&amp;#39;s ability to process relational information. The general premise is that individuals experiencing relational uncertainty should have difficulty deriving inferences because they lack the knowledge necessary to identify and interpret relational cues. The authors use this reasoning to deduce hypotheses about how relational uncertainty may correspond with people&amp;#39;s perceptions of relationship talk, judgments of relational messages, and evaluations of the difficulty of interaction. They conducted a study of conversations between romantic partners (N= 120 couples). As predicted, relational uncertainty was negatively associated with people&amp;#39;s perceptions of relationship talk after controlling for the perceptions of third-party observers. Relational uncertainty was negatively associated with the extremity of people&amp;#39;s judgments about relational messages. Furthermore, relational uncertainty was positively associated with people&amp;#39;s perceptions of the difficulty of interaction. They conclude by discussing how these findings illuminate the connection between relational uncertainty and relational information processing.
     :subfile_database: 
     - Journal Article
-    :issue: 
-    - "3"
-    :author_secondary: []
-
+    :volume: 
+    - "32"
     :accession_number: 
     - CAX0280050001388
+    :abstract: 
+    - This article seeks to understand how relational uncertainty coincides with people&amp;#39;s ability to process relational information. The general premise is that individuals experiencing relational uncertainty should have difficulty deriving inferences because they lack the knowledge necessary to identify and interpret relational cues. The authors use this reasoning to deduce hypotheses about how relational uncertainty may correspond with people&amp;#39;s perceptions of relationship talk, judgments of relational messages, and evaluations of the difficulty of interaction. They conducted a study of conversations between romantic partners (N= 120 couples). As predicted, relational uncertainty was negatively associated with people&amp;#39;s perceptions of relationship talk after controlling for the perceptions of third-party observers. Relational uncertainty was negatively associated with the extremity of people&amp;#39;s judgments about relational messages. Furthermore, relational uncertainty was positively associated with people&amp;#39;s perceptions of the difficulty of interaction. They conclude by discussing how these findings illuminate the connection between relational uncertainty and relational information processing.
+    :issue: 
+    - "3"
     :pub_year: 
     - "2005"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational communication
+    - relational uncertainty
     :start_page: 
     - "349"
     :title_primary: 
     - "Relational uncertainty and relational information processing: Questions without answers?"
     :issn_isbn: 
     - 0093-6502
-    :keyword: 
-    - Relational communication
-    - relational uncertainty
-    :language: []
-
     :other_pages: 
     - "388"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -798,75 +472,33 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Communication Research
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Sage Publications
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "32"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
-    :author_secondary: []
-
-    :accession_number: []
-
+    :volume: 
+    - "55"
     :pub_year: 
     - "2004"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Marriage
+    - Communication studies
     :start_page: 
     - "146"
     :title_primary: 
     - The chilling effect on decisions to withhold complaints in marriage
     :issn_isbn: 
     - 1051-0974
-    :keyword: 
-    - Marriage
-    - Communication studies
-    :language: []
-
     :other_pages: 
     - "167"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Studies
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -885,75 +517,35 @@
       <pb>Routledge</pb>
       <sn>1051-0974</sn>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Communication Studies
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Routledge
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "55"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
+    :volume: 
+    - "11"
     :issue: 
     - "1"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2004"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Romantic relations
+    - Interdependence
     :start_page: 
     - "115"
     :title_primary: 
     - Interference and facilitation from partners in the development of interdependence within romantic relationships
     :issn_isbn: 
     - 1350-4126
-    :keyword: 
-    - Romantic relations
-    - Interdependence
-    :language: []
-
     :other_pages: 
     - "130"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -975,78 +567,44 @@
       <sn>1350-4126</sn>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Personal Relationships
     :pub_date: 
     - Mar
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "11"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - "Interpersonal communication in the context of close relationships is inextricably linked with the ways people understand their dyadic associations. Relationship conceptualizations, or the characteristics that individuals associate with their relationships, constitute an important component of relating. A question fundamental to the study of interpersonal communication in close relationships is how the characteristics people associate with their relationships are evident in their conversation. The authors begin by explicating the following three key aspects of relationship conceptualizations: reliance on rational knowledge, interdependence, and mutual commitment. Then the authors advance hypotheses linking those relationship conceptualizations with features of people&amp;#39;s content and relational messages. They report the results of a study in which 120 dating couples engaged in videotaped conversations. Findings offered modest support for the predictions regarding reliance on relational knowledge; results were less consistent with the hypotheses involving independence and mutual commitment. The authors conclude by discussing the implications of their findings for understanding how perceptions of relationships are apparent in conversation."
     :subfile_database: 
     - Journal Article
+    :volume: 
+    - "29"
+    :abstract: 
+    - "Interpersonal communication in the context of close relationships is inextricably linked with the ways people understand their dyadic associations. Relationship conceptualizations, or the characteristics that individuals associate with their relationships, constitute an important component of relating. A question fundamental to the study of interpersonal communication in close relationships is how the characteristics people associate with their relationships are evident in their conversation. The authors begin by explicating the following three key aspects of relationship conceptualizations: reliance on rational knowledge, interdependence, and mutual commitment. Then the authors advance hypotheses linking those relationship conceptualizations with features of people&amp;#39;s content and relational messages. They report the results of a study in which 120 dating couples engaged in videotaped conversations. Findings offered modest support for the predictions regarding reliance on relational knowledge; results were less consistent with the hypotheses involving independence and mutual commitment. The authors conclude by discussing the implications of their findings for understanding how perceptions of relationships are apparent in conversation."
     :issue: 
     - "4"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2003"
-    :user_3: []
-
-    :user_2: []
-
-    :start_page: 
-    - "482"
-    :title_primary: 
-    - Manifestations of relationship conceptualizations in conversations
-    :issn_isbn: 
-    - 0360-3989
     :keyword: 
     - Interpersonal communication
     - Conversation analysis
     - Communication behavior
     - Communication
     - Romantic relations
-    :language: []
-
+    :start_page: 
+    - "482"
+    :title_primary: 
+    - Manifestations of relationship conceptualizations in conversations
+    :issn_isbn: 
+    - 0360-3989
     :other_pages: 
     - "515"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Human Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1075,76 +633,36 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Human Communication Research
     :pub_date: 
     - October
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "29"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
-    :author_secondary: []
-
-    :accession_number: []
-
+    :volume: 
+    - "54"
     :pub_year: 
     - "2003"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational uncertainty
+    - romantic relations
+    - communication strategies
     :start_page: 
     - "282"
     :title_primary: 
     - "Responses to changes in relational uncertainty within dating relationships: Emotions and communication strategies"
     :issn_isbn: 
     - 1051-0974
-    :keyword: 
-    - Relational uncertainty
-    - romantic relations
-    - communication strategies
-    :language: []
-
     :other_pages: 
     - "305"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Studies
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1164,76 +682,42 @@
       <pb>Routledge</pb>
       <sn>1051-0974</sn>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Communication Studies
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Routledge
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "54"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - This article extends previous work on uncertainty and information seeking within close relationships by considering how relationship parameters correspond with the directness of people&amp;#39;s information-seeking strategies. Because the authors believe that assumptions of uncertainty reduction theory have been translated into the context of close relationships without attention to the unique features of that domain, the authors begin by reframing questions about uncertainty to reflect issues relevant to intimate associations. In particular, the authors reconsider the focus of uncertainty, the function of uncertainty reduction, and the nature of information seeking. The authors then discuss how relationship intimacy, power dynamics, and information expectancies correspond with information-seeking behavior within close relationships. In doing so, the authors highlight how the negotiation of relational uncertainty may function to sustain intimate associations.
     :subfile_database: 
     - Journal Article
-    :issue: 
-    - "2"
-    :author_secondary: []
-
+    :volume: 
+    - "28"
     :accession_number: 
     - CAX0250050001323
+    :abstract: 
+    - This article extends previous work on uncertainty and information seeking within close relationships by considering how relationship parameters correspond with the directness of people&amp;#39;s information-seeking strategies. Because the authors believe that assumptions of uncertainty reduction theory have been translated into the context of close relationships without attention to the unique features of that domain, the authors begin by reframing questions about uncertainty to reflect issues relevant to intimate associations. In particular, the authors reconsider the focus of uncertainty, the function of uncertainty reduction, and the nature of information seeking. The authors then discuss how relationship intimacy, power dynamics, and information expectancies correspond with information-seeking behavior within close relationships. In doing so, the authors highlight how the negotiation of relational uncertainty may function to sustain intimate associations.
+    :issue: 
+    - "2"
     :pub_year: 
     - "2002"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Information Seeking
+    - Interpersonal Relations
+    - Relational uncertainty
     :start_page: 
     - "243"
     :title_primary: 
     - "Information seeking beyond initial interaction: negotiating relational uncertainty within close relationships"
     :issn_isbn: 
     - 0360-3989
-    :keyword: 
-    - Information Seeking
-    - Interpersonal Relations
-    - Relational uncertainty
-    :language: []
-
     :other_pages: 
     - "257"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Human Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1262,76 +746,42 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Human Communication Research
     :pub_date: 
     - April
+    :ref_type: 
+    - Journal Article
+    :notes: 
+    - "RX: 6 (on Apr 25, 2007)"
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: 
-    - "RX: 6 (on Apr 25, 2007)"
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "28"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: 
-    - "4"
-    :author_secondary: []
-
+    :volume: 
+    - "9"
     :accession_number: 
     - 000179365600006
+    :issue: 
+    - "4"
     :pub_year: 
     - "2002"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - relational uncertainty
+    - Romantic relations
+    - intimacy
     :start_page: 
     - "457"
     :title_primary: 
     - Intimacy and the magnitude and experience of episodic relational uncertainty within romantic relationships
     :issn_isbn: 
     - 1350-4126
-    :keyword: 
-    - relational uncertainty
-    - Romantic relations
-    - intimacy
-    :language: []
-
     :other_pages: 
     - "478"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1355,74 +805,34 @@
       <an>000179365600006</an>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Personal Relationships
     :pub_date: 
     - DEC
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "9"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: []
-
-    :author_secondary: []
-
-    :accession_number: []
-
+    :volume: 
+    - "50"
     :pub_year: 
     - "1999"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational uncertainty
     :start_page: 
     - "261"
     :title_primary: 
     - Measuring the sources and content of relational uncertainty
     :issn_isbn: 
     - 1051-0974
-    :keyword: 
-    - Relational uncertainty
-    :language: []
-
     :other_pages: 
     - "278"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Studies
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1440,76 +850,38 @@
       <pb>Routledge</pb>
       <sn>1051-0974</sn>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Communication Studies
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
-    :links: []
-
     :publisher: 
     - Routledge
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "50"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: 
-    - "2"
-    :author_secondary: []
-
+    :volume: 
+    - "8"
     :accession_number: 
     - 000168953500006
+    :issue: 
+    - "2"
     :pub_year: 
     - "2001"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Jealousy
+    - relationship dissatisfaction
+    - romantic relations
     :start_page: 
     - "205"
     :title_primary: 
     - The role of relationship development and attachment in the experience of romantic jealousy
     :issn_isbn: 
     - 1350-4126
-    :keyword: 
-    - Jealousy
-    - relationship dissatisfaction
-    - romantic relations
-    :language: []
-
     :other_pages: 
     - "224"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1535,61 +907,35 @@
       <an>000168953500006</an>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Personal Relationships
     :pub_date: 
     - JUN
+    :ref_type: 
+    - Journal Article
+    :notes: 
+    - "PT: J"
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
     - Cruz,M. G.
-    :links: []
-
     :publisher: 
     - Blackwell Publishing
-    :user_1: []
-
-    :notes: 
-    - "PT: J"
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "8"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: 
-    - The authors define relationship talk as content messages that reference the nature of the relationship between people. They seek to contribute to the literature by (a) conceptualizing relationship talk in ways that attend to its nuances, and (b) evaluating how intimacy predicts the production and perception of relationship talk. They conducted an observational study of conversations between 120 dating couples. Length of romantic interest, compared to intimacy, was the more proximal predictor of the prominence, explicitness, depth, and negative valence of relationship talk. In general, relationship talk was positively associated with people&amp;#39;s perceptions of the relational impact of conversation, but intimacy was unrelated to relational impact. The prominence of relationship talk noted by third-party judges was positively associated with relational impact when intimacy was low but not high. The authors discuss how their findings illuminate content messages about relationships.
     :subfile_database: 
     - Journal Article
-    :issue: 
-    - "4"
-    :author_secondary: []
-
+    :volume: 
+    - "33"
     :accession_number: 
     - CAX0300010000017
+    :abstract: 
+    - The authors define relationship talk as content messages that reference the nature of the relationship between people. They seek to contribute to the literature by (a) conceptualizing relationship talk in ways that attend to its nuances, and (b) evaluating how intimacy predicts the production and perception of relationship talk. They conducted an observational study of conversations between 120 dating couples. Length of romantic interest, compared to intimacy, was the more proximal predictor of the prominence, explicitness, depth, and negative valence of relationship talk. In general, relationship talk was positively associated with people&amp;#39;s perceptions of the relational impact of conversation, but intimacy was unrelated to relational impact. The prominence of relationship talk noted by third-party judges was positively associated with relational impact when intimacy was low but not high. The authors discuss how their findings illuminate content messages about relationships.
+    :issue: 
+    - "4"
     :pub_year: 
     - "2006"
-    :user_3: []
-
-    :user_2: []
-
-    :start_page: 
-    - "211"
-    :title_primary: 
-    - The role of intimacy in the production and perception of relationship talk within courtship
-    :issn_isbn: 
-    - 0093-6502
     :keyword: 
     - Relations
     - Communication
@@ -1597,18 +943,14 @@
     - Message Content
     - Conversation
     - Communication Research
-    :language: []
-
+    :start_page: 
+    - "211"
+    :title_primary: 
+    - The role of intimacy in the production and perception of relationship talk within courtship
+    :issn_isbn: 
+    - 0093-6502
     :other_pages: 
     - "241"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Communication Research
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1639,77 +981,39 @@
       <db>Communication Abstracts</db>
       <ds>CSA</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
-    :pub_date: []
-
+    :periodical_full: 
+    - Communication Research
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Knobloch,L. K.
     - Solomon,D. H.
     - Theiss,J. A.
-    :links: []
-
     :publisher: 
     - Sage Publications
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "33"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
-    :issue: 
-    - "6"
-    :author_secondary: []
-
+    :volume: 
+    - "21"
     :accession_number: 
     - 000225868900005
+    :issue: 
+    - "6"
     :pub_year: 
     - "2004"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - relational turbulence model
+    - Romantic relations
+    - Communication Theory
     :start_page: 
     - "795"
     :title_primary: 
     - "A model of relational turbulence: The role of intimacy, relational uncertainty, and interference from partners in appraisals of irritations"
     :issn_isbn: 
     - 0265-4075
-    :keyword: 
-    - relational turbulence model
-    - Romantic relations
-    - Communication Theory
-    :language: []
-
     :other_pages: 
     - "816"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Journal of Social and Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1733,75 +1037,37 @@
       <an>000225868900005</an>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Journal of Social and Personal Relationships
     :pub_date: 
     - Dec
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Solomon,D. H.
     - Knobloch,L. K.
-    :links: []
-
     :publisher: 
     - Sage Publications
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "21"
-    :user_5: []
-
-    :place_of_publication: []
-
 - !ruby/object:ParsedCitation 
   citation_type: :refworks_xml
   properties: 
-    :abstract: []
-
-    :subfile_database: []
-
+    :volume: 
+    - "18"
     :issue: 
     - "6"
-    :author_secondary: []
-
-    :accession_number: []
-
     :pub_year: 
     - "2001"
-    :user_3: []
-
-    :user_2: []
-
+    :keyword: 
+    - Relational uncertainty
+    - romantic relations
     :start_page: 
     - "804"
     :title_primary: 
     - Relationship uncertainty, partner interference, and intimacy within dating relationships
     :issn_isbn: 
     - 0265-4075
-    :keyword: 
-    - Relational uncertainty
-    - romantic relations
-    :language: []
-
     :other_pages: 
     - "820"
-    :title_secondary: []
-
-    :author_address_affiliations: []
-
-    :periodical_full: 
-    - Journal of Social and Personal Relationships
-    :ref_type: 
-    - Journal Article
     :original_data: |-
       <reference>
       <rt>Journal Article</rt>
@@ -1823,32 +1089,14 @@
       <sn>0265-4075</sn>
       <ds>ISI</ds>
       <ol>Unknown(0)</ol></reference>
-    :user_4: []
-
-    :title_tertiary: []
-
-    :periodical_abbrev: []
-
+    :periodical_full: 
+    - Journal of Social and Personal Relationships
     :pub_date: 
     - DEC
+    :ref_type: 
+    - Journal Article
     :author_primary: 
     - Solomon,D. H.
     - Knobloch,L. K.
-    :links: []
-
     :publisher: 
     - Sage Publications
-    :user_1: []
-
-    :notes: []
-
-    :doi: []
-
-    :edition: []
-
-    :volume: 
-    - "18"
-    :user_5: []
-
-    :place_of_publication: []
-

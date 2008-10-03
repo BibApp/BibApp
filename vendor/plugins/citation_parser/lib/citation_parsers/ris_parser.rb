@@ -22,8 +22,8 @@ class RisParser < CitationParser
       errorCheck = 1
       rec.strip!  
       cite = ParsedCitation.new(:ris)
-      # Map original data for inclusion in database
-      cite.properties["original_data"] = rec
+      # Save original data for inclusion in final hash
+      cite.properties[:original_data] = rec
       # Use a lookahead -- if the regex consumes characters, split() will
       # filter them out.
       # Keys (or 'tags') are specified by the following regex.

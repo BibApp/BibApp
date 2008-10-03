@@ -29,13 +29,17 @@
     - Reproductive Behavior/physiology
     - Sexual Behavior, Animal/physiology
     - Signal Transduction/physiology
-    :y2: 
-    - Mar
     :ad: 
     - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
     :ep: 
     - "172"
-    original_data: |-
+    :y2: 
+    - Mar
+    :t1: 
+    - Steroid receptor control of reproductive behavior
+    :a1: 
+    - Auger,A. P.
+    :original_data: |-
       TY  - JOUR
       ID  - 116
       A1  - Auger,A. P.
@@ -69,14 +73,10 @@
       JF  - Hormones and behavior
       JA  - Horm.Behav.
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - Steroid receptor control of reproductive behavior
-    :a1: 
-    - Auger,A. P.
     :jf: 
     - Hormones and behavior
+    :a3: 
+    - Anonymous
     :vl: 
     - "45"
     :id: 
@@ -118,13 +118,17 @@
     - Sexual Behavior/physiology
     - Signal Transduction
     - Trans-Activators/metabolism
-    :y2: 
-    - Jun
     :ad: 
     - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
     :ep: 
     - "627"
-    original_data: |-
+    :y2: 
+    - Jun
+    :t1: 
+    - "Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein"
+    :a1: 
+    - Auger,A. P.
+    :original_data: |-
       TY  - JOUR
       ID  - 117
       A1  - Auger,A. P.
@@ -157,14 +161,10 @@
       JF  - Journal of neuroendocrinology
       JA  - J.Neuroendocrinol.
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - "Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein"
-    :a1: 
-    - Auger,A. P.
     :jf: 
     - Journal of neuroendocrinology
+    :a3: 
+    - Anonymous
     :vl: 
     - "15"
     :id: 
@@ -203,13 +203,19 @@
     - Progesterone/pharmacology
     - Rats
     - Rats, Sprague-Dawley
-    :y2: 
-    - Jan 5
     :ad: 
     - Department of Zoology, Birge Hall, 430 Lincoln Drive, University of Wisconsin, Madison, WI 53706, USA. cauger@wisc.edu
     :ep: 
     - "66"
-    original_data: |-
+    :y2: 
+    - Jan 5
+    :t1: 
+    - Microarray profiling of gene expression patterns in adult male rat brain following acute progesterone treatment
+    :a1: 
+    - Auger,C. J.
+    - Jessen,H. M.
+    - Auger,A. P.
+    :original_data: |-
       TY  - JOUR
       ID  - 112
       A1  - Auger,C. J.
@@ -241,16 +247,10 @@
       JF  - Brain research
       JA  - Brain Res.
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - Microarray profiling of gene expression patterns in adult male rat brain following acute progesterone treatment
-    :a1: 
-    - Auger,C. J.
-    - Jessen,H. M.
-    - Auger,A. P.
     :jf: 
     - Brain research
+    :a3: 
+    - Anonymous
     :vl: 
     - "1067"
     :id: 
@@ -274,11 +274,20 @@
     - "We previously applied selective breeding on outbred mice to increase maternal aggression (maternal defense). In this study, we compared gene expression within a continuous region of the central nervous system (CNS) involved in maternal aggression (hypothalamus and preoptic regions) between lactating selected (S) and nonselected control (C) mice (n= 6 per group). Using microarrays representing over 40 000 genes or expressed sequence tags, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray and the probe logarithmic intensity error method. Approximately 200 genes were identified as significant using an intersection from both techniques. A subset of genes was examined for confirmation by real-time polymerase chain reaction (PCR). Significant decreases were found in S mice for neurotensin and neuropeptide Y receptor Y2 (both confirmed by PCR). Significant increases were found in S mice for neuronal nitric oxide synthase (confirmed by PCR), the K+ channel subunit, Kcna1 (confirmed by PCR), corticotrophin releasing factor binding protein (just above significance using PCR; P= 0.051) and GABA A receptor subunit 1A (not confirmed by PCR, but similar direction). S mice also exhibited significantly higher levels of the neurotransmitter receptor, adenosine A1 receptor and the transcription factors, c-Fos, and Egr-1. Interestingly, for 24 genes related to metabolism, all were significantly elevated in S mice, suggesting altered metabolism in these mice. Together, this study provides a list of candidate genes (some previously implicated in maternal aggression and some novel) that may play an important role in the production of this behavior."
     :m1: 
     - Journal
-    :y2: 
-    - Aug 29
     :ad: 
     - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
-    original_data: |-
+    :y2: 
+    - Aug 29
+    :t1: 
+    - Altered gene expression in mice selected for high maternal aggression
+    :a1: 
+    - Gammie,S. C.
+    - Auger,A. P.
+    - Jessen,H. M.
+    - Vanzo,R. J.
+    - Awad,T. A.
+    - Stevenson,S. A.
+    :original_data: |-
       TY  - JOUR
       ID  - 111
       A1  - Gammie,S. C.
@@ -299,15 +308,6 @@
       M1  - Journal
     :a3: 
     - Anonymous
-    :t1: 
-    - Altered gene expression in mice selected for high maternal aggression
-    :a1: 
-    - Gammie,S. C.
-    - Auger,A. P.
-    - Jessen,H. M.
-    - Vanzo,R. J.
-    - Awad,T. A.
-    - Stevenson,S. A.
     :id: 
     - "111"
     :ty: 
@@ -344,13 +344,23 @@
     - Mice, Inbred ICR
     - Neuropeptide Y/genetics/metabolism
     - Pro-Opiomelanocortin/genetics/metabolism
-    :y2: 
-    - Oct 3
     :ad: 
     - Department of Zoology, University of Wisconsin, 1117 W. Johnson Street, Madison, WI 53706, USA. scgammie@wisc.edu
     :ep: 
     - "211"
-    original_data: |-
+    :y2: 
+    - Oct 3
+    :t1: 
+    - Gene array profiling of large hypothalamic CNS regions in lactating and randomly cycling virgin mice
+    :a1: 
+    - Gammie,S. C.
+    - Hasen,N. S.
+    - Awad,T. A.
+    - Auger,A. P.
+    - Jessen,H. M.
+    - Panksepp,J. B.
+    - Bronikowski,A. M.
+    :original_data: |-
       TY  - JOUR
       ID  - 113
       A1  - Gammie,S. C.
@@ -388,20 +398,10 @@
       JF  - Brain research.Molecular brain research
       JA  - Brain Res.Mol.Brain Res.
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - Gene array profiling of large hypothalamic CNS regions in lactating and randomly cycling virgin mice
-    :a1: 
-    - Gammie,S. C.
-    - Hasen,N. S.
-    - Awad,T. A.
-    - Auger,A. P.
-    - Jessen,H. M.
-    - Panksepp,J. B.
-    - Bronikowski,A. M.
     :jf: 
     - Brain research.Molecular brain research
+    :a3: 
+    - Anonymous
     :vl: 
     - "139"
     :id: 
@@ -442,13 +442,18 @@
     - Rats, Sprague-Dawley
     - Sex Characteristics
     - Transcription Factors/metabolism
-    :y2: 
-    - Apr
     :ad: 
     - Department of Psychology, University of Wisconsin, Madison, WI 53706, USA.
     :ep: 
     - "261"
-    original_data: |-
+    :y2: 
+    - Apr
+    :t1: 
+    - Sex differences in Fos protein expression in the neonatal rat brain
+    :a1: 
+    - Olesen,K. M.
+    - Auger,A. P.
+    :original_data: |-
       TY  - JOUR
       ID  - 115
       A1  - Olesen,K. M.
@@ -481,15 +486,10 @@
       JF  - Journal of neuroendocrinology
       JA  - J.Neuroendocrinol.
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - Sex differences in Fos protein expression in the neonatal rat brain
-    :a1: 
-    - Olesen,K. M.
-    - Auger,A. P.
     :jf: 
     - Journal of neuroendocrinology
+    :a3: 
+    - Anonymous
     :vl: 
     - "17"
     :id: 
@@ -538,13 +538,20 @@
     - Receptors, Progesterone/metabolism
     - Social Behavior
     - Tamoxifen/pharmacology
-    :y2: 
-    - Sep
     :ad: 
     - Department of Psychology, University of Wisconsin, Madison, 1202 West Johnson Street, Madison, Wisconsin 53706, USA.
     :ep: 
     - "3712"
-    original_data: |-
+    :y2: 
+    - Sep
+    :t1: 
+    - Dopaminergic activation of estrogen receptors in neonatal brain alters progestin receptor expression and juvenile social play behavior
+    :a1: 
+    - Olesen,K. M.
+    - Jessen,H. M.
+    - Auger,C. J.
+    - Auger,A. P.
+    :original_data: |-
       TY  - JOUR
       ID  - 114
       A1  - Olesen,K. M.
@@ -587,17 +594,10 @@
       JF  - Endocrinology
       JA  - Endocrinology
       M1  - Journal
-    :a3: 
-    - Anonymous
-    :t1: 
-    - Dopaminergic activation of estrogen receptors in neonatal brain alters progestin receptor expression and juvenile social play behavior
-    :a1: 
-    - Olesen,K. M.
-    - Jessen,H. M.
-    - Auger,C. J.
-    - Auger,A. P.
     :jf: 
     - Endocrinology
+    :a3: 
+    - Anonymous
     :vl: 
     - "146"
     :id: 

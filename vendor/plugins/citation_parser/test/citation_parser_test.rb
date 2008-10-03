@@ -1,14 +1,16 @@
 require 'rubygems'
 require 'test/unit'
-require 'citation_parser'
 require 'hpricot'
 require 'htmlentities'
 require 'logger'
+
 
 #initialize environment
 RAILS_ROOT = File.dirname(__FILE__) + "/.." # fake the rails root directory.
 RAILS_ENV = "test"  # fake test environment
 RAILS_DEFAULT_LOGGER = Logger.new(STDERR) #fake logger (log to Standard Error)
+
+require 'citation_parser'
 
 class CitationParserTest < Test::Unit::TestCase
   FIX_DIR = "#{File.expand_path(File.dirname(__FILE__))}/fixtures"
@@ -29,13 +31,8 @@ class CitationParserTest < Test::Unit::TestCase
     assert_equal citations.size, 7
     citations.each do |c|
       assert_equal :ris, c.citation_type
+      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
-  end
-  
-  def test_ris_field_types
-    p = CitationParser.new
-    citations = p.parse(@ris_data)
-    
   end
   
 #  def test_bibtex_parser
@@ -54,6 +51,7 @@ class CitationParserTest < Test::Unit::TestCase
    
     citations.each do |c|
       assert_equal :medline, c.citation_type
+      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
   
@@ -63,6 +61,7 @@ class CitationParserTest < Test::Unit::TestCase
     assert_equal citations.size, 34
     citations.each do |c|
       assert_equal :refworks_deprecated_xml, c.citation_type
+      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
   
@@ -72,6 +71,7 @@ class CitationParserTest < Test::Unit::TestCase
     assert_equal citations.size, 20
     citations.each do |c|
       assert_equal :refworks_xml, c.citation_type
+      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
   

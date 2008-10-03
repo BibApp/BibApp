@@ -36,8 +36,8 @@ class MedlineParser < CitationParser
         cite.properties[key] = Array.new if cite.properties[key].nil?
         cite.properties[key] << val.strip
         end
-      # Map original data for inclusion in database
-      cite.properties["original_data"] = rec
+      # Save original data for inclusion in final hash
+      cite.properties[:original_data] = rec
       
       # The following error should only occur if no part of the citation
       # is consistent with the Medline format. 

@@ -89,3 +89,19 @@ Required fields
  :original_data     => <<entire original citation in its original format>>
 }
 
+==========
+Testing:
+==========
+
+If you would like to see more sample outputs of this CitationImporter plugin,
+there is a rake task to do so.  From your Rails Application ([rails-app])
+root directory run:
+
+rake citation_importer:test_dump
+
+This will run through all Test Fixtures (in [citation_importer]/test/fixtures/)
+and write the output to YAML files in your [rails-app]/tmp/ directory
+(with the extension ".bibapp.yml" appended).
+
+
+
