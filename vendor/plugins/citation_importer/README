@@ -1,6 +1,15 @@
 BibApp CitationImporter plugin
 ==============================
 
+
+Plugin Requirements:
+--------------------
+  * 'CitationParser' plugin - The Ruby Hash output of this plugin is expected
+    as an input to this one.
+
+
+Details:
+--------
 Transforms a format-specific Ruby Hash (as returned from the 'citation_parser' 
 plugin) into a Work attribute hash valid for import into BibApp:
 http://bibapp.googlecode.com/
@@ -14,9 +23,9 @@ During the transformation the following occurs:
       (e.g. "2005" => "2005-01-01")
   (3) Fields that are not used by BibApp are dropped
 
-====================
+
 An RIS Hash example:
-====================
+--------------------
 Parsing of the below RIS Ruby Hash:
 {
  :ty => ["THES"],
@@ -89,9 +98,9 @@ Required fields
  :original_data     => <<entire original citation in its original format>>
 }
 
-==========
+
 Testing:
-==========
+--------
 
 If you would like to see more sample outputs of this CitationImporter plugin,
 there is a rake task to do so.  From your Rails Application ([rails-app])

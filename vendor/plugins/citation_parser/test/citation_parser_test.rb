@@ -18,6 +18,7 @@ class CitationParserTest < Test::Unit::TestCase
   def setup
     @parser = CitationParser.new
     @ris_data = File.read("#{FIX_DIR}/papers.ris")
+    @ris_unicode_data = File.read("#{FIX_DIR}/papers.unicode.ris")
     @bib_data = File.read("#{FIX_DIR}/papers.bib")
     @med_data = File.read("#{FIX_DIR}/papers.med")
     @rxml_deprecated_data = File.read("#{FIX_DIR}/papers.deprecated.rxml")
@@ -32,6 +33,19 @@ class CitationParserTest < Test::Unit::TestCase
     citations.each do |c|
       assert_equal :ris, c.citation_type
       assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
+    end
+  end
+  
+  def test_ris_unicode_parser
+    citations = @parser.parse(@ris_unicode_data)
+    assert_not_nil citations
+    assert_equal citations.size, 1
+    citations.each do |c|
+      assert_equal :ris, c.citation_type
+      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
+      #verify it successfully parsed out non-English characters in title & author
+      assert_equal c.properties[:t1], ["El carácter conservador de la opinión pública"]
+      assert_equal c.properties[:a1][1], "González,L. (Trans)"
     end
   end
   

@@ -1,6 +1,16 @@
-class RefworksXmlParser < CitationParser
-  require 'hpricot' if defined? Hpricot
-  require 'htmlentities' if defined? HTMLEntities
+#
+# RefWorks XML format parser
+# 
+# Parses a valid RefWorks XML file into a Ruby Hash.
+# 
+# XML parsing is handled by Hpricot:
+#   http://code.whytheluckystiff.net/hpricot/
+#   
+# All String parsing is done using String.chars
+# to ensure Unicode strings are parsed properly.
+# See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
+#
+class RefworksXmlParser < BaseXmlParser
   
   def logger
     CitationParser.logger
@@ -8,26 +18,34 @@ class RefworksXmlParser < CitationParser
   
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
-  def parse(data)
-    Hpricot.buffer_size = 204800
+  def parse_data(data)
+   
     xml = Hpricot.XML(data)
+    
+    #Check if this is Refworks XML format
     row_count = (xml/:reference).collect{|ref| ref.to_s} 
     if row_count.size < 1
       return nil
     end
     logger.debug("This file is the Refworks XML format.")
   
+    # Each record is enclosed in a <reference> tag
     (xml/:reference).each { |ref|
-      # add the citation to the database
+      # create a new citation for each row in XML
       c = ParsedCitation.new(:refworks_xml)
-      c.properties = param_hash(ref)
-      @citations << c
+
+      # map / parse all the properties
+      props_hash = param_hash(ref)
+      
+      # decode any XML entities in properties (e.g. &apos; => ', &amp; => &, etc.)
+      c.properties = decode_xml_entities(props_hash)
+      
+      @citations << c  
     }
     
     logger.debug("\nCitations Size: #{@citations.size}\n")
     
-    #Return @citations
-    @citations
+    return @citations
   end
   
   def param_hash(xml)
@@ -61,7 +79,7 @@ class RefworksXmlParser < CitationParser
       :abstract => (xml/:ab).inner_html.to_a,
       :notes => (xml/:no).inner_html.to_a,
       :user_1 => (xml/:u1).inner_html.to_a,
-      :user_2 => (xml/:u2).inner_html.split(/\||;/),
+      :user_2 => (xml/:u2).inner_html.chars.split(/\||;/),
       :user_3 => (xml/:u3).inner_html.to_a,
       :user_4 => (xml/:u4).inner_html.to_a,
       :user_5 => (xml/:u5).inner_html.to_a,

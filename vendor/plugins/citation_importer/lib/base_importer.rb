@@ -1,11 +1,15 @@
-require 'parsedate'
 #
-# This is the Base Importer class.  All importers should extend this class
+# BaseImporter class
+# 
+# All citation importers should extend this class
 #
 # It defines common methods for all citation importers, and performs calls
 # to the @attribute_mapping and @value_translators for specific Importers.
 #
 class BaseImporter < CitationImporter
+  #Require ParseDate for better date parsing (see parse_date method below)
+  require 'parsedate'
+  
   attr_reader :attribute_mapping, :value_translators
   
   class << self
@@ -82,10 +86,10 @@ class BaseImporter < CitationImporter
         next
       end
       
-      #If we have an Array of Strings with only a single value,
+      #If we have an Array of Strings (or Unicode Strings) with only a single value,
       # just return the first String as the value
-      if value.class.to_s=="Array" and value.size==1 and value[0].class.to_s=="String"
-        value = value[0].to_s.strip
+      if value.class.to_s=="Array" and value.size==1 and (value[0].class.to_s=="String" or value[0].class.to_s=="ActiveSupport::Multibyte::Chars")
+        value = value[0].to_s.chars.strip
         
         #if this is an empty string, remove it
         if value.empty?
@@ -94,11 +98,30 @@ class BaseImporter < CitationImporter
         end
       end
       
+      # Finally, for Arrays/Hashes, make sure we don't have any
+      # "ActiveSupport::Multibyte::Chars" as values 
+      # (this makes sure we are always saving strings to the database)
+      if value.class.to_s=="Array" or value.class.to_s=="Hash"
+        value = value.collect {|v| chars_to_string(v) }
+      end
+
+        
       #save cleaned value
       hash[key] = value
     end
     return hash
   end
+  
+  # Global method to parse out publication dates
+  # (Can be overriden by individual importers, as necessary)
+  def publication_date_parse(publication_date)
+    date = Hash.new
+    
+    date[:publication_date] = parse_date(publication_date)
+    
+    return date
+  end
+  
   
   # Parse a date out of a string, and returns in YYYY-MM-DD format
   # (returns nil if date cannot be parsed)
@@ -157,6 +180,16 @@ class BaseImporter < CitationImporter
     else
       return nil
     end
+  end
+  
+  #If a given String is actually a ActiveSupport::Multibyte::Chars",
+  #  return its value as a String (so that it will be saved to database as such)
+  def chars_to_string(value)
+    if value.class.to_s == "ActiveSupport::Multibyte::Chars"
+      return value.to_s
+    end
+    
+    return value
   end
   
 end

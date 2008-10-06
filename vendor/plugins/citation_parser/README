@@ -1,6 +1,14 @@
 CitationParser Plugin
 =====================
 
+Gem Requirements:
+------------------
+  * Hpricot - required for XML-based parsers
+  * HTMLEntities - required for XML-based parsers
+
+
+Details:
+--------
 Parses supported citation formats "as-is" into a Ruby Hash.
 
 During the parsing the following occurs:
@@ -28,9 +36,9 @@ the entire original citation (in its original structure).
 
 You get the idea. :)
 
-================
+
 An RIS example: 
-================
+----------------
 Parsing of the below RIS citation:
  TY  - THES
  ID  - 1031
@@ -63,9 +71,8 @@ Produces a Ruby Hash of the structure:
 The above Ruby Hash can then be used as a valid input to the 'citation_importer' plugin.
 
 
-==========
 Testing:
-==========
+---------
 
 If you would like to see more sample outputs of this CitationParser plugin,
 there is a rake task to do so.  From your Rails Application ([rails-app])

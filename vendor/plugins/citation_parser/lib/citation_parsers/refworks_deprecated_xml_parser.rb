@@ -1,53 +1,68 @@
-class RefworksDeprecatedXmlParser < CitationParser
-  require 'hpricot' if defined? Hpricot
-  require 'htmlentities' if defined? HTMLEntities
-  
+#
+# RefWorks Deprecated XML format parser
+# 
+# Parses a valid RefWorks XML (Deprecated) file into a Ruby Hash.
+# As RefWorks has deprecated this older XML format,
+# it is recommended to now use the new RefWorks XML format
+# (supported by the RefworksXmlParser).
+# 
+# XML parsing is handled by Hpricot:
+#   http://code.whytheluckystiff.net/hpricot/
+#   
+# All String parsing is done using String.chars
+# to ensure Unicode strings are parsed properly.
+# See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
+#
+class RefworksDeprecatedXmlParser < BaseXmlParser
+ 
   def logger
     CitationParser.logger
   end
   
   # Perform our initial parse of Citation Data,
   # using Hpricot to parse the Refworks XML format
-  def parse(data)
-    if data != nil
-      data.gsub("�", "-").gsub("�", "y").gsub("�", "'")
-    end
-    Hpricot.buffer_size = 204800
+  def parse_data(data)
+#    if data != nil
+#      data.gsub("�", "-").gsub("�", "y").gsub("�", "'")
+#    end
+
     xml = Hpricot.XML(data)
+    
+    #Check if this is Refworks Deprecated XML format
     row_count = (xml/'z:row').collect{|ref| ref.to_s}
     if row_count.size < 1
       return nil
     end
     logger.debug("This file is the Refworks Deprecated XML format.")
   
+    # Each record is enclosed in a <z:row> tag
     (xml/'z:row').each { |ref|
-      # add the citation to the database
+      # create a new citation for each row in XML
       c = ParsedCitation.new(:refworks_deprecated_xml)
 
-      # escape and parse troublesome keywords
-      keywords = HTMLEntities.new
-      ref[:Keyword] = keywords.decode(ref[:Keyword].to_s)
-      user_two = HTMLEntities.new
-      ref[:User2] = user_two.decode(ref[:User2].to_s)
-      c.properties = param_hash(ref)
+      # map / parse all the properties
+      props_hash = param_hash(ref)
+      
+      # decode any XML entities in properties (e.g. &apos; => ', &amp; => &, etc.)
+      c.properties = decode_xml_entities(props_hash)
+      
       @citations << c
     }
     
-    
-
-    @citations
+  
+    return @citations
   end
   
   def param_hash(xml)
 
     return {
       :ref_type => xml[:RefType].to_a,
-      :author_primary => xml[:AuthorPrimary].split("|"),
-      :author_secondary => xml[:AuthorSecondary].split("|"),
+      :author_primary => xml[:AuthorPrimary].chars.split("|"),
+      :author_secondary => xml[:AuthorSecondary].chars.split("|"),
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
       :title_tertiary => xml[:TitleTertiary].to_a,
-      :keyword => xml[:Keyword].split(/\||;/).each{|k| k.strip!},
+      :keyword => xml[:Keyword].chars.split(/\||;/).each{|k| k.chars.strip!},
       :pub_year => xml[:PubYear].to_a,
       :periodical_full => xml[:PeriodicalFull].to_a,
       :periodical_abbrev => xml[:PeriodicalAbbrev].to_a,
@@ -66,13 +81,13 @@ class RefworksDeprecatedXmlParser < CitationParser
       :classification => xml[:Classification].to_a,
       :subfile_database => xml[:SubFile_Database].to_a,
       :original_foreign_title => xml[:OriginalForeignTitle].to_a,
-      :links => xml[:Links].split("|"),
-      :doi => xml[:DOI].split("|"),
+      :links => xml[:Links].chars.split("|"),
+      :doi => xml[:DOI].chars.split("|"),
       :abstract => xml[:Abstract].to_a,
       :notes => xml[:Notes].to_a,
       :folder => xml[:Folder].to_a,
       :user_1 => xml[:User1].to_a,
-      :user_2 => xml[:User2].split(/\||;/).each{|k| k.strip!},
+      :user_2 => xml[:User2].chars.split(/\||;/).each{|k| k.chars.strip!},
       :user_3 => xml[:User3].to_a,
       :user_4 => xml[:User4].to_a,
       :user_5 => xml[:User5].to_a,
@@ -83,7 +98,7 @@ class RefworksDeprecatedXmlParser < CitationParser
       :retrieved_date => xml[:RetrievedDate].to_a,
       :shortened_title => xml[:ShortenedTitle].to_a,
       :text_attributes => xml[:TextAttributes].to_a,
-      :url => xml[:URL].split("|"),
+      :url => xml[:URL].chars.split("|"),
       :sponsoring_library => xml[:SponsoringLibrary].to_a,
       :sponsoring_library_location => xml[:SponsoringLibraryLocation].to_a,
       :cited_refs => xml[:CitedRefs].to_a,
