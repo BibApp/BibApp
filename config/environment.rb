@@ -78,6 +78,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
 
   #CMess - Assists with handling parsing citations from a non-Unicode text file
+  #  See: http://prometheus.rubyforge.org/cmess/
   config.gem 'cmess', :version=>"~>0.1.2"
   
   # Add additional load paths for your own custom dirs
