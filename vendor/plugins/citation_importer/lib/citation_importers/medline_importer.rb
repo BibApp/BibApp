@@ -43,8 +43,7 @@ class MedlineImporter < BaseImporter
        :pmid => :external_id,
        :aid => :links,
        :la  => :language,
-       :ci  => :copyright_holder,
-       :original_data => :original_data
+       :ci  => :copyright_holder
     }
   
     #Initialize our Value Translators (which will translate values from normal Medline files)
@@ -56,21 +55,21 @@ class MedlineImporter < BaseImporter
     @value_translators[:fau] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     
     # Map publication types (see @type_mapping)    
-    @value_translators[:pt] = lambda { |val_arr| @type_mapping[val_arr[0].downcase] }
+    @value_translators[:pt] = lambda { |val_arr| @type_mapping[val_arr[0].to_s.downcase] }
     
     # Parse start/end page from page-range field
-    @value_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0])}
+    @value_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0].to_s)}
     
     # Parse publication date & ISSN
-    @value_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0])}
-    @value_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0])}
+    @value_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
+    @value_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0].to_s)}
     
     # Strip line breaks from Title, Abstract, Affiliation, Publication
-    @value_translators[:ti] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @value_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @value_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @value_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
-    @value_translators[:ta] = lambda { |val_arr| strip_line_breaks(val_arr[0])}
+    @value_translators[:ti] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
+    @value_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
+    @value_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
+    @value_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
+    @value_translators[:ta] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
 
     #Mapping of Medline Types => valid BibApp Types
     @type_mapping = {                         
@@ -251,18 +250,9 @@ class MedlineImporter < BaseImporter
     }
   end
   
-  def publication_date_parse(publication_date)
-    date = Hash.new
-    
-    date[:publication_date] = parse_date(publication_date)
-    
-    return date
-  end
-  
-  
   def page_range_parse(range)
     page_range = Hash.new
-    pages = range.split("-")
+    pages = range.chars.split("-")
     page_range[:start_page] = pages[0]
     page_range[:end_page]   = pages[1]
     return page_range
@@ -270,12 +260,12 @@ class MedlineImporter < BaseImporter
   
   def issn_parse(issn)
     identifier = Hash.new
-    identifier[:issn_isbn] = issn.split(/ /)[0]
+    identifier[:issn_isbn] = issn.chars.split(/ /)[0]
     return identifier
   end
   
   def strip_line_breaks(value)
-    clean = value.gsub(/\s+/, " ")
+    clean = value.chars.gsub(/\s+/, " ")
     return clean
   end
 end

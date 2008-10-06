@@ -47,8 +47,7 @@ class RisImporter < BaseImporter
        :bn => :issn_isbn,
        :n1 => :notes,
        :m1 => :notes,
-       :l2 => :links,
-       :original_data => :original_data
+       :l2 => :links
     }
   
     #Initialize our Value Translators (which will translate values from normal Medline files)
@@ -60,11 +59,11 @@ class RisImporter < BaseImporter
     @value_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     
     # Map publication types (see @type_mapping)    
-    @value_translators[:ty] = lambda { |val_arr| Array(@type_mapping[val_arr[0]]) }
+    @value_translators[:ty] = lambda { |val_arr| Array(@type_mapping[val_arr[0].to_s]) }
     
     # Parse publication dates
-    @value_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0])}
-    @value_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0])}
+    @value_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
+    @value_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     
     
     #Mapping of RIS Publication Types => valid BibApp Types
@@ -105,15 +104,6 @@ class RisImporter < BaseImporter
        "UNPB"  => "UnpublishedWork", # Unpublished work
        "VIDEO" => "VideoRecording" # Video recording
     }
-  end
-  
-  
-  def publication_date_parse(publication_date)
-    date = Hash.new
-    
-    date[:publication_date] = parse_date(publication_date)
-    
-    return date
   end
   
 end

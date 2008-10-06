@@ -1,4 +1,14 @@
+#
+# CitationParser plugin
+#
+# This class calls our defined Citation Parsers to actually
+# generate Ruby Hashes from various citation file formats.
+# http://bibapp.googlecode.com/
+#
 class CitationParser
+  #Must require ActiveRecord so we have access to Rails Unicode tools
+  # See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
+  require 'active_record' 
   
   @@parsers = Array.new
   
@@ -24,14 +34,18 @@ class CitationParser
     @citations = Array.new
   end
   
+  #Primary parse method.
+  # Tries each defined CitationParser, and calls their parse_data()
+  # method in an attempt to parse unknown data.
   def parse(data)
     @citations = Array.new
     
     @@parsers.each do |klass|
       parser = klass.new
-      @citations = parser.parse(data)
+      
+      @citations = parser.parse_data(data) if parser.respond_to?(:parse_data)
 
-      unless @citations.nil?
+      unless @citations.nil? or @citations.empty?
         @citations = cleanup_cites(@citations)
         
         CitationParser.logger.debug("\n Successfully parsed #{@citations.size} citations using: #{klass}!\n")
@@ -85,4 +99,6 @@ class ParsedCitation
   end
 end
 
+#Load BaseXmlParser first, then all format-specific citation importers.
+require "#{File.expand_path(File.dirname(__FILE__))}/base_xml_parser.rb"
 Dir["#{File.expand_path(File.dirname(__FILE__))}/citation_parsers/*_parser.rb"].each { |p| require p }

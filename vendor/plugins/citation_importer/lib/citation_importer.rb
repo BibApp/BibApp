@@ -1,9 +1,14 @@
 #
+# CitationImporter plugin
+# 
 # This class calls our defined Citation Importers to actually
 # generate a valid attribute hash for the BibApp database:
 # http://bibapp.googlecode.com/
 #
 class CitationImporter
+  #Must require ActiveRecord so we have access to Rails Unicode tools
+  # See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
+  require 'active_record'
   
   @@importers = Array.new
   
@@ -37,7 +42,7 @@ class CitationImporter
     importer = importer_obj(parsed_citation.citation_type)
     
     #generate our hash (performed by BaseImporter)
-    hash = importer.generate_attribute_hash(parsed_citation)
+    hash = importer.generate_attribute_hash(parsed_citation) if importer.respond_to?(:generate_attribute_hash)
     
     return hash
   end
@@ -63,6 +68,6 @@ class CitationImporter
   
 end
 
-#Load BaseImporter, and all format-specific citation importers.
-require 'base_importer.rb'
+#Load BaseImporter first, then all format-specific citation importers.
+require "#{File.expand_path(File.dirname(__FILE__))}/base_importer.rb"
 Dir["#{File.expand_path(File.dirname(__FILE__))}/citation_importers/*_importer.rb"].each { |p| require p }

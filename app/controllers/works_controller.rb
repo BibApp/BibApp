@@ -1,4 +1,6 @@
 class WorksController < ApplicationController
+  #require CMess to help guess encoding of uploaded text files
+  require 'cmess/guess_encoding'
   
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :destroy_multiple ]
@@ -136,7 +138,7 @@ class WorksController < ApplicationController
           format.html {redirect_to review_batch_works_url}
           format.xml  {head :created}
         else #otherwise, we ended up with nothing imported!
-          flash[:warning] = "The format of the input was unrecognized or unsupported.  Supported formats include: RIS, MedLine and Refworks XML"
+          flash[:warning] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
           format.html {redirect_to new_work_url}
           format.xml  {render :xml => @works_batch.errors.to_xml}        
         end
@@ -614,11 +616,26 @@ class WorksController < ApplicationController
       elsif File.readable?(data)
         str = File.read(data)
       end
+     
+      #Convert string to Unicode, if it's not already Unicode
+      unless str.is_utf8?
+        #guess the character encoding
+        encoding = CMess::GuessEncoding::Automatic.guess(str)
+        
+        #as long as encoding could be guessed, try to convert to UTF-8
+        unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
+          #convert to one big UTF-8 string
+          str =Iconv.iconv('UTF-8', encoding, str).to_s
+        else
+          #log an error...this file has a character encoding we cannot handle!
+          logger.error("Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
+          #return nothing, which will inform user that file format was invalid
+          return nil
+        end
+      end
+     
     rescue Exception =>e
-       #Log entire error backtrace
-      logger.error("An error occurred reading the input data: #{e.message}\n")
-      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
-      #re-raise this exception to create()
+      #re-raise this exception to create()...it will handle logging the error
       raise
     end
     
@@ -633,11 +650,7 @@ class WorksController < ApplicationController
 
     #Rescue any errors in parsing  
     rescue Exception => e
-      #Log entire error backtrace
-      logger.error("An error occurred during Citation Parsing: #{e.message}\n")
-      logger.error("\nError Trace: #{e.backtrace.join("\n")}")
-
-      #re-raise this exception to create()
+      #re-raise this exception to create()...it will handle logging the error
       raise
     end
         
@@ -649,8 +662,8 @@ class WorksController < ApplicationController
       return nil
     end
 
-    logger.debug("\n\nParsed Citations: #{pcites.inspect}\n\n")
-
+    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
+    
     # (3) Import the data using CitationImporter Plugin
     begin
       # Map Import hashes
@@ -708,13 +721,8 @@ class WorksController < ApplicationController
           ###
           work.keyword_strings = h[:keywords]
 
-          # Clean the abstract
-          # @TODO we'll want to clean all data
-          code = HTMLEntities.new
-          h[:abstract] = code.encode(h[:abstract], :decimal)
-
           # Clean the hash of non-Work table data
-          # Cleaning preps hash for AR insert
+          # Cleaning will prepare the hash for ActiveRecord insert
           h.delete(:klass)
           h.delete(:work_name_strings)
           h.delete(:publisher)

@@ -51,8 +51,7 @@ class RefworksDeprecatedXmlImporter < BaseImporter
       :user_2 => :keywords,
       :data_source => :source,
       :identifying_phrase => :external_id,
-      :url => :links,
-      :original_data => :original_data
+      :url => :links
     }
   
     #Initialize our Value Translators (which will translate values from normal RefWorks XML)
@@ -64,9 +63,9 @@ class RefworksDeprecatedXmlImporter < BaseImporter
     @value_translators[:author_secondary] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     
     # Map publication types (see @type_mapping)
-    @value_translators[:ref_type] = lambda { |val_arr| Array(@type_mapping[val_arr[0]]) }
+    @value_translators[:ref_type] = lambda { |val_arr| Array(@type_mapping[val_arr[0].to_s]) }
     # Convert publication year into a date
-    @value_translators[:pub_year] = lambda { |val_arr| val_arr.collect!{|n| Date.new(n.to_i).to_s}}
+    @value_translators[:pub_year] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     
     #Mapping of RefWorks XML Publication Types => valid BibApp Types
     @type_mapping = {

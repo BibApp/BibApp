@@ -77,6 +77,8 @@ Rails::Initializer.run do |config|
   #Will Paginate - for fancy pagination
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
 
+  #CMess - Assists with handling parsing citations from a non-Unicode text file
+  config.gem 'cmess', :version=>"~>0.1.2"
   
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
