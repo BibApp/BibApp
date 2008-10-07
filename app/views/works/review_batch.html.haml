@@ -19,7 +19,7 @@
             = check_box_tag "select_works", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
             %strong="Select All"
             |
-            =link_to_function "Delete selected works", "submit_delete_form(document.works_form, 'work_id[]', '#{destroy_multiple_works_path}');"
+            =button_to_function "Delete selected works", "submit_delete_form(document.works_form, 'work_id[]', '#{destroy_multiple_works_path}');"
             
           #sort-by
             %label Show:
