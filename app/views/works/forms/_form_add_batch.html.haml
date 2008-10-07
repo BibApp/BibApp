@@ -18,4 +18,4 @@
     = form.text_area :works
     = hidden_field_tag :type, 'AddBatch'
   %p.submit
-    = submit_tag "Add Batch"
+    = submit_tag "Add Batch", :disable_with => "Parsing and Importing Batch..."
