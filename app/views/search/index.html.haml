@@ -1,28 +1,40 @@
 / === Search === Index ===
 / Main
-- if !@export.empty?
-  %div{:class => "span-24"}
+%div{:class => "span-24"}
+  - if @q.nil?
     %div{:class => "span-22 prepend-1"}
-      %h2 Works
-      = @works
+      %h2 Search
+      %div{:class => "span-20 prepend-1"}
+        = render :partial => "advanced_search_form"
+  - else
+    %div{:class => "span-22 prepend-1"}
+      %h2
+        ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
+        %strong=" #{@query}"
 
-- else
-  %div{:class => "span-24"}
-    - if @q.nil?
-      %div{:class => "span-22 prepend-1"}
-        %p Search form here.
-    - else
-      %div{:class => "span-22 prepend-1"}
-        %h2
-          ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
-          %strong=" #{@query}"
+      -if !@spelling_suggestions.empty? && !@q.total_hits == 0
+        %p.warning{:class => "span-22"} 
+          Did you mean:
+          - @spelling_suggestions.each do |suggestion|
+            %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
 
-        -if !@spelling_suggestions.empty?
-          %p{:class => "span-22"} 
-            Did you mean:
-            - @spelling_suggestions.each do |suggestion|
-              %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
-
+      -if @q.total_hits == 0
+        %div{:class => "span-20 prepend-1"}
+          %h4.error
+            = "Sorry, your search for &ldquo;#{@query}&rdquo; came up empty."
+            -if !@spelling_suggestions.empty?
+              Did you mean:
+              - @spelling_suggestions.each do |suggestion|
+                %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
+              ?
+          %h4 Suggestions:
+          %ul
+            %li Double check your spelling.
+            %li Try different keywords.
+            %li Try our advanced search options.
+                
+          =render :partial => "advanced_search_form"
+      - else
         / People
         = render :partial => "shared/people", :locals => {:count => 10}
 
@@ -32,6 +44,6 @@
         %div#results{:class => "span-22"}
           / Facets
           = render :partial => "shared/facets"
-                    
+                  
           / Works 
           = render :partial => "shared/works"
