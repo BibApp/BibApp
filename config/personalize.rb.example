@@ -97,3 +97,17 @@ $WORK_ARCHIVE_STATUS = {
   2 => "Ready for archiving",
   3 => "Repository record created, URL known"
 }
+
+####
+# BibApp Advanced Search Examples
+#
+# These are the out-of-the-box explanations for each of
+# the states that a work in the BibApp system can go through.
+$SEARCH_EXAMPLES ={
+  :keywords   => "ex. plasma confinement physics",
+  :title      => "ex. Transport Phenomena",
+  :authors    => "ex. Corradini, Michael",
+  :groups     => "ex. Engineering Physics",
+  :issn_isbn  => "ex. 0003-018X",
+  :year       => "ex. 2006  to  2008"
+}

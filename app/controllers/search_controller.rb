@@ -84,6 +84,28 @@ class SearchController < ApplicationController
         logger.debug(params[:issn_isbn].inspect)
         @q << "issn_isbn:#{params[:issn_isbn]}"
       end
+      
+      # Add year to query
+      # Begin with SOLR/lucene's wildcard
+      start_date = "*"
+      end_date = "*"
+      
+      # If there is a start_date use it
+      if !params[:start_date].nil? && !params[:start_date].empty?
+        start_date = params[:start_date]
+      end
+
+      # If there is a end_date use it
+      if !params[:end_date].nil? && !params[:end_date].empty?
+        end_date = params[:end_date]
+      end
+      
+      # Only if we have a non-default start_date or end_date add it to @q
+      if start_date == "*" && end_date == "*"
+        # Do Nothing
+      else 
+        @q << "year:[#{start_date} TO #{end_date}]"
+      end
 
       logger.debug(@q.inspect)      
       # Redirect to /search with properly formated solr standard request params
