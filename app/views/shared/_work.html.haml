@@ -25,20 +25,14 @@
 
   -#Display the work
   %div.screen-format
+    - if work['issn_isbn'] != nil
+      %span{:title => "ISBN:#{work['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
     %strong=link_to "#{work['title']}", work_path(work['pk_i'])
+    %h5{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=work['type']
     -#display status of a work, if specified
     = render :partial => "shared/work_status", :locals => {:work => work} if show_status
-    %p.metadata 
-      - work['name_strings_data'].first(5).each do |ns|
-        - name, id = NameString.parse_solr_data(ns)
-        =link_to "#{name}", name_string_path(id), {:class => "name_string"}
-      - if work['name_strings'].size > 5
-        =link_to "more...", work_path(work['pk_i'])
-      %br/
-      - pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-      =link_to "#{pub_name}", publication_path(pub_id), {:class => "source"}
-      -if work['year'] != nil
-        ="(#{work['year']})"
+    
+    = render :partial => "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :locals => {:work => work}
 
     .links
       -links_array.each do |link|

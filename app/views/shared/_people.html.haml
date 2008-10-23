@@ -2,7 +2,6 @@
 -# Render People facets from Solr data
 -#
 %div{:class => "span-15"}
-  %h3.heading People
   %ol#people
     -# if there's a count specified, only show the first few
     -people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]

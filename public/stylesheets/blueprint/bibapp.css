@@ -102,7 +102,7 @@ div.left_box {
     border-left:1px solid #CCC;
     border-right:1px solid #CCC;
     border-bottom:1px solid #CCC;        
-    margin:0.5em;
+    margin:0 0.5em 0.5em 0;
 }
 div.left_box_no_border {        
     margin:0.5em;
@@ -114,8 +114,9 @@ div.box_heading {
     background-color: #EEEEEE; 
     padding:0.5em; 
     margin-top: 0;
-    margin-bottom: 1.25em; 
-    border:1px solid #CCC; 
+    margin-bottom: 1em; 
+    border-top:1px solid #CCC; 
+    border-bottom:1px solid #CCC; 
     height: 1.25em;
     line-height: 1.25;
     color: #111111;
@@ -127,7 +128,7 @@ div.box_heading {
 /* ========== Facet / Refine Results Styles ============ */
 /* ===================================================== */
 /*Division around entire "Refine Results" box*/
-#results {clear:both; padding-top:1.5em;}
+#results {clear:both; padding-top:0.5em;}
 
 /*Division for individual facet*/
 div.facet {
@@ -135,8 +136,7 @@ div.facet {
 }
 /*heading for individual facet*/
 div.facet_heading {
-    padding-left:0.5em;
-    padding-top:1em;
+    padding-top:0.5em;
     margin-bottom:0em;
     color:#000;
     border-bottom: 1px dotted black;
@@ -338,10 +338,14 @@ div.person { padding:0em; margin:0em; }
 
 .person-last-name {padding-right:0.5em;}
 
-/* lists of publications/publishers*/
-#publications {padding:0; margin:0;}
-#publishers {padding:0; margin:0;}
+/* lists of groups/publications/publishers*/
+#groups{padding:0.5em 0; margin:0;}
+#publications {padding:0.5em 0; margin:0;}
+#publishers {padding:0.5em 0; margin:0;}
 
+h3.heading {
+	margin:0.25em 0;
+}
 .heading a {
 	text-decoration:none;
 	color:#000;
@@ -350,6 +354,18 @@ div.person { padding:0em; margin:0em; }
 /*list of actions on a specific page*/
 ul.actions li {
 	display:inline;
+}
+
+ol#groups {
+	list-style:none;
+}
+
+ol#publications {
+	list-style:none;
+}
+
+ol#publishers {
+	list-style:none;
 }
 
 /* =============================== */

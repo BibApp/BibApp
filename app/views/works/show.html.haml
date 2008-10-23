@@ -25,6 +25,8 @@
           ="&#149; #{@work.publication_date.year} #{@work.volume}(#{@work.issue}), #{@work.start_page}-#{@work.end_page}."
         -if @work.publication_date.nil?
           ="&#149; #{@work.volume}(#{@work.issue}), #{@work.start_page}-#{@work.end_page}."
+      - if @work.publication.issn_isbn != nil
+        %span{:title => "ISBN:#{@work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview", :style=>"float:right; padding:3px; margin:0.5em;"}
       %p{:style => "font-size:1.25em;"}= @work.name_strings.author.collect{|ns| link_to(ns.name, name_string_path(ns.id))}.join(", ").to_s
       
       - if !@work.attachments.nil? and !@work.attachments.empty?               

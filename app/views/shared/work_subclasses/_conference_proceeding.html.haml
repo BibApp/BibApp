@@ -1,0 +1,20 @@
+%p.metadata
+  - #NameStrings
+  = link_to_work_name_strings(work)
+
+  - #Conference
+  %br/
+  = work['title_secondary']
+
+  - #Publication
+  %br/
+  = link_to_work_publication(work)
+
+  - #Year
+  -if work['year'] != nil
+    ="(#{work['year']})"
+
+  Published by: 
+  - #Publisher
+  = link_to_work_publisher(work)
+  
