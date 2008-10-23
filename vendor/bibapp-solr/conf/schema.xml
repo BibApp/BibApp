@@ -274,6 +274,7 @@
  <field name="publisher" type="text" indexed="true" stored="true"/>
  <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="type" type="text" indexed="true" stored="true"/>
  <field name="year" type="text" indexed="true" stored="true"/>
  
  <!--====Special Fields====-->
@@ -327,6 +328,7 @@
 <copyField source="publisher" dest="publisher_facet"/>
 <copyField source="keywords" dest="keyword_facet"/>
 <copyField source="tags" dest="tag_facet"/>
+<copyField source="type" dest="type_facet"/>
 <copyField source="year" dest="year_facet"/>
 
 <!--Copy data fields over to '*_facet_data',

@@ -42,7 +42,7 @@ class Index
     :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
     
     # Work Type (index as "Journal article" rather than "JournalArticle")
-    :type_facet => Proc.new{|record| record[:type].underscore.humanize},
+    :type => Proc.new{|record| record[:type].underscore.humanize},
     
     # NameStrings
     :name_strings => Proc.new{|record| record.name_strings.collect{|ns| ns.name}},
