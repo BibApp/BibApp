@@ -159,7 +159,7 @@ class WorksController < ApplicationController
       @work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @work)
     
       respond_to do |format|
-        if @work.save and Index.update_solr(@work)
+        if @work.save
           flash[:notice] = "Work was successfully created."
           format.html {redirect_to work_url(@work)}
           format.xml  {head :created, :location => work_url(@work)}
@@ -219,14 +219,19 @@ class WorksController < ApplicationController
     update_work_info
    
     respond_to do |format|
-      flash[:notice] = "Work was successfully updated."
-      unless return_path.nil?
-        format.html {redirect_to return_path}
+      if @work.save
+        flash[:notice] = "Work was successfully updated."
+        unless return_path.nil?
+          format.html {redirect_to return_path}
+        else
+          #default to returning to work page
+          format.html {redirect_to work_url(@work)}
+        end
+        format.xml  {head :ok}
       else
-        #default to returning to work page
-        format.html {redirect_to work_url(@work)}
+        format.html {render :action => "edit"}
+        format.xml  {render :xml => @work.errors.to_xml}
       end
-      format.xml  {head :ok}
     end
   end
   
@@ -242,14 +247,15 @@ class WorksController < ApplicationController
     params[:author_name_strings] ||= [] 
     params[:editor_name_strings] ||= [] 
             
-    #Set Author NameStrings for this Work
-    @author_name_strings = params[:author_name_strings]
-    @editor_name_strings = params[:editor_name_strings]
+    #Set Author & Editor NameStrings for this Work
     work_name_strings = Array.new
+    
+    @author_name_strings = params[:author_name_strings]
     @author_name_strings.each do |name|
       work_name_strings << {:name => name, :role => "Author"}
     end
     
+    @editor_name_strings = params[:editor_name_strings]
     @editor_name_strings.each do |name|
       work_name_strings << {:name => name, :role => "Editor"}
     end
@@ -529,49 +535,57 @@ class WorksController < ApplicationController
   #Adds a single item value to list of items in Web-based Work entry
   # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:
-  # 	item_name - "Name" of type of item (e.g. "name_string", "keywords")
-  #     item_value - value to add to item list
+  # 	list_type - "Name" of type of list (e.g. "author_name_strings", "keywords")
   #     clear_field - Name of form field to clear after processing is complete
+  #     item_value - value to add to item list
+  #     item_class - (optional) any extra CSS classes to add to the <li> tag
+  #     sortable - whether or not this list is sortable (i.e. able to be reordered)
   #
-  # (E.g.) item_name=>"name_string", item_value=>"Donohue, Tim", clear_field=>"author_name"
-  #	  Above example will add value "Donohue, Tim" to list of "author_string" values in form.
-  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_string_list". 
-  #   It then clears the "author_name" field (which is the textbox where the value was entered).
-  #   End result example (doesn't include AJAX code created, but you get the idea):
-  #   <input type="textbox" id="author_name" name="author_name" value=""/>
-  #   <ul id='author_string_list'>
-  #     <li id='Donohue, Timothy' class='list_item'>
-  #       <input type="checkbox" id="name_string[]" name="name_string[]" value="Donohue, Tim"/> Donohue, Tim
-  #     </li>
-  #   </ul>
+  # (E.g.) item_name=>"author_name_strings", item_value=>"Donohue, Tim", clear_field=>"author_string"
+  #	  Above example will add value "Donohue, Tim" to list of author values in form.
+  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_name_strings_list". 
+  #   It then clears the "author_string" field (which is the textbox where the value was entered).
+  #
+  # See 'item_list.js.rjs' for much more information, as this file includes the
+  # Javascript to add and remove items.
   def add_item_to_list
-    @item_name = params[:item_name]
-    @item_value = params[:item_value]
+    @list_type = params[:list_type]
     @clear_field = params[:clear_field]
+    @item_value = params[:item_value]
+    @item_class = params[:item_class]
+    @sortable = params[:sortable]
+    @update_action = 'add'
 
     #Add item value to list dynamically using Javascript
-      respond_to do |format|
-      format.js { render :action => :item_list }
-    end
+    render :template => 'works/forms/fields/update_item_list'
   end
-	
+  
   #Removes a single item value from list of items in Web-based Work entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
   # Expects two parameters:
-  #   item_name - "Name" of type of item (e.g. "name_string", "keywords")
-  #   item_value - value to add to item list  
+  #   list_type -  Type of list (e.g. "author_name_strings", "keywords")
+  #   item_id   -  ID of item to remove 
   #
   # Essentially this does the opposite of 'add_item_to_list', and removes
   # an existing item.
+  # 
+  # See 'item_list.js.rjs' for much more information, as this file includes the
+  # Javascript to add and remove items.
   def remove_item_from_list
-    @item_name = params[:item_name]
-    @item_value = params[:item_value]
-    @remove = true
-
+    @list_type = params[:list_type]
+    @item_id = params[:item_id]
+    @update_action = 'remove'
+    
     #remove item value from list dynamically using Javascript
-    respond_to do |format|
-      format.js { render :action => :item_list }
-    end
+    render :template => 'works/forms/fields/update_item_list'
+  end
+  
+  # Reorders a list using Scriptaculous's 'sortable_element'
+  def reorder_list
+    list_type = params[:list_type]
+    
+    #display message that reorder was successful
+    render :partial => 'works/forms/fields/reorder_list', :locals => {:list_type=>list_type}
   end
   
   def update_tags

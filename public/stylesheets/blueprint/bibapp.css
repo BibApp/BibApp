@@ -187,11 +187,48 @@ li.active-filter {
 .inline-form {display:inline;}
 .inline-form div {display:inline;}
 
-ul.form_item_list {list-style-type:none;}
+/*Unordered list of field values - used for tags/keywords */
+ul.form_item_list {
+  list-style-type:none;
+  margin-left: 7em;
+}        
+
+/*Ordered list of field values - used for Authors/Editors */
+ol.form_item_list {
+  list-style-position: inside;
+  margin-left: 7em;
+}
+
+li.list_item {
+  margin: 0 0 0.75em 0;
+  color: #666;        
+}
+
+/* list item value (within an <li>) */
+li.list_item div.list_item_value { 
+  display: inline;
+  padding: 0.25em;
+  border: 1px dotted #CCC; 
+  width: 20em;
+  margin-right: 0.5em;        
+}
+/* hint after a list of items */
+p#list_hint {
+  margin: 0 0 1em 10em;
+  font-size: 80%;
+  color: #666;
+  width: 25em;            
+}
 
 input.smallbox {width:40px;}
 
 input.mediumbox {width:100px;}
+
+/* Style of an item which can be moved using 'sortable_element' */
+.movable {
+  cursor: move;  
+  position:relative;
+}
 
 /* =============================== */
 /* ==== Auto-Complete Styles ===== */
@@ -214,6 +251,7 @@ div.auto_complete ul li {
 }
 div.auto_complete ul li.selected {
   background-color: #ffb;
+  cursor: default; 
 }
 
 div.auto_complete ul strong.highlight {

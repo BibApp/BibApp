@@ -766,15 +766,15 @@ class Work < ActiveRecord::Base
   def self.update_work_name_strings(work, name_strings_hash)
     logger.debug("\n\n===UPDATE WORK_NAME_STRINGS===\n\n")
     unless name_strings_hash.nil?
-      #first, remove any name_string(s) that are no longer in list
+      #First, remove *ALL* existing name_string(s).  We want to add them
+      #all again from scratch, since the order of Authors/Editors *matters*
       work.work_name_strings.each do |cns| # Current CNSs
-        cns.destroy unless name_strings_hash.collect{|c| c[:name]}.include?(cns.name_string.name)
+        cns.destroy
       end
         
-      #next, add any new name string(s) to list
+      #next, re-add all name string(s) to list
       name_strings_hash.flatten.each do |cns|
-        #if this is a brand new name_string, we must save it first
-        logger.debug("CNS: #{cns.inspect}")
+        #Generate the "machine_name" for this namestring...this is our unique name with punctuation removed, etc.
         machine_name = cns[:name].gsub(".", " ").gsub(",", " ").gsub(/ +/, " ").strip.downcase
         name_string = NameString.find_or_create_by_machine_name(machine_name)
         
