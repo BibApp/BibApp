@@ -143,3 +143,123 @@ function submit_delete_form(form, checkboxName, action)
   }  
   return false;
 }//end submit_delete_form
+
+
+/*=============================
+ * Create/Edit Work Form
+ *=============================*/
+
+/* Custom Scriptaculuous autocomplete onShow script
+ * 
+ * This is called "on_show" for an autocomplete text field. It
+ * essentially displays the autocomplete values, while also disabling
+ * the reorder capabilities from the existing list of authors.
+ * 
+ * Call similar to:
+ * text_field_with_auto_complete :author, :string, {},
+ *    {:on_show => 
+ *     "function(element, update) {show_autocomplete_names(element, update);}" }
+ * 
+ * Note: The Scriptaculous 'sortable_element' and 'text_field_with_autocomplete'
+ * have conflicting Javascript which essentially causes the two fields to
+ * overlap and look ugly.  This method ensures we are *completely* disabling
+ * the 'sortable_element' field whenever autocomplete is occurring.
+ *
+ * This method works for either a list of AUTHORS or a list of EDITORS.
+ *
+ * Customized from Autocompleter.Base code in /javascripts/control.js
+ */
+function show_autocomplete_names(element, update)
+{
+  if(!update.style.position || update.style.position=='absolute') {
+          update.style.position = 'absolute';
+          Position.clone(element, update, {
+            setHeight: false, 
+            offsetTop: element.offsetHeight
+          });
+  }
+  Effect.Appear(update,{duration:0.15});
+  
+  /* Start custom BibApp code */
+  nameListID = get_name_list_id(element); 
+  
+  if(nameListID.length>0)
+  {
+    //Get our list our names
+    nameList = Element.childElements(nameListID);
+
+    //Temporarily remove ability to sort the list
+    Sortable.destroy(nameListID); 
+
+    //Temporarily remove 'movable' class from all list items
+    for(var i=0; i<nameList.length; i++)
+    {
+      nameList[i].removeClassName('movable');
+    }
+  }//end if nameListID  
+}
+
+
+/* Custom Scriptaculuous autocomplete onShow script
+ * 
+ * This is called "on_hide" for an autocomplete text field. It
+ * essentially hides the autocomplete values, while also re-enabling
+ * the reorder capabilities for the existing list of authors.
+ * 
+ * Call similar to:
+ * text_field_with_auto_complete :author, :string, {},
+ *    {:on_hide => 
+ *     "function(element, update) {hide_autocomplete_names(element, update);}" }
+ * 
+ * Note: The Scriptaculous 'sortable_element' and 'text_field_with_autocomplete'
+ * have conflicting Javascript which essentially causes the two fields to
+ * overlap and look ugly.  This method ensures we are only re-enabling the
+ * 'sortable_element' field once the autocomplete functionality has finished.
+ *
+ * This method works for either a list of AUTHORS or a list of EDITORS.
+ *
+ * Customized from Autocompleter.Base code in /javascripts/control.js
+ */
+function hide_autocomplete_names(element, update)
+{
+  new Effect.Fade(update,{duration:0.15})
+  
+  /* Start custom BibApp code */
+  nameListID = get_name_list_id(element); 
+  
+  if(nameListID.length>0)
+  {  
+    //Get our list our names
+    nameList = Element.childElements(nameListID);
+
+    //re-Add 'movable' class to all list items
+    for(var i=0; i<nameList.length; i++)
+    {
+      nameList[i].addClassName('movable');
+    }
+    //Make name list sortable again
+    Sortable.create(nameListID); 
+  }//end if nameListID  
+}
+
+/*
+ * This method is used by show_autocomplete_names()
+ * and hide_autocomplete_names() to get the ID of the
+ * list of names associated with a given text element.
+ */
+function get_name_list_id(element)
+{
+  var nameListID = "";
+  
+  //Check if we are working with authors or editors listing
+  if(element.id=="author_string")
+  {
+    nameListID = "author_name_strings_list";
+  }  
+  else if(element.id=="editor_string")
+  {
+    nameListID = "editor_name_strings_list";
+  }
+  
+  return nameListID;
+}
