@@ -265,6 +265,22 @@ module ApplicationHelper
     return $WORK_ARCHIVE_STATUS[work_archive_state_id]
   end
   
+  #Finds the Error message for a *specific field* in a Form
+  # This is useful to display the error messages next to the
+  # appropriate field in a form.
+  # This displays a <div> with the error message right after the field
+  # Borrowed from: http://www.sciwerks.com/blog/category/ruby-on-rails/page/2/
+  def error_for(object, method = nil, options={})
+    if method
+      err = instance_variable_get("@#{object}").errors.on(method).to_sentence rescue instance_variable_get("@#{object}").errors.on(method)
+    else
+      err = @errors["#{object}"] rescue nil
+    end 
+    options.merge!(:class=>'fieldWithErrors', :id=>"#{[object,method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
+    content_tag("p",err || "", options )     
+  end
+
+  
   private
   
   #Find information necessary to build our OpenURL query

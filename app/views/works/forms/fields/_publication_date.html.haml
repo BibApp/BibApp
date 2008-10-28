@@ -1,4 +1,3 @@
 -# Publication Date field
-%p
-  %label Publication Date:
-  = date_select 'work', 'publication_date', :start_year => 1950, :end_year => Time.now.year, :include_blank=>true
+= label 'work', 'publication_date', "Publication Date:"
+= date_select 'work', 'publication_date', :start_year => 1950, :end_year => Time.now.year, :include_blank=>true

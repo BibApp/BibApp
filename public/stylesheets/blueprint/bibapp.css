@@ -168,17 +168,57 @@ li.active-filter {
 /* =============================== */
 /* ========= Form Styles ========= */
 /* =============================== */
-.formError{
-	display:inline;
-	padding:1em;
-	margin:1em;
-	color:red;
+form.work_form fieldset {
+   margin-bottom: 10px;
+   width: 700px;
 }
-.fieldWithErrors{
-	display:inline;
-	border:1px solid red;
-	padding:1em;
-	margin:1em;
+form.work_form legend {
+    padding: 0 2px;
+    font-weight: bold;
+    font-size: 1.6em;
+}
+form.work_form fieldset ul {
+    padding: 0;
+    margin: 0;
+}
+form.work_form fieldset li {
+    list-style: none;
+    padding: 5px;
+    margin: 0;
+    clear: both;
+}
+
+form.work_form label {
+    font-weight: bold;
+    float: left;
+    text-align:right;
+    margin-left: 0px;
+    width: 120px;
+    padding: 10px;
+}
+
+/* style for a label appearing inline, rather than floating left */
+form.work_form label.inline_label {
+    float: none;
+    display: inline;
+    font-weight: bold;
+    text-align:right;
+}
+
+/* styles for Form field Errors*/
+div.fieldWithErrors{
+  display:inline;
+  color: red;
+}
+/* style for input field with error */
+div.fieldWithErrors input {
+  border:1px solid red;
+}
+/* style for actual error message */
+p.fieldWithErrors{
+  color: red;
+  margin-left: 10em;
+  font-weight: bold;
 }
 .submit{
 	margin-top:2em;
@@ -187,16 +227,26 @@ li.active-filter {
 .inline-form {display:inline;}
 .inline-form div {display:inline;}
 
+/* hint before a list of items */
+p#list_hint {
+  margin: 0 0 1em 16em;
+  font-size: 80%;
+  color: #666;
+  width: 25em;            
+}
 /*Unordered list of field values - used for tags/keywords */
-ul.form_item_list {
+form.work_form fieldset ul.form_item_list {
   list-style-type:none;
-  margin-left: 7em;
+  margin-left: 13em;
 }        
 
 /*Ordered list of field values - used for Authors/Editors */
 ol.form_item_list {
+  margin-left: 13em;
+}
+ol.form_item_list li.list_item {
   list-style-position: inside;
-  margin-left: 7em;
+  list-style-type:decimal;
 }
 
 li.list_item {
@@ -212,23 +262,23 @@ li.list_item div.list_item_value {
   width: 20em;
   margin-right: 0.5em;        
 }
-/* hint after a list of items */
-p#list_hint {
-  margin: 0 0 1em 10em;
-  font-size: 80%;
-  color: #666;
-  width: 25em;            
-}
-
-input.smallbox {width:40px;}
-
-input.mediumbox {width:100px;}
 
 /* Style of an item which can be moved using 'sortable_element' */
 .movable {
   cursor: move;  
   position:relative;
 }
+
+/* Small input box */
+input.smallbox {width:40px;}
+/* Medium input box */
+input.mediumbox {width:100px;}
+
+/* Submit buttons */
+.buttons {
+  margin-left: 15em;
+}
+
 
 /* =============================== */
 /* ==== Auto-Complete Styles ===== */

@@ -7,6 +7,6 @@
 -# Initialize optional input variables
 - label ||= "Primary Title"
   
-%p
-  %label="#{label}*:"
-  = form.text_field :title_primary, :class=>'text'
+= form.label :title_primary, "#{label}*:"
+= form.text_field :title_primary, :class=>'text'
+= error_for 'work', 'title_primary'

@@ -1,22 +1,26 @@
 %fieldset
   %legend Report
 
-  = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Report Title", :form => form}
+  %ul
+    %li
+      = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Report Title", :form => form}
+    %li
+      = render :partial => 'works/forms/fields/author_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/publication_date'
+    %li
+      = render :partial => 'works/forms/fields/publication'  
+    %li
+      = render :partial => 'works/forms/fields/publisher'
 
-  = render :partial => 'works/forms/fields/author_name_strings'
- 
-  = render :partial => 'works/forms/fields/publication_date'
-
-  = render :partial => 'works/forms/fields/publication'  
-  = render :partial => 'works/forms/fields/publisher'
-
-  - if current_user.has_role?("admin", System)
-    = render :partial => 'works/forms/fields/keywords'
+    - if current_user.has_role?("admin", System)
+      %li
+      = render :partial => 'works/forms/fields/keywords'
     
-  = render :partial => 'works/forms/fields/tags'
-    
-  = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
+    %li
+      = render :partial => 'works/forms/fields/tags'
+    %li
+      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
 
-  = hidden_field_tag :type, 'Report'
-
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 
+= hidden_field_tag :type, 'Report'
+= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 
