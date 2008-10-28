@@ -2,8 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
-%p
-  %label Volume:
-  = form.text_field :volume, :class=>'text smallbox'
-  %label Issue:
-  = form.text_field :issue, :class=>'text smallbox'
+
+
+= form.label :volume, "Volume:"
+= form.text_field :volume, :class=>'text smallbox'
+
+= form.label :issue, "Issue:", :class => 'inline_label'
+= form.text_field :issue, :class=>'text smallbox'

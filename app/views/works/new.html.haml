@@ -11,5 +11,5 @@
         %li
           =link_to ct, new_work_path(:type => ct)
 
-    - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:method => :post, :multipart => true} do |form|
+    - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
       = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }

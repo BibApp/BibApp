@@ -2,8 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
-%p
-  %label Start Page:
-  = form.text_field :start_page, :class=>'text smallbox'
-  %label End Page:
-  = form.text_field :end_page, :class=>'text smallbox'
+
+
+= form.label :start_page, "Start Page:"
+= form.text_field :start_page, :class=>'text smallbox'
+
+= form.label :end_page, "End Page:", :class => 'inline_label'
+= form.text_field :end_page, :class=>'text smallbox'

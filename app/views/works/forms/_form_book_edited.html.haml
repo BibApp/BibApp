@@ -1,25 +1,28 @@
 %fieldset
   %legend Book Edited
 
-  = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Book Title", :form => form}
-
-  = render :partial => 'works/forms/fields/author_name_strings'
-
-  = render :partial => 'works/forms/fields/publication_date'
-
-  = render :partial => 'works/forms/fields/editor_name_strings'
-
-  = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
-
-  = render :partial => 'works/forms/fields/publisher'
-
-  - if current_user.has_role?("admin", System)
-    = render :partial => 'works/forms/fields/keywords'
+  %ul
+    %li
+      = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Book Title", :form => form}
+    %li
+      = render :partial => 'works/forms/fields/author_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/publication_date'
+    %li
+      = render :partial => 'works/forms/fields/editor_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/publisher'
     
-  = render :partial => 'works/forms/fields/tags'
+    - if current_user.has_role?("admin", System)
+      %li
+        = render :partial => 'works/forms/fields/keywords'
+    
+    %li
+      = render :partial => 'works/forms/fields/tags'
+    %li
+      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
 
-  = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
-
-  = hidden_field_tag :type, 'BookEdited'
-  
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+= hidden_field_tag :type, 'BookEdited'  
+= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}

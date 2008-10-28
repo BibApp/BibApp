@@ -7,7 +7,7 @@
     %h2 Edit a Work
 
     %div{:class => "column span-16"}
-      - form_for :work, @work, :url => work_path(@work), :html => {:method => :put} do |form|
+      - form_for :work, @work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
         -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html"))
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
         -else

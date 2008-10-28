@@ -1,32 +1,35 @@
 -# Generic Form (for a Work)
 %fieldset
-  %legend Generic
+  %legend Generic Work
 
-  = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
-
-  = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+  %ul
+    %li
+      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/author_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/publication_date'  
+    %li
+      = render :partial => 'works/forms/fields/publication'
+    %li
+      = render :partial => 'works/forms/fields/publisher'
+    %li
+      = render :partial => 'works/forms/fields/issn_isbn'
+    %li
+      = render :partial => 'works/forms/fields/volume_issue', :locals => {:form => form} 
+    %li
+      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
   
-  = render :partial => 'works/forms/fields/author_name_strings'
- 
-  = render :partial => 'works/forms/fields/publication_date'  
+    - if current_user.has_role?("admin", System)
+      %li
+        = render :partial => 'works/forms/fields/keywords'
     
-  = render :partial => 'works/forms/fields/publication'
-  
-  = render :partial => 'works/forms/fields/publisher'
-  
-  = render :partial => 'works/forms/fields/issn_isbn'
-  
-  = render :partial => 'works/forms/fields/volume_issue', :locals => {:form => form} 
-  
-  = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
-  
-  - if current_user.has_role?("admin", System)
-    = render :partial => 'works/forms/fields/keywords'
+    %li
+      = render :partial => 'works/forms/fields/tags'
+    %li
+      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}  
     
-  = render :partial => 'works/forms/fields/tags'
-    
-  = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}  
-    
-  = hidden_field_tag :type, 'Generic'
-
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 
+= hidden_field_tag :type, 'Generic'
+= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 

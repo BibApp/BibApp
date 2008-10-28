@@ -104,71 +104,82 @@ class WorksController < ApplicationController
     #Anyone with 'editor' role (anywhere) can add works
     permit "editor"
 
-    # If we need to add a batch
-    if params[:type] == "AddBatch"
-    
-      logger.debug("\n\n===ADDING BATCH WORKS===\n\n")
-      unrecoverable_error = false
-      begin
-        unless params[:work][:works_file].nil? or params[:work][:works_file].kind_of?String
-          #user uploaded a file of works
-          @works_batch, @batch_errors = import_batch!(params[:work][:works_file])
-        else 
-          #user used cut & paste to add works
-          @works_batch, @batch_errors = import_batch!(params[:work][:works])
-        end
-      rescue Exception => e
-        logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
-        logger.error("\nError Trace: #{e.backtrace.join("\n")}")
-        #We just display an "unrecoverable error" message for now
-        unrecoverable_error = true
-      end
-      
+    #Check if user hit cancel button    
+    if params['cancel']
+      #just return back to 'new' page
       respond_to do |format|
-        if unrecoverable_error
-          flash[:error] = "There was an unrecoverable error caused by the input!  Please contact the Administrators and let them know about this problem."
-          format.html {redirect_to new_work_url}
-          format.xml  {render :xml => @works_batch.errors.to_xml}
-        elsif !@batch_errors.nil? and !@batch_errors.empty?
-          flash[:warning] = "Batch creation was successful for some works.  However, we encountered the following problems with other works:<br/>#{@batch_errors.join('<br/>')}"
-          format.html {redirect_to review_batch_works_url}
-          format.xml  {render :xml => @works_batch.errors.to_xml}
-        elsif !@works_batch.nil? and !@works_batch.empty?
-          flash[:notice] = "Batch creation completed successfully."
-          format.html {redirect_to review_batch_works_url}
-          format.xml  {head :created}
-        else #otherwise, we ended up with nothing imported!
-          flash[:warning] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
-          format.html {redirect_to new_work_url}
-          format.xml  {render :xml => @works_batch.errors.to_xml}        
-        end
+        format.html {redirect_to new_work_url}
+        format.xml  {head :ok}
       end
+  
+    else #Only perform create if 'save' button was pressed
+    
+      # If we need to add a batch
+      if params[:type] == "AddBatch"
 
-    else
-      logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
-
-      # Create the basic Work SubKlass
-      @work = subklass_init(params[:type], params[:work])
-    
-    
-      #Update work information based on inputs
-      update_work_info
-    
-      # current user automatically gets 'admin' permissions on work
-      # (only if he/she doesn't already have that permission)
-      @work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @work)
-    
-      respond_to do |format|
-        if @work.save
-          flash[:notice] = "Work was successfully created."
-          format.html {redirect_to work_url(@work)}
-          format.xml  {head :created, :location => work_url(@work)}
-        else
-          format.html {render :action => "new"}
-          format.xml  {render :xml => @work.errors.to_xml}
+        logger.debug("\n\n===ADDING BATCH WORKS===\n\n")
+        unrecoverable_error = false
+        begin
+          unless params[:work][:works_file].nil? or params[:work][:works_file].kind_of?String
+            #user uploaded a file of works
+            @works_batch, @batch_errors = import_batch!(params[:work][:works_file])
+          else 
+            #user used cut & paste to add works
+            @works_batch, @batch_errors = import_batch!(params[:work][:works])
+          end
+        rescue Exception => e
+          logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
+          logger.error("\nError Trace: #{e.backtrace.join("\n")}")
+          #We just display an "unrecoverable error" message for now
+          unrecoverable_error = true
         end
-      end # If we are adding one
-    end # If we need to add a batch
+
+        respond_to do |format|
+          if unrecoverable_error
+            flash[:error] = "There was an unrecoverable error caused by the input!  Please contact the Administrators and let them know about this problem."
+            format.html {redirect_to new_work_url}
+            format.xml  {render :xml => @works_batch.errors.to_xml}
+          elsif !@batch_errors.nil? and !@batch_errors.empty?
+            flash[:warning] = "Batch creation was successful for some works.  However, we encountered the following problems with other works:<br/>#{@batch_errors.join('<br/>')}"
+            format.html {redirect_to review_batch_works_url}
+            format.xml  {render :xml => @works_batch.errors.to_xml}
+          elsif !@works_batch.nil? and !@works_batch.empty?
+            flash[:notice] = "Batch creation completed successfully."
+            format.html {redirect_to review_batch_works_url}
+            format.xml  {head :created}
+          else #otherwise, we ended up with nothing imported!
+            flash[:warning] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
+            format.html {redirect_to new_work_url}
+            format.xml  {render :xml => @works_batch.errors.to_xml}        
+          end
+        end
+
+      else
+        logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
+
+        # Create the basic Work SubKlass
+        @work = subklass_init(params[:type], params[:work])
+
+
+        #Update work information based on inputs
+        update_work_info
+
+        # current user automatically gets 'admin' permissions on work
+        # (only if he/she doesn't already have that permission)
+        @work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @work)
+
+        respond_to do |format|
+          if @work.save
+            flash[:notice] = "Work was successfully created."
+            format.html {redirect_to work_url(@work)}
+            format.xml  {head :created, :location => work_url(@work)}
+          else
+            format.html {render :action => "new"}
+            format.xml  {render :xml => @work.errors.to_xml}
+          end
+        end # If we are adding one
+      end # If we need to add a batch
+    end #If 'save' button was pressed
   end
   
   # Generates a form which allows individuals to review the citations
@@ -205,22 +216,16 @@ class WorksController < ApplicationController
   
   
   def update
+    
     @work = Work.find(params[:id])
+    
     #Check if there was a path and page passed along to return to
     return_path = params[:return_path]
     
-    #Anyone with 'editor' role on this work can edit it
-    permit "editor on work"
-    
-    #First, update work attributes (ensures deduplication keys are updated)
-    @work.attributes=params[:work]   
-
-    #Then, update other work information
-    update_work_info
-   
-    respond_to do |format|
-      if @work.save
-        flash[:notice] = "Work was successfully updated."
+    #Check if user hit cancel button    
+    if params['cancel']
+      # just return back from where we came
+      respond_to do |format|
         unless return_path.nil?
           format.html {redirect_to return_path}
         else
@@ -228,11 +233,34 @@ class WorksController < ApplicationController
           format.html {redirect_to work_url(@work)}
         end
         format.xml  {head :ok}
-      else
-        format.html {render :action => "edit"}
-        format.xml  {render :xml => @work.errors.to_xml}
       end
-    end
+      
+    else #Only perform update if 'save' button was pressed
+      #Anyone with 'editor' role on this work can edit it
+      permit "editor on work"
+
+      #First, update work attributes (ensures deduplication keys are updated)
+      @work.attributes=params[:work]   
+
+      #Then, update other work information
+      update_work_info
+
+      respond_to do |format|
+        if @work.save
+          flash[:notice] = "Work was successfully updated."
+          unless return_path.nil?
+            format.html {redirect_to return_path}
+          else
+            #default to returning to work page
+            format.html {redirect_to work_url(@work)}
+          end
+          format.xml  {head :ok}
+        else
+          format.html {render :action => "edit"}
+          format.xml  {render :xml => @work.errors.to_xml}
+        end
+      end #end respond to
+    end  
   end
   
   

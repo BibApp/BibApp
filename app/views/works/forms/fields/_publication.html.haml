@@ -11,8 +11,8 @@
   document.getElementById('publisher_name').value = publisher;
   document.getElementById('issn_isbn').value = issn_isbn;
   }
-%p
-  %label Periodical Title:
-  - @publication = @work.publication unless @work.publication.nil?
-  = text_field_with_auto_complete :publication, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"} 
+
+= label :publication, :name, "Periodical Title:"
+- @publication = @work.publication unless @work.publication.nil?
+= text_field_with_auto_complete :publication, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"} 
   

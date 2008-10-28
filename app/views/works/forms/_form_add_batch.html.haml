@@ -7,15 +7,15 @@
 
   %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
   
-  %p
-    %label Upload File of Citations
-    %br/
-    = form.file_field :works_file
+  %ul
+    %li
+      = form.label :works_file, "Upload File:"
+      = form.file_field :works_file, :class=>'text'
 
-  %p
-    %label Or, Paste Citations below
-    %br/
-    = form.text_area :works
-    = hidden_field_tag :type, 'AddBatch'
-  %p.submit
-    = submit_tag "Add Batch", :disable_with => "Parsing and Importing Batch..."
+    %li
+      = form.label :works, "Or, Paste Citations:"
+      = form.text_area :works 
+    
+= hidden_field_tag :type, 'AddBatch'
+%p.buttons
+  = submit_tag "Add Batch", :disable_with => "Parsing and Importing Batch..."
