@@ -2,7 +2,6 @@ class Work < ActiveRecord::Base
   
   acts_as_authorizable  #some actions on Works require authorization
   
-
   cattr_accessor :current_user
   
   serialize :scoring_hash
@@ -70,16 +69,17 @@ class Work < ActiveRecord::Base
   #### Callbacks ####
   before_validation_on_create :set_initial_states
 
+  # After Create only
   def after_create 
-   	create_work_name_strings
-  	create_keywords
+    create_work_name_strings
+    create_keywords
     create_tags
+    
     #save any changes to work
     self.save_without_callbacks
-    
-   
   end
   
+  # After Create or Update
   def after_save
     logger.debug("\n\n === After Save ===\n\n")
 
@@ -87,14 +87,14 @@ class Work < ActiveRecord::Base
     # otherwise the faux-accessors will *not* be available in the
     # after_save callbacks.
     self.reload
+    
+    #re-check for duplicates
     deduplicate
     
-    self.reload
+    #update all contributorships for this work
     create_contributorships
     
-    self.reload
     update_scoring_hash
-    
     update_archive_state
   end
   
@@ -157,21 +157,21 @@ class Work < ActiveRecord::Base
     
   # List of all currently enabled Work Types
   def self.types
-  	# @TODO: Add each work subklass to this array
-	  # "Journal Article", 
-	  # "Conference Proceeding", 
-	  # "Book"
-	  # more...   	    			  
-	  types = [
-		  "Add Batch",
+    # @TODO: Add each work subklass to this array
+    # "Journal Article", 
+    # "Conference Proceeding", 
+    # "Book"
+    # more...   	    			  
+    types = [
+      "Add Batch",
       "Book (Edited)",
       "Book (Section)",
       "Book (Whole)",
       "Conference Proceeding",
-		  "Journal Article", 
+      "Journal Article", 
       "Report",
       "Generic"
-	  ]  
+      ]  
   end
   
   
@@ -179,21 +179,21 @@ class Work < ActiveRecord::Base
   def deduplicate
     logger.debug("\n\n===DEDUPLICATE===\n\n")
 
+    #Find all possible dupe candidates
+    # (NOTE: this also includes current work..so, it needs to return more
+    #  than 2 candidates for actual duplicates to exist)
     dupe_candidates = duplicates
     logger.debug("\nDuplicates: #{duplicates.size}")
 
-    if dupe_candidates.empty?
+    #Check if any duplicates found.
+    if dupe_candidates.empty? or dupe_candidates.size < 2
       self.is_accepted
       self.save_without_callbacks
       return
     end
     
-    if dupe_candidates.size < 2
-      self.is_accepted
-      self.save_without_callbacks
-      return
-    end
-    
+    #Try to find the *best* of the dupe candidates
+    # Right now the "best" is the one with the highest "preferred_score" 
     best = dupe_candidates[0]
     dupe_candidates.each do |candidate|
       if candidate.preferred_score > best.preferred_score
@@ -201,18 +201,16 @@ class Work < ActiveRecord::Base
       end
     end
 
+    # Flag and save this as the canonical best
     unless best.duplicate?
-      # Flag and save this as the canonical beast.
       best.is_accepted
       best.save_without_callbacks
     end
 
-    # All the others are, by definition, dupes
+    # All the others are, by definition, duplicates of the "best" candidate
     dupe_candidates.each do |dupe|
       logger.debug "Saving dupe work_states: #{dupe.id}"
-      if dupe.accepted?
-        # Do nothing
-      else
+      unless dupe.accepted?
         dupe.is_duplicate
         dupe.batch_index = 0
         dupe.save_without_callbacks
@@ -232,23 +230,14 @@ class Work < ActiveRecord::Base
       :conditions => ["work_state_id <> 2 and title_dupe_key = ?", self.title_dupe_key])
     return (issn_dupes + title_dupes).uniq
   end
-  
-  def year
-    if publication_date != nil
-      publication_date.year
-    else
-      nil
-    end
-  end
-  
+ 
   # Deduplication: set score
   def preferred_score
-    # The highest score will win... currently, we like things from Engineering Village folders,
-    # and really like things that are already accepted.
+    # The highest score will win... 
+    # currently, we really like things that are already accepted.
     score = 0
-    #score = 1 if (folder["- ev"])
     score = 10 if self.accepted?
-    score
+    return score
   end
   
   def save_without_callbacks
@@ -265,6 +254,15 @@ class Work < ActiveRecord::Base
     self.save
   end
 
+  # Finds year of publication for this work
+  def year
+    if publication_date != nil
+      publication_date.year
+    else
+      nil
+    end
+  end
+  
   # Initializes an array of Keywords
   # and saves them to the current Work
   # Arguments:
@@ -283,7 +281,10 @@ class Work < ActiveRecord::Base
     self.keywords = keywords   
   end 
   
-  
+  # Initializes an array of Tags
+  # and saves them to the current Work
+  # Arguments:
+  #  * array of tag strings
   def tag_strings=(tag_strings)
     #default to empty array of keywords
     tag_strings ||= []  
@@ -311,15 +312,23 @@ class Work < ActiveRecord::Base
     logger.debug("\n\n===SET KEYWORDS===\n\n")
     logger.debug("Keywords= #{keywords.inspect}")
     if self.new_record?
-		  #Defer saving to Work object directly, until it is created
-		  @keywords_cache = keywords
+      #Defer saving keywords to Work object directly, until it is created
+      @keywords_cache = keywords
     else
-		  # Create keywords and save to database
-		  Work.update_keywordings(self, keywords)  
-		end
+      # Create keywords and save to database
+      Work.update_keywordings(self, keywords)  
+    end
   end  
   
-  
+  # Updates tags for the current Work
+  # If this Work is still a *new* record (i.e. it hasn't been created
+  # in the database), then the tags are just cached until the 
+  # Work is created.
+  # Based on ideas at:
+  #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+  #
+  # Arguments:
+  #  * array of Tags
   def tags=(tags)
     logger.debug("\n\n===SET TAGS===\n\n")
     logger.debug("Tags= #{tags.inspect}")
