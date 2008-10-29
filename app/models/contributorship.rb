@@ -10,7 +10,9 @@ class Contributorship   < ActiveRecord::Base
   named_scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
   named_scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
   named_scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
-  named_scope :visible, :conditions => ["hide = ?", false]
+  named_scope :visible, :conditions => ["contributorships.hide = ?", false]
+  #By default, show all verified, visible contributorships
+  named_scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
   
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id

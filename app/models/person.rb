@@ -8,42 +8,9 @@ class Person < ActiveRecord::Base
   has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false]
   has_many :memberships
   
-  # Association Extensions - Read more here:
-  # http://blog.hasmanythrough.com/2006/3/1/association-goodness-2
-  
   has_many :works, :through => :contributorships 
 
-  has_many :contributorships do 
-    # Show only non-hidden contributorships
-    # @TODO: Maybe include a "score" threshold here as well?
-    # - Like > 50 we show on the person view, 'cuz they probably wrote it?
-    # - Like < 50 we don't show, 'cuz maybe they didn't write it?
-    def to_show 
-      find(
-        :all, 
-        :conditions => [
-          "contributorships.hide = ? and contributorships.contributorship_state_id = ?", 
-          false, 
-          2
-        ],
-        :include => [:work]
-      )
-    end
-    
-    def unverified
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 1], :include => [:work], :order => "works.publication_date desc")
-    end
-    
-    def verified
-      # ContributorshipStateId 2 = Verifed
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 2], :include => [:work], :order => "works.publication_date desc")
-    end
-    
-    def denied
-      # ContributorshipStateId 3 = Denied
-      find(:all, :conditions => ["contributorships.contributorship_state_id = ?", 3],:include => [:work], :order => "works.publication_date desc")
-    end
-  end
+  has_many :contributorships
   
   has_one :image, :as => :asset
   
