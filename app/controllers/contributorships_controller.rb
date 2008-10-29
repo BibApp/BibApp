@@ -14,7 +14,9 @@ class ContributorshipsController < ApplicationController
         
         @contributorships = @person.contributorships.send(@status).paginate(
           :page => params[:page] || 1,
-          :per_page => 10
+          :per_page => 10,
+          :include => [:work],
+          :order => 'works.publication_date desc'
         )
         
       end
