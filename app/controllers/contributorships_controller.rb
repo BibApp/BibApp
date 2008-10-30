@@ -48,13 +48,12 @@ class ContributorshipsController < ApplicationController
     # only 'editor' of this person can verify contributorship   
     permit "editor of :person", :person => person
     
-    @contributorship.update_attributes(:contributorship_state_id => 2)
-    person.update_scoring_hash
+    #Verify & save contributorship
+    #(Note: Contributorship callbacks will automatically update scores, etc.)
+    @contributorship.verify_contributorship
+    @contributorship.save
     
-    @contributorship.person.contributorships.unverified.each do |c|
-      c.calculate_score
-    end
-    
+    #get updated list of contributorships to display
     @contributorships = person.contributorships.to_show
     
     respond_to do |format|
@@ -71,12 +70,9 @@ class ContributorshipsController < ApplicationController
     # only 'editor' of this person can deny contributorship   
     permit "editor of person"
     
-    # Update Contributorship
-    # 1. Set Contributorship.state to "Denied"
-    # 2. Set Contributorship.hide to "true"
-    # 3. Set Contributorship.score to "zero"
-    @contributorship.update_attributes(:contributorship_state_id => 3, :hide => 1, :score => 0)
-    
+    @contributorship.deny_contributorship
+    @contributorship.save
+   
     # RJS action removes the denied Work from the view
     respond_to do |format|
       format.html { redirect_to :back }
