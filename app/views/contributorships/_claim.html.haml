@@ -11,7 +11,7 @@
       
   %div{:class => "prepend-1 span-3 last"}
     %div{:id => "contributorship_admin-#{claim.id}", :class => "span-3"}
-      - if claim.contributorship_state_id == 2
+      - if claim.verified?
         %p
           %strong Verified!
       - else

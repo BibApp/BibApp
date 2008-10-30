@@ -97,7 +97,7 @@ class Person < ActiveRecord::Base
   
   # Person Contributorship Calculation Fields
   def verified_publications
-    Contributorship.find_all_by_person_id_and_contributorship_state_id(self.id,2,:include=>[:work])
+    Contributorship.verified.find_all_by_person_id(self.id,:include=>[:work])
   end
   
   def update_scoring_hash

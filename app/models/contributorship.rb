@@ -27,7 +27,7 @@ class Contributorship   < ActiveRecord::Base
     logger.debug("\n=== REFRESHING ===\n")
     contributorship.refresh_contributorships
     
-    if contributorship.contributorship_state_id == 2    
+    if contributorship.verified?   
       # Update Solr!
       # * Works have many People...
       # * But, only if contributorship_state_id == 2 (verified)
@@ -39,6 +39,35 @@ class Contributorship   < ActiveRecord::Base
   ## takes care of updating Solr before destroying Contributorships
   ## associated with a PenName.
 
+  ##### Contributorship State Methods #####
+  def unverified?
+    return true if self.contributorship_state_id == 1
+  end
+  
+  def verified?
+    return true if self.contributorship_state_id == 2
+  end
+  
+  def denied?
+    return true if self.contributorship_state_id == 3
+  end
+  
+  def visible?
+    return true if self.contributorships.hide == false
+  end
+  
+  def set_initial_states
+    # All Contributions start with:
+    # * state - "Unverified" 
+    # * hide  - 0 (false)
+    # * score - 0 (zero)
+    self.contributorship_state_id = 1
+    self.hide = false
+    self.score = 0
+  end
+  
+  
+  ########## Methods ##########
   def calculate_score
     
     # Build the calcuated Contributorship.score attribute--a rough
@@ -122,44 +151,23 @@ class Contributorship   < ActiveRecord::Base
     self.save
   end
   
-  def set_initial_states
-    # All Contributions start with:
-    # * state - "Unverified" 
-    # * hide  - 0 (false)
-    # * score - 0 (zero)
-    self.contributorship_state_id = 1
-    self.hide = 0
-    self.score = 0
-  end
 
+  def verify
+    
+  end
+  
+  # Get a count of other unverified contributorships for current Work
   def candidates
-    candidates = Contributorship.count(
-      :conditions => ["
-        work_id = ? and contributorship_state_id = ?", 
-        self.work_id,
-        1 # caluculated
-      ]
+    candidates = Contributorship.unverified.count(
+      :conditions => ["work_id = ?", self.work_id]
     )
   end
   
+   # Get a count of possible Person matches to contributorships for current Work
   def possibilities
     count = Array.new
     possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
     return count.size
-  end
-  
-  def verified
-    verified = Contributorship.verified.count(:conditions => ["
-        work_id = ?", 
-        self.work_id
-      ])
-  end
-
-  def unverified
-    unverified = Contributorship.unverified.count(:conditions => ["
-        work_id = ?", 
-        self.work_id
-      ])
   end
 
   def save_without_callbacks
