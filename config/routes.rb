@@ -53,6 +53,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people do |p|
     # Make URLs like /people/1/attachments/2 for Person Images
     p.resources :attachments
+    # Make URLs like /people/1/works/4 (and allow adding Works to People)
+    p.resources :works
     # Make URLs like /people/1/roles/3 for user roles on a specific Person
     p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
   end

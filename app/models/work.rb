@@ -4,6 +4,11 @@ class Work < ActiveRecord::Base
   
   cattr_accessor :current_user
   
+  # Information about a 'pre-verified' Contributorship
+  # for a specific Person in the system
+  # (This occurs when adding a Work directly to a Person).
+  cattr_accessor :preverified_person
+  
   serialize :scoring_hash
   
   #### Associations ####
@@ -70,7 +75,7 @@ class Work < ActiveRecord::Base
   before_validation_on_create :set_initial_states
 
   # After Create only
-  def after_create 
+  def after_create
     create_work_name_strings
     create_keywords
     create_tags
@@ -360,7 +365,7 @@ class Work < ActiveRecord::Base
     end
     
   end 
-  
+ 
   # Initializes the Publication information
   # and saves it to the current Work
   # Arguments:
@@ -475,12 +480,19 @@ class Work < ActiveRecord::Base
         # Find or create a Contributorship for each claim
         # @TODO: Incorporate a Person.blacklist?
         claims.each do |claim|
-          Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
+          contributorship=Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
             self.id,
             claim.person.id, 
             claim.id,
             cns.role
           )
+          
+          # if we have a preverified person, check if this person matches this claim
+          if self.preverified_person and claim.person.id == self.preverified_person.id
+            # verify this contributorship immediately and save
+            contributorship.verify_contributorship
+            contributorship.save
+          end
         end
       end
     end
@@ -692,7 +704,7 @@ class Work < ActiveRecord::Base
     return editors
   end
   
-  
+ 
   ### PRIVATE METHODS ###
   private
   
