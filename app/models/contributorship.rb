@@ -13,6 +13,8 @@ class Contributorship   < ActiveRecord::Base
   named_scope :visible, :conditions => ["contributorships.hide = ?", false]
   #By default, show all verified, visible contributorships
   named_scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
+  #All contributorships for a specified work
+  named_scope :for_work, lambda { |work_id| {:conditions => ["contributorships.work_id = ?", work_id]}}
   
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id
@@ -22,16 +24,28 @@ class Contributorship   < ActiveRecord::Base
   before_validation_on_create :set_initial_states
   after_create :calculate_score
   
-  after_save do |contributorship|
+  def after_save
     # Remove false positives from other PenName claimants
     logger.debug("\n=== REFRESHING ===\n")
-    contributorship.refresh_contributorships
+    self.refresh_contributorships
     
-    if contributorship.verified?   
+    if self.verified?  
+      #If contributorship is newly verified
+      if self.contributorship_state_id_changed?
+        logger.debug("\n=== Newly Verified Contributorship ===\n")
+        person = self.person
+        
+        #update scoring hash for Person
+        person.update_scoring_hash
+    
+        #re-calculate scores for all unverified contributorships of this Person
+        person.contributorships.unverified.each do |c|
+          c.calculate_score
+        end
+      end
+      
       # Update Solr!
-      # * Works have many People...
-      # * But, only if contributorship_state_id == 2 (verified)
-      Index.update_solr(contributorship.work)
+      Index.update_solr(self.work)
     end
   end
   
@@ -40,22 +54,6 @@ class Contributorship   < ActiveRecord::Base
   ## associated with a PenName.
 
   ##### Contributorship State Methods #####
-  def unverified?
-    return true if self.contributorship_state_id == 1
-  end
-  
-  def verified?
-    return true if self.contributorship_state_id == 2
-  end
-  
-  def denied?
-    return true if self.contributorship_state_id == 3
-  end
-  
-  def visible?
-    return true if self.contributorships.hide == false
-  end
-  
   def set_initial_states
     # All Contributions start with:
     # * state - "Unverified" 
@@ -66,8 +64,38 @@ class Contributorship   < ActiveRecord::Base
     self.score = 0
   end
   
+  def unverified?
+    return true if self.contributorship_state_id == 1
+  end
   
-  ########## Methods ##########
+  def verified?
+    return true if self.contributorship_state_id == 2
+  end
+  
+  def verify_contributorship
+    self.contributorship_state_id = 2
+  end
+  
+  def denied?
+    return true if self.contributorship_state_id == 3
+  end
+  
+  def deny_contributorship
+    # Denying a Contributorship requires following
+    # 1. Set state to "Denied"
+    # 2. Set hide to "true"
+    # 3. Set score to "zero"
+    self.contributorship_state_id = 3
+    self.hide = true
+    self.score = 0
+  end
+  
+  def visible?
+    return true if self.hide == false
+  end
+  
+  
+  ########## Methods ##########  
   def calculate_score
     
     # Build the calcuated Contributorship.score attribute--a rough
@@ -148,19 +176,12 @@ class Contributorship   < ActiveRecord::Base
     else
       self.score = 0
     end
-    self.save
+    self.save_without_callbacks
   end
-  
-
-  def verify
-    
-  end
-  
+ 
   # Get a count of other unverified contributorships for current Work
   def candidates
-    candidates = Contributorship.unverified.count(
-      :conditions => ["work_id = ?", self.work_id]
-    )
+    candidates = Contributorship.unverified.for_work(self.work_id).size
   end
   
    # Get a count of possible Person matches to contributorships for current Work
@@ -180,7 +201,7 @@ class Contributorship   < ActiveRecord::Base
     # - Loop through competing Contributorships
     # - Set Contributorship.hide = true
     
-    if self.verified == self.possibilities
+    if Contributorship.verified.for_work(self.work_id).size == self.possibilities
       refresh = Contributorship.find(
         :all, 
         :conditions => [
