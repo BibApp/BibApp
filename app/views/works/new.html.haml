@@ -5,11 +5,20 @@
 
     = render :partial => "shared/flash_messages"
 
-    %h2 Add a Work
+    -#Check if we are adding Works directly to a Person
+    -if @person
+      %h2="Add a Work for #{link_to @person.name, person_path(@person)}"
+    -else
+      %h2 Add a Work
     %ul
       - Work.types.each do |ct|
         %li
-          =link_to ct, new_work_path(:type => ct)
+          -if @person
+            =link_to ct, new_person_work_path(@person, :type => ct)
+          -else
+            =link_to ct, new_work_path(:type => ct)
 
     - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
       = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
+      -#Save person id in form, if adding Work to a Person
+      = hidden_field_tag :person_id, @person.id if @person

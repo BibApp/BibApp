@@ -34,8 +34,18 @@ class WorksController < ApplicationController
 
     #initialize variables used by 'new.html.haml'
     before :new do
-      #Anyone with 'editor' role (anywhere) can add works
-      permit "editor"
+      #check if we are adding new works directly to a person
+      if params[:person_id]
+        @person = Person.find(params[:person_id])
+      end
+      
+      if @person
+        #If adding to a person, must be an 'editor' of that person
+        permit "editor on person"
+      else
+        #Default: anyone with 'editor' role (anywhere) can add works
+        permit "editor"
+      end
       
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Work.types[0]
@@ -100,10 +110,21 @@ class WorksController < ApplicationController
     @view = params[:view] || "splash"
   end
   
+  #Create a new Work or many new Works
   def create
-    #Anyone with 'editor' role (anywhere) can add works
-    permit "editor"
+    #check if we are adding new works directly to a person
+    if params[:person_id]
+      @person = Person.find(params[:person_id])
+    end
 
+    if @person
+      #If adding to a person, must be an 'editor' of that person
+      permit "editor on person"
+    else
+      #Default: anyone with 'editor' role (anywhere) can add works
+      permit "editor"
+    end
+    
     #Check if user hit cancel button    
     if params['cancel']
       #just return back to 'new' page
@@ -289,6 +310,9 @@ class WorksController < ApplicationController
     end
     
     @work.work_name_strings = work_name_strings 
+    
+    #If we are adding to a person, pre-verify that person's contributorship
+    @work.preverified_person = @person if @person
       
     ###
     # Setting Keywords
@@ -739,6 +763,9 @@ class WorksController < ApplicationController
         work_name_strings = h[:work_name_strings]
         work.work_name_strings = work_name_strings
       
+        #If we are adding to a person, pre-verify that person's contributorship
+        work.preverified_person = @person if @person
+    
         ###
         # Setting Publication Info, including Publisher
         ###
@@ -852,5 +879,5 @@ class WorksController < ApplicationController
     # Quick cleanup of batch...remove any items which have been deleted
     session[:works_batch].delete_if{|work_id| !Work.exists?(work_id)}
   end
-  
+    
 end
