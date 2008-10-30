@@ -3,7 +3,7 @@
     = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(contributorship.work) }
   %div{:class => "prepend-2 span-3 last"}
     %div{:id => "contributorship_admin-#{contributorship.id}", :class => "span-3"}
-      - if contributorship.contributorship_state_id == 2
+      - if contributorship.verified?
         %p
           %strong Verified!
       - else
