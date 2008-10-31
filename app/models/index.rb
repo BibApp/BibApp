@@ -176,6 +176,11 @@ class Index
       SOLRCONN.commit
     end
 
+    
+    def optimize_index
+      SOLRCONN.optimize
+    end
+    
     #Fetch all documents matching a particular query, 
     # along with the facets.
     def fetch(query_string, filter, sort, page, facet_count, rows)

@@ -97,6 +97,13 @@ namespace :solr do
     end
   end
   
+  desc 'Optimize Solr index'
+  task :optimize_index do
+    puts "\nOptimizing Solr index...\n\n"
+    Index.optimize_index
+     puts "Finished optimization!"
+  end
+  
   desc 'Refresh Solr index'
   task :refresh_index do
     puts "\nRe-indexing all BibApp Works in Solr...\n\n"
