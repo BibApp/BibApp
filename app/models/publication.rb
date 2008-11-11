@@ -1,41 +1,35 @@
 class Publication < ActiveRecord::Base
+  
+  
+  #### Associations ####
+  
   belongs_to :publisher
   belongs_to :authority,
     :class_name => "Publication",
     :foreign_key => :authority_id
-  has_many :works, :conditions => ["work_state_id = 3"]
+  has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
   
-  after_create do |publication|
-    publication.authority_id = publication.id
-    publication.save
+  
+  #### Callbacks ####
+  
+  #Called after create only
+  def after_create
+    #Authority defaults to self
+    self.authority_id = self.id
+    self.save
   end
   
-  after_save do |publication|
+  #Called after create or update
+  def after_save
     
-    # If Publication authority changed, we need to echo new authority key
-    # to each related model.
-    
-    logger.debug("\n\nPub: #{publication.id} | Auth: #{publication.authority_id}\n\n")
-    if publication.authority_id != publication.id
-      
-      # Update publications
-      logger.debug("\n\n===Updating Publications===\n\n")
-      publication.authority_for.each do |pub|
-        pub.authority_id = publication.authority_id
-        pub.save
-      end
-      
-      # Update works
-      logger.debug("\n\n===Updating Works===\n\n")
-      publication.works.each do |work|
-        work.publication_id = publication.authority_id
-        work.publisher_id = publication.publisher.authority_id
-        work.save
-      end
-      
-      #TODO: AsyncObserver
-      Index.batch_index
-    end
+    update_authorities
+    update_machine_name
+  end
+  
+  #### Methods ####
+  
+  def save_without_callbacks
+    update_without_callbacks
   end
   
   def to_param
@@ -59,6 +53,46 @@ class Publication < ActiveRecord::Base
       :conditions => ["authority_id = ?", self.id]
     )
     return authority_for
+  end
+  
+  #Update authorities for related models, when Publication Authority changes
+  # (called by after_save callback)
+  def update_authorities
+    # If Publication authority changed, we need to echo new authority key
+    # to each related model.
+    logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
+    if self.authority_id_changed? and self.authority_id != self.id
+      
+      # Update publications
+      logger.debug("\n\n===Updating Publications===\n\n")
+      self.authority_for.each do |pub|
+        pub.authority_id = self.authority_id
+        pub.save
+      end
+      
+      # Update works
+      logger.debug("\n\n===Updating Works===\n\n")
+      self.works.each do |work|
+        work.publication_id = self.authority_id
+        work.publisher_id = self.publisher.authority_id
+        work.save
+      end
+      
+      #TODO: AsyncObserver
+      Index.batch_index
+    end
+  end
+  
+  #Update Machine Name of Publication (called by after_save callback)
+  def update_machine_name
+    #Machine name only needs updating if there was a name change
+    if self.name_changed?
+      #Machine name is Name with:
+      #  1. all punctuation/spaces converted to single space
+      #  2. stripped of leading/trailing spaces and downcased
+      self.machine_name = self.name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.save_without_callbacks
+    end
   end
   
   class << self

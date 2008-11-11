@@ -111,11 +111,11 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  config.active_record.observers = :index_observer, :user_observer, 
+  config.active_record.observers = :work_observer, :user_observer, 
                                    :person_observer, :pen_name_observer,
                                    :group_observer, :membership_observer,
                                    :publication_observer, :publisher_observer,
-                                   :attachment_observer
+                                   :attachment_observer, :index_observer
                                    
 
   # Make Active Record use UTC-base instead of local time

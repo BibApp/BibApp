@@ -1,4 +1,7 @@
 class Publisher < ActiveRecord::Base
+  
+  #### Associations ####
+  
   has_many :publications
   belongs_to :authority,
     :class_name => "Publisher",
@@ -8,51 +11,31 @@ class Publisher < ActiveRecord::Base
     :class_name => "PublisherSource",
     :foreign_key => :source_id
 
-  has_many :works, :conditions => ["work_state_id = 3"]
+  has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
 
+  #### Callbacks ####
+  
   before_validation_on_create :set_initial_states
   
-  after_create do |publisher|
-    publisher.authority_id = publisher.id
-    publisher.save
+  def after_create
+    #Authority defaults to self
+    self.authority_id = self.id
+    self.save
   end
   
-  after_save do |publisher|
-    
-    # If Publisher authority changed, we need to echo new authority key
-    # to each related model.
-    
-    logger.debug("\n\nPub: #{publisher.id} | Auth: #{publisher.authority_id}\n\n")
-    if publisher.authority_id != publisher.id
-      
-      # Update publishers
-      logger.debug("\n\n===Updating Publishers===\n\n")
-      publisher.authority_for.each do |pub|
-        pub.authority_id = publisher.authority_id
-        pub.save
-      end
-      
-      # Update publications
-      logger.debug("\n\n===Updating Publications===\n\n")
-      publisher.publications.each do |publication|
-        publication.publisher_id = publisher.authority_id
-        publication.save
-      end
-      
-      # Update Works
-      logger.debug("\n\n===Updating Works===\n\n")
-      publisher.works.each do |work|
-        work.publisher_id = publisher.authority_id
-        work.save_and_set_for_index_without_callbacks
-      end
-      
-      #@TODO: AsyncObserver
-      Index.batch_index
-    end
+  def after_save
+    update_authorities
+    update_machine_name
   end
+  
+  #### Methods ####
   
   def set_initial_states
     self.source_id = 2 # Import Data
+  end
+  
+  def save_without_callbacks
+    update_without_callbacks
   end
   
   def to_param
@@ -73,6 +56,53 @@ class Publisher < ActiveRecord::Base
     )
     return authority_for
   end
+  
+  #Update authorities for related models, when Publisher Authority changes
+  # (called by after_save callback)
+  def update_authorities
+    # If Publisher authority changed, we need to echo new authority key
+    # to each related model.
+    logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
+    if self.authority_id_changed? and self.authority_id != self.id
+      
+      # Update publishers
+      logger.debug("\n\n===Updating Publishers===\n\n")
+      self.authority_for.each do |pub|
+        pub.authority_id = self.authority_id
+        pub.save
+      end
+      
+      # Update publications
+      logger.debug("\n\n===Updating Publications===\n\n")
+      self.publications.each do |publication|
+        publication.publisher_id = self.authority_id
+        publication.save
+      end
+      
+      # Update Works
+      logger.debug("\n\n===Updating Works===\n\n")
+      self.works.each do |work|
+        work.publisher_id = self.authority_id
+        work.save_and_set_for_index_without_callbacks
+      end
+      
+      #@TODO: AsyncObserver
+      Index.batch_index
+    end
+  end
+  
+  #Update Machine Name of Publisher (called by after_save callback)
+  def update_machine_name
+    #Machine name only needs updating if there was a name change
+    if self.name_changed?
+      #Machine name is Name with:
+      #  1. all punctuation/spaces converted to single space
+      #  2. stripped of leading/trailing spaces and downcased
+      self.machine_name = self.name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.save_without_callbacks
+    end
+  end
+  
   
   class << self
     # return the first letter of each name, ordered alphabetically

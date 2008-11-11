@@ -75,7 +75,11 @@ class Index
     
     # Tags
     :tags => Proc.new{|record| record.tags.collect{|t| t.name}},
-    :tag_id => Proc.new{|record| record.tags.collect{|t| t.id}}
+    :tag_id => Proc.new{|record| record.tags.collect{|t| t.id}},
+    
+    # Duplication Keys
+    :title_dupe_key => Proc.new{|record| record.title_dupe_key},
+    :name_string_dupe_key => Proc.new{|record| record.name_string_dupe_key}
   }
   
   # Mapping specific to dates
@@ -85,12 +89,12 @@ class Index
     :year => Proc.new{|record| record.publication_date.year}
   }
   
-  
+ 
   class << self
     
-    # Index all accepted Works which have been flagged for batch indexing
+    # Index all Works which have been flagged for batch indexing
     def batch_index
-      records = Work.accepted.to_batch_index
+      records = Work.to_batch_index
       
       #Batch index 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
@@ -99,7 +103,8 @@ class Index
       
       #Mark all these Works as indexed & commit changes to Solr
       records.indexed
-      SOLRCONN.commit
+      #SOLRCONN.commit
+      Index.optimize_index
     end
     
     def start(page)
@@ -117,8 +122,8 @@ class Index
       #Delete all existing records in Solr
       SOLRCONN.delete_by_query('*:*')
         
-      #Reindex all accepted Works again  
-      records = Work.accepted
+      #Reindex all Works again  
+      records = Work.all
       
       #Do a batch update, 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
@@ -184,6 +189,17 @@ class Index
     #Fetch all documents matching a particular query, 
     # along with the facets.
     def fetch(query_string, filter, sort, page, facet_count, rows)
+      
+      #Check array of filters to see if work 'status' specified
+      filter_by_status = false
+      filter.each do |f|
+        if f.include?(Work.solr_status_field)
+          filter_by_status = true
+          break
+        end
+      end
+      #If status unspecified, default to *only* showing "accepted" works
+      filter.push(Work.solr_accepted_filter) if !filter_by_status
       
       #build our list of Solr query parameters
       # Note: the various '*_facet' and '*_facet_data' fields
@@ -281,6 +297,50 @@ class Index
       return docs
     end
     
+    
+    # Retrieve possible duplicates from Solr, based on current Work
+    #   Returns list of document hashes from Solr
+    def possible_duplicates(record)
+      
+      work = Hash.new
+      #If this is a Work, generate dupe keys dynamically
+      if record.kind_of?(Work)
+        work['title_dupe_key'] = record.title_dupe_key
+        work['name_string_dupe_key'] = record.name_string_dupe_key
+      else #otherwise, this is data from Solr, so we already have dupe keys
+        work = record
+      end
+      
+      # Find all 'accepted' works with a matching Title Dupe Key or matching NameString Dupe Key
+      query_params = {
+        :query => "(title_dupe_key:\"#{work['title_dupe_key']}\" OR name_string_dupe_key:\"#{work['name_string_dupe_key']}\") AND #{Work.solr_accepted_filter}",
+            :rows => 3
+      }
+      
+      #Send a "more like this" query to Solr
+      r = SOLRCONN.send(Solr::Request::Standard.new(query_params))
+   
+      #get the documents returned by Solr query
+      docs = r.data["response"]["docs"]
+     
+      return docs
+    end
+    
+    # Retrieve possible duplicates from Solr, based on current Work
+    #  Returns a list of Work objects
+    def possible_duplicate_works(work)
+      dupes = Array.new 
+    
+      # Query Solr for all possible duplicates
+      #  This returns a hash of document information from Solr
+      docs = possible_duplicates(work)
+      
+      #Get the Work corresponding to each doc returned by Solr
+      docs.each do |doc|
+        dupes << Work.find(doc["pk_i"])
+      end
+      return dupes
+    end
     
     # Output a Work as if it came directly from Solr index
     # This is useful if a View has the full Work object

@@ -58,7 +58,7 @@ module ApplicationHelper
     
     return links.join(", ")
   end
-  
+ 
   def link_to_work_publication(work)
     pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
     return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
@@ -228,8 +228,11 @@ module ApplicationHelper
     prepped_filter.delete_at(prepped_filter.index(value))
     prepped_filter = prepped_filter.join("+>+")
     
-    #display value of filter is everything *after* the colon
-    display_value = value.split(':')[1]
+    #Split filter into field name and display value (they are separated by a colon)
+    field_name, display_value = value.split(':')
+    
+    #If this is the Work Status field, get the "pretty name" of the work status
+    display_value = $WORK_STATUS[display_value.to_i] if field_name+":"==Work.solr_status_field
     
     link_to "#{display_value}", {
       :q => query,

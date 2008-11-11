@@ -388,6 +388,23 @@ ul.recommendations {
     list-style: none; 
 }
 
+/* Style for duplicates box (displayed only for Duplicate Works) */
+div.duplicate_box {
+    margin: 0 0.5em 0.5em 0;
+    padding: 0.5em;
+    width: 40%;
+    float:right;
+}
+
+div.duplicate_box_heading {
+    background-color: #EEEEEE;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+    font-size: 0.9em;
+    text-align:center;
+}
+
+
 /* ===================================== */
 /* ======== Person View Styles ========= */
 /* ===================================== */

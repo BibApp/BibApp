@@ -1,6 +1,5 @@
 -#
--# Render Single Work from Solr data
--# This template can also be used with @work objects by calling Index.work_to_solr_hash(@work)
+-# Render Information about the Work
 -#
 -# Possible Input Variables:
 -#    :work         => work to display (REQUIRED)
@@ -23,6 +22,10 @@
     %div.select_multiple
       = check_box_tag "work_id[]", "#{work['pk_i']}"
 
+  -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
+  -if work['status']==2  
+    = render :partial => "shared/duplicate_of_work", :locals => {:work => work}
+    
   -#Display the work
   %div.screen-format
     - if work['issn_isbn'] != nil
