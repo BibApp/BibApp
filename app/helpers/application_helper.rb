@@ -47,14 +47,16 @@ module ApplicationHelper
   def link_to_work_name_strings(work)
     links = Array.new
 
-    work['name_strings_data'].first(5).each do |ns|
-      name, id = NameString.parse_solr_data(ns)
-      links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
-    end
-    
-    if work['name_strings'].size > 5
-      links << link_to("more...", work_path(work['pk_i']))
-    end
+    if work['name_strings_data'] and work['name_strings']
+      work['name_strings_data'].first(5).each do |ns|
+        name, id = NameString.parse_solr_data(ns)
+        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+      end
+
+      if work['name_strings'].size > 5
+        links << link_to("more...", work_path(work['pk_i']))
+      end
+    end  
     
     return links.join(", ")
   end
