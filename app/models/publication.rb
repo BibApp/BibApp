@@ -19,12 +19,9 @@ class Publication < ActiveRecord::Base
     self.save
   end
   
-  #Called after create or update
-  def after_save
-    
-    update_authorities
-    update_machine_name
-  end
+  #Note: 'after_save' callback is located in 'publication_observer.rb', to make
+  # sure it is called *before* after_save in 'index_observer.rb'
+  # (That way Publication info is updated completely *before* re-indexing of works)
   
   #### Methods ####
   
@@ -77,9 +74,6 @@ class Publication < ActiveRecord::Base
         work.publisher_id = self.publisher.authority_id
         work.save
       end
-      
-      #TODO: AsyncObserver
-      Index.batch_index
     end
   end
   

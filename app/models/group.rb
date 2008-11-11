@@ -11,12 +11,10 @@ class Group < ActiveRecord::Base
 
   #### Callbacks ####
   
-  #Called after create or save
-  def after_save
-    update_machine_name
-  end
-  
-  
+  #Note: 'after_save' callback is located in 'group_observer.rb', to make
+  # sure it is called *before* after_save in 'index_observer.rb'
+  # (That way Group info is updated completely *before* re-indexing of works)
+ 
   #### Methods ####
   
   def save_without_callbacks
