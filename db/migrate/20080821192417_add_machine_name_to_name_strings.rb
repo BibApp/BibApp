@@ -1,10 +1,10 @@
 class AddMachineNameToNameStrings < ActiveRecord::Migration
   def self.up    
     # Add name_string.machine_name field
-    #add_column :name_strings, :machine_name, :string
+    add_column :name_strings, :machine_name, :string
 
     # Add name_string.cleaned? field to see if data has been cleaned 
-    #add_column :name_strings, :cleaned, :boolean, :default => false
+    add_column :name_strings, :cleaned, :boolean, :default => false
     
     # Populate the machine_name field
     NameString.reset_column_information
