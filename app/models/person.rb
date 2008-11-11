@@ -18,17 +18,15 @@ class Person < ActiveRecord::Base
   has_one :image, :as => :asset
   
   #### Callbacks ####
-  
-  #Called only after create
+ 
   def after_create
     set_pen_names
   end
   
-  #Called after create or save
-  def after_save
-    update_machine_name
-  end
-  
+  #Note: 'after_save' callback is located in 'person_observer.rb', to make
+  # sure it is called *before* after_save in 'index_observer.rb'
+  # (That way Person info is updated completely *before* re-indexing of works)
+ 
   #### Methods ####
   
   def save_without_callbacks

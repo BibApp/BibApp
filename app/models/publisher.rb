@@ -23,10 +23,9 @@ class Publisher < ActiveRecord::Base
     self.save
   end
   
-  def after_save
-    update_authorities
-    update_machine_name
-  end
+  #Note: 'after_save' callback is located in 'publisher_observer.rb', to make
+  # sure it is called *before* after_save in 'index_observer.rb'
+  # (That way Publisher info is updated completely *before* re-indexing of works)
   
   #### Methods ####
   
@@ -83,11 +82,9 @@ class Publisher < ActiveRecord::Base
       logger.debug("\n\n===Updating Works===\n\n")
       self.works.each do |work|
         work.publisher_id = self.authority_id
-        work.save_and_set_for_index_without_callbacks
+        work.save
       end
-      
-      #@TODO: AsyncObserver
-      Index.batch_index
+    
     end
   end
   
