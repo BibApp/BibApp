@@ -3,6 +3,9 @@ class Person < ActiveRecord::Base
   acts_as_authorizable  #some actions on people require authorization
  
   serialize :scoring_hash
+  
+  #### Associations ####
+  
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
   has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false]
@@ -16,8 +19,20 @@ class Person < ActiveRecord::Base
   
   #### Callbacks ####
   
+  #Called only after create
   def after_create
     set_pen_names
+  end
+  
+  #Called after create or save
+  def after_save
+    update_machine_name
+  end
+  
+  #### Methods ####
+  
+  def save_without_callbacks
+    update_without_callbacks
   end
 
   def set_pen_names
@@ -61,7 +76,11 @@ class Person < ActiveRecord::Base
   end
 
   def name
-    "#{first_name} #{last_name}"
+    first_last
+  end
+  
+  def full_name
+    "#{first_name} #{middle_name} #{last_name}"
   end
   
   def first_last
@@ -123,6 +142,18 @@ class Person < ActiveRecord::Base
       :keyword_ids => known_keyword_ids
     }
     self.update_attribute(:scoring_hash, scoring_hash)
+  end
+  
+  #Update Machine Name of Person (called by after_save callback)
+  def update_machine_name
+    #Machine name only needs updating if there was a name change
+    if self.first_name_changed? or self.middle_name_changed? or self.last_name_changed?
+      #Machine name is Full Name with:
+      #  1. all punctuation/spaces converted to single space
+      #  2. stripped of leading/trailing spaces and downcased
+      self.machine_name = self.full_name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.save_without_callbacks
+    end
   end
   
   #A person's image file

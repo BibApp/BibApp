@@ -9,6 +9,8 @@
     - remove_filter = @filter.clone
     -# Delete any filters pertaining to current object from removal list
     - remove_filter.delete_if{ |f| !@current_object.nil? and f.include?('"' + @current_object.id.to_s + '"') }
+    -# Delete any filters pertaining to Work status (as different statuses are currently never show intermixed)
+    - remove_filter.delete_if{ |f| f.include?(Work.solr_status_field)}
     - if !remove_filter.empty?
       %div.facet
         %ol.facet_filters

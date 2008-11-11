@@ -266,8 +266,8 @@
  <field name="status" type="long" indexed="true" stored="true"/>
  <field name="issn_isbn" type="text" indexed="true" stored="true"/>
  <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
-  <!-- authors are a synonym for name_strings -->
-  <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
+ <!-- authors are a synonym for name_strings -->
+ <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="publication" type="text" indexed="true" stored="true"/>
@@ -283,6 +283,14 @@
  <!--'word' is used to spell check against -->
  <field name="word" type="spell" indexed="true" stored="true"/>
 
+
+ <!--====Dupe Key Fields====-->
+ <!--These fields act as duplication keys for BibApp. 
+     Unique records should have unique duplication keys.  If more than one 
+     record has the same dupe key, then we likely have duplicate data-->
+ <!--Dupe keys should be searchable, and stored within Solr-->
+ <dynamicField name="*_dupe_key" type="string" indexed="true" stored="true"/>
+ 
 
  <!--====Data Fields====-->
  <!--These fields store BibApp data in Solr, so that the majority

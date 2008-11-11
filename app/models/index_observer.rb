@@ -4,9 +4,9 @@ class IndexObserver < ActiveRecord::Observer
   observe Work
   
   def after_save(record)
-    if record.batch_index? || !record.accepted?
-      # Do not update
-    else
+    record.logger.debug("\n\n === AFTER-SAVE IN INDEX OBSERVER ===\n\n")
+    #Only re-index when something has changed, and record is not marked for batch indexing
+    unless !record.batch_index? and record.changed?
       Index.update_solr(record)
     end
   end

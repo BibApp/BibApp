@@ -8,7 +8,7 @@ class Work < ActiveRecord::Base
   # for a specific Person in the system
   # (This occurs when adding a Work directly to a Person).
   cattr_accessor :preverified_person
-  
+ 
   serialize :scoring_hash
   
   #### Associations ####
@@ -75,6 +75,8 @@ class Work < ActiveRecord::Base
   before_validation_on_create :set_initial_states
 
   # After Create only
+  # (Note: after create callbacks *must* be placed in Work model, 
+  #  for faux-accessors to work properly)
   def after_create
     create_work_name_strings
     create_keywords
@@ -84,23 +86,29 @@ class Work < ActiveRecord::Base
     self.save_without_callbacks
   end
   
-  # After Create or Update
-  def after_save
-    logger.debug("\n\n === After Save ===\n\n")
-
+  # NOTE: after_save callback is in 'work_observer.rb',
+  # to ensure it is called *before* after_save in 'index_observer.rb'
+  # (This ensures work is updated completely *before* re-indexing)
+  
+  # Not a true callback, but this method is called by
+  # 'after_save' callback in 'work_observer.rb' in order
+  # to update all work information after a work has been saved.
+  def update_work
     # The Work object needs to be reloaded into memory,
     # otherwise the faux-accessors will *not* be available in the
     # after_save callbacks.
     self.reload
     
-    #re-check for duplicates
-    deduplicate
-    
-    #update all contributorships for this work
+    #Update all contributorships for this work (re-create them)
     create_contributorships
     
+    #update dynamic database fields
     update_scoring_hash
     update_archive_state
+    update_machine_name
+    
+    #re-check for duplicate works (after all updates have completed)
+    deduplicate
   end
   
   #### Serialization ####
@@ -131,6 +139,24 @@ class Work < ActiveRecord::Base
   def is_accepted
     self.work_state_id=3
   end
+  
+  # The field for work status in BibApp's Solr Index
+  def self.solr_status_field
+    return "status:"
+  end
+  
+  # The Solr filter for accepted works...this is used by default, as
+  # we don't want incomplete works to normally appear in BibApp
+  def self.solr_accepted_filter
+    return solr_status_field + "3"  # 3 = accepted
+  end
+  
+  # The Solr filter for duplicate works...these works are normally
+  # hidden by BibApp, except to administrators
+  def self.solr_duplicate_filter
+    return solr_status_field + "2"  # 2 = duplicate
+  end
+  
   
   ##### Work Archival State Methods #####
   def init_archive_status
@@ -180,69 +206,28 @@ class Work < ActiveRecord::Base
   end
   
   
-  # Deduplication: deduplicate Work records on create
+  # Deduplication: deduplicate Work records on save
   def deduplicate
     logger.debug("\n\n===DEDUPLICATE===\n\n")
 
-    #Find all possible dupe candidates
-    # (NOTE: this also includes current work..so, it needs to return more
-    #  than 2 candidates for actual duplicates to exist)
-    dupe_candidates = duplicates
-    logger.debug("\nDuplicates: #{duplicates.size}")
+    #Find all possible dupe candidates from Solr
+    dupe_candidates = Index.possible_duplicate_works(self)
+    logger.debug("\nDuplicates: #{dupe_candidates.size}")
 
     #Check if any duplicates found.
-    if dupe_candidates.empty? or dupe_candidates.size < 2
+    #@TODO: Be smarter about this...first in probably shouldn't always win
+    if dupe_candidates.empty?
       self.is_accepted
-      self.save_without_callbacks
-      return
+    #Only mark as duplicate if this work wasn't previously accepted 
+    elsif !self.accepted? 
+      self.is_duplicate
     end
+    self.save_without_callbacks
     
-    #Try to find the *best* of the dupe candidates
-    # Right now the "best" is the one with the highest "preferred_score" 
-    best = dupe_candidates[0]
-    dupe_candidates.each do |candidate|
-      if candidate.preferred_score > best.preferred_score
-        best = candidate
-      end
-    end
-
-    # Flag and save this as the canonical best
-    unless best.duplicate?
-      best.is_accepted
-      best.save_without_callbacks
-    end
-
-    # All the others are, by definition, duplicates of the "best" candidate
-    dupe_candidates.each do |dupe|
-      logger.debug "Saving dupe work_states: #{dupe.id}"
-      unless dupe.accepted?
-        dupe.is_duplicate
-        dupe.batch_index = 0
-        dupe.save_without_callbacks
-      end
-    end
-  end
-
-  # Deduplication: search for Work duplicates
-  def duplicates
-    # This is Very Slow (at least on mysql) when done in one query with an OR:
-    # mysql will only use one index per query, and the or implies that your index 
-    # would need to be indexed with more than one key first.
-    # Alternative approach: use find_by_sql and UNION
-    issn_dupes = Work.find(:all, 
-      :conditions => ["work_state_id <> 2 and issn_isbn_dupe_key = ?", self.issn_isbn_dupe_key])
-    title_dupes = Work.find(:all, 
-      :conditions => ["work_state_id <> 2 and title_dupe_key = ?", self.title_dupe_key])
-    return (issn_dupes + title_dupes).uniq
-  end
- 
-  # Deduplication: set score
-  def preferred_score
-    # The highest score will win... 
-    # currently, we really like things that are already accepted.
-    score = 0
-    score = 10 if self.accepted?
-    return score
+    #@TODO: Is there a way that we can calculate the *canonical best*
+    # version of a work? We've tried this in the past, but we need to do 
+    # it in a better way (e.g.  we don't end up accidently re-marking things as
+    # dupes that have previously been determined to not be dupes by a human)
   end
   
   def save_without_callbacks
@@ -428,35 +413,27 @@ class Work < ActiveRecord::Base
     "Work-#{id}"
   end
 
-  def self.set_issn_isbn_dupe_key(work, work_name_strings, issn_isbn)
-    # Set issn_isbn_dupe_key
-    if !work_name_strings.nil? 
-      if work_name_strings[0] != nil
-        logger.debug("\nCNS: #{work_name_strings.inspect}\n")
-        first_author = work_name_strings[0][:name].split(",")[0]
-      else
-        first_author = nil
-      end
-    else
-      first_author = nil
-    end
-        
-    if (first_author.nil? or issn_isbn.nil? or work.publication_date.nil? or work.start_page.nil? or work.start_page.empty? or issn_isbn.empty?)
-      issn_isbn_dupe_key = nil
-    else
-      issn_isbn_dupe_key = (first_author+issn_isbn+work.publication_date.year.to_s+work.start_page.to_s).gsub(/[^0-9A-Za-z]/, '').downcase
+  # Generate a key based on title information
+  # which can be used to determine if a Work is a duplicate
+  def title_dupe_key
+    # Title Dupe Key Format:
+    # [Work.machine_name]||[Work.year]||[Publication.machine_name]
+    unless self.publication.nil? or self.publication.authority.nil?
+      self.machine_name.to_s + "||" + self.year.to_s + "||" + self.publication.authority.machine_name.to_s
     end
   end
-    
-  def self.set_title_dupe_key(work)
-    # Set title_dupe_key      
-    if work.title_primary.nil? or work.publication_date.nil? or work[:type].nil? or work.start_page.nil?
-      title_dupe_key = nil
-    else 
-      title_dupe_key = work.title_primary.downcase.gsub(/[^a-z]/,'').first(200)+work.publication_date.year.to_s+work[:type].to_s+work.start_page.to_s
+  
+  # Generate a key based on Author/Editor information
+  # which can be used to determine if a Work is a duplicate
+  def name_string_dupe_key
+    # NameString Dupe Key Format:
+    # [First NameString.machine_name]||[Work.year]||[Work.type]||[Work.machine_name]
+    unless self.name_strings.nil? or self.name_strings.empty?
+      self.name_strings[0].machine_name.to_s + "||" + self.year.to_s + "||" + self.type.to_s + "||" + self.machine_name.to_s
     end
   end
- 
+  
+  
   def create_contributorships
     logger.debug "\n\n===== CREATE CONTRIBUTORSHIPS =====\n\n"
     # After save method
@@ -539,6 +516,18 @@ class Work < ActiveRecord::Base
       #else if marked ready, but no attachments
       #then, revert to initial status  
       self.init_archive_status
+      self.save_without_callbacks
+    end
+  end
+  
+  #Update Machine Name of Work (called by after_save callback)
+  def update_machine_name
+    #Machine name only needs updating if title primary changes or empty
+    if self.title_primary_changed? or self.machine_name.nil?
+      #Machine name is Title Primary with:
+      #  1. all punctuation/spaces converted to single space
+      #  2. stripped of leading/trailing spaces and downcased
+      self.machine_name = self.title_primary.chars.gsub(/[\W]+/, " ").strip.downcase
       self.save_without_callbacks
     end
   end
@@ -703,7 +692,7 @@ class Work < ActiveRecord::Base
     end
     return editors
   end
-  
+   
  
   ### PRIVATE METHODS ###
   private
@@ -768,7 +757,7 @@ class Work < ActiveRecord::Base
     logger.debug("Cached Keywords= #{@keywords_cache.inspect}")
     #Create any initialized keywords and save to Work
     self.keywords = @keywords_cache if @keywords_cache
-  end  
+  end
  
  
   def create_tags

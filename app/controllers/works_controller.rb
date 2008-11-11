@@ -349,15 +349,7 @@ class WorksController < ApplicationController
  
     end
 
-
     @work.publication_info = publication_info
-    
-    ###
-    # Setting De-Duplication keys
-    ###
-    @work.issn_isbn_dupe_key = Work.set_issn_isbn_dupe_key(@work, work_name_strings, issn_isbn)
-    @work.title_dupe_key = Work.set_title_dupe_key(@work)
-    
   end
   
   
@@ -688,6 +680,8 @@ class WorksController < ApplicationController
         #guess the character encoding
         encoding = CMess::GuessEncoding::Automatic.guess(str)
         
+        logger.debug("Guessed Encoding: #{encoding}")
+       
         #as long as encoding could be guessed, try to convert to UTF-8
         unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
           #convert to one big UTF-8 string
@@ -805,8 +799,6 @@ class WorksController < ApplicationController
           
           #save remaining hash attributes
           work.attributes=h
-          work.issn_isbn_dupe_key = Work.set_issn_isbn_dupe_key(work, work_name_strings, issn_isbn)
-          work.title_dupe_key = Work.set_title_dupe_key(work)
           work.save_and_set_for_index
    
           # current user automatically gets 'admin' permissions on work

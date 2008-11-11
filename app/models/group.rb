@@ -2,11 +2,28 @@ class Group < ActiveRecord::Base
   acts_as_tree :order => "name"
   acts_as_authorizable  #some actions on groups require authorization
   
+  #### Associations ####
+  
   has_many :people,
     :through => :memberships,
     :order => "last_name, first_name"
   has_many :memberships
 
+  #### Callbacks ####
+  
+  #Called after create or save
+  def after_save
+    update_machine_name
+  end
+  
+  
+  #### Methods ####
+  
+  def save_without_callbacks
+    update_without_callbacks
+  end
+  
+  
   def works
     # @TODO: Do this the Rails way.
     self.people.collect{|p| p.works.verified}.uniq.flatten
@@ -23,6 +40,19 @@ class Group < ActiveRecord::Base
     "#{name}||#{id}"
   end 
 
+  #Update Machine Name of Group (called by after_save callback)
+  def update_machine_name
+    #Machine name only needs updating if there was a name change
+    if self.name_changed?
+      #Machine name is Group Name with:
+      #  1. all punctuation/spaces converted to single space
+      #  2. stripped of leading/trailing spaces and downcased
+      self.machine_name = self.name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.save_without_callbacks
+    end
+  end
+  
+  
   class << self
     # return the first letter of each name, ordered alphabetically
     def letters

@@ -1,0 +1,18 @@
+-#
+-# Render Information about the Work
+-# which the current work is a duplicate of
+-#
+-# 
+  
+-# Get listing of all possible duplicates from Solr
+- dupes = Index.possible_duplicates(work)
+
+/ Duplicate information (just for first dupe found)
+%div.duplicate_box
+  %div.duplicate_box_heading="Duplicate of this work"
+  - dupe = dupes.first
+  %p.metadata=link_to dupe['title'].titleize, work_path(dupe['pk_i'])
+  %p.metadata=work['name_strings'].first(5).join(", ")
+  %p.metadata
+    ="#{dupe['publication']}" 
+    ="(#{dupe['year']})" if dupe['year']
