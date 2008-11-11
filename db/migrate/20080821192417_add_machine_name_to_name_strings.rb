@@ -1,10 +1,10 @@
 class AddMachineNameToNameStrings < ActiveRecord::Migration
   def self.up    
     # Add name_string.machine_name field
-    add_column :name_strings, :machine_name, :string
+    #add_column :name_strings, :machine_name, :string
 
     # Add name_string.cleaned? field to see if data has been cleaned 
-    add_column :name_strings, :cleaned, :boolean, :default => false
+    #add_column :name_strings, :cleaned, :boolean, :default => false
     
     # Populate the machine_name field
     NameString.reset_column_information
@@ -55,20 +55,22 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
           dc.update_attribute(:cleaned, true)
         else
           # All other candidates are dupes (cleaned = false)
-          dc.citation_name_strings.each{ |cns|
+          citation_name_strings = CitationNameString.find_by_sql("select * from citation_name_strings where name_string_id = #{dc.id}")
+          citation_name_strings.each{ |cns|
             puts "Reassociating: #{dc.id}"
             cns.update_attribute(:name_string_id, dupe_candidates[0].id)
           }
           
           #Refresh our dupe candidate, so we can check if it now has no citation_name_strings
           dc.reload
+          citation_name_strings = CitationNameString.find_by_sql("select * from citation_name_strings where name_string_id = #{dc.id}")
           
-          if dc.citation_name_strings.empty?
+          if citation_name_strings.empty?
             # Destroy the dupe
             puts "Destroying NameString: #{dc.id}"
             dc.destroy
           else
-            puts "Trouble cleaning NameString: #{dc.id} It still has #{dc.citation_name_strings.size} CitationNameStrings associated."
+            puts "Trouble cleaning NameString: #{dc.id} It still has #{citation_name_strings.size} CitationNameStrings associated."
           end
         end
       end
@@ -90,5 +92,13 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
     # Remove machine_name field
     remove_column :name_strings, :machine_name
     remove_column :name_strings, :cleaned
+  end
+  
+  
+  #Placeholder class, since this no longer exists in our model
+  # The addition of this class allows us to still interact with the citation_name_strings
+  # table, even though we've since removed it from BibApp.  It also ensures that folks
+  # can upgrade from BibApp 0.7 -> 1.0 without migration issues.
+  class CitationNameString < ActiveRecord::Base
   end
 end
