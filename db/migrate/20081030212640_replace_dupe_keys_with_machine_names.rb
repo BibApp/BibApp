@@ -11,7 +11,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       Work.find(:all, :order=>"id DESC").each do |work|
         # machine name is primary title, downcased, with all punctuation/spaces converted to single space
         machine_name = work.title_primary.chars.gsub(/[\W]+/, " ").strip.downcase
-        work.update_attribute(:machine_name, machine_name)
+        work.machine_name = machine_name
+        work.save_without_callbacks
         say "Work with id=#{work.id} updated!", true
       end
     end
@@ -26,7 +27,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       Publication.find(:all, :order=>"id DESC").each do |pub|
         # machine name is Publication name, downcased, with all punctuation/spaces converted to single space
         machine_name =  pub.name.chars.gsub(/[\W]+/, " ").strip.downcase
-        pub.update_attribute(:machine_name, machine_name)
+        pub.machine_name = machine_name
+        pub.save_without_callbacks
         say "Publication with id=#{pub.id} updated!", true
       end
     end
@@ -41,7 +43,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       Publisher.find(:all, :order=>"id DESC").each do |pub|
         # machine name is Publisher name, downcased, with all punctuation/spaces converted to single space
         machine_name =  pub.name.chars.gsub(/[\W]+/, " ").strip.downcase
-        pub.update_attribute(:machine_name, machine_name)
+        pub.machine_name = machine_name
+        pub.save_without_callbacks
         say "Publisher with id=#{pub.id} updated!", true
       end
     end
@@ -56,7 +59,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       Person.find(:all, :order=>"id DESC").each do |person|
         # machine name is Person name, downcased, with all punctuation/spaces converted to single space
         machine_name =  person.full_name.chars.gsub(/[\W]+/, " ").strip.downcase
-        person.update_attribute(:machine_name, machine_name)
+        person.machine_name = machine_name
+        person.save_without_callbacks
         say "Person with id=#{person.id} updated!", true
       end
     end
@@ -71,7 +75,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       Group.find(:all, :order=>"id DESC").each do |group|
         # machine name is Group name, downcased, with all punctuation/spaces converted to single space
         machine_name =  group.name.chars.gsub(/[\W]+/, " ").strip.downcase
-        group.update_attribute(:machine_name, machine_name)
+        group.machine_name = machine_name
+        group.save_without_callbacks
         say "Group with id=#{group.id} updated!", true
       end
     end
@@ -86,7 +91,8 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
       ExternalSystem.find(:all, :order=>"id DESC").each do |system|
         # machine name is Person name, downcased, with all punctuation/spaces converted to single space
         machine_name =  system.name.chars.gsub(/[\W]+/, " ").strip.downcase
-        system.update_attribute(:machine_name, machine_name)
+        system.machine_name = machine_name
+        system.save_without_callbacks
         say "ExternalSystem with id=#{system.id} updated!", true
       end
     end
