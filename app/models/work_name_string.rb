@@ -6,6 +6,11 @@ class WorkNameString   < ActiveRecord::Base
   validates_presence_of :name_string_id, :work_id
   validates_uniqueness_of :work_id, :scope => :name_string_id
   
+  # Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{self.name_string.name}||#{self.name_string.id}||#{position}||#{role}"
+  end
+  
   class << self
     def create_batch!(name_string_id, work_data)
       cites = Work.import_batch!(work_data)

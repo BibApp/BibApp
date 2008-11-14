@@ -1,1 +1,20 @@
-= render :partial => "shared/work_subclasses/generic", :locals => {:work => work}
+%p.metadata 
+  - #Authors
+  = link_to_authors(work)
+
+  %br/
+  In
+  - if work['editors_data'] != nil
+    - #Editors
+    = link_to_editors(work)
+    (Eds.),
+
+  - #Publisher
+  = link_to_work_publisher(work)
+
+  -if work['year'] != nil
+    ="(#{work['year']})"
+
+  - # ISBN - @todo: Standardize ISBNs during ingest
+  - if work['issn_isbn'] != nil
+    = "; ISBN: #{work['issn_isbn'].gsub(" ", "")}"

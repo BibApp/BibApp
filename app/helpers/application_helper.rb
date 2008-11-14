@@ -44,23 +44,38 @@ module ApplicationHelper
     "Download from #{$REPOSITORY_NAME}"
   end
   
-  def link_to_work_name_strings(work)
+  def link_to_authors(work)
     links = Array.new
 
-    if work['name_strings_data'] and work['name_strings']
-      work['name_strings_data'].first(5).each do |ns|
-        name, id = NameString.parse_solr_data(ns)
-        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
-      end
-
-      if work['name_strings'].size > 5
-        links << link_to("more...", work_path(work['pk_i']))
-      end
-    end  
+    work['authors_data'].first(5).each do |au|
+      name, id = NameString.parse_solr_data(au)
+      links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+    end
     
+    if work['authors_data'].size > 5
+      links << link_to("more...", work_path(work['pk_i']))
+    end
+
     return links.join(", ")
   end
  
+  def link_to_editors(work)
+    links = Array.new
+    
+    if work['editors_data'] != nil
+      work['editors_data'].first(5).each do |ed|
+        name, id = NameString.parse_solr_data(ed)
+        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+      end
+    
+      if work['editors_data'].size > 5
+        links << link_to("more...", work_path(work['pk_i']))
+      end
+    end
+    
+    return links.join(", ")
+  end
+  
   def link_to_work_publication(work)
     pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
     return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
