@@ -71,6 +71,13 @@ class SwordClient
     
   # Currently parsed SWORD service document
   attr_writer :parsed_service_doc
+  
+  class << self
+    def logger
+      #Use RAILS_DEFAULT_LOGGER by default for all logging
+      @@logger ||= ::RAILS_DEFAULT_LOGGER
+    end
+  end
     
   #Initialize a SWORD Connection,
   # based on the configurations
@@ -122,7 +129,7 @@ class SwordClient
     end
     return false
   end
-
+  
   # Retrieve the SWORD Service Document for current connection,
   # based on configs read from sword.yml.
   def service_document
@@ -205,16 +212,16 @@ class SwordClient
     
     # get our available collections
     colls = get_collections
-    
+   
     #locate our default collection, based on configs loaded from sword.yml
     default_collection = nil
     colls.each do |c|
       if @config['default_collection_url']
         default_collection = c if c[:deposit_url].to_s == @config['default_collection_url']
-        break #first matching collection wins!
+        break if default_collection #first matching collection wins!
       elsif @config['default_collection_name']
         default_collection = c if c[:title].to_s.downcase == @config['default_collection_name'].downcase
-        break #first matching collection wins!
+        break if default_collection #first matching collection wins!
       end
     end
     
