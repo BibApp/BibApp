@@ -98,6 +98,7 @@ class SwordClient
     
     #build our connection params from configurations
     params = {}
+    params[:debug_mode] = true if @config['debug_mode']
     params[:username] = @config['username'] if @config['username'] and !@config['username'].empty?
     params[:password] = @config['password'] if @config['password'] and !@config['password'].empty?
     
@@ -169,7 +170,9 @@ class SwordClient
   #
   # If deposit URL is unspecified, it posts to the 
   # default collection (if one is specified in sword.yml)
-  def post_file(file_path, deposit_url=nil, mime_type="application/zip")
+  #
+  # For a list of valid 'headers', see Connection.post_file()
+  def post_file(file_path, deposit_url=nil, headers={})
     
     if deposit_url.nil?
       #post to default collection, if there is one
@@ -179,7 +182,7 @@ class SwordClient
     
     #only post file if we have some sort of deposit url!
     if deposit_url and !deposit_url.empty?
-      @connection.post_file(file_path, deposit_url, mime_type)
+      @connection.post_file(file_path, deposit_url, headers)
     else
       raise SwordException.new, "File '#{file_path}' could not be posted via SWORD as no deposit URL (or default collection) was specified!"
     end

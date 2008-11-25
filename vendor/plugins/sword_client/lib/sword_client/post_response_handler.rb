@@ -33,7 +33,7 @@ class SwordClient::PostResponseHandler
   
   #Processing when a start tag is encountered
   def tag_start name, attrs
-    if name=="atom:entry"
+    if name=="atom:entry" or name=="entry"
       #flip our flag
       @in_atom_entry=true
     
@@ -42,7 +42,7 @@ class SwordClient::PostResponseHandler
  
       #save current tag name for later
       #only save end of name (e.g. "atom:title" becomes "title")
-      @curr_tag_name = name.gsub(/.*:/, '') if name!="atom:name"  #for names we want to keep the parent tag as "curr_tag_name"
+      @curr_tag_name = name.gsub(/.*:/, '') if name!="atom:name" or name!="name"  #for names we want to keep the parent tag as "curr_tag_name"
       
       
       # Catch tags which have important info in their attributes
