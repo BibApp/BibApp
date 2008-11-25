@@ -8,7 +8,7 @@
 # software (DSpace, Fedora, EPrints)
 #
 # More info on SWORD:
-#  http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
+#  http://www.swordapp.org/
 ##################################################
 
 development:
@@ -37,6 +37,8 @@ development:
   #default_collection_url: http://localhost:8080/sword-app/deposit/123456789/4
   #default_collection_name: My Collection
   
+  # Turns on debugging mode: Logs all HTTP request/responses to STDERR
+  #debug_mode: true
 test:
   # SWORD Server's Service Document URL
   service_doc_url: http://localhost:8080/sword-app/servicedocument

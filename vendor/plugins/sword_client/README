@@ -6,16 +6,18 @@ existing SWORD Server.  In addition, it is able to perform some
 basic parsing of the Atom-based HTTP response sent from the SWORD server.
 
 This is only the *client*.  Your SWORD Server must already exist!  SWORD 
-servers are already available for DSpace (www.dspace.org) and Fedora
-(www.fedora.info) repository software.  Supposedly EPrints (www.eprints.org)
-will also soon have a SWORD Server packaged with it.
+servers are already available for DSpace (www.dspace.org), Fedora
+(www.fedora.info) and EPrints (www.eprints.org) repository software. 
+
+WARNING: This client does *not* yet support sending MD5 checksums within a
+SWORD request.
 
 For more information on SWORD or the SWORD APP Profile:
-http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
+http://www.swordapp.org/
 
 For more information on Atom or Atom Publishing Protocol (APP):
-http://tools.ietf.org/html/rfc4287 (Atom Syndication Format)
-http://tools.ietf.org/html/rfc5023 (Atom Publishing Protocol)
+http://www.atomenabled.org/
+
 
 Post-Installation
 ==================
@@ -63,15 +65,15 @@ which helps decrease the number of direct requests to your SWORD server.
   @client = SwordClient.new
   
 * Initialize via an options hash (by calling SwordClient::Connection directly) 
-params = {  :username => @username,
-            :password => @password,
-            :on_behalf_of => @behalf_of_username,
-            :proxy_settings => {:server  => "my.proxy.edu", 
-                                :port    => "80",
-                                :username => "proxy_user", 
-                                :password => "proxy_pass"} }
+  params = {  :username => @username,
+              :password => @password,
+              :on_behalf_of => @behalf_of_username,
+              :proxy_settings => {:server  => "my.proxy.edu", 
+                                  :port    => "80",
+                                  :username => "proxy_user", 
+                                  :password => "proxy_pass"} }
                                 
-@connection = SwordClient::Connection.new(@sword_url, params)
+  @connection = SwordClient::Connection.new(@sword_url, params)
 
 3. Requesting the SWORD Service Document from an initialized Connection (@connection)
 
@@ -103,4 +105,4 @@ params = {  :username => @username,
   @response_hash = SwordClient::Response.parse_post_response(@post_response_doc)
 
 
-Copyright (c) 2008 BibApp (written by Tim Donohue), released under the MIT license
+Copyright (c) 2008 BibApp.org (written by Tim Donohue), released under the MIT license

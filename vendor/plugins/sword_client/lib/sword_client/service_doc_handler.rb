@@ -47,7 +47,7 @@ class SwordClient::ServiceDocHandler
       #save current tag name for later
       #only save end of name (e.g. "atom:title" becomes "title")
       @curr_tag_name = name.gsub(/.*:/, '')
-    elsif !@curr_collection and name=="atom:title"  
+    elsif !@curr_collection and (name=="atom:title" or name=="title")
       #capture the repository's name, which is under <workspace><atom:title>...</workspace>
       @in_repository_title = true
     end

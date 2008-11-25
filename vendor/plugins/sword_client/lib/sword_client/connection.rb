@@ -42,6 +42,7 @@ class SwordClient::Connection
   #                       :port     => port on proxy server,
   #                       :username => login name for proxy server, 
   #                       :password => password for proxy server}
+  #    :debug_mode => Set to true to log all HTTP request/responses to STDERR                   
   #
   def initialize(service_doc_url="http://localhost:8080/sword-app/servicedocument", opts={})
     @url = URI.parse(service_doc_url)
@@ -70,6 +71,9 @@ class SwordClient::Connection
     
     #setup connection timeout, if specified
     @connection.read_timeout = opts[:timeout] if opts[:timeout]
+    
+    #If debug mode, turn on debugging of HTTP request/response
+    @connection.set_debug_output(STDERR) if opts[:debug_mode]
   end
   
   # Retrieve the SWORD Service Document for this connection.
@@ -94,26 +98,33 @@ class SwordClient::Connection
   #   "http://localhost:8080/sword-app/deposit/123456789/1"
   #
   # This filepath should be a *local* filepath to file.  
-  # MIME type is assumed to be "application/zip", unless specified otherwise
-  def post_file(file_path, deposit_url, mime_type="application/zip")
-    
+  # 
+  # Optional Headers available:
+  #    :user_agent => Name of the SWORD client User Agent
+  #    :verbose => If true, request a Verbose response from server
+  #    :noop => If true, tells server to perform no operation (useful for debugging)
+  #    :format_namespace => The specified SWORD Format Namespace (default: "METS")
+  #    :mime_type => Content Type / MIME type of file (default: "application/zip")
+  #    
+  def post_file(file_path, deposit_url, headers={})
+   
     # Make sure file exists
     raise SwordException, "Could not find file at " + file_path if(!File.exists?(file_path))
    
     # Make sure we have a deposit URL
     raise SwordException.new, "File '#{file_path}' could not be posted via SWORD as no deposit URL was specified!" if !deposit_url or deposit_url.empty?
-   
-    # Add content type to HTTP Request Headers
-    headers = {'Content-Type' =>  mime_type}
     
-    if mime_type.match('^text\/.*') #check if MIME Type begins with "text/"
+    # Map our passed in headers to valid HTTP POST headers
+    post_headers = http_post_headers(headers)
+    
+    if post_headers['Content-Type'].match('^text\/.*') #check if MIME Type begins with "text/"
       file = File.open(file_path) # open as normal (text-based format)
     else
       file = File.open(file_path, 'rb') # force opening in Binary file mode
     end
       
     # POST our file to deposit_url
-    response = request("post", deposit_url, headers, file)
+    response = request("post", deposit_url, post_headers, file)
     
     #determine response
     case response
@@ -124,6 +135,30 @@ class SwordClient::Connection
     
   end
   
+  #Map our Connection 'headers' to valid SWORD HTTP Headers
+  def http_post_headers(headers)
+    #Mapping of Connection headers{} => corresponding HTTP Headers
+    header_mapping = {
+       :user_agent => 'User-Agent',
+       :verbose => 'X-Verbose',
+       :noop => 'X-No-Op',
+       :format_namespace => 'X-Format-Namespace',
+       :mime_type => 'Content-Type'
+    }
+
+    # Map our headers over to the appropriate HTTP Header
+    http_headers = {}
+    headers.each_key do |key|
+      r_key = header_mapping[key]   #map the key to appropriate HTTP header
+      http_headers[r_key] = headers[key]
+    end
+    
+    #Set our defaults for POST: sending a Zipped up METS file
+    http_headers['Content-Type'] ||= "application/zip"
+    http_headers['X-Format-Namespace'] ||= "METS"
+    
+    return http_headers
+  end
   
   
   ###################
@@ -211,7 +246,6 @@ class SwordClient::Connection
   # Set our SWORD headers, if they haven't been set already
   def add_sword_headers!(request)
     request['X-On-Behalf-Of'] ||= @on_behalf_of.to_s  if @on_behalf_of
-    request['X-Verbose'] ||= "true"
   end
   
   # If unspecified, add file information to request
@@ -220,7 +254,7 @@ class SwordClient::Connection
     request.content_length = body.respond_to?(:lstat) ? body.lstat.size : body.size         
     
     #Add filename to Content-Disposition
-    request['Content-Disposition'] ||= body.respond_to?(:path) ? "filename=\"" + File.basename(body.path).to_s + "\"" : ""
+    request['Content-Disposition'] ||= body.respond_to?(:path) ? "filename=#{File.basename(body.path).to_s}" : ""
     
     #If content type header not set, assume binary/octet-stream, since this is a file
     request['Content-Type'] ||= 'binary/octet-stream'
@@ -230,5 +264,5 @@ class SwordClient::Connection
   def request_method(verb)
     Net::HTTP.const_get(verb.to_s.capitalize)
   end
-  
+ 
 end
