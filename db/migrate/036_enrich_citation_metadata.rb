@@ -38,4 +38,11 @@ class EnrichCitationMetadata < ActiveRecord::Migration
     
     remove_column :citations, :publication_date
   end
+  
+  #Placeholder class, since this no longer exists in our model
+  # The addition of this class allows us to still interact with the citations
+  # table, even though we've since removed it from BibApp.  It also ensures that folks
+  # can upgrade from BibApp 0.7 -> 1.0 or perform a fresh install without migration issues.
+  class Citation < ActiveRecord::Base
+  end
 end
