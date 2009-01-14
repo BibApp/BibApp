@@ -35,33 +35,102 @@
 #search-box { float:right; }
 
 /* Global Navigation (e.g. FAQ, Login, etc.) */
-ul.global-nav {
-	margin:0;
+ul#global-nav {
 	padding:0;
-	float: right;
+	margin:0;
+  float: right;
 	text-align:right;
 }
 
-ul.global-nav li {
+ul#global-nav li {
 	display:inline;
-	padding: 0.5em;
+	padding:0.5em;
+}
+
+ul#global-nav a {
+  text-decoration: none;
+}
+
+ul#global-nav a:hover {
+	  background-color:#E6E6E6;
 }
 
 /* Primary Navigation (e.g. Works | Groups | People | etc.) */
-ul#navigation {
-	padding:0.5em;
-	margin:0em;
+#navigation {
+  margin: 0;
+  padding: 0;
+  float: left;
+  line-height: normal;
 }
 
-ul#navigation li {
-	display: inline;
-	padding-right:0.5em;
-	margin:0em;
+#navigation li {
+  float: left;
+  margin-right: 5px;
+  padding: 0;
+  list-style: none;
+}
+  
+#navigation a {
+  display: block;
+  padding: 5px 5px 7px 5px;
+  text-decoration: none;
+}
+  
+#navigation a:hover {
+  background-color:#E6E6E6;
 }
 
-ul#navigation a {
-	padding: 0.5em 1.5em 0.5em 0em;
-	margin:0em;
+#navigation li#current {
+	background-color:#CCC;
+}
+
+#navigation #current a {
+  padding-bottom: 0.5em;
+  color: #990000;
+  font-weight: bold;
+}
+
+#local-nav {
+	margin:0.5em 0em;
+	padding-bottom:1em;
+	background-color:#EEEEEE;
+	margin-bottom:1.5em;
+	border-bottom:1px solid #CCC;
+	border-top:1px solid #CCC
+}
+
+#local-nav li {
+	list-style:none;
+	float:left;
+	padding:0;
+	text-decoration:none;
+}
+
+#local-nav li.current {
+	background-color: #000000;
+}
+
+#local-nav li.current a {
+	color:#FFF;
+	font-weight:bold;
+}
+
+#local-nav a {
+	font-size:110%;
+	color:#000000;
+	display:block;
+	padding:5px 10px;
+	text-decoration:none;
+}
+
+#local-nav a:hover {
+	color:#000000;
+	background:#CCC;
+}
+
+#local-nav a.current {
+	background:#000;
+	color:#990000;
 }
 
 
@@ -365,9 +434,12 @@ ol.works {
 }
 .work {
 	list-style: none; 
-	border-bottom:1px solid #ddd; 
-	padding:0.75em 0; 
+	padding:0 0 0.75em 0; 
 	margin-bottom:0.5em;
+}
+
+div.screen-format {
+	padding:1em;
 }
 
 a.name_string {
@@ -423,14 +495,21 @@ div.duplicate_box_heading {
 /*Work metadata*/
 p.metadata {
 	color:#737373;
-	font-size:0.85em;
+	font-size:0.95em;
 	padding:0;
 	margin:0.5em 0 0 0;
 }
 
 /*Links under a listed work*/
 .links {
+	font-size:0.95em;
 	margin-top:0.5em;
+}
+
+.even {
+	background-color: #F8F8F8;
+	border-top:1px solid #CCC;
+	border-bottom:1px solid #CCC;
 }
 
 /*lists of people */
@@ -448,9 +527,6 @@ div.person { padding:0em; margin:0em; }
 #publications {padding:0.5em 0; margin:0;}
 #publishers {padding:0.5em 0; margin:0;}
 
-h3.heading {
-	margin:0.25em 0;
-}
 .heading a {
 	text-decoration:none;
 	color:#000;
@@ -501,8 +577,15 @@ tr.selected {
 
 
 /* Any editing actions for views */
-#edit-actions {padding:1em;}
-#edit-actions li {display:inline; padding-right:1em;}
+#admin-actions{width:100%;margin-bottom:1em;}
+
+ul#edit-actions {padding-left:2em;}
+
+#edit-actions li {
+	display:inline; 
+	padding-right:1em;
+	color: #990000;
+}
 
 /* display a list inline */
 .inline {

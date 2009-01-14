@@ -8,18 +8,19 @@ xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
                       :id => @person.id)
     xml.image h($APPLICATION_URL + @person.image_url)
     xml.description h("My latest scholarly work")
-    @person.works.verified.each do |c|
+    @person.works.verified.first(10).each do |work|
       xml.item do
-        xml.title c.title_primary
+        xml.title work.title_primary
+        xml.description work.to_apa
         xml.link url_for(:only_path => false,
                          :controller => 'works',
                          :action => 'show',
-                         :id => c.id)
-        xml.pubDate c.publication_date
+                         :id => work.id)
+        xml.pubDate work.publication_date.year
         xml.guid url_for(:only_path => false,
                          :controller => 'works',
                          :action => 'show',
-                         :id => c.id)
+                         :id => work.id)
         xml.author h(@person.name)
       end
     end

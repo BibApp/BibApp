@@ -53,8 +53,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people do |p|
     # Make URLs like /people/1/attachments/2 for Person Images
     p.resources :attachments
-    # Make URLs like /people/1/works/4 (and allow adding Works to People)
+    # Make URLs like /people/1/works (and allow adding Works to People)
     p.resources :works
+    # Make URLs like /people/1/groups
+    p.resources :groups
     # Make URLs like /people/1/roles/3 for user roles on a specific Person
     p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
   end
@@ -64,9 +66,11 @@ ActionController::Routing::Routes.draw do |map|
   ##### 
   # Add Auto-Complete routes for adding new groups
   map.resources :groups, 
-                :collection => {:auto_complete_for_group_name => :get} do |p|
+                :collection => {:auto_complete_for_group_name => :get} do |g|
+    # Make URLs like /group/1/works/4
+    g.resources :works
     # Make URLs like /group/1/roles/3 for roles on a specific Group
-    p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
+    g.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
   end
 
   #####

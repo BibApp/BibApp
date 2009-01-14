@@ -11,7 +11,7 @@ class WorksController < ApplicationController
   before_filter :find_cart, :only => [:index, :show]
 
   make_resourceful do
-    build :show, :new, :edit, :destroy
+    build :index, :show, :new, :edit, :destroy
     
     publish :xml, :json, :yaml, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
@@ -76,39 +76,52 @@ class WorksController < ApplicationController
       #Anyone with 'admin' role on this work can destroy it
       permit "admin on work"
     end
+    
+    before :index do
+      # Are we showing a person or group's works?
+      # - If there is an "_id" we need to behave properly.
+      if params[:person_id]
+       facet_field = "people"
+       @person = Person.find_by_id(params[:person_id].split("-")[0])
+       object = @person
+       # We want to show the citation list results page
+       params[:view] = "all"
+      elsif params[:group_id]
+       facet_field = "groups"
+       @group = Group.find_by_id(params[:group_id].split("-")[0])
+       object = @group
+       # We want to show the citation list results page
+       params[:view] = "all"
+      end
+      
+      # Solr filtering
+      # * Start with an empty array
+      # * If there are param filters, collect them
+      # * If we have a nested object, filter for object's works
+      
+      filter = Array.new
+      if params[:fq]
+        filter = params[:fq].collect
+      end
+      
+      filter = filter << "#{facet_field}:\"#{object.name}\"" if object
+      filter.uniq!
+      # Default SolrRuby params
+      @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
+      @filter       = filter
+      @sort         = params[:sort] || "year"
+      @sort         = "year" if @sort.empty?
+      @page         = params[:page] || 0
+      @facet_count  = params[:facet_count] || 50
+      @rows         = params[:rows] || 10
+      @export       = params[:export] || ""
+
+      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      @view = params[:view] || "splash"
+    end
   end # end make_resourceful
 
-  def index
-    @remote_ip = request.env["HTTP_X_FORWARDED_FOR"] 
-
-    # Default SolrRuby params
-    @query        = "*:*" # Lucene syntax for "find everything"
-    @filter       = params[:fq] || ""
-    @filter_no_strip = params[:fq] || ""
-    @filter       = @filter.split("+>+").each{|f| f.strip!}
-    @sort         = params[:sort] || "year"
-    @sort         = "year" if @sort.empty?
-    @page         = params[:page] || 0
-    @facet_count  = params[:facet_count] || 50
-    @rows         = params[:rows] || 10
-    @export       = params[:export] || ""
-
-    @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
-
-    #@TODO: This WILL need updating as we don't have *ALL* work info from Solr!
-    # Process:
-    # 1) Get AR objects (works) from Solr results
-    # 2) Init the WorkExport class
-    # 3) Pass the export variable and works to Citeproc for processing
-
-    if @export && !@export.empty?
-      works = Work.find(@works.collect{|c| c["pk_i"]}, :order => "publication_date desc")
-      ce = WorkExport.new
-      @works = ce.drive_csl(@export,works)
-    end
-    
-    @view = params[:view] || "splash"
-  end
+  
   
   #Create a new Work or many new Works
   def create

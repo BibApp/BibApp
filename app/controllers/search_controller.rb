@@ -8,9 +8,8 @@ class SearchController < ApplicationController
 
       # Default SolrRuby params
       @query        = params[:q] || "" # User query
-      @filter       = params[:fq] || ""
-      @filter_no_strip = params[:fq] || ""
-      @filter       = @filter.split("+>+").each{|f| f.strip!}
+      @filter       = params[:fq] || []
+      @filter_no_strip = params[:fq] || []
       @sort         = params[:sort] || "score"
       @sort         = "score" if @sort.empty?
       @page         = params[:page] || 0
