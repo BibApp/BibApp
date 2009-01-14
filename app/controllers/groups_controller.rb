@@ -24,6 +24,10 @@ class GroupsController < ApplicationController
       # find first letter of group names (in uppercase, for paging mechanism)
       @a_to_z = Group.letters.collect { |g| g.letter.upcase }
       
+      if params[:person_id]
+        @person = Person.find_by_id(params[:person_id].split("-")[0])
+      end
+      
       @page = params[:page] || @a_to_z[0]
       @current_objects = Group.find(
         :all, 

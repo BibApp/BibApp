@@ -53,7 +53,7 @@ dl {margin:0 0 1.5em 0;}
 dl dt {font-weight:bold;}
 dd {margin-left:1.5em;}
 table {margin-bottom:1.4em;width:100%;}
-th {font-weight:bold;background:#C3D9FF;}
+th {font-weight:bold; border-bottom:solid black #000;}
 th, td {padding:4px 10px 4px 5px;}
 tr.even td {background:#E5ECF9;}
 tfoot {font-style:italic;}
@@ -124,6 +124,7 @@ div.last {margin-right:0;}
 .append-21 {padding-right:840px;}
 .append-22 {padding-right:880px;}
 .append-23 {padding-right:920px;}
+.prepend-half {padding-left:20px;}
 .prepend-1 {padding-left:40px;}
 .prepend-2 {padding-left:80px;}
 .prepend-3 {padding-left:120px;}

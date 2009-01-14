@@ -16,7 +16,7 @@
 - show_status ||= false
 - links_array ||= [:find_it, :cart]  #default to just 'find_it' and 'cart' links
 
-%li.work
+%li.work{:class => "#{cycle('odd','even')}"}
   -#If work can be selected (and user is logged in), add a checkbox
   - if allow_select && logged_in?
     %div.select_multiple

@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   
   has_many :name_strings, :through => :pen_names
   has_many :pen_names
-  has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false]
+  has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false], :order => "position"
   has_many :memberships
   
   has_many :works, :through => :contributorships 

@@ -1,55 +1,49 @@
 / === People === Show ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor", @person)
-      %ul#edit-actions
-        %li=link_to "Edit", edit_person_path(@person)
-        %li=link_to "Manage Roles", person_roles_path(@person)
-        %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
-        %li=link_to "Add Works", new_person_work_path(@person)
+- @title = @person.first_last # Specify text at end of HTML <title> tag
 
+/ #### Admin Actions ###
+%div#admin-actions.span-24
+  - if logged_in? && current_user.has_role?("editor", @person)
+    %ul#edit-actions
+      %li=link_to "Edit", edit_person_path(@person)
+      %li=link_to "Manage Roles", person_roles_path(@person)
+      %li=link_to "Archive Analysis", archivable_contributorships_path(:person_id => @person.id)
+      %li=link_to "Add Works", new_person_work_path(@person)
+
+/ ### Main ###
+%div.span-24
+  %div.span-22.prepend-1
     = render :partial => "shared/flash_messages"
 
-    %h2{:style => "margin-bottom:0.5em"}
-      ="#{@person.first_last}"
-  
-      %span#contact-info
-        %strong
-          Email: 
-        =link_to @person.email, "mailto:#{@person.email}"
-        &#183; 
-        %strong
-          Phone:
-        = @person.phone
+    %div.span-5
+      =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em; margin:1em 0 0 0;", :size => "150x200")
 
-    %div#person-image{:class => "span-6 append-1"}  
-      =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "150x200")
+      %div.memberships{:style => "margin-top:1em"}
+        - if !@person.memberships.empty?
+          %h4 Group Memberships
+          %ul
+            - @person.memberships.each do |m|
+              -if m.group.hide == false
+                %li=link_to m.group.name, group_path(m.group)
 
-    %div{:class => "span-14 prepend-1 last"}
-      - if @research_focus.strip.length > 0
-        %h3{:style => "padding-top:1em"}Research Focus
-        #research_focus=@research_focus
+      %div.coauthors{:style => "margin-top:1em"}
+        = render :partial => "shared/coauthors_table"
 
-      - if !@person.memberships.empty?
-        %h3 Groups
-        %ul#groups
-          - @person.memberships.each do |m|
-            -if m.group.hide == false
-              %li{:style => "display:inline; padding-right:1em"}
-                =link_to m.group.name, group_path(m.group)
+    %div.span-17.last
+      %h2
+        ="#{@person.first_last}"
+      = render :partial => "shared/local_nav", :locals => {:object => "person"}
+        
+      %div.span-9.append-1
+        - if @research_focus.strip.length > 0
+          %h3 Research Focus
+          #research_focus=@research_focus
 
-      = render :partial => "shared/coauthors"
-
-    - if !@export.empty?
-      %div#results{:class => "span-22"}
-        %h2 Works
-        = @works
-
-    - else
-      %div#results{:class => "span-23"}
-        / Facets
-        = render :partial => "shared/facets"
-
-        / Works 
-        = render :partial => "shared/works"
+      %div.span-7.last
+        %h3.heading
+          =link_to "Recent Works", person_works_path(@person)
+          =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss")) 
+        %ol#works{:class => "works"}
+          - @works.first(3).each do |work|
+            = render :partial => "shared/work", :locals => {:work => work}

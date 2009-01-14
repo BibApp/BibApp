@@ -1,15 +1,18 @@
 / === People === Index ===
 / Main
 - @title="People" # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor")
-      %ul#edit-actions
-        %li=link_to "Add a Person", new_person_path
-      
+
+/ #### Admin Actions ###
+%div#admin-actions.span-24
+  - if logged_in? && current_user.has_role?("editor")
+    %ul#edit-actions
+      %li=link_to "Add a Person", new_person_path
+
+%div.span-24
+  %div.span-22.prepend-1
     = render :partial => "shared/flash_messages"
       
-  %div{:class => "span-22 prepend-1"}
+  %div.span-22.prepend-1
     %h2="People (#{@page})"
     
     = render :partial => "shared/alpha_pagination"

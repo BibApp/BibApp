@@ -1,64 +1,94 @@
 / === Works === Index ===
 / Main
-- @title="Works" # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
+- @title = "Works" # Specify text at end of HTML <title> tag
 
-    - if logged_in? && current_user.has_role?("editor")
-      %ul#edit-actions
-        %li=link_to "Add a Work", new_work_path
-          
+/ ### Admin Actions
+%div#admin-actions.span-24
+- if logged_in? && current_user.has_role?("editor")
+  %ul#edit-actions
+    %li=link_to "Add a Work", new_work_path
+
+/ ### Main ###
+%div.span-24
+  %div.span-22.prepend-1
+    = render :partial => "shared/flash_messages"
+  
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
   - if @view == "all" && @export.empty?
-    %div{:class => "span-22 prepend-1"}
-    
-      %h2="Works"
-      %div#results{:class => "span-22"}
-        / Facets
-        = render :partial => "shared/facets"
+  
+    %div.span-22.prepend-1
 
-        / Works 
-        = render :partial => "shared/works"
+      / ### Person / Works ###
+      - if params[:person_id]
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag person_works_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = nil, {:size => 15})
+              = submit_tag 'Go'
+
+        %div.span-17.last
+          %h2="#{@person.first_last}"
+          = render :partial => "shared/local_nav", :locals => {:object => "person"}
+
+      / ### Group / Works ###
+      - if params[:group_id]
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag group_works_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = nil, {:size => 15})
+              = submit_tag 'Go'
+
+        %div.span-17.last
+          %h2= @group.name
+          = render :partial => "shared/local_nav", :locals => {:object => "group"}
+          
+
+    / Render
+    %div#results.span-22.prepend-1
+      = render :partial => "shared/facets"
+        
+      / Works 
+      = render :partial => "shared/works"
 
   - elsif !@export.empty?
-    %div{:class => "span-24"}
-      %div{:class => "span-22 prepend-1"}
+    %div.span-24
+      %div.span-22.prepend-1
         %h2 Works
         = @works
 
   - else
-    %div{:class => "span-22 prepend-1"}
+    %div.span-22.prepend-1
 
       %h2 
         At the library, we
         %span{:style => "color:#990000;"} &hearts; 
         our researchers.
       
-      %div{:class => "span-23"}
-        
+      %div.span-15
         / People
         = render :partial => "shared/people", :locals => {:count => 15}
 
-        / Works
-        %div{:class => "span-6"}
-          %h3.heading
-            =link_to "Recent additions", works_url(:view => "all")
-          %ol#works{:class => "span-7 works", :style => "clear:both;"}
-            - @works.first(3).each do |work|
-              = render :partial => "shared/work", :locals => {:work => work}
+      / Works
+      %div.span-7.last
+        %h3.heading
+          =link_to "Recent additions", works_url(:view => "all")
+        %ol#works.works
+          - @works.first(3).each do |work|
+            = render :partial => "shared/work", :locals => {:work => work}
 
-    %div#facets{:class => "span-24", :style=>"padding-top:1em"}
+    %div#facets.span-24
       
       / Groups
-      %div{:class => "span-6 prepend-1"}
+      %div.span-6.prepend-1
         = render :partial => "shared/groups", :locals => {:count => 10}
 
       / Publications
-      %div{:class => "span-6 prepend-1 append-2"}
+      %div.span-6.prepend-1.append-2
         = render :partial => "shared/publications", :locals => {:count => 10}
 
       / Publishers
-      %div{:class => "span-6 last"}
+      %div.span-6.last
         = render :partial => "shared/publishers", :locals => {:count => 10}

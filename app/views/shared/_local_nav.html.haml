@@ -1,0 +1,40 @@
+%div#local-nav
+  - if object == "person"
+    %ul#local-pages
+      - # People
+      - if params[:controller] == "people"
+        %li.current=link_to "Home", person_path(@person)
+      - else
+        %li=link_to "Home", person_path(@person)
+      
+      - # Works
+      - if params[:controller] == "works"
+        %li.current=link_to "Works", person_works_path(@person)
+      - else
+        %li=link_to "Works", person_works_path(@person)
+
+      - # Groups
+      - if params[:controller] == "groups"
+        %li.current=link_to "Groups", person_groups_path(@person)
+      - else
+        %li=link_to "Groups", person_groups_path(@person)
+
+  - if object == "group"
+    %ul#local-pages
+      - # Group
+      - if params[:controller] == "group"
+        %li.current=link_to "Home", group_path(@group)
+      - else
+        %li=link_to "Home", group_path(@group)
+    
+      - # Works
+      - if params[:controller] == "works"
+        %li.current=link_to "Works", group_works_path(@group)
+      - else
+        %li=link_to "Works", group_works_path(@group)
+
+      - # People
+      - if params[:controller] == "people"
+        %li.current=link_to "People"#, group_people_path(@group)
+      - else
+        %li=link_to "People"#, group_people_path(@group)

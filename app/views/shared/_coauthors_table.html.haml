@@ -1,0 +1,21 @@
+-#
+-# Render Co-Author Table from Solr data
+-#
+
+-# Size must be greater than 1, since person is not a co-author with him/herself
+
+%h4="#{$UNIVERSITY_SHORT_NAME} Co-Authors"
+- if @facets[:people_data].size > 1
+  %table{:style => "width:90%"}
+    %thead
+      %tr
+        %th Last Name
+        %th # of Works
+    %tbody
+      -@facets[:people_data].each do |p|
+      - last_name, id, image_url = Person.parse_solr_data(p.name)
+      - #Skip over the current person in the co-author listing
+      - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
+        %tr
+          %td=link_to last_name, person_path(id)
+          %td{:style=>"text-align:center;"}=p.value

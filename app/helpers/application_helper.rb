@@ -210,55 +210,31 @@ module ApplicationHelper
     return @archivable_count
   end
   
-  def add_filter(query, sort, query_filter, facet, value, count, view, rows)
-    # TODO: Add Sort
-    # If we have >1 filter, we need to join the facet_field:value
-    if query_filter.size > 0 || !query_filter.empty?
-      prepped_filter = Array.new
-      prepped_filter << query_filter.dup
-
-      if(!query_filter.include?(facet + ':"' + value.to_s + '"'))
-        prepped_filter << facet + ':"' + value.to_s + '"'
-      end
-      
-      prepped_filter = prepped_filter.join("+>+")
-
-    # If we have no filters, we need to send the first
+  def add_filter(params, facet, value, count)
+    filter = Hash.new
+    if params[:fq]
+      filter[:fq] = params[:fq].collect
     else
-      prepped_filter = facet + ':"' + value.to_s + '"'
+      filter[:fq] = []
     end
     
-    link_to "#{value} (#{count})", {
-      :q => query,
-      :sort => sort,
-      :fq => prepped_filter,
-      :view => view,
-      :rows => rows,
-      :anchor => "works"
-    }
+    filter[:fq] << "#{facet}:\"#{value}\""
+    filter[:fq].uniq!
+    
+    link_to "#{value} (#{count})", params.merge(filter)
   end
   
-  def remove_filter(query, sort, query_filter, value, view, rows)
-    
-    prepped_filter = Array.new
-    prepped_filter = query_filter.dup
-    prepped_filter.delete_at(prepped_filter.index(value))
-    prepped_filter = prepped_filter.join("+>+")
-    
-    #Split filter into field name and display value (they are separated by a colon)
-    field_name, display_value = value.split(':')
-    
-    #If this is the Work Status field, get the "pretty name" of the work status
-    display_value = $WORK_STATUS[display_value.to_i] if field_name+":"==Work.solr_status_field
-    
-    link_to "#{display_value}", {
-      :q => query,
-      :sort => sort,
-      :fq => prepped_filter,
-      :view => view,
-      :rows => rows,
-      :anchor => "works"
-    }
+  def remove_filter(params, facet)
+    filter = Hash.new
+    if params[:fq]
+      filter[:fq] = params[:fq].collect
+      filter[:fq].delete(facet)
+      filter[:fq].uniq!
+
+      #Split filter into field name and display value (they are separated by a colon)
+      field_name, display_value = facet.split(':')
+      link_to "#{display_value}", params.merge(filter)
+    end
   end
   
   #Encodes UTF-8 data such that it is valid in HTML
