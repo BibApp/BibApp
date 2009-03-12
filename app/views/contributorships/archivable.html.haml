@@ -21,7 +21,7 @@
         - @pub_table.each do |row|
           -# Default colors to unknown
           - color = "unknown"
-          - color = row.color.downcase if row.color
+          - color = row.color.downcase if row.color and !row.color.empty?
           %tr{:class => "#{color}"}
             %td=row.count
             %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
