@@ -83,7 +83,11 @@ ActionController::Routing::Routes.draw do |map|
   #####
   # Contributorship routes
   #####
-  map.resources :contributorships, :collection => { :admin => :get, :archivable => :get }, :member => { :verify => :put, :deny => :put } 
+  map.resources :contributorships,
+                :collection => { :admin => :get,
+                                 :archivable => :get,
+                                 :verify_multiple => :put }, 
+                :member => { :verify => :put, :deny => :put }
     
   #####
   # Publisher routes
