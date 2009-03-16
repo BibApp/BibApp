@@ -145,6 +145,90 @@ function submit_delete_form(form, checkboxName, action)
 }//end submit_delete_form
 
 
+/* submit_verify_form method
+ *
+ * First, verifies that a given checkbox field (specified
+ * by 'checkboxName') has at least one item checked.  Then,
+ * changes the current form on-the-fly into a
+ * 'destroy' action, and submits it (to the speficied 'action')
+ *
+ * (Based on ideas from Railscast: Destroy without Javascript
+ *  http://railscasts.com/episodes/77 )
+ *
+ * HAML example:
+ * = link_to_function "Delete everything selected",
+ *        "submit_delete_form(document.works_form,
+ *                            'work_id[]',
+ *                            '#{destroy_multiple_works_path}')"
+ *
+ * NOTE: Your form *MUST* also include the following hidden input,
+ * or else RAILS will think this is a fraudelent request!
+ *
+ * = hidden_field_tag "authenticity_token", form_authenticity_token
+ */
+function submit_verify_form(form, checkboxName, action)
+{
+  var msg = "";
+  /*Count the number of selected fields for our confirmation message */
+  var count = 0;
+  var fields = document.getElementsByName(checkboxName);
+
+  if(fields.length>0)
+  {
+    for(var i=0; i<fields.length; i++)
+    {
+      if(fields[i].checked==true)
+      {
+        count++;
+      }
+    }//end for
+  }
+  else
+  {
+    if(fields.checked==true)
+    {
+      count++;
+    }
+  }
+
+
+  /* Only continue if we have an item seleted */
+  if(count==0)
+  {
+    alert("Please select an item to verify.");
+    return false;
+  }
+  else if(count==1)
+  {
+     msg = "Are you sure you want to verify this item?"
+  }
+  else if(count>1)
+  {
+    msg = "Are you sure you want to verify the " + count + " selected items?"
+  }
+
+  /*Confirm before verifying anything*/
+  if(confirm(msg))
+  {
+    /* Change form's method & action to delete these items */
+    form.method = 'POST';
+    form.action = action;
+
+    /* In Rails, the PUT method is specified via a hidden input named "_method" */
+    var hiddenMethod = document.createElement('input');
+    hiddenMethod.setAttribute('type', 'hidden');
+    hiddenMethod.setAttribute('name', '_method');
+    hiddenMethod.setAttribute('value', 'put');
+    form.appendChild(hiddenMethod);
+
+    /* Finally, submit our form to verify the items! */
+    form.submit();
+
+  }
+  return false;
+}//end submit_verify_form
+
+
 /*=============================
  * Create/Edit Work Form
  *=============================*/
