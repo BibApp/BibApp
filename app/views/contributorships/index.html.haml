@@ -16,11 +16,11 @@
     %h2="#{@status.capitalize} Contributorships for: #{link_to @person.name, person_path(@person)}"
     %div{:class => "column span-14"}
       %ul.actions
-        %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => @page))
+        %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => 1))
         |
-        %li=link_to_unless((@status.downcase == "verified"), "Verified (#{@person.contributorships.verified.size})", contributorships_path(:person_id => @person.id, :status => "verified", :page => @page))
+        %li=link_to_unless((@status.downcase == "verified"), "Verified (#{@person.contributorships.verified.size})", contributorships_path(:person_id => @person.id, :status => "verified", :page => 1))
         |
-        %li=link_to_unless((@status.downcase == "denied"), "Denied (#{@person.contributorships.denied.size})", contributorships_path(:person_id => @person.id, :status => "denied", :page => @page))
+        %li=link_to_unless((@status.downcase == "denied"), "Denied (#{@person.contributorships.denied.size})", contributorships_path(:person_id => @person.id, :status => "denied", :page => 1))
 
     / Sort Form
     %div{:class => "span-13 append-1 last"}
@@ -29,7 +29,19 @@
           = check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
           %strong="Select All"
           |
-          =button_to_function "Verify selected contributorships", "submit_verify_form(document.contributorships_form, 'contrib_id[]', '#{verify_multiple_contributorships_path}');"
+          %select{:name => "do_to_all"}
+            %option{:selected => "selected", :value => "null", :id => "null"} Action
+            - if @status == "verified"
+              %option{:value => "#{unverify_multiple_contributorships_path}", :id => "unverify"} Unverify
+              %option{:value => "#{deny_multiple_contributorships_path}", :id => "deny"} Deny
+            - if @status == "unverified"
+              %option{:value => "#{verify_multiple_contributorships_path}", :id => "verify"} Verify
+              %option{:value => "#{deny_multiple_contributorships_path}", :id => "deny"} Deny
+            - if @status == "denied"
+              %option{:value => "#{unverify_multiple_contributorships_path}", :id => "unverify"} Undeny
+              %option{:value => "#{verify_multiple_contributorships_path}", :id => "verify"} Verify
+          |
+          =button_to_function "Apply to selection", "sel=document.contributorships_form.do_to_all;submit_contributorships_form(document.contributorships_form, 'contrib_id[]', sel.options[sel.options.selectedIndex].value, sel.options[sel.options.selectedIndex].id)"
 
         #sort-by
           %label Show:

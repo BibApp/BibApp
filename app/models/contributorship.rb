@@ -68,6 +68,10 @@ class Contributorship   < ActiveRecord::Base
     return true if self.contributorship_state_id == 1
   end
   
+  def unverify_contributorship
+    self.contributorship_state_id = 1
+  end
+  
   def verified?
     return true if self.contributorship_state_id == 2
   end

@@ -86,7 +86,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :contributorships,
                 :collection => { :admin => :get,
                                  :archivable => :get,
-                                 :verify_multiple => :put }, 
+                                 :verify_multiple => :put,
+                                 :unverify_multiple => :put,
+                                 :deny_multiple => :put },
                 :member => { :verify => :put, :deny => :put }
     
   #####
