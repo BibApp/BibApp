@@ -3,9 +3,7 @@
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
     = render :partial => "shared/flash_messages"
-      
-    %p.person-edit-actions
-      = render :partial => "edit_actions"
+
   %div{:class => "span-22 prepend-1"}
     %h2="Edit #{link_to @person.name, person_path(@person)}"
     %div{:class => "span-4"}
