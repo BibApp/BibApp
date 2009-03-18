@@ -13,7 +13,10 @@
     = render :partial => "shared/flash_messages"
       
   %div.span-22.prepend-1
-    %h2="People (#{@page})"
+    - if @page == ""
+      %h2="People (All)"
+    - else
+      %h2="People (#{@page})"
     
     = render :partial => "shared/alpha_pagination"
 
