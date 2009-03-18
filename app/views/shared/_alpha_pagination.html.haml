@@ -1,4 +1,5 @@
 %ol#alpha-nav.pagination
+  = content_tag :li, link_to("All", {:page=> ""}, :class => "all")
   - ('A'..'Z').each do |letter|
     - current = false
     - if letter == @page
