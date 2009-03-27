@@ -4,50 +4,13 @@
   %div{:class => "span-22 prepend-1"}
     = render :partial => "shared/flash_messages"
 
-    %h2="Memberships for: #{link_to @person.first_last, person_path(@person)}"
-    %div{:class => "column span-14"}
-      %ul.actions
-        %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "member"}})
-        |
-        %li=link_to_unless((@status.downcase == "non_member"), "Non-Memberships (#{@person.groups_not.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "non_member"}})
+  %div{:class => "span-22 prepend-1"}
+    %h2=" Editing: #{link_to @person.first_last, person_path(@person)}"
 
-    - if @status == "non_member"
-      / Sort Form
-      %div{:class => "span-13 append-1 last"}
-        - form_tag "#", :method => :get, :name => "memberships_form" do
-          #bulk_links
-            /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
-            =button_to_function "Join selected groups", "submit_memberships_form(document.memberships_form, 'group_id[]', '#{create_multiple_memberships_path}')"
+    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
-          #sort-by
-            %label Show:
-            %select{:name => "rows"}
-              - ["10", "20", "50", "100", "250", "500"].each do |opt|
-                - if opt == @rows
-                  %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-                - else
-                  %option{:value => "#{opt}"}= opt.titleize
-
-            - @page = 1 if @page == 0
-            = hidden_field_tag "person_id", @person.id
-            = hidden_field_tag "status", @status
-            -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
-            = hidden_field_tag "authenticity_token", form_authenticity_token
-
-            = submit_tag 'Go'
-
-          %div
-            = will_paginate @groups
-            = render :partial => "group_list"
-
-    - if @status == "member"
-      %div{:class => "span-13 append-1 last"}
-        #edit_membership_active
-        %ol#current
-          = render :partial => "group", :collection => @person.groups(true)
-
-    %div{:class => "span-7 prepend-1 last"}
-      #picture{:class => "span-6"}
+    %div{:class => "span-4 prepend-1"}
+      #picture{:class => "span-3"}
         %p= render :partial => "shared/person_image", :locals => {:o => @person}
 
       %h3="Groups (#{@person.groups.size})"
@@ -55,4 +18,47 @@
         - @person.groups.each do |g|
           %li=link_to "#{g.name}", group_path(g)
 
-    /=sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
+    %fieldset
+      %legend="Group Memberships"
+      %div{:class => "column span-14"}
+        %ul.actions
+          %li=link_to_unless((@status.downcase == "member"), "Group Memberships (#{@person.groups.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "member"}})
+          |
+          %li=link_to_unless((@status.downcase == "non_member"), "Other Groups (#{@person.groups_not.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "non_member"}})
+
+      - if @status == "non_member"
+        / Sort Form
+        %div{:class => "span-12 append-1 last"}
+          - form_tag "#", :method => :get, :name => "memberships_form" do
+            #bulk_links
+              /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
+              =button_to_function "Join selected groups", "submit_memberships_form(document.memberships_form, 'group_id[]', '#{create_multiple_memberships_path}')"
+
+            #sort-by
+              %label Show:
+              %select{:name => "rows"}
+                - ["10", "20", "50", "100", "250", "500"].each do |opt|
+                  - if opt == @rows
+                    %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
+                  - else
+                    %option{:value => "#{opt}"}= opt.titleize
+
+              - @page = 1 if @page == 0
+              = hidden_field_tag "person_id", @person.id
+              = hidden_field_tag "status", @status
+              -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
+              = hidden_field_tag "authenticity_token", form_authenticity_token
+
+              = submit_tag 'Go'
+
+            %div
+              = will_paginate @groups
+              = render :partial => "group_list"
+
+      - if @status == "member"
+        %div{:class => "span-12 append-1 last"}
+          #edit_membership_active
+          %ol#current
+            = render :partial => "group", :collection => @person.groups(true)
+
+      /=sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }

@@ -1,23 +1,44 @@
 %div#local-nav
   - if object == "person"
-    %ul#local-pages
-      - # People
-      - if params[:controller] == "people"
-        %li.current=link_to "Home", person_path(@person)
-      - else
-        %li=link_to "Home", person_path(@person)
-      
-      - # Works
-      - if params[:controller] == "works"
-        %li.current=link_to "Works", person_works_path(@person)
-      - else
-        %li=link_to "Works", person_works_path(@person)
+    - if state == "edit"
+      %ul#local-pages
+        - # Personal Info
+        - if params[:controller] == "people"
+          %li.current=link_to "Personal Info", edit_person_path(@person.id)
+        - else
+          %li=link_to "Personal Info", edit_person_path(@person.id)
 
-      - # Groups
-      - if params[:controller] == "groups"
-        %li.current=link_to "Groups", person_groups_path(@person)
-      - else
-        %li=link_to "Groups", person_groups_path(@person)
+        - # Pen Names
+        - if params[:controller] == "pen_names"
+          %li.current=link_to "Pen Names", new_person_pen_name_path(@person.id)
+        - else
+          %li=link_to "Pen Names", new_person_pen_name_path(@person.id)
+
+        - # Memberships
+        - if params[:controller] == "memberships"
+          %li.current=link_to "Group Memberships", new_person_membership_path(@person.id)
+        - else
+          %li=link_to "Group Memberships", new_person_membership_path(@person.id)
+    - else
+      %ul#local-pages
+        - # People
+        - if params[:controller] == "people"
+          %li.current=link_to "Home", person_path(@person)
+        - else
+          %li=link_to "Home", person_path(@person)
+
+        - # Works
+        - if params[:controller] == "works"
+          %li.current=link_to "Works", person_works_path(@person)
+        - else
+          %li=link_to "Works", person_works_path(@person)
+
+        - # Groups
+        - if params[:controller] == "groups"
+          %li.current=link_to "Groups", person_groups_path(@person)
+        - else
+          %li=link_to "Groups", person_groups_path(@person)
+
 
   - if object == "group"
     %ul#local-pages

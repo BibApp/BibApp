@@ -57,6 +57,10 @@ ActionController::Routing::Routes.draw do |map|
     p.resources :works
     # Make URLs like /people/1/groups
     p.resources :groups
+    # Make URLs like /people/1/pen_names
+    p.resources :pen_names
+    # Make URLs like /people/1/memberships
+    p.resources :memberships
     # Make URLs like /people/1/roles/3 for user roles on a specific Person
     p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
   end

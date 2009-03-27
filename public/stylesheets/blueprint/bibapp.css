@@ -237,6 +237,13 @@ li.active-filter {
 /* =============================== */
 /* ========= Form Styles ========= */
 /* =============================== */
+form.edit_person label {
+  width: 140px;
+  float: left;
+  text-align: right;
+  margin-right: 5px;
+}
+
 form.work_form fieldset {
    margin-bottom: 10px;
    width: 700px;
