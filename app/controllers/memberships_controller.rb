@@ -38,7 +38,7 @@ class MembershipsController < ApplicationController
     @person.groups << @group  
     respond_to do |format|
       format.js { render :action => :regen_lists }
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
+      format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
     end
   end
 
@@ -69,7 +69,7 @@ class MembershipsController < ApplicationController
     end
 
     #Return path for any actions that take place on the memberships page
-    return_path = new_membership_path(:person_id=>params[:person_id],
+    return_path = new_person_membership_path(:person_id=>params[:person_id],
                                    :status=>params[:status])
 
     respond_to do |format|
@@ -98,7 +98,7 @@ class MembershipsController < ApplicationController
     if(@membership == nil)
     	@person.groups << @group
     	respond_to do |format|
-      	format.html { redirect_to new_membership_path(:person_id => @person.id) }
+      	format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
       	format.js { render :action => :regen_lists }
     	end
   	end
@@ -112,7 +112,7 @@ class MembershipsController < ApplicationController
     @membership.destroy if @membership
     respond_to do |format|
       format.js { render :action => :regen_lists }
-      format.html { redirect_to new_membership_path(:person_id => @person.id) }
+      format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
     end
 
   end
