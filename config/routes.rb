@@ -78,7 +78,9 @@ ActionController::Routing::Routes.draw do |map|
   #####
   # Add Auto-Complete routes
   map.resources :memberships, 
-                :collection => {:auto_complete_for_group_name => :get}
+                :collection => {:auto_complete_for_group_name => :get,
+                                :create_multiple => :put
+                                }
   
   #####
   # Contributorship routes

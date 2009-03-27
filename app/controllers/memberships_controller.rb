@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  
+
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy]
   
@@ -14,6 +14,20 @@ class MembershipsController < ApplicationController
       #'editor' of person or group can update membership details
       permit "editor of person or group"
     end
+
+    before :new do
+      @person = Person.find(params[:person_id])
+      @page   = params[:page] || 1
+      @rows = params[:rows] || 10
+      @status = params[:status] || "member"
+
+      @groups = @person.groups_not.paginate(
+        :page => @page,
+        :per_page => @rows,
+        :order => 'name'
+      )
+    end
+
   end
   
   
@@ -25,6 +39,48 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       format.js { render :action => :regen_lists }
       format.html { redirect_to new_membership_path(:person_id => @person.id) }
+    end
+  end
+
+
+  def create_multiple
+
+    person = Person.find(params[:person_id])
+    group_ids = params[:group_id]
+
+    full_success = true
+
+    unless group_ids.nil? or group_ids.empty?
+      #Create each membership one by one, so we can be sure user has 'edit' rights on all
+      group_ids.each do |group_id|
+        group = Group.find(group_id)
+
+        #One final check...only an editor on this person or group can create the membership
+        if logged_in? && (current_user.has_role?("editor", person) || current_user.has_role?("editor", group))
+          begin
+            person.groups << group
+          rescue ActiveRecord::RecordInvalid
+            flash[:warning] = "One or more groups could not be joined; a membership already exists."
+          end
+        else
+          full_success = false
+        end
+      end
+    end
+
+    #Return path for any actions that take place on the memberships page
+    return_path = new_membership_path(:person_id=>params[:person_id],
+                                   :status=>params[:status])
+
+    respond_to do |format|
+      if full_success
+        flash[:notice] = "Groups were successfully joined."
+      else
+        flash[:warning] = "One or more groups could not be joined; you have insufficient privileges"
+      end
+      #forward back to path which was specified in params
+      format.html {redirect_to return_path }
+      format.xml  {head :ok}
     end
   end
   
@@ -47,7 +103,8 @@ class MembershipsController < ApplicationController
     	end
   	end
   end
-  
+
+
   def destroy
     #'editor' of person or group can destroy a membership
     permit "editor of person or group"
@@ -72,12 +129,14 @@ class MembershipsController < ApplicationController
       format.html { redirect_to new_membership_path(:person_id => @person.id) }
     end
   end
-  
+
+
   def update
     membership = Membership.find(params[:id])
     membership.update_attributes(params[:membership])
+    @person = membership.person
     
-    render :partial => 'group', :collection => @person.groups(true), :locals => {:selected => true}
+    render :partial => 'group', :collection => @person.groups(true)
     
   end
   
@@ -96,7 +155,6 @@ class MembershipsController < ApplicationController
       
     render :partial => 'autocomplete_list', :locals => {:objects => groups}
   end 
-  
   
   private
   def find_person

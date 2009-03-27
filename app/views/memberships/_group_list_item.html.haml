@@ -1,0 +1,3 @@
+%div{:id => "group_id-#{group_list_item.id}", :class => "span-14", :style => "border-top: 1px dotted #CCC;"}
+  = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:style => "float: left;"}
+  = group_list_item.name
