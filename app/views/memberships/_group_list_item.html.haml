@@ -1,3 +1,7 @@
-%div{:id => "group_id-#{group_list_item.id}", :class => "span-14", :style => "border-top: 1px dotted #CCC;"}
-  = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:style => "float: left;"}
-  = group_list_item.name
+- if !group_list_item.hide?
+  %div{:id => "group_id-#{group_list_item.id}", :class => "span-14", :style => "border-top: 1px dotted #CCC;"}
+    - if @person.groups.include?(group_list_item)
+      = check_box_tag "group_id[].ignore", "#{group_list_item.id}", true, {:disabled => true, :style => "float: left;"}
+    - else
+      = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:style => "float: left;"}
+    = group_list_item.name

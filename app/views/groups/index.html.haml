@@ -27,7 +27,7 @@
         
         %ul
           - @person.groups.each do |group|
-            %li=group.name
+            %li=link_to group.name, group_path(group)
 
     - else
       / ### Groups

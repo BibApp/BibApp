@@ -86,11 +86,10 @@ class GroupsController < ApplicationController
     end
   end
   
-  def create_group
+  def create
     
     @duplicategroup = Group.find(:first, :conditions => ["name LIKE ?", params[:group][:name]])
    
-    
     if @duplicategroup.nil?
       @group = Group.find_or_create_by_name(params[:group][:name])
       @group.hide = false
@@ -132,6 +131,25 @@ class GroupsController < ApplicationController
        flash[:notice] = "Group was successfully removed."
        format.html {redirect_to :action => "index"}
       end
+  end
+  
+  def destroy
+    @group = Group.find(params[:id])
+
+    #check memberships
+    memberships = Membership.find_all_by_group_id(@group)
+
+    if memberships.length > 0
+      respond_to do |format|
+       flash[:error] = "Group cannot be deleted. Memberships exist."
+       format.html {redirect_to :action => "edit"}
+      end
+    else
+      respond_to do |format|
+       flash[:notice] = "Group was successfully removed."
+       format.html {redirect_to :action => "edit"}
+      end
+    end
   end
   
   private

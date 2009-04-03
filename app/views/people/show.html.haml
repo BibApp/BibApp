@@ -20,7 +20,7 @@
           %h4 Group Memberships
           %ul
             - @person.memberships.each do |m|
-              -if m.group.hide == false
+              -if !m.group.hide?
                 %li=link_to m.group.name, group_path(m.group)
 
       %div.coauthors{:style => "margin-top:1em"}
