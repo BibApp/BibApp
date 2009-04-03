@@ -1,12 +1,22 @@
 / === Groups === Edit ===
 / Main
 %div{:class => "span-24"}
+  / #### Admin Actions ###
+  %div#admin-actions.span-24
+    %ul#edit-actions
+      - if logged_in? && current_user.has_role?("editor", @person) && !current_user.has_role?("admin", @person)
+        %li=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+      - if logged_in? && current_user.has_role?("admim", @person)
+        %li=link_to "Hide Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+        %li=link_to "Delete Group", {:id => @group.id, :controller => "groups", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this group? This cannot be undone.'
+
   %div{:class => "span-22 prepend-1"}
     = render :partial => "shared/flash_messages"
+
       
     %h2="Edit #{link_to @group.name, group_path(@group)}"
     
-    %h5=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+    /%h5=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
     
     %div{:class => "column span-16"}
       - form_for :group, @group, :url => group_path(@group), :html => {:method => :put} do |form|

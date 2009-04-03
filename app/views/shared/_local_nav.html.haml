@@ -1,6 +1,6 @@
 %div#local-nav
   - if object == "person"
-    - if state == "edit"
+    - if defined?(state) && state == "edit"
       %ul#local-pages
         - # Personal Info
         - if params[:controller] == "people"
@@ -43,7 +43,7 @@
   - if object == "group"
     %ul#local-pages
       - # Group
-      - if params[:controller] == "group"
+      - if params[:controller] == "groups"
         %li.current=link_to "Home", group_path(@group)
       - else
         %li=link_to "Home", group_path(@group)

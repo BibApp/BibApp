@@ -21,11 +21,45 @@ class MembershipsController < ApplicationController
       @rows = params[:rows] || 10
       @status = params[:status] || "member"
 
-      @groups = @person.groups_not.paginate(
-        :page => @page,
-        :per_page => @rows,
-        :order => 'name'
-      )
+      #For searching groups:
+      #  Start by building the "LIKE" string for :conditions
+      #  e.g. if two terms, (LOWER(name) LIKE ?) AND (LOWER(name) LIKE ?)
+      if params[:q]
+        @query = params[:q]
+        like_string = ""
+        query_words = @query.downcase.split
+        query_words.each do |qw|
+          like_string += "(LOWER(name) LIKE ?) AND "
+        end
+
+        #Chop five times to remove the trailing " AND "
+        like_string = like_string.chop.chop.chop.chop.chop
+        
+        #Add the "LIKE" string to the array
+        query_string = []
+        query_string << like_string
+        
+        #Add the search terms
+        query_words.each do |qw|
+          query_string << ("%" + qw + "%")
+        end
+
+        @groups = Group.find(:all,
+                             :conditions => query_string,
+                             :order => "name ASC")
+
+        @groups = @groups.paginate(
+            :page => @page,
+            :per_page => @rows,
+            :order => 'name'
+          )
+      else
+        @groups = Group.find(:all).paginate(
+          :page => @page,
+          :per_page => @rows,
+          :order => 'name'
+        )
+      end
     end
 
   end
@@ -102,6 +136,15 @@ class MembershipsController < ApplicationController
       	format.js { render :action => :regen_lists }
     	end
   	end
+  end
+
+
+  def search_groups
+    respond_to do |format|
+      format.js { render :action => :regen_lists }
+      format.html { redirect_to new_person_membership_path(:person_id => params[:person_id],
+          :status => params[:status], :q => params[:q]) }
+    end
   end
 
 

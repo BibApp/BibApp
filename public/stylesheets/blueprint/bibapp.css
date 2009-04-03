@@ -237,7 +237,7 @@ li.active-filter {
 /* =============================== */
 /* ========= Form Styles ========= */
 /* =============================== */
-form.edit_person label {
+form.edit_person label, form.new_person label {
   width: 140px;
   float: left;
   text-align: right;
