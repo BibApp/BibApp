@@ -1,17 +1,15 @@
 / === Publications === Index ===
 / Main
 - @title="Publications" # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+  %div.span-22.prepend-1
     - if logged_in? && current_user.has_role?("editor")
       %ul#edit-actions
         %li=link_to "Add a Publication", new_publication_path
         - if current_user.has_role?("admin", System)
           %li=link_to "Admin Publication Authorities", authorities_publications_path
-      
-    = render :partial => "shared/flash_messages"
     
-  %div{:class => "span-22 prepend-1"}
+  %div.span-22.prepend-1
     %h2="Publications (#{@page})"
     
     = render :partial => "shared/alpha_pagination"
