@@ -42,7 +42,7 @@
       / Admin
       = #render :partial => 'admin'
 
-      %p{:style => "padding-top:1em;"}= @work.abstract
+      %p{:style => "padding-top:1em;"}= #@work.abstract
     
       -if (File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html"))
         %h4{:style => "margin-bottom:0.5em;"}="APA Format: #{@work.class.name.to_s.underscore.humanize}"
