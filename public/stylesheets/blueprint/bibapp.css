@@ -137,7 +137,8 @@ ul#global-nav a:hover {
 /* ======================================= */
 /* =========== Flash Messages ============ */
 /* ======================================= */
-.error, .notice, .warning {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
+#flash-messages {margin-bottom:1em;}
+.error, .notice, .warning {padding:.8em;border:2px solid #ddd;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
@@ -435,6 +436,12 @@ div.auto_complete ul strong.highlight {
 /* =========== Work View Styles ========== */
 /* ======================================= */
 /* Used by shared/works.html.haml and shared/work.html.haml */
+
+
+#work-details	{ min-height:600px; }
+p#work-publication-details {margin-top:-1em;}
+p#work-authors {font-size:1.25em;}
+#work-abstract	{ padding-top:1em; }
 ol.works {
 	margin:0;
 	padding:0;
@@ -499,12 +506,27 @@ div.duplicate_box_heading {
 /* ==== Shared Styles (i.e. partial templates) ==== */
 /* ================================================ */
 
+/* Basic floaters */
+.left { float:left; }
+.right { float:right; }
+
+/* Basic text-aligns */
+.text-center { text-align: center;}
+.text-left { text-align: left;}
+.text-right { text-align: right;}
+
 /*Work metadata*/
 p.metadata {
 	color:#737373;
 	font-size:0.95em;
 	padding:0;
 	margin:0.5em 0 0 0;
+}
+
+span.gbs-link {
+	float:right; 
+	padding:3px; 
+	margin:0.5em
 }
 
 /*Links under a listed work*/

@@ -50,7 +50,7 @@ module ApplicationHelper
     if work['authors_data'] != nil
       work['authors_data'].first(5).each do |au|
         name, id = NameString.parse_solr_data(au)
-        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+        links << link_to("#{name.gsub(",", ", ")}", name_string_path(id), {:class => "name_string"})
       end
     
       if work['authors_data'].size > 5
@@ -62,20 +62,29 @@ module ApplicationHelper
   end
  
   def link_to_editors(work)
-    links = Array.new
-    
-    if work['editors_data'] != nil
+    if work['editors_data'] != nil    
+      # If no authors, editors go first
+      if work['authors_data'] == nil
+        str = ""
+      else
+        str = "In "
+      end
+
+      links = Array.new
+
       work['editors_data'].first(5).each do |ed|
         name, id = NameString.parse_solr_data(ed)
-        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+        links << link_to("#{name(",", ", ")}", name_string_path(id), {:class => "name_string"})
       end
-    
+  
       if work['editors_data'].size > 5
         links << link_to("more...", work_path(work['pk_i']))
       end
+
+      str += links.join(", ")
+      str += " (Eds.), "
+      return str
     end
-    
-    return links.join(", ")
   end
   
   def link_to_work_publication(work)
@@ -110,6 +119,27 @@ module ApplicationHelper
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
+  end
+  
+  def work_details(work)
+    str = ""
+    str += link_to "#{work.publication.name}", publication_path(work.publication.id) if work.publication != nil && work.publication.name != "Unknown"
+    str += " &#149; " if work.publication != nil && work.publication.name != "Unknown"
+    str += "#{work.publication_date.year} " if work.publication_date != nil
+    str += " #{work.volume}" if work.volume != nil
+    str += "(#{work.issue}), " if work.issue != nil && !work.issue.empty?
+    str += " pgs."
+    str += " #{work.start_page}-" if work.start_page != nil
+    str += "#{work.end_page}." if work.end_page != nil
+    return str
+  end
+  
+  def link_to_google_book(work)
+    if work.publication.issn_isbn != nil && !work.publication.issn_isbn.empty?
+      haml_tag :div, {:class => "right"} do
+        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
+      end
+    end
   end
   
   def link_to_add_to_cart(id)

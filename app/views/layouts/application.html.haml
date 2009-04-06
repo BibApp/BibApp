@@ -18,5 +18,7 @@
   %body
     %div.container
       = render :partial => "shared/header"
+      %div#flash-messages.span-22.prepend-1
+        = render :partial => "shared/flash_messages"
       = yield
       = render :partial => "shared/footer"
