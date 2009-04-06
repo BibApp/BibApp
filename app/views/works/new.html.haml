@@ -3,8 +3,6 @@
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
 
-    = render :partial => "shared/flash_messages"
-
     -#Check if we are adding Works directly to a Person
     -if @person
       %h2="Add a Work for #{link_to @person.name, person_path(@person)}"

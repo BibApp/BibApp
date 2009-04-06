@@ -1,12 +1,9 @@
 / === Works === Edit ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
-
+%div.span-24
     %h2 Edit a Work
 
-    %div{:class => "column span-16"}
+    %div.span-16.column
       - form_for :work, @work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
         -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html"))
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
