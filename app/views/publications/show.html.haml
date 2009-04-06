@@ -1,21 +1,19 @@
 / === Publications === Show ===
 / Main
 - if !@export.empty?
-  %div{:class => "span-24"}
-    %div{:class => "span-22 prepend-1"}
+  %div.span-24
+    %div.span-22.prepend-1
       %h2 Works
       = @works
 
 - else
-  %div{:class => "span-24"}
-    %div{:class => "span-23 prepend-1"}
+  %div.span-24
+    %div.span-23.prepend-1
       - if logged_in? && current_user.has_role?("editor", @publication)
         %ul#edit-actions
           %li=link_to "Edit", edit_publication_path(@publication)
 
-      = render :partial => "shared/flash_messages"
-
-    %div{:class => "span-22 prepend-1" }
+    %div.span-22.prepend-1
       %h2= @publication.name
       %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
 
@@ -25,7 +23,7 @@
       / Groups
       = render :partial => "shared/groups", :locals => {:count => 10}
 
-      %div#results{:class => "span-22"}
+      %div#results.span-22
         / Facets
         = render :partial => "shared/facets"
 
@@ -33,7 +31,7 @@
         = render :partial => "shared/works"
 
       / Authority
-      %div#authority{:class => "span-9"}
+      %div#authority.span-9
         - if @publication.authority_for.size > 0
           %h3=@publication.name
           %p Authorized name for:
