@@ -1,17 +1,14 @@
 / === People === Edit ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
-
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+  %div.span-22.prepend-1
 
     %h2=" Editing: #{link_to @person.first_last, person_path(@person)}"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
-    %div{:class => "span-4 prepend-1"}
-      #picture{:class => "span-3"}
+    %div.span-4.prepend-1
+      #picture.span-3
         %p= render :partial => "shared/person_image", :locals => {:o => @person}
 
       -if @person.image
