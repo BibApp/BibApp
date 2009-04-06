@@ -1,19 +1,16 @@
 / === Publishers === Index ===
 / Main
 - @title="Publishers" # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+  %div.span-22.prepend-1
     - if logged_in? && current_user.has_role?("editor")
       %ul#edit-actions
         %li=link_to "Add a Publisher", new_publisher_path
         - if current_user.has_role?("admin", System)
           %li=link_to "Admin Publisher Authorities", authorities_publishers_path
-
-    = render :partial => "shared/flash_messages"
       
-  %div{:class => "column span-22 prepend-1"}
+  %div.span-22.prepend-1
     %h2="Publishers (#{@page})"
-
     = render :partial => "shared/alpha_pagination"
     
     %ol#publishers
