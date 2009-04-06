@@ -1,12 +1,5 @@
 / Authors
-- if !c.name_strings.author.empty?
-  %span.authors
-    - authors = Array.new
-    - c.name_strings.author.each do |ns|
-      - authors << ns.name
-    - if authors.size > 5
-      - authors = authors.first(6) << "et al."
-    = authors.join(", ")
+=link_to_work_authors(c, true)
 
 / Year
 -if c.publication_date != nil

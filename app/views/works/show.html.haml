@@ -1,8 +1,8 @@
 / === Works === Show ===
 / Main
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+  %div.span-22.prepend-1
     - if logged_in? && current_user.has_role?("editor", @work)
       %ul#edit-actions
         %li= link_to "Edit", edit_work_path
@@ -11,75 +11,37 @@
     - elsif logged_in?
       %ul#edit-actions
         %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
-      
 
-      - if flash[:notice]
-        %div.success= flash[:notice]
-
+    / Work Title
     %h2= @work.title_primary
-    %div{:class => "span-14", :style => "min-height:600px"}
-      %p{:style => "margin-top:-1em;"}
-        =link_to @work.publication.name, publication_path(@work.publication.id)
-        -#Check for publication date
-        -unless @work.publication_date.nil?
-          ="&#149; #{@work.publication_date.year} #{@work.volume}(#{@work.issue}), #{@work.start_page}-#{@work.end_page}."
-        -if @work.publication_date.nil?
-          ="&#149; #{@work.volume}(#{@work.issue}), #{@work.start_page}-#{@work.end_page}."
-      - if @work.publication.issn_isbn != nil
-        %span{:title => "ISBN:#{@work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview", :style=>"float:right; padding:3px; margin:0.5em;"}
-      %p{:style => "font-size:1.25em;"}= @work.name_strings.author.collect{|ns| link_to(ns.name, name_string_path(ns.id))}.join(", ").to_s
-      
-      - if !@work.attachments.nil? and !@work.attachments.empty?               
-        = render :partial => 'attachments', :locals => { :files => @work.attachments }
-        / Admin
-        = render :partial => 'admin'
-          
-      - else
-        .links
-          %strong=link_to_findit(Index.work_to_solr_hash(@work))
-        %br/
-
-      / Admin
-      = #render :partial => 'admin'
-
-      %p{:style => "padding-top:1em;"}= #@work.abstract
     
-      -if (File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html"))
-        %h4{:style => "margin-bottom:0.5em;"}="APA Format: #{@work.class.name.to_s.underscore.humanize}"
-        %p.apa_citation= render :partial => "works/apa/#{@work.class.name.to_s.underscore}", :locals => { :c => @work }
-      -else
-        %h4="APA Format: Generic"
-        %p.apa_citation= render :partial => "works/apa/generic", :locals => { :c => @work }
+    / Work Details
+    %div#work-details.span-14
+      %p#work-publication-details= work_details(@work)
 
-      - if @work.tags.size > 0
-        %div.field
-          %label
-            = pluralize(@work.tags.size, "Tag: ", "Tags: ")
-          - @work.tags.each do |tg|
-            - filter = 'tags:' + '"' + tg.name + '"'
-            %a{:href => search_path(:fq => filter, :qt => "standard") }= tg.name
+      %div.span-14
+        / Google Book Link
+        = link_to_google_book(@work)
+          
+        / Authors
+        %p#work-authors
+          =link_to_work_authors(@work)
+        
+        / Attachments
+        = render :partial => 'attachments', :locals => { :files => @work.attachments }
+        
+        / Abstract
+        %p#work-abstract= #@work.abstract
+    
+        / APA Citation
+        = render :partial => 'citation'
 
-    %div{:class => "span-7 prepend-1 last", :style => "margin-top:2em;"}
-      - if @work.people.size > 0
-        %div.right_box_no_border
-          %div.box_heading="#{$UNIVERSITY_SHORT_NAME} Authors"
-          %ol.people
-            -@work.people.each do |person|
-              %li.inline{:style => "margin:0; padding:0;"}
-                %div{:class => "span-3"}
-                  = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
-                  %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
-                    %strong= person.works.verified.size
-                    %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
+        / Tags
+        = render :partial => "tags"
 
-        - if @recommendations.size > 0
-          %div.right_box
-            %div.box_heading="Related #{$UNIVERSITY_SHORT_NAME} Work"
-            %ul.recommendations
-              - @recommendations.each do |rec, score|
-                %li{:style => "padding:0.5em"}
-                  %p.metadata=link_to rec.title_primary.titleize, work_path(rec)
-                  %p.metadata
-                    ="#{rec.publication.authority.name} |" 
-                    -if rec.publication_date
-                      ="#{rec.publication_date.year}"
+    %div#local-relations.span-7.prepend-1.last
+      / Local Authors
+      = render :partial => "local_authors"
+
+      / Local Recommendations
+      = render :partial => "local_recommendations"
