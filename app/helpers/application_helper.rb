@@ -47,13 +47,15 @@ module ApplicationHelper
   def link_to_authors(work)
     links = Array.new
 
-    work['authors_data'].first(5).each do |au|
-      name, id = NameString.parse_solr_data(au)
-      links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
-    end
+    if work['authors_data'] != nil
+      work['authors_data'].first(5).each do |au|
+        name, id = NameString.parse_solr_data(au)
+        links << link_to("#{name}", name_string_path(id), {:class => "name_string"})
+      end
     
-    if work['authors_data'].size > 5
-      links << link_to("more...", work_path(work['pk_i']))
+      if work['authors_data'].size > 5
+        links << link_to("more...", work_path(work['pk_i']))
+      end
     end
 
     return links.join(", ")
