@@ -13,9 +13,6 @@
 
 / ### Main ###
 %div.span-24
-  %div.span-22.prepend-1
-    = render :partial => "shared/flash_messages"
-  
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
   - if @view == "all" && @export.empty?
