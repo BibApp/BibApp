@@ -1,15 +1,16 @@
 / === Works === Edit ===
 / Main
 %div.span-24
+  %div.span-22.prepend-1
     %h2 Edit a Work
 
-    %div.span-16.column
+    %div.span-22
       - form_for :work, @work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
         -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html"))
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
         -else
           = render :partial => "works/forms/form_generic", :locals => { :form => form }
-        
+    
         -#Add return path & page to form, if specified
         = hidden_field_tag "return_path", @return_path unless @return_path.nil?
         = hidden_field_tag "return_page", @return_page unless @return_page.nil?
