@@ -1,16 +1,16 @@
 / === People === New ===
 / Main
 %div.span-24
-      
+  %div.span-22.prepend-1
     %h2 Add a Person
-  
+
     - form_tag( {:action => :new}, {:method => :get} ) do
       %p
         Search LDAP directory (to pre-populate person information):
       %p
         = text_field_tag :q, params[:q]
         = submit_tag "Search"
-    
+  
     - if @ldap_results
       %ul#ldap_results
         - @ldap_results.each_with_index do |l, i|
@@ -19,6 +19,5 @@
       %script{ :type => "text/javascript" }
         - update_page do |p|
           = p.assign "ldap_results", @ldap_results
-        
+      
     = render :partial => 'form'
-  
