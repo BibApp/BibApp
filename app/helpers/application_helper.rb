@@ -74,7 +74,7 @@ module ApplicationHelper
 
       work['editors_data'].first(5).each do |ed|
         name, id = NameString.parse_solr_data(ed)
-        links << link_to("#{name(",", ", ")}", name_string_path(id), {:class => "name_string"})
+        links << link_to("#{name.gsub(",", ", ")}", name_string_path(id), {:class => "name_string"})
       end
   
       if work['editors_data'].size > 5
