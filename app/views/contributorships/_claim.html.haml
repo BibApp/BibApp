@@ -1,14 +1,16 @@
-%div{:id => "contributorship_id-#{claim.id}", :class => "span-13", :style => "border-top: 1px dotted #CCC; margin-top:1em; padding-top:2em"}
-  %div{:class => "span-9"}
-    %h3=claim.person.name
-    %div{:class => "span-3"}
-      = image_tag(claim.person.image_url, {:height => "100px"})
+%div{:id => "contributorship_id-#{claim.id}", :class => "span-20 #{cycle("even","odd")}", :style => "border-top: 1px dotted #CCC; margin-top:1em; padding-top:2em"}
+  %div{:class => "span-3"}
+    %div{:style => "text-align: center;"}
+      = image_tag(claim.person.image_url, {:height => "100px", :width => "75px", :style => "border: 2px dashed rgb(204, 204, 204); margin: 1em 0pt; padding: 0.5em;"})
+  %div{:class => "span-10"}
+    %h2=claim.person.name
+
     %div{:class => "span-5"}
-      %h4 Groups
-      %ul
+      %strong Groups:
+      %ul{:id => "groups"}
         - claim.person.groups.each do |g|
           %li=g.name
-      
+
   %div{:class => "prepend-1 span-3 last"}
     %div{:id => "contributorship_admin-#{claim.id}", :class => "span-3"}
       - if claim.verified?

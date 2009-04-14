@@ -10,7 +10,10 @@ class Contributorship   < ActiveRecord::Base
   named_scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
   named_scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
   named_scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
-  named_scope :visible, :conditions => ["contributorships.hide = ?", false]
+  # TODO: For now we don't want editors showing up as contributors
+  #   although in the future we might want them to show up for whole
+  #   conference preceedings, entire books, et cetera
+  named_scope :visible, :conditions => ["contributorships.hide = ? and contributorships.role = ?", false, "Author"]
   #By default, show all verified, visible contributorships
   named_scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
   #All contributorships for a specified work
@@ -70,6 +73,9 @@ class Contributorship   < ActiveRecord::Base
   
   def unverify_contributorship
     self.contributorship_state_id = 1
+    # if the contributorship is going from denied -> unverified
+    # we need it to be unhidden
+    self.hide = false
   end
   
   def verified?
@@ -78,6 +84,9 @@ class Contributorship   < ActiveRecord::Base
   
   def verify_contributorship
     self.contributorship_state_id = 2
+    # if the contributorship is going from denied -> verified
+    # we need it to be unhidden
+    self.hide = false
   end
   
   def denied?
@@ -191,7 +200,13 @@ class Contributorship   < ActiveRecord::Base
    # Get a count of possible Person matches to contributorships for current Work
   def possibilities
     count = Array.new
-    possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
+    # I don't think this is working as intended
+    #possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
+
+    Contributorship.find_all_by_work_id(self.work_id).each{ |c|
+      possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == c.pen_name.name_string.name }
+    }
+
     return count.size
   end
 
