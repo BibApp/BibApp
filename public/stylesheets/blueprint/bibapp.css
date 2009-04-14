@@ -566,6 +566,15 @@ ul.actions li {
 	display:inline;
 }
 
+ul#tasks {
+  list-style: square;
+  line-height: 2.0em;
+}
+
+ul#groups {
+  list-style: none;
+}
+
 ol#groups {
 	list-style:none;
 }
@@ -575,6 +584,10 @@ ol#publications {
 }
 
 ol#publishers {
+	list-style:none;
+}
+
+ol#people {
 	list-style:none;
 }
 
