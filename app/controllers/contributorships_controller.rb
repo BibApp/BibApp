@@ -27,9 +27,26 @@ class ContributorshipsController < ApplicationController
   def admin
     
     #find all visible, unverified contributorships
-    @unverified = Contributorship.unverified.visible
+    @unverified = Contributorship.unverified.visible.group_by do |i|
+      i[:work_id]
+    end
+
+    @current_page = params[:page].to_i || 1
+    @last_page = 1
+
+    if @unverified.length > 1
+      @last_page = @unverified.length
+    end
+
+    if @current_page < 1
+      @current_page = 1
+    end
+
+    if @current_page > @last_page
+      @current_page = @last_page
+    end
     
-    @contributorship = @unverified.first
+    @contributorship = @unverified.values[@current_page - 1][0]
     
     if @contributorship == nil
       # Do Nothing
@@ -40,6 +57,7 @@ class ContributorshipsController < ApplicationController
         :order => "score desc"
       )
     end
+    t=true
   end
 
   def verify_multiple
