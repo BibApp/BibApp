@@ -31,11 +31,24 @@
 
     - else
       / ### Groups
-      %h2="Groups (#{@page})"
+      %h2="Groups"
 
       = render :partial => "shared/alpha_pagination"
 
-      %ol#groups
+      %table#groups
+        %tr
+          %th.span-10="Group Name"
+          %th.span-10="Parent Group"
+          %th.span-2.last="Members"
         -@current_objects.each do |group|
-          %li.group
-            =link_to group.name, group
+          %tr{:class => cycle("even", "odd")}
+            %td=link_to group.name, group
+            - if !group.parent.nil?
+              %td=link_to group.parent.name, group.parent
+            - else
+              %td
+            %td=group.memberships.length
+
+      %br/
+      %br/
+      = render :partial => "shared/alpha_pagination"
