@@ -11,14 +11,23 @@
 %div.span-24
       
   %div.span-22.prepend-1
-    - if @page == ""
-      %h2="People (All)"
-    - else
-      %h2="People (#{@page})"
+    %h2="People"
     
     = render :partial => "shared/alpha_pagination"
 
-    %ol#people
+    %table#people
+      %tr
+        %th.span-1
+        %th.span-6="Name"
+        %th.span-12="Recent Publication"
+        %th.span-1.last="Works"
       -@current_objects.each do |person|
-        %li.person
-          =link_to "#{person.last_first}", person_path(person)
+        %tr{:class => cycle("odd", "even")}
+          %td=image_tag(person.image_url, :size => "50x50")
+          %td=link_to "#{person.last_first}", person_path(person)
+          %td=link_to person.works.first, work_path(person.works.first)
+          %td{:style => "text-align:right;"}=person.works.length
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"
