@@ -415,6 +415,10 @@ div.auto_complete ul strong.highlight {
 	border:none;
 }
 
+.pagination li.current a {
+  background: #c3d9ff;
+}
+
 #sort-by { text-align:right; }
 
 /* ========================================= */
