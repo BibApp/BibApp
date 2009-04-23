@@ -11,8 +11,6 @@
         %li=link_to "Delete Group", {:id => @group.id, :controller => "groups", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this group? This cannot be undone.'
 
   %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
-
       
     %h2="Edit #{link_to @group.name, group_path(@group)}"
     

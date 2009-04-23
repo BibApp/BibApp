@@ -2,9 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
 
     %h2 Add a Group
-
     - form_for :group, @group, :url => {:controller => "groups", :action => "create"}, :html => {:method => :post} do |form|
       = render :partial => 'form', :locals => { :form => form }
