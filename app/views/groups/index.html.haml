@@ -11,9 +11,6 @@
         %li=link_to "Add a Group", new_group_path
 %div.span-24
   %div.span-22.prepend-1
-    = render :partial => "shared/flash_messages"
-    
-  %div.span-22.prepend-1
     / ### Person / Groups ###
     - if params[:person_id]
       %div.span-5
