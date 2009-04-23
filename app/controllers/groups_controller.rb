@@ -91,7 +91,7 @@ class GroupsController < ApplicationController
     @duplicategroup = Group.find(:first, :conditions => ["name LIKE ?", params[:group][:name]])
    
     if @duplicategroup.nil?
-      @group = Group.find_or_create_by_name(params[:group][:name])
+      @group = Group.find_or_create_by_name(params[:group])
       @group.hide = false
       @group.save
      
