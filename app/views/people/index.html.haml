@@ -25,7 +25,10 @@
         %tr{:class => cycle("odd", "even")}
           %td=image_tag(person.image_url, :size => "50x50")
           %td=link_to "#{person.last_first}", person_path(person)
-          %td=link_to person.works.first, work_path(person.works.first)
+          - if person.works.length > 0
+            %td=link_to person.works.first, work_path(person.works.first)
+          - else
+            %td
           %td{:style => "text-align:right;"}=person.works.length
 
     %br/
