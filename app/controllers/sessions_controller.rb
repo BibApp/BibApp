@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       redirect_back_or_default($APPLICATION_URL)
       flash[:notice] = "Logged in successfully"
     else
-      flash[:notice] = "Username or password was invalid."
+      flash[:error] = "Username or password was invalid."
       render :action => 'new'
     end
   end
