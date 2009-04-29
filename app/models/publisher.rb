@@ -99,9 +99,23 @@ class Publisher < ActiveRecord::Base
       self.save_without_callbacks
     end
   end
+
+  #Return the year of the most recent publication
+  def most_recent_year
+    year = 0
+    self.publications.each do |pub|
+      if !pub.works.first.nil?
+        if pub.works.first.year.to_i > year
+          year = pub.works.first.year
+        end
+      end
+    end
+    return year > 0 ? year.to_s : ""
+  end
   
   
   class << self
+
     # return the first letter of each name, ordered alphabetically
     def letters
       find(
