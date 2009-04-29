@@ -1,0 +1,31 @@
+%div#admin-nav
+  %ul
+    - if @tab_name == "works"
+      %li.current=link_to "Works", {:controller => "admin", :tab => "works"}
+    - else
+      %li=link_to "Works", {:controller => "admin", :tab => "works"}
+
+    - if @tab_name == "groups"
+      %li.current=link_to "Groups", {:controller => "admin", :tab => "groups"}
+    - else
+      %li=link_to "Groups", {:controller => "admin", :tab => "groups"}
+
+    - if @tab_name == "people"
+      %li.current=link_to "People", {:controller => "admin", :tab => "people"}
+    - else
+      %li=link_to "People", {:controller => "admin", :tab => "people"}
+
+    - if @tab_name == "publications"
+      %li.current=link_to "Publications", {:controller => "admin", :tab => "publications"}
+    - else
+      %li=link_to "Publications", {:controller => "admin", :tab => "publications"}
+
+    - if @tab_name == "publishers"
+      %li.current=link_to "Publishers", {:controller => "admin", :tab => "publishers"}
+    - else
+      %li=link_to "Publishers", {:controller => "admin", :tab => "publishers"}
+
+    - if @tab_name == "roles"
+      %li.current=link_to "Roles", {:controller => "admin", :tab => "roles"}
+    - else
+      %li=link_to "Roles", {:controller => "admin", :tab => "roles"}

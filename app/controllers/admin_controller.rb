@@ -5,6 +5,11 @@ class AdminController < ApplicationController
   
   make_resourceful do
     build :all
+
+  end
+
+  def index
+    @tab_name = params[:tab] || "works"
   end
   
   #Find Works which are marked "Ready to Archive"
