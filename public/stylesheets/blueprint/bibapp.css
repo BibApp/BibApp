@@ -90,7 +90,7 @@ ul#global-nav a:hover {
   font-weight: bold;
 }
 
-#local-nav {
+#local-nav, #admin-nav {
 	margin:0.5em 0em;
 	padding-bottom:1em;
 	background-color:#EEEEEE;
@@ -99,23 +99,23 @@ ul#global-nav a:hover {
 	border-top:1px solid #CCC
 }
 
-#local-nav li {
+#local-nav li, #admin-nav li {
 	list-style:none;
 	float:left;
 	padding:0;
 	text-decoration:none;
 }
 
-#local-nav li.current {
+#local-nav li.current, #admin-nav li.current {
 	background-color: #000000;
 }
 
-#local-nav li.current a {
+#local-nav li.current a, #admin-nav li.current a {
 	color:#FFF;
 	font-weight:bold;
 }
 
-#local-nav a {
+#local-nav a, #admin-nav a {
 	font-size:110%;
 	color:#000000;
 	display:block;
@@ -123,12 +123,12 @@ ul#global-nav a:hover {
 	text-decoration:none;
 }
 
-#local-nav a:hover {
+#local-nav a:hover, #admin-nav a:hover {
 	color:#000000;
 	background:#CCC;
 }
 
-#local-nav a.current {
+#local-nav a.current, #admin-nav a.current {
 	background:#000;
 	color:#990000;
 }
