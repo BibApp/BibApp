@@ -103,10 +103,10 @@ class Publisher < ActiveRecord::Base
   #Return the year of the most recent publication
   def most_recent_year
     year = 0
-    self.publications.each do |pub|
-      if !pub.works.first.nil?
-        if pub.works.first.year.to_i > year
-          year = pub.works.first.year
+    self.publications.each do |publication|
+      publication.works.each do |work|
+        if work.year.to_i > year
+          year = work.year
         end
       end
     end
