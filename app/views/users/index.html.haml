@@ -5,11 +5,24 @@
     = render :partial => "shared/flash_messages"
       
   %div{:class => "span-22 prepend-1"}
-    %h2="Users (#{@page.upcase})"
+    %h2="Users"
     
     = render :partial => "shared/alpha_pagination"
 
-    %ol.users
+    %table#users.prepend-1
+      %tr
+        %th.span-6="Username"
+        %th.span-6="Email"
+        %th.span-8.last="Roles"
       -@current_objects.each do |user|
-        %li.user
-          =link_to "#{user.login}", user_path(user)
+        %tr{:class => cycle("odd", "even")}
+          %td=link_to user.login, user_path(user)
+          %td=user.email
+          %td
+            %ul
+              - user.roles.each do |role|
+                %li=role.description
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"

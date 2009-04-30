@@ -25,7 +25,7 @@
     - else
       %li=link_to "Publishers", {:controller => "admin", :tab => "publishers"}
 
-    - if @tab_name == "roles"
-      %li.current=link_to "Roles", {:controller => "admin", :tab => "roles"}
+    - if @tab_name == "users"
+      %li.current=link_to "Users/Roles", {:controller => "admin", :tab => "users"}
     - else
-      %li=link_to "Roles", {:controller => "admin", :tab => "roles"}
+      %li=link_to "Users/Roles", {:controller => "admin", :tab => "users"}

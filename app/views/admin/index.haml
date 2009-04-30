@@ -33,7 +33,9 @@
         %li=link_to "Add a publisher", new_publication_path
         %li=link_to "Update publisher authorities", authorities_publishers_path
 
-    - if @tab_name == "roles"
+    - if @tab_name == "users"
       %ul#tasks
+        %li=link_to "Add a user", :controller=>"users", :action =>"new"
+        %li=link_to "View all users", :controller=>"users", :action =>"index"
         %li=link_to "Update system roles", :controller=>"roles", :action =>"index"
           
