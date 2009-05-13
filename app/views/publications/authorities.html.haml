@@ -1,6 +1,10 @@
 %div{:class => "column span-24"}
+  %div.span-22#admin-actions
+    - if logged_in? && current_user.has_role?("editor")
+      %ul#edit-actions
+        %li=link_to "Add a Publication", new_publication_path
   %div{:class => "column span-22 prepend-1"}
-    %h2="ADMIN::Publications (#{@page.upcase}) - #{link_to "Add", new_publication_path}"
+    %h2="Admin Publication Authorities"
     %h3 Select and Add Authority
     
     = render :partial => "shared/alpha_pagination"
@@ -15,7 +19,7 @@
           %td= render :partial => 'authority_actions'
       %tbody
         -@current_objects.each do |publication|
-          %tr.publication{:id => "publication_#{publication.id}"}
+          %tr.publication{:id => "publication_#{publication.id}", :class => cycle("odd", "even")}
             %td
               %a.add select
             %td=publication.issn_isbn
@@ -23,6 +27,10 @@
             %td=link_to "#{publication.publisher.authority.name}", publisher_path(publication.publisher)
             %td
               %a.update make authority
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"
             
 %script{:type => 'text/javascript'}
   :plain
