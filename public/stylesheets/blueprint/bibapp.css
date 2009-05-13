@@ -623,14 +623,29 @@ tr.selected {
 
 
 /* Any editing actions for views */
-#admin-actions{width:100%;margin-bottom:1em;}
+#admin-actions{
+  width:100%;
+  margin-bottom:1em;
+  border-top:solid #aaa 1px;
+  border-bottom:solid #aaa 1px;
+  background-color:#fee;
+  height:30px;}
 
-ul#edit-actions {padding-left:2em;}
+ul#edit-actions {
+  padding-left:2em;
+  list-style:none;
+  line-height:30px;
+}
 
 #edit-actions li {
 	display:inline; 
 	padding-right:1em;
+	padding-left:1em;
 	color: #990000;
+}
+
+#edit-actions li a {
+  color:#900;
 }
 
 /* display a list inline */

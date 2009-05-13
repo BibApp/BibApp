@@ -2,7 +2,7 @@
 / Main
 - @title="Publishers" # Specify text at end of HTML <title> tag
 %div.span-24
-  %div.span-22.prepend-1
+  %div.span-22#admin-actions
     - if logged_in? && current_user.has_role?("editor")
       %ul#edit-actions
         %li=link_to "Add a Publisher", new_publisher_path
