@@ -46,7 +46,10 @@ class ContributorshipsController < ApplicationController
       @current_page = @last_page
     end
     
-    @contributorship = @unverified.values[@current_page - 1][0]
+    @contributorship = nil
+    if @unverified.length > 0 
+      @contributorship = @unverified.values[@current_page - 1][0]
+    end
     
     if @contributorship == nil
       # Do Nothing
