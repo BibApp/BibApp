@@ -45,6 +45,9 @@ class PeopleController < ApplicationController
     before :new do
       if params[:q]
         @ldap_results = ldap_search(params[:q])
+        if @ldap_results.nil?
+          @fail = true
+        end
       end
       @title = "Add a Person"
     end
@@ -122,10 +125,21 @@ class PeopleController < ApplicationController
         return ldap.search( :filter => filt ).map{|entry| clean_ldap(entry)}
       end
     rescue Exception => e
-      logger.debug("LDAP exception: #{e.message}")
-      logger.debug(e.backtrace.join("\n"))
+      if ldap.get_operation_result.code != 0
+        if ldap.get_operation_result.code == 4
+          @fail_message = "too many results"
+        else
+          @fail_message = ldap.get_operation_result.message
+        end
+        logger.debug("LDAP exception: #{ldap.get_operation_result.message}")
+        logger.debug(e.backtrace.join("\n"))
+      else 
+        @fail_message = e.message
+        logger.debug("LDAP exception: #{e.message}")
+        logger.debug(e.backtrace.join("\n"))
+      end
     end
-    Array.new
+    nil
   end
   
   def clean_ldap(entry)
