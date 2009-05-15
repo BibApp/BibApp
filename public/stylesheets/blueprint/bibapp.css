@@ -625,16 +625,16 @@ tr.selected {
 /* Any editing actions for views */
 #admin-actions{
   width:100%;
-  margin-bottom:1em;
-  border-top:solid #aaa 1px;
-  border-bottom:solid #aaa 1px;
-  background-color:#fee;
-  height:30px;}
+  margin-bottom:1em;}
 
 ul#edit-actions {
   padding-left:2em;
   list-style:none;
   line-height:30px;
+  border-top:solid #aaa 1px;
+  border-bottom:solid #aaa 1px;
+  background-color:#fee;
+  height:30px;
 }
 
 #edit-actions li {

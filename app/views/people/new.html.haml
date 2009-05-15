@@ -6,18 +6,32 @@
 
     - form_tag( {:action => :new}, {:method => :get} ) do
       %p
-        Search LDAP directory (to pre-populate person information):
+        Search campus directory (to pre-populate person information):
       %p
         = text_field_tag :q, params[:q]
         = submit_tag "Search"
-  
+        ="&nbsp;Ex: Smith, John OR Smith, J"
+
     - if @ldap_results
-      %ul#ldap_results
-        - @ldap_results.each_with_index do |l, i|
-          - # I don't know why :collection doesn't work here
-          = render :partial => "ldap_result", :object => l, :locals => {:i => i}
-      %script{ :type => "text/javascript" }
-        - update_page do |p|
-          = p.assign "ldap_results", @ldap_results
-      
+      %fieldset
+        %legend="Search results"
+        - if @ldap_results.length > 0
+          %div{:style => "max-height:10em; overflow-x:hidden;overflow-y:auto;"}
+            %ul#ldap_results
+              - @ldap_results.each_with_index do |l, i|
+                - # I don't know why :collection doesn't work here
+                = render :partial => "ldap_result", :object => l, :locals => {:i => i}
+          %script{ :type => "text/javascript" }
+            - update_page do |p|
+              = p.assign "ldap_results", @ldap_results
+        - else
+          %p="No results for #{params[:q]}"
+
+    - if @fail
+      %fieldset
+        %legend="Search results"
+        %p{:style => "color:red;"}="Search failed: #{@fail_message}."
+
+    = button_to "Reset", :action => :new
+
     = render :partial => 'form'
