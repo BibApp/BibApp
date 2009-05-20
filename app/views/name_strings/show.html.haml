@@ -1,13 +1,13 @@
 / === NameString === Show ===
 / Main
-%div{:class => "span-24"}
-
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor", @name_string)
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
       %ul#edit-actions
-        %li=link_to "Edit", edit_name_string_path(@name_string)
-      
-    = render :partial => "shared/flash_messages"
+        %li=link_to "Edit this name string", edit_name_string_path(@name_string)
+
+%div{:class => "span-24"}
 
   %div{:class => "span-22 prepend-1"}
     %h2

@@ -1,17 +1,22 @@
 / === Works === Show ===
 / Main
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
+
+- if logged_in?
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      - if logged_in? && current_user.has_role?("editor", @work)
+        %ul#edit-actions
+          %li= link_to "Edit this work", edit_work_path
+          - if !@work.archived?
+            %li= link_to "Archive Research", new_work_attachment_path(@work)
+      - elsif logged_in?
+        %ul#edit-actions
+          %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
+
 %div.span-24
   %div.span-22.prepend-1
-    - if logged_in? && current_user.has_role?("editor", @work)
-      %ul#edit-actions
-        %li= link_to "Edit", edit_work_path
-        - if !@work.archived?
-          %li= link_to "Archive Research", new_work_attachment_path(@work)
-    - elsif logged_in?
-      %ul#edit-actions
-        %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
-
     / Work Title
     %h2= @work.title_primary
     

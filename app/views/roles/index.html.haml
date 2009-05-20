@@ -1,13 +1,15 @@
 / === Roles === Index ===
 / Main
+
+- if logged_in? && current_user.has_role?("admin", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
+        %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
+      
 %div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    %ul#edit-actions
-      %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"} 
-      %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
-      
-    = render :partial => "shared/flash_messages"
-      
   %div{:class => "span-22 prepend-1"}
     - if @authorizable.is_a? Class and @authorizable==System
       %h2="System-wide Roles: #{$APPLICATION_NAME}"

@@ -24,7 +24,10 @@
       %ul#navigation
         - if logged_in?
           - if current_user.has_role?("admin", System)
-            %li=link_to "Admin", {:controller => "admin", :action => "index"}
+            - if params['controller'] == "admin"
+              %li#current=link_to "Admin", {:controller => "admin", :action => "index"}
+            - else
+              %li=link_to "Admin", {:controller => "admin", :action => "index"}
 
         - if params['controller'] == "groups"  
           %li#current=link_to "Groups", groups_path

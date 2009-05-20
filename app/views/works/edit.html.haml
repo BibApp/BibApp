@@ -1,12 +1,14 @@
 / === Works === Edit ===
 / Main
-%div.span-24
-  / #### Admin Actions ###
-  %div#admin-actions.span-24
-    %ul#edit-actions
-      - if logged_in? && current_user.has_role?("editor", @person) 
-        %li=link_to "Delete Work", {:id => @work.id, :controller => "works", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this work? This cannot be undone.'
 
+- if logged_in? && current_user.has_role?("admin", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to "Delete this work", {:id => @work.id, :controller => "works", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this work? This cannot be undone.'
+
+%div.span-24
   %div.span-22.prepend-1
     %h2 Edit a Work
 

@@ -11,8 +11,10 @@
       = @works
 
     - else
-      %ul#edit-actions
-        %li=link_to_deletecart
+      - content_for :admin_bar do
+        %div.span-24#admin-actions
+          %ul#edit-actions
+            %li=link_to_deletecart
       
       %h2="Cart (#{@cart.items.size})"
 
