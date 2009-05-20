@@ -1,8 +1,12 @@
-%div{:class => "column span-24"}
-  %div.span-22#admin-actions
-    - if logged_in? && current_user.has_role?("editor")
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
       %ul#edit-actions
         %li=link_to "Add a Publisher", new_publisher_path
+
+%div{:class => "column span-24"}
   %div{:class => "column span-22 prepend-1"}
     %h2="Admin Publisher Authorities"
     %h3 Select and Add Authority

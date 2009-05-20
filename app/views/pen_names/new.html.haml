@@ -2,9 +2,6 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    = render :partial => "shared/flash_messages"
-
-  %div{:class => "span-22 prepend-1"}
     %h2=" Editing: #{link_to @person.first_last, person_path(@person)}"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}

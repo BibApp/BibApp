@@ -18,7 +18,7 @@
 
 
 #header {
-	margin-bottom:1em; 
+	margin-bottom:0;
 	padding-top:2em;
 }
 
@@ -625,23 +625,26 @@ tr.selected {
 /* Any editing actions for views */
 #admin-actions{
   width:100%;
-  margin-bottom:1em;}
+  margin-top:1em;
+  margin-bottom:1em;
+  border-top:1px solid #900;
+  border-bottom:1px solid #900;
+  background-color:#fee;
+  height:30px;
+}
 
 ul#edit-actions {
+  margin-left:10px;
   padding-left:2em;
   list-style:none;
   line-height:30px;
-  border-top:solid #aaa 1px;
-  border-bottom:solid #aaa 1px;
-  background-color:#fee;
-  height:30px;
 }
 
 #edit-actions li {
 	display:inline; 
 	padding-right:1em;
 	padding-left:1em;
-	color: #990000;
+  color:#900;
 }
 
 #edit-actions li a {

@@ -7,11 +7,14 @@
       = @works
 
 - else
-  %div.span-24
-    %div.span-23.prepend-1
-      - if logged_in? && current_user.has_role?("editor", @publication)
+  - if logged_in? && current_user.has_role?("editor", @name_string)
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
         %ul#edit-actions
-          %li=link_to "Edit", edit_publication_path(@publication)
+          %li=link_to "Edit this publication", edit_publication_path(@publication)
+
+  %div.span-24
 
     %div.span-22.prepend-1
       %h2= @publication.name

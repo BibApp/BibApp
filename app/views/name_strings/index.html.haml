@@ -1,13 +1,13 @@
 / === NameStrings === Index ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    - if logged_in? && current_user.has_role?("editor")
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
       %ul#edit-actions
         %li=link_to "Add a NameString", new_name_string_path
 
-    = render :partial => "shared/flash_messages"
-      
+%div{:class => "span-24"}
   %div{:class => "column span-22 prepend-1"}
     %h2="NameStrings (#{@page})"
 

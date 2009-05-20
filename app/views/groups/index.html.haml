@@ -1,14 +1,17 @@
 / === Groups === Index ===
 / Main
 - @title="Groups" # Specify text at end of HTML <title> tag
-/ ### Admin Actions
-%div#admin-actions.span-24
-  - if logged_in? && current_user.has_role?("editor")
-    - if params[:person_id]
-      = render :partial => "people/admin_actions"
-    - else
-      %ul#edit-actions
-        %li=link_to "Add a Group", new_group_path
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      - if params[:person_id]
+        = render :partial => "people/admin_actions"
+      - else
+        %ul#edit-actions
+          %li=link_to "Add a Group", new_group_path
+
 %div.span-24
   %div.span-22.prepend-1
     / ### Person / Groups ###

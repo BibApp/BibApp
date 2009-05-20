@@ -41,6 +41,7 @@ a:link, a:visited {color:#000; text-decoration:none;}
 span.publication {font-style:italic;}
 span.volume{font-style:italic;}
 #header {display:none;}
+#admin-actions {dispaly:none;}
 #edit-actions {display:none;}
 .vcard {display:none;}
 
