@@ -334,7 +334,7 @@ class Index
       return docs
     end
     
-    # Retrieve possible duplicates from Solr, based on current Work
+    # Retrieve possible *accepted* duplicates from Solr, based on current Work
     #  Returns a list of Work objects
     def possible_duplicate_works(work)
       dupes = Array.new 
@@ -343,6 +343,35 @@ class Index
       #  This returns a hash of document information from Solr
       docs = possible_duplicates(work)
       
+      #Get the Work corresponding to each doc returned by Solr
+      docs.each do |doc|
+        dupes << Work.find(doc["pk_i"])
+      end
+      return dupes
+    end
+
+    # Retrieve all possible duplicates from Solr (accepted or unaccepted), based
+    # on current Work, and including the current Work itself
+    #  Returns a list of Work objects
+    def all_possible_duplicate_works_including_self(work)
+      dupes = Array.new
+
+      record = Hash.new
+      record['title_dupe_key'] = work.title_dupe_key
+      record['name_string_dupe_key'] = work.name_string_dupe_key
+
+      # Find all works with a matching Title Dupe Key or matching NameString Dupe Key
+      query_params = {
+        :query => "(title_dupe_key:\"#{record['title_dupe_key']}\" OR name_string_dupe_key:\"#{record['name_string_dupe_key']}\") AND (#{Work.solr_accepted_filter} OR #{Work.solr_duplicate_filter})",
+            :rows => 3
+      }
+
+      #Send a "more like this" query to Solr
+      r = SOLRCONN.send(Solr::Request::Standard.new(query_params))
+
+      #get the documents returned by Solr query
+      docs = r.data["response"]["docs"]
+
       #Get the Work corresponding to each doc returned by Solr
       docs.each do |doc|
         dupes << Work.find(doc["pk_i"])

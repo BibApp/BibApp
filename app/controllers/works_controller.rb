@@ -364,7 +364,46 @@ class WorksController < ApplicationController
 
     @work.publication_info = publication_info
   end
-  
+
+  def destroy
+    permit "admin"
+
+    work = Work.find(params[:id])
+
+    #Find all possible dupe candidates from Solr
+    dupe_candidates = Index.all_possible_duplicate_works_including_self(work)
+
+    #Remove the to-be-destroyed work from the list
+    dupe_candidates.delete(work)
+
+    #Destroy the work
+    work.destroy
+
+    #Check the remaining dupes to see if any of them have already been accepted
+    # if one has, then we're done
+    done = 0
+    dupe_candidates.each do |dc|
+      if dc.work_state_id == Work.solr_accepted_filter
+        done = 1
+      end
+    end
+
+    #If we're not done, then update the remaining dupes -- the first one will
+    # get accepted
+    unless done == 1
+      dupe_candidates.each do |dc|
+        dupe = Work.find(dc.id)
+        dupe.save
+      end
+    end
+
+    respond_to do |format|
+      flash[:notice] = "Works were successfully deleted."
+      #forward back to path which was specified in params
+      format.html {redirect_to works_url }
+      format.xml  {head :ok}
+    end
+  end
   
   def destroy_multiple    
     #Anyone who is minimally an admin (on anything in system) can delete works
