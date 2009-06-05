@@ -215,6 +215,10 @@ class WorksController < ApplicationController
       end # If we need to add a batch
     end #If 'save' button was pressed
   end
+
+  def merge_duplicates
+    @work = Work.find(params[:id])
+  end
   
   # Generates a form which allows individuals to review the citations
   # that were just bulk loaded *before* they make it into the system.

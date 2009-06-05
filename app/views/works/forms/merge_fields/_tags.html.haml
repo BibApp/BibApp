@@ -1,0 +1,33 @@
+-#Add tags field, with Auto-Complete
+-# Also adds a list of existing tags
+
+%td
+  -# Initialize our list of tags
+  -#  Default: use tags assigned to @work.
+  -#  @tags should only exist if there were errors in saving work
+  - tags = @work.tags if @work.tags
+  - tags = @tags if @tags
+
+  = label :tag, :name, "Tag(s):"
+  %br/
+  = text_field_with_auto_complete :tag, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
+  -# Ajax-enabled link to add new items to below list
+  = link_to_remote "add", :url => { :action => :add_item_to_list}, :condition => "$('tag_name').value.length > 0", :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
+  %ul.form_item_list#tags_list
+    -# Build list of existing tags
+    - if tags
+      - tags.each do |tag|
+        - name = (tag.kind_of?(String) ? tag : tag.name)
+        - id = (tag.kind_of?(String) ? tag : tag.id)
+        = render :partial => 'works/forms/merge_fields/list_item', :locals => {:list_type => 'tags', :item_id => id, :item_value => name}
+%td.duplicate
+  -# Initialize our list of tags
+  - tags = dupe.tags if dupe.tags
+  = label_tag 'dupe_tag_name_strings[]', "Tag(s):"
+  -# Build list of tags
+  - if tags
+    - tags.each do |tag|
+      - name = (tag.kind_of?(String) ? tag : tag.name)
+      - id = (tag.kind_of?(String) ? tag : tag.id)
+      %br/
+      = text_field_tag 'dupe_tag_name_strings[]', name, :class => 'text'

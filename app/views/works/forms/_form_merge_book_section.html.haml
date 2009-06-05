@@ -1,0 +1,34 @@
+-dupes = Index.possible_duplicates(@work)
+-dupe = Work.find(dupes.first["pk_i"])
+
+%table#accepted_work.span-22
+  %tr
+    %td.span-10
+      %h3 Accepted work
+    %td.span-10.duplicate
+      %h3 Duplicate work
+  %tr#title_primary
+    = render :partial => 'works/forms/merge_fields/title_primary', :locals => {:label => "Article/Chapter Title", :form => form, :dupe => dupe}
+  %tr#authors
+    = render :partial => 'works/forms/merge_fields/author_name_strings', :locals => {:dupe => dupe}
+  %tr#publication_date
+    = render :partial => 'works/forms/merge_fields/publication_date', :locals => {:dupe => dupe}
+  %tr#editors
+    = render :partial => 'works/forms/merge_fields/editor_name_strings', :locals => {:dupe => dupe}
+  %tr#title_secondary
+    = render :partial => 'works/forms/merge_fields/title_secondary', :locals => {:label => "Book Title", :form => form, :dupe => dupe}
+  %tr#pages
+    = render :partial => 'works/forms/merge_fields/pages', :locals => {:form => form, :dupe => dupe}
+  %tr#publisher
+    = render :partial => 'works/forms/merge_fields/publisher', :locals => {:dupe => dupe}
+  - if current_user.has_role?("admin", System)
+    %tr#keywords
+      = render :partial => 'works/forms/merge_fields/keywords', :locals => {:dupe => dupe}
+  %tr#tags
+    = render :partial => 'works/forms/merge_fields/tags', :locals => {:dupe => dupe}
+  %tr#abstract
+    = render :partial => 'works/forms/merge_fields/abstract', :locals => {:form => form, :dupe => dupe}
+
+
+= hidden_field_tag :type, 'BookSection'
+= render :partial => 'works/forms/merge_fields/form_buttons', :locals => {:form => form} 

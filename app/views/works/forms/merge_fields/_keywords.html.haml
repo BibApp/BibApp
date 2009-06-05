@@ -1,0 +1,35 @@
+-#Add Keywords field, with Auto-Complete
+-# Also adds a list of existing Keywords
+
+-# Initialize our list of keywords
+-#  Default: use keywords assigned to @work.  
+-#  @keywords should only exist if there were errors in saving work
+%td
+  -# Initialize our list of keywords
+  -#  Default: use keywords assigned to @work.
+  -#  @keywords should only exist if there were errors in saving work
+  - keywords = @work.keywords if @work.keywords
+  - keywords = @keywords if @keywords
+  = label :keyword, "Keyword(s):"
+  %br/
+  = text_field_with_auto_complete :keyword, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
+  -# Ajax-enabled link to add new items to below list
+  = link_to_remote "add", :url => { :action => :add_item_to_list}, :condition => "$('keyword_name').value.length > 0", :with => "'list_type=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'"
+  %ul.form_item_list#keywords_list
+    -# Build list of existing keywords
+    - if keywords
+      - keywords.each do |keyword|
+        - name = (keyword.kind_of?(String) ? keyword : keyword.name)
+        - id = (keyword.kind_of?(String) ? keyword : keyword.id)
+        = render :partial => 'works/forms/merge_fields/list_item', :locals => {:list_type => 'keywords', :item_id => id, :item_value => name}
+%td.duplicate
+  -# Initialize our list of keywords
+  - keywords = dupe.keywords if dupe.keywords
+  = label_tag 'dupe_keyword_name_strings[]', "Keyword(s):"
+  -# Build list of keywords
+  - if keywords
+    - keywords.each do |keyword|
+      - name = (keyword.kind_of?(String) ? keyword : keyword.name)
+      - id = (keyword.kind_of?(String) ? keyword : keyword.id)
+      %br/
+      = text_field_tag 'dupe_keyword_name_strings[]', name, :class => 'text'
