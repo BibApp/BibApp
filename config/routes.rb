@@ -42,7 +42,8 @@ ActionController::Routing::Routes.draw do |map|
                         :auto_complete_for_publisher_name => :get,
                         :auto_complete_for_tag_name => :get,
                         :review_batch => :get,
-                        :destroy_multiple => :delete} do |c|
+                        :destroy_multiple => :delete},
+                :member => {:merge_duplicates => :get} do |c|
     # Make URLs like /work/2/attachments/4 for Work Content Files
     c.resources :attachments
   end

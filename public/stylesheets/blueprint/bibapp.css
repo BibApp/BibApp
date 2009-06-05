@@ -494,6 +494,13 @@ div.duplicate_box_heading {
     text-align:center;
 }
 
+td.duplicate {
+  vertical-align:top;
+  border-left:1px dotted #aaa;
+  background-color:#eee;
+  color:inherit;
+}
+
 
 /* ===================================== */
 /* ======== Person View Styles ========= */

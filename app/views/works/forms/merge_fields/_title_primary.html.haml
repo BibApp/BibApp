@@ -1,0 +1,20 @@
+-# Title (Primary) field
+-#
+-# Possible Input Variables:
+-#    :dupe     => duplicate work (REQUIRED)
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Primary Title)
+
+-# Initialize optional input variables
+- label ||= "Primary Title"
+  
+
+%td
+  = form.label :title_primary, "#{label}*:"
+  %br/
+  = form.text_field :title_primary, :class=>'text'
+  = error_for 'work', 'title_primary'
+%td.duplicate
+  = label_tag 'dupe_title_primary', "#{label}*:"
+  %br/
+  = text_field_tag 'dupe_title_primary', dupe.title_primary, {:class => 'text'}

@@ -1,0 +1,20 @@
+-# Used by Auto-Complete functionality
+-# Add a single list item to a list, with a link to remove it
+-#
+-# Required Input Variables:
+-#    :list_type    => Type of list (e.g. 'author_name_strings', 'tags', etc.)
+-#    :item_id      => ID of this item
+-#    :item_value   => Value of this item
+-# Optional Input Variables:
+-#    :item_class   => Additional class to put on <li> tag
+
+-# Initialize optional input variables
+- item_class ||=""
+
+%li.list_item{:id => "#{list_type}_#{item_id}", :class => "#{item_class}"}
+  .list_item_value
+    = hidden_field_tag "#{list_type}[]", "#{item_value}"
+    -#= check_box_tag "#{item_name}[]", "#{item_value}", "#{selected}", :onclick => remote_function(:url => { :action => :remove_item_from_list, :item_name => item_name, :item_id => item_id} )
+    = item_value
+  = link_to_remote "remove", :url => { :action => :remove_item_from_list, :list_type => list_type, :item_id => item_id}
+   
