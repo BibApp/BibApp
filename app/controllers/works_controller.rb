@@ -218,8 +218,8 @@ class WorksController < ApplicationController
 
   def merge_duplicates
     #Anyone with 'editor' role on this work can edit it
-    permit "editor on work"
     @work = Work.find(params[:id])
+    permit "editor on work"
     @dupe = Work.find(params[:dupe_id])
   end
   
