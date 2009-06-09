@@ -1,6 +1,3 @@
--dupes = Index.possible_duplicates(@work)
--dupe = Work.find(dupes.first["pk_i"])
-
 %table#accepted_work.span-22
   %tr
     %td.span-10
@@ -8,31 +5,32 @@
     %td.span-10.duplicate
       %h3 Duplicate work
   %tr#title_primary
-    = render :partial => 'works/forms/merge_fields/title_primary', :locals => {:label => "Article Title", :form => form, :dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_title_primary', :locals => {:label => "Article Title", :form => form}
   %tr#authors
-    = render :partial => 'works/forms/merge_fields/author_name_strings', :locals => {:dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_author_name_strings'
   %tr#publication_date
-    = render :partial => 'works/forms/merge_fields/publication_date', :locals => {:dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_publication_date'
   %tr#publication
-    = render :partial => 'works/forms/merge_fields/publication', :locals => {:dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_publication'
   %tr#publisher
-    = render :partial => 'works/forms/merge_fields/publisher', :locals => {:dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_publisher'
   %tr#isbn_issn
-    = render :partial => 'works/forms/merge_fields/issn_isbn', :locals => {:dupe => dupe, :issn => true}
+    = render :partial => 'works/forms/fields/merge_issn_isbn', :locals => {:issn => true}
   %tr#volume_issue
-    = render :partial => 'works/forms/merge_fields/volume_issue', :locals => {:form => form, :dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_volume_issue', :locals => {:form => form}
   %tr#pages
-    = render :partial => 'works/forms/merge_fields/pages', :locals => {:form => form, :dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_pages', :locals => {:form => form}
 
   -#Only Admin can add/edit keywords
   - if current_user.has_role?("admin", System)
     %tr#keywords
-      = render :partial => 'works/forms/merge_fields/keywords', :locals => {:dupe => dupe}
+      = render :partial => 'works/forms/fields/merge_keywords'
 
   %tr#tags
-    = render :partial => 'works/forms/merge_fields/tags', :locals => {:dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_tags'
   %tr#abstract
-    = render :partial => 'works/forms/merge_fields/abstract', :locals => {:form => form, :dupe => dupe}
+    = render :partial => 'works/forms/fields/merge_abstract', :locals => {:form => form}
 
 = hidden_field_tag :type, 'JournalArticle'
-= render :partial => 'works/forms/merge_fields/form_buttons', :locals => {:form => form} 
+= hidden_field_tag 'return_path', '/admin/duplicates'
+= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}

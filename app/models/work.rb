@@ -211,7 +211,7 @@ class Work < ActiveRecord::Base
     logger.debug("\n\n===DEDUPLICATE===\n\n")
 
     #Find all possible dupe candidates from Solr
-    dupe_candidates = Index.possible_duplicate_works(self)
+    dupe_candidates = Index.possible_accepted_duplicate_works(self)
     logger.debug("\nDuplicates: #{dupe_candidates.size}")
 
     #Check if any duplicates found.

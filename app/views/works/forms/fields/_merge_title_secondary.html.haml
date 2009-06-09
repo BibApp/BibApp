@@ -2,7 +2,6 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :dupe     => duplicat work (REQUIRED)
 -#    :label    => Label to diplay (default: Primary Title)
 
 -# Initialize optional input variables
@@ -15,4 +14,4 @@
 %td.duplicate
   = label_tag 'dupe_title_secondary', "#{label}:"
   %br/
-  = text_field_tag 'dupe_title_secondary', dupe.title_secondary, {:class=>'text'}
+  = text_field_tag 'dupe_title_secondary', @dupe.title_secondary, {:class=>'text', :readonly => 'readonly'}

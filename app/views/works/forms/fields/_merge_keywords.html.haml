@@ -21,10 +21,10 @@
       - keywords.each do |keyword|
         - name = (keyword.kind_of?(String) ? keyword : keyword.name)
         - id = (keyword.kind_of?(String) ? keyword : keyword.id)
-        = render :partial => 'works/forms/merge_fields/list_item', :locals => {:list_type => 'keywords', :item_id => id, :item_value => name}
+        = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'keywords', :item_id => id, :item_value => name}
 %td.duplicate
   -# Initialize our list of keywords
-  - keywords = dupe.keywords if dupe.keywords
+  - keywords = @dupe.keywords if @dupe.keywords
   = label_tag 'dupe_keyword_name_strings[]', "Keyword(s):"
   -# Build list of keywords
   - if keywords
@@ -32,4 +32,4 @@
       - name = (keyword.kind_of?(String) ? keyword : keyword.name)
       - id = (keyword.kind_of?(String) ? keyword : keyword.id)
       %br/
-      = text_field_tag 'dupe_keyword_name_strings[]', name, :class => 'text'
+      = text_field_tag 'dupe_keyword_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}

@@ -3,7 +3,7 @@ class WorksController < ApplicationController
   require 'cmess/guess_encoding'
   
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :destroy_multiple ]
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates ]
    
   before_filter :find_authorities, :only => [:new, :edit]
 
@@ -217,7 +217,10 @@ class WorksController < ApplicationController
   end
 
   def merge_duplicates
+    #Anyone with 'editor' role on this work can edit it
+    permit "editor on work"
     @work = Work.find(params[:id])
+    @dupe = Work.find(params[:dupe_id])
   end
   
   # Generates a form which allows individuals to review the citations
@@ -373,39 +376,40 @@ class WorksController < ApplicationController
     permit "admin"
 
     work = Work.find(params[:id])
+    return_path = params[:return_path] || works_url
 
-    #Find all possible dupe candidates from Solr
-    dupe_candidates = Index.all_possible_duplicate_works_including_self(work)
+    full_success = true
 
-    #Remove the to-be-destroyed work from the list
+    #Find all possible dupe candidates from Solr, if any
+    dupe_candidates = Index.possible_unaccepted_duplicate_works(work)
+
+    #if this is an unaccepted work, it will show up in the list, so remove it first
     dupe_candidates.delete(work)
 
-    #Destroy the work
-    work.destroy
-
-    #Check the remaining dupes to see if any of them have already been accepted
-    # if one has, then we're done
-    done = 0
-    dupe_candidates.each do |dc|
-      if dc.work_state_id == Work.solr_accepted_filter
-        done = 1
-      end
+    if dupe_candidates.empty?
+      #Destroy the work
+      work.destroy
+    else
+      #can't destroy an accepted work that has duplicates
+      if work.work_state_id != 3
+        work.destroy
+      else
+        full_success = false
+      end 
     end
 
-    #If we're not done, then update the remaining dupes -- the first one will
-    # get accepted
-    unless done == 1
-      dupe_candidates.each do |dc|
-        dupe = Work.find(dc.id)
-        dupe.save
-      end
-    end
 
     respond_to do |format|
-      flash[:notice] = "Works were successfully deleted."
-      #forward back to path which was specified in params
-      format.html {redirect_to works_url }
-      format.xml  {head :ok}
+      if full_success
+        flash[:notice] = "Works were successfully deleted."
+        #forward back to path which was specified in params
+        format.html {redirect_to return_path }
+        format.xml  {head :ok}
+      else
+        flash[:warning] = "This work has duplicates, which must be altered or deleted before this work can be deleted."
+        format.html {redirect_to edit_work_path(work.id)  }
+        format.xml  {head :ok}
+      end
     end
   end
   

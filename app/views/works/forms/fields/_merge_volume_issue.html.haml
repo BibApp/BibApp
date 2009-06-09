@@ -2,7 +2,6 @@
 -#
 -# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
--#    :dupe         => duplicate work (REQUIRED)
 
 %td
   = form.label :volume, "Volume:"
@@ -12,7 +11,7 @@
   = form.text_field :issue, :class=>'text smallbox'
 %td.duplicate
   = label_tag 'dupe_volume', "Volume:"
-  = text_field_tag 'dupe_volume', dupe.volume, :class => 'text smallbox'
+  = text_field_tag 'dupe_volume', @dupe.volume, {:class => 'text smallbox', :readonly => 'readonly'}
 
   = label_tag 'dupe_issue', "Issue:", :class => 'inline_label'
-  = text_field_tag 'dupe_issue', dupe.issue, :class => 'text smallbox'
+  = text_field_tag 'dupe_issue', @dupe.issue, {:class => 'text smallbox', :readonly => 'readonly'}

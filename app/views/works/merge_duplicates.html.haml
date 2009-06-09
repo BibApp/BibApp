@@ -9,18 +9,16 @@
       ="#{link_to @work, work_path(@work.id)}"
 
     - if @work.work_state_id != 3
-      %p
-        = "This is a <strong>#{$WORK_STATUS[@work.work_state_id]}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
+      - flash[:notice]  = "This is a <strong>#{$WORK_STATUS[@work.work_state_id]}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
     - else
-      -dupes = Index.possible_duplicates(@work)
+      -dupes = Index.possible_accepted_duplicate_works(@work)
 
-      - if dupes.length < 1
-        %p No duplicates were found for this work.
+      - possible_dupes = Index.possible_unaccepted_duplicate_works(@work)
+      - if !possible_dupes.include?(@dupe)
+        - flash[:notice] = "#{@dupe} is not a possible duplicate for this work."
       - else
-        %p Use this screen to edit the Accepted Work. When you are finished, click the button at the bottom "Save Accepted Work and Delete Duplicate".
-        
-        -dupe = Work.find(dupes.first["pk_i"])
-        
+        %p Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to "Save Changes".
+                
         - form_for :work, @work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
           -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html"))
             = render :partial => "works/forms/form_merge_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
