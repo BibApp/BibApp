@@ -19,10 +19,10 @@
       - tags.each do |tag|
         - name = (tag.kind_of?(String) ? tag : tag.name)
         - id = (tag.kind_of?(String) ? tag : tag.id)
-        = render :partial => 'works/forms/merge_fields/list_item', :locals => {:list_type => 'tags', :item_id => id, :item_value => name}
+        = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'tags', :item_id => id, :item_value => name}
 %td.duplicate
   -# Initialize our list of tags
-  - tags = dupe.tags if dupe.tags
+  - tags = @dupe.tags if @dupe.tags
   = label_tag 'dupe_tag_name_strings[]', "Tag(s):"
   -# Build list of tags
   - if tags
@@ -30,4 +30,4 @@
       - name = (tag.kind_of?(String) ? tag : tag.name)
       - id = (tag.kind_of?(String) ? tag : tag.id)
       %br/
-      = text_field_tag 'dupe_tag_name_strings[]', name, :class => 'text'
+      = text_field_tag 'dupe_tag_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}

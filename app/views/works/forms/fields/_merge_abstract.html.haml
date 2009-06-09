@@ -2,7 +2,6 @@
 -#
 -# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
--#    :dupe         => duplicate work (REQUIRED)
 
 %td
   = form.label :abstract, "Abstract:"
@@ -11,4 +10,4 @@
 %td.duplicate
   = label_tag 'dupe_abstract', "Abstract:"
   %br/
-  = text_area_tag 'dupe_abstract', dupe.abstract, {:class=>'text'}
+  = text_area_tag 'dupe_abstract', @dupe.abstract, {:class=>'text', :readonly => 'readonly'}

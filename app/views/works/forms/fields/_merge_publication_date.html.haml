@@ -6,4 +6,4 @@
 %td.duplicate
   = label_tag 'dupe_publication_date', "Publication Date:"
   %br/
-  = text_field_tag 'dupe_publication_date', dupe.publication_date, {:class=>'text'}
+  = text_field_tag 'dupe_publication_date', @dupe.publication_date, {:class=>'text', :readonly => 'readonly'}

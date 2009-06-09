@@ -5,12 +5,13 @@
 -# 
   
 -# Get listing of all possible duplicates from Solr
-- dupes = Index.possible_duplicates(work)
+- dupes = Index.possible_accepted_duplicate_works(work)
 
 / Duplicate candidates
 %div.duplicate_box
   %div.duplicate_box_heading="Duplicate of these accepted works"
   - dupes.each do |dupe|
-    - w = Work.find(dupe['pk_i'])
-    =link_to w, work_path(dupe['pk_i'])
+    =link_to dupe, work_path(dupe.id)
     %h5.metadata{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=dupe['type']
+    .links
+      =link_to "Merge duplicates", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe.id
