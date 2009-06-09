@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080917171121) do
+ActiveRecord::Schema.define(:version => 20081030212640) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -61,7 +61,10 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.text     "lookup_params"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "machine_name"
   end
+
+  add_index "external_systems", ["machine_name"], :name => "external_system_machine_name"
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -73,8 +76,10 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer  "parent_id"
+    t.string   "machine_name"
   end
 
+  add_index "groups", ["machine_name"], :name => "group_machine_name"
   add_index "groups", ["name"], :name => "group_name", :unique => true
 
   create_table "keywordings", :force => true do |t|
@@ -149,7 +154,10 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "scoring_hash"
+    t.string   "machine_name"
   end
+
+  add_index "people", ["machine_name"], :name => "person_machine_name"
 
   create_table "publications", :force => true do |t|
     t.integer  "sherpa_id"
@@ -163,11 +171,13 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "place"
+    t.string   "machine_name"
   end
 
   add_index "publications", ["authority_id"], :name => "fk_publication_authority_id"
   add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
   add_index "publications", ["issn_isbn"], :name => "issn_isbn"
+  add_index "publications", ["machine_name"], :name => "publication_machine_name"
   add_index "publications", ["name"], :name => "publication_name"
 
   create_table "publisher_sources", :force => true do |t|
@@ -187,9 +197,11 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.string   "copyright_notice"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "machine_name"
   end
 
   add_index "publishers", ["authority_id"], :name => "fk_publisher_authority_id"
+  add_index "publishers", ["machine_name"], :name => "publisher_machine_name"
 
   create_table "roles", :force => true do |t|
     t.string   "name",              :limit => 40
@@ -270,8 +282,6 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.text     "abstract"
     t.text     "notes"
     t.text     "links"
-    t.text     "title_dupe_key"
-    t.text     "issn_isbn_dupe_key"
     t.integer  "work_state_id"
     t.integer  "work_archive_state_id"
     t.integer  "publication_id"
@@ -286,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
     t.string   "language"
     t.text     "copyright_holder"
     t.boolean  "peer_reviewed"
+    t.string   "machine_name"
   end
 
   add_index "works", ["batch_index"], :name => "batch_index"
@@ -293,7 +304,6 @@ ActiveRecord::Schema.define(:version => 20080917171121) do
   add_index "works", ["publisher_id"], :name => "fk_work_publisher_id"
   add_index "works", ["work_state_id"], :name => "fk_work_state_id"
   add_index "works", ["type"], :name => "fk_work_type"
-  add_index "works", ["issn_isbn_dupe_key"], :name => "issn_isbn_dupe"
-  add_index "works", ["title_dupe_key"], :name => "title_dupe"
+  add_index "works", ["machine_name"], :name => "work_machine_name"
 
 end
