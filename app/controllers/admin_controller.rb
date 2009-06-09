@@ -56,12 +56,19 @@ class AdminController < ApplicationController
   
   
   def duplicates
+    
+    # Default the filter to only show works marked as "duplicate"
+    filter = [Work.solr_duplicate_filter]
+    # Add any param filters
+    filter << params[:fq] if params[:fq]
+    filter = filter.compact
+    filter.flatten!
+
     # Default SolrRuby params
     @query        = "*:*" # Lucene syntax for "find everything"
-    # Default the filter to only show works marked as "duplicate"
-    @filter       = params[:fq] || Work.solr_duplicate_filter
-    @filter_no_strip = params[:fq] || Work.solr_duplicate_filter
-    @filter       = @filter.split("+>+").each{|f| f.strip!}
+    @filter       = filter.clone
+    @filter_no_strip = filter.clone
+    @filter       = @filter.each{|f| f.strip!}
     @sort         = params[:sort] || "year"
     @sort         = "year" if @sort.empty?
     @page         = params[:page] || 0
