@@ -125,6 +125,9 @@ class GroupsController < ApplicationController
   
   def hide
     @group = Group.find(params[:id])
+
+    permit "editor on group"
+
     @group.hide = true
     @group.save
       respond_to do |format|
@@ -134,19 +137,22 @@ class GroupsController < ApplicationController
   end
   
   def destroy
+    permit "admin"
+    
     @group = Group.find(params[:id])
 
     #check memberships
     memberships = Membership.find_all_by_group_id(@group)
 
-    if memberships.length > 0
+    if memberships.empty?
+      @group.destroy
       respond_to do |format|
-       flash[:error] = "Group cannot be deleted. Memberships exist."
+       flash[:notice] = "Group was successfully removed."
        format.html {redirect_to :action => "edit"}
       end
     else
       respond_to do |format|
-       flash[:notice] = "Group was successfully removed."
+       flash[:error] = "Group cannot be deleted. Memberships exist."
        format.html {redirect_to :action => "edit"}
       end
     end
