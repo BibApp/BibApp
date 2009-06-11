@@ -13,6 +13,8 @@
     = render :partial => 'works/forms/fields/merge_author_name_strings'
   %tr#publication_date
     = render :partial => 'works/forms/fields/merge_publication_date'
+  %tr#isbn_issn
+    = render :partial => 'works/forms/fields/merge_issn_isbn', :locals => {:isbn => true}
   %tr#editors
     = render :partial => 'works/forms/fields/merge_editor_name_strings'
   %tr#pages

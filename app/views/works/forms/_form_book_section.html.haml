@@ -9,6 +9,8 @@
     %li
       = render :partial => 'works/forms/fields/publication_date'
     %li
+      = render :partial => 'works/forms/fields/issn_isbn', :locals => {:isbn => true}
+    %li
       = render :partial => 'works/forms/fields/editor_name_strings'
     %li
       = render :partial => 'works/forms/fields/title_secondary', :locals => {:label => "Book Title", :form => form}

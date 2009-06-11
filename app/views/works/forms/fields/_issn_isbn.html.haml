@@ -16,5 +16,6 @@
 - if !issn and !isbn
   = label_tag 'issn_isbn', "ISSN/ISBN:"
 
+- @publication = @work.publication unless @work.publication.nil?
 - issn_isbn = @publication.issn_isbn unless @publication.nil?
 = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'
