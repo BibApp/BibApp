@@ -1,7 +1,7 @@
 / === Passwords === Change ===
 / Main
 %div{:class => "span-24"}
-
+  %div.span-22.prepend-1
     %h2 Change Password
     %fieldset
       - form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
