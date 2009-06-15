@@ -5,6 +5,7 @@
 -# Initialize optional input variables
 - allow_select ||= false
 - show_status ||= false
+- show_dupes ||= false
 - links_array ||= [:find_it, :cart]  #default to just 'find_it' and 'cart' links
 
 %div#works{:class => "span-17 last"}
@@ -47,6 +48,6 @@
 
     %ol.span-17{:style => "padding:0; margin:0; clear:both;"}
       - @works.each do |work|
-        = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :links_array => links_array}
+        = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :show_dupes => show_dupes, :links_array => links_array}
         
     %div{:class => "span-17"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

@@ -460,6 +460,11 @@ div.screen-format {
 	padding: 0 2em;
 }
 
+div.screen-format-dupes {
+	padding: 0 2em;
+  width:45%;
+}
+
 a.name_string {
 	text-decoration:none;
 }
@@ -483,7 +488,7 @@ div.duplicate_box {
     margin: 0 0.5em 0.5em 0;
     padding: 0.5em;
     width: 40%;
-    float:right;
+    float: right;
 }
 
 div.duplicate_box_heading {

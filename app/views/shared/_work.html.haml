@@ -5,6 +5,7 @@
 -#    :work         => work to display (REQUIRED)
 -#    :allow_select => whether or not to display checkbox next to displayed work
 -#    :show_status  => display status of work in BibApp (dupe, accepted, etc.)
+-#    :show_dupe    => display possible accepted works for dupes
 -#    :links_array  => Array of default links to display under the work
 -#                     Valid values: {:find_it, (local library "find it" link)
 -#                                    :cart,    (adds/removes from cart)
@@ -14,6 +15,7 @@
 -# Initialize optional input variables
 - allow_select ||= false
 - show_status ||= false
+- show_dupes ||= false
 - links_array ||= [:find_it, :cart]  #default to just 'find_it' and 'cart' links
 
 %li.work{:class => "#{cycle('odd','even')}"}
@@ -22,12 +24,18 @@
     %div.select_multiple
       = check_box_tag "work_id[]", "#{work['pk_i']}"
 
-  -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
-  -if work['status']==2  
-    = render :partial => "shared/duplicate_of_work", :locals => {:work => work}
-    
+  -if show_dupes
+    -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
+    -if work['status']==2
+      = render :partial => "shared/duplicate_of_work", :locals => {:work => work}
+
+  -# Change the class name depending on dupe or not
+  -the_class = "screen-format"
+  -if show_dupes
+    -the_class = "screen-format-dupe"
+
   -#Display the work
-  %div.screen-format
+  %div{:class => the_class}
     - if work['issn_isbn'] != nil
       %span{:title => "ISBN:#{work['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
     %strong=link_to "#{work['title']}", work_path(work['pk_i'])
@@ -62,3 +70,4 @@
         -#As long as not last link, add a vertical pipe between links
         -unless link==links_array.last
           ="|"
+  %div{:style=>"clear:both;"}
