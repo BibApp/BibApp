@@ -101,7 +101,7 @@ class Publication < ActiveRecord::Base
     end
   
     def update_multiple(pub_ids, auth_id)
-      pub_ids.split(",").each do |pub|
+      pub_ids.each do |pub|
         update = Publication.find_by_id(pub)
         update.authority_id = auth_id
         update.save

@@ -113,18 +113,57 @@ class PublicationsController < ApplicationController
     permit "editor of System"
     
     @a_to_z = Publication.letters.collect { |d| d.letter }
+    @page = params[:page] || @a_to_z[0]
     
     if params[:q]
       query = params[:q]
       @current_objects = current_objects
     else
-      @page = params[:page] || @a_to_z[0]
       @current_objects = Publication.find(
         :all, 
         :conditions => ["id = authority_id and name like ?", "#{@page}%"], 
         :order => "issn_isbn, name"
       )
-    end    
+    end
+
+    #Keep a list of publications in process in session[:publication_auths]
+    @pas = session[:publication_auths] || Array.new
+  end
+
+  def add_to_box
+    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @page = params[:page] || @a_to_z[0]
+    #Add new pubs to the list, and to the session var
+    @pas = session[:publication_auths] || Array.new
+    if params[:new_pa]
+      begin
+        pa = Publication.find(params[:new_pa])
+        @pas << pa unless @pas.include?(pa)
+      rescue ActiveRecord::RecordNotFound
+        flash[:warning] = "One or more publications could not be found."
+        redirect_to authorities_publications_path
+      end
+    end
+    session[:publication_auths] = @pas
+    redirect_to authorities_publications_path(:page => @page) unless request.xhr?
+  end
+
+  def remove_from_box
+    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @page = params[:page] || @a_to_z[0]
+    #Remove pubs from the list
+    @pas = session[:publication_auths] || Array.new
+    if params[:rem_pa]
+      begin
+        pa = Publication.find(params[:rem_pa])
+        @pas.delete(pa) if @pas.include?(pa)
+      rescue ActiveRecord::RecordNotFound
+        flash[:warning] = "One or more publications could not be found."
+        redirect_to authorities_publications_path
+      end
+    end
+    session[:publication_auths] = @pas
+    redirect_to authorities_publications_path(:page => @page) unless request.xhr?
   end
   
   def update_multiple
@@ -133,13 +172,21 @@ class PublicationsController < ApplicationController
     
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]
-    page = params[:page]
     
-    update = Publication.update_multiple(pub_ids, auth_id)
+    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @page = params[:page] || @a_to_z[0]
+    
+    if auth_id
+      update = Publication.update_multiple(pub_ids, auth_id)
+      session[:publication_auths] = nil
+    else
+      flash[:warning] = "You must select one record as the authority."
+    end
+
 
     respond_to do |wants|
       wants.html do
-        redirect_to authorities_publications_path(:page => page)
+        redirect_to authorities_publications_path(:page => @page)
       end
     end
   end
