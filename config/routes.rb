@@ -107,7 +107,10 @@ ActionController::Routing::Routes.draw do |map|
   #####
   # Publication routes
   #####
-  map.resources :publications,  :collection => { :authorities => :get, :update_multiple => :put }
+  map.resources :publications,  :collection => {:authorities => :get, 
+                                                :update_multiple => :put,
+                                                :add_to_box => :get,
+                                                :remove_from_box => :get}
   
   ####
   # User routes
