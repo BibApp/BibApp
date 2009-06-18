@@ -79,11 +79,13 @@ class Publisher < ActiveRecord::Base
       end
       
       # Update Works
-      logger.debug("\n\n===Updating Works===\n\n")
-      self.works.each do |work|
-        work.publisher_id = self.authority_id
-        work.save
-      end
+      logger.debug("\n\n===Reindexing Works===\n\n")
+      Index.batch_update_solr(self.works)
+      #self.works.each do |work|
+        #work.publication_id = self.authority_id
+        #work.publisher_id = self.publisher.authority_id
+        #work.save
+      #end
     
     end
   end
