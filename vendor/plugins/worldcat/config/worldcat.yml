@@ -1,0 +1,12 @@
+##################################################
+# WorldCat API Configuration
+#
+# More info on WorldCat Affiliate Services:
+# http://www.worldcat.org/affiliate/
+##################################################
+
+# Affiliate ID
+ai: <GET YOUR OWN KEY>
+
+# WSKEY - using the WCAPI gem's demo wskey
+wskey: PYNtMxToldTvjQdsCUPqph5WPv2jnXX4IICzKZmILTHZRQ42JslUTz7Q6ngC4P1UVEkpyZ9XHbIGlfMX
