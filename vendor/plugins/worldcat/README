@@ -1,0 +1,52 @@
+==== Worldcat - Ruby port of the worldcat Python module ====
+
+Worldcat intends to make use of OCLC's WorldCat Affiliate web services:
+http://www.worldcat.org/affiliate/
+
+*Important*
+This version only supports the OCLC xID (xISSN, xISBN, xOCLCNUM) web services.
+
+=== Installation
+
+Edit the <plugin>/config/worldcat.yml file.  This file requires your:
+
+* Affiliate ID
+* WSKEY code (currently using Terry Reese's wcapi gem wskey key)
+
+=== Usage?
+
+Run the rake task: rake worldcat:test
+
+Basics
+>> script/console
+>> x = XISBNRequest.new('1888363886', {:format => 'xml', :method => 'to13'})
+>> x.valid?
+>> y = x.get_response
+>> y.evaluated?
+>> y.data
+
+See each XIDRequest subklass for format and method options.
+
+=== TODO
+
+* -xID support- Done 2009.06.17
+* All @TODO comments
+* Tests
+* Documentation
+* Future?
+- Integrate Terry Reese's wcapi gem
+
+=== License
+
+* GPL and BSD (Python heritage copyright)
+- See included licenses
+
+=== Authors
+
+* Eric Larson - Ruby
+- - - -
+* Python module
+- Mark A. Matienzo
+- Etienne Posthumus
+- worldcat.py available at BitBucket
+http://bitbucket.org/anarchivist/worldcat/overview/
