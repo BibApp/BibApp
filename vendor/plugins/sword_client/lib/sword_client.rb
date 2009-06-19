@@ -7,7 +7,7 @@ class SwordException < Exception; end
 # SWORD Server, including posting a file to a SWORD server.
 #
 # For more information on SWORD and the SWORD APP Profile:
-#  http://www.ukoln.ac.uk/repositories/digirep/index/SWORD
+#  http://www.swordapp.org/
 #
 # == Configuration
 #
@@ -177,7 +177,7 @@ class SwordClient
     if deposit_url.nil?
       #post to default collection, if there is one
       default_col = get_default_collection
-      deposit_url = default_col[:deposit_url] if default_col
+      deposit_url = default_col['deposit_url'] if default_col
     end
     
     #only post file if we have some sort of deposit url!
@@ -220,10 +220,10 @@ class SwordClient
     default_collection = nil
     colls.each do |c|
       if @config['default_collection_url']
-        default_collection = c if c[:deposit_url].to_s == @config['default_collection_url']
+        default_collection = c if c['deposit_url'].to_s.strip == @config['default_collection_url'].strip
         break if default_collection #first matching collection wins!
       elsif @config['default_collection_name']
-        default_collection = c if c[:title].to_s.downcase == @config['default_collection_name'].downcase
+        default_collection = c if c['title'].to_s.strip.downcase == @config['default_collection_name'].strip.downcase
         break if default_collection #first matching collection wins!
       end
     end
@@ -254,6 +254,5 @@ end
 #load SwordClient sub-classes
 require 'sword_client/connection'
 require 'sword_client/service_doc_handler'
-require 'sword_client/post_response_handler'
 require 'sword_client/response'
 require 'sword_client/parsed_service_doc'

@@ -101,10 +101,11 @@ class SwordClient::Connection
   # 
   # Optional Headers available:
   #    :user_agent => Name of the SWORD client User Agent
-  #    :verbose => If true, request a Verbose response from server
-  #    :noop => If true, tells server to perform no operation (useful for debugging)
-  #    :format_namespace => The specified SWORD Format Namespace (default: "METS")
+  #    :verbose => If true, request a Verbose response from server (default: false)
+  #    :no_op => If true, tells server to perform no operation (useful for debugging) (default: false)
+  #    :packaging => The specified SWORD Packaging type (default: "http://purl.org/net/sword-types/METSDSpaceSIP")
   #    :mime_type => Content Type / MIME type of file (default: "application/zip")
+  #    :md5 => The MD5 Checksum of the contents
   #    
   def post_file(file_path, deposit_url, headers={})
    
@@ -125,7 +126,7 @@ class SwordClient::Connection
       
     # POST our file to deposit_url
     response = request("post", deposit_url, post_headers, file)
-    
+
     #determine response
     case response
     when Net::HTTPSuccess then response.body
@@ -135,27 +136,30 @@ class SwordClient::Connection
     
   end
   
-  #Map our Connection 'headers' to valid SWORD HTTP Headers
+  #Map our POST-specific Connection 'headers' to valid SWORD HTTP Headers
+  #(Note: headers which can also be sent in a GET request are specified
+  #       by add_sword_headers!())
   def http_post_headers(headers)
     #Mapping of Connection headers{} => corresponding HTTP Headers
     header_mapping = {
        :user_agent => 'User-Agent',
        :verbose => 'X-Verbose',
-       :noop => 'X-No-Op',
-       :format_namespace => 'X-Format-Namespace',
-       :mime_type => 'Content-Type'
+       :no_op => 'X-No-Op',
+       :packaging => 'X-Packaging',
+       :mime_type => 'Content-Type',
+       :md5 => 'Content-MD5'
     }
 
     # Map our headers over to the appropriate HTTP Header
     http_headers = {}
     headers.each_key do |key|
       r_key = header_mapping[key]   #map the key to appropriate HTTP header
-      http_headers[r_key] = headers[key]
+      http_headers[r_key] = headers[key].to_s
     end
     
-    #Set our defaults for POST: sending a Zipped up METS file
+    #Set our defaults for POST: sending a Zipped up METS file which works with DSpace.org
     http_headers['Content-Type'] ||= "application/zip"
-    http_headers['X-Format-Namespace'] ||= "METS"
+    http_headers['X-Packaging'] ||= "http://purl.org/net/sword-types/METSDSpaceSIP"
     
     return http_headers
   end

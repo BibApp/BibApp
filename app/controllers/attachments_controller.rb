@@ -159,7 +159,7 @@ class AttachmentsController < ApplicationController
     # @TODO, right now we are dependent on a default collection!
     if !default_collection.nil?
       #save license text for display in view
-      @license = default_collection[:collectionPolicy]
+      @license = default_collection['collectionPolicy']
       
       #save repository name for display in view
       @repository_name = sword_client.get_repository_name

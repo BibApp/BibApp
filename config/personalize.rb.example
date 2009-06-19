@@ -26,8 +26,9 @@ $DEFUALT_ZIP_CODE            = "53706"
 # Full Address / Contact info of Unit running BibApp
 $UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
 
-# Name of your local institutional repository
-$REPOSITORY_NAME = "Minds@UW"
+# Name and URL of your local institutional repository (only used if SWORD plugin is enabled)
+$REPOSITORY_NAME = "My Repository"
+$REPOSITORY_BASE_URL = "http://my.repository.edu/"
 
 ####
 # Linking To Publications
