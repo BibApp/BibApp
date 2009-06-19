@@ -1,14 +1,15 @@
 - form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
-  %div{:class => "span-14"}
+  %div
     %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
     %span.asset= render :partial => "works/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
 
-  %div{:class => "box span-14"}
-    %div#upload_files{:class => "span-14"}
+  %fieldset
+    %legend="Content Files"
+    %div#upload_files
       %label="Upload File(s):"
       -# Allow uploading multiple files
       = link_to_remote "[Add More Files]", :url =>{ :action => :add_upload_box, :form => form }
-      %br/ 
+      %br/
       = render :partial => 'upload_file', :locals => { :form => form }
 
     -# save asset id as work_id  
@@ -28,11 +29,13 @@
           =@repository_name
         - else
           my local repository
-      %div#license_warning{:style => "display: none;", :class => "notice"}
+      %div#license_warning{:style => "display: none;", :class => "warning"}
         You must agree to the license terms before you can upload files.  
       %div#license{:style => "display: none;", :class => "scrollarea span-12"}
         = @license
 
   %p.submit
     = submit_tag "Upload file(s)", :disable_with => "Uploading files..."
+
+
   
