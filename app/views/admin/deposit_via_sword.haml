@@ -10,19 +10,19 @@
         %legend Deposit Information
         %div.field
           %label Title:
-          %span.field_value=@deposit[:title] 
+          %span.field_value=@deposit['title']
         %div.field
-          %label Deposit ID:
-          %span.field_value=@deposit[:deposit_id]
-        %div.field
-          %label URL of Deposited Item:
+          %label URI of Deposited Item:
           %span.field_value
-            =link_to @deposit[:deposit_url], @deposit[:deposit_url]
+            =link_to @deposit['id'], @deposit['id']
+        %div.field
+          %label Treatment Deposited Item:
+          %span.field_value=@deposit['treatment']
         %div.field
           %label Repository:
           %span.field_value
-            =link_to "#{@deposit[:server][:name]}", @deposit[:server][:uri]
+            =link_to "#{$REPOSITORY_NAME}", $REPOSITORY_BASE_URL
         %div.field
           %label Date Deposited:
-          %span.field_value=@deposit[:updated]
+          %span.field_value=@deposit['updated']
     =link_to "Return to Work", work_path(@work)

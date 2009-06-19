@@ -4,6 +4,8 @@
 # out of responses received from a SWORD Server
 
 require 'rexml/document'
+# Must require ActiveRecord, as it adds the Hash.from_xml() method (used below)
+require 'active_record'
 
 class SwordClient::Response
   
@@ -28,30 +30,30 @@ class SwordClient::Response
  
  
   # Parses the response from post_file() call into 
-  # a Hash similar to the following
-  # (see PostResponseHandler for more details):
+  # a Hash similar which has the same general structure
+  # as the ATOM XML.  Hash structure is similar to:
   #
-  #   {:title => <Deposited Item Title>,
-  #    :deposit_id => <Assigned ID to deposited item>,
-  #    :deposit_url  => <URL of deposited item>,
-  #    :file_urls => <Array of URLs of uploaded files within item>,
-  #    :license_url => <URL of license assigned>,
-  #    :server => {:name => <SWORD service Name>, :uri=> <URI> },
-  #    :updated => <Date deposited item was updated/deposited>,
-  #    :namespace => <SWORD namespace URI> }
+  #   {'title' => <Deposited Item Title>,
+  #    'id' => <Assigned ID to deposited item>,
+  #    'content'  => {'src' => <URL of deposited item>}
+  #    'link' => <Array of URLs of uploaded files within item>,
+  #    'rights' => <URL of license assigned>,
+  #    'server' => {'name' => <SWORD service Name>, 'uri'=> <URI> },
+  #    'updated' => <Date deposited item was updated/deposited> }
   #
-  def self.parse_post_response(response)
+  def self.post_response_to_hash(response)
     
-    # We will use SAX Parsing with REXML
-    src = REXML::Source.new response
-    
-    responseHandler = SwordClient::PostResponseHandler.new
-    
-    #parse Source Doc XML using our custom handler
-    REXML::Document.parse_stream src, responseHandler
-    
-    #return parsed response hash 
-    responseHandler.response_hash 
+    #directly convert ATOM reponse to a Ruby Hash (uses REXML by default)
+    response_hash = Hash.from_xml(response)
+
+   
+
+    #Remove any keys which represent XML namespace declarations ("xmlns:*")
+    # (These are not recognized properly by Hash.from_xml() above)
+    response_hash['entry'].delete_if{|key, value| key.to_s.include?("xmlns:")}
+
+    # Return hash under the top 'entry' node
+    response_hash['entry']
   end
   
 end

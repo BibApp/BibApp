@@ -12,14 +12,14 @@ class SwordClientTest < Test::Unit::TestCase
   def setup
     
     # @TODO: ENTER IN A VALID SWORD URL, USERNAME AND PASSWORD TO TEST EVERYTHING!
-    @service_doc_url = "http://localhost:8080/sword-app/servicedocument"
-    @username = ""
-    @password = ""
+    @service_doc_url = "http://localhost:8080/sword/servicedocument"
+    @username = "tdonohue@illinois.edu"
+    @password = "uiucDspac3"
     
   end
  
   def test_bad_url_type
-    assert_raise(SwordClient::SwordException) do
+    assert_raise(SwordException) do
       SwordClient::Connection.new("ftp://localhost:9999")
     end
   end
@@ -27,6 +27,7 @@ class SwordClientTest < Test::Unit::TestCase
   def test_connection_initialize
     
     #Make sure all defaults get initialized properly
+    # These defaults are set up in SwordClient::Connection initialize()
     connection = SwordClient::Connection.new
     assert_equal 'localhost', connection.url.host
     assert_equal 8080, connection.url.port
@@ -131,15 +132,13 @@ class SwordClientTest < Test::Unit::TestCase
     
     doc = connection.service_document
     
-    #Uncomment to see the Service Document
-    #puts doc  
-      
     #make sure our service doc structure looks OK
-    assert_match(/<\?xml[^<>]*>[\s]*<service[^<>]*>[\s]*<sword:level[^<>]*>.*<\/sword:level>.*<workspace>[\s]*<atom:title[^<>]*>.*<\/atom:title>.*<\/workspace>.*<\/service>/m, doc)
+    # (note: this doesn't do a full validation, just a general structural check)
+    assert_match(/<\?xml[^<>]*>[\s]*<app:service[^<>]*>[\s]*<sword:version[^<>]*>.*<\/sword:version>.*<app:workspace>[\s]*<atom:title[^<>]*>.*<\/atom:title>[\s]*<app:collection[^<>]*>.*<\/app:collection>.*<\/app:workspace>.*<\/app:service>/m, doc)
   end
   
   # This test will ALWAYS fail until you add in a valid SWORD URL, username & password
-  def test_get_collections
+  def test_parse_service_doc
    
     if @service_doc_url.empty? or @username.empty? or @password.empty?
       flunk "Because SwordClient actually connects to an existing SWORD Server, many of its tests require a valid SWORD URL, username and password. You can specify these in the 'setup()' of sword_client_test.rb so those tests don't fail by default."
@@ -154,15 +153,54 @@ class SwordClientTest < Test::Unit::TestCase
       
     #retrieve collections and check
     assert_instance_of Array, parsed_doc.collections
-    
-    #check in more detail
+    assert !parsed_doc.collections.empty?
+
+    #Uncomment to see the parsed out hash
+    #puts parsed_doc.inspect
+
+    #check in more detail (by checking some required values were parsed properly)
+    assert_not_nil parsed_doc.version
+    assert_not_nil parsed_doc.repository_name
     parsed_doc.collections.each do |c|
       #at very least each collection should have a title & URL
-      assert c[:title]
-      assert c[:deposit_url]
+      assert c['title']
+      assert c['deposit_url']
     end
   end
-  
+
+  #Test parsing the response after posting a File to SWORD
+  # NOTE: Rather than actually posting a file,
+  # this test uses prepackaged fixtures which are actual responses
+  # from DSpace, Fedora, and EPrints
+  def test_parse_post_response
+
+
+    #Take all the Test fixtures and run them through the response parser
+    Dir["#{FIX_DIR}/post-response/*"].each do |filepath|
+
+      #Read the file into a string
+      if filepath.respond_to? :read
+        str = filepath.read
+      elsif File.readable?(filepath)
+        str = File.read(filepath)
+      end
+
+      #parse the file into a hash
+      response_hash = SwordClient::Response.post_response_to_hash(str)
+
+      assert_instance_of Hash, response_hash
+
+      #Check for required fields in response
+      assert response_hash['id']
+      assert response_hash['treatment']
+      assert response_hash['updated']
+      assert response_hash['generator']
+      assert response_hash['userAgent']
+    end
+
+  end
+
+
   # This test will ALWAYS fail until you add in a valid SWORD URL, username & password
   def test_post_file
     
@@ -180,10 +218,11 @@ class SwordClientTest < Test::Unit::TestCase
     
     puts "\n\nTesting Deposit"
     puts "\nFile: #{FIX_DIR}/sword-example.zip"
-    puts "\nDepositing to: " + parsed_doc.collections[0][:deposit_url] + "\n"
+    puts "\nDepositing to: " + parsed_doc.collections[0]['deposit_url'] + "\n"
     
     #as a test, we'll just post to first collection found
-    post_response_doc = connection.post_file("#{FIX_DIR}/sword-example.zip", parsed_doc.collections[0][:deposit_url])
+    # NOTE: We are passing the NO_OP flag so that deposit doesn't actually happen.
+    post_response_doc = connection.post_file("#{FIX_DIR}/sword-example.zip", parsed_doc.collections[0]['deposit_url'], {:no_op=>true})
     
     #Uncomment to see the ATOM response
     #puts post_response_doc
@@ -192,17 +231,17 @@ class SwordClientTest < Test::Unit::TestCase
     assert_match(/<\?xml[^<>]*>[\s]*<atom:entry[^<>]*>[\s]*<atom:id[^<>]*>.*<\/atom:id>.*<atom:title[^<>]*>.*<\/atom:title>.*<atom:updated[^<>]*>.*<\/atom:updated>.*<\/atom:entry>/m, post_response_doc)
   
     #Parse response into Hash
-    response_hash = SwordClient::Response.parse_post_response(post_response_doc)
+    response_hash = SwordClient::Response.post_response_to_hash(post_response_doc)
     assert_instance_of Hash, response_hash
     
     #Uncomment to see the parsed out hash
     #puts response_hash.inspect
     
     #check Hash in more detail
-    assert response_hash[:deposit_id]
-    assert response_hash[:deposit_url]
-    assert response_hash[:updated]
-    assert response_hash[:title]
+    assert response_hash['id']
+    assert response_hash['treatment']
+    assert response_hash['updated']
+    assert response_hash['title']
   
   end
 
