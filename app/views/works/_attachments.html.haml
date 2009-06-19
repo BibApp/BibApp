@@ -12,7 +12,7 @@
     -if SwordClient.configured?
       %br/
       %p
-        ="The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{$REPOSITORY_NAME}."
+        ="The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}."
 
     / Admin
     = render :partial => 'admin'

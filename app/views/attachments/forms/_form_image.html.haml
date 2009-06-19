@@ -1,17 +1,40 @@
-- form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true } do |form|
-  %div{:class => "column span-12"}
+-#
+-# Render Form for Creating/Editing an Image
+-#
+
+-# Determine Form URL and Method based on whether we are editing or creating an image
+- form_url = {:controller => "attachments", :action => "create"}
+- form_method = :post
+- if !@attachment.new_record?
+  - form_url = attachment_path(@attachment)
+  - form_method = :put
+  -# Also, set the asset, if unset
+  - @asset ||= @attachment.asset
+
+-# Actually build the form
+- form_for :attachment, :url => form_url, :html => { :method => form_method, :multipart => true } do |form|
+  %div
     %h4="Attaching to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
 
-  %div#upload_files
-    %label="Upload Image:"
-    %br/ 
+  -# If there is an existing image, display it
+  -if !@attachment.new_record?
+    %div{:class => "prepend-2 last"}
+      Current Image
+      %br/
+      = render :partial => "shared/person_image", :locals => {:o => @asset}
+
+  %fieldset
+    %legend="New Image"
+    %label="Upload File:"
+    %br/
     = render :partial => 'upload_file', :locals => { :form => form }
 
-  -# save asset id as person_id   
-  = hidden_field_tag :person_id, @asset.id
+    -# save asset id as person_id
+    = hidden_field_tag :person_id, @asset.id
 
-  -# Save type of attachment
-  = hidden_field_tag :type, @attachment.class
+    -# Save type of attachment
+    = hidden_field_tag :type, @attachment.class
 
-  %p.submit
-    = submit_tag "Upload image", :disable_with => "Uploading your image..."
+    %p.submit
+      = submit_tag "Upload image", :disable_with => "Uploading your image..."
+      = link_to "Cancel", get_asset_url(@asset)
