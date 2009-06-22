@@ -74,6 +74,8 @@ ActionController::Routing::Routes.draw do |map|
                 :collection => {:auto_complete_for_group_name => :get} do |g|
     # Make URLs like /group/1/works/4
     g.resources :works
+    # Make URLs like /group/1/people/4
+    g.resources :people
     # Make URLs like /group/1/roles/3 for roles on a specific Group
     g.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
   end

@@ -35,12 +35,12 @@
 
       / Authority
       %div#authority.span-9
-        - if @publication.authority_for.size > 0
+        - unless @authority_for.empty?
           %h3=@publication.name
           %p Authorized name for:
           %ul.authority-children
-            - @publication.authority_for.collect{|c| c.name}.uniq.each do |auth|
-              %li= auth
+            - @authority_for.each do |auth|
+              %li=link_to auth.name, publication_path(auth)
         - else
           %h3 Authorized Title
           %p=link_to @publication.authority.name, publication_path(@publication.authority)

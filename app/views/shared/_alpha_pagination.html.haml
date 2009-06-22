@@ -1,12 +1,9 @@
 %ol#alpha-nav.pagination
+  -# path ||= nil
   - ('A'..'Z').each do |letter|
     - current = false
     - if letter == @page
       - current = true
-      = letter_link_for(@a_to_z, letter, current)
+      = letter_link_for(@a_to_z, letter, current, :path => path)
     - else
-      = letter_link_for(@a_to_z, letter, current)
-  - if @page == ""
-    = content_tag :li, link_to("All", {:page=> ""}, :class => "some"), :class => "current"
-  - else
-    = content_tag :li, link_to("All", {:page=> ""}, :class => "some")
+      = letter_link_for(@a_to_z, letter, current, :path => path)

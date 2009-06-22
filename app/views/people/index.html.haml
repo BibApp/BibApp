@@ -10,11 +10,19 @@
         %li=link_to "Add a Person", new_person_path
 
 %div.span-24
-      
   %div.span-22.prepend-1
-    %h2="People"
-    
-    = render :partial => "shared/alpha_pagination"
+    / ### Group / People ###
+    - if params[:group_id]
+      %h2= @group.name
+      = render :partial => "shared/local_nav", :locals => {:object => "group"}
+
+    - else
+      %h2="People"
+
+    - if params[:group_id]
+      = render :partial => "shared/alpha_pagination", :locals => {:path => group_people_path(@group.id)}
+    - else
+      = render :partial => "shared/alpha_pagination"
 
     %table#people
       %tr
