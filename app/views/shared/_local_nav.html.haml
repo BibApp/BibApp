@@ -56,6 +56,6 @@
 
       - # People
       - if params[:controller] == "people"
-        %li.current=link_to "People"#, group_people_path(@group)
+        %li.current=link_to "People", group_people_path(@group)
       - else
-        %li=link_to "People"#, group_people_path(@group)
+        %li=link_to "People", group_people_path(@group)

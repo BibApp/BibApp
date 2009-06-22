@@ -24,22 +24,46 @@ class PeopleController < ApplicationController
     end
       
     before :index do
-      # find first letter of last name (in uppercase, for paging mechanism)
-      @a_to_z = Person.letters.collect { |d| d.letter.upcase }
       
-      if params[:q]
-        query = params[:q]
-        @current_objects = current_objects
+      # for groups/people
+      if params[:group_id]
+        @group = Group.find_by_id(params[:group_id].split("-")[0])
+
+        if params[:q]
+          query = params[:q]
+          @current_objects = current_objects
+        else
+          @a_to_z = Array.new
+          @group.people.each do |person|
+            @a_to_z << person.last_name[0,1].upcase
+          end
+          @a_to_z = @a_to_z.uniq
+          @page = params[:page] || @a_to_z[0]
+          @current_objects = @group.people.find(
+            :all,
+            :conditions => ["upper(last_name) like ?", "#{@page}%"],
+            :order => "upper(last_name), upper(first_name)"
+          )
+        end
+
+        @title = "#{@group.name} - People"
       else
-        @page = params[:page] || @a_to_z[0]
-        @current_objects = Person.find(
-          :all, 
-          :conditions => ["upper(last_name) like ?", "#{@page}%"], 
-          :order => "upper(last_name), upper(first_name)"
-        )
-      end
       
-      @title = "People"
+        if params[:q]
+          query = params[:q]
+          @current_objects = current_objects
+        else
+          @a_to_z = Person.letters.collect { |d| d.letter.upcase }
+          @page = params[:page] || @a_to_z[0]
+          @current_objects = Person.find(
+            :all,
+            :conditions => ["upper(last_name) like ?", "#{@page}%"],
+            :order => "upper(last_name), upper(first_name)"
+          )
+        end
+
+        @title = "People"
+      end
     end
     
     before :new do

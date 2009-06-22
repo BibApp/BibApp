@@ -26,11 +26,19 @@ module ApplicationHelper
     check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, :onclick => js)
   end
 
-  def letter_link_for(letters, letter, current)
-    if current == true
-      content_tag(:li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
+  def letter_link_for(letters, letter, current, path)
+    if path.nil?
+      if current == true
+        content_tag(:li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
+      else
+        content_tag :li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none'))
+      end
     else
-      content_tag :li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none'))
+      if current == true
+        content_tag(:li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
+      else
+        content_tag :li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none'))
+      end
     end
   end
   
