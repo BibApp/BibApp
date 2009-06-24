@@ -22,6 +22,10 @@ class Person < ActiveRecord::Base
   def after_create
     set_pen_names
   end
+
+  def after_update
+    set_pen_names
+  end
   
   #Note: 'after_save' callback is located in 'person_observer.rb', to make
   # sure it is called *before* after_save in 'index_observer.rb'
@@ -70,7 +74,10 @@ class Person < ActiveRecord::Base
     variants << (last_name + " " + first_name.first(1)).downcase.strip
 
     # Find or create
-    variants.uniq.each{|v| self.name_strings << NameString.find_or_create_by_machine_name(v)}
+    variants.uniq.each do |v|
+      ns = NameString.find_or_create_by_machine_name(v)
+      self.name_strings << ns unless self.name_strings.include?(ns)
+    end
   end
 
   def name
