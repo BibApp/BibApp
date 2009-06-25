@@ -8,7 +8,7 @@
       %label="Middle Name"
       = form.text_field :middle_name
     %p
-      %label="Last Name"
+      = form.label :last_name, "Last Name*"
       = form.text_field :last_name
     %p
       %label="Prefix"
@@ -23,8 +23,9 @@
       %label="Phone"
       = form.text_field :phone
     %p
-      %label="Email"
+      = form.label :email,"Email"
       = form.text_field :email
+      = error_for 'person', 'email'
     %p
       %label="IM"
       = form.text_field :im
