@@ -16,6 +16,10 @@ class Person < ActiveRecord::Base
   has_many :contributorships
   
   has_one :image, :as => :asset
+
+  #### Validators ####
+
+  validates_presence_of :email
   
   #### Callbacks ####
  
@@ -197,4 +201,5 @@ class Person < ActiveRecord::Base
       return last_name, id, image_url
     end
   end
+
 end

@@ -116,6 +116,36 @@ class PeopleController < ApplicationController
     end
   end
 
+  def create
+
+    @person = Person.new(params[:person])
+    @dupeperson = Person.find_by_email(@person.email)
+    
+    if @dupeperson.nil?
+      respond_to do |format|
+        if @person.save
+          flash[:notice] = "Person was successfully created."
+          format.html {redirect_to new_person_pen_name_path(@person.id)}
+          #TODO: not sure this is right
+          format.xml  {head :created, :location => person_url(@person)}
+        else
+          flash[:warning] = "One or more required fields are missing."
+          format.html {render :action => "new"}
+          format.xml  {render :xml => @person.errors.to_xml}
+        end
+      end
+    else
+      respond_to do |format|
+        flash[:error] = "This person already exists in the BibApp system: <a href=""", @dupeperson.id, """>view their record.</a>"
+        format.html {render :action => "new"}
+        #TODO: what will the xml response be?
+        #format.xml  {render :xml => "error"}
+      end
+    end
+ 
+  end
+
+
   private
   
   def find_cart
