@@ -63,7 +63,7 @@ Rails::Initializer.run do |config|
   config.gem "namecase", :version=>"~>1.0.2"
   
   #RedCloth - converts plain text or textile to HTML (also used by HAML)
-  config.gem "RedCloth", :lib=>"redcloth", :version=>"~>3.0.4"
+  config.gem "RedCloth", :lib=>"redcloth", :version=>"~>4.1.9"
 
   #Ruby-Net-LDAP - used to perform LDAP queries
   config.gem "ruby-net-ldap", :lib=>"net/ldap", :version=>"~>0.0.4"
@@ -84,6 +84,7 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
+  config.load_paths += %W( #{RAILS_ROOT}/app/models/identifier_subclasses )
   config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
     File.directory?(lib = "#{dir}/lib") ? lib : dir
   end

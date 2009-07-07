@@ -9,6 +9,9 @@ class Publication < ActiveRecord::Base
     :foreign_key => :authority_id
   has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
   
+  has_many :identifyings, :as => :identifiable
+  has_many :identifiers, :through => :identifyings
+  
   
   #### Callbacks ####
   
@@ -24,6 +27,15 @@ class Publication < ActiveRecord::Base
   # (That way Publication info is updated completely *before* re-indexing of works)
   
   #### Methods ####
+  
+  def isbns
+    isbns = Array.new
+    ids = self.identifiers.find(:all, :conditions => [ 'type=?', 'ISBN']).collect{|isbn| {:name => isbn.name, :id => isbn.id}}
+    ids.each do |id|
+      isbns << {:name => id[:name], :id => id[:id]}
+    end
+    return isbns
+  end
   
   def save_without_callbacks
     update_without_callbacks
