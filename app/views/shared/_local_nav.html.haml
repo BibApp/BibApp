@@ -1,6 +1,13 @@
 %div#local-nav
   - if object == "person"
-    - if defined?(state) && state == "edit"
+    - if defined?(state) && state == "new"
+      %ul#local-pages
+        %li.current=link_to "Personal Info", new_person_path
+        %li=link_to "Pen Names", new_person_path, :disabled => "true"
+        %li=link_to "Group Memberships", new_person_path, :disabled => "true"
+        %li=link_to "Image", new_person_path, :disabled => "true"
+
+    - elsif defined?(state) && state == "edit"
       %ul#local-pages
         - # Personal Info
         - if params[:controller] == "people"
@@ -19,6 +26,21 @@
           %li.current=link_to "Group Memberships", new_person_membership_path(@person.id)
         - else
           %li=link_to "Group Memberships", new_person_membership_path(@person.id)
+
+        - # Memberships
+        - if params[:controller] == "attachments"
+          %li.current
+            - if @person.image
+              =link_to "Image", edit_person_attachment_path(@person, @person.image)
+            - else
+              =link_to "Image", new_person_attachment_path(@person), :params => {"type" => "Image"}
+        - else
+          %li
+            - if @person.image
+              =link_to "Image", edit_person_attachment_path(@person, @person.image)
+            - else
+              =link_to "Image", new_person_attachment_path(@person), :params => {"type" => "Image"}
+
     - else
       %ul#local-pages
         - # People

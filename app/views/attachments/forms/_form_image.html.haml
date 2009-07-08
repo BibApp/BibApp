@@ -13,15 +13,15 @@
 
 -# Actually build the form
 - form_for :attachment, :url => form_url, :html => { :method => form_method, :multipart => true } do |form|
-  %div
-    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}: #{@asset.name}"
-
   -# If there is an existing image, display it
   -if !@attachment.new_record?
-    %div{:class => "prepend-2 last"}
-      Current Image
-      %br/
-      = render :partial => "shared/person_image", :locals => {:o => @asset}
+
+    %div.span-4.prepend-1
+      #picture.span-3
+        %p= render :partial => "shared/person_image", :locals => {:o => @asset}
+
+      -if @person.image
+        = link_to "delete image", {:controller => "attachments", :action => "destroy", :id => @asset.image.id}, :method => :delete
 
   %fieldset
     %legend="New Image"
