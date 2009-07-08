@@ -6,16 +6,5 @@
     %h2=" Editing: #{link_to @person.first_last, person_path(@person)}"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
-
-    %div.span-4.prepend-1
-      #picture.span-3
-        %p= render :partial => "shared/person_image", :locals => {:o => @person}
-
-      -if @person.image
-        = link_to "change", edit_person_attachment_path(@person, @person.image)
-        |
-        = link_to "delete", {:controller => "attachments", :action => "destroy", :id => @person.image.id}, :method => :delete
-      -else
-        = link_to "upload image", new_person_attachment_path(@person), :params => {"type" => "Image"}
     
     = render :partial => 'form'

@@ -14,6 +14,10 @@ class AttachmentsController < ApplicationController
       #load asset information
       load_asset
       
+      if @asset.kind_of?(Person)
+        @person = @asset
+      end
+      
       #only editors of this asset can attach files to it
       permit "editor of asset"
       
@@ -37,6 +41,14 @@ class AttachmentsController < ApplicationController
         else
           flash[:error] = "SWORD does not seem to be configured in #{RAILS_ROOT}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
         end
+      end
+    end
+
+    before :edit do
+      #load asset information
+      load_asset
+      if @asset.kind_of?(Person)
+        @person = @asset
       end
     end
     

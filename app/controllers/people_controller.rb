@@ -136,7 +136,7 @@ class PeopleController < ApplicationController
       end
     else
       respond_to do |format|
-        flash[:error] = "This person already exists in the BibApp system: <a href=""", @dupeperson.id, """>view their record.</a>"
+        flash[:error] = "This person already exists in the BibApp system: <a href=""", person_path(@dupeperson.id), """>view their record.</a>"
         format.html {render :action => "new"}
         #TODO: what will the xml response be?
         #format.xml  {render :xml => "error"}

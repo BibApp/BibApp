@@ -2,7 +2,9 @@
 / Main
 %div.span-24
   %div.span-22.prepend-1
-    %h2 <strong>Add a Person</strong> » Set Pen Names » Join Groups » Upload a Photo
+    %h2 New Person
+
+    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "new"}
 
     - form_tag( {:action => :new}, {:method => :get} ) do
       %p
