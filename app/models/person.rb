@@ -19,7 +19,8 @@ class Person < ActiveRecord::Base
   has_many :contributorships,
     :dependent => :delete_all
   
-  has_one :image, :as => :asset
+  has_one :image, :as => :asset,
+    :dependent => :delete_all
 
   #### Validators ####
 
