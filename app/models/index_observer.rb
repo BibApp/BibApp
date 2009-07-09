@@ -26,7 +26,7 @@ class IndexObserver < ActiveRecord::Observer
     end  
   end
   
-  def after_destroy(record)
+  def before_destroy(record)
     #check if we destroyed a Work, or another model
     case record
     when Work #destroyed a Work

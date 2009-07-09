@@ -145,6 +145,22 @@ class PeopleController < ApplicationController
  
   end
 
+  def destroy
+    permit "admin"
+
+    person = Person.find(params[:id])
+    return_path = params[:return_path] || people_url
+
+    person.destroy if person
+
+    respond_to do |format|
+      flash[:notice] = "#{person.first_last} was successfully deleted."
+      #forward back to path which was specified in params
+      format.html {redirect_to return_path }
+      format.xml  {head :ok}
+    end
+  end
+
 
   private
   
