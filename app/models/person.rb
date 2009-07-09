@@ -20,7 +20,7 @@ class Person < ActiveRecord::Base
     :dependent => :delete_all
   
   has_one :image, :as => :asset,
-    :dependent => :delete_all
+    :dependent => :delete
 
   #### Validators ####
 
