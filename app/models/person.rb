@@ -7,13 +7,17 @@ class Person < ActiveRecord::Base
   #### Associations ####
   
   has_many :name_strings, :through => :pen_names
-  has_many :pen_names
+  has_many :pen_names,
+    :dependent => :delete_all
+  
   has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false], :order => "position"
-  has_many :memberships
+  has_many :memberships,
+    :dependent => :delete_all
   
   has_many :works, :through => :contributorships 
 
-  has_many :contributorships
+  has_many :contributorships,
+    :dependent => :delete_all
   
   has_one :image, :as => :asset
 
