@@ -81,12 +81,16 @@ class PenNamesController < ApplicationController
 
   def live_search_for_name_strings
     @phrase = params[:q]
+    @person = Person.find(params[:person_id])
     a1 = "%"
     a2 = "%"
     @searchphrase = a1 + @phrase + a2
-    @results = NameString.find(:all, :conditions => [ "name LIKE ?", @searchphrase], :order => "name")
+    @results = NameString.find(
+      :all,
+      :conditions => [ "name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
+      :order => "name"
+    )
     @number_match = @results.length
-    @person = Person.find(params[:person_id])
     @results = @results - @person.name_strings
         
     respond_to do |format|
