@@ -145,6 +145,26 @@ class PeopleController < ApplicationController
  
   end
 
+  def update
+
+    @person = Person.find(params[:id])
+    @person.update_attributes(params[:person])
+  
+    respond_to do |format|
+      if @person.save
+        flash[:notice] = "Personal info was successfully updated."
+        format.html {redirect_to new_person_pen_name_path(@person.id)}
+        #TODO: not sure this is right
+        format.xml  {head :created, :location => person_url(@person)}
+      else
+        flash[:warning] = "One or more required fields are missing."
+        format.html {render :action => "new"}
+        format.xml  {render :xml => @person.errors.to_xml}
+      end
+    end
+
+  end
+
   def destroy
     permit "admin"
 

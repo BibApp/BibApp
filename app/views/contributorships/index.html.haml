@@ -1,7 +1,9 @@
+- @title = "#{@person.first_last}: #{@status.capitalize} Contributorships"
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
 
-    %h2="#{@status.capitalize} Contributorships for: #{link_to @person.name, person_path(@person)}"
+    %h2="#{link_to @person.name, person_path(@person)}: #{@status.capitalize} Contributorships"
+    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
     %div{:class => "column span-14"}
       %ul.actions
         %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => 1))
