@@ -1,13 +1,16 @@
 = error_messages_for :attachment
-
 / === Attachments === Edit ===
 / Main
+-if @asset.kind_of?(Person)
+  - @title = "#{@person.first_last}: Photo"
+-else
+  - @title = "Upload #{@attachment.class.to_s.underscore.titleize}"
 %div{:class => "span-24"}
   %div.span-22.prepend-1
     = error_messages_for :attachment
 
     -if @asset.kind_of?(Person)
-      %h2=" Editing: #{link_to @person.first_last, person_path(@person)}"
+      %h2="#{link_to @person.first_last, person_path(@person)}: Photo"
       = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
     -else
       %h2="Upload #{@attachment.class.to_s.underscore.titleize}"

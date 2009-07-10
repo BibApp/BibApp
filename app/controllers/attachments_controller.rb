@@ -108,8 +108,13 @@ class AttachmentsController < ApplicationController
           flash[:notice] = attachment_count.to_s + ' attachments were successfully uploaded'
         end
         
-        format.html {redirect_to get_response_url(@asset)}
-        format.xml  {head :created, :location => get_response_url(@asset)}
+        if @asset.kind_of?(Person)
+          format.html {redirect_to edit_person_attachment_path(@asset.id, @asset.image.id)}
+          format.xml  {head :created, :location => get_response_url(@asset)}
+        else
+          format.html {redirect_to get_response_url(@asset)}
+          format.xml  {head :created, :location => get_response_url(@asset)}
+        end
       else
         format.html {render :action => "new"}
         format.xml  {render :xml => @attachment.errors.to_xml}
@@ -129,8 +134,14 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       if @attachment.save
         flash[:notice] = 'Attachment was successfully uploaded'
-        format.html {redirect_to get_response_url(@attachment.asset)}
-        format.xml  {head :created, :location => get_response_url(@attachment.asset)}    
+
+        if @asset.kind_of?(Person)
+          format.html {redirect_to edit_person_attachment_path(@attachment.asset.id, @attachment.id)}
+          format.xml  {head :created, :location => get_response_url(@attachment.asset)}
+        else
+          format.html {redirect_to get_response_url(@attachment.asset)}
+          format.xml  {head :created, :location => get_response_url(@attachment.asset)}
+        end
       else
         format.html {render :action => "edit"}
         format.xml  {render :xml => @attachment.errors.to_xml}
@@ -150,8 +161,14 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       if asset.save! #make sure asset's after_save callbacks are called
         flash[:notice] = 'Attachment was successfully deleted'
-        format.html {redirect_to get_response_url(asset)}
-        format.xml  {head :ok }
+
+        if asset.kind_of?(Person)
+          format.html {redirect_to new_person_attachment_path(asset.id)}
+          format.xml  {head :ok }
+        else
+          format.html {redirect_to get_response_url(asset)}
+          format.xml  {head :ok }
+        end
       end  
     end
   end
