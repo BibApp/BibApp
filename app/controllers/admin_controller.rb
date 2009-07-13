@@ -81,6 +81,7 @@ class AdminController < ApplicationController
     @export       = params[:export] || ""
 
     @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+    t = true
   end
   
   ######

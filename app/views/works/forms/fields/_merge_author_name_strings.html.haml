@@ -1,6 +1,17 @@
 -# Add an Author field, with Auto-Complete.
 -# Also adds a list of existing Authors
 
+%td.duplicate
+  -# Initialize our list of authors
+  - authors = @dupe.name_strings.author if @dupe.name_strings.author
+  = label_tag 'dupe_author_name_strings[]', "Author(s):"
+  -# Build list of authors
+  - if authors
+    - authors.each do |author|
+      - name = (author.kind_of?(String) ? author : author.name)
+      - id = (author.kind_of?(String) ? author : author.id)
+      %br/
+      = text_field_tag 'dupe_author_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of authors
   -#  Default: use authors assigned to @work.  
@@ -24,14 +35,3 @@
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
   = sortable_element 'author_name_strings_list', :update => 'list_hint', :only => 'movable', :url => {:action => "reorder_list", :list_type =>'author_name_strings'}, :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
-%td.duplicate
-  -# Initialize our list of authors
-  - authors = @dupe.name_strings.author if @dupe.name_strings.author
-  = label_tag 'dupe_author_name_strings[]', "Author(s):"
-  -# Build list of authors
-  - if authors
-    - authors.each do |author|
-      - name = (author.kind_of?(String) ? author : author.name)
-      - id = (author.kind_of?(String) ? author : author.id)
-      %br/
-      = text_field_tag 'dupe_author_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}

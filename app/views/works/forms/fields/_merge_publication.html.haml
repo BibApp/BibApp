@@ -1,3 +1,8 @@
+%td.duplicate
+  = label_tag 'dupe_publication', "Periodical Title:"
+  %br/
+  - publication = @dupe.publication unless @dupe.publication.nil?
+  = text_field_tag 'dupe_publication', publication.name, {:class => 'text', :readonly => 'readonly'}
 %td
   -# Publication field with Auto-Complete.
   -# Also includes some special Javascript
@@ -17,8 +22,4 @@
   %br/
   - @publication = @work.publication unless @work.publication.nil?
   = text_field_with_auto_complete :publication, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}
-%td.duplicate
-  = label_tag 'dupe_publication', "Periodical Title:"
-  %br/
-  - publication = @dupe.publication unless @dupe.publication.nil?
-  = text_field_tag 'dupe_publication', publication.name, {:class => 'text', :readonly => 'readonly'}
+
