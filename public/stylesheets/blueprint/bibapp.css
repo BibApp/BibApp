@@ -485,8 +485,7 @@ ul.recommendations {
 
 /* Style for duplicates box (displayed only for Duplicate Works) */
 div.duplicate_box {
-    margin: 0 0.5em 0.5em 0;
-    padding: 0.5em;
+    padding: 0 2em 0 0;
     width: 40%;
     float: right;
 }
@@ -506,6 +505,10 @@ td.duplicate {
   color:inherit;
 }
 
+td.duplicate * {
+  background-color:transparent;
+  border-color:transparent;
+}
 
 /* ===================================== */
 /* ======== Person View Styles ========= */

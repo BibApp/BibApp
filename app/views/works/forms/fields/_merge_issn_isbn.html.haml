@@ -16,15 +16,15 @@
 - if !issn and !isbn
   - label = "ISSN/ISBN"
 
-%td
-  = label_tag 'issn_isbn', "#{label}:"
-  %br/
-  - @publication = @work.publication unless @work.publication.nil?
-  - issn_isbn = @publication.issn_isbn unless @publication.nil?
-  = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'
 %td.duplicate
   = label_tag 'dupe_issn_isbn', "#{label}:"
   %br/
   - publication = @dupe.publication unless @dupe.publication.nil?
   - issn_isbn = publication.issn_isbn unless publication.nil?
   = text_field_tag 'dupe_issn_isbn', issn_isbn, {:class=>'text mediumbox', :readonly => 'readonly'}
+%td
+  = label_tag 'issn_isbn', "#{label}:"
+  %br/
+  - @publication = @work.publication unless @work.publication.nil?
+  - issn_isbn = @publication.issn_isbn unless @publication.nil?
+  = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'

@@ -1,6 +1,17 @@
 -# Add an Editor field, with Auto-Complete.
 -# Also adds a list of existing Editors
 
+%td.duplicate
+  -# Initialize our list of authors
+  - editors = @dupe.name_strings.editor if @dupe.name_strings.editor
+  = label_tag 'dupe_editor_name_strings[]', "Editor(s):"
+  -# Build list of editors
+  - if editors
+    - editors.each do |editor|
+      - name = (editor.kind_of?(String) ? editor : editor.name)
+      - id = (editor.kind_of?(String) ? editor : editor.id)
+      %br/
+      = text_field_tag 'dupe_editor_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of editors
   -#  Default: use editors assigned to @work.
@@ -24,14 +35,3 @@
   -# make the editor list sortable, so users can change order of editors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
   = sortable_element 'editor_name_strings_list', :update => 'list_hint', :url => {:action => "reorder_list", :list_type =>'editor_name_strings'}, :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
-%td.duplicate
-  -# Initialize our list of authors
-  - editors = @dupe.name_strings.editor if @dupe.name_strings.editor
-  = label_tag 'dupe_editor_name_strings[]', "Editor(s):"
-  -# Build list of editors
-  - if editors
-    - editors.each do |editor|
-      - name = (editor.kind_of?(String) ? editor : editor.name)
-      - id = (editor.kind_of?(String) ? editor : editor.id)
-      %br/
-      = text_field_tag 'dupe_editor_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}

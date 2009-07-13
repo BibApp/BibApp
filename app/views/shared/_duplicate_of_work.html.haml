@@ -5,13 +5,19 @@
 -# 
   
 -# Get listing of all possible duplicates from Solr
-- dupes = Index.possible_accepted_duplicate_works(work)
+- dupes = Index.possible_accepted_duplicates(work)
 
 / Duplicate candidates
 %div.duplicate_box
-  %div.duplicate_box_heading="Duplicate of these accepted works"
   - dupes.each do |dupe|
-    =link_to dupe, work_path(dupe.id)
-    %h5.metadata{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=dupe['type']
+    - if dupe['issn_isbn'] != nil
+      %span{:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
+    %strong=link_to "#{dupe['title']}", work_path(dupe['pk_i'])
+    %h5{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=dupe['type']
+    -#display status of a work, if specified
+    = render :partial => "shared/work_status", :locals => {:work => dupe}
+
+    = render :partial => "shared/work_subclasses/#{dupe['type'].downcase.gsub(" ", "_")}", :locals => {:work => dupe}
+
     .links
-      =link_to "Merge duplicates", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe.id
+      =link_to "Side-by-side edit", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe['pk_i']

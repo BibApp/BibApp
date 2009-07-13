@@ -7,13 +7,12 @@
 -# Initialize optional input variables
 - label ||= "Primary Title"
   
-
+%td.duplicate
+  = label_tag 'dupe_title_primary', "#{label}:"
+  %br/
+  = text_field_tag 'dupe_title_primary', @dupe.title_primary, {:class => 'text', :readonly => 'readonly'}
 %td
   = form.label :title_primary, "#{label}*:"
   %br/
   = form.text_field :title_primary, :class=>'text'
   = error_for 'work', 'title_primary'
-%td.duplicate
-  = label_tag 'dupe_title_primary', "#{label}:"
-  %br/
-  = text_field_tag 'dupe_title_primary', @dupe.title_primary, {:class => 'text', :readonly => 'readonly'}
