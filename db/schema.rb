@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081030212640) do
+ActiveRecord::Schema.define(:version => 20090727211325) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -81,6 +81,27 @@ ActiveRecord::Schema.define(:version => 20081030212640) do
 
   add_index "groups", ["machine_name"], :name => "group_machine_name"
   add_index "groups", ["name"], :name => "group_name", :unique => true
+
+  create_table "identifiers", :force => true do |t|
+    t.string   "name"
+    t.string   "type",       :default => "Unknown", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identifiers", ["name", "type"], :name => "index_identifiers_on_name_and_type", :unique => true
+
+  create_table "identifyings", :force => true do |t|
+    t.integer  "identifier_id",     :null => false
+    t.integer  "identifiable_id",   :null => false
+    t.string   "identifiable_type", :null => false
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "identifyings", ["identifiable_id", "identifiable_type"], :name => "index_identifyings_on_identifiable_id_and_identifiable_type"
+  add_index "identifyings", ["identifier_id"], :name => "index_identifyings_on_identifier_id"
 
   create_table "keywordings", :force => true do |t|
     t.integer  "keyword_id"
@@ -155,6 +176,9 @@ ActiveRecord::Schema.define(:version => 20081030212640) do
     t.datetime "updated_at"
     t.text     "scoring_hash"
     t.string   "machine_name"
+    t.string   "uid"
+    t.string   "display_name"
+    t.text     "postal_address"
   end
 
   add_index "people", ["machine_name"], :name => "person_machine_name"

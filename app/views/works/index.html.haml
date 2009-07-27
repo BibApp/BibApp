@@ -30,7 +30,7 @@
               = submit_tag 'Go'
 
         %div.span-17.last
-          %h2="#{link_to @person.first_last, person_path(@person)}"
+          %h2="#{link_to @person.display_name, person_path(@person)}"
           = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
       / ### Group / Works ###

@@ -24,7 +24,7 @@ class Person < ActiveRecord::Base
 
   #### Validators ####
 
-  validates_presence_of :email
+  validates_presence_of :uid
   
   #### Callbacks ####
  
@@ -103,6 +103,10 @@ class Person < ActiveRecord::Base
   
   def last_first
     "#{last_name}, #{first_name}"
+  end
+
+  def last_first_middle
+    "#{last_name}, #{first_name} #{middle_name}"
   end
   
   def to_param

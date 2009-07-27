@@ -1,6 +1,6 @@
 / === People === Show ===
 / Main
-- @title = @person.first_last # Specify text at end of HTML <title> tag
+- @title = @person.display_name # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @name_string)
   - content_for :admin_bar do
@@ -28,7 +28,7 @@
 
     %div.span-17.last
       %h2
-        ="#{link_to @person.first_last, person_path(@person)}"
+        ="#{link_to @person.display_name, person_path(@person)}"
       = render :partial => "shared/local_nav", :locals => {:object => "person"}
         
       %div.span-9.append-1

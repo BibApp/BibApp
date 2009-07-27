@@ -2,7 +2,7 @@
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
-    %h2="Archival Analysis: #{link_to @person.first_last, person_path(@person)}"
+    %h2="Archival Analysis: #{link_to @person.display_name, person_path(@person)}"
     
     %table
       %thead

@@ -3,7 +3,7 @@
     %div{:style => "text-align: center;"}
       = image_tag(claim.person.image_url, {:height => "100px", :width => "75px", :style => "border: 2px dashed rgb(204, 204, 204); margin: 1em 0pt; padding: 0.5em;"})
   %div{:class => "span-10"}
-    %h2=claim.person.name
+    %h2=claim.person.display_name
 
     %div{:class => "span-5"}
       %strong Groups:

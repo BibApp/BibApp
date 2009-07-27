@@ -1,5 +1,5 @@
 %ul#edit-actions
-  %li=link_to "Edit", edit_person_path(@person)
+  %li=link_to "Edit this Person", edit_person_path(@person)
   %li=link_to "Add Works", new_person_work_path(@person)
   %li=link_to "Manage Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
   %li=link_to "Manage Roles", person_roles_path(@person)

@@ -1,8 +1,8 @@
-- @title = "#{@person.first_last}: #{@status.capitalize} Contributorships"
+- @title = "#{@person.display_name}: #{@status.capitalize} Contributorships"
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
 
-    %h2="#{link_to @person.name, person_path(@person)}: #{@status.capitalize} Contributorships"
+    %h2="#{link_to @person.display_name, person_path(@person)}: #{@status.capitalize} Contributorships"
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
     %div{:class => "column span-14"}
       %ul.actions

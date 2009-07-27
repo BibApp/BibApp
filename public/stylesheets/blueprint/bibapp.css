@@ -239,10 +239,26 @@ li.active-filter {
 /* ========= Form Styles ========= */
 /* =============================== */
 form.edit_person label, form.new_person label {
-  width: 140px;
+  width: 120px;
   float: left;
   text-align: right;
   margin-right: 5px;
+}
+
+form.edit_person label.lar, form.new_person label.lar {
+  width: 120px;
+  margin-right: 5px;
+  float: none;
+}
+
+form.edit_person div, form.new_person div {
+  margin: 0 0 1.5em;
+}
+
+textarea.smallbox {
+  width: 195px;
+  height: 100px;
+  padding: 5px;
 }
 
 form.work_form fieldset {

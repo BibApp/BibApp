@@ -195,12 +195,17 @@ class Work < ActiveRecord::Base
     # more...   	    			  
     types = [
       "Add Batch",
-      "Book (Edited)",
       "Book (Section)",
       "Book (Whole)",
+      "Book Review",
+      "Conference Paper",
+      "Conference Poster",
       "Conference Proceeding",
-      "Journal Article", 
-      "Report",
+      "Dissertation Thesis",
+      "Journal Article",
+      "Monograph",
+      "Patent",
+      "Web Page",
       "Generic"
       ]  
   end
@@ -451,7 +456,7 @@ class Work < ActiveRecord::Base
         # Debugger
         logger.debug("\n Claims: ")
         claims.each do |c| 
-          logger.debug("#{c.person.name}")
+          logger.debug("#{c.person.display_name}")
         end
     
         # Find or create a Contributorship for each claim
