@@ -1,9 +1,9 @@
 / === Pen Names === New ===
 / Main
-- @title = "#{@person.first_last}: Pen Names"
+- @title = "#{@person.display_name}: Pen Names"
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="#{link_to @person.first_last, person_path(@person)}: Pen Names"
+    %h2="#{link_to @person.display_name, person_path(@person)}: Pen Names"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 

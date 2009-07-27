@@ -3,10 +3,10 @@
     - if defined?(state) && state == "new"
       %ul#local-pages
         %li.current=link_to "Personal Info", new_person_path
-        %li=link_to "Pen Names", new_person_path, :disabled => "true"
-        %li=link_to "Group Memberships", new_person_path, :disabled => "true"
-        %li=link_to "Manage Contributorships", new_person_path, :disabled => "true"
-        %li=link_to "Photo", new_person_path, :disabled => "true"
+        %li=link_to "Pen Names", "#", :disabled => "true"
+        %li=link_to "Group Memberships", "#", :disabled => "true"
+        %li=link_to "Manage Contributorships", "#", :disabled => "true"
+        %li=link_to "Photo", "#", :disabled => "true"
 
     - elsif defined?(state) && state == "edit"
       %ul#local-pages

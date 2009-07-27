@@ -118,13 +118,62 @@ class PeopleController < ApplicationController
 
   def create
 
-    @person = Person.new(params[:person])
-    @dupeperson = Person.find_by_email(@person.email)
-    
-    if @dupeperson.nil?
+    #Check if user hit cancel button
+    if params['cancel']
+      #just return back to 'new' page
+      respond_to do |format|
+        format.html {redirect_to new_person_url}
+        format.xml  {head :ok}
+      end
+
+    else #Only perform create if 'save' button was pressed
+
+      @person = Person.new(params[:person])
+      @dupeperson = Person.find_by_uid(@person.uid)
+
+      if @dupeperson.nil?
+        respond_to do |format|
+          if @person.save
+            flash[:notice] = "Person was successfully created."
+            format.html {redirect_to new_person_pen_name_path(@person.id)}
+            #TODO: not sure this is right
+            format.xml  {head :created, :location => person_url(@person)}
+          else
+            flash[:warning] = "One or more required fields are missing."
+            format.html {render :action => "new"}
+            format.xml  {render :xml => @person.errors.to_xml}
+          end
+        end
+      else
+        respond_to do |format|
+          flash[:error] = "This person already exists in the BibApp system: <a href=""", person_path(@dupeperson.id), """>view their record.</a>"
+          format.html {render :action => "new"}
+          #TODO: what will the xml response be?
+          #format.xml  {render :xml => "error"}
+        end
+      end
+    end
+  end
+
+  def update
+
+    @person = Person.find(params[:id])
+
+    #Check if user hit cancel button
+    if params['cancel']
+      #just return back to 'new' page
+      respond_to do |format|
+        format.html {redirect_to person_url(@person)}
+        format.xml  {head :ok}
+      end
+
+    else #Only perform create if 'save' button was pressed
+
+      @person.update_attributes(params[:person])
+
       respond_to do |format|
         if @person.save
-          flash[:notice] = "Person was successfully created."
+          flash[:notice] = "Personal info was successfully updated."
           format.html {redirect_to new_person_pen_name_path(@person.id)}
           #TODO: not sure this is right
           format.xml  {head :created, :location => person_url(@person)}
@@ -134,35 +183,7 @@ class PeopleController < ApplicationController
           format.xml  {render :xml => @person.errors.to_xml}
         end
       end
-    else
-      respond_to do |format|
-        flash[:error] = "This person already exists in the BibApp system: <a href=""", person_path(@dupeperson.id), """>view their record.</a>"
-        format.html {render :action => "new"}
-        #TODO: what will the xml response be?
-        #format.xml  {render :xml => "error"}
-      end
     end
- 
-  end
-
-  def update
-
-    @person = Person.find(params[:id])
-    @person.update_attributes(params[:person])
-  
-    respond_to do |format|
-      if @person.save
-        flash[:notice] = "Personal info was successfully updated."
-        format.html {redirect_to new_person_pen_name_path(@person.id)}
-        #TODO: not sure this is right
-        format.xml  {head :created, :location => person_url(@person)}
-      else
-        flash[:warning] = "One or more required fields are missing."
-        format.html {render :action => "new"}
-        format.xml  {render :xml => @person.errors.to_xml}
-      end
-    end
-
   end
 
   def destroy
@@ -174,7 +195,7 @@ class PeopleController < ApplicationController
     person.destroy if person
 
     respond_to do |format|
-      flash[:notice] = "#{person.first_last} was successfully deleted."
+      flash[:notice] = "#{person.display_name} was successfully deleted."
       #forward back to path which was specified in params
       format.html {redirect_to return_path }
       format.xml  {head :ok}
@@ -210,9 +231,24 @@ class PeopleController < ApplicationController
           :base => config['base']
         )
         
-        filt = Net::LDAP::Filter.eq("cn", "*#{query}*")
-        res = Array.new
-        return ldap.search( :filter => filt ).map{|entry| clean_ldap(entry)}
+        cn_filt = Net::LDAP::Filter.eq("cn", "*#{query}*")
+        uid_filt = Net::LDAP::Filter.eq("uid", "*#{query}*")
+        mail_filt = Net::LDAP::Filter.eq("mail", "*#{query}*")
+        ldap_result = ldap.search( :filter => cn_filt | uid_filt | mail_filt ).map{|entry| clean_ldap(entry)}
+
+        # Map university-specific fields
+        ldap_result.collect! { |entry|
+          res = Hash.new("")
+          entry.each do |key, val|
+            if config.has_value? key.to_s
+              res[config.index(key.to_s)] = val
+            else
+              res[key] = val
+            end
+          end
+          res
+        }
+        return ldap_result
       end
     rescue Exception => e
       if ldap.get_operation_result.code != 0
@@ -245,4 +281,5 @@ class PeopleController < ApplicationController
     end
     return res
   end
+
 end

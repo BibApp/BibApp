@@ -1,9 +1,9 @@
 / === Memberships === New ===
 / Main
-- @title = "#{@person.first_last}: Group Memberships"
+- @title = "#{@person.display_name}: Group Memberships"
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="#{link_to @person.first_last, person_path(@person)}: Group Memberships"
+    %h2="#{link_to @person.display_name, person_path(@person)}: Group Memberships"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 

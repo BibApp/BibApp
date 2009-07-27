@@ -4,16 +4,24 @@
 function populate_person_form(ldap_result_index, form) {
   var f = $(form);
   var res = ldap_results[ldap_result_index];
+  
+  f['person_uid'].value = res.uid;
   f['person_first_name'].value = res.givenname;
   f['person_last_name'].value = res.sn;
-  if (res.postaladdress) {
-    var aparts = res.postaladdress.split('$');
-    f['person_office_address_line_one'].value = aparts[0];
-    if (aparts[1]) { f['person_office_address_line_two'].value = aparts[1]; }
+  if (res.middlename) { f['person_middle_name'].value = res.middlename }
+  if (res.generationqualifier) { f['person_suffix'].value = res.generationqualifier }
+  if (res.displayname) { f['person_display_name'].value = res.displayname }
+  if (res.postaladdress) { 
+    f['person_postal_address'].value = res.postaladdress.replace(/\$/g, "\n")
   }
+  //if (res.postaladdress) {
+  //  var aparts = res.postaladdress.split('$');
+  //  f['person_office_address_line_one'].value = aparts[0];
+  //  if (aparts[1]) { f['person_office_address_line_two'].value = aparts[1]; }
+  //}
+  
   if (res.mail) { f['person_email'].value = res.mail }
   if (res.telephonenumber) { f['person_phone'].value = res.telephonenumber  }
-  if (res.postalcode) { f['person_office_zip'].value = res.postalcode }
   if (res.l) { f['person_office_city'].value = res.l }
   if (res.st) { f['person_office_state'].value = res.st }
 }

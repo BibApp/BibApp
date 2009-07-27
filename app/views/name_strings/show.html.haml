@@ -21,7 +21,7 @@
           -@name_string.people.each do |person|
             %li.inline{:style => "margin:0; padding:0;"}
               %div{:class => "span-3"}
-                = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.name, :title => person.name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
+                = link_to(image_tag(person.image_url, :size => "75x100", :alt => person.display_name, :title => person.display_name, :style => "border:2px dashed #CCC; padding:3px;"), person_path(person))
                 %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
                   %strong= person.works.size
                   %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
