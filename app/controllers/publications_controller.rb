@@ -37,6 +37,11 @@ class PublicationsController < ApplicationController
     end
 
     before :show do
+      # Recent additions list sorted by "updated_at"
+      params[:sort] = "updated_at" unless params[:sort]
+      @people = Person.find_all_by_publication_id(params[:id])
+      @people = Person.sort_by_most_recent_work(@people)
+
       # Lock current object to filters
       filter = ["publication_id:\"#{@current_object.id}\""]
       # Add any param filters

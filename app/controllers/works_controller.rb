@@ -92,6 +92,11 @@ class WorksController < ApplicationController
        object = @group
        # We want to show the citation list results page
        params[:view] = "all"
+      else
+        # Recent additions list sorted by "updated_at"
+        params[:sort] = "updated_at" unless params[:sort]
+        @people = Person.find(:all)
+        @people = Person.sort_by_most_recent_work(@people)
       end
       
       # Solr filtering
