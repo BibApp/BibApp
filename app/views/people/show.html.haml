@@ -29,6 +29,7 @@
     %div.span-17.last
       %h2
         ="#{link_to @person.display_name, person_path(@person)}"
+        =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
       = render :partial => "shared/local_nav", :locals => {:object => "person"}
         
       %div.span-9.append-1
@@ -39,7 +40,6 @@
       %div.span-7.last
         %h3.heading
           =link_to "Recent Works", person_works_path(@person)
-          =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss")) 
         %ol#works{:class => "works"}
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
