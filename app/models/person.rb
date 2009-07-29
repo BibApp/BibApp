@@ -110,7 +110,7 @@ class Person < ActiveRecord::Base
   end
 
   def most_recent_work
-    self.works.sort!{ |a,b| a.updated_at <=> b.updated_at }.first
+    self.works.sort!{ |a,b| b.updated_at <=> a.updated_at }.first
   end
   
   def to_param
