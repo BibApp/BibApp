@@ -276,6 +276,8 @@
  <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="type" type="text" indexed="true" stored="true"/>
  <field name="year" type="text" indexed="true" stored="true"/>
+ <field name="created_at" type="date" indexed="true" stored="true"/>
+ <field name="updated_at" type="date" indexed="true" stored="true"/>
  
  <!--====Special Fields====-->
  <!--'text' is used as default search field (see below)-->

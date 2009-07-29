@@ -83,7 +83,11 @@ class Index
     
     # Duplication Keys
     :title_dupe_key => Proc.new{|record| record.title_dupe_key},
-    :name_string_dupe_key => Proc.new{|record| record.name_string_dupe_key}
+    :name_string_dupe_key => Proc.new{|record| record.name_string_dupe_key},
+
+    # Timestamps
+    :created_at => :created_at,
+    :updated_at => :updated_at
   }
   
   # Mapping specific to dates

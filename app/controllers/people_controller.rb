@@ -77,6 +77,8 @@ class PeopleController < ApplicationController
     end
     
     before :show do
+      # Recent additions list sorted by "updated_at"
+      params[:sort] = "updated_at" unless params[:sort]
       # Default SolrRuby params
       @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
       @filter       = params[:fq] || "person_id:\"#{@current_object.id}\""

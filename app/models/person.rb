@@ -108,6 +108,10 @@ class Person < ActiveRecord::Base
   def last_first_middle
     "#{last_name}, #{first_name} #{middle_name}"
   end
+
+  def most_recent_work
+    self.works.sort!{ |a,b| a.updated_at <=> b.updated_at }.first
+  end
   
   def to_param
     param_name = first_last.gsub(" ", "_")
@@ -209,6 +213,43 @@ class Person < ActiveRecord::Base
       
       return last_name, id, image_url
     end
+
+    def sort_by_most_recent_work(array_of_people)
+      # For people with no works, time = Time.at(0)
+      time = Time.at(0)
+      array_of_people.sort! { |a,b|
+        t1 = a.most_recent_work.nil? ? time : a.most_recent_work.updated_at
+        t2 = b.most_recent_work.nil? ? time : b.most_recent_work.updated_at
+        t2 <=> t1
+      }
+      array_of_people
+    end
+
+    def find_all_by_publisher_id(publisher_id)
+      publisher = Publisher.find(publisher_id)
+      works = publisher.works
+      people = Array.new
+      works.each do |work|
+        people << work.people
+      end
+      people.flatten.uniq
+    end
+
+    def find_all_by_publication_id(publisher_id)
+      publication = Publication.find(publisher_id)
+      works = publication.works
+      people = Array.new
+      works.each do |work|
+        people << work.people
+      end
+      people.flatten.uniq
+    end
+
+    def find_all_by_group_id(group_id)
+      group = Group.find(group_id)
+      group.people
+    end
+
   end
 
 end
