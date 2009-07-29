@@ -15,7 +15,9 @@
 %div.span-24
   %div.span-22.prepend-1
       
-    %h2= @group.name
+    %h2
+      = @group.name
+      =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss"))
     = render :partial => "shared/local_nav", :locals => {:object => "group"}
       
 
@@ -40,7 +42,6 @@
     %div.span-7.last
       %h3.heading
         =link_to "Recent Works", group_works_path(@group)
-        =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss")) 
       %ol#works{:class => "span-7 works"}
         - @works.first(3).each do |work|
           = render :partial => "shared/work", :locals => {:work => work}
