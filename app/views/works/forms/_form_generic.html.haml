@@ -25,9 +25,6 @@
     - if current_user.has_role?("admin", System)
       %li
         = render :partial => 'works/forms/fields/keywords'
-    
-    %li
-      = render :partial => 'works/forms/fields/tags'
     %li
       = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}  
     

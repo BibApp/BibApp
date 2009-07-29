@@ -26,8 +26,6 @@
   - if current_user.has_role?("admin", System)
     %tr#keywords
       = render :partial => 'works/forms/fields/merge_keywords'
-  %tr#tags
-    = render :partial => 'works/forms/fields/merge_tags'
   %tr#abstract
     = render :partial => 'works/forms/fields/merge_abstract', :locals => {:form => form}
 
