@@ -24,6 +24,9 @@ function populate_person_form(ldap_result_index, form) {
   if (res.telephonenumber) { f['person_phone'].value = res.telephonenumber  }
   if (res.l) { f['person_office_city'].value = res.l }
   if (res.st) { f['person_office_state'].value = res.st }
+
+  // Jump down to the form
+  Element.scrollTo('personal_info')
 }
   
 
