@@ -95,8 +95,8 @@ class WorksController < ApplicationController
       else
         # Recent additions list sorted by "updated_at"
         params[:sort] = "updated_at" unless params[:sort]
-        @people = Person.find(:all)
-        @people = Person.sort_by_most_recent_work(@people)
+        #@people = Person.find(:all)
+        #@people = Person.sort_by_most_recent_work(@people)
       end
       
       # Solr filtering

@@ -37,9 +37,6 @@ class GroupsController < ApplicationController
     end
     
     before :show do
-      
-      @people = Person.find_all_by_group_id(params[:id])
-      @people = Person.sort_by_most_recent_work(@people)
 
        # Default SolrRuby params
        @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
