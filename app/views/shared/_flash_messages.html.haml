@@ -3,11 +3,13 @@
 -#
 
 / Flash Messages
-- if flash[:notice]
-  %div.notice= flash[:notice]
+- if !flash.empty?
+  %div#flash-message.span-22.prepend-1
+    - if flash[:notice]
+      %div.notice= flash[:notice]
 
-- if flash[:warning]
-  %div.warning= flash[:warning]
+    - if flash[:warning]
+      %div.warning= flash[:warning]
 
-- if flash[:error]
-  %div.error= flash[:error]
+    - if flash[:error]
+      %div.error= flash[:error]
