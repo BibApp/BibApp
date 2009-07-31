@@ -5,17 +5,12 @@
   %h3 People
   %ol#people
     -# if there's a count specified, only show the first few
-    -#people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]
-    -#people.each do |p|
-    -# last_name, id, image_url = Person.parse_solr_data(p.name)
-    -@people = @people.first(count) unless count.nil?
-    -@people.each do |p|
-      - last_name = p.last_name
-      - image_url = p.image_url
-      - id = p.id
+    - people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]
+    - people.each do |p|
+      - last_name, id, image_url = Person.parse_solr_data(p.name)
       %li.inline
         %div.person{:class => "span-3"}
           = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           %div.person-image-metadata
-            %strong= p.works.length
+            %strong= p.value
             %h6.person-last-name=link_to last_name, person_path(id)

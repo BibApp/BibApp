@@ -44,9 +44,6 @@ class SearchController < ApplicationController
         @works = ce.drive_csl(@export,works)
       end
       
-      @people = Person.find(@facets[:people_data].collect{|p| Person.parse_solr_data(p.name)[1]})
-      @people = Person.sort_by_most_recent_work(@people)
-      
     else
       @q = nil
       # There's nothing to return
