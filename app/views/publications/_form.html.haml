@@ -20,10 +20,10 @@
     %p
       %label Publisher
       %br/
-      = form.collection_select :publisher_id, @publishers, :id, :name
+      = form.collection_select :publisher_id, @publishers, :id, :name, {}, {:class => "span-12"}
     %p
       %label Publication Authority Record
       %br/
-      = form.collection_select :authority_id, @publications, :id, :form_select, {:width => "100"}
+      = form.collection_select :authority_id, @publications, :id, :form_select, {}, {:class => "span-12"}
     %p.submit
       = submit_tag :save
