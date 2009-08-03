@@ -1,2 +1,3 @@
 #groups
-  = render :partial => 'group_list_item', :collection => @groups
+  %ul
+    = render :partial => 'group_list_item', :collection => @parents

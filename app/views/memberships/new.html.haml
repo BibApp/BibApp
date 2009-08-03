@@ -31,7 +31,7 @@
                 = submit_tag 'Search Groups'
 
         %ul.actions
-          %li=link_to_unless((@status.downcase == "member"), "Groups (#{@person.groups.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "member"}})
+          %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "member"}})
           |
           %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.find(:all).size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "non_member"}})
 
@@ -43,10 +43,11 @@
               %h3
                 Searching for:
                 = @query
+                = link_to image_tag('/images/remove_facet.gif'), new_person_membership_path(:person_id=>@person.id,:status=>"non_member")
             - if @groups.length < 1
               %p No groups found
             - else
-              - form_tag "#", :method => :get, :name => "memberships_form" do
+              - form_tag "javascript:void(0)", :method => :get, :name => "memberships_form" do
                 %div
                   #bulk_links
                     /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
@@ -70,8 +71,31 @@
                     = submit_tag 'Go'
 
                 %div{:class => "span-15 append-1 last"}
-                  = will_paginate @groups
+                  = will_paginate @parents
                   = render :partial => "group_list"
+
+                  %script{:type => "text/javascript"}
+                    :plain
+                      <!--
+                      function toggle_folder(fid){
+                        $('children_of_' + fid).toggle();
+                        if ($('toggle_switch_' + fid).innerHTML == ' + ') {
+                          $('toggle_switch_' + fid).innerHTML = ' &ndash; ';
+                        } else {
+                          $('toggle_switch_' + fid).innerHTML = ' + ';
+                        }
+                      }
+                      function check_parent(pid){
+                        if (pid != null) {
+                          if ($('group_id-' + pid) == null) return;
+                          pnode = $('group_id-' + pid).childElements()[1];
+                          if (!pnode.disabled) {
+                            pnode.checked = true;
+                            pnode.onclick();
+                          }
+                        }
+                      }
+                      // -->
 
         - if @status == "member"
           %div{:class => "span-15 append-1 last"}
