@@ -19,7 +19,9 @@ class MembershipsController < ApplicationController
       @person = Person.find(params[:person_id])
       @page   = params[:page] || 1
       @rows = params[:rows] || 10
-      @status = params[:status] || "member"
+
+      member = @person.groups.empty? ? "non_member" : "member"
+      @status = params[:status] || member
 
       #For searching groups:
       #  Start by building the "LIKE" string for :conditions
@@ -44,22 +46,48 @@ class MembershipsController < ApplicationController
           query_string << ("%" + qw + "%")
         end
 
-        @groups = Group.find(:all,
-                             :conditions => query_string,
-                             :order => "name ASC")
-
-        @groups = @groups.paginate(
-            :page => @page,
-            :per_page => @rows,
-            :order => 'name'
-          )
+        results = Group.find(
+          :all,
+          :conditions => query_string,
+          :order => "name ASC")
       else
-        @groups = Group.find(:all).paginate(
+        results = Group.find(
+          :all,
+          :order => "name ASC")
+      end
+
+      @parents = Array.new
+      @groups = Array.new
+
+      # 'results' contians a list of all groups, or all groups returned by the
+      # search. We now form two arrays, one for top-level parents, the other
+      # for all groups. We will paginate on top-level parents.
+      #
+      # For each group, check to see if it is a parent:
+      # If it has no parents, then it is a parent by default (even if childless)
+      # and it goes into the @parents array.
+      # If it has a parent, then the parent goes into the @parents array,
+      # unless the parent has parents, in which case it is not top-level.
+      #
+      # Regardless of parent status, all groups go into the @groups array
+      # as well as their parent and all their children. That way, if a group
+      # with a parent or with children is retrieved from a search, it's parent
+      # and children will be returned as well.
+
+      results.each do |g|
+        @parents << g.top_level_parent
+        @groups << g.ancestors_and_descendants
+        @groups << g
+      end
+      
+      @groups  = @groups.flatten.uniq
+      @parents.uniq!
+
+      @parents = @parents.paginate(
           :page => @page,
           :per_page => @rows,
           :order => 'name'
         )
-      end
     end
 
   end

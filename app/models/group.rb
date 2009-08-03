@@ -49,7 +49,25 @@ class Group < ActiveRecord::Base
       self.save_without_callbacks
     end
   end
-  
+
+  #Return the group's top-level parent (ancestor)
+  def top_level_parent
+    if self.parent.nil?
+      return self
+    else
+      return self.parent.top_level_parent
+    end
+  end
+
+  def ancestors_and_descendants
+    family = Array.new
+    family << self.ancestors
+    family << self.descendants
+  end
+
+  def descendants
+    self.children.map(&:descendants).flatten + self.children
+  end
   
   class << self
     # return the first letter of each name, ordered alphabetically

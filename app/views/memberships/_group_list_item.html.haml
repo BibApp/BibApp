@@ -1,7 +1,17 @@
 - if !group_list_item.hide?
-  %div{:id => "group_id-#{group_list_item.id}", :class => "span-14", :style => "border-top: 1px dotted #CCC;"}
-    - if @person.groups.include?(group_list_item)
-      = check_box_tag "group_id[].ignore", "#{group_list_item.id}", true, {:disabled => true, :style => "float: left;"}
-    - else
-      = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:style => "float: left;"}
-    = group_list_item.name
+  - # only show groups that are in the @groups list
+  - if @groups.include?(group_list_item) 
+    %li.parent{:style => "list-style: none;"}
+      %div{:id => "group_id-#{group_list_item.id}", :style => "border-top: 1px dotted #CCC;"}
+        - unless group_list_item.children.empty?
+          = link_to " &ndash; ", "javascript:void(0)", {:onclick => "toggle_folder(#{group_list_item.id});", :id => "toggle_switch_#{group_list_item.id}"}
+        - parent_id = group_list_item.parent.nil? ? nil : group_list_item.parent.id
+        - if @person.groups.include?(group_list_item)
+          = check_box_tag "group_id[].ignore", "#{group_list_item.id}", true, {:disabled => true, :style => "float: left;"}
+        - else
+          = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:style => "float: left;", :onclick => "if (this.checked == true) check_parent(#{parent_id});"}
+        = group_list_item.name
+
+      - unless group_list_item.children.empty?
+        %ul.children{:id => "children_of_#{group_list_item.id}", :style => "list-style: none;"}
+          = render :partial => 'group_list_item', :collection => group_list_item.children

@@ -3,10 +3,10 @@
     - if defined?(state) && state == "new"
       %ul#local-pages
         %li.current=link_to "Personal Info", new_person_path
-        %li=link_to "Pen Names", "#", :disabled => "true"
-        %li=link_to "Group Memberships", "#", :disabled => "true"
-        %li=link_to "Manage Contributorships", "#", :disabled => "true"
-        %li=link_to "Photo", "#", :disabled => "true"
+        %li=link_to "Pen Names", "javascript:void(0)", :disabled => "true"
+        %li=link_to "Photo", "javascript:void(0)", :disabled => "true"
+        %li=link_to "Groups", "javascript:void(0)", :disabled => "true"
+        %li=link_to "Works", "javascript:void(0)", :disabled => "true"
 
     - elsif defined?(state) && state == "edit"
       %ul#local-pages
@@ -22,18 +22,6 @@
         - else
           %li=link_to "Pen Names", new_person_pen_name_path(@person.id)
 
-        - # Memberships
-        - if params[:controller] == "memberships"
-          %li.current=link_to "Group Memberships", new_person_membership_path(@person.id)
-        - else
-          %li=link_to "Group Memberships", new_person_membership_path(@person.id)
-
-        - # Memberships
-        - if params[:controller] == "contributorships"
-          %li.current=link_to "Manage Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
-        - else
-          %li=link_to "Manage Contributorships", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
-
         - # Attachements
         - if params[:controller] == "attachments"
           %li.current
@@ -47,6 +35,19 @@
               =link_to "Photo", edit_person_attachment_path(@person, @person.image)
             - else
               =link_to "Photo", new_person_attachment_path(@person), :params => {"type" => "Image"}
+
+        - # Memberships
+        - if params[:controller] == "memberships"
+          %li.current=link_to "Groups", new_person_membership_path(@person.id)
+        - else
+          %li=link_to "Groups", new_person_membership_path(@person.id)
+
+        - # Contributorships
+        - if params[:controller] == "contributorships"
+          %li.current=link_to "Works", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
+        - else
+          %li=link_to "Works", {:controller => "contributorships", :action => "index", :params => {"person_id", @person.id}}
+
     - else
       %ul#local-pages
         - # People
