@@ -1,16 +1,14 @@
--form_tag update_multiple_publications_path, {:method => :put, :id => 'authority_box', :page => page} do
+-form_tag update_multiple_publishers_path, {:method => :put, :id => 'authority_box', :page => page} do
   %fieldset
     %legend="Add Records and Set Authority"
     -unless authority_form.empty?
       %table#pub-cart
-        %thead
-          %tr
-            %td 
-            %td ISSN / ISBN
-            %td Publication Name
-            %td Publisher
-            %td Works
-            %td
+        %tr
+          %th
+          %th Title
+          %th Source
+          %th Publications
+          %th
         =render :partial => "authority_form_item", :collection => authority_form, :locals => {:page => page}
       = hidden_field_tag :page, page, :id => 'page'
     -if authority_form.length > 1

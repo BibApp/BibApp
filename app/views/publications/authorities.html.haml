@@ -21,17 +21,19 @@
         %tr
           %td Select
           %td ISSN / ISBN
-          %td Title
+          %td Publication Name
           %td Publisher
+          %td Works
       %tbody
         -@current_objects.each do |publication|
           %tr.publication{:id => "publication_#{publication.id}", :class => cycle("odd", "even")}
-            %td=link_to_remote 'add', {:url => { :action => :add_to_box, :new_pa => publication.id }}, :href => url_for(:action => :add_to_box, :new_pa => publication.id, :page => @page)
+            -#%td=link_to_remote 'add', {:url => { :action => :add_to_box, :new_pa => publication.id }}, :href => url_for(:action => :add_to_box, :new_pa => publication.id, :page => @page)
+            %td=link_to 'add', url_for(:action => :add_to_box, :new_pa => publication.id, :page => @page)
             -#link_to 'add', authorities_publications_path(:new_pa => publication.id)
             %td=publication.issn_isbn
-            %td=link_to "#{publication.authority.name}", edit_publication_path(publication)
+            %td=link_to "#{publication.authority.name}", publication_path(publication)
             %td=link_to "#{publication.publisher.authority.name}", publisher_path(publication.publisher)
-
+            %td=publication.works.length
 
     %br/
     %br/
