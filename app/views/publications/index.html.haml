@@ -19,19 +19,19 @@
 
     %table#publications
       %tr
-        %th.span-9="Publication Name"
-        %th.span-2="ISSN/ISBN"
-        %th.span-9="Publisher"
-        %th.span-1.last="Works"
+        %th="ISSN / ISBN"
+        %th="Publication Name"
+        %th="Publisher"
+        %th="Works"
       -@current_objects.each do |publication|
         %tr{:class => cycle("odd", "even")}
-          %td=link_to publication.name, publication
           - if publication.issn_isbn.nil?
             %td
           - else
             %td=link_to publication.issn_isbn, publication
+          %td=link_to publication.name, publication
           %td=link_to link_to publication.publisher.name, publisher_path(publication.publisher)
-          %td{:style => "text-align:right;"}=publication.works.length
+          %td=publication.works.length
 
     %br/
     %br/

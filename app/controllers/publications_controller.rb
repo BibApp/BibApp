@@ -130,6 +130,7 @@ class PublicationsController < ApplicationController
     end
 
     #Keep a list of publications in process in session[:publication_auths]
+    #session[:publication_auths].clear
     @pas = session[:publication_auths] || Array.new
   end
 
