@@ -107,6 +107,14 @@ class GroupsController < ApplicationController
       end
     end
   end
+
+  def hidden
+    @hidden_groups = Group.find(
+      :all,
+      :conditions => ["hide = ?", true],
+      :order => "upper(name)"
+    )
+  end
   
   def auto_complete_for_group_name
     group_name = params[:group][:name].downcase
@@ -133,6 +141,19 @@ class GroupsController < ApplicationController
     @group.save
       respond_to do |format|
        flash[:notice] = "Group was successfully removed."
+       format.html {redirect_to :action => "index"}
+      end
+  end
+
+  def unhide
+    @group = Group.find(params[:id])
+
+    permit "editor on group"
+
+    @group.hide = false
+    @group.save
+      respond_to do |format|
+       flash[:notice] = "Group was successfully unhidden."
        format.html {redirect_to :action => "index"}
       end
   end

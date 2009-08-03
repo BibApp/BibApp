@@ -11,6 +11,8 @@
       - else
         %ul#edit-actions
           %li=link_to "Add a Group", new_group_path
+          - if logged_in? && current_user.has_role?("admin", @name_string)
+            %li=link_to "Show Hidden Groups", hidden_groups_path
 
 %div.span-24
   %div.span-22.prepend-1

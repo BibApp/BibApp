@@ -71,7 +71,8 @@ ActionController::Routing::Routes.draw do |map|
   ##### 
   # Add Auto-Complete routes for adding new groups
   map.resources :groups, 
-                :collection => {:auto_complete_for_group_name => :get} do |g|
+                :collection => {:auto_complete_for_group_name => :get,
+                                :hidden => :get} do |g|
     # Make URLs like /group/1/works/4
     g.resources :works
     # Make URLs like /group/1/people/4

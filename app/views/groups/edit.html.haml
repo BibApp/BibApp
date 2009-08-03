@@ -8,7 +8,10 @@
         - if logged_in? && current_user.has_role?("editor", @person) && !current_user.has_role?("admin", @person)
           %li=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
         - if logged_in? && current_user.has_role?("admim", @person)
-          %li=link_to "Hide Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+          - if @group.hide == true
+            %li=link_to "Unhide Group", {:id => @group.id, :controller => "groups", :action => "unhide"}, :confirm => 'Are you sure?'
+          - else
+            %li=link_to "Hide Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
           %li=link_to "Delete Group", {:id => @group.id, :controller => "groups", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this group? This cannot be undone.'
 
   %div{:class => "span-22 prepend-1"}
