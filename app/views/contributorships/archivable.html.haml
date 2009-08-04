@@ -1,3 +1,4 @@
+-@title = "Archival Analysis: #{@person.display_name}"
 / === Contributorships === Archivable ===
 / Main
 %div{:class => "span-24"}
@@ -7,36 +8,36 @@
     %table
       %thead
         %tr
-          %td Count
-          %td Percentage
-          %td Color
+          %td RoMEO Color
           %td Archiving Policy
+          %td Percentage
+          %td Works
       %tfoot
         %tr
-          %td=@pub_totals
+          %td &nbsp;
+          %td &nbsp;
           %td Total
-          %td &nbsp;
-          %td &nbsp;
+          %td=@pub_totals
       %tbody
         - @pub_table.each do |row|
           -# Default colors to unknown
           - color = "unknown"
           - color = row.color.downcase if row.color and !row.color.empty?
           %tr{:class => "#{color}"}
-            %td=row.count
-            %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
             %td=color.capitalize
             %td=$SHERPA_COLORS[color.downcase.to_sym]
+            %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
+            %td=row.count
 
 
     %h3 Publications
     %table
       %thead
         %tr
-          %td Count
-          %td Color
+          %td RoMEO Color
           %td Name
           %td Publisher
+          %td Works
           
       %tbody
         - @publ_table.each do |row|
@@ -44,7 +45,8 @@
           - color = "unknown"
           - color = row.color.downcase if row.color
           %tr{:class => "#{color}"}
-            %td=row.count
             %td=color.capitalize
             %td=row.name
             %td=row.pub_name
+            %td
+              = link_to row.count, person_works_path(@person, "fq[]" => URI.unescape("publication_facet%3A\"#{row.name}\""))

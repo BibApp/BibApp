@@ -83,6 +83,27 @@ class AdminController < ApplicationController
     @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
     t = true
   end
+
+  def update_sherpa_data
+  end
+
+  def update_publishers_from_sherpa
+    begin
+      Publisher.update_sherpa_data
+    rescue
+      respond_to do |format|
+        flash[:notice] = "Error updating publisher data: "
+        format.html {redirect_to admin_update_sherpa_data_path}
+        format.xml  {head :error}
+      end
+    else
+      respond_to do |format|
+        flash[:notice] = "Update successful."
+        format.html {redirect_to url_for(:controller => :admin, :action => :update_sherpa_data)}
+        format.xml  {head :ok}
+      end
+    end
+  end
   
   ######
   # Private methods
