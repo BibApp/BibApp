@@ -174,14 +174,14 @@ class PublishersController < ApplicationController
 
     if auth_id
       update = Publisher.update_multiple(pub_ids, auth_id)
-      session[:publication_auths] = nil
+      session[:publisher_auths] = nil
     else
       flash[:warning] = "You must select one record as the authority."
     end
 
     respond_to do |wants|
       wants.html do
-        redirect_to authorities_publishers_path(:page => page)
+        redirect_to authorities_publishers_path(:page => @page)
       end
     end
   end

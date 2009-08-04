@@ -136,34 +136,43 @@ class Publisher < ActiveRecord::Base
     end
     
     def update_sherpa_data
-      # @TODO: Rewrite this using hpricot
 
       require 'hpricot'
       require 'open-uri'
+      require 'net/http'
+      require 'config/personalize.rb'
 
       # SHERPA's API is not-cached! Opening the URI directly will likely 
       # produce a ruby net/http timeout.
       #
-      # @TODO: 
+      # Todo:
       # 1. Offer a cached copy within /trunk?
       # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
+      #
+      # UPDATE:
+      # The SHERPA API has gotten better, and requests are no longer timing
+      # out. Unless those problems reëmerge, it's probably safe to download
+      # the SHERPA data via net/http.
 
-      data = Hpricot.XML(open("public/sherpa/publishers.xml"))
+      #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
+      data = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
 
-      (data/'publisher').each do |pub|
-        sherpa_id = pub[:id].to_i
-        name = (pub/'name').inner_html
-        url = (pub/'homeurl').inner_html
-        romeo_color = (pub/'romeocolour').inner_html
+      if false
+        (data/'publisher').each do |pub|
+          sherpa_id = pub[:id].to_i
+          name = (pub/'name').inner_html
+          url = (pub/'homeurl').inner_html
+          romeo_color = (pub/'romeocolour').inner_html
 
-        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
-        add.update_attributes!({
-          :name         => name,
-          :url          => url,
-          :romeo_color  => romeo_color,
-          :sherpa_id    => sherpa_id,
-          :source_id    => 1           
-        })
+          add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+          add.update_attributes!({
+            :name         => name,
+            :url          => url,
+            :romeo_color  => romeo_color,
+            :sherpa_id    => sherpa_id,
+            :source_id    => 1
+          })
+        end
       end
     end
     

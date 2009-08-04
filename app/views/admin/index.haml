@@ -31,6 +31,7 @@
       %ul#tasks
         %li=link_to "Add a publisher", new_publication_path
         %li=link_to "Update publisher authorities", authorities_publishers_path
+        %li=link_to "Update publisher data from SHERPA/RoMEO", url_for(:action => :update_sherpa_data)
 
     - if @tab_name == "users"
       %ul#tasks
