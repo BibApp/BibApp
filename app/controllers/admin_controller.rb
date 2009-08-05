@@ -90,10 +90,10 @@ class AdminController < ApplicationController
   def update_publishers_from_sherpa
     begin
       Publisher.update_sherpa_data
-    rescue
+    rescue Exception => e
       respond_to do |format|
-        flash[:notice] = "Error updating publisher data: "
-        format.html {redirect_to admin_update_sherpa_data_path}
+        flash[:notice] = "Error updating publisher data: #{e.message}"
+        format.html {redirect_to url_for(:controller => :admin, :action => :update_sherpa_data)}
         format.xml  {head :error}
       end
     else

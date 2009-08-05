@@ -258,13 +258,13 @@ class ContributorshipsController < ApplicationController
     # by the Journal/Publication and Publisher
     # and retrieves a total number of each Journal/Publication
     Contributorship.verified.all(
-                         :select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color", 
+                         :select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color, publishers.publisher_copy as pub_copy",
                          :joins => "JOIN works ON contributorships.work_id=works.id
                                     JOIN people ON contributorships.person_id=people.id
                                     JOIN publications ON works.publication_id = publications.id
                                     JOIN publishers ON works.publisher_id=publishers.id",
                          :conditions => ["people.id = ?", @person.id],
-                         :group => "publications.name, publishers.name, publishers.romeo_color",
+                         :group => "publications.name, publishers.name, publishers.romeo_color, publishers.publisher_copy",
                          :order => "count(contributorships.id) desc")
   end
   

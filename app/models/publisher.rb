@@ -137,7 +137,10 @@ class Publisher < ActiveRecord::Base
     
     def update_sherpa_data
 
-      require 'hpricot'
+      # Hpricot chokes on UNICODE; use remxml instead
+      #require 'hpricot'
+      require 'rexml/document'
+
       require 'open-uri'
       require 'net/http'
       require 'config/personalize.rb'
@@ -155,24 +158,24 @@ class Publisher < ActiveRecord::Base
       # the SHERPA data via net/http.
 
       #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
-      data = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
+      sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
+      data = REXML::Document.new(sherpa_response.body)
 
-      if false
-        (data/'publisher').each do |pub|
-          sherpa_id = pub[:id].to_i
-          name = (pub/'name').inner_html
-          url = (pub/'homeurl').inner_html
-          romeo_color = (pub/'romeocolour').inner_html
+      data.elements.each('/romeoapi/publishers/publisher') do |pub|
+        sherpa_id = pub.attributes['id']
+        name = pub.elements['name'].text
+        url = pub.elements['homeurl'].text
+        romeo_color = pub.elements['romeocolour'].text
 
-          add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
-          add.update_attributes!({
-            :name         => name,
-            :url          => url,
-            :romeo_color  => romeo_color,
-            :sherpa_id    => sherpa_id,
-            :source_id    => 1
-          })
-        end
+        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+        add.update_attributes!({
+          :name         => name,
+          :url          => url,
+          :romeo_color  => romeo_color,
+          :sherpa_id    => sherpa_id,
+          :source_id    => 1
+        })
+        t = true
       end
     end
     
