@@ -8,7 +8,7 @@
     %table
       %thead
         %tr
-          %td RoMEO Color
+          %td RoMEO<br />Color
           %td Archiving Policy
           %td Percentage
           %td Works
@@ -34,7 +34,8 @@
     %table
       %thead
         %tr
-          %td RoMEO Color
+          %td RoMEO<br />Color
+          %td Pub Copy<br />Allowed
           %td Name
           %td Publisher
           %td Works
@@ -43,9 +44,10 @@
         - @publ_table.each do |row|
           -# Default colors to unknown
           - color = "unknown"
-          - color = row.color.downcase if row.color
+          - color = row.color.downcase if (row.color && !row.color.empty?)
           %tr{:class => "#{color}"}
             %td=color.capitalize
+            %td="yes" if row.pub_copy?
             %td=row.name
             %td=row.pub_name
             %td
