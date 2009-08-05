@@ -1,5 +1,9 @@
 / === Contributorships === Admin ===
 / Main
+
+-#Require personalize.rb for Abstracts and Keywords
+-require 'config/personalize.rb'
+
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
     %div{:style => "float:right;"}
@@ -21,10 +25,11 @@
       %p Congratulations! Nothing to do here.
     - else
       = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(@contributorship.work)}
-      %h4 Keywords
-      %p
-        - @contributorship.work.keywords.each do |k|
-          %span{:id => "keyword-id-#{k.id}"}=k.name
+      -if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+        %h4 Keywords
+        %p
+          - @contributorship.work.keywords.each do |k|
+            %span{:id => "keyword-id-#{k.id}"}=k.name
     
       %div{:class => "span-22"}
         %ol#claims
