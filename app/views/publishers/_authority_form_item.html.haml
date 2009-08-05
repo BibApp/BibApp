@@ -1,3 +1,4 @@
+- authority_form_item = Publisher.find(authority_form_item)
 %tr.publisher{:id => "publisher_#{authority_form_item.id}", :class => cycle("odd", "even")}
   =hidden_field_tag "pub_ids[]", authority_form_item.id
   %td=radio_button_tag "auth_id", authority_form_item.id
