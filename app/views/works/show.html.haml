@@ -1,5 +1,9 @@
 / === Works === Show ===
 / Main
+
+-#Require personalize.rb for Abstracts and Keywords
+-require 'config/personalize.rb'
+
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
 
 - if logged_in?
@@ -37,7 +41,8 @@
         = render :partial => 'attachments', :locals => { :files => @work.attachments }
         
         / Abstract
-        %p#work-abstract= #@work.abstract
+        -if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+          %p#work-abstract= #@work.abstract
     
         / APA Citation
         = render :partial => 'citation'

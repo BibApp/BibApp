@@ -1,6 +1,10 @@
 -# METS Metadata Wrapper, which contains metadata
 -# in EPrints DC XML Schema (epdcx) - As necessary for SWORD
 -# See: http://www.ukoln.ac.uk/repositories/digirep/index/Eprints_Application_Profile
+
+-#Require personalize.rb for Abstracts and Keywords
+-require 'config/personalize.rb'
+
 %mdWrap{ :LABEL=>"SWORD Metadata - EPrints DC XML schema", :MDTYPE=>"OTHER", :OTHERMDTYPE=>"EPDCX", :MIMETYPE=>"text/xml" }
   %xmlData
     %epdcx:descriptionSet{ 'xmlns:epdcx'=>"http://purl.org/eprint/epdcx/2006-11-16/", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation'=>"http://purl.org/eprint/epdcx/2006-11-16/ http://purl.org/eprint/epdcx/xsd/2006-11-16/epdcx.xsd" }
@@ -17,7 +21,7 @@
             %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/subject" }
               %epdcx:valueString=encode_for_xml(kw.name) 
         -# ABSTRACT
-        - if work.abstract and !work.abstract.empty?
+        - if work.abstract and !work.abstract.empty? and $EXPORT_ABSTRACTS_AND_KEYWORDS
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/abstract" }
             %epdcx:valueString=encode_for_xml(work.abstract)
         -# CREATOR (i.e. AUTHOR)

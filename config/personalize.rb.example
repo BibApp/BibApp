@@ -118,3 +118,19 @@ $SEARCH_EXAMPLES ={
   :issn_isbn  => "ex. 0003-018X",
   :year       => "ex. 2006  to  2008"
 }
+
+####
+# Display Keywords and Abstracts
+#
+# Copyright restrictions may prohibit the display of abstracts
+# and keywords. Set this value to 'false' to prevent abstracts
+# and keywords from displaying on work pages.
+$DISPLAY_ABSTRACTS_AND_KEYWORDS = true
+
+####
+# Export Keywords and Abstracts
+#
+# Similar to the $DISPLAY_ABSTRACTS_AND_KEYWORDS directive above,
+# set this value to 'false' to prevent abstracts and keywords from
+# being exported via web services (xml, yml, json).
+$EXPORT_ABSTRACTS_AND_KEYWORDS = true
