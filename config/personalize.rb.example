@@ -10,7 +10,7 @@ $APPLICATION_TAGLINE         = "Find experts on campus... Promote their research
 $APPLICATION_LOGO            = "bibapp.png"
 
 # Name of your University and University URL
-$UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison" 
+$UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison"
 $UNIVERSITY_SHORT_NAME       = "UW-Madison"
 $UNIVERSITY_URL              = "http://wisc.edu"
 
@@ -33,7 +33,7 @@ $REPOSITORY_BASE_URL = "http://my.repository.edu/"
 ####
 # Linking To Publications
 #
-# The following two variables are used to 
+# The following two variables are used to
 # find an article in your library's
 # database(s) via OpenURL.
 #
@@ -67,7 +67,7 @@ $WORK_SUFFIX             = "ctx_enc=info%3Aofi%2Fenc%3AUTF-8&amp;ctx_id=10_1&amp
 # Sherpa Color Explanations
 #
 # These are the out-of-the-box explanations for each of
-# the SHERPA RoMEO "color" rankings for publishers/publications. 
+# the SHERPA RoMEO "color" rankings for publishers/publications.
 $SHERPA_COLORS = {
   :green    => "Can archive pre-print and post-print",
   :blue     => "Can archive post-print (ie final draft post-refereeing)",
@@ -75,6 +75,12 @@ $SHERPA_COLORS = {
   :white    => "Archiving not formally supported",
   :unknown  => "Could not determine from data"
 }
+
+####
+# Sherpa API URL
+#
+# Used to retrieve publisher information from the latest SHERPA API.
+$SHERPA_API_URL = "http://www.sherpa.ac.uk/romeo/api24.php?all=yes&showfunder=none"
 
 ####
 # BibApp Status Explanations
