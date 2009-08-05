@@ -142,7 +142,7 @@ class PublicationsController < ApplicationController
     if params[:new_pa]
       begin
         pa = Publication.find(params[:new_pa])
-        @pas << pa unless @pas.include?(pa)
+        @pas << pa.id unless @pas.include?(pa.id)
       rescue ActiveRecord::RecordNotFound
         flash[:warning] = "One or more publications could not be found."
         redirect_to authorities_publications_path
@@ -160,7 +160,7 @@ class PublicationsController < ApplicationController
     if params[:rem_pa]
       begin
         pa = Publication.find(params[:rem_pa])
-        @pas.delete(pa) if @pas.include?(pa)
+        @pas.delete(pa.id) if @pas.include?(pa.id)
       rescue ActiveRecord::RecordNotFound
         flash[:warning] = "One or more publications could not be found."
         redirect_to authorities_publications_path
