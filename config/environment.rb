@@ -130,24 +130,3 @@ Rails::Initializer.run do |config|
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory is automatically loaded
 end
-
-
-#Initialize Workling plugin (http://github.com/purzelrakete/workling/)
-#  By default, BibApp uses the Spawn plugin (http://rubyforge.org/projects/spawn) 
-#  for simple backend processing.
-#  However, if you want more scalability/speed, you may want to 
-#  switch to using Starling (http://rubyforge.org/projects/starling/)
-#  To switch to Starling (UNTESTED)
-#    1. Install Starling & startup
-#    2. Startup Workling's script/workling_starling_client
-#    3. Use this config instead:
-#       Workling::Remote.dispatcher = Workling::Remote::Runners::StarlingRunner.new
-
-# Unfortunately, Windows doesn't work consistently with Spawn.  So, we cannot support
-# backend processing for Windows.  Poor Windows :(
-if RUBY_PLATFORM.include?('mswin32')
-  Workling::Remote.dispatcher = Workling::Remote::Runners::NotRemoteRunner.new
-else  
-  Workling::Remote.dispatcher = Workling::Remote::Runners::SpawnRunner.new
-end
-

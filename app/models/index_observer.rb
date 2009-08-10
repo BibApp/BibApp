@@ -21,7 +21,7 @@ class IndexObserver < ActiveRecord::Observer
         
         #Asynchronously update Solr index for affected Works
         #  (This uses the Workling Plugin for asynchronization)
-        IndexWorker.async_update_index(works)
+        Index.send_later(:batch_update_solr, works)
       end
     end  
   end
@@ -38,7 +38,7 @@ class IndexObserver < ActiveRecord::Observer
 
       #Asynchronously update Solr index for affected Works
       #  (This uses the Workling Plugin for asynchronization)
-      IndexWorker.async_update_index(works)
+      Index.send_later(:batch_update_solr, works)
     end
   end
   
