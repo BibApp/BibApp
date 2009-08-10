@@ -28,9 +28,9 @@ class Contributorship   < ActiveRecord::Base
   after_create :calculate_score
   
   def after_save
-    # Remove false positives from other PenName claimants
+    # Delayed Job - Remove false positives from other PenName claimants
     logger.debug("\n=== REFRESHING ===\n")
-    self.refresh_contributorships
+    self.send_later(:refresh_contributorships)
     
     if self.verified?  
       #If contributorship is newly verified
@@ -38,15 +38,10 @@ class Contributorship   < ActiveRecord::Base
         logger.debug("\n=== Newly Verified Contributorship ===\n")
         person = self.person
         
-        #update scoring hash for Person
-        person.update_scoring_hash
-    
-        #re-calculate scores for all unverified contributorships of this Person
-        person.contributorships.unverified.each do |c|
-          c.calculate_score
-        end
+        #Delayed Job - Update scoring hash for Person
+        person.send_later(:queue_update_scoring_hash)
       end
-      
+
       # Update Solr!
       Index.update_solr(self.work)
     end

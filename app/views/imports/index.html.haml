@@ -1,0 +1,26 @@
+/ === Imports === Index ===
+/ Main
+%div.span-24
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to_unless_current "Show all Imports", user_imports_path
+        %li=link_to_unless_current "Add an Import", new_user_import_path
+        
+  %div.span-22.prepend-1
+    %h2="Imports"
+    %table
+      %thead
+        %tr
+          %td Batch #
+          %td Imported For
+          %td Date
+          %td Status
+      - current_user.imports.each do |import|
+        %tbody
+          %tr
+            %td=link_to "Batch-#{import.id}", user_import_path(current_user, import.id)
+            %td=imported_for(import)
+            %td=import.created_at
+            %td=import.state

@@ -1,3 +1,10 @@
-page.replace_html 'inactive', :partial => "name_string", :collection => @person.name_strings_not, :locals => {:selected => false}
-page.replace_html 'current', :partial => "name_string", :collection => @person.name_strings, :locals => {:selected => true}
-page['name_string_name'].value = ""
+logger.debug("=== RJS rendering - #{@reload.inspect}")
+
+if @reload
+  page.replace_html 'current', :partial => "/imports/pen_name", :collection => @person.pen_names, :locals => {:selected => true}
+  page << "matchedPenNames();"
+else
+  page.replace_html 'inactive', :partial => "name_string", :collection => @person.name_strings_not, :locals => {:selected => false}
+  page.replace_html 'current', :partial => "name_string", :collection => @person.name_strings, :locals => {:selected => true}
+  page['name_string_name'].value = ""
+end

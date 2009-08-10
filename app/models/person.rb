@@ -141,6 +141,19 @@ class Person < ActiveRecord::Base
     Contributorship.verified.find_all_by_person_id(self.id,:include=>[:work])
   end
   
+  def queue_update_scoring_hash
+    self.send_later(:update_scoring_hash)
+  end
+  
+  def recalculate_unverified_contributorship_score
+    #re-calculate scores for all unverified contributorships of this Person        
+    self.contributorships.unverified.each do |c|
+      c.calculate_score
+      Index.update_solr(c.work)
+    end
+    
+  end
+  
   def update_scoring_hash
     vps = self.verified_publications
     
@@ -164,6 +177,9 @@ class Person < ActiveRecord::Base
       :keyword_ids => known_keyword_ids
     }
     self.update_attribute(:scoring_hash, scoring_hash)
+    
+    # Now recalc all our unverified contributorships.
+    self.send_later(:recalculate_unverified_contributorship_score)
   end
   
   #Update Machine Name of Person (called by after_save callback)

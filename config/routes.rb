@@ -122,8 +122,16 @@ ActionController::Routing::Routes.draw do |map|
   # User routes
   ####
   # Make URLs like /user/1/password/edit for Users managing their passwords
-  map.resources :users, :has_one => [:password]
+  map.resources :users, :has_one => [:password] do |u|
+    u.resources :imports
+  end
   
+  ####
+  # Import routes
+  ####
+  map.resources :imports, :has_one => [:user] do |i|
+    i.resources :attachments
+  end
 
   ####
   # Search route

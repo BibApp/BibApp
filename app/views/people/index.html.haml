@@ -38,7 +38,7 @@
             %td=link_to person.works.first, work_path(person.works.first)
           - else
             %td
-          %td{:style => "text-align:right;"}=person.works.length
+          %td{:style => "text-align:right;"}=person.works.verified.length
 
     %br/
     %br/

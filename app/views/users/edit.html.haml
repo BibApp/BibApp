@@ -1,7 +1,16 @@
 / === Users === Edit ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to_unless_current "My Account", edit_user_path
+        %li=link_to_unless_current "Show all Imports", user_imports_path(@user)
+        %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
+
+  %div.span-22.prepend-1
     = error_messages_for :user, :class => 'notice'
     %h2 Edit My Account
   

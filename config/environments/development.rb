@@ -13,5 +13,6 @@ config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 config.action_view.debug_rjs                         = true
 
-# Don't care if the mailer can't send
+# Don't want the mailer to send.
+config.action_mailer.delivery_method = :test
 config.action_mailer.raise_delivery_errors = false

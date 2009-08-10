@@ -81,6 +81,9 @@ Rails::Initializer.run do |config|
   #  See: http://prometheus.rubyforge.org/cmess/
   config.gem 'cmess', :version=>"~>0.1.2"
   
+  #AASM - Acts as State Machine - helps manage batch import state
+  config.gem 'rubyist-aasm', :version => '~> 2.0.2', :lib => 'aasm', :source => "http://gems.github.com"
+  
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )

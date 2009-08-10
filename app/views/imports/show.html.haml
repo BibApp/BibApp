@@ -1,0 +1,202 @@
+/ === Works === Review-Batch ===
+/ Main
+%div.span-24
+
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to_unless_current "Show all Imports", user_imports_path
+        %li=link_to_unless_current "Add an Import", new_user_import_path
+
+  %div.span-22.prepend-1
+
+    - if @works.nil? || @works.empty?
+      %h2 Review Batch
+      %p
+        %a{:href => "#works"}
+      - case @import.state
+        - when "rejected"
+          
+          %div.error
+            %h3="Batch-#{@import.id}"
+            %p 
+              This import was 
+              %strong rejected
+              and all works associated with the import were destroyed.
+
+    - else      
+      %h2
+        ="Review Batch - "
+        %span{:style => "font-size:0.75em;"}="Imported For #{imported_for(@import)}"
+
+      / Right - Admin div
+      %div{:style => "padding-bottom:2em;"}
+        - if @import.state != "accepted"
+          %div.warning
+            %h3 Actions
+            %div.left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
+            %div.span-1.text-center
+              %p
+                %strong or
+            %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
+            %div.clear
+              %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
+
+        - if @import.state == "accepted"
+          %div.notice
+            %h3="Batch-#{@import.id}"
+            %p 
+              This import was 
+              %strong accepted.
+
+      %div
+        %h3 Batch report
+        
+        - if @person
+          %div.left.span-8.append-1
+            %table#pen_names
+              %thead
+                %tr
+                  %th{:style => "border-bottom:1px solid #000"} My Names
+                  %th{:style => "border-bottom:1px solid #000"} Works Matched
+              %tbody#current
+                = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
+
+              %tfoot
+                %tr
+                  %td{:style => "border-top:1px dotted #CCC"} Total
+                  %td{:id => "pen_names_count_total", :style => "border-top:1px dotted #CCC"} 0
+
+        %div.left.span-6.append-1
+          / Works added
+          %table
+            %thead
+              %tr
+                %th{:style => "border-bottom:1px solid #000"} Works
+                %th{:style => "border-bottom:1px solid #000"} Count
+            %tbody
+              %tr
+                %td New works
+                %td= @work_batch.size - @dupe_count
+              %tr
+                %td Duplicate works
+                %td= @dupe_count
+            %tfoot
+              %tr
+                %td{:style => "border-top:1px dotted #CCC"} Total
+                %td#works_imported_total{:style => "border-top:1px dotted #CCC"}= @work_batch.size
+          
+
+        %div.left.span-6.last
+          / Errors
+          %table
+            %thead
+              %tr
+                %th{:style => "border-bottom:1px solid #000"} Errors
+            %tbody
+              - if !@errors.empty?
+                %tr
+                  %td Error description
+              - else
+                %tr
+                  %td{:colspan => "2"} 
+                    %p No errors encountered during import.
+
+        %div.clear
+          - if @person
+            %p
+              Matched 
+              %strong#matched_total="#{@match_count} works"
+              = "to #{imported_for(@import)}."
+              %strong#remaining_total="#{@work_batch.size - @match_count} remain to match."
+
+        %hr/
+      - if @person
+        %div.left.span-7
+          %h3 Import Names
+          %p Select missing variations of your name.
+          / PenName matches
+          %div.left.append-1
+            %ul#import_names{:style => "padding:0; margin:0;"}
+              -@import.name_string_work_count.sort.inspect
+              - @import.name_string_work_count.sort.each do |ns|
+                = import_name_string_line(ns, @person)
+      
+      %div.left.prepend-1
+        %h3#works Works Imported
+        = render :partial => "works"
+        
+:javascript
+  // Matched PenNames
+  
+  function matchedPenNames() {
+    
+    // 1) Show all Imported Work NamesStrings
+    var lines = new Array();
+    lines = $('import_names').childElements();
+    lines.each(function(li){
+        li.show();
+    });
+    
+    // 2) Find all claimed PenNames
+    var pen_names = $$('td.pen_name');
+
+    // 3) For each claimed PenName, hide Imported Work NameStrings with matching Work associations
+    pen_names.each(function(pn){
+      var works = new Array();
+      var name_string = new String();
+      name_string = "ns-" + pn.id;
+      import_name_string = $(name_string);
+      if (import_name_string != null) {
+        works = $w(import_name_string.className);
+        works.each(function(work){
+          var match = new String();
+          match = "li." + work
+          $$(match).each(function(w){
+            w.hide();
+          });
+        });
+        
+        // 4) Set PenName Imported Work Count and Total  
+        
+        var pen_name_work_count = new String();
+        pen_name_work_count = "pn-" + pn.id + "-count";
+
+        var name_string_work_count = new String();
+        name_string_work_count = "ns-" + pn.id + "-count";
+
+        if ($(name_string_work_count).innerHTML != null) {
+          $(pen_name_work_count).innerHTML = $(name_string_work_count).innerHTML
+        }
+      }
+      
+    });
+  
+    // 5) Set PenName match total
+    total = 0;
+    imported = parseInt($('works_imported_total').innerHTML);
+    
+    $$('td.pen_name_count').each(function(c){
+        total = total + parseInt(c.innerHTML);
+    });
+    
+    $('pen_names_count_total').innerHTML = total;
+    $('matched_total').innerHTML = total + " works";
+
+    remaining = imported - total;
+    if (remaining > 0) {
+      $('remaining_total').innerHTML = remaining + " remain unmatched.";
+      $('remaining_total').addClassName("error")
+    }
+    else {
+      $('remaining_total').innerHTML = "Everything matches.";
+      $('remaining_total').removeClassName("error")
+    }
+    
+  }
+
+  // On Document load
+  document.observe("dom:loaded", function() {
+    matchedPenNames();
+  });
