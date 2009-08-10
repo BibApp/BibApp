@@ -23,7 +23,7 @@ class PenNameObserver < ActiveRecord::Observer
     #Asynchronously update Solr index for affected Works
     #  (This uses the Workling Plugin for asynchronization)
     works = contributorships.collect{|contrib| contrib.work}
-    IndexWorker.async_update_index(works)
+    Index.send_later(:batch_update_solr, works)
   end
   
   # Anytime a PenName is removed, we need to do the following:
@@ -35,7 +35,7 @@ class PenNameObserver < ActiveRecord::Observer
     
     #Asynchronously update Solr index for affected Works
     works = contributorships.collect{|contrib| contrib.work}
-    IndexWorker.async_update_index(works)
+    Index.send_later(:batch_update_solr, works)
     
     #Finally, destroy all these contributorships
     contributorships.each{|c| c.destroy}
