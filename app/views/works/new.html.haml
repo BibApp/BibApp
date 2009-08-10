@@ -1,22 +1,33 @@
 / === Works === New ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+%div.span-24
+  %div.span-22.prepend-1
 
     -#Check if we are adding Works directly to a Person
     -if @person
-      %h2="Add a Work for #{link_to @person.display_name, person_path(@person)}"
+      %h2="Add Works for #{link_to @person.display_name, person_path(@person)}"
     -else
-      %h2 Add a Work
-    %ul
-      - Work.types.each do |ct|
-        %li
-          -if @person
-            =link_to ct, new_person_work_path(@person, :type => ct)
-          -else
-            =link_to ct, new_work_path(:type => ct)
+      %h2 Add Works
+    %div.right
+      %h3 Select a type:
+      %ul
+        - if @person
+          %li= link_to "Batch Import", new_user_import_path(current_user, :person_id => @person.id)
+        - else
+          %li= link_to "Batch Import", new_user_import_path(current_user)
+        
+        
+        %li -----
+        
+        - Work.types.each do |ct|
+          %li
+            -if @person
+              =link_to ct, new_person_work_path(@person, :type => ct)
+            -else
+              =link_to ct, new_work_path(:type => ct)
 
-    - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
-      = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
-      -#Save person id in form, if adding Work to a Person
-      = hidden_field_tag :person_id, @person.id if @person
+    %div.span-16
+      - form_for :work, @work, :url => {:controller => "works", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+        = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
+        -#Save person id in form, if adding Work to a Person
+        = hidden_field_tag :person_id, @person.id if @person

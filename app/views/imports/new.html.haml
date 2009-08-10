@@ -1,0 +1,58 @@
+/ === Import === New ===
+/ Main
+%div.span-24
+
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to_unless_current "Show all Imports", user_imports_path
+        %li=link_to_unless_current "Add an Import", new_user_import_path
+
+  %div.span-22.prepend-1
+
+    -#Check if we are adding Works directly to a Person
+    -if @person
+      %h2="Add Works for #{link_to @person.display_name, person_path(@person)}"
+    -else
+      %h2 Add Works
+    %div.right
+      %h3 Select a type:
+      %ul
+        %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
+        %li -----
+        - Work.types.each do |ct|
+          %li
+            -if @person
+              =link_to ct, new_person_work_path(@person, :type => ct)
+            -else
+              =link_to ct, new_work_path(:type => ct)
+
+    - form_for :import, @import, :url => {:controller => "imports", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+      %fieldset.span-16
+        %legend Batch Import (RIS | Medline | Refworks XML)
+
+        - unless @last_batch.nil? or @last_batch.empty?
+          %p
+            %strong=link_to "Review your previously added Batch", review_batch_works_path
+
+        %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
+
+        %ul
+          %li
+            = form.label :import_file, "Upload File:"
+            = form.file_field :import_file, :class=>'text'
+            - if @person
+              = hidden_field_tag :person_id, @person.id
+
+          %li
+            = #form.label :works, "Or, Paste Citations:"
+            = #form.text_area :works 
+
+        %p.buttons
+          = submit_tag "Add Batch", :disable_with => "Importing Batch..."
+
+
+      
+      -#Save person id in form, if adding Work to a Person
+      = hidden_field_tag :person_id, @person.id if @person

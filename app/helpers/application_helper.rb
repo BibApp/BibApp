@@ -3,27 +3,32 @@ module ApplicationHelper
   require 'config/personalize.rb'
   require 'htmlentities' if defined? HTMLEntities
   
-  def ajax_checkbox_toggle(model, person, selected)
+  def ajax_checkbox_toggle(model, person, selected, reload=nil)
     person = Person.find(person.id)
     if selected
       js = remote_function(
         :url => {
+          :controller => :pen_names,
           :action => :destroy,
           :person_id => person.id, 
-          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id},
+          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id,
+          :reload => reload
+          },
         :method => :delete
       )
     else
       js = remote_function(
         :url => {
+          :controller => :pen_names,
           :action => :create,
           :person_id => person.id, 
-          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id
+          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id,
+          :reload => reload
           },
         :method => :post
       )
     end
-    check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, :onclick => js)
+    check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, {:onclick => js})
   end
 
   def letter_link_for(letters, letter, current, path)
@@ -143,10 +148,18 @@ module ApplicationHelper
   end
   
   def link_to_google_book(work)
-    if work.publication.issn_isbn != nil && !work.publication.issn_isbn.empty?
+    if !work.publication.isbns.blank?
+      haml_tag :div, {:class => "right"} do
+        haml_tag :span, {:title => "ISBN"}
+          work.publication.isbns.first[:name]
+        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
+      end      
+    elsif !work.publication.issn_isbn.blank?
       haml_tag :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
       end
+    else
+      # Nothing
     end
   end
   
@@ -327,7 +340,7 @@ module ApplicationHelper
     link_text = $WORK_LINK_TEXT
     base_url = $WORK_BASE_URL
     suffix = $WORK_SUFFIX
-    
+     
     #If we've already found this info for
     # the current session, return it immediately
     if session[:openurl_info]
@@ -389,7 +402,7 @@ module ApplicationHelper
       # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
       session[:openurl_info] = true
     end #end if session[:openurl_info]
-    
+  
     return link_text, base_url, suffix
   end
 end

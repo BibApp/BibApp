@@ -69,8 +69,6 @@ class Work < ActiveRecord::Base
   named_scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
   named_scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
   
-  
-  
   #### Callbacks ####
   before_validation_on_create :set_initial_states
 
@@ -194,7 +192,6 @@ class Work < ActiveRecord::Base
     # "Book"
     # more...   	    			  
     types = [
-      "Add Batch",
       "Book (Section)",
       "Book (Whole)",
       "Book Review",
@@ -458,6 +455,9 @@ class Work < ActiveRecord::Base
         claims.each do |c| 
           logger.debug("#{c.person.display_name}")
         end
+        
+        # @TODO: If there is no "claim" matching our Preverified Person
+        #self.preverified_person
     
         # Find or create a Contributorship for each claim
         # @TODO: Incorporate a Person.blacklist?

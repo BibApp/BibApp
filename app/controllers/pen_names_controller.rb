@@ -32,6 +32,15 @@ class PenNamesController < ApplicationController
     #only 'editor' of person can assign a pen name
     permit "editor of person"
     
+    
+    logger.debug("\n\n\n\n\n\n\n\n\n\n==== Params: #{params.inspect}")
+    
+    if params[:reload]
+      @reload = true
+    end
+
+    logger.debug("\n\n\n\n\n\n\n\n\n\n==== reload? #{@reload.inspect}")    
+    
     @person.name_strings << @name_string
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -44,7 +53,7 @@ class PenNamesController < ApplicationController
     permit "editor of person"
     
     machine_name = (params[:name_string][:name]).chars.gsub(/[\W]+/, " ").strip.downcase
-
+    
     #@name_string = NameString.find_or_create_by_name(params[:name_string][:name])
     @name_string = NameString.find_or_create_by_machine_name(machine_name)
 
@@ -58,6 +67,10 @@ class PenNamesController < ApplicationController
   def destroy
     #only 'editor' of person can destroy a pen name
     permit "editor of :person", :person => @pen_name.person
+    
+    if params[:reload]
+      @reload = true
+    end
     
     @pen_name.destroy if @pen_name
     respond_to do |format|

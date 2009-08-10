@@ -16,7 +16,8 @@ class Attachment < ActiveRecord::Base
   def self.types               
     types = [
       "Content File",  #Default type of attachment
-      "Image"
+      "Image",
+      "Import File"
     ]  
   end
   
