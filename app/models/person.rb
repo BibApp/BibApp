@@ -14,7 +14,7 @@ class Person < ActiveRecord::Base
   has_many :memberships,
     :dependent => :delete_all
   
-  has_many :works, :through => :contributorships 
+  has_many :works, :through => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 2]
 
   has_many :contributorships,
     :dependent => :delete_all
