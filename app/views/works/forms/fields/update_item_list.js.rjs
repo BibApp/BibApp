@@ -37,20 +37,36 @@
 
 
 ##
-# Remove action
+# Remove actions
 ##
 if @update_action.downcase=="remove" and @list_type and @item_id
   # remove the <li> field with the id of [list_type]_[item_id]
   page.remove @list_type+'_'+@item_id
-end  
+end
+
+if @update_action.downcase=="remove_author" and @ns_id
+  page.remove "author_#{@ns_id}"
+end
+
+if @update_action.downcase=="remove_contributor" and @ns_id
+  page.remove "contributor_#{@ns_id}"
+end
 
 ##
-# Add action
+# Add actions
 ##
 if @update_action.downcase=="add" and @list_type and @item_value
   # add a new <li> field to the list using the 'list_item' partial
    page.insert_html :bottom, @list_type+'_list', :partial => "works/forms/fields/list_item", :locals => {:list_type => @list_type, :item_id => @item_value, :item_value => @item_value, :item_class => @item_class}
-end  
+end
+
+if @update_action.downcase=="add_author" and @ns_id
+  page.insert_html :bottom, "author_name_strings_list", :partial => "works/forms/fields/author_list_item", :locals => {:ns_id => @ns_id}
+end
+
+if @update_action.downcase=="add_contributor" and @ns_id
+  page.insert_html :bottom, "contributor_name_strings_list", :partial => "works/forms/fields/contributor_list_item", :locals => {:ns_id => @ns_id}
+end
 
 #If 'clear_field' was passed in, clear the value of that field
 unless @clear_field.nil?

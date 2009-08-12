@@ -1,0 +1,11 @@
+-# Copyright Statement field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Copyright Statement)
+
+-# Initialize optional input variables
+- label ||= "Copyright Statement"
+
+= form.label :copyright_holder, "#{label}:"
+= form.text_area :copyright_holder

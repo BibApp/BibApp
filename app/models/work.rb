@@ -192,16 +192,24 @@ class Work < ActiveRecord::Base
     # "Book"
     # more...   	    			  
     types = [
-      "Book (Section)",
+      #"Artwork",
+      #"Book (Section)",
       "Book (Whole)",
       "Book Review",
+      "Composition",
       "Conference Paper",
       "Conference Poster",
-      "Conference Proceeding",
-      "Dissertation Thesis",
+      "Conference Proceeding (Whole)",
+      "Exhibition",
+      "Journal (Whole)",
       "Journal Article",
       "Monograph",
       "Patent",
+      "Performance",
+      "Presentation / Lecture",
+      "Recording (Moving Image)",
+      "Recording (Sound)",
+      "Thesis / Dissertation",
       "Web Page",
       "Generic"
       ]  

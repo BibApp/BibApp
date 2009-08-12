@@ -1,0 +1,11 @@
+-# Instrumentation field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Instrumentation)
+
+-# Initialize optional input variables
+- label ||= "Instrumentation"
+
+= form.label :instrumentation, "#{label}:"
+= form.text_field :instrumentation, :class=>'text'

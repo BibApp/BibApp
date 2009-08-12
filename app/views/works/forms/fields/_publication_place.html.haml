@@ -1,0 +1,11 @@
+-# Publication Place field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Publication Place)
+
+-# Initialize optional input variables
+- label ||= "Publication Place"
+
+= form.label :publication_place, "#{label}:"
+= form.text_field :publication_place, :class=>'text'

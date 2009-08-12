@@ -273,20 +273,23 @@ form.work_form fieldset ul {
     padding: 0;
     margin: 0;
 }
+
 form.work_form fieldset li {
     list-style: none;
     padding: 5px;
     margin: 0;
-    clear: both;
+}
+
+form.work_form fieldset ol li {
+    list-style: decimal;
+    padding: 5px;
+    margin: 0;
 }
 
 form.work_form label {
     font-weight: bold;
-    float: left;
-    text-align:right;
-    margin-left: 0px;
+    display: block;
     width: 120px;
-    padding: 10px;
 }
 
 /* style for a label appearing inline, rather than floating left */
@@ -295,6 +298,10 @@ form.work_form label.inline_label {
     display: inline;
     font-weight: bold;
     text-align:right;
+}
+
+form.work_form .author_block {
+  margin-bottom: 1em;
 }
 
 /* styles for Form field Errors*/
@@ -368,7 +375,6 @@ input.mediumbox {width:100px;}
 
 /* Submit buttons */
 .buttons {
-  margin-left: 15em;
 }
 
 
