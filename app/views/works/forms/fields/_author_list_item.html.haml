@@ -1,0 +1,18 @@
+-# Used by Auto-Complete functionality
+-# Add a single list item to a list, with a link to remove it
+-#
+-# Required Input Variables:
+-#    :ns_id      => name_string ID
+-#    :ns_name    => name_string name
+-#    :ns_role    => name_string role
+-# Optional Input Variables:
+-#    :item_class => Additional class to put on <li> tag
+
+-# Initialize optional input variables
+- item_class ||= ""
+
+%li.list_item{:id => "author_#{ns_id}", :class => "movable"}
+  = hidden_field_tag "author_roles[]", "#{ns_role}"
+  = text_field_tag "authors[]", ns_name, {:class=>'text'}
+  -# Ajax-enabled link to add new items to below list
+  = link_to_remote "[remove]", :url => { :action => :remove_author_from_list, :ns_id => ns_id}

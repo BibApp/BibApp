@@ -1,0 +1,11 @@
+-# Degree Level field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Degree Level)
+
+-# Initialize optional input variables
+- label ||= "Degree Level"
+
+= form.label :degree_level, "#{label}:"
+= form.text_field :degree_level, :class=>'text'

@@ -13,7 +13,7 @@ class WorksController < ApplicationController
   make_resourceful do
     build :index, :show, :new, :edit, :destroy
     
-    publish :xml, :json, :yaml, :attributes => [
+    publish :xml, :json, :yaml, :only => :show, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
       :year, :volume, :issue, :start_page, :end_page, :links, :tags, {
         :publication => [:id, :name]
@@ -25,11 +25,18 @@ class WorksController < ApplicationController
         :people => [:id, :first_last]
         }
       ]
-    
+
     #Add a response for METS!
     response_for :show do |format| 
       format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
       format.mets  #loads show.mets.haml
+    end
+
+    response_for :index do |format|
+      format.html
+      format.xml
+      format.yaml
+      format.json
     end
 
     #initialize variables used by 'new.html.haml'
@@ -126,11 +133,20 @@ class WorksController < ApplicationController
 
       @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
       @view = params[:view] || "splash"
+
+      @has_next_page = ((Work.count.to_i - (@page.to_i * @rows.to_i)) > 0)
     end
   end # end make_resourceful
 
-  
-  
+
+  # For paging make_resourceful publish
+  def current_objects
+    page = params[:page] || 1
+    @current_object ||= current_model.paginate(:order => "created_at DESC", 
+                                               :page => page,
+                                               :per_page => 10)
+  end
+
   #Create a new Work or many new Works
   def create
     #check if we are adding new works directly to a person
@@ -322,7 +338,7 @@ class WorksController < ApplicationController
 
     #default to empty array of author strings
     params[:author_name_strings] ||= [] 
-    params[:editor_name_strings] ||= [] 
+    params[:editor_name_strings] ||= []
             
     #Set Author & Editor NameStrings for this Work
     work_name_strings = Array.new
@@ -336,6 +352,10 @@ class WorksController < ApplicationController
     @editor_name_strings.each do |name|
       work_name_strings << {:name => name, :role => "Editor"}
     end
+
+    #for name strings not in the array
+    work_name_strings << {:name => params[:author][:string], :role => "Author"} unless params[:author][:string].empty?
+    work_name_strings << {:name => params[:editor][:string], :role => "Editor"} unless params[:editor][:string].empty?
     
     @work.work_name_strings = work_name_strings 
     
@@ -671,6 +691,29 @@ class WorksController < ApplicationController
     #Add item value to list dynamically using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end
+
+  # see above
+  def add_contributor_to_list
+    @list_type = "contributor_name_strings"
+    @sortable = true
+    @ns_id = params[:ns_id]
+    @update_action = 'add_contributor'
+
+    @work = subklass_init(params[:work_type], nil)
+
+    #Add item value to list dynamically using Javascript
+    render :template => 'works/forms/fields/update_item_list'
+  end
+
+  def add_author_to_list
+    @ns_id = params[:ns_id]
+    @list_type = "author_name_strings"
+    @sortable = true
+    @update_action = "add_author"
+    render :template => 'works/forms/fields/update_item_list'
+  end
+
+
   
   #Removes a single item value from list of items in Web-based Work entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
@@ -688,6 +731,22 @@ class WorksController < ApplicationController
     @item_id = params[:item_id]
     @update_action = 'remove'
     
+    #remove item value from list dynamically using Javascript
+    render :template => 'works/forms/fields/update_item_list'
+  end
+
+  def remove_contributor_from_list
+    @ns_id = params[:ns_id]
+    @update_action = 'remove_contributor'
+
+    #remove item value from list dynamically using Javascript
+    render :template => 'works/forms/fields/update_item_list'
+  end
+
+  def remove_author_from_list
+    @ns_id = params[:ns_id]
+    @update_action = 'remove_author'
+
     #remove item value from list dynamically using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end

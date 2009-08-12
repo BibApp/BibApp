@@ -1,0 +1,11 @@
+-# Identifier field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Identifier)
+
+-# Initialize optional input variables
+- label ||= "Identifier"
+
+= form.label :identifier, "#{label}:"
+= form.text_field :identifier, :class=>'text'

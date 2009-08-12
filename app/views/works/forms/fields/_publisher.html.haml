@@ -1,5 +1,11 @@
 -# Publisher text field, with auto-complete
+-#
+-# Possible Input Variables:
+-#    :label    => Label to diplay (default: Publication Place)
 
-= label :publisher, :name, "Publisher:"
+-# Initialize optional input variables
+- label ||= "Publisher"
+
+= label 'publisher', :name, "#{label}:"
 - @publisher = @work.publisher unless @work.publisher.nil?
-= text_field_with_auto_complete :publisher, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+= text_field_with_auto_complete 'publisher', :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5}

@@ -1,0 +1,32 @@
+-# Used by Auto-Complete functionality
+-# Add a single list item to a list, with a link to remove it
+-#
+-# Required Input Variables:
+-#    :ns_id      => name_string ID
+-#    :ns_name    => name_string name
+-#    :ns_role    => Contributor role (e.g, Author, Editor, etc)
+-# Optional Input Variables:
+-#    :item_class => Additional class to put on <li> tag
+
+-# Initialize optional input variables
+- item_class ||= ""
+
+-# Get the roles for this work subklass
+- roles = @work.class.roles
+-#Delete the first role; it's Author
+- first_role = roles.delete_at(0)
+
+
+%li.list_item{:id => "contributor_#{ns_id}", :class => "movable"}
+  %select{:id => "contributor_roles[]"}
+    - roles.each do |r|
+      - if r == ns_role
+        %option{:selected => "selected", :value => r}
+          = r
+      - else
+        %option{:value => r}
+          = r
+  -#= select :roles, ns_id, roles, {:include_blank => false, :selected => ns_role.to_s }
+  = text_field_tag "contributors[]", ns_name, {:class=>'text'}
+  -# Ajax-enabled link to add new items to below list
+  = link_to_remote "[remove]", :url => { :action => :remove_contributor_from_list, :ns_id => ns_id}
