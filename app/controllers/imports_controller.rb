@@ -25,10 +25,6 @@ class ImportsController < ApplicationController
     @import.user_id = params[:user_id]
     @import.person_id = params[:person_id]
     
-    # @TODO: Rails serialization is buggy w/o setting empty Arrays for serializable fields
-    @import.works_added = {}
-    @import.errors = {}
-    
     # Associate Attachment to Import
     @import.import_file = @attachment
     
@@ -64,7 +60,7 @@ class ImportsController < ApplicationController
     
     #load last batch from session
     @work_batch = @import.works_added
-    @errors = @import.errors
+    @errors = @import.import_errors
    
     # Init duplicate works count
     @dupe_count = 0

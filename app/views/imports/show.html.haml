@@ -13,6 +13,15 @@
 
     - if @works.nil? || @works.empty?
       %h2 Review Batch
+
+      / Error block
+      - if !@import.import_errors.empty?
+        - @import.import_errors.each do |key, value|
+          %div.warning
+            %h3="Batch-#{@import.id}"
+            %p=value
+      
+      / State blocks
       %p
         %a{:href => "#works"}
       - case @import.state
@@ -24,6 +33,15 @@
               This import was 
               %strong rejected
               and all works associated with the import were destroyed.
+
+        - when "processing"
+
+          %div.warning
+            %h3="Batch-#{@import.id}"
+            %p 
+              This import is in processing.  You'll receive an
+              %strong email
+              when the batch is complete.
 
     - else      
       %h2
