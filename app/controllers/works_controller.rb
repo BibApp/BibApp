@@ -120,6 +120,9 @@ class WorksController < ApplicationController
       @facet_count  = params[:facet_count] || 50
       @rows         = params[:rows] || 10
       @export       = params[:export] || ""
+      
+      # Public resultset... only show "accepted" Works
+      @filter << "status:3"
 
       @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
       @view = params[:view] || "splash"

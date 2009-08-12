@@ -17,6 +17,9 @@ class SearchController < ApplicationController
       @rows         = params[:rows] || 10
       @export       = params[:export] || ""
       
+      # Public resultset... only show "accepted" Works
+      @filter << "status:3"
+      
       @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
       
       if !@query.empty?
@@ -43,7 +46,29 @@ class SearchController < ApplicationController
         ce = WorkExport.new
         @works = ce.drive_csl(@export,works)
       end
-      
+
+      respond_to do |format|
+        format.html # Do HTML
+        format.yaml { render :yaml => @works }
+        format.json {
+        
+          # Too much processing move to view!
+          @items = Hash.new
+          @items["items"] = Array.new
+          @works.each do |work|
+            item = Hash.new
+            item["type"] = work["type"]
+            item["label"] = work["title"]
+            item["authors"] = work["authors"]
+            item["year"] = work["year"]
+            item["publication"] = work["publication"]
+            @items["items"] << item
+          end
+          
+          render :json => @items, :callback => params[:callback] 
+        }
+        format.xml  # Do XML
+      end
     else
       @q = nil
       # There's nothing to return
