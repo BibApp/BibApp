@@ -3,7 +3,7 @@ class Import < ActiveRecord::Base
   # ActiveRecord Attributes
   attr_protected :state
   serialize :works_added
-  serialize :errors
+  serialize :import_errors
   
   # ActiveRecord Associations
   belongs_to :user
@@ -112,9 +112,11 @@ class Import < ActiveRecord::Base
     
     logger.debug("\n\n==== Staring Batch Import ==== \n\n")
     
-    # Default errors to none
-    errors = Array.new
+    # Initialize an array of all the works we create in the batch
+    self.works_added = Array.new
     
+    # Initialize a Hash of all the errors encountered in the batch
+    self.import_errors = Hash.new
     
     # Are we importing for a person?
     if self.person_id
@@ -147,7 +149,7 @@ class Import < ActiveRecord::Base
           logger.error("Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
 
           #return nothing, which will inform user that file format was invalid
-          errors << "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
+          self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
           self.save
           self.review!
           return
@@ -156,7 +158,10 @@ class Import < ActiveRecord::Base
      
     rescue Exception =>e
       #re-raise this exception to create()...it will handle logging the error
-      raise
+      self.import_errors[:exception] = e
+      self.save
+      self.review!
+      return
     end
     
     # Init: Parser and Importer
@@ -169,15 +174,25 @@ class Import < ActiveRecord::Base
       pcites = p.parse(str)
 
     #Rescue any errors in parsing
-    rescue Exception => e
+    rescue Exception =>e
       #re-raise this exception to create()...it will handle logging the error
-      raise
+      self.import_errors[:exception] = e
+      self.save
+      self.review!
+      return
     end
         
     # @TODO: Check to make sure there were not errors while parsing the data.
     #No citations were parsed
     if pcites.nil? || pcites.empty?
-      return nil
+      logger.debug("\n* Unsupported file format!\n\n")
+      self.import_errors[:no_parsed_citations] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
+      logger.debug("\n* Before save: #{self.inspect}\n\n")
+      self.save
+      logger.debug("\n* After save: #{self.inspect}\n\n")
+      self.review!
+      logger.debug("\n* After review: #{self.inspect}\n\n")
+      return
     end
 
     logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
@@ -186,12 +201,10 @@ class Import < ActiveRecord::Base
     begin
       # Map Import hashes
       attr_hashes = i.citation_attribute_hashes(pcites)
+      logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
 
       # Make sure there is data in the Attribute Hash
       return nil if attr_hashes.nil?
-      
-      # Initialize an array of all the works we create in this batch
-      works_added = Array.new
       
       # Now, actually *create* these works in database
       attr_hashes.map { |h|
@@ -238,7 +251,7 @@ class Import < ActiveRecord::Base
     
         # Very minimal validation -- just check that we have a title
         if h[:title_primary].nil? or h[:title_primary] == ""
-          errors << "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
+          self.import_errors[:missing_title] = "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
           
           logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
           logger.warn("End Work \n\n")
@@ -278,25 +291,27 @@ class Import < ActiveRecord::Base
       #index everything in Solr
       Index.batch_index
       
-    #This error occurs if the works were parsed, but some bad data
-    #was entered which caused an error to occur when saving the data
-    #to the database.
+    # This error occurs if the works were parsed, but some bad data
+    # was entered which caused an error to occur when saving the data
+    # to the database.
     rescue Exception => e
-      #remove anything already added to the database (i.e. rollback ALL changes)
+      # remove anything already added to the database (i.e. rollback ALL changes)
       unless works_added.nil?
         works_added.each do |work_id|
           work = Work.find(work_id)
           work.destroy unless work.nil?     
         end
       end
-      #reraise the error to create(), which will make sure it is logged
-      raise
+
+      #re-raise this exception to create()...it will handle logging the error
+      self.import_errors[:exception] = e
+      self.save
+      self.review!
     end
    
-    #At this point, some or all of the works were saved to the database successfully.
-    #return works_added, errors
+    # At this point, some or all of the works were saved to the database successfully.
+    # return works_added, errors
     self.works_added = works_added
-    self.errors = errors
     self.save
     
     # Trigger AASM reviewable event
