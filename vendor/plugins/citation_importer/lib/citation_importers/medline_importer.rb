@@ -22,28 +22,28 @@ class MedlineImporter < BaseImporter
     
     #Mapping of Medline Attributes => BibApp Attributes
     @attribute_mapping = {
-       :pt => :klass,
-       :ti => :title_primary,
-       :au => :work_name_strings,
-       :fau => :work_name_strings,
-       :ad => :affiliation,
-       :jt => :publication,
-       :ta => :publication,
-       :pb => :publisher,
-       :mh => :keywords,
-       :ab => :abstract,
-       :dp => :publication_date, # translated
-       :pg => :start_page, #translated
-       :vi => :volume,
-       :ip => :issue,
-       :is => :issn_isbn,
-       :pl => :publication_place,
-       :own => :source,
-       :stat => :notes,
-       :pmid => :external_id,
-       :aid => :links,
-       :la  => :language,
-       :ci  => :copyright_holder
+       :pt    => :klass,
+       :ti    => :title_primary,
+       :au    => :work_name_strings,
+       #:fau   => :work_name_strings,
+       :ad    => :affiliation,
+       :jt    => :publication,
+       :ta    => :publication,
+       :pb    => :publisher,
+       :mh    => :keywords,
+       :ab    => :abstract,
+       :dp    => :publication_date, # translated
+       :pg    => :start_page, #translated
+       :vi    => :volume,
+       :ip    => :issue,
+       :is    => :issn_isbn,
+       :pl    => :publication_place,
+       :own   => :source,
+       :stat  => :notes,
+       :pmid  => :external_id,
+       :aid   => :links,
+       :la    => :language,
+       :ci    => :copyright_holder
     }
   
     #Initialize our Value Translators (which will translate values from normal Medline files)
