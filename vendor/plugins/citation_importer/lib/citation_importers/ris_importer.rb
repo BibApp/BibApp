@@ -24,14 +24,20 @@ class RisImporter < BaseImporter
        :ty => :klass,
        :t1 => :title_primary,
        :ti => :title_primary,
+       :ct => :title_primary,
+       :t2 => :title_secondary,
        :bt => :title_secondary,
        :t3 => :title_tertiary,
        :a1 => :work_name_strings,
+       :au => :work_name_strings,
+       :a2 => :work_name_strings,
        :ed => :work_name_strings,
        :ad => :affiliation,
        :jf => :publication,
        :ja => :publication,
        :jo => :publication,
+       :j1 => :publication,
+       :j2 => :publication,
        :pb => :publisher,
        :kw => :keywords,
        :u2 => :keywords,
@@ -42,11 +48,15 @@ class RisImporter < BaseImporter
        :ep => :end_page,
        :vl => :volume,
        :is => :issue,
+       :cp => :issue,
        :sn => :issn_isbn,
-       :cy => :publication_place,
        :bn => :issn_isbn,
+       :cy => :publication_place,
        :n1 => :notes,
+       :ab => :notes,
        :m1 => :notes,
+       :ur => :links,
+       :l1 => :links,
        :l2 => :links
     }
   
@@ -54,8 +64,10 @@ class RisImporter < BaseImporter
     @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
     # Map NameString and CitationNameStringType
-    # example {:name => "Larson, EW", :type=> "Author"}
+    # example {:name => "Larson, EW", :role=> "Author"}
     @value_translators[:a1] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @value_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
+    @value_translators[:a2] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     @value_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     
     # Map publication types (see @type_mapping)    
