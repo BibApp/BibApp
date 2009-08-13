@@ -24,8 +24,8 @@ class MedlineImporter < BaseImporter
     @attribute_mapping = {
        :pt    => :klass,
        :ti    => :title_primary,
-       :au    => :work_name_strings,
-       #:fau   => :work_name_strings,
+       :au    => :short_names,
+       :fau   => :full_names,
        :ad    => :affiliation,
        :jt    => :publication,
        :ta    => :publication,
@@ -108,40 +108,40 @@ class MedlineImporter < BaseImporter
       "unbill"                            => "UnenactedBillResolution", # Unenacted bill/resolution
       "unpb"                              => "UnpublishedWork", # Unpublished work
       "video"                             => "VideoRecording", # Video recording
-      "abbreviations"  => "Generic",
-      "abstracts"  => "Abstract",
-      "academic dissertations"  => "DissertationThesis",
-      "account books"  => "Generic",
-      "addresses"  => "Generic",
-      "advertisements"  => "Generic",
-      "almanacs"  => "Generic",
-      "anecdotes"  => "Generic",
-      "animation"  => "Generic",
-      "annual reports"  => "Report",
-      "aphorisms and proverbs"  => "Generic",
-      "architectural drawings"  => "Generic",
-      "atlases"  => "BookEdited",
-      "bibliography"  => "Generic",
-      "biobibliography"  => "Generic",
-      "biography"  => "BookWhole",
-      "book illustrations"  => "Generic",
-      "book reviews"  => "JournalArticle",
-      "bookplates"  => "Generic",
-      "broadsides"  => "Generic",
-      "caricatures"  => "Generic",
-      "cartoons"  => "Generic",
-      "case reports"  => "Report",
-      "catalogs"  => "Generic",
-      "charts"  => "Generic",
-      "chronology"  => "Generic",
-      "classical article"  => "Generic",
-      "clinical conference"  => "Generic",
-      "clinical trial"  => "Generic",
-      "clinical trial, phase i"  => "Generic",
-      "clinical trial, phase ii"  => "Generic",
-      "clinical trial, phase iii"  => "Generic",
-      "clinical trial, phase iv"  => "Generic",
-      "collected correspondence"  => "Generic",
+      "abbreviations"                     => "Generic",
+      "abstracts"                         => "Abstract",
+      "academic dissertations"            => "DissertationThesis",
+      "account books"                     => "Generic",
+      "addresses"                         => "Generic",
+      "advertisements"                    => "Generic",
+      "almanacs"                          => "Generic",
+      "anecdotes"                         => "Generic",
+      "animation"                         => "Generic",
+      "annual reports"                    => "Report",
+      "aphorisms and proverbs"            => "Generic",
+      "architectural drawings"            => "Generic",
+      "atlases"                           => "BookEdited",
+      "bibliography"                      => "Generic",
+      "biobibliography"                   => "Generic",
+      "biography"                         => "BookWhole",
+      "book illustrations"                => "Generic",
+      "book reviews"                      => "JournalArticle",
+      "bookplates"                        => "Generic",
+      "broadsides"                        => "Generic",
+      "caricatures"                       => "Generic",
+      "cartoons"                          => "Generic",
+      "case reports"                      => "Report",
+      "catalogs"                          => "Generic",
+      "charts"                            => "Generic",
+      "chronology"                        => "Generic",
+      "classical article"                 => "Generic",
+      "clinical conference"               => "Generic",
+      "clinical trial"                    => "Generic",
+      "clinical trial, phase i"           => "Generic",
+      "clinical trial, phase ii"          => "Generic",
+      "clinical trial, phase iii"         => "Generic",
+      "clinical trial, phase iv"          => "Generic",
+      "collected correspondence"          => "Generic",
       "collected works"  => "Generic",
       "collections"  => "Generic",
       "comment"  => "Generic",
@@ -267,5 +267,30 @@ class MedlineImporter < BaseImporter
   def strip_line_breaks(value)
     clean = value.chars.gsub(/\s+/, " ")
     return clean
+  end
+  
+  def prioritize_full_names(hash)
+
+    # If Full Names exist, accept them over Short Names.
+    if hash.has_key?(:full_names) && !hash[:full_names].empty?
+      hash[:work_name_strings] = hash[:full_names]
+    else
+      hash[:work_name_strings] = hash[:short_names]
+    end
+    
+    # Remove un-necessary hash keys
+    hash.delete(:short_names)
+    hash.delete(:full_names)
+    
+    return hash
+  end
+  
+  def import_callbacks?
+    true
+  end
+  
+  def callbacks(hash)
+    prioritize_full_names(hash)
+    return hash
   end
 end
