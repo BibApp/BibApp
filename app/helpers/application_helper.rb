@@ -136,8 +136,8 @@ module ApplicationHelper
   
   def work_details(work)
     str = ""
-    str += link_to "#{work.publication.name}", publication_path(work.publication.id) if work.publication != nil && work.publication.name != "Unknown"
-    str += " &#149; " if work.publication != nil && work.publication.name != "Unknown"
+    str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id) if work.publication.authority != nil && work.publication.authority.name != "Unknown"
+    str += " &#149; " if work.publication.authority != nil && work.publication.authority.name != "Unknown"
     str += "#{work.publication_date.year} " if work.publication_date != nil
     str += " #{work.volume}" if work.volume != nil
     str += "(#{work.issue}), " if work.issue != nil && !work.issue.empty?
@@ -156,6 +156,8 @@ module ApplicationHelper
       end      
     elsif !work.publication.issn_isbn.blank?
       haml_tag :div, {:class => "right"} do
+        haml_tag :span, {:title => "ISBN"}
+          work.publication.issn_isbn
         haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
       end
     else
@@ -340,7 +342,7 @@ module ApplicationHelper
     link_text = $WORK_LINK_TEXT
     base_url = $WORK_BASE_URL
     suffix = $WORK_SUFFIX
-     
+=begin
     #If we've already found this info for
     # the current session, return it immediately
     if session[:openurl_info]
@@ -402,7 +404,7 @@ module ApplicationHelper
       # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
       session[:openurl_info] = true
     end #end if session[:openurl_info]
-  
+=end  
     return link_text, base_url, suffix
   end
 end
