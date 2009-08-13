@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "identifyings", ["identifiable_id", "identifiable_type"], :name => "index_identifyings_on_identifiable_id_and_identifiable_type"
 
   create_table "imports", :force => true do |t|
-    t.integer  "user_id",     :limit => 11, :null => false
-    t.integer  "person_id",   :limit => 11
+    t.integer  "user_id",       :limit => 11, :null => false
+    t.integer  "person_id",     :limit => 11
     t.string   "state"
     t.text     "works_added"
     t.text     "import_errors"
