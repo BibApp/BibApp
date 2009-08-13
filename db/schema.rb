@@ -9,11 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< .mine
 ActiveRecord::Schema.define(:version => 20090812194920) do
-=======
-ActiveRecord::Schema.define(:version => 20090803144909) do
->>>>>>> .r1152
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -50,21 +46,6 @@ ActiveRecord::Schema.define(:version => 20090803144909) do
 
   add_index "contributorships", ["work_id", "person_id"], :name => "work_person_join"
 
-<<<<<<< .mine
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-=======
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :limit => 11, :default => 0
     t.integer  "attempts",   :limit => 11, :default => 0
@@ -78,7 +59,6 @@ ActiveRecord::Schema.define(:version => 20090803144909) do
     t.datetime "updated_at"
   end
 
->>>>>>> .r1152
   create_table "external_system_uris", :force => true do |t|
     t.integer  "external_system_id", :limit => 11
     t.integer  "work_id",            :limit => 11
@@ -136,10 +116,9 @@ ActiveRecord::Schema.define(:version => 20090803144909) do
   add_index "identifyings", ["identifier_id"], :name => "index_identifyings_on_identifier_id"
   add_index "identifyings", ["identifiable_id", "identifiable_type"], :name => "index_identifyings_on_identifiable_id_and_identifiable_type"
 
-<<<<<<< .mine
   create_table "imports", :force => true do |t|
-    t.integer  "user_id",       :null => false
-    t.integer  "person_id"
+    t.integer  "user_id",     :limit => 11, :null => false
+    t.integer  "person_id",   :limit => 11
     t.string   "state"
     t.text     "works_added"
     t.text     "import_errors"
@@ -147,18 +126,6 @@ ActiveRecord::Schema.define(:version => 20090803144909) do
     t.datetime "updated_at"
   end
 
-=======
-  create_table "imports", :force => true do |t|
-    t.integer  "user_id",     :limit => 11, :null => false
-    t.integer  "person_id",   :limit => 11
-    t.string   "state"
-    t.text     "works_added"
-    t.text     "errors"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
->>>>>>> .r1152
   create_table "keywordings", :force => true do |t|
     t.integer  "keyword_id", :limit => 11
     t.integer  "work_id",    :limit => 11
