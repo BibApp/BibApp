@@ -118,4 +118,9 @@ class RisImporter < BaseImporter
     }
   end
   
+  
+  def import_callbacks?
+    false
+  end
+  
 end

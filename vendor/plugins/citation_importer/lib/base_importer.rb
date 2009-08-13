@@ -64,6 +64,11 @@ class BaseImporter < CitationImporter
     # may have Array values of size 1 (in which case, there's only
     # one value, and it doesn't need to be in an array)
     r_hash = cleanup_hash(r_hash)
+    
+    # Run any BaseImporter subklass callbacks
+    if self.import_callbacks?
+      r_hash = self.callbacks(r_hash)
+    end
   
     #puts "Mapped Hash: #{r_hash.inspect}"
     return r_hash

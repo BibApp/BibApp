@@ -102,4 +102,8 @@ class RefworksDeprecatedXmlImporter < BaseImporter
       "30" => "ComputerProgram"
     }
   end
+  
+  def import_callbacks?
+    false
+  end
 end

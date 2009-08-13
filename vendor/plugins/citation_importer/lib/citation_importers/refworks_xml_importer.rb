@@ -99,4 +99,8 @@ class RefworksXmlImporter < BaseImporter
       "Web Page" => "WebPage"
     }
   end
+  
+  def import_callbacks?
+    false
+  end
 end
