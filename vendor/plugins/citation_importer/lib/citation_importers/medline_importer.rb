@@ -27,8 +27,8 @@ class MedlineImporter < BaseImporter
        :au    => :short_names,
        :fau   => :full_names,
        :ad    => :affiliation,
-       :jt    => :publication,
-       :ta    => :publication,
+       :jt    => :full_journal_title,
+       :ta    => :journal_title_abbreviation,
        :pb    => :publisher,
        :mh    => :keywords,
        :ab    => :abstract,
@@ -65,7 +65,10 @@ class MedlineImporter < BaseImporter
     @value_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0].to_s)}
     
     # Strip line breaks from Title, Abstract, Affiliation, Publication
-    @value_translators[:ti] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
+    @value_translators[:ti] = lambda { |val_arr| 
+      remove_trailing_period(strip_line_breaks(val_arr[0].to_s))
+    }
+    
     @value_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
     @value_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
     @value_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
@@ -269,6 +272,11 @@ class MedlineImporter < BaseImporter
     return clean
   end
   
+  def remove_trailing_period(value)
+    clean = value.gsub(/\.(\s*)$/, "")
+    return clean
+  end
+  
   def prioritize_full_names(hash)
 
     # If Full Names exist, accept them over Short Names.
@@ -285,12 +293,29 @@ class MedlineImporter < BaseImporter
     return hash
   end
   
+  def prioritize_full_journal_title(hash)
+
+    # If Full Journal Title exists, accept over Short forms.
+    if hash.has_key?(:full_journal_title) && !hash[:full_journal_title].empty?
+      hash[:publication] = hash[:full_journal_title]
+    else
+      hash[:publication] = hash[:journal_title_abbreviation]
+    end
+    
+    # Remove un-necessary hash keys
+    hash.delete(:journal_title_abbreviation)
+    hash.delete(:full_journal_title)
+    
+    return hash
+  end
+  
   def import_callbacks?
     true
   end
   
   def callbacks(hash)
     prioritize_full_names(hash)
+    prioritize_full_journal_title(hash)
     return hash
   end
 end
