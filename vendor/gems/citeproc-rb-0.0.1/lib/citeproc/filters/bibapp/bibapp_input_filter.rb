@@ -43,8 +43,8 @@ module Bibapp
       citation.issue = row.issue
       citation.url = row.links
       citation.pages = "#{row.start_page}-#{row.end_page}"
-      citation.authors = row.authors
-      citation.editors = row.editors
+      citation.authors = row.authors.collect{|au| {:name => au[:name]}}
+      citation.editors = row.editors.collect{|ed| {:name => ed[:name]}}
       citation
     end
     
@@ -155,10 +155,10 @@ module Bibapp
     
       ## the primary title for the cited item
       when 'author'
-        @current_citation.authors
+        @current_citation.csl_authors
     
       when 'editor'
-        @current_citation.editors
+        @current_citation.csl_editors
     
       ## the primary title for the cited item
       when 'title'

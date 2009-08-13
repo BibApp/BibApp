@@ -683,9 +683,6 @@ class Work < ActiveRecord::Base
     citation_string
   end
 
-  
-  ##### CSL Simple Citation Variables #####
-
   #Get all Author names on a Work, return as an array of hashes
   def authors
     authors = Array.new
@@ -695,7 +692,7 @@ class Work < ActiveRecord::Base
     end
     return authors
   end
-  
+
    #Get all Editor Strings of a Work, return as an array of hashes
   def editors
     editors = Array.new
@@ -705,7 +702,6 @@ class Work < ActiveRecord::Base
     end
     return editors
   end
-   
  
   ### PRIVATE METHODS ###
   private
