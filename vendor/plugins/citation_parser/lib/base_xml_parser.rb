@@ -36,7 +36,7 @@ class BaseXmlParser < CitationParser
       #Determine whether we are cleaning arrays or strings
       if value.class.to_s=="Array" and !value.empty?
         #decode every value
-        value.collect! {|v| coder.decode(v).chars}
+        value.collect! {|v| coder.decode(v).mb_chars}
       elsif (value.class.to_s=="String" or value.class.to_s=="ActiveSupport::Multibyte::Chars") and !value.empty?
         props[key] = coder.decode(value)
       end

@@ -9,7 +9,7 @@
 # XML parsing is handled by Hpricot:
 #   http://code.whytheluckystiff.net/hpricot/
 #   
-# All String parsing is done using String.chars
+# All String parsing is done using String.mb_chars
 # to ensure Unicode strings are parsed properly.
 # See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
 #
@@ -57,12 +57,12 @@ class RefworksDeprecatedXmlParser < BaseXmlParser
 
     return {
       :ref_type => xml[:RefType].to_a,
-      :author_primary => xml[:AuthorPrimary].chars.split("|"),
-      :author_secondary => xml[:AuthorSecondary].chars.split("|"),
+      :author_primary => xml[:AuthorPrimary].mb_chars.split("|"),
+      :author_secondary => xml[:AuthorSecondary].mb_chars.split("|"),
       :title_primary => xml[:TitlePrimary].to_a,
       :title_secondary => xml[:TitleSecondary].to_a,
       :title_tertiary => xml[:TitleTertiary].to_a,
-      :keyword => xml[:Keyword].chars.split(/\||;/).each{|k| k.chars.strip!},
+      :keyword => xml[:Keyword].mb_chars.split(/\||;/).each{|k| k.mb_chars.strip!},
       :pub_year => xml[:PubYear].to_a,
       :periodical_full => xml[:PeriodicalFull].to_a,
       :periodical_abbrev => xml[:PeriodicalAbbrev].to_a,
@@ -81,13 +81,13 @@ class RefworksDeprecatedXmlParser < BaseXmlParser
       :classification => xml[:Classification].to_a,
       :subfile_database => xml[:SubFile_Database].to_a,
       :original_foreign_title => xml[:OriginalForeignTitle].to_a,
-      :links => xml[:Links].chars.split("|"),
-      :doi => xml[:DOI].chars.split("|"),
+      :links => xml[:Links].mb_chars.split("|"),
+      :doi => xml[:DOI].mb_chars.split("|"),
       :abstract => xml[:Abstract].to_a,
       :notes => xml[:Notes].to_a,
       :folder => xml[:Folder].to_a,
       :user_1 => xml[:User1].to_a,
-      :user_2 => xml[:User2].chars.split(/\||;/).each{|k| k.chars.strip!},
+      :user_2 => xml[:User2].mb_chars.split(/\||;/).each{|k| k.mb_chars.strip!},
       :user_3 => xml[:User3].to_a,
       :user_4 => xml[:User4].to_a,
       :user_5 => xml[:User5].to_a,
@@ -98,7 +98,7 @@ class RefworksDeprecatedXmlParser < BaseXmlParser
       :retrieved_date => xml[:RetrievedDate].to_a,
       :shortened_title => xml[:ShortenedTitle].to_a,
       :text_attributes => xml[:TextAttributes].to_a,
-      :url => xml[:URL].chars.split("|"),
+      :url => xml[:URL].mb_chars.split("|"),
       :sponsoring_library => xml[:SponsoringLibrary].to_a,
       :sponsoring_library_location => xml[:SponsoringLibraryLocation].to_a,
       :cited_refs => xml[:CitedRefs].to_a,

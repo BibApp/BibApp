@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.1.0' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -60,7 +60,7 @@ Rails::Initializer.run do |config|
   config.gem "libxml-ruby", :lib=>"xml/libxml", :version=>"~>0.8.3"
   
   #Namecase - converts strings to be properly cased
-  config.gem "namecase", :version=>"~>1.0.2"
+  config.gem "namecase", :version=>"~>1.1.0"
   
   #RedCloth - converts plain text or textile to HTML (also used by HAML)
   config.gem "RedCloth", :lib=>"redcloth", :version=>"~>4.1.9"
@@ -83,6 +83,10 @@ Rails::Initializer.run do |config|
   
   #AASM - Acts as State Machine - helps manage batch import state
   config.gem 'rubyist-aasm', :version => '~> 2.0.2', :lib => 'aasm', :source => "http://gems.github.com"
+  
+  #ISBN Tools - Helps validate ISBNs
+  # See: http://isbn-tools.rubyforge.org/rdoc/index.html
+  config.gem 'isbn-tools', :lib=>"isbn/tools", :version => "~>0.1.0"
   
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
@@ -130,3 +134,8 @@ Rails::Initializer.run do |config|
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory is automatically loaded
 end
+
+### Mongrel Users ###
+# Rails 2.3.3 patch for Mongel
+# Uncomment the line below:
+#require 'lib/mongrel_patch'
