@@ -6,7 +6,7 @@
 # XML parsing is handled by Hpricot:
 #   http://code.whytheluckystiff.net/hpricot/
 #   
-# All String parsing is done using String.chars
+# All String parsing is done using String.mb_chars
 # to ensure Unicode strings are parsed properly.
 # See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
 #
@@ -79,7 +79,7 @@ class RefworksXmlParser < BaseXmlParser
       :abstract => (xml/:ab).inner_html.to_a,
       :notes => (xml/:no).inner_html.to_a,
       :user_1 => (xml/:u1).inner_html.to_a,
-      :user_2 => (xml/:u2).inner_html.chars.split(/\||;/),
+      :user_2 => (xml/:u2).inner_html.mb_chars.split(/\||;/),
       :user_3 => (xml/:u3).inner_html.to_a,
       :user_4 => (xml/:u4).inner_html.to_a,
       :user_5 => (xml/:u5).inner_html.to_a,

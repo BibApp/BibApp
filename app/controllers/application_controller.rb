@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
 
   # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery :secret => '6ef4f4bba39aae6ef1a1da02e1ace6d8'
+  protect_from_forgery
   
   # Adds a work.id to the session[:cart] array
   def add_to_cart

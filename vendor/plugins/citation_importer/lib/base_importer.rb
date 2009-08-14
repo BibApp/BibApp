@@ -94,7 +94,7 @@ class BaseImporter < CitationImporter
       #If we have an Array of Strings (or Unicode Strings) with only a single value,
       # just return the first String as the value
       if value.class.to_s=="Array" and value.size==1 and (value[0].class.to_s=="String" or value[0].class.to_s=="ActiveSupport::Multibyte::Chars")
-        value = value[0].to_s.chars.strip
+        value = value[0].to_s.mb_chars.strip
         
         #if this is an empty string, remove it
         if value.empty?

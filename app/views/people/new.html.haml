@@ -24,7 +24,7 @@
                 - # I don't know why :collection doesn't work here
                 = render :partial => "ldap_result", :object => l, :locals => {:i => i}
           %script{ :type => "text/javascript" }
-            - update_page do |p|
+            = update_page do |p|
               = p.assign "ldap_results", @ldap_results
         - else
           %p="No results for #{params[:q]}"
