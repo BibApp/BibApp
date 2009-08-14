@@ -81,12 +81,6 @@ class Publisher < ActiveRecord::Base
       # Update Works
       logger.debug("\n\n===Reindexing Works===\n\n")
       Index.batch_update_solr(self.works)
-      #self.works.each do |work|
-        #work.publication_id = self.authority_id
-        #work.publisher_id = self.publisher.authority_id
-        #work.save
-      #end
-    
     end
   end
   
@@ -128,7 +122,7 @@ class Publisher < ActiveRecord::Base
     end
       
     def update_multiple(pub_ids, auth_id)
-      pub_ids.split(",").each do |pub|
+      pub_ids.each do |pub|
         update = Publisher.find_by_id(pub)
         update.authority_id = auth_id
         update.save
