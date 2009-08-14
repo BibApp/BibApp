@@ -289,7 +289,7 @@ form.work_form fieldset ol li {
 form.work_form label {
     font-weight: bold;
     display: block;
-    width: 120px;
+    width: 300px;
 }
 
 /* style for a label appearing inline, rather than floating left */

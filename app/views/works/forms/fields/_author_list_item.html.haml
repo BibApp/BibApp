@@ -3,13 +3,13 @@
 -#
 -# Required Input Variables:
 -#    :ns_id      => name_string ID
+-# Optional Input Variables:
 -#    :ns_name    => name_string name
 -#    :ns_role    => name_string role
--# Optional Input Variables:
--#    :item_class => Additional class to put on <li> tag
 
 -# Initialize optional input variables
-- item_class ||= ""
+- ns_name ||= ""
+- ns_role ||= @work.class.roles[0]
 
 %li.list_item{:id => "author_#{ns_id}", :class => "movable"}
   = hidden_field_tag "author_roles[]", "#{ns_role}"

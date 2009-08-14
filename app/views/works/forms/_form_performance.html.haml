@@ -1,7 +1,7 @@
 %fieldset
-  %legend Generic / Other
+  %legend Performance
 
-  = hidden_field_tag :type, 'Generic'
+  = hidden_field_tag :type, 'Performance'
   = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
 
   %ul
@@ -16,21 +16,13 @@
     %li
       = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Performance Date"}
     %li
-      = render :partial => 'works/forms/fields/publication'
+      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Title of Larger Performance"}
     %li
-      = render :partial => 'works/forms/fields/issn_isbn'
+      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Venue"}
     %li
-      = render :partial => 'works/forms/fields/publisher'
-    %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication_date'
-    %li
-      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/language', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
 
     - if current_user.has_role?("admin", System)
       %li
@@ -38,12 +30,8 @@
     %li
       = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/copyright_holder', :locals => {:form => form}
-    %li
       = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/links', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/notes', :locals => {:form => form}

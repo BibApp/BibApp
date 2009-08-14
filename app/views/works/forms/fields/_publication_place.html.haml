@@ -2,10 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to diplay (default: Publication Place)
+-#    :label    => Label to diplay (default: Publication City)
 
 -# Initialize optional input variables
-- label ||= "Publication Place"
+- label ||= "Publication City"
 
 = form.label :publication_place, "#{label}:"
 = form.text_field :publication_place, :class=>'text'

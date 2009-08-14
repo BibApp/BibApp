@@ -4,16 +4,20 @@
 -# Possible Input Variables:
 -#    :isbn         => if true, displays ISBN heading 
 -#    :issn         => if true, displays ISSN heading
+-#    :isrc         => if true, displays ISRC heading
 
 -# Initialize optional input variables
 - isbn ||= false
 - issn ||= false
+- isrc ||= false
 
 - if isbn
   = label_tag 'issn_isbn', "ISBN:"
 - if issn
   = label_tag 'issn_isbn', "ISSN:"
-- if !issn and !isbn
+- if isrc
+  = label_tag 'issn_isbn', "ISRC:"
+- if !issn and !isbn and !isrc
   = label_tag 'issn_isbn', "ISSN/ISBN:"
 
 - @publication = @work.publication unless @work.publication.nil?
