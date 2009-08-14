@@ -203,10 +203,19 @@ class Person < ActiveRecord::Base
     end
     
   end
+
+  #A person's group ids
+  def group_ids
+    gids = Array.new
+    groups.each do |g|
+      gids << g.id
+    end
+    gids.join(",")
+  end
   
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{last_name}||#{id}||#{image_url}"
+    "#{last_name}||#{id}||#{image_url}||#{group_ids}"
   end
 
   class << self
@@ -226,8 +235,9 @@ class Person < ActiveRecord::Base
       last_name = data[0]
       id = data[1].to_i
       image_url = data[2]
+      group_ids = data[3].split(",").collect{ |g| g.to_i }
       
-      return last_name, id, image_url
+      return last_name, id, image_url, group_ids
     end
 
     def sort_by_most_recent_work(array_of_people)
