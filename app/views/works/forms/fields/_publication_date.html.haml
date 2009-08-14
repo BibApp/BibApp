@@ -1,3 +1,9 @@
 -# Publication Date field
-= label 'work', 'publication_date', "Publication Date:"
+-#
+-# Possible Input Variables:
+-#    :label    => Label to diplay (default: Publication Date)
+
+- label ||= "Publication Date"
+
+= label 'work', 'publication_date', "#{label}:"
 = date_select 'work', 'publication_date', :start_year => Time.now.year, :end_year => 1850, :include_blank=>true

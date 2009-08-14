@@ -337,26 +337,32 @@ class WorksController < ApplicationController
     ###
 
     #default to empty array of author strings
-    params[:author_name_strings] ||= [] 
-    params[:editor_name_strings] ||= []
+    params[:authors] ||= []
+    params[:contributors] ||= []
+
+    #roles
+    params[:author_roles] ||= []
+    params[:contributor_roles] ||= []
             
     #Set Author & Editor NameStrings for this Work
     work_name_strings = Array.new
     
-    @author_name_strings = params[:author_name_strings]
-    @author_name_strings.each do |name|
-      work_name_strings << {:name => name, :role => "Author"}
+    @author_name_strings = params[:authors]
+    @author_name_strings.each_with_index do |name, i|
+      name.strip!
+      unless name.empty?
+        work_name_strings << {:name => name, :role => params[:author_roles][i]}
+      end
     end
     
-    @editor_name_strings = params[:editor_name_strings]
-    @editor_name_strings.each do |name|
-      work_name_strings << {:name => name, :role => "Editor"}
+    @editor_name_strings = params[:contributors]
+    @editor_name_strings.each_with_index do |name, i|
+      name.strip!
+      unless name.empty?
+        work_name_strings << {:name => name, :role => params[:contributor_roles][i]}
+      end
     end
 
-    #for name strings not in the array
-    work_name_strings << {:name => params[:author][:string], :role => "Author"} unless params[:author][:string].empty?
-    work_name_strings << {:name => params[:editor][:string], :role => "Editor"} unless params[:editor][:string].empty?
-    
     @work.work_name_strings = work_name_strings 
     
     #If we are adding to a person, pre-verify that person's contributorship
@@ -368,15 +374,15 @@ class WorksController < ApplicationController
     # Save keywords to instance variable @keywords,
     # in case any errors should occur in saving work
     @keywords = params[:keywords]
-    @work.keyword_strings = @keywords
+    @work.keyword_strings = @keywords.split('; ')
     
     ###
     # Setting Tags
     ###
     # Save tags to instance variable @tags,
     # in case any errors should occur in saving work    
-    @tags = params[:tags]
-    @work.tag_strings = @tags
+    #@tags = params[:tags]
+    #@work.tag_strings = @tags
 
     ###
     # Setting Publication Info, including Publisher
@@ -710,6 +716,9 @@ class WorksController < ApplicationController
     @list_type = "author_name_strings"
     @sortable = true
     @update_action = "add_author"
+
+    @work = subklass_init(params[:work_type], nil)
+
     render :template => 'works/forms/fields/update_item_list'
   end
 
@@ -964,7 +973,8 @@ class WorksController < ApplicationController
   
   # Initializes a new work subclass, but doesn't create it in the database
   def subklass_init(klass_type, work)
-    klass_type.sub!(" ", "") #remove spaces
+    klass_type.gsub!(" ", "") #remove spaces
+    klass_type.gsub!("/", "") #remove slashes
     klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Work

@@ -2,10 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to diplay (default: Primary Title)
+-#    :label    => Label to diplay (default: Title)
 
 -# Initialize optional input variables
-- label ||= "Primary Title"
+- label ||= "Title"
   
 = form.label :title_primary, "#{label} <span style='color:grey;'>(required)</span>:"
 = form.text_field :title_primary, :class=>'text'

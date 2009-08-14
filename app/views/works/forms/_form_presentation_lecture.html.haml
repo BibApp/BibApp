@@ -1,14 +1,12 @@
 %fieldset
-  %legend Generic / Other
+  %legend Presentation / Lecture
 
-  = hidden_field_tag :type, 'Generic'
+  = hidden_field_tag :type, 'PresentationLecture'
   = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
 
   %ul
     %li
       = render :partial => 'works/forms/fields/author_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
     %li
       = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
     %li
@@ -18,17 +16,11 @@
     %li
       = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/publication'
+      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Title of Conference or Occasion"}
     %li
-      = render :partial => 'works/forms/fields/issn_isbn'
+      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
     %li
-      = render :partial => 'works/forms/fields/publisher'
-    %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication_date'
-    %li
-      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/publication_date', :locals => {:label => "Date Given"}
     %li
       = render :partial => 'works/forms/fields/language', :locals => {:form => form}
 
@@ -43,7 +35,5 @@
       = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/links', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/notes', :locals => {:form => form}

@@ -26,7 +26,7 @@
     -# Build list of contributors
     - if contributors.empty?
       %li.list_item{:id => "contributor_#{count}", :class => "movable"}
-        %select{:id => "contributor_roles[]"}
+        %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
           - roles.each do |r|
             - if r == roles[0]
               %option{:selected => "selected", :value => r}

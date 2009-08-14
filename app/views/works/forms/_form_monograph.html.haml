@@ -1,7 +1,7 @@
 %fieldset
-  %legend Generic / Other
+  %legend Monograph
 
-  = hidden_field_tag :type, 'Generic'
+  = hidden_field_tag :type, 'Monograph'
   = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
 
   %ul
@@ -16,11 +16,7 @@
     %li
       = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication'
-    %li
-      = render :partial => 'works/forms/fields/issn_isbn'
+      = render :partial => 'works/forms/fields/issn_isbn', :locals => {:isbn => true}
     %li
       = render :partial => 'works/forms/fields/publisher'
     %li
@@ -28,11 +24,11 @@
     %li
       = render :partial => 'works/forms/fields/publication_date'
     %li
-      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/pages', :locals => {:form => form, :omit_start => true, :label => "Total Pages"}
     %li
       = render :partial => 'works/forms/fields/language', :locals => {:form => form}
 
-    - if current_user.has_role?("admin", System)
+    - if current_user.has_role?("admin", System) 
       %li
         = render :partial => 'works/forms/fields/keywords'
     %li
@@ -43,7 +39,5 @@
       = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/links', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/notes', :locals => {:form => form}

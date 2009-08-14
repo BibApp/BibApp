@@ -1,23 +1,43 @@
 %fieldset
   %legend Report
 
+  = hidden_field_tag :type, 'Report'
+  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+
   %ul
-    %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Report Title", :form => form}
     %li
       = render :partial => 'works/forms/fields/author_name_strings'
     %li
-      = render :partial => 'works/forms/fields/publication_date'
+      = render :partial => 'works/forms/fields/contributor_name_strings'
     %li
-      = render :partial => 'works/forms/fields/publication'  
+      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/volume_issue', :locals => {:form => form, :omit_volume => true, :label => "Series Number"}
+    %li
+      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Series Title"}
     %li
       = render :partial => 'works/forms/fields/publisher'
+    %li
+      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/publication_date'
+    %li
+      = render :partial => 'works/forms/fields/language', :locals => {:form => form}
 
     - if current_user.has_role?("admin", System)
       %li
-      = render :partial => 'works/forms/fields/keywords'
+        = render :partial => 'works/forms/fields/keywords'
     %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form} 
-
-= hidden_field_tag :type, 'Report'
-= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form} 
+      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/copyright_holder', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}

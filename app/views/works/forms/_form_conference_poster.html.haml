@@ -1,7 +1,7 @@
 %fieldset
-  %legend Generic / Other
+  %legend Conference Poster
 
-  = hidden_field_tag :type, 'Generic'
+  = hidden_field_tag :type, 'ConferencePoster'
   = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
 
   %ul
@@ -18,15 +18,13 @@
     %li
       = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/publication'
-    %li
-      = render :partial => 'works/forms/fields/issn_isbn'
+      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Conference Title"}
     %li
       = render :partial => 'works/forms/fields/publisher'
     %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
     %li
-      = render :partial => 'works/forms/fields/publication_date'
+      = render :partial => 'works/forms/fields/publication_date', :locals => {:lable => "Date Presented"}
     %li
       = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
     %li

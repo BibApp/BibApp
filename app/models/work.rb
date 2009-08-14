@@ -97,9 +97,6 @@ class Work < ActiveRecord::Base
     # after_save callbacks.
     self.reload
     
-    #Update all contributorships for this work (re-create them)
-    create_contributorships
-    
     #update dynamic database fields
     update_scoring_hash
     update_archive_state
@@ -107,6 +104,11 @@ class Work < ActiveRecord::Base
     
     #re-check for duplicate works (after all updates have completed)
     deduplicate
+    
+    #Update all contributorships for this work (re-create them)
+    #NB: This -has- to happen after deduplicate, because contributorships
+    #cannont be assigned to duplicates
+    create_contributorships
   end
   
   #### Serialization ####
@@ -192,14 +194,15 @@ class Work < ActiveRecord::Base
     # "Book"
     # more...   	    			  
     types = [
-      #"Artwork",
-      #"Book (Section)",
+      "Artwork",
+      "Book (Section)",
       "Book (Whole)",
       "Book Review",
       "Composition",
       "Conference Paper",
       "Conference Poster",
       "Conference Proceeding (Whole)",
+      "Dissertation / Thesis",
       "Exhibition",
       "Journal (Whole)",
       "Journal Article",
@@ -209,7 +212,7 @@ class Work < ActiveRecord::Base
       "Presentation / Lecture",
       "Recording (Moving Image)",
       "Recording (Sound)",
-      "Thesis / Dissertation",
+      "Report",
       "Web Page",
       "Generic"
       ]  
