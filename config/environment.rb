@@ -135,7 +135,11 @@ Rails::Initializer.run do |config|
   # -- all .rb files in that directory is automatically loaded
 end
 
+### Exception Handling ###
+# Captures errors and displays 404/500 pages
+# For 500 errors, emails the ADMIN_EMAIL an error summary
+require 'lib/error_handler'
+
 ### Mongrel Users ###
 # Rails 2.3.3 patch for Mongel
-# Uncomment the line below:
-#require 'lib/mongrel_patch'
+require 'lib/mongrel_patch'
