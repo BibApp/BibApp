@@ -4,8 +4,8 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 
-%h4="#{$UNIVERSITY_SHORT_NAME} Co-Authors"
 - if @facets[:people_data].size > 1
+  %h4="#{$UNIVERSITY_SHORT_NAME} Co-Authors"
   %table{:style => "width:90%"}
     %thead
       %tr
