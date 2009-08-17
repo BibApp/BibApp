@@ -2,6 +2,11 @@
 # Personalization Globals
 ####
 
+# System Administrator
+# - Will receive application error emails
+$SYSADMIN_NAME                   = "John Foo Bar"
+$SYSADMIN_EMAIL                  = "john_foo_bar@corge.edu"
+
 # Name & base URL of your BibApp Application
 $APPLICATION_NAME            = "UW BibApp"
 $APPLICATION_URL             = "http://localhost:3000/"

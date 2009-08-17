@@ -58,7 +58,25 @@ module Resourceful
           end
 
           response_for(:show_fails) do |format|
-            not_found = Proc.new { render :text => "No item found", :status => 404 }
+            not_found = Proc.new {
+              logger.debug "Render a 404 error"
+              
+              # Default SolrRuby params
+              @query        = "*:*" # Lucene syntax for "find everything"
+              @filter       = []
+              @sort         = "year"
+              @page         = 0
+              @facet_count  = 50
+              @rows         = 10
+              @export       = ""
+
+              # Public resultset... only show "accepted" Works
+              @filter << "status:3"
+
+              @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+              render :partial => "shared/not_found", :layout => "application", :status => "404" 
+            }
+            
             format.html &not_found
             format.js &not_found
             format.xml &not_found
