@@ -235,7 +235,7 @@ class Person < ActiveRecord::Base
       last_name = data[0]
       id = data[1].to_i
       image_url = data[2]
-      group_ids = data[3].split(",").collect{ |g| g.to_i }
+      group_ids = data[3].nil? ? nil: data[3].split(",").collect{ |g| g.to_i }
       
       return last_name, id, image_url, group_ids
     end
