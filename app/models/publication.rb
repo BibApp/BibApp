@@ -37,6 +37,10 @@ class Publication < ActiveRecord::Base
     return isbns
   end
   
+  def issns
+    issns = self.identifiers.find(:all, :conditions => [ 'type=?', 'ISSN']).collect{|issn| {:name => issn.name, :id => issn.id}}
+  end
+  
   def save_without_callbacks
     update_without_callbacks
   end
