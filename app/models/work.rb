@@ -460,18 +460,14 @@ class Work < ActiveRecord::Base
       self.work_name_strings.each do |cns|
         # Find all People with a matching PenName claim
         claims = PenName.find(:all, :conditions => ["name_string_id = ?", cns.name_string_id])
-    
+        
         # Debugger
         logger.debug("\n Claims: ")
         claims.each do |c| 
           logger.debug("#{c.person.display_name}")
         end
         
-        # @TODO: If there is no "claim" matching our Preverified Person
-        #self.preverified_person
-    
         # Find or create a Contributorship for each claim
-        # @TODO: Incorporate a Person.blacklist?
         claims.each do |claim|
           contributorship=Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
             self.id,
@@ -479,13 +475,6 @@ class Work < ActiveRecord::Base
             claim.id,
             cns.role
           )
-          
-          # if we have a preverified person, check if this person matches this claim
-          if self.preverified_person and claim.person.id == self.preverified_person.id
-            # verify this contributorship immediately and save
-            contributorship.verify_contributorship
-            contributorship.save
-          end
         end
       end
     end

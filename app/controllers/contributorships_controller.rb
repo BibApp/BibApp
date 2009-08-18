@@ -64,12 +64,11 @@ class ContributorshipsController < ApplicationController
   end
 
   def verify_multiple
-    #Anyone who is minimally an admin (on anything in system) can verify
-    #       contributorships
+    # Anyone who is minimally an admin (on anything in system) can verify
+    # contributorships
     permit "admin"
 
     contrib_ids = params[:contrib_id]
-
     full_success = true
 
     unless contrib_ids.nil? or contrib_ids.empty?
@@ -80,7 +79,6 @@ class ContributorshipsController < ApplicationController
         #One final check...only an admin on this contributorship can verify it
         if logged_in? && current_user.has_role?("admin", contributorship)
           contributorship.verify_contributorship
-          contributorship.save
         else
           full_success = false
         end

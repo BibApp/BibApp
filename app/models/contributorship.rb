@@ -32,16 +32,7 @@ class Contributorship   < ActiveRecord::Base
     logger.debug("\n=== REFRESHING ===\n")
     self.send_later(:refresh_contributorships)
     
-    if self.verified?  
-      #If contributorship is newly verified
-      if self.contributorship_state_id_changed?
-        logger.debug("\n=== Newly Verified Contributorship ===\n")
-        person = self.person
-        
-        #Delayed Job - Update scoring hash for Person
-        person.send_later(:queue_update_scoring_hash)
-      end
-
+    if self.contributorship_state_id_changed?
       # Update Solr!
       Index.update_solr(self.work)
     end
@@ -82,6 +73,7 @@ class Contributorship   < ActiveRecord::Base
     # if the contributorship is going from denied -> verified
     # we need it to be unhidden
     self.hide = false
+    self.save
   end
   
   def denied?

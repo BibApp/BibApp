@@ -101,7 +101,7 @@ class ImportsController < ApplicationController
       # Success!
       respond_to do |format|
         if @import.state == "accepted"
-          flash[:notice] = "Batch accepted"
+          flash[:notice] = "Batch accepted -- The imported data will appear shortly."
         elsif @import.state == "rejected"
           flash[:notice] = "Batch rejected"
         end
