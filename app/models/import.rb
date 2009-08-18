@@ -51,14 +51,19 @@ class Import < ActiveRecord::Base
   end
 
   def accept_import
+    self.send_later(:process_accepted_import)
+  end
+  
+  def process_accepted_import
     logger.debug("\n=== Accepted Import - #{self.id}\n\n")
-    works = self.works_added.collect{|w| Work.find_by_id(w)}
+    works = Work.find(:all, :conditions => ["id in (?)", self.works_added])
     
-    # Create contributorships - sets unverified contributorships
-    works.each{|w| w.create_contributorships}
+    # Create unverified contributorships for each non-duplicate work
+    works.each{|w| w.create_contributorships }
     
     # If import was for a Person, auto-verify the contributorships
     if self.person_id
+      person = Person.find(person_id)
       logger.debug("\n\n\n* Auto-verify contributorships - #{self.person_id}\n\n")
       
       # Find Contributorships, set to verified.
@@ -69,14 +74,16 @@ class Import < ActiveRecord::Base
       end
       
       contributorhips.each{ |c| 
-        c.verify_contributorship 
-        c.save_without_callbacks
+        c.verify_contributorship
         c.work.save_and_set_for_index_without_callbacks
       }
+      
       logger.debug("\n\n\n* Batch indexing import - #{self.person_id}\n\n")
       Index.batch_index
     end
     
+    #Delayed Job - Update scoring hash for Person
+    person.send_later(:queue_update_scoring_hash)
   end
   
   def reject_import

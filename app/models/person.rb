@@ -235,7 +235,12 @@ class Person < ActiveRecord::Base
       last_name = data[0]
       id = data[1].to_i
       image_url = data[2]
-      group_ids = data[3].nil? ? nil: data[3].split(",").collect{ |g| g.to_i }
+
+      if !data[3].nil?
+        group_ids = data[3].split(",").collect{ |g| g.to_i }
+      else
+        group_ids = []
+      end
       
       return last_name, id, image_url, group_ids
     end
