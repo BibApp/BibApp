@@ -28,6 +28,9 @@
     / Work Details
     %div#work-details.span-14
       %p#work-publication-details= work_details(@work)
+      
+      / COinS
+      %span.Z3988{:title => "#{coin(@work)}"}
 
       %div.span-14
         / Google Book Link
@@ -39,11 +42,11 @@
         
         / Attachments
         = render :partial => 'attachments', :locals => { :files => @work.attachments }
-        
+
         / Abstract
-        -if $DISPLAY_ABSTRACTS_AND_KEYWORDS
-          %p#work-abstract= #@work.abstract
-    
+        - if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+          %p#work-abstract= @work.abstract
+
         / APA Citation
         = render :partial => 'citation'
 

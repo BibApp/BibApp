@@ -177,66 +177,23 @@ module ApplicationHelper
     link_to "Empty cart?", :controller => "sessions", :action => "delete_cart"
   end
   
-  def coins(work)
-    coins = "ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook&amp;rft.btitle=The+Wind+in+the+Willows&amp;rft.au=Grahame,+Kenneth"
-=begin
-    # Journal - http://ocoins.info/cobg.html
-    rft.atitle
-    rft.title 
-    rft.jtitle 
-    rft.stitle 
-    rft.date 
-    rft.volume 
-    rft.issue 
-    rft.spage 
-    rft.epage 
-    rft.pages 
-    rft.artnum 
-    rft.issn 
-    rft.eissn 
-    rft.aulast 
-    rft.aufirst 
-    rft.auinit 
-    rft.auinit1 
-    rft.auinitm 
-    rft.ausuffix 
-    rft.au 
-    rft.aucorp 
-    rft.isbn 
-    rft.coden 
-    rft.sici 
-    rft.genre 
-    rft.chron 
-    rft.ssn 
-    rft.quarter 
-    rft.part 
+  def coin(work)
+    # @TODO - improve - probably have subklass.to_coin methods for each.
+    # Genre differences: journal/article = atitle ; book/proceeding = title
+    coin = String.new
+    coin += "ctx_ver=Z39.88-2004"                                             # OpenURL 1.0
     
-    #Book - http://ocoins.info/cobgbook.html
-    rft.btitle
-    rft.isbn 
-    rft.aulast 
-    rft.aufirst 
-    rft.auinit 
-    rft.auinit1 
-    rft.auinitm 
-    rft.ausuffix 
-    rft.au 
-    rft.aucorp 
-    rft.atitle 
-    rft.title 
-    rft.place 
-    rft.pub 
-    rft.date 
-    rft.edition 
-    rft.tpages 
-    rft.series 
-    rft.spage 
-    rft.epage 
-    rft.pages 
-    rft.issn 
-    bici 
-    rft.genre 
-=end
+    if !work.open_url_kevs.empty?
+      work.open_url_kevs.each do |kev, value|                                 # Work Subklass Kevs
+        coin += value
+      end
+    end
+    
+    work.authors.each do |au|                                                 # Authors
+      coin += "&rft.au=#{au[:name]}"
+    end
+    
+    return coin
   end
   
   # NOT USED BY BIBAPP, by Default
