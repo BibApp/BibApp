@@ -41,6 +41,40 @@ class Publication < ActiveRecord::Base
     issns = self.identifiers.find(:all, :conditions => [ 'type=?', 'ISSN']).collect{|issn| {:name => issn.name, :id => issn.id}}
   end
   
+  def parse_identifiers
+    if self.issn_isbn.blank?
+      return
+    else
+      # Loop thru all publication issn_isbn values
+      self.issn_isbn.each do |issn_isbn| 
+
+        # Field might be separated
+        issn_isbn.split("; ").each do |identifier|
+
+          # No spaces, no hyphens, no quotes -- @TODO: Do this better!
+          identifier = identifier.strip.gsub(" ", "").gsub("-", "").gsub('"', "")
+
+          # Init new Identifier
+          id = Identifier.new
+          parsed_id = id.parse(identifier)
+          if !parsed_id[0].blank?
+            pub_id = Identifier.find_or_initialize_by_name(:name => parsed_id[1])
+            pub_id[:type] = parsed_id[0] if !parsed_id[0].blank?
+            pub_id.save
+            if self.identifiers.include?(pub_id)
+              # Do nothing
+            else
+              self.identifiers << pub_id
+            end
+            self.save_without_callbacks
+          else
+            # Do Nothing
+          end
+        end
+      end
+    end
+  end
+  
   def save_without_callbacks
     update_without_callbacks
   end
@@ -96,7 +130,7 @@ class Publication < ActiveRecord::Base
       #Machine name is Name with:
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
       self.save_without_callbacks
     end
   end
