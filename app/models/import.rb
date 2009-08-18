@@ -80,10 +80,10 @@ class Import < ActiveRecord::Base
       
       logger.debug("\n\n\n* Batch indexing import - #{self.person_id}\n\n")
       Index.batch_index
-    end
     
-    #Delayed Job - Update scoring hash for Person
-    person.send_later(:queue_update_scoring_hash)
+      #Delayed Job - Update scoring hash for Person
+      person.send_later(:queue_update_scoring_hash)
+    end
   end
   
   def reject_import
