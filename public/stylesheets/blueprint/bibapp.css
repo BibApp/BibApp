@@ -654,6 +654,11 @@ thead td {font-weight:bold;}
 #authority {padding:2em 1em 1em 1em}
 
 /* Selected candidates */
+#publishers .selected {
+	background-color:#FFFF99;
+}
+
+/* Selected candidates */
 #publications .selected {
 	background-color:#FFFF99;
 }
