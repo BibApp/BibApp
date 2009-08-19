@@ -152,13 +152,13 @@ module ApplicationHelper
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
           work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end      
     elsif !work.publication.issn_isbn.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
           work.publication.issn_isbn
-        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail-large gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     else
       # Nothing
