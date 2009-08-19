@@ -7,7 +7,7 @@
 - keywords = @work.keywords if @work.keywords
 - kw_s = ""
 - keywords.each_with_index do |kw, i|
-  - if i < keywords.length
+  - if i < keywords.length-1
     - kw_s << "#{kw.name}; "
   - else
     - kw_s << kw.name

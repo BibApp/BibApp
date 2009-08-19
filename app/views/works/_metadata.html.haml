@@ -1,0 +1,271 @@
+%table#metadata
+  -#%tr
+  -#%td.label Type:
+  -#%td=@work.type
+
+  -# Get the creators associated with this work
+  -# Only get the first role for this work subklass (usually Author)
+  - creator_role = @work.class.roles[0]
+  - creators = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} if wns.role == creator_role} if @work.name_strings
+  - creators.compact!
+
+  - unless creators.empty?
+    %tr
+      %td.label
+        = "#{creator_role}(s):"
+      %td
+        - creators.collect!{ |c| "#{link_to c[:ns].name.gsub(",", ", "), name_string_path(c[:ns])}"}
+        = creators.join(', ')
+
+  -# Get the contributors associated with this work
+  -# Omit the first role for this work subklass (usually Author)
+  - contributors = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} unless wns.role == creator_role} if @work.name_strings
+  - contributors.compact!
+  - contributors.sort!{ |x,y| x[:role] <=> y[:role]}
+
+  - unless contributors.empty?
+    - label = ""
+    - i = 0
+    - while i < contributors.length
+      %tr
+        %td.label
+          = "#{contributors[i][:role]}(s):"
+        %td
+          - out = Array.new
+          - while i < contributors.length and contributors[i][:role] != label
+            - out << "#{link_to contributors[i][:ns].name.gsub(",", ", "), name_string_path(contributors[i][:ns])}"
+            - i += 1
+          = out.join(', ')
+
+  - unless @work.title_primary.blank?
+    %tr
+      %td.label Primary Title:
+      %td
+        = @work.title_primary
+
+  - unless @work.title_secondary.blank?
+    %tr
+      %td.label Alternate Title:
+      %td
+        = @work.title_secondary
+
+  - unless @work.title_tertiary.blank?
+    %tr
+      %td.label Title Series:
+      %td
+        = @work.title_tertiary
+
+  - if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+    - unless @work.abstract.blank?
+      %tr
+        %td.label Abstract:
+        %td
+          = @work.abstract
+    - if @work.keywords
+      - keywords = @work.keywords
+      - kw_s = ""
+      - keywords.each_with_index do |kw, i|
+        - if i < keywords.length-1
+          - kw_s << "#{kw.name}; "
+        - else
+          - kw_s << kw.name
+      %tr
+        %td.label Keywords:
+        %td
+          = kw_s
+
+  - if @work.medium
+    %tr
+      %td.label Medium:
+      %td
+        = @work.title_tertiary
+
+  - if @work.instrumentation
+    %tr
+      %td.label Instrumentation:
+      %td
+        = @work.instrumentation
+
+  - if @work.volume
+    %tr
+      %td.label Volume:
+      %td
+        = @work.volume
+
+  - if @work.issue
+    %tr
+      - if @work.class == Report
+        %td.label Series Number
+      - else
+        %td.label Issue
+      %td
+        = @work.issue
+
+  - if @work.date_range
+    - label = "Date Range"
+    - case @work.class.to_s
+    - when 'Patent'
+      - label = "Filing Date"
+    - when 'WebPage'
+      - label = "Date of Last Visit"
+    - when 'Exhibition'
+      - label = "Exhibition Dates"
+    - when 'Performance'
+      - label = "Performance Date"
+    - when 'JournalWhole'
+      - label = "Dates"
+    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture'
+      - label = "Conference Dates"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = @work.date_range
+
+  - if @work.publication.name
+    - label = "Publication Title"
+    - case @work.class.to_s
+    - when 'BookSection'
+      - label = "Title of Book"
+    - when 'JournalArticle', 'BookReview'
+      - label = "Title of Journal"
+    - when 'ConferencePaper', 'ConferencePoster'
+      - label = "Title of Conference"
+    - when 'Performance', 'RecordingSound', 'RecordingMovingImage'
+      - label = "Title of Larger Work"
+    - when 'Report'
+      - label = "Title of Series"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = link_to @work.publication.name, publication_path(@work.publication.id)
+
+  - if @work.publication.issn_isbn
+    - label = "ISBN"
+    - case @work.class.to_s
+    - when 'JournalArticle', 'JournalWhole', 'BookReview'
+      - label = "ISSN"
+    - when 'RecordingSound', 'RecordingMovingImage'
+      - label = "ISRC"
+    %tr
+      %td.label 
+        = "#{label}:"
+      %td
+        = @work.publication.issn_isbn
+
+  - if @work.publisher
+    - label = "Publisher"
+    - case @work.class.to_s
+    - when 'Artwork'
+      - label = "Institution or Collection Name"
+    - when 'DissertationThesis'
+      - label = "Degree Granting Institution"
+    - when 'Exhibition', 'Performance'
+      - label = "Venue"
+    - when 'RecordingSound'
+      - label = "Recording Label"
+    - when 'RecordingMovingImage'
+      - label = "Production Company"
+    - when 'Grant'
+      - label = "Institution"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = link_to @work.publisher.name, publisher_path(@work.publisher.id)
+
+  - if @work.degree_level
+    %tr
+      %td.label Degree:
+      %td
+        = @work.degree_level
+
+  - if @work.discipline
+    %tr
+      %td.label Discipline:
+      %td
+        = @work.discipline
+
+  - if @work.publication_place
+    - label = "Publication Place"
+    - case @work.class.to_s
+    - when 'ConferencePaper', 'ConferencePoster', 'ConferencePreceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
+      - label = "Location"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = @work.publication_place
+
+  - if @work.publication_date
+    - label = "Date Published"
+    - case @work.class.to_s
+    - when 'ConferencePoster'
+      - label = "Date Presented"
+    - when 'PresentationLecture'
+      - label = "Date Given"
+    - when 'Artwork'
+      - label = "Date of Composition"
+    - when 'DissertationThesis'
+      - label = "Degree Date"
+    - when 'Patent', 'RecordingMovingImage'
+      - label = "Date Issued"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = @work.publication_date
+
+  - unless @work.start_page.blank?
+    %tr
+      %td.label Start Page:
+      %td
+        = @work.start_page
+
+  - unless @work.end_page.blank?
+    - label = "End Page"
+    - case @work.class.to_s
+    - when 'BookWhole', 'Monograph', 'ConferenceProceeding', 'DissertationThesis'
+      - label = "Total Pages"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = @work.end_page
+
+  - unless @work.language.blank?
+    %tr
+      %td.label Language:
+      %td
+        = @work.language
+
+  - unless @work.copyright_holder.blank?
+    %tr
+      %td.label Copyright Statement:
+      %td
+        = @work.copyright_holder
+
+  - unless @work.sponsor.blank?
+    %tr
+      %td.label Sponsor:
+      %td
+        = @work.sponsor
+
+  - unless @work.links.blank?
+    %tr
+      %td.label URL:
+      %td
+        = @work.links
+
+  - unless @work.identifier.blank?
+    %tr
+      %td.label Identifier:
+      %td
+        = @work.identifier
+
+  - unless @work.notes.blank?
+    %tr
+      %td.label Notes:
+      %td
+        = @work.notes

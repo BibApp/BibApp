@@ -1,23 +1,21 @@
-- if !@work.attachments.nil? and !@work.attachments.empty?
-  - if @work.archived?
-    - @work.external_system_uris.each do |s|
-      %div.file
-        %strong="Download Page: #{link_to(s.uri, s.uri)}"
-  - else      
-    - @work.attachments.each do |f|
-      %div.file
-        %strong="Download File: #{link_to(f.filename, f.public_filename)}"
-        = "(#{f.filesize}) - "
-        = link_to "remove", {:controller => "attachments", :action => "destroy", :id => f.id}, :method => :delete
-    -if SwordClient.configured?
-      %br/
-      %p
-        ="The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}."
+.links
+  %strong="Local Library Link: #{link_to_findit(Index.work_to_solr_hash(@work))}"
+  - if !@work.attachments.nil? and !@work.attachments.empty?
+    - if @work.archived?
+      - @work.external_system_uris.each do |s|
+        %div.file
+          %strong="Download Page: #{link_to(s.uri, s.uri)}"
+    - else
+      - @work.attachments.each do |f|
+        %div.file
+          %strong="Download File: #{link_to(f.filename, f.public_filename)}"
+          = "(#{f.filesize}) - "
+          = link_to "remove", {:controller => "attachments", :action => "destroy", :id => f.id}, :method => :delete
+      -if SwordClient.configured?
+        %br/
+        %p
+          ="The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}."
 
-    / Admin
-    = render :partial => 'admin'
-    
-- else
-  .links
-    %strong=link_to_findit(Index.work_to_solr_hash(@work))
-  %br/
+
+
+%br/

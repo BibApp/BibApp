@@ -16,6 +16,9 @@
           %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
           - if !@work.archived?
             %li= link_to "Archive Research", new_work_attachment_path(@work)
+          -#If SWORD is configured, and Work is "Ready for Archiving"
+          -if SwordClient.configured? and @work.ready_to_archive?
+            %li= link_to "Deposit Attachments", :controller => "admin", :action => "deposit_via_sword", :work_id => @work
       - elsif logged_in?
         %ul#edit-actions
           %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
@@ -23,35 +26,26 @@
 %div.span-24
   %div.span-22.prepend-1
     / Work Title
-    %h2= @work.title_primary
+    %h2
+      = @work.title_primary
+      %span{:style => "font-size:small;color:grey;display:block;"}
+        = @work.type.underscore.humanize
     
     / Work Details
     %div#work-details.span-14
-      %p#work-publication-details= work_details(@work)
-      
+
       / COinS
       %span.Z3988{:title => "#{coin(@work)}"}
 
-      %div.span-14
-        / Google Book Link
-        = link_to_google_book(@work)
-          
-        / Authors
-        %p#work-authors
-          =link_to_work_authors(@work)
-        
-        / Attachments
-        = render :partial => 'attachments', :locals => { :files => @work.attachments }
+      / Google Book Link
+      = link_to_google_book(@work)
 
-        / Abstract
-        - if $DISPLAY_ABSTRACTS_AND_KEYWORDS
-          %p#work-abstract= @work.abstract
+      / Attachments
+      -# attachements include the Find It link
+      = render :partial => 'attachments', :locals => { :files => @work.attachments }
 
-        / APA Citation
-        = render :partial => 'citation'
-
-        / Tags
-        = render :partial => "tags"
+      / Metadata
+      = render :partial => "metadata"
 
     %div#local-relations.span-7.prepend-1.last
       / Local Authors
