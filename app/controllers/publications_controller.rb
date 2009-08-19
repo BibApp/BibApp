@@ -37,8 +37,6 @@ class PublicationsController < ApplicationController
     end
 
     before :show do
-      # Recent additions list sorted by "updated_at"
-      params[:sort] = "updated_at" unless params[:sort]
 
       # Lock current object to filters
       filter = ["publication_id:\"#{@current_object.id}\""]
