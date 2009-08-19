@@ -711,6 +711,11 @@ class Work < ActiveRecord::Base
     
     return open_url_kevs
   end
+
+  def update_type_and_save(new_type)
+    self[:type] = new_type
+    self.save_without_callbacks
+  end
  
   ### PRIVATE METHODS ###
   private
