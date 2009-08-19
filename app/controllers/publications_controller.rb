@@ -123,7 +123,7 @@ class PublicationsController < ApplicationController
       @current_objects = Publication.find(
         :all, 
         :conditions => ["id = authority_id and name like ?", "#{@page}%"], 
-        :order => "issn_isbn, name"
+        :order => "upper(name)"
       )
     end
 
