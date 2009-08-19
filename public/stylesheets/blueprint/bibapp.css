@@ -138,7 +138,7 @@ ul#global-nav a:hover {
 /* =========== Flash Messages ============ */
 /* ======================================= */
 #flash-messages {margin-bottom:1em;}
-.error, .notice, .warning {padding:.8em;border:2px solid #ddd;}
+.error, .notice, .warning {padding:.8em;border:2px solid #ddd;margin:1em 0;}
 .error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
 .warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
@@ -652,18 +652,16 @@ thead td {font-weight:bold;}
 
 /* Authorities for Publications/Publishers */
 #authority {padding:2em 1em 1em 1em}
-/* Selected authorities */
-tr.selected {
+
+/* Selected candidates */
+#publications .selected {
 	background-color:#FFFF99;
 }
-
 
 /* Any editing actions for views */
 #admin-actions{
   width:100%;
-  margin-top:1em;
   margin-bottom:1em;
-  border-top:1px solid #900;
   border-bottom:1px solid #900;
   background-color:#fee;
   height:30px;
