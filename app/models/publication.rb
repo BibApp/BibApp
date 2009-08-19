@@ -102,6 +102,16 @@ class Publication < ActiveRecord::Base
     return authority_for
   end
   
+  def authority_for_work_count
+    works = Array.new
+    self.authority_for.each do |publication|
+      works << publication.works.size
+    end
+    
+    # Sum a ruby array of work counts
+    return works.inject( 0 ) { |sum,x| sum+x }
+  end
+  
   #Update authorities for related models, when Publication Authority changes
   # (called by after_save callback)
   def update_authorities
