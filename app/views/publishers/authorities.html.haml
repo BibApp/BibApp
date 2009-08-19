@@ -36,47 +36,26 @@
     %br/
     = render :partial => "shared/alpha_pagination"
             
-%script{:type => 'text/javascript'}
-  :plain
-    
-    Event.addBehavior({
-      'a.add:click': function() {
-        var id = this.up('tr').id;
-      
-        if (this.innerHTML == "remove") {
-          $(id).removeClassName("selected");
-          this.update("select");
-        } else {
-          $(id).addClassName("selected");
-          this.update("remove");
-        }
-      },
-      'a.update:click': function() {
-        var auth_id = this.up('tr').id;
-        
-        if (this.innerHTML == "make authority") {
-          $(auth_id).addClassName("authority");
-          this.update("Authority!");
-        } else {
-          $(auth_id).removeClassName("authority");
-          this.update("make authority");
-        }
-      },
-        
-      '#authority:submit': function() {
-        pub_ids = new Array();
-        auth_id = new Array();
-        
-        auth_id = $$('tr.authority')[0].id.split('_')[1];
-        
-        $$('tr.selected').each(function(value) {
-          pub_ids = pub_ids.concat(value.id.split('_')[1]);
-        })
-        
-        $('pub_ids').value = pub_ids;
-        $('auth_id').value = auth_id;
-        
+:javascript
+  // Highlight selected authority candidates 
+  function highlight_candidates() {
+
+    // Find all authority candidates 
+    auth_opts = $$('tr.authority_option');
+    auth_opts.each(function(tr){
+      select = new String();
+      select = "publisher_" + tr.id;
+
+      // If candidate row is listed on current page, "highlight" the row
+      if ($(select)) {
+        $(select).removeClassName("even");
+        $(select).removeClassName("odd");
+        $(select).addClassName("selected");
       }
-    });
-    
-    // $$('tr.selected') will return an Array of "selected" rows
+    })
+  }
+  
+  // On Document load
+  document.observe("dom:loaded", function() {
+    highlight_candidates();
+  });
