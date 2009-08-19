@@ -21,7 +21,7 @@
       %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
       
       / Authority check
-      - if @authority_for.empty?
+      - if @authority_for.size > 1
         %div.notice
           %h3 Authorized Title
           %p=link_to @publication.authority.name, publication_path(@publication.authority)
