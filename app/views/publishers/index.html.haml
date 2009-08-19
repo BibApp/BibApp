@@ -9,7 +9,7 @@
       %ul#edit-actions
         %li=link_to "Add a Publisher", new_publisher_path
         - if current_user.has_role?("admin", System)
-          %li=link_to "Admin Publisher Authorities", authorities_publishers_path
+          %li=link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])
 
 %div.span-24
   %div.span-22.prepend-1
