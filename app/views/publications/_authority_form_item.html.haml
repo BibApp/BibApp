@@ -1,5 +1,5 @@
 - authority_form_item = Publication.find(authority_form_item)
-%tr.publication{:id => "publication_#{authority_form_item.id}", :class => cycle("odd", "even")}
+%tr.publication{:id => "#{authority_form_item.id}", :class => "#{cycle("odd", "even")} authority_option"}
   =hidden_field_tag "pub_ids[]", authority_form_item.id
   %td.span-1=radio_button_tag "auth_id", authority_form_item.id
   %td.span-2=authority_form_item.issn_isbn
