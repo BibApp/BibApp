@@ -19,28 +19,43 @@
     %div.span-22.prepend-1
       %h2= @publication.name
       %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
-
-      / People
-      = render :partial => "shared/people", :locals => {:count => 10}
-
-      / Groups
-      = render :partial => "shared/groups", :locals => {:count => 10}
-
-      %div#results.span-22
-        / Facets
-        = render :partial => "shared/facets"
-
-        / Works 
-        = render :partial => "shared/works"
-
-      / Authority
-      %div#authority.span-9
-        - unless @authority_for.empty?
-          %h3=@publication.name
-          %p Authorized name for:
-          %ul.authority-children
-            - @authority_for.each do |auth|
-              %li=link_to auth.name, publication_path(auth)
-        - else
+      
+      / Authority check
+      - if @authority_for.empty?
+        %div.notice
           %h3 Authorized Title
           %p=link_to @publication.authority.name, publication_path(@publication.authority)
+        
+      -else
+
+        / People
+        = render :partial => "shared/people", :locals => {:count => 10}
+
+        / Groups
+        = render :partial => "shared/groups", :locals => {:count => 10}
+
+        %div#results.span-22
+          / Facets
+          = render :partial => "shared/facets"
+
+          / Works 
+          = render :partial => "shared/works"
+
+        / Authority
+        %div#authority.span-9
+          - unless @authority_for.empty?
+            %h4
+              =@publication.name
+              &ndash; authorized name for:
+            %table#authority-children
+              %thead
+                %tr
+                  %th Name
+                  %th ISSN/ISBN
+                  %th Publisher
+              %tbody
+                - @authority_for.each do |auth|
+                  %tr
+                    %td=link_to auth.name, publication_path(auth)
+                    %td= auth.issn_isbn
+                    %td= auth.publisher.name
