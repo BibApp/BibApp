@@ -13,7 +13,7 @@
       - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
       %li.inline
         %div.person{:style => "float:left; padding-right:0.75em;"}
-          = link_to(image_tag(image_url, :size => "56x75", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
+          = link_to(image_tag(image_url, :width => "56px", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           %div.person-image-metadata
             %strong= p.value
             %h6.person-last-name=link_to last_name, person_path(id)
