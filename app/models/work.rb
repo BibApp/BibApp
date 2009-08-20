@@ -204,6 +204,7 @@ class Work < ActiveRecord::Base
       "Conference Proceeding (Whole)",
       "Dissertation / Thesis",
       "Exhibition",
+      "Grant",
       "Journal (Whole)",
       "Journal Article",
       "Monograph",

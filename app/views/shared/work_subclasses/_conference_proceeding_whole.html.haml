@@ -8,12 +8,12 @@
 
   - #Publication
   %br/
-  = link_to_work_publication(work)
+  = work['title_tertiary']
 
   - #Year
   -if work['year'] != nil
     ="(#{work['year']})"
-
+  %br/
   Published by: 
   - #Publisher
   = link_to_work_publisher(work)
