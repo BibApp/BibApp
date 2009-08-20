@@ -7,11 +7,4 @@
   = link_to_work_publisher(work)
 
   -if work['year'] != nil
-    ="(#{work['year']})"
-
-  - # ISBN - @todo: Standardize ISBNs during ingest
-  - if work['issn_isbn'] != nil
-    = "; ISBN: #{work['issn_isbn'].gsub(" ", "")}"
-    
-
-  
+    ="(#{work['year']})"  
