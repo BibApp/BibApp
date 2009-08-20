@@ -42,10 +42,11 @@
         = render :partial => "shared/works"
   
       / Authority
-      %div#authority.span-9
+      %div#authority.span-22
         - if @publisher.authority_for.size > 0
-          %h3=@publisher.name
-          %p Authorized name for:
+          %h4
+            =@publisher.name
+            &ndash; authorized name for:
           %ul.authority-children
             - @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
               %li= auth
