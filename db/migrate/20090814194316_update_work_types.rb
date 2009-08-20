@@ -1,3 +1,15 @@
+class BookEdited < Work
+end
+
+class JournalEdited < Work
+end
+
+class SoundRecording < Work
+end
+
+class Video < Work
+end
+
 class UpdateWorkTypes < ActiveRecord::Migration
   def self.up
 
