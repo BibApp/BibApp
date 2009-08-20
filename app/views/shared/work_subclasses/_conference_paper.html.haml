@@ -1,1 +1,19 @@
-= render :partial => "shared/work_subclasses/generic", :locals => {:work => work}
+%p.metadata
+  - #Authors
+  = link_to_authors(work)
+
+  - #Conference
+  %br/
+  = work['title_secondary']
+
+  - #Publication
+  %br/
+  = work['title_tertiary']
+
+  - #Year
+  -if work['year'] != nil
+    ="(#{work['year']})"
+  %br/
+  Published by: 
+  - #Publisher
+  = link_to_work_publisher(work)
