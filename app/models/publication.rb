@@ -89,6 +89,10 @@ class Publication < ActiveRecord::Base
   def to_solr_data
     "#{name}||#{id}"
   end
+  
+  def solr_filter
+    'publication_id:"' + self.id.to_s + '"'
+  end
 
   def form_select
     "#{name.first(100)+"..."} - #{issn_isbn}"

@@ -37,6 +37,10 @@ class Group < ActiveRecord::Base
   def to_solr_data
     "#{name}||#{id}"
   end 
+  
+  def solr_filter
+    'groups:"' + self.name + '"'
+  end
 
   #Update Machine Name of Group (called by after_save callback)
   def update_machine_name

@@ -48,6 +48,10 @@ class Publisher < ActiveRecord::Base
     "#{name}||#{id}"
   end
   
+  def solr_filter
+    'publisher_id:"' + self.id.to_s + '"'
+  end
+  
   def authority_for
     authority_for = Publisher.find(
       :all, 
