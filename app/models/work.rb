@@ -639,13 +639,13 @@ class Work < ActiveRecord::Base
     #Formatting specific to type of Work
     #---------------------------------------
     case self.class
-    when BookWhole, BookEdited
+    when BookWhole
    
       citation_string << self.publisher.authority.name if self.publisher
       #Only add a period if the string doesn't currently end in a period.
       citation_string << ". " if !citation_string.match("\.\s*\Z")
     
-    when ConferenceProceeding #Conference Proceeding in APA Format
+    when ConferencePaper #Conference Proceeding in APA Format
       
       citation_string << "In #{self.title_secondary}" if self.title.secondary
       citation_string << ": Vol. #{self.volume}" if self.volume
