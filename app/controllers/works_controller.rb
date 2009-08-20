@@ -87,6 +87,10 @@ class WorksController < ApplicationController
     before :index do
       # Are we showing a person or group's works?
       # - If there is an "_id" we need to behave properly.
+      
+      # We need a current_object
+      @current_object = nil
+      
       if params[:person_id]
        facet_field = "people"
        @current_object = Person.find_by_id(params[:person_id].split("-")[0])
