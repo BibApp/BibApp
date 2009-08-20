@@ -43,15 +43,17 @@ span.volume{font-style:italic;}
 #header {display:none;}
 #admin-actions {dispaly:none;}
 #edit-actions {display:none;}
+#local-nav {display:none;}
 .vcard {display:none;}
 
-#results {width:100%; page-break-before:always;}
 #research_focus{width:100%;}
 #sort-by {display:none;}
 .pagination {display:none;}
 #filters {display:none;}
 .links {display:none;}
-.screen-format { display:none; }
+
+#works{clear: both; width:100%;}
+
 #people { padding:0em; margin:0em; }
 .people { padding:0em; margin:0em; }
 div.person { padding:0em; margin:0em; }

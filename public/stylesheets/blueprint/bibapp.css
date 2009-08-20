@@ -639,14 +639,17 @@ ul#groups {
 
 ol#groups {
 	list-style:none;
+	line-height:1.75em;
 }
 
 ol#publications {
 	list-style:none;
+	line-height:1.75em;
 }
 
 ol#publishers {
 	list-style:none;
+	line-height:1.75em;
 }
 
 ol#people {
