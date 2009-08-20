@@ -26,8 +26,17 @@
       = render :partial => "shared/groups", :locals => {:count => 10}
 
       %div#results.span-22
-        / Facets
-        = render :partial => "shared/facets"
+      
+        / Search Within
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag publisher_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = nil, {:size => 15})
+              = submit_tag 'Go'
+
+          / Facets
+          = render :partial => "shared/facets"
 
         / Works 
         = render :partial => "shared/works"
