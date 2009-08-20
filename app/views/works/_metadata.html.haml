@@ -74,25 +74,25 @@
         %td
           = kw_s
 
-  - if @work.medium
+  - unless @work.medium.blank?
     %tr
       %td.label Medium:
       %td
         = @work.title_tertiary
 
-  - if @work.instrumentation
+  - unless @work.instrumentation.blank?
     %tr
       %td.label Instrumentation:
       %td
         = @work.instrumentation
 
-  - if @work.volume
+  - unless @work.volume.blank?
     %tr
       %td.label Volume:
       %td
         = @work.volume
 
-  - if @work.issue
+  - unless @work.issue.blank?
     %tr
       - if @work.class == Report
         %td.label Series Number
@@ -101,7 +101,7 @@
       %td
         = @work.issue
 
-  - if @work.date_range
+  - unless @work.date_range.blank?
     - label = "Date Range"
     - case @work.class.to_s
     - when 'Patent'
@@ -122,7 +122,7 @@
       %td
         = @work.date_range
 
-  - if @work.publication.name
+  - unless @work.publication.name.blank?
     - label = "Publication Title"
     - case @work.class.to_s
     - when 'BookSection'
@@ -141,7 +141,7 @@
       %td
         = link_to @work.publication.name, publication_path(@work.publication.id)
 
-  - if @work.publication.issn_isbn
+  - unless @work.publication.issn_isbn.blank?
     - label = "ISBN"
     - case @work.class.to_s
     - when 'JournalArticle', 'JournalWhole', 'BookReview'
@@ -154,7 +154,7 @@
       %td
         = @work.publication.issn_isbn
 
-  - if @work.publisher
+  - unless @work.publisher.blank?
     - label = "Publisher"
     - case @work.class.to_s
     - when 'Artwork'
@@ -175,19 +175,19 @@
       %td
         = link_to @work.publisher.name, publisher_path(@work.publisher.id)
 
-  - if @work.degree_level
+  - unless @work.degree_level.blank?
     %tr
       %td.label Degree:
       %td
         = @work.degree_level
 
-  - if @work.discipline
+  - unless @work.discipline.blank?
     %tr
       %td.label Discipline:
       %td
         = @work.discipline
 
-  - if @work.publication_place
+  - unless @work.publication_place.blank?
     - label = "Publication Place"
     - case @work.class.to_s
     - when 'ConferencePaper', 'ConferencePoster', 'ConferencePreceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
@@ -198,7 +198,7 @@
       %td
         = @work.publication_place
 
-  - if @work.publication_date
+  - unless @work.publication_date.blank?
     - label = "Date Published"
     - case @work.class.to_s
     - when 'ConferencePoster'
