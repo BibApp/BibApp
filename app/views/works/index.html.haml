@@ -10,7 +10,7 @@
         = render :partial => "people/admin_actions"
       - else
         %ul#edit-actions
-          %li=link_to "Add a Work", new_work_path
+          %li=link_to "Add a Work", new_user_import_path(current_user)
 
 / ### Main ###
 %div.span-24
@@ -75,7 +75,8 @@
       / Works
       %div.span-7.last
         %h3.heading
-          =link_to "Recent additions", works_url(:view => "all")
+          =link_to "Works", works_url(:view => "all")
+          &ndash; Recent additions
         %ol#works.works
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
