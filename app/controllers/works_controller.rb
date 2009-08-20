@@ -89,13 +89,15 @@ class WorksController < ApplicationController
       # - If there is an "_id" we need to behave properly.
       if params[:person_id]
        facet_field = "people"
-       @person = Person.find_by_id(params[:person_id].split("-")[0])
+       @current_object = Person.find_by_id(params[:person_id].split("-")[0])
+       @person = @current_object
        object = @person
        # We want to show the citation list results page
        params[:view] = "all"
       elsif params[:group_id]
        facet_field = "groups"
-       @group = Group.find_by_id(params[:group_id].split("-")[0])
+       @current_object = Group.find_by_id(params[:group_id].split("-")[0])
+       @group = @current_object
        object = @group
        # We want to show the citation list results page
        params[:view] = "all"

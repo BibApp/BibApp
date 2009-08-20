@@ -217,6 +217,10 @@ class Person < ActiveRecord::Base
   def to_solr_data
     "#{last_name}||#{id}||#{image_url}||#{group_ids}"
   end
+  
+  def solr_filter
+    'people:"' + self.first_last + '"'
+  end
 
   class << self
     # return the first letter of each name, ordered alphabetically
