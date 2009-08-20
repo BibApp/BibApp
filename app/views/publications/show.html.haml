@@ -21,7 +21,7 @@
       %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
       
       / Authority check
-      - if @authority_for.size > 1
+      - if @authority_for.size == 0
         %div.notice
           %h3 Authorized Title
           %p=link_to @publication.authority.name, publication_path(@publication.authority)
@@ -51,7 +51,7 @@
           = render :partial => "shared/works"
 
         / Authority
-        %div#authority.span-9
+        %div#authority.span-22
           - unless @authority_for.empty?
             %h4
               =@publication.name
