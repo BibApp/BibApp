@@ -1,24 +1,33 @@
 xml.instruct!
 xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
   xml.channel do
-    xml.title 'Feed for ' + @group.name
+    xml.title $UNIVERSITY_SHORT_NAME + ": " + @group.name
     xml.link url_for(:only_path => false,
-                      :controller => 'groups',
+                      :controller => 'people',
                       :action => 'show',
                       :id => @group.id)
-    xml.description h("Our latest scholarly work")
-    @group.works.each do |c|
+    xml.image h($APPLICATION_URL + $APPLICATION_LOGO)
+    xml.description h("My latest scholarly work")
+    @works.each do |work|
       xml.item do
-        xml.title c.title_primary
+        xml.title work['title']
+
+        xml.description {
+          xml.cdata!(work['type'])
+          xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
+          xml.cdata!(work['abstract'])
+        }
+        
         xml.link url_for(:only_path => false,
                          :controller => 'works',
                          :action => 'show',
-                         :id => c.id)
-        xml.pubDate c.publication_date
+                         :id => work['id'].split("-")[1])
+
         xml.guid url_for(:only_path => false,
                          :controller => 'works',
                          :action => 'show',
-                         :id => c.id)
+                         :id => work['id'].split("-")[1])
+
         xml.author h(@group.name)
       end
     end
