@@ -7,4 +7,6 @@ class Membership < ActiveRecord::Base
   
   acts_as_list  :scope => :person
 
+  named_scope :active, :conditions => ["end_date is ?", nil]
+
 end
