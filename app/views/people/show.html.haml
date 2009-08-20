@@ -11,35 +11,43 @@
 / ### Main ###
 %div.span-24
   %div.span-22.prepend-1
+    %h2
+      ="#{link_to @person.display_name, person_path(@person)}"
+      =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
+    
+    = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
-    %div.span-5
-      =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em; margin:1em 0 0 0;", :size => "150x200")
+    %div#image.span-4
+      =image_tag(@person.image_url, :style => "border:2px dashed #CCC; padding:0.5em;", :size => "131x175")
 
-      %div.memberships{:style => "margin-top:1em"}
-        - if !@person.memberships.empty?
-          %h4 Group Memberships
-          %ul
-            - @person.memberships.each do |m|
-              -if !m.group.hide?
-                %li=link_to m.group.name, group_path(m.group)
-
-      %div.coauthors{:style => "margin-top:1em"}
-        = render :partial => "shared/coauthors_table"
-
-    %div.span-17.last
-      %h2
-        ="#{link_to @person.display_name, person_path(@person)}"
-        =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
-      = render :partial => "shared/local_nav", :locals => {:object => "person"}
-        
-      %div.span-9.append-1
-        - if @research_focus.strip.length > 0
+    %div.span-11
+      - if !@person.memberships.empty?
+        %dl#memberships.span-10
+          - @person.memberships.active.each do |m|
+            -if !m.group.hide?
+              %dt=link_to m.group.name, group_path(m.group)
+              - if m.title
+                %dd= "&ndash; #{m.title}" 
+                
+      - if @research_focus.strip.length > 0
+        %div#research-focus.span-10
           %h3 Research Focus
-          #research_focus=@research_focus
-
+          %p=@research_focus
+    
+    - if @facets[:people_data].size > 1
       %div.span-7.last
+        = render :partial => "shared/coauthors"
+
+  %div.span-22.prepend-1{:style => "padding-top:2em;"}
+    - if @works.size > 0
+      %div#works.span-14.append-1
         %h3.heading
-          =link_to "Recent Works", person_works_path(@person)
-        %ol#works{:class => "works"}
+          =link_to "Works", person_works_path(@person)
+          &ndash; recent additions
+        %ol.works
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
+            
+      / Publications
+      %div.span-7.last
+        = render :partial => "shared/publications", :locals => {:count => 10}
