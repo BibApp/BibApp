@@ -3,18 +3,12 @@
   = link_to_authors(work)
 
   %br/
-  In
   - if work['editors_data'] != nil
     - #Editors
     = link_to_editors(work)
-    (Eds.),
 
   - #Publication
   = link_to_work_publication(work)
 
   -if work['year'] != nil
     ="(#{work['year']})"
-
-  - # ISBN - @todo: Standardize ISBNs during ingest
-  - if work['issn_isbn'] != nil
-    = "; ISBN: #{work['issn_isbn'].gsub(" ", "")}"
