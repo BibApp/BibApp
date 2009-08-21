@@ -1,4 +1,7 @@
 class Import < ActiveRecord::Base
+  cattr_reader :per_page
+  @@per_page = 10
+  
   
   # ActiveRecord Attributes
   attr_protected :state
