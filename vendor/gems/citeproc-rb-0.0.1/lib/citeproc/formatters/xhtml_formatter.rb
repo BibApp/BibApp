@@ -22,7 +22,7 @@ module Citeproc
         node.each do |n|
           tmp = format(n)
           if tmp
-            result << '<div class="citation">'
+            result << '<div class="work">'
             result << tmp
             result << "</div>\n"
           end

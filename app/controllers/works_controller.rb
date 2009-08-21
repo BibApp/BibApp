@@ -7,9 +7,6 @@ class WorksController < ApplicationController
    
   before_filter :find_authorities, :only => [:new, :edit]
 
-  # Find the @cart variable, used to display "add" or "remove" links for saved works
-  before_filter :find_cart, :only => [:index, :show]
-
   make_resourceful do
     build :index, :show, :new, :edit, :destroy
     
@@ -798,10 +795,6 @@ class WorksController < ApplicationController
   end
   
   private
-  
-  def find_cart
-    @cart = session[:cart] ||= Cart.new
-  end
   
   # Batch import Works
   def import_batch!(data)    
