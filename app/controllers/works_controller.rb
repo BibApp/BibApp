@@ -52,14 +52,14 @@ class WorksController < ApplicationController
       end
       
       #if 'type' unspecified, default to first type in list
-      params[:type] ||= Work.types[0]
+      params[:klass] ||= Work.types[0]
 
       #initialize work subclass with any passed in work info
-      @work = subklass_init(params[:type], params[:work])
+      @work = subklass_init(params[:klass], params[:work])
       
       #check if there was a batch created previously
       # (if so, we'll provide a link to review that batch)
-      @last_batch = find_last_batch
+      #@last_batch = find_last_batch
     end
     
     before :show do
@@ -176,71 +176,36 @@ class WorksController < ApplicationController
   
     else #Only perform create if 'save' button was pressed
     
-      # If we need to add a batch
-      if params[:type] == "AddBatch"
+      logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
 
-        logger.debug("\n\n===ADDING BATCH WORKS===\n\n")
-        unrecoverable_error = false
-        begin
-          unless params[:work][:works_file].nil? or params[:work][:works_file].kind_of?String
-            #user uploaded a file of works
-            @works_batch, @batch_errors = import_batch!(params[:work][:works_file])
-          else 
-            #user used cut & paste to add works
-            @works_batch, @batch_errors = import_batch!(params[:work][:works])
-          end
-        rescue Exception => e
-          logger.error("An unrecoverable error occurred during Batch Import: #{e.message}\n")
-          logger.error("\nError Trace: #{e.backtrace.join("\n")}")
-          #We just display an "unrecoverable error" message for now
-          unrecoverable_error = true
+      # Create the basic Work SubKlass
+      @work = subklass_init(params[:klass], params[:work])
+
+
+      #Create attribute hash
+      r_hash = create_attribute_hash
+
+      work_id, errors =  Work.create_from_hash(r_hash)
+
+      # current user automatically gets 'admin' permissions on work
+      # (only if he/she doesn't already have that permission)
+      if work_id
+        @work = Work.find(work_id)
+        @work.accepts_role 'admin', current_user unless !current_user.has_role?( 'admin', @work)
+      end
+
+      respond_to do |format|
+        if work_id
+          flash[:notice] = "Work was successfully created."
+          format.html {redirect_to work_url(work_id)}
+          format.xml  {head :created, :location => work_url(work_id)}
+        else
+          flash[:notice] = errors
+          format.html {render :action => "new"}
+          format.xml  {render :xml => error.to_xml}
         end
+      end 
 
-        respond_to do |format|
-          if unrecoverable_error
-            flash[:error] = "There was an unrecoverable error caused by the input!  Please contact the Administrators and let them know about this problem."
-            format.html {redirect_to new_work_url}
-            format.xml  {render :xml => @works_batch.errors.to_xml}
-          elsif !@batch_errors.nil? and !@batch_errors.empty?
-            flash[:warning] = "Batch creation was successful for some works.  However, we encountered the following problems with other works:<br/>#{@batch_errors.join('<br/>')}"
-            format.html {redirect_to review_batch_works_url}
-            format.xml  {render :xml => @works_batch.errors.to_xml}
-          elsif !@works_batch.nil? and !@works_batch.empty?
-            flash[:notice] = "Batch creation completed successfully."
-            format.html {redirect_to review_batch_works_url}
-            format.xml  {head :created}
-          else #otherwise, we ended up with nothing imported!
-            flash[:warning] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
-            format.html {redirect_to new_work_url}
-            format.xml  {render :xml => @works_batch.errors.to_xml}        
-          end
-        end
-
-      else
-        logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
-
-        # Create the basic Work SubKlass
-        @work = subklass_init(params[:type], params[:work])
-
-
-        #Update work information based on inputs
-        update_work_info
-
-        # current user automatically gets 'admin' permissions on work
-        # (only if he/she doesn't already have that permission)
-        @work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', @work)
-
-        respond_to do |format|
-          if @work.save
-            flash[:notice] = "Work was successfully created."
-            format.html {redirect_to work_url(@work)}
-            format.xml  {head :created, :location => work_url(@work)}
-          else
-            format.html {render :action => "new"}
-            format.xml  {render :xml => @work.errors.to_xml}
-          end
-        end # If we are adding one
-      end # If we need to add a batch
     end #If 'save' button was pressed
   end
 
@@ -309,33 +274,57 @@ class WorksController < ApplicationController
       permit "editor on work"
 
       #First, update work attributes (ensures deduplication keys are updated)
-      @work.attributes=params[:work]   
+      @work.attributes=params[:work]
 
       #Then, update other work information
-      update_work_info
+      #update_work_info
+
+      # Create attribute hash from params
+      r_hash = create_attribute_hash
+
+      work_id, errors =  Work.create_from_hash(r_hash)
+
+      # current user automatically gets 'admin' permissions on work
+      # (only if he/she doesn't already have that permission)
+      if work_id
+        @work = Work.find(work_id)
+        @work.accepts_role 'admin', current_user unless !current_user.has_role?( 'admin', @work)
+      end
+
 
       respond_to do |format|
-        if @work.save
+        if work_id
           flash[:notice] = "Work was successfully updated."
-          unless return_path.nil?
-            format.html {redirect_to return_path}
-          else
+          if return_path.nil?
             #default to returning to work page
-            format.html {redirect_to work_url(@work)}
+            format.html {redirect_to work_path(@work.id)}
+          else
+            format.html {redirect_to return_path}
           end
           format.xml  {head :ok}
         else
-          format.html {render :action => "edit"}
-          format.xml  {render :xml => @work.errors.to_xml}
+          flash[:notice] = errors
+          format.html {redirect_to edit_work_path(@work.id)}
+          format.xml  {render :xml => errors.to_xml}
         end
       end #end respond to
     end  
   end
   
   
-  # Actually update all properties of this Work
+  # Create a hash of Work attributes
   # This is called by both create() and update()
-  def update_work_info
+  def create_attribute_hash
+    
+    #initialize our final attribute hash
+    attr_hash = Hash.new
+    attr_hash[:klass] = params[:klass]
+
+    ###
+    # Person
+    ###
+    attr_hash[:person_id] = params[:person_id]
+    
     ###
     # Setting WorkNameStrings
     ###
@@ -349,36 +338,37 @@ class WorksController < ApplicationController
     params[:contributor_roles] ||= []
             
     #Set Author & Editor NameStrings for this Work
-    work_name_strings = Array.new
+    @work_name_strings = Array.new
+    @author_name_strings = Array.new
+    @editor_name_strings = Array.new
     
-    @author_name_strings = params[:authors]
-    @author_name_strings.each_with_index do |name, i|
+    ans = params[:authors]
+    ans.each_with_index do |name, i|
       name.strip!
       unless name.empty?
-        work_name_strings << {:name => name, :role => params[:author_roles][i]}
+        @author_name_strings << {:name => name, :role => params[:author_roles][i]}
+        @work_name_strings << {:name => name, :role => params[:author_roles][i]}
       end
     end
     
-    @editor_name_strings = params[:contributors]
-    @editor_name_strings.each_with_index do |name, i|
+    @ens = params[:contributors]
+    @ens.each_with_index do |name, i|
       name.strip!
       unless name.empty?
-        work_name_strings << {:name => name, :role => params[:contributor_roles][i]}
+        @editor_name_strings << {:name => name, :role => params[:contributor_roles][i]}
+        @work_name_strings << {:name => name, :role => params[:contributor_roles][i]}
       end
     end
 
-    @work.work_name_strings = work_name_strings 
-    
-    #If we are adding to a person, pre-verify that person's contributorship
-    @work.preverified_person = @person if @person
+    attr_hash[:work_name_strings] = @work_name_strings
       
     ###
     # Setting Keywords
     ###
     # Save keywords to instance variable @keywords,
     # in case any errors should occur in saving work
-    @keywords = params[:keywords]
-    @work.keyword_strings = @keywords.split('; ')
+    @keywords = params[:keywords].split('; ') unless params[:keywords].blank?
+    attr_hash[:keywords] = @keywords
     
     ###
     # Setting Tags
@@ -391,23 +381,36 @@ class WorksController < ApplicationController
     ###
     # Setting Publication Info, including Publisher
     ###
-    issn_isbn = params[:issn_isbn]
-    publication_info = Hash.new
+    @publication = Publication.new
+    @publisher = Publisher.new
+    @publication.issn_isbn = params[:issn_isbn]
+
+    # Sometimes there will be no publication, sometimes it will be blank,
+    # sometimes it will have a value. If it's nil or blank we still want
+    # to have the @publication[:name] hash in case we're sent back to
+    # the 'new' page due to a save error.
+    if params[:publication].blank?
+      @publication.name = nil
+    else
+      @publication.name = params[:publication][:name].blank? ? nil : params[:publication][:name]
+    end
+    if params[:publisher].blank?
+      @publisher.name = nil
+    else
+      @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
+    end
     
 
+    attr_hash[:issn_isbn] = @publication.issn_isbn
+    attr_hash[:publication] = @publication.name
+    attr_hash[:publisher] = @publisher.name
     
-    if params[:type] != 'BookWhole' && params[:type] != 'BookSection' && params[:type] != 'BookEdited'
-      publication_info = {:name => params[:publication][:name], 
-                          :issn_isbn => issn_isbn,
-                          :publisher_name => params[:publisher][:name]}
-    else
-      publication_info = {:name => params[:work][:title_primary], 
-                          :issn_isbn => issn_isbn,
-                          :publisher_name => params[:publisher][:name]}
- 
+    params[:work].each do |key, val|
+      attr_hash[key] = val
     end
 
-    @work.publication_info = publication_info
+    attr_hash.delete_if { |key, val| val.blank? }
+
   end
 
   def destroy

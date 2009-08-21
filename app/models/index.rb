@@ -39,7 +39,7 @@ class Index
     :start_page => :start_page,
     :abstract => :abstract,
     :status => :work_state_id,
-    :issn_isbn => Proc.new{|record| record.publication.authority.issn_isbn},
+    :issn_isbn => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.issn_isbn},
     
     # Work Type (index as "Journal article" rather than "JournalArticle")
     :type => Proc.new{|record| record[:type].underscore.humanize},
@@ -64,9 +64,9 @@ class Index
     :groups_data => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.to_solr_data}}.uniq.flatten},
     
     # Publication
-    :publication => Proc.new{|record| record.publication.authority.name},
-    :publication_id => Proc.new{|record| record.publication.authority.id},
-    :publication_data => Proc.new{|record| record.publication.authority.to_solr_data},
+    :publication => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.name},
+    :publication_id => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.id},
+    :publication_data => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.to_solr_data},
     
     # Publisher
     :publisher => Proc.new{|record| record.publisher.authority.name},

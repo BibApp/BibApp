@@ -5,6 +5,14 @@ class PresentationLecture < Work
     def roles
       ['Presenter']
     end
+
+    def creator_role
+      'Presenter'
+    end
+
+    def contributor_role
+      'Presenter'
+    end
   end
 
 end

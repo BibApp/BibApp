@@ -148,13 +148,13 @@ module ApplicationHelper
   end
   
   def link_to_google_book(work)
-    if !work.publication.isbns.blank?
+    if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
           work.publication.isbns.first[:name]
         haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end      
-    elsif !work.publication.issn_isbn.blank?
+    elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
           work.publication.issn_isbn

@@ -5,6 +5,8 @@
 -#  Default: use keywords assigned to @work.  
 -#  @keywords should only exist if there were errors in saving work
 - keywords = @work.keywords if @work.keywords
+- keywords = @keywords if @keywords
+
 - kw_s = ""
 - keywords.each_with_index do |kw, i|
   - if i < keywords.length-1

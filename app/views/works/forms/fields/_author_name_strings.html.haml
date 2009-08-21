@@ -1,6 +1,5 @@
 -# Add an Author field, with Auto-Complete.
 -# Also adds a list of existing Authors
--#  @author_name_strings should only exist if there were errors in saving work
 
 -# Get the first role for this work subklass (usually Author)
 - role = @work.class.roles[0]
@@ -10,6 +9,9 @@
 -# which is displayed seperately
 - authors = @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} if wns.role == role} if @work.name_strings
 - authors.compact!
+
+-#  @author_name_strings should only exist if there were errors in saving work
+- authors = @author_name_strings if @author_name_strings
 
 - count = 0
 %div.author_block

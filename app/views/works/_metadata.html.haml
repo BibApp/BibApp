@@ -24,15 +24,15 @@
   - contributors.sort!{ |x,y| x[:role] <=> y[:role]}
 
   - unless contributors.empty?
-    - label = ""
     - i = 0
     - while i < contributors.length
+      - label = contributors[i][:role]
       %tr
         %td.label
-          = "#{contributors[i][:role]}(s):"
+          = "#{label}(s):"
         %td
           - out = Array.new
-          - while i < contributors.length and contributors[i][:role] != label
+          - while i < contributors.length and contributors[i][:role] == label
             - out << "#{link_to contributors[i][:ns].name.gsub(",", ", "), name_string_path(contributors[i][:ns])}"
             - i += 1
           = out.join(', ')
@@ -61,7 +61,7 @@
         %td.label Abstract:
         %td
           = @work.abstract
-    - if @work.keywords
+    - unless @work.keywords.blank?
       - keywords = @work.keywords
       - kw_s = ""
       - keywords.each_with_index do |kw, i|
@@ -122,7 +122,7 @@
       %td
         = @work.date_range
 
-  - unless @work.publication.name.blank?
+  - unless @work.publication.nil? or @work.publication.name.blank?
     - label = "Publication Title"
     - case @work.class.to_s
     - when 'BookSection'
@@ -141,7 +141,7 @@
       %td
         = link_to @work.publication.name, publication_path(@work.publication.id)
 
-  - unless @work.publication.issn_isbn.blank?
+  - unless @work.publication.nil? or @work.publication.issn_isbn.blank?
     - label = "ISBN"
     - case @work.class.to_s
     - when 'JournalArticle', 'JournalWhole', 'BookReview'

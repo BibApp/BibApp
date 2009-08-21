@@ -5,6 +5,14 @@ class Grant < Work
     def roles
       ['Principal Investigator', 'Co-Principal Investigator']
     end
+
+    def creator_role
+      'Principal Investigator'
+    end
+
+    def contributor_role
+      'Co-Principal Investigator'
+    end
   end
 
 end

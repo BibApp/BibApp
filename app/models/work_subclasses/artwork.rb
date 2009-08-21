@@ -5,6 +5,14 @@ class Artwork < Work
     def roles
       ['Artist', 'Curator']
     end
+
+    def creator_role
+      'Artist'
+    end
+
+    def contributor_role
+      'Curator'
+    end
   end
 
 end

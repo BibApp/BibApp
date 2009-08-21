@@ -5,6 +5,14 @@ class Patent < Work
     def roles
       ['Patent Owner']
     end
+
+    def creator_role
+      'Patent Owner'
+    end
+
+    def contributor_role
+      'Patent Owner'
+    end
   end
 
 end

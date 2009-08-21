@@ -87,7 +87,7 @@ class Publication < ActiveRecord::Base
   
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{name}||#{id}"
+    "#{name}||#{id}" unless self.nil?
   end
   
   def solr_filter

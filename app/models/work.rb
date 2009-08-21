@@ -219,6 +219,107 @@ class Work < ActiveRecord::Base
       ]  
   end
   
+  # Creates a new work from an attribute hash
+  def self.create_from_hash(h)
+
+    begin
+      # Initialize the Work
+      klass = h[:klass]
+
+      # Are we working with a legit SubKlass?
+      klass = klass.constantize
+      if klass.superclass != Work
+        raise NameError.new("#{klass_type} is not a subclass of Work") and return
+      end
+
+      work = klass.new
+
+      ###
+      # Setting WorkNameStrings
+      # We need to get creator and contributor roles
+      # from the subklasses
+      # (e.g., for Artwork creator=>Artist, contributor=>Curator)
+      ###
+      work_name_strings = Array.new
+      
+      h[:work_name_strings].each do |wns|
+        role = wns[:role]
+        if role == 'Author'
+          role = klass.creator_role
+        elsif role == 'Editor'
+          role = klass.contributor_role
+        end
+        work_name_strings << {:name=>wns[:name], :role=>role}
+      end
+      
+      work.work_name_strings = work_name_strings
+
+      #If we are adding to a person, pre-verify that person's contributorship
+      person = Person.find(h[:person_id]) if h[:person_id]
+      work.preverified_person = person if person
+
+      ###
+      # Setting Publication Info, including Publisher
+      ###
+      issn_isbn = h[:issn_isbn]
+      publisher = h[:publisher]
+
+      case klass.to_s
+      when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
+        publication = h[:title_primary] ? h[:title_primary] : 'Unknown'
+      when 'BookSection', 'JournalArticle', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Report', 'Generic'
+        publication = h[:publication] ? h[:publication] : 'Unknown'
+      else
+        publication = nil
+      end
+
+      if publication == 'Unknown'
+        if issn_isbn.blank?
+          publication = nil
+        else
+          publication = "Unknown (#{issn_isbn})"
+        end
+      end
+
+      publication_info = Hash.new
+      publication_info = {:publication_name => publication,
+                          :issn_isbn => issn_isbn,
+                          :publisher_name => publisher}
+
+      work.publication_info = publication_info
+
+      ###
+      # Setting Keywords
+      ###
+      work.keyword_strings = h[:keywords]
+
+      # Clean the hash of non-Work table data
+      # Cleaning will prepare the hash for ActiveRecord insert
+      h.delete(:klass)
+      h.delete(:work_name_strings)
+      h.delete(:publisher)
+      h.delete(:publication)
+      h.delete(:issn_isbn)
+      h.delete(:keywords)
+      h.delete(:source)
+      # @TODO add external_systems to work import
+      h.delete(:external_id)
+
+      #save remaining hash attributes
+      work.attributes=h
+      saved = work.save
+
+    rescue Exception => e
+      return nil, e
+    end
+
+    if saved
+      return work.id, nil
+    else
+      return nil, "Validation Error: Primary Title is missing."
+    end
+  end
+
   
   # Deduplication: deduplicate Work records on save
   def deduplicate
@@ -374,11 +475,11 @@ class Work < ActiveRecord::Base
   #  (not all hash values need be set)
   def publication_info=(publication_hash)
     logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
-    # If there is no publication name, set to Unknown
-    publication_name = publication_hash[:name]
-    if publication_name.nil? || publication_name.empty?
-      publication_name = "Unknown"
-    end
+
+    # Unknown publication names should be set to Unknown
+    # already. Nil is accepted for some work types.
+    publication_name = publication_hash[:publication_name]
+    
     
     # If there is no publisher name, set to Unknown
     publisher_name = publication_hash[:publisher_name]
@@ -388,31 +489,33 @@ class Work < ActiveRecord::Base
     #Create and assign publisher
     publisher = Publisher.find_or_create_by_name(publisher_name)
     self.publisher = publisher.authority
-   
-    # We can have more than one Publisher name
-    # Ex: [Physics of Plasmas, Phys Plasmas]
-    publication_name.each do |pub_name|
-      # Initialize our publication, as best we can,
-      # based on the information provided
 
-      # English: If you have an issn or isbn and good publisher data 
-      if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-        publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
-            :name => pub_name, 
-            :issn_isbn => publication_hash[:issn_isbn], 
-            :publisher_id => publisher.authority_id
-        )
-      elsif not(publisher.nil?)
-        publication = Publication.find_or_create_by_name_and_publisher_id(
-            :name => pub_name,  
-            :publisher_id => publisher.authority_id
-        )
-      else
-        publication = Publication.find_or_create_by_name(pub_name)
+    if publication_name
+      # We can have more than one Publisher name
+      # Ex: [Physics of Plasmas, Phys Plasmas]
+      publication_name.each do |pub_name|
+        # Initialize our publication, as best we can,
+        # based on the information provided
+
+        # English: If you have an issn or isbn and good publisher data
+        if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
+          publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
+              :name => pub_name,
+              :issn_isbn => publication_hash[:issn_isbn],
+              :publisher_id => publisher.authority_id
+          )
+        elsif not(publisher.nil?)
+          publication = Publication.find_or_create_by_name_and_publisher_id(
+              :name => pub_name,
+              :publisher_id => publisher.authority_id
+          )
+        else
+          publication = Publication.find_or_create_by_name(pub_name)
+        end
+
+        #save or update Work
+        self.publication = publication.authority
       end
-
-      #save or update Work
-      self.publication = publication.authority
     end
   end
  
@@ -702,8 +805,10 @@ class Work < ActiveRecord::Base
     open_url_kevs[:format]     = "&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal"
     open_url_kevs[:genre]      = "&rft.genre=article"
     open_url_kevs[:title]      = "&rft.atitle=#{CGI.escape(self.title_primary)}"
-    open_url_kevs[:source]     = "&rft.jtitle=#{self.publication.authority.name}"
-    open_url_kevs[:issn]       = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
+    unless self.publication.nil?
+      open_url_kevs[:source]     = "&rft.jtitle=#{self.publication.authority.name}"
+      open_url_kevs[:issn]       = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
+    end
     open_url_kevs[:date]       = "&rft.date=#{self.publication_date}"
     open_url_kevs[:volume]     = "&rft.volume=#{self.volume}"
     open_url_kevs[:issue]      = "&rft.issue=#{self.issue}"

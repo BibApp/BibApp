@@ -5,6 +5,14 @@ class Generic < Work
     def roles
       ['Creator', 'Contributor']
     end
+
+    def creator_role
+      'Creator'
+    end
+
+    def contributor_role
+      'Contributor'
+    end
   end
 
 end

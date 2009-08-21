@@ -5,7 +5,16 @@ class BookSection < Work
     def roles
       ['Author', 'Editor']
     end
+    
+    def creator_role
+      'Author'
+    end
+
+    def contributor_role
+      'Editor'
+    end
   end
+
 
   def open_url_kevs
     open_url_kevs = Hash.new
