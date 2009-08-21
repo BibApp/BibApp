@@ -406,7 +406,7 @@ class WorksController < ApplicationController
     attr_hash[:publisher] = @publisher.name
     
     params[:work].each do |key, val|
-      attr_hash[key] = val
+      attr_hash[key.to_sym] = val
     end
 
     attr_hash.delete_if { |key, val| val.blank? }
