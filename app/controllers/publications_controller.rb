@@ -75,9 +75,6 @@ class PublicationsController < ApplicationController
         :conditions => ["authority_id = ?", current_object.id],
         :order => "name"
       )
-      
-      # Remove current object -- @TODO: this should be in publicadtion model
-      @authority_for.delete(@current_object)
     end
 
     before :new do
