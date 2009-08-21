@@ -48,7 +48,6 @@ class PublicationsController < ApplicationController
       # Default SolrRuby params
       @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
       @filter       = filter.clone
-      @filter_no_strip = filter.clone
       @sort         = params[:sort] || "year"
       @sort         = "year" if @sort.empty?
       @page         = params[:page] || 0

@@ -35,9 +35,12 @@
           %select{:name => "export"}
             - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
               %option{:value => "#{opt.downcase}"}=opt
-              
+
           = hidden_field_tag "q", @query
-          = hidden_field_tag "fq", @filter_no_strip
+
+          - for filter in @filter
+            = hidden_field_tag "fq[]", filter
+            
           = hidden_field_tag "view", "all"
           - @page = 1 if @page == 0
           = hidden_field_tag "page", @page              
