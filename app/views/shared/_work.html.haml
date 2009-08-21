@@ -8,7 +8,7 @@
 -#    :show_dupe    => display possible accepted works for dupes
 -#    :links_array  => Array of default links to display under the work
 -#                     Valid values: {:find_it, (local library "find it" link)
--#                                    :cart,    (adds/removes from cart)
+-#                                    :saved,    (adds/removes from saved)
 -#                                    :edit}    (edit work)
                                  
 
@@ -16,7 +16,7 @@
 - allow_select ||= false
 - show_status ||= false
 - show_dupes ||= false
-- links_array ||= [:find_it, :cart]  #default to just 'find_it' and 'cart' links
+- links_array ||= [:find_it, :saved]  #default to just 'find_it' and 'saved' links
 
 %li.work{:class => "#{cycle('odd','even')}"}
   -#If work can be selected (and user is logged in), add a checkbox
@@ -52,13 +52,14 @@
         -if link==:find_it
           =link_to_findit(work)
 
-        -#"Add to Cart" and "Remove from Cart" links
-        -if link==:cart
-          - if !@cart.nil? && !@cart.items.nil?
-            - if @cart.items.include?(work['pk_i'].to_i)
-              =link_to_remove_from_cart(work['pk_i'])
-          - if @cart.nil? || !@cart.items.include?(work['pk_i'].to_i)
-            =link_to_add_to_cart(work['pk_i'])
+        -#"Add to Saved" and "Remove from Saved" links
+        -if link==:saved
+          - if !@saved.nil? && !@saved.items.nil?
+            - if @saved.items.include?(work['pk_i'].to_i)
+              %strong Saved - 
+              =link_to_remove_from_saved(work['pk_i'])
+          - if @saved.nil? || !@saved.items.include?(work['pk_i'].to_i)
+            =link_to_add_to_saved(work['pk_i'])
 
         -#"Edit" link
         -if link==:edit
