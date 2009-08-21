@@ -4,9 +4,6 @@ class PeopleController < ApplicationController
   # Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
   
-  # Find the @cart variable, used to display "add" or "remove" links for saved Works
-  before_filter :find_cart, :only => [:show]
-  
   make_resourceful do 
     build :index, :new, :create, :show, :edit, :update, :destroy
 
@@ -205,10 +202,6 @@ class PeopleController < ApplicationController
 
 
   private
-  
-  def find_cart
-    @cart = session[:cart] ||= Cart.new
-  end
   
   def ldap_search(query)
     begin

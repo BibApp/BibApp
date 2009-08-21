@@ -1,7 +1,4 @@
 class SearchController < ApplicationController
-
-  # Find the @cart variable, used to display "add" or "remove" links for saved Works  
-  before_filter :find_cart, :only => [:index, :advanced]
   
   def index
     if params[:q] || params[:fq]
@@ -9,7 +6,6 @@ class SearchController < ApplicationController
       # Default SolrRuby params
       @query        = params[:q] || "" # User query
       @filter       = params[:fq] || []
-      @filter_no_strip = params[:fq] || []
       @sort         = params[:sort] || "score"
       @sort         = "score" if @sort.empty?
       @page         = params[:page] || 0
@@ -139,10 +135,5 @@ class SearchController < ApplicationController
       # There's nothing to return, show them the search form
     end
   end
-  
-  private
-  
-  def find_cart
-    @cart = session[:cart] ||= Cart.new
-  end
+
 end

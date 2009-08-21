@@ -9,6 +9,9 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
+
+  # Find the @cart variable, used to display "add" or "remove" links for saved Works
+  before_filter :find_cart
   
   # Adds a work.id to the session[:cart] array
   def add_to_cart
@@ -46,9 +49,9 @@ class ApplicationController < ActionController::Base
   
   private
   
-  # Loads the current session cart, or starts a new cart
+  # Loads the current session cart, or starts a new cart  
   def find_cart
-    session[:cart] ||= Cart.new
+    @cart = session[:cart] ||= Cart.new
   end
 
 end
