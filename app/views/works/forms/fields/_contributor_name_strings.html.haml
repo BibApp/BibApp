@@ -1,10 +1,6 @@
 -# Add an contributors field, with Auto-Complete.
 -# Also adds a list of existing contributors
 
--# Initialize our list of contributors
--#  Default: use contributors assigned to @work.
--#  @contributor_name_strings should only exist if there were errors in saving work
-
 -# Get the roles for this work subklass
 -# Need arrays for the select box: <option value="Author">Author</option>
 - roles = @work.class.roles
@@ -16,6 +12,9 @@
 -# which is displayed seperately
 - contributors = @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} unless wns.role == first_role} if @work.name_strings
 - contributors.compact!
+
+-#  @editor_name_strings should only exist if there were errors in saving work
+- contributors = @editor_name_strings if @editor_name_strings
 
 - count = 0
 %div.author_block

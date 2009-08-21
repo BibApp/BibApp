@@ -1,7 +1,7 @@
 %fieldset
   %legend Dissertation / Thesis
 
-  = hidden_field_tag :type, 'DissertationThesis'
+  = hidden_field_tag :klass, 'DissertationThesis'
   = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
 
   %ul

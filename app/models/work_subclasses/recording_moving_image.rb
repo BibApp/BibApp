@@ -5,6 +5,14 @@ class RecordingMovingImage < Work
     def roles
       ['Director', 'Producer', 'Actor', 'Performer']
     end
+
+    def creator_role
+      'Director'
+    end
+
+    def contributor_role
+      'Performer'
+    end
   end
 
 end

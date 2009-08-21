@@ -5,6 +5,14 @@ class ConferenceProceedingWhole < Work
     def roles
       ['Editor']
     end
+
+    def creator_role
+      'Editor'
+    end
+
+    def contributor_role
+      'Editor'
+    end
   end
 
 end

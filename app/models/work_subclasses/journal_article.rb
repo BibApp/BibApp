@@ -5,6 +5,14 @@ class JournalArticle < Work
     def roles
       ['Author']
     end
+
+    def creator_role
+      'Author'
+    end
+
+    def contributor_role
+      'Author'
+    end
   end
   
   def open_url_kevs

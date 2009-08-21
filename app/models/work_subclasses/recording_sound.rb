@@ -5,6 +5,14 @@ class RecordingSound < Work
     def roles
       ['Musician', 'Performer', 'Interviewer', 'Interviewee', 'Musical Ensemble']
     end
+
+    def creator_role
+      'Performer'
+    end
+
+    def contributor_role
+      'Performer'
+    end
   end
 
 end
