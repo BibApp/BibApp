@@ -1,12 +1,6 @@
 class AdminController < ApplicationController
   #Only System Admins can access this controller's methods
   permit "admin of System"
-  
-  
-  make_resourceful do
-    build :all
-
-  end
 
   def index
     @tab_name = params[:tab] || "works"
@@ -71,7 +65,6 @@ class AdminController < ApplicationController
     # Default SolrRuby params
     @query        = "*:*" # Lucene syntax for "find everything"
     @filter       = filter.clone
-    @filter_no_strip = filter.clone
     @filter       = @filter.each{|f| f.strip!}
     @sort         = params[:sort] || "year"
     @sort         = "year" if @sort.empty?
@@ -168,6 +161,4 @@ class AdminController < ApplicationController
     #parse out our response doc into a hash and return
     return SwordClient::Response.post_response_to_hash(response_doc)
   end
-  
-  
 end
