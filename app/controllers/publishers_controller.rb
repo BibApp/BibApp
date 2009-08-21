@@ -37,14 +37,13 @@ class PublishersController < ApplicationController
       # Lock current object to filters
       filter = ["publisher_id:\"#{@current_object.id}\""]
       # Add any param filters
-      filter << params[:fq] if params[:fq]
-      filter = filter.compact
+      filter.concat(params[:fq]) if params[:fq]
+      filter.compact!
       filter.flatten!
       
       # Default SolrRuby params
       @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
       @filter       = filter.clone
-      @filter_no_strip = filter.clone
       @sort         = params[:sort] || "year"
       @sort         = "year" if @sort.empty?
       @page         = params[:page] || 0
