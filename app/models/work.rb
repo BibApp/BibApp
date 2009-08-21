@@ -18,7 +18,7 @@ class Work < ActiveRecord::Base
   has_many :name_strings, :through => :work_name_strings,
     :order => "position"
   
-  has_many :work_name_strings,
+  has_many :work_name_strings, :order => "position",
     :dependent => :delete_all
   
   has_many :people,
