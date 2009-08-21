@@ -218,84 +218,12 @@ class Import < ActiveRecord::Base
       
       # Now, actually *create* these works in database
       attr_hashes.map { |h|
-       
-        # Initialize the Work
-        klass = h[:klass]
-      
-        # Are we working with a legit SubKlass?
-        klass = klass.constantize
-        if klass.superclass != Work
-          raise NameError.new("#{klass_type} is not a subclass of Work") and return
-        end
-      
-        work = klass.new
-      
-        ###
-        # Setting WorkNameStrings
-        ###
-        work_name_strings = h[:work_name_strings]
-        work.work_name_strings = work_name_strings
-      
-        #If we are adding to a person, pre-verify that person's contributorship
-        work.preverified_person = person if person
-    
-        ###
-        # Setting Publication Info, including Publisher
-        ###
-        issn_isbn = h[:issn_isbn]
-        publication_info = Hash.new
-        publication_info = {:name => h[:publication], 
-                                    :issn_isbn => issn_isbn,
-                                    :publisher_name => h[:publisher]}
-
-        # If publication[:name] is nothing and work type is ConferenceProceeding
-        # - Make title_secondary publication name
-
-        if publication_info[:name].nil? || publication_info[:name].empty?
-          if klass_type = "ConferenceProceeding"
-            publication_info[:name] = h[:title_secondary]
-          end
-        end
-
-        work.publication_info = publication_info
-    
-        # Very minimal validation -- just check that we have a title
-        if h[:title_primary].nil? or h[:title_primary] == ""
-          self.import_errors[:missing_title] = "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
-          
-          logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
-          logger.warn("End Work \n\n")
-        else
-     
-          ###
-          # Setting Keywords
-          ###
-          work.keyword_strings = h[:keywords]
-
-          # Clean the hash of non-Work table data
-          # Cleaning will prepare the hash for ActiveRecord insert
-          h.delete(:klass)
-          h.delete(:work_name_strings)
-          h.delete(:publisher)
-          h.delete(:publication)
-          h.delete(:publication_place)
-          h.delete(:issn_isbn)
-          h.delete(:keywords)
-          h.delete(:source)
-          # @TODO add external_systems to work import
-          h.delete(:external_id)
-          
-          #save remaining hash attributes
-          work.attributes=h
-          work.save_and_set_for_index
-   
-          # current user automatically gets 'admin' permissions on work
-          # (only if he/she doesn't already have that role on the work)
-          work.accepts_role 'admin', self.user
         
-          #add to batch of works created
-          works_added << work.id
-        end #end if no title
+        work, import_error = Work.create_from_hash(h)
+        
+        #add to batch of works created
+        self.works_added << work
+        self.import_errors[:import_error]
       }
       
       #index everything in Solr
