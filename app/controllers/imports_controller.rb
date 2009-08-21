@@ -5,6 +5,7 @@ class ImportsController < ApplicationController
   
   def index
     # List all current_user.imports
+    @imports = Import.paginate_by_user_id(current_user.id, :page => params[:page], :order => 'updated_at DESC')
   end
   
   def new
