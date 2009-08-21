@@ -10,48 +10,48 @@ class ApplicationController < ActionController::Base
   # See ActionController::RequestForgeryProtection for details
   protect_from_forgery
 
-  # Find the @cart variable, used to display "add" or "remove" links for saved Works
-  before_filter :find_cart
+  # Find the @saved variable, used to display "add" or "remove" links for saved Works
+  before_filter :find_saved
   
-  # Adds a work.id to the session[:cart] array
-  def add_to_cart
-    @cart = find_cart
+  # Adds a work.id to the session[:saved] array
+  def add_to_saved
+    @saved = find_saved
     work = Work.find(params[:id])
-    @cart.add_work(work)
+    @saved.add_work(work)
     redirect_to :back
   end
   
-  def add_many_to_cart
-    @cart = find_cart
+  def add_many_to_saved
+    @saved = find_saved
     
     works = Index.fetch_all_ids(params[:query],params[:facets],params[:sort],params[:rows])
     
     works.each do |work|
       work = Work.find(work)
-      @cart.add_work(work)
+      @saved.add_work(work)
     end
     
     redirect_to :back
   end
 
-  # Removes a work.id to the session[:cart] array  
-  def remove_from_cart
-    @cart = find_cart
-    @cart.remove_work(params[:id].to_i)
+  # Removes a work.id to the session[:saved] array  
+  def remove_from_saved
+    @saved = find_saved
+    @saved.remove_work(params[:id].to_i)
     redirect_to :back
   end
 
-  # Sets the session[:cart] array to nil    
-  def delete_cart
-    session[:cart] = nil
-    redirect_to cart_path
+  # Sets the session[:saved] array to nil    
+  def delete_saved
+    session[:saved] = nil
+    redirect_to saved_path
   end
   
   private
   
-  # Loads the current session cart, or starts a new cart  
-  def find_cart
-    @cart = session[:cart] ||= Cart.new
+  # Loads the current session saved, or starts a new saved  
+  def find_saved
+    @saved = session[:saved] ||= Saved.new
   end
 
 end

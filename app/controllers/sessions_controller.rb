@@ -33,17 +33,17 @@ class SessionsController < ApplicationController
     redirect_back_or_default($APPLICATION_URL)
   end
   
-  def cart
-    @cart   = session[:cart]
+  def saved
+    @saved   = session[:saved]
     @page   = params[:page] || 1
     @rows   = params[:rows] || 10
     @export = params[:export] || ""
     
-    if !@cart.nil?
+    if !@saved.nil?
       @works = Work.paginate(
         :page => @page, 
         :per_page => @rows,
-        :conditions => ["id in (?)", @cart.items]
+        :conditions => ["id in (?)", @saved.items]
       )
     end
     

@@ -1,9 +1,9 @@
-/ === Sessions === Cart ===
+/ === Sessions === Saved ===
 / Main
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
     - if @works.nil? || @works.empty?
-      %h2 Cart
+      %h2 Saved
       %p Nothing added yet.
 
     - elsif !@export.empty?
@@ -14,9 +14,9 @@
       - content_for :admin_bar do
         %div.span-24#admin-actions
           %ul#edit-actions
-            %li=link_to_deletecart
+            %li=link_to_delete_saved
       
-      %h2="Cart (#{@cart.items.size})"
+      %h2="Saved (#{@saved.items.size})"
 
       / Sort Form
       %div{:class => "span-13 append-1 last"}

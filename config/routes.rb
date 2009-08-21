@@ -140,17 +140,17 @@ ActionController::Routing::Routes.draw do |map|
   map.advanced_search 'search/advanced', :controller => 'search', :action => 'advanced'
   
   ####
-  # Cart routes
+  # Saved routes
   ####
-  map.cart '/cart',
+  map.saved '/saved',
     :controller => 'sessions',
-    :action => 'cart'
-  map.delete_cart '/sessions/delete_cart',
+    :action => 'saved'
+  map.delete_saved '/sessions/delete_saved',
     :controller => 'sessions',
-    :action => 'delete_cart'
-  map.add_many_to_cart '/sessions/add_many_to_cart',
+    :action => 'delete_saved'
+  map.add_many_to_saved '/sessions/add_many_to_saved',
     :controller => 'sessions',
-    :action => 'add_many_to_cart'
+    :action => 'add_many_to_saved'
   
   ####
   # Authentication routes

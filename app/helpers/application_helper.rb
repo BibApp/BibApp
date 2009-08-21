@@ -165,16 +165,16 @@ module ApplicationHelper
     end
   end
   
-  def link_to_add_to_cart(id)
-    link_to "Add to cart", :action => "add_to_cart", :id => id
+  def link_to_add_to_saved(id)
+    link_to "Save", :action => "add_to_saved", :id => id
   end
   
-  def link_to_remove_from_cart(id)
-    link_to "Remove from cart ", :action => "remove_from_cart", :id => id
+  def link_to_remove_from_saved(id)
+      link_to "Remove ", :action => "remove_from_saved", :id => id
   end
   
-  def link_to_deletecart
-    link_to "Empty cart?", :controller => "sessions", :action => "delete_cart"
+  def link_to_delete_saved
+    link_to "Empty saved items?", :controller => "sessions", :action => "delete_saved"
   end
   
   def coin(work)
