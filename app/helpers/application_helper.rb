@@ -101,8 +101,12 @@ module ApplicationHelper
   end
   
   def link_to_work_publication(work)
-    pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-    return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
+    if work['publication_data'].blank?
+      return ""
+    else
+      pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
+      return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
+    end 
   end
   
   def link_to_work_publisher(work)
