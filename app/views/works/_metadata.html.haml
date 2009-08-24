@@ -114,7 +114,7 @@
       - label = "Performance Date"
     - when 'JournalWhole'
       - label = "Dates"
-    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture'
+    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
       - label = "Conference Dates"
     %tr
       %td.label
@@ -226,7 +226,7 @@
   - unless @work.end_page.blank?
     - label = "End Page"
     - case @work.class.to_s
-    - when 'BookWhole', 'Monograph', 'ConferenceProceeding', 'DissertationThesis'
+    - when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
       - label = "Total Pages"
     %tr
       %td.label

@@ -171,11 +171,15 @@ class Publication < ActiveRecord::Base
     #Parse Solr data (produced by to_solr_data)
     # return Publication name and ID
     def parse_solr_data(publication_data)
-      data = publication_data.split("||")
-      name = data[0]
-      id = data[1]  
-      
-      return name, id
+      if publication_data.blank?
+        return nil, nil
+      else
+        data = publication_data.split("||")
+        name = data[0]
+        id = data[1]
+
+        return name, id
+      end
     end
   end
 end
