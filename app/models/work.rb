@@ -101,6 +101,7 @@ class Work < ActiveRecord::Base
     update_scoring_hash
     update_archive_state
     update_machine_name
+    update_authorities
     
     #re-check for duplicate works (after all updates have completed)
     deduplicate
@@ -178,14 +179,12 @@ class Work < ActiveRecord::Base
    def is_archived
     self.work_archive_state_id=3
   end
-  
-  
+
   
   ########## Methods ##########
   # Rule #1: Comment H-E-A-V-I-L-Y
   # Rule #2: Include @TODOs
 
-    
   # List of all currently enabled Work Types
   def self.types
     # @TODO: Add each work subklass to this array
@@ -641,6 +640,15 @@ class Work < ActiveRecord::Base
     end
   end
   
+  #Update Publication and Publisher Authorities (called by after_save callback)
+  def update_authorities
+    if !self.publication.nil?
+      self.authority_publication_id  = self.publication.authority.id
+      self.authority_publisher_id    = self.publication.authority.publisher.id
+      self.save_without_callbacks
+    end
+  end
+  
   # Returns to Work Type URI based on the EPrints Application Profile's
   # Type vocabulary.  If the type is not available in the EPrints App Profile,
   # then the URI of the appropriate DCMI Type is returned.
@@ -797,6 +805,14 @@ class Work < ActiveRecord::Base
       editors << {:name => name[:name], :id => name[:id]}
     end
     return editors
+  end
+  
+  def publication_authority
+    Publication.find(:first, :conditions => ["id = ?", self.authority_publication_id])
+  end
+  
+  def publisher_authority
+    Publisher.find(:first, :conditions => ["id = ?", self.authority_publisher_id])
   end
  
   # In case there isn't a subklass open_url_kevs method

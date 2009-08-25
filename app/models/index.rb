@@ -64,14 +64,14 @@ class Index
     :groups_data => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.to_solr_data}}.uniq.flatten},
     
     # Publication
-    :publication => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.name},
-    :publication_id => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.id},
-    :publication_data => Proc.new{|record| record.publication.nil? ? nil : record.publication.authority.to_solr_data},
+    :publication => Proc.new{|record| record.publication.nil? ? nil : record.publication_authority.name},
+    :publication_id => Proc.new{|record| record.publication.nil? ? nil : record.authority_publication_id},
+    :publication_data => Proc.new{|record| record.publication.nil? ? nil : record.publication_authority.to_solr_data},
     
     # Publisher
-    :publisher => Proc.new{|record| record.publisher.authority.name},
-    :publisher_id => Proc.new{|record| record.publisher.authority.id},
-    :publisher_data => Proc.new{|record| record.publisher.authority.to_solr_data},
+    :publisher => Proc.new{|record| record.publication.nil? ? nil : record.publisher_authority.name},
+    :publisher_id => Proc.new{|record| record.publication.nil? ? nil : record.authority_publisher_id},
+    :publisher_data => Proc.new{|record| record.publication.nil? ? nil : record.publisher_authority.to_solr_data},
     
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},

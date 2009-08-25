@@ -107,13 +107,7 @@ class Publication < ActiveRecord::Base
   end
   
   def authority_for_work_count
-    works = Array.new
-    self.authority_for.each do |publication|
-      works << publication.works.size
-    end
-    
-    # Sum a ruby array of work counts
-    return works.inject( 0 ) { |sum,x| sum+x }
+    Work.find(:all, :conditions => ["authority_publication_id = ? and work_state_id = ?", self.id, 3]).size
   end
   
   #Update authorities for related models, when Publication Authority changes
@@ -132,8 +126,15 @@ class Publication < ActiveRecord::Base
       end
       
       # Update works
+      logger.debug("\n\n===Updating Works===\n\n")
+      self.works.each do |work|
+        work.authority_publisher_id = self.authority_id
+        work.save_and_set_for_index_without_callbacks
+      end
+      
+      # Reindex
       logger.debug("\n\n===Reindexing Works===\n\n")
-      Index.batch_update_solr(self.works)
+      Index.batch_index
     end
   end
   
