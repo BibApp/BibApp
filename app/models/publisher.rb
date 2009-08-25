@@ -82,9 +82,18 @@ class Publisher < ActiveRecord::Base
         publication.save
       end
       
-      # Update Works
+      # Update works
+      logger.debug("\n\n===Updating Works===\n\n")
+      self.publications.each do |publication|
+        publication.works.each do |work|
+          work.authority_publisher_id = self.authority_id
+          work.save_and_set_for_index_without_callbacks
+        end
+      end
+      
+      # Reindex
       logger.debug("\n\n===Reindexing Works===\n\n")
-      Index.batch_update_solr(self.works)
+      Index.batch_index
     end
   end
   
@@ -180,9 +189,14 @@ class Publisher < ActiveRecord::Base
     #Parse Solr data (produced by to_solr_data)
     # return Publisher name and ID
     def parse_solr_data(publisher_data)
-      data = publisher_data.split("||")
-      name = data[0]
-      id = data[1]  
+      if !publisher_data.nil?
+        data = publisher_data.split("||")
+        name = data[0]
+        id = data[1]
+      else
+        name = "Unknown"
+        id = nil
+      end
       
       return name, id
     end

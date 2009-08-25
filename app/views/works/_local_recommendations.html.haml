@@ -6,6 +6,7 @@
         %li{:style => "padding:0.5em"}
           %p.metadata=link_to rec.title_primary.titleize, work_path(rec)
           %p.metadata
-            ="#{rec.publication.authority.name} |" 
+            - if !rec.publication.blank?
+              ="#{rec.publication.authority.name} |" 
             -if rec.publication_date
               ="#{rec.publication_date.year}"

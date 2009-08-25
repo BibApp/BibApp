@@ -102,7 +102,7 @@ module ApplicationHelper
   
   def link_to_work_publication(work)
     if work['publication_data'].blank?
-      return ""
+      return "Unknown"
     else
       pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
       return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
@@ -110,8 +110,12 @@ module ApplicationHelper
   end
   
   def link_to_work_publisher(work)
-    pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
-    return link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
+    if work['publisher_data'].blank?
+      return "Unknown"
+    else
+      pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
+      return link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
+    end
   end
 
   #Generate a "Find It!" OpenURL link, 
