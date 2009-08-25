@@ -1,7 +1,7 @@
 %div{:id => "contributorship_id-#{contributorship.id}", :class => "span-14", :style => "border-top: 1px dotted #CCC; margin-top:1em; padding-top:2em"}
   %div{:class => "span-9"}
     = check_box_tag "contrib_id[]", "#{contributorship.id}", false, {:style => "float: left;"}
-    = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(contributorship.work) }
+    = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(contributorship.work), :links_array => 'none' }
   %div{:class => "prepend-2 span-3 last"}
     %div{:id => "contributorship_admin-#{contributorship.id}", :class => "span-3"}
       - if contributorship.verified?
