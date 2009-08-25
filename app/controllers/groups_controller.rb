@@ -167,7 +167,7 @@ class GroupsController < ApplicationController
       @group.destroy
       respond_to do |format|
        flash[:notice] = "Group was successfully removed."
-       format.html {redirect_to :action => "edit"}
+       format.html {redirect_to groups_path()}
       end
     else
       respond_to do |format|
