@@ -8,8 +8,9 @@
 -#    :show_dupe    => display possible accepted works for dupes
 -#    :links_array  => Array of default links to display under the work
 -#                     Valid values: {:find_it, (local library "find it" link)
--#                                    :saved,    (adds/removes from saved)
--#                                    :edit}    (edit work)
+-#                                    :saved,   (adds/removes from saved)
+-#                                    :edit,    (edit work)
+-#                                    :none     (trumps all)}
                                  
 
 -# Initialize optional input variables
@@ -46,29 +47,30 @@
     = render :partial => "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :locals => {:work => work}
 
     .links
-      -links_array.each do |link|
+      - unless links_array.include? 'none'
+        -links_array.each do |link|
 
-        -#"Find It" Link
-        -if link==:find_it
-          =link_to_findit(work)
+          -#"Find It" Link
+          -if link==:find_it
+            =link_to_findit(work)
 
-        -#"Add to Saved" and "Remove from Saved" links
-        -if link==:saved
-          - if !@saved.nil? && !@saved.items.nil?
-            - if @saved.items.include?(work['pk_i'].to_i)
-              %strong Saved - 
-              =link_to_remove_from_saved(work['pk_i'])
-          - if @saved.nil? || !@saved.items.include?(work['pk_i'].to_i)
-            =link_to_add_to_saved(work['pk_i'])
+          -#"Add to Saved" and "Remove from Saved" links
+          -if link==:saved
+            - if !@saved.nil? && !@saved.items.nil?
+              - if @saved.items.include?(work['pk_i'].to_i)
+                %strong Saved -
+                =link_to_remove_from_saved(work['pk_i'])
+            - if @saved.nil? || !@saved.items.include?(work['pk_i'].to_i)
+              =link_to_add_to_saved(work['pk_i'])
 
-        -#"Edit" link
-        -if link==:edit
-          -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
-            =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path)
-          -if @return_path.nil?
-            =link_to "Edit", edit_work_path(work['pk_i'])
+          -#"Edit" link
+          -if link==:edit
+            -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
+              =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path)
+            -if @return_path.nil?
+              =link_to "Edit", edit_work_path(work['pk_i'])
 
-        -#As long as not last link, add a vertical pipe between links
-        -unless link==links_array.last
-          ="|"
+          -#As long as not last link, add a vertical pipe between links
+          -unless link==links_array.last
+            ="|"
   %div{:style=>"clear:both;"}
