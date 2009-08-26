@@ -1,0 +1,12 @@
+- m = Membership.find_by_person_id_and_group_id(@person.id, group_list_item.id)
+- if m
+  %li.parent{:style=>"list-style:none;"}
+    %strong=link_to m.group.name, group_path(m.group)
+    - if m.title
+      %span=" (#{m.title})"
+
+    - unless m.group.children.empty?
+      %ul.children
+        = render :partial => 'group_list_item', :collection => m.group.children
+- else
+  = render :partial => 'group_list_item', :collection => group_list_item.children
