@@ -25,7 +25,7 @@
       %p Congratulations! Nothing to do here.
     - else
       = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(@contributorship.work)}
-      -if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+      -if $DISPLAY_ABSTRACTS_AND_KEYWORDS and !@contributorship.work.keywords.blank?
         %h4 Keywords
         %p
           - @contributorship.work.keywords.each do |k|
