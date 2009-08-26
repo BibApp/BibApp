@@ -16,7 +16,7 @@
 %div.span-24
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
-  - if @view == "all" && @export.empty?
+  - if @view == "all"
   
     %div.span-22.prepend-1
 
@@ -43,7 +43,7 @@
               = submit_tag 'Go'
 
         %div.span-17.last
-          %h2= @group.name
+          %h2="#{link_to @group.name, group_path(@group)}"
           = render :partial => "shared/local_nav", :locals => {:object => "group"}
           
 
@@ -51,7 +51,7 @@
     %div#results.span-22.prepend-1
       = render :partial => "shared/facets"
         
-      / Works 
+      / Works
       = render :partial => "shared/works"
 
   - else
