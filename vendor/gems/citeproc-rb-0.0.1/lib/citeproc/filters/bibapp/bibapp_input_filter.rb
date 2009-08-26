@@ -36,7 +36,7 @@ module Bibapp
       citation = SimpleCitation.new
       citation.type = row.class.name
       citation.title = row.title_primary
-      citation.container_title = row.publication.name
+      citation.container_title = row.publication.blank? ? nil : row.publication.name
       citation.collection_title = row.title_tertiary
       citation.date_issued = row.year.to_s
       citation.publisher = row.publisher.name

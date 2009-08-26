@@ -139,6 +139,12 @@ class WorksController < ApplicationController
       @view = params[:view] || "splash"
 
       @has_next_page = ((Work.count.to_i - (@page.to_i * @rows.to_i)) > 0)
+
+      if @export && !@export.empty?
+        works = Work.find(@works.collect{|c| c['pk_i']}, :order => "publication_date desc")
+        ce = WorkExport.new
+        @works = ce.drive_csl(@export,works)
+      end
     end
   end # end make_resourceful
 

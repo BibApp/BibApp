@@ -7,6 +7,7 @@
 - show_status ||= false
 - show_dupes ||= false
 - links_array ||= [:find_it, :saved]  #default to just 'find_it' and 'saved' links
+- export_type ||= nil
 
 %div#works{:class => "span-17 last"}
   - if @q
@@ -34,7 +35,10 @@
           %label Send to:
           %select{:name => "export"}
             - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
-              %option{:value => "#{opt.downcase}"}=opt
+              - if opt.downcase == @export
+                %option{:value => "#{opt.downcase}", :selected=>"selected"}=opt
+              - else
+                %option{:value => "#{opt.downcase}"}=opt
 
           = hidden_field_tag "q", @query
 
@@ -49,8 +53,12 @@
 
     %div.span-17{:style => "margin-bottom:1em;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
-    %ol.span-17{:style => "padding:0; margin:0; clear:both;"}
-      - @works.each do |work|
-        = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :show_dupes => show_dupes, :links_array => links_array}
+    - if @export.blank?
+      %ol.span-17{:style => "padding:0; margin:0; clear:both;"}
+        - @works.each do |work|
+          = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :show_dupes => show_dupes, :links_array => links_array}
+    - else
+      %div.span-17{:style => "padding:0; margin:0; clear:both;"}
+        = @works
         
     %div{:class => "span-17"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
