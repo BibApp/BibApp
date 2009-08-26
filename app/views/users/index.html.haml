@@ -19,7 +19,8 @@
           %td
             %ul
               - user.roles.each do |role|
-                %li=role.description
+                - if role.authorizable_type == 'System' or role.authorizable_type == 'Group'
+                  %li=role.description
 
     %br/
     %br/

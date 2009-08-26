@@ -18,6 +18,7 @@
         %div.field
           %label="Roles in #{$APPLICATION_NAME}:"
           %ul.roles
-            -@user.roles.each do |role|
-              %li.role=role.description
+            - @user.roles.each do |role|
+              - if role.authorizable_type == 'System' or role.authorizable_type == 'Group'
+                %li=role.description
   

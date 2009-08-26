@@ -10,12 +10,12 @@ class Role < ActiveRecord::Base
   #it is a System-Wide, Class, or object-level role.
   def description
     @description = self.name
-  if self.authorizable_id
-    @description << " of #{self.authorizable.class.to_s} '#{self.authorizable.name}'"
-  elsif self.authorizable_type
-      @description << " of #{self.authorizable_type}"
-  else
-    @description << " (generic role)"
+    if self.authorizable_id
+      @description << " of #{self.authorizable.class.to_s} '#{self.authorizable.name}'"
+    elsif self.authorizable_type
+        @description << " of #{self.authorizable_type}"
+    else
+      @description << " (generic role)"
     end
   end
 end
