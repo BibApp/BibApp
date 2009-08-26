@@ -39,7 +39,7 @@ class Index
     :start_page => :start_page,
     :abstract => :abstract,
     :status => :work_state_id,
-    :issn_isbn => Proc.new{|record| record.publisher_authority.nil? ? nil : record.publisher_authority.issn_isbn},
+    :issn_isbn => Proc.new{|record| record.publication_authority.nil? ? nil : record.publication_authority.issn_isbn},
     
     # Work Type (index as "Journal article" rather than "JournalArticle")
     :type => Proc.new{|record| record[:type].underscore.humanize},
