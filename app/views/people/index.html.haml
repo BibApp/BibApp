@@ -33,7 +33,7 @@
       -@current_objects.each do |person|
         %tr{:class => cycle("odd", "even")}
           %td=image_tag(person.image_url, :class => "person-image", :width => "50px")
-          %td=link_to "#{person.last_first_middle}", person_path(person)
+          %td=link_to "#{person.display_name}", person_path(person)
           - if person.works.length > 0
             %td=link_to person.works.first, work_path(person.works.first)
           - else
