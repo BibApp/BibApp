@@ -20,10 +20,6 @@
         %div{:class => "span-3 big-number contributorship_score", :id => "contributorship_score-#{claim.id}"}
           %strong= "#{claim.score}% sure"
         %div{:class => "span-3"}
-          ="#{pluralize(claim.possibilities, "possible")}"
-        %div{:class => "span-3"}
-          ="#{pluralize(claim.candidates, "candidate")}"
-        %div{:class => "span-3"}
           %ul{:id => "contributorship_actions-#{claim.id}", :class => "contributorship_actions_list"}
             %li{:class => "inline"}=link_to("Verify", verify_contributorship_path(claim.id), :method => :put)
             |
