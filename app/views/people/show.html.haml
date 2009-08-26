@@ -21,13 +21,7 @@
       =image_tag(@person.image_url, :class => "person-image", :width => "125")
 
     %div.span-11
-      - if !@person.memberships.empty?
-        %dl#memberships.span-10
-          - @person.memberships.active.each do |m|
-            -if !m.group.hide?
-              %dt=link_to m.group.name, group_path(m.group)
-              - if m.title
-                %dd= "&ndash; #{m.title}" 
+      = render :partial => 'group_list'
                 
       - if @research_focus.strip.length > 0
         %div#research-focus.span-10
