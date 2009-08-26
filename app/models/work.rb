@@ -366,6 +366,11 @@ class Work < ActiveRecord::Base
       nil
     end
   end
+
+  # Returns the 
+  def name
+    return self.to_s
+  end
   
   # Initializes an array of Keywords
   # and saves them to the current Work
