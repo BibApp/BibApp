@@ -148,6 +148,18 @@ class WorksController < ApplicationController
     end
   end # end make_resourceful
 
+  def change_type
+    t = params[:type]
+    work = Work.find(params[:work_id])
+    
+    work.update_type_and_save_without_callbacks(t) if t
+    Index.update_solr(work)
+
+    respond_to do |format|
+      format.html {redirect_to edit_work_path(work.id)}
+      format.xml  {head :ok}
+    end
+  end
 
   # For paging make_resourceful publish
   def current_objects
