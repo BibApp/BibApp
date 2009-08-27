@@ -12,11 +12,9 @@
     %li
       = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form, :label => "Series Title"}
     %li
       = render :partial => 'works/forms/fields/volume_issue', :locals => {:form => form, :omit_volume => true, :label => "Series Number"}
-    %li
-      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Series Title"}
     %li
       = render :partial => 'works/forms/fields/publisher'
     %li

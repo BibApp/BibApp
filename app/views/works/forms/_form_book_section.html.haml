@@ -12,11 +12,9 @@
     %li
       = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Article/Chapter Title", :form => form}
     %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form, :label => "Book Title"}
     %li
       = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Book Title"}
     %li
       = render :partial => 'works/forms/fields/issn_isbn', :locals => {:isbn => true}
     %li

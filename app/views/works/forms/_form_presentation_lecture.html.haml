@@ -10,13 +10,11 @@
     %li
       = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
     %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form, :label => "Title of Conference or Occasion"}
     %li
       = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Title of Conference or Occasion"}
     %li
       = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
     %li

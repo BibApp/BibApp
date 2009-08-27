@@ -266,7 +266,9 @@ class Work < ActiveRecord::Base
       case klass.to_s
       when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
         publication = h[:title_primary] ? h[:title_primary] : 'Unknown'
-      when 'BookSection', 'JournalArticle', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Report', 'Generic'
+      when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
+        publication = h[:title_secondary] ? h[:title_secondary] : 'Unknown'
+      when 'JournalArticle', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Generic'
         publication = h[:publication] ? h[:publication] : 'Unknown'
       else
         publication = nil

@@ -1,4 +1,4 @@
-%table#metadata
+%table#metadata.span-15
   -#%tr
   -#%td.label Type:
   -#%td=@work.type
@@ -38,14 +38,21 @@
           = out.join(', ')
 
   - unless @work.title_primary.blank?
+    - label = "Title"
+    - case @work.class.to_s
+    - when 'BookSection'
+      - label = "Article/Chapter Title"
+    - when 'JournalArticle'
+      - label = "Article Title"
     %tr
-      %td.label Primary Title:
+      %td.label="#{label}:"
       %td
         = @work.title_primary
 
-  - unless @work.title_secondary.blank?
+  - unless @work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(@work.class.to_s)
+    - label = "Alternate Title"
     %tr
-      %td.label Alternate Title:
+      %td.label="#{label}:"
       %td
         = @work.title_secondary
 
@@ -86,6 +93,27 @@
       %td
         = @work.instrumentation
 
+  - unless @work.publication.nil? or @work.publication.name.blank?
+    - label = "Publication Title"
+    - case @work.class.to_s
+    - when 'BookSection'
+      - label = "Book Title"
+    - when 'JournalArticle', 'BookReview'
+      - label = "Journal Title"
+    - when 'ConferencePaper', 'ConferencePoster'
+      - label = "Conference Title"
+    - when 'PresentationLecture'
+      - label = "Title of Conference or Occasion"
+    - when 'Performance', 'RecordingSound', 'RecordingMovingImage'
+      - label = "Title of Larger Work"
+    - when 'Report'
+      - label = "Series Title"
+    %tr
+      %td.label
+        = "#{label}:"
+      %td
+        = link_to @work.publication_authority.name, publication_path(@work.publication_authority.id)
+
   - unless @work.volume.blank?
     %tr
       %td.label Volume:
@@ -121,25 +149,6 @@
         = "#{label}:"
       %td
         = @work.date_range
-
-  - unless @work.publication.nil? or @work.publication.name.blank?
-    - label = "Publication Title"
-    - case @work.class.to_s
-    - when 'BookSection'
-      - label = "Title of Book"
-    - when 'JournalArticle', 'BookReview'
-      - label = "Title of Journal"
-    - when 'ConferencePaper', 'ConferencePoster'
-      - label = "Title of Conference"
-    - when 'Performance', 'RecordingSound', 'RecordingMovingImage'
-      - label = "Title of Larger Work"
-    - when 'Report'
-      - label = "Title of Series"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = link_to @work.publication_authority.name, publication_path(@work.publication_authority.id)
 
   - unless @work.publication.nil? or @work.publication.issn_isbn.blank?
     - label = "ISBN"
@@ -259,7 +268,9 @@
     %tr
       %td.label URL:
       %td
-        = @work.links
+        -#to keep long, unbroken URLS from expanding the table
+        %div.span-11{:style => "overflow:auto"}
+          = @work.links
 
   - unless @work.identifier.blank?
     %tr
