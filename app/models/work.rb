@@ -227,18 +227,23 @@ class Work < ActiveRecord::Base
   
   # Creates a new work from an attribute hash
   def self.create_from_hash(h)
+        # Initialize the Work
+    klass = h[:klass]
+
+    # Are we working with a legit SubKlass?
+    klass = klass.constantize
+    if klass.superclass != Work
+      raise NameError.new("#{klass_type} is not a subclass of Work") and return
+    end
+
+    work = klass.new
+    update_from_hash(h, work)
+  end
+
+  # Updates an existing work from an attribute hash
+  def self.update_from_hash(h, work)
 
     begin
-      # Initialize the Work
-      klass = h[:klass]
-
-      # Are we working with a legit SubKlass?
-      klass = klass.constantize
-      if klass.superclass != Work
-        raise NameError.new("#{klass_type} is not a subclass of Work") and return
-      end
-
-      work = klass.new
 
       ###
       # Setting WorkNameStrings
