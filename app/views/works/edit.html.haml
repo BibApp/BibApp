@@ -15,7 +15,7 @@
         %label Change Type
         %select{:name => 'type'}
           - Work.types.each do |t|
-            - if Work.type_to_class(t) == @work.type
+            - if Work.type_to_class(t) == @work.class
               %option{:selected => "selected", :value => "#{Work.type_to_class(t)}"}= t
             - else
               %option{:value => "#{Work.type_to_class(t)}"}= t

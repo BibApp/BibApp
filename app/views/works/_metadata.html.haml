@@ -184,6 +184,8 @@
       %td
         -if @work.publisher_authority
           = link_to @work.publisher_authority.name, publisher_path(@work.publisher_authority.id)
+        -elsif @work.publisher
+          = link_to @work.publisher.authority.name, publisher_path(@work.publisher.authority.id)
         -else
           Unknown
 
