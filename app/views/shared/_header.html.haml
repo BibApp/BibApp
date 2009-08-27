@@ -29,6 +29,11 @@
             - else
               %li=link_to "Admin", {:controller => "admin", :action => "index"}
 
+        - if params['controller'] == "works"
+          %li#current=link_to "Works", works_path(:view => "all")
+        - else
+          %li=link_to "Works", works_path(:view => "all")
+
         - if params['controller'] == "groups"  
           %li#current=link_to "Groups", groups_path
         - else
