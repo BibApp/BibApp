@@ -217,6 +217,13 @@ class Work < ActiveRecord::Base
       "Generic"
       ]  
   end
+
+  def self.type_to_class(type)
+      t = type.gsub(" ", "") #remove spaces
+      t.gsub!("/", "") #remove slashes
+      t.gsub!(/[()]/, "") #remove any parens
+      t.constantize #change into a class
+  end
   
   # Creates a new work from an attribute hash
   def self.create_from_hash(h)
@@ -841,7 +848,7 @@ class Work < ActiveRecord::Base
     return open_url_kevs
   end
 
-  def update_type_and_save(new_type)
+  def update_type_and_save_without_callbacks(new_type)
     self[:type] = new_type
     self.save_without_callbacks
   end

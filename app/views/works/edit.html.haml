@@ -10,9 +10,22 @@
 
 %div.span-24
   %div.span-22.prepend-1
+    %div#change_type{:style=>"float:right;"}
+      - form_for :work, :url => {:action => :change_type} do |form|
+        %label Change Type
+        %select{:name => 'type'}
+          - Work.types.each do |t|
+            - if Work.type_to_class(t) == @work.type
+              %option{:selected => "selected", :value => "#{Work.type_to_class(t)}"}= t
+            - else
+              %option{:value => "#{Work.type_to_class(t)}"}= t
+        = hidden_field_tag :work_id, @work.id
+        = submit_tag 'Go'
+
     %h2 Edit a Work
 
     %div.span-22
+
       - form_for :work, @work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
         -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html"))
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
