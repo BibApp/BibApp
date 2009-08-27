@@ -2,10 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to diplay (default: Title Series)
+-#    :label    => Label to diplay (default: Series Title)
 
 -# Initialize optional input variables
-- label ||= "Title Series"
+- label ||= "Series Title"
 
 = form.label :title_tertiary, "#{label}:"
 = form.text_field :title_tertiary, :class=>'text'
