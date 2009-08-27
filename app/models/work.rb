@@ -252,7 +252,10 @@ class Work < ActiveRecord::Base
       # (e.g., for Artwork creator=>Artist, contributor=>Curator)
       ###
       work_name_strings = Array.new
+      
       klass = h[:klass]
+      klass = klass.constantize
+
       h[:work_name_strings].each do |wns|
         role = wns[:role]
         if role == 'Author'
