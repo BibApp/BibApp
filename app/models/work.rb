@@ -501,7 +501,8 @@ class Work < ActiveRecord::Base
     end
     #Create and assign publisher
     publisher = Publisher.find_or_create_by_name(publisher_name)
-    self.publisher = publisher.authority
+    self.publisher = publisher
+    self.authority_publisher_id = publisher.authority.id
 
     if publication_name
       # We can have more than one Publisher name
@@ -527,7 +528,8 @@ class Work < ActiveRecord::Base
         end
 
         #save or update Work
-        self.publication = publication.authority
+        self.publication = publication
+        self.authority_publication_id = publication.authority.id
       end
     end
   end
