@@ -59,7 +59,7 @@ class PenNamesController < ApplicationController
     @name_string.name = name
     @name_string.save
 
-    @person.name_strings << @name_string
+    @person.name_strings << @name_string unless @person.name_strings.include?(@name_string)
     respond_to do |format|
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
       format.js { render :action => :regen_lists }
