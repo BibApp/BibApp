@@ -21,7 +21,7 @@
       =image_tag(@person.image_url, :class => "person-image", :width => "125")
 
     %div.span-11
-      = render :partial => 'group_list'
+      = render :partial => 'shared/group_list'
                 
       - if @research_focus.strip.length > 0
         %div#research-focus.span-10

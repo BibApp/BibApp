@@ -7,6 +7,6 @@
 
     - unless m.group.children.empty?
       %ul.children
-        = render :partial => 'group_list_item', :collection => m.group.children
+        = render :partial => 'shared/group_list_item', :collection => m.group.children
 - else
-  = render :partial => 'group_list_item', :collection => group_list_item.children
+  = render :partial => 'shared/group_list_item', :collection => group_list_item.children
