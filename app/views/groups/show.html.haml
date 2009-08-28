@@ -8,6 +8,7 @@
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
+        %li=link_to "Add a Group", new_group_path
         %li= link_to "Edit this group", edit_group_path
         %li=link_to "Manage Roles", group_roles_path(@group)
 
