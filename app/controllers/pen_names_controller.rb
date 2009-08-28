@@ -51,11 +51,13 @@ class PenNamesController < ApplicationController
   def create_name_string
     #only 'editor' of person can assign a pen name
     permit "editor of person"
+
+    name = params[:name_string][:name]
+    machine_name = name.chars.gsub(/[\W]+/, " ").strip.downcase
     
-    machine_name = (params[:name_string][:name]).chars.gsub(/[\W]+/, " ").strip.downcase
-    
-    #@name_string = NameString.find_or_create_by_name(params[:name_string][:name])
     @name_string = NameString.find_or_create_by_machine_name(machine_name)
+    @name_string.name = name
+    @name_string.save
 
     @person.name_strings << @name_string
     respond_to do |format|
