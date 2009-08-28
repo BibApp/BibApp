@@ -81,7 +81,9 @@ class AttachmentsController < ApplicationController
     
     #initialize attachment(s) based on form info
     #(This allows for multiple uploads)
-    unless params[:file].nil?
+    if params[:file].nil?
+      missing = true
+    else
       params[:file].each do |f|
         if !f.nil? and f.size>0 #only upload if there's content to upload!
           #initialize new attachment with uploaded file data
@@ -100,7 +102,12 @@ class AttachmentsController < ApplicationController
     end
     
     respond_to do |format|
-      if @asset.save
+      if missing
+        flash[:warning] = 'No file was uploaded.'
+        format.html {redirect_to new_person_attachment_path(@asset.id)}
+        format.xml  {render :head => "ok"}
+
+      elsif @asset.save
         
         if attachment_count==1
           flash[:notice] = 'Attachment was successfully uploaded'
@@ -128,11 +135,25 @@ class AttachmentsController < ApplicationController
     
     #only editors of asset can update attachments
     permit "editor of :asset", :asset => @attachment.asset
-    
-    @attachment.attributes=params[:attachment]
+
+    if params[:attachement]
+      @attachment.attributes=params[:attachment]
+    else
+      missing = true
+    end
     
     respond_to do |format|
-      if @attachment.save
+      if missing
+        flash[:warning] = 'No file was uploaded.'
+        if @attachment.asset.kind_of?(Person)
+          format.html {redirect_to edit_person_attachment_path(@attachment.asset.id, @attachment.id)}
+          format.xml  {head :ok}
+        else
+          format.html {redirect_to get_response_url(@attachment.asset)}
+          format.xml  {head :ok}
+        end
+
+      elsif @attachment.save
         flash[:notice] = 'Attachment was successfully uploaded'
 
         if @asset.kind_of?(Person)
