@@ -23,6 +23,13 @@ class GroupsController < ApplicationController
       
       if params[:person_id]
         @person = Person.find_by_id(params[:person_id].split("-")[0])
+
+        # Collect a list of the person's top-level groups for the tree view
+        @top_level_groups = Array.new
+        @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
+          @top_level_groups << m.group.top_level_parent
+        end
+        @top_level_groups.uniq!
       end
       
       @page = params[:page] || @a_to_z[0]

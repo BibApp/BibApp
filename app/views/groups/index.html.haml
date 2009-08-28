@@ -27,9 +27,7 @@
           ="#{link_to @person.display_name, person_path(@person)}"
         = render :partial => "shared/local_nav", :locals => {:object => "person"} 
         
-        %ul
-          - @person.groups.each do |group|
-            %li=link_to group.name, group_path(group)
+        = render :partial => 'shared/group_list'
 
     - else
       / ### Groups
