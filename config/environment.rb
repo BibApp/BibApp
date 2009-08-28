@@ -50,6 +50,13 @@ Rails::Initializer.run do |config|
   #   rake gems:unpack - unpacks the gems into /vendor/gems/
   #   rake gems:build - builds gems that require local building
   #################################
+
+  #Rack - Rails 2.3.3 no longer bundles rack.
+  config.gem "rack", :version=>'>=1.0.0'
+  
+  #Haml - Haml plugin will fail initialization if haml gem is not installed.
+  config.gem "haml", :version=>'>=2.2.3'
+
   #Hpricot - used for various HTML parsing purposes
   config.gem "hpricot", :version=>"~>0.6", :source=>"http://code.whytheluckystiff.net"
 
@@ -142,4 +149,4 @@ require 'lib/error_handler'
 
 ### Mongrel Users ###
 # Rails 2.3.3 patch for Mongel
-require 'lib/mongrel_patch'
+#require 'lib/mongrel_patch'
