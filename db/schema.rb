@@ -9,17 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090812194920) do
+ActiveRecord::Schema.define(:version => 20090824183531) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
-    t.integer  "size",         :limit => 11
+    t.integer  "size"
     t.string   "content_type"
-    t.integer  "parent_id",    :limit => 11
+    t.integer  "parent_id"
     t.string   "thumbnail"
-    t.integer  "height",       :limit => 11
-    t.integer  "width",        :limit => 11
-    t.integer  "asset_id",     :limit => 11
+    t.integer  "height"
+    t.integer  "width"
+    t.integer  "asset_id"
     t.string   "asset_type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -31,24 +31,24 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   end
 
   create_table "contributorships", :force => true do |t|
-    t.integer  "person_id",                :limit => 11
-    t.integer  "work_id",                  :limit => 11
-    t.integer  "position",                 :limit => 11
+    t.integer  "person_id"
+    t.integer  "work_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "pen_name_id",              :limit => 11
+    t.integer  "pen_name_id"
     t.boolean  "highlight"
-    t.integer  "score",                    :limit => 11
+    t.integer  "score"
     t.boolean  "hide"
-    t.integer  "contributorship_state_id", :limit => 11
+    t.integer  "contributorship_state_id"
     t.string   "role"
   end
 
   add_index "contributorships", ["work_id", "person_id"], :name => "work_person_join"
 
   create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :limit => 11, :default => 0
-    t.integer  "attempts",   :limit => 11, :default => 0
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   end
 
   create_table "external_system_uris", :force => true do |t|
-    t.integer  "external_system_id", :limit => 11
-    t.integer  "work_id",            :limit => 11
+    t.integer  "external_system_id"
+    t.integer  "work_id"
     t.text     "uri"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -88,12 +88,12 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
     t.boolean  "hide"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer  "parent_id",    :limit => 11
+    t.integer  "parent_id"
     t.string   "machine_name"
   end
 
-  add_index "groups", ["name"], :name => "group_name", :unique => true
   add_index "groups", ["machine_name"], :name => "group_machine_name"
+  add_index "groups", ["name"], :name => "group_name", :unique => true
 
   create_table "identifiers", :force => true do |t|
     t.string   "name"
@@ -105,20 +105,20 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "identifiers", ["name", "type"], :name => "index_identifiers_on_name_and_type", :unique => true
 
   create_table "identifyings", :force => true do |t|
-    t.integer  "identifier_id",     :limit => 11, :null => false
-    t.integer  "identifiable_id",   :limit => 11, :null => false
-    t.string   "identifiable_type",               :null => false
-    t.integer  "position",          :limit => 11
+    t.integer  "identifier_id",     :null => false
+    t.integer  "identifiable_id",   :null => false
+    t.string   "identifiable_type", :null => false
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "identifyings", ["identifier_id"], :name => "index_identifyings_on_identifier_id"
   add_index "identifyings", ["identifiable_id", "identifiable_type"], :name => "index_identifyings_on_identifiable_id_and_identifiable_type"
+  add_index "identifyings", ["identifier_id"], :name => "index_identifyings_on_identifier_id"
 
   create_table "imports", :force => true do |t|
-    t.integer  "user_id",       :limit => 11, :null => false
-    t.integer  "person_id",     :limit => 11
+    t.integer  "user_id",       :null => false
+    t.integer  "person_id"
     t.string   "state"
     t.text     "works_added"
     t.text     "import_errors"
@@ -127,9 +127,9 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   end
 
   create_table "keywordings", :force => true do |t|
-    t.integer  "keyword_id", :limit => 11
-    t.integer  "work_id",    :limit => 11
-    t.integer  "position",   :limit => 11
+    t.integer  "keyword_id"
+    t.integer  "work_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -145,12 +145,12 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "keywords", ["name"], :name => "keyword_name", :unique => true
 
   create_table "memberships", :force => true do |t|
-    t.integer  "person_id",  :limit => 11
-    t.integer  "group_id",   :limit => 11
+    t.integer  "person_id"
+    t.integer  "group_id"
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position",   :limit => 11
+    t.integer  "position"
     t.date     "start_date"
     t.date     "end_date"
   end
@@ -169,8 +169,8 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "name_strings", ["name"], :name => "author_name"
 
   create_table "pen_names", :force => true do |t|
-    t.integer  "name_string_id", :limit => 11
-    t.integer  "person_id",      :limit => 11
+    t.integer  "name_string_id"
+    t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "pen_names", ["name_string_id", "person_id"], :name => "author_person_join", :unique => true
 
   create_table "people", :force => true do |t|
-    t.integer  "external_id",             :limit => 11
+    t.integer  "external_id"
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -207,10 +207,10 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "people", ["machine_name"], :name => "person_machine_name"
 
   create_table "publications", :force => true do |t|
-    t.integer  "sherpa_id",    :limit => 11
-    t.integer  "publisher_id", :limit => 11
-    t.integer  "source_id",    :limit => 11
-    t.integer  "authority_id", :limit => 11
+    t.integer  "sherpa_id"
+    t.integer  "publisher_id"
+    t.integer  "source_id"
+    t.integer  "authority_id"
     t.string   "name"
     t.string   "url"
     t.string   "code"
@@ -221,11 +221,11 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
     t.string   "machine_name"
   end
 
-  add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
   add_index "publications", ["authority_id"], :name => "fk_publication_authority_id"
-  add_index "publications", ["name"], :name => "publication_name"
   add_index "publications", ["issn_isbn"], :name => "issn_isbn"
   add_index "publications", ["machine_name"], :name => "publication_machine_name"
+  add_index "publications", ["name"], :name => "publication_name"
+  add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
 
   create_table "publisher_sources", :force => true do |t|
     t.string   "name"
@@ -234,9 +234,9 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   end
 
   create_table "publishers", :force => true do |t|
-    t.integer  "sherpa_id",        :limit => 11
-    t.integer  "source_id",        :limit => 11
-    t.integer  "authority_id",     :limit => 11
+    t.integer  "sherpa_id"
+    t.integer  "source_id"
+    t.integer  "authority_id"
     t.boolean  "publisher_copy"
     t.string   "name"
     t.string   "url"
@@ -253,14 +253,14 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   create_table "roles", :force => true do |t|
     t.string   "name",              :limit => 40
     t.string   "authorizable_type", :limit => 30
-    t.integer  "authorizable_id",   :limit => 11
+    t.integer  "authorizable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
-    t.integer  "user_id",    :limit => 11
-    t.integer  "role_id",    :limit => 11
+    t.integer  "user_id"
+    t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -276,11 +276,11 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "taggings", :force => true do |t|
-    t.integer  "tag_id",        :limit => 11
-    t.integer  "taggable_id",   :limit => 11
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
     t.string   "taggable_type"
     t.datetime "created_at"
-    t.integer  "user_id",       :limit => 11
+    t.integer  "user_id"
   end
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
@@ -306,9 +306,9 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
   end
 
   create_table "work_name_strings", :force => true do |t|
-    t.integer  "name_string_id", :limit => 11
-    t.integer  "work_id",        :limit => 11
-    t.integer  "position",       :limit => 11
+    t.integer  "name_string_id"
+    t.integer  "work_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "role"
@@ -329,15 +329,15 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
     t.text     "abstract"
     t.text     "notes"
     t.text     "links"
-    t.integer  "work_state_id",         :limit => 11
-    t.integer  "work_archive_state_id", :limit => 11
-    t.integer  "publication_id",        :limit => 11
-    t.integer  "publisher_id",          :limit => 11
+    t.integer  "work_state_id"
+    t.integer  "work_archive_state_id"
+    t.integer  "publication_id"
+    t.integer  "publisher_id"
     t.datetime "archived_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "original_data"
-    t.integer  "batch_index",           :limit => 11, :default => 0
+    t.integer  "batch_index",              :default => 0
     t.text     "scoring_hash"
     t.date     "publication_date"
     t.string   "language"
@@ -354,13 +354,15 @@ ActiveRecord::Schema.define(:version => 20090812194920) do
     t.string   "instrumentation"
     t.text     "admin_definable"
     t.text     "user_definable"
+    t.integer  "authority_publication_id"
+    t.integer  "authority_publisher_id"
   end
 
   add_index "works", ["batch_index"], :name => "batch_index"
+  add_index "works", ["machine_name"], :name => "work_machine_name"
   add_index "works", ["publication_id"], :name => "fk_work_publication_id"
   add_index "works", ["publisher_id"], :name => "fk_work_publisher_id"
-  add_index "works", ["work_state_id"], :name => "fk_work_state_id"
   add_index "works", ["type"], :name => "fk_work_type"
-  add_index "works", ["machine_name"], :name => "work_machine_name"
+  add_index "works", ["work_state_id"], :name => "fk_work_state_id"
 
 end
