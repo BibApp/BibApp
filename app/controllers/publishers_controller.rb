@@ -20,6 +20,8 @@ class PublishersController < ApplicationController
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters.collect { |d| d.letter.upcase }
       
+      @authorities = Publisher.find(:all, :conditions => ["id = authority_id and upper(name) like ?", "%#{params[:search]}%"])
+      
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
