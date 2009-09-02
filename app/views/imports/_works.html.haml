@@ -27,6 +27,6 @@
 
     %ol.span-14.works{:style => "clear:both;"}
       - @works.each do |work|
-        = #render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work), :allow_select => true, :show_status=>true, :links_array=>[:edit]}
+        = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work), :allow_select => true, :show_status=>true, :links_array=>[:edit]}
 
     %div.span-14= will_paginate @works
