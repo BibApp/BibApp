@@ -14,6 +14,8 @@ class Publisher < ActiveRecord::Base
   has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
 
   #### Callbacks ####
+
+  named_scope :authorities, :conditions => ["id = authority_id"]
   
   before_validation_on_create :set_initial_states
   

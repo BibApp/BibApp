@@ -1,6 +1,8 @@
 class Publication < ActiveRecord::Base
-  
-  
+     
+  #### Validations ####
+  validates_uniqueness_of :name, :scope => :issn_isbn, :message => "Sorry this name and issn_isbn already exist in the list"
+
   #### Associations ####
   
   belongs_to :publisher
@@ -12,6 +14,7 @@ class Publication < ActiveRecord::Base
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
   
+  named_scope :authorities, :conditions => ["id = authority_id"]
   
   #### Callbacks ####
   
@@ -27,6 +30,18 @@ class Publication < ActiveRecord::Base
   # (That way Publication info is updated completely *before* re-indexing of works)
   
   #### Methods ####
+  
+  def validate_name
+    "#{self.name} #{self.issn_isbn}".downcase.gsub(/[^a-zA-Z0-9]+/, "")
+  end
+
+  def publisher_name
+    publisher.name if publisher
+  end
+  
+  def publisher_name=(name)
+    self.publisher = Publisher.find_or_create_by_name(name) unless name.blank?
+  end
   
   def isbns
     isbns = Array.new
@@ -116,19 +131,20 @@ class Publication < ActiveRecord::Base
     # If Publication authority changed, we need to echo new authority key
     # to each related model.
     logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
-    if self.authority_id_changed? and self.authority_id != self.id
+    if self.authority_id_changed?
       
       # Update publications
       logger.debug("\n\n===Updating Publications===\n\n")
       self.authority_for.each do |pub|
         pub.authority_id = self.authority_id
-        pub.save
+        pub.save_without_callbacks
       end
       
       # Update works
       logger.debug("\n\n===Updating Works===\n\n")
       self.works.each do |work|
-        work.authority_publisher_id = self.authority_id
+        work.authority_publication_id = self.authority_id
+        work.authority_publisher_id = self.authority.publisher.authority.id
         work.save_and_set_for_index_without_callbacks
       end
       
