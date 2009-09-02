@@ -37,8 +37,11 @@ class IndexObserver < ActiveRecord::Observer
       works = get_associated_works(record)
 
       # @TODO: Asynchronously update Solr index for affected Works
-      works.each{|work| work.save_and_set_for_index_without_callbacks}
-      Index.batch_index
+      # Check to see if object has associated works -- attachments for archiving will not.
+      if !works.nil?
+        works.each{|work| work.save_and_set_for_index_without_callbacks}
+        Index.batch_index
+      end
     end
   end
   
