@@ -125,18 +125,7 @@ module ApplicationHelper
     #Get our OpenURL information
     link_text, base_url, suffix = find_openurl_info
     
-    #Substitute Work title
-    suffix = (work['title'].nil?) ? suffix.gsub("[title]", "") : suffix.gsub("[title]", work['title'].gsub(" ", "+"))
-    #Substitute Work year
-    suffix = (work['year'].nil?) ? suffix.gsub("[year]", "") : suffix.gsub("[year]", work['year'].to_s)
-    #Substitute Work issue
-    suffix = (work['issue'].nil?) ? suffix.gsub("[issue]", "") : suffix.gsub("[issue]", work['issue'].to_s)
-    #Substitute Work volume
-    suffix = (work['volume'].nil?) ? suffix.gsub("[vol]", "") : suffix.gsub("[vol]", work['volume'].to_s)
-    #Substitute Work start-page
-    suffix = (work['start_page'].nil?) ? suffix.gsub("[fst]", "") : suffix.gsub("[fst]", work['start_page'].to_s)
-    #Substitute Work ISSN/ISBN
-    suffix = (work['issn_isbn'].nil?) ? suffix.gsub("[issn]", "") : suffix.gsub("[issn]", work['issn_isbn'].to_s)
+    suffix =coin(work)
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
@@ -188,6 +177,12 @@ module ApplicationHelper
   def coin(work)
     # @TODO - improve - probably have subklass.to_coin methods for each.
     # Genre differences: journal/article = atitle ; book/proceeding = title
+    
+    # We want AR objects!
+    if work.class == Hash
+      work = Work.find(work["pk_i"])
+    end
+
     coin = String.new
     coin += "ctx_ver=Z39.88-2004"                                             # OpenURL 1.0
     
