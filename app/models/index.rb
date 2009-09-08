@@ -39,7 +39,7 @@ class Index
     :start_page => :start_page,
     :abstract => :abstract,
     :status => :work_state_id,
-    :issn_isbn => Proc.new{|record| record.publication_authority.nil? ? nil : record.publication_authority.issn_isbn},
+    :issn_isbn => Proc.new{|record| record.publication.nil? ? nil : record.publication.issn_isbn},
     
     # Work Type (index as "Journal article" rather than "JournalArticle")
     :type => Proc.new{|record| record[:type].underscore.humanize},
@@ -64,14 +64,14 @@ class Index
     :groups_data => Proc.new{|record| record.people.collect{|p| p.groups.collect{|g| g.to_solr_data}}.uniq.flatten},
     
     # Publication
-    :publication => Proc.new{|record| record.publication_authority.nil? ? nil : record.publication_authority.name},
-    :publication_id => Proc.new{|record| record.publication_authority.nil? ? nil : record.authority_publication_id},
-    :publication_data => Proc.new{|record| record.publication_authority.nil? ? nil : record.publication_authority.to_solr_data},
+    :publication => Proc.new{|record| record.publication.nil? ? nil : record.publication.name},
+    :publication_id => Proc.new{|record| record.publication.nil? ? nil : record.publication.id},
+    :publication_data => Proc.new{|record| record.publication.nil? ? nil : record.publication.to_solr_data},
     
     # Publisher
-    :publisher => Proc.new{|record| record.publisher_authority.nil? ? nil : record.publisher_authority.name},
-    :publisher_id => Proc.new{|record| record.publisher_authority.nil? ? nil : record.authority_publisher_id},
-    :publisher_data => Proc.new{|record| record.publisher_authority.nil? ? nil : record.publisher_authority.to_solr_data},
+    :publisher => Proc.new{|record| record.publisher.nil? ? nil : record.publisher.name},
+    :publisher_id => Proc.new{|record| record.publisher.nil? ? nil : record.publisher.id},
+    :publisher_data => Proc.new{|record| record.publisher.nil? ? nil : record.publisher.to_solr_data},
     
     # Keywords
     :keywords => Proc.new{|record| record.keywords.collect{|k| k.name}},

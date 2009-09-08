@@ -1,7 +1,6 @@
 class Publication < ActiveRecord::Base
      
   #### Validations ####
-  validates_uniqueness_of :name, :scope => :issn_isbn, :message => "Sorry this name and issn_isbn already exist in the list"
 
   #### Associations ####
   
@@ -131,20 +130,20 @@ class Publication < ActiveRecord::Base
     # If Publication authority changed, we need to echo new authority key
     # to each related model.
     logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
-    if self.authority_id_changed?
+    if self.authority_id_changed? and self.authority_id != self.id or self.publisher_id_changed?
       
       # Update publications
       logger.debug("\n\n===Updating Publications===\n\n")
       self.authority_for.each do |pub|
         pub.authority_id = self.authority_id
-        pub.save_without_callbacks
+        pub.save
       end
       
       # Update works
       logger.debug("\n\n===Updating Works===\n\n")
       self.works.each do |work|
-        work.authority_publication_id = self.authority_id
-        work.authority_publisher_id = self.authority.publisher.authority.id
+        work.publication_id = self.authority_id
+        work.publisher_id = self.authority.publisher.authority_id
         work.save_and_set_for_index_without_callbacks
       end
       

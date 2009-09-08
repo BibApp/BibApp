@@ -88,7 +88,7 @@ class Publisher < ActiveRecord::Base
       logger.debug("\n\n===Updating Works===\n\n")
       self.publications.each do |publication|
         publication.works.each do |work|
-          work.authority_publisher_id = self.authority_id
+          work.publisher_id = self.authority_id
           work.save_and_set_for_index_without_callbacks
         end
       end

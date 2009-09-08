@@ -98,10 +98,10 @@ class Work < ActiveRecord::Base
     self.reload
     
     #update dynamic database fields
+    update_authorities
     update_scoring_hash
     update_archive_state
     update_machine_name
-    update_authorities
     
     #re-check for duplicate works (after all updates have completed)
     deduplicate
@@ -501,16 +501,16 @@ class Work < ActiveRecord::Base
     # already. Nil is accepted for some work types.
     publication_name = publication_hash[:publication_name]
     
-    
     # If there is no publisher name, set to Unknown
     publisher_name = publication_hash[:publisher_name]
     if publisher_name.nil? || publisher_name.empty?
       publisher_name = "Unknown"
     end
+    
     #Create and assign publisher
-    publisher = Publisher.find_or_create_by_name(publisher_name)
-    self.publisher = publisher
-    self.authority_publisher_id = publisher.authority.id
+    set_publisher = Publisher.find_or_create_by_name(publisher_name)
+    self.publisher = set_publisher.authority
+    self.initial_publisher_id = set_publisher.id
 
     if publication_name
       # We can have more than one Publisher name
@@ -521,23 +521,25 @@ class Work < ActiveRecord::Base
 
         # English: If you have an issn or isbn and good publisher data
         if not(publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-          publication = Publication.find_or_create_by_name_and_issn_isbn_and_publisher_id(
-              :name => pub_name,
-              :issn_isbn => publication_hash[:issn_isbn],
-              :publisher_id => publisher.authority_id
+
+          publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(
+              :name => pub_name.to_s,
+              :issn_isbn => publication_hash[:issn_isbn].to_s,
+              :initial_publisher_id => set_publisher.id
           )
+
         elsif not(publisher.nil?)
-          publication = Publication.find_or_create_by_name_and_publisher_id(
+          publication = Publication.find_or_create_by_name_and_initial_publisher_id(
               :name => pub_name,
-              :publisher_id => publisher.authority_id
+              :initial_publisher_id => set_publisher.id
           )
         else
           publication = Publication.find_or_create_by_name(pub_name)
         end
 
         #save or update Work
-        self.publication = publication
-        self.authority_publication_id = publication.authority.id
+        self.publication = publication.authority
+        self.initial_publication_id = publication.id
       end
     end
   end
@@ -666,11 +668,9 @@ class Work < ActiveRecord::Base
   
   #Update Publication and Publisher Authorities (called by after_save callback)
   def update_authorities
-    if !self.publication.nil?
-      self.authority_publication_id  = self.publication.authority.id
-      self.authority_publisher_id    = self.publication.authority.publisher.id
-      self.save_without_callbacks
-    end
+    self.publication_id  = self.publication.authority_id
+    self.publisher_id    = self.publication.authority.publisher_id
+    self.save_without_callbacks
   end
   
   # Returns to Work Type URI based on the EPrints Application Profile's

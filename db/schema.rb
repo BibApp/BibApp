@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090824183531) do
+ActiveRecord::Schema.define(:version => 20090903151853) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20090824183531) do
     t.datetime "updated_at"
     t.string   "place"
     t.string   "machine_name"
+    t.integer  "initial_publisher_id"
   end
 
   add_index "publications", ["authority_id"], :name => "fk_publication_authority_id"
@@ -356,6 +357,8 @@ ActiveRecord::Schema.define(:version => 20090824183531) do
     t.text     "user_definable"
     t.integer  "authority_publication_id"
     t.integer  "authority_publisher_id"
+    t.integer  "initial_publication_id"
+    t.integer  "initial_publisher_id"
   end
 
   add_index "works", ["batch_index"], :name => "batch_index"
