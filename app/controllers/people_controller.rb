@@ -74,42 +74,9 @@ class PeopleController < ApplicationController
     end
     
     before :show do
-      
-      # Default SolrRuby params
-      @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
-      @filter       = params[:fq] || "person_id:\"#{@current_object.id}\""
-      @filter_no_strip = params[:fq] || "person_id:\"#{@current_object.id}\""
-      @filter       = @filter.split("+>+").each{|f| f.strip!}
-      @sort         = params[:sort] || "year"
-      @sort         = "year" if @sort.empty?
-      @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 50
-      @rows         = params[:rows] || 10
-      @export       = params[:export] || ""
 
-      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
-
-      #@TODO: This WILL need updating as we don't have *ALL* Work info from Solr!
-      # Process:
-      # 1) Get AR objects (works) from Solr results
-      # 2) Init the WorkExport class
-      # 3) Pass the export variable and works to Citeproc for processing
-
-      if @export && !@export.empty?
-        works = Work.find(@works.collect{|c| c["pk_i"]}, :order => "publication_date desc")
-        ce = WorkExport.new
-        @works = ce.drive_csl(@export,works)
-      end
-
-      @view = "all"
-      @title = @current_object.name
-      @research_focus = RedCloth.new(@current_object.research_focus).to_html
-      
-      @feeds = [{
-        :action => "show",
-        :id => @current_object.id,
-        :format => "rss"
-      }]
+      search(params)
+      @person = @current_object
 
       # Collect a list of the person's top-level groups for the tree view
       @top_level_groups = Array.new

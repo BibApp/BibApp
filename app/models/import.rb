@@ -29,7 +29,6 @@ class Import < ActiveRecord::Base
   aasm_state :reviewable, :enter => :notify_user
   aasm_state :accepted,   :enter => :accept_import
   aasm_state :rejected,   :enter => :reject_import
-  aasm_state :errored,    :enter => :error_state
   
   aasm_event :process do
     transitions :to => :processing, :from => :recieved
@@ -45,14 +44,6 @@ class Import < ActiveRecord::Base
   
   aasm_event :reject do
     transitions :to => :rejected, :from => :reviewable
-  end
-  
-  aasm_event :error do
-    transitions :to => :errored, :from => :processing
-  end
-  
-  def error_state
-    # @TODO
   end
    
   def notify_user

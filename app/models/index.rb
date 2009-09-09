@@ -196,8 +196,7 @@ class Index
     
     #Fetch all documents matching a particular query, 
     # along with the facets.
-    def fetch(query_string, filter, sort, page, facet_count, rows)
-
+    def fetch(query_string, filter, sort, order, page, facet_count, rows)
 
       #Check array of filters to see if work 'status' specified
       filter_by_status = false
@@ -240,7 +239,7 @@ class Index
               :limit => facet_count
             },
             :start => self.start(page),
-            :sort => [{"#{sort}" => :descending}],
+            :sort => [{"#{sort}" => order.to_sym}],
             :rows => rows
       }
       

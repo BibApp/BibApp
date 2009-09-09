@@ -8,7 +8,7 @@ class WorksController < ApplicationController
   before_filter :find_authorities, :only => [:new, :edit]
 
   make_resourceful do
-    build :index, :show, :new, :edit, :destroy
+    build :show, :new, :edit, :destroy
     
     publish :xml, :json, :yaml, :only => :show, :attributes => [
       :id, :type, :title_primary, :title_secondary, :title_tertiary,
@@ -81,72 +81,23 @@ class WorksController < ApplicationController
       permit "admin on work"
     end
     
-    before :index do
-      # Are we showing a person or group's works?
-      # - If there is an "_id" we need to behave properly.
-      
-      # We need a current_object
-      @current_object = nil
-      
-      if params[:person_id]
-       facet_field = "people"
-       @current_object = Person.find_by_id(params[:person_id].split("-")[0])
-       @person = @current_object
-       object = @person
-       # We want to show the citation list results page
-       params[:view] = "all"
-      elsif params[:group_id]
-       facet_field = "groups"
-       @current_object = Group.find_by_id(params[:group_id].split("-")[0])
-       @group = @current_object
-       object = @group
-       # We want to show the citation list results page
-       params[:view] = "all"
-      elsif params[:view] && params[:sort].nil?
-        # If showing all works, default sort is "year"
-        @sort = "year"
-      else
-        # Recent additions list sorted by "updated_at"
-        params[:sort] = "updated_at" unless params[:sort]
-      end
-      
-      # Solr filtering
-      # * Start with an empty array
-      # * If there are param filters, collect them
-      # * If we have a nested object, filter for object's works
-      
-      filter = Array.new
-      if params[:fq]
-        filter = params[:fq].collect
-      end
-      
-      filter = filter << "#{facet_field}:\"#{object.name}\"" if object
-      filter.uniq!
-      # Default SolrRuby params
-      @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
-      @filter       = filter
-      @sort         = params[:sort] || "year"
-      @sort         = "year" if @sort.empty?
-      @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 50
-      @rows         = params[:rows] || 10
-      @export       = params[:export] || ""
-      
-      # Public resultset... only show "accepted" Works
-      @filter << "status:3"
-
-      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
-      @view = params[:view] || "splash"
-
-      @has_next_page = ((Work.count.to_i - (@page.to_i * @rows.to_i)) > 0)
-
-      if @export && !@export.empty?
-        works = Work.find(@works.collect{|c| c['pk_i']}, :order => "publication_date desc")
-        ce = WorkExport.new
-        @works = ce.drive_csl(@export,works)
-      end
-    end
   end # end make_resourceful
+
+  def index
+    if params[:person_id]
+      @current_object = Person.find_by_id(params[:person_id].split("-")[0])
+      @person = @current_object
+      search(params)
+    elsif params[:group_id]
+      @current_object = Group.find_by_id(params[:group_id].split("-")[0])
+      @group = @current_object
+      search(params)
+    else
+      logger.debug("\n\n===Works: #{@current_object.inspect}")
+      # Default BibApp search method - ApplicationController
+      search(params)
+    end
+  end
 
   def change_type
     t = params[:type]

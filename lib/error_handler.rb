@@ -18,6 +18,7 @@ class ActionController::Base
       @query        = "*:*" # Lucene syntax for "find everything"
       @filter       = []
       @sort         = "year"
+      @order        = "descending"
       @page         = 0
       @facet_count  = 50
       @rows         = 10
@@ -26,7 +27,7 @@ class ActionController::Base
       # Public resultset... only show "accepted" Works
       @filter << "status:3"
 
-      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @order, @page, @facet_count, @rows)
 
       render :partial => "shared/not_found", :layout => "application", :status => "404"
     else
