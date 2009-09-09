@@ -5,7 +5,7 @@ class Notifier < ActionMailer::Base
     body(:user => user, :import_id => import_id)
   end
   
-  def error_summary(exception, clean_backtrace, params, session, request_env)
+  def error_summary(exception, clean_backtrace, params, session)
     recipients  "#{$SYSADMIN_EMAIL}"
     from        "#{$SYSADMIN_EMAIL}"
     subject     "BibApp - Exception summary: #{Time.now.strftime('%B %d, %Y')}"
@@ -13,8 +13,7 @@ class Notifier < ActionMailer::Base
       :exception => exception, 
       :clean_backtrace => clean_backtrace,
       :params => params, 
-      :session => session, 
-      :request_env => request_env
+      :session => session
     )
   end
 
