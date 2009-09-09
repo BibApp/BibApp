@@ -318,6 +318,9 @@
  <!-- All our facet data (*_facet_data fields) are matched by this dynamic field -->
  <dynamicField name="*_facet_data" type="string" indexed="true" stored="false" multiValued="true"/>
  
+ <!--===Dynamic Sorting Fields==-->
+ <dynamicField name="*_sort" type="string" indexed="true" stored="false"/>
+ 
 </fields>
 
 <!-- Field to use to determine and enforce document uniqueness. -->
@@ -361,6 +364,11 @@
 <copyField source="year" dest="text"/>
 <copyField source="abstract" dest="text"/>
 <copyField source="title" dest="text"/>
+
+<!--Copy titles into 'title_sort' field, so they can be used for sorting-->
+<copyField source="title" dest="title_sort"/>
+<copyField source="year" dest="year_sort"/>
+<copyField source="updated_at" dest="updated_at_sort"/>
 
 <!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
 <copyField source="abstract" dest="word"/>

@@ -67,13 +67,13 @@ class AdminController < ApplicationController
     @filter       = filter.clone
     @filter       = @filter.each{|f| f.strip!}
     @sort         = params[:sort] || "year"
-    @sort         = "year" if @sort.empty?
+    @order        = params[:order]|| "descending"
     @page         = params[:page] || 0
     @facet_count  = params[:facet_count] || 50
     @rows         = params[:rows] || 10
     @export       = params[:export] || ""
 
-    @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
+    @q,@works,@facets = Index.fetch(@query, @filter, @sort, @order, @page, @facet_count, @rows)
     t = true
   end
 

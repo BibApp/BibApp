@@ -11,11 +11,11 @@
 
 %div#works{:class => "span-17 last"}
   - if @q
-    %div{:class => "span-4"}
+    %div{:class => "span-13"}
       %h3="Results (#{@q.total_hits})"
 
     / Sort Form
-    %div{:class => "span-11 append-1 last"}
+    %div{:class => "span-17 append-1"}
       - form_tag "#works", :method => :get do
         #sort-by
           %label Show:
@@ -25,13 +25,23 @@
                 %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
               - else
                 %option{:value => "#{opt}"}= opt.titleize
+
           %label Sort by:
           %select{:name => "sort"}
-            - ["", "Year", "Score"].each do |opt|
-              - if opt.downcase == @sort
+            - ["", "Year", "Title", "Score"].each do |opt|
+              - if opt.downcase == @sort or opt.downcase == @sort.split("_")[0]
                 %option{:selected => "selected", :value => "#{opt.downcase}"}= opt.titleize
               - else
                 %option{:value => "#{opt.downcase}"}= opt
+
+          %label Order:
+          %select{:name => "order"}
+            - ["Ascending", "Descending"].each do |opt|
+              - if opt.downcase == @order
+                %option{:selected => "selected", :value => "#{opt.downcase}"}= opt.titleize
+              - else
+                %option{:value => "#{opt.downcase}"}= opt
+
           %label Send to:
           %select{:name => "export"}
             - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|

@@ -25,10 +25,10 @@
         %h3 Groups
         = render :partial => 'shared/group_list'
                 
-      - if @research_focus.strip.length > 0
+      - if @person.research_focus.strip.length > 0
         %div#research-focus.span-10
           %h3 Research Focus
-          %p=@research_focus
+          %p=@person.research_focus
     
     - if @facets[:people_data].size > 1
       %div.span-7.last

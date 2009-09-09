@@ -15,6 +15,12 @@ class PublicationsController < ApplicationController
         :works => [:id]
         }
       ]
+      
+    #Add a response for RSS
+    response_for :show do |format| 
+      format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
+      format.rss  #loads show.rss.rxml
+    end
 
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
@@ -34,45 +40,12 @@ class PublicationsController < ApplicationController
     end
 
     before :show do
-
-      # Lock current object to filters
-      filter = ["publication_id:\"#{@current_object.id}\""]
-      # Add any param filters
-      filter << params[:fq] if params[:fq]
-      filter = filter.compact
-      filter.flatten!
-      
-      # Default SolrRuby params
-      @query        = params[:q] || "*:*" # Lucene syntax for "find everything"
-      @filter       = filter.clone
-      @sort         = params[:sort] || "year"
-      @sort         = "year" if @sort.empty?
-      @page         = params[:page] || 0
-      @facet_count  = params[:facet_count] || 50
-      @rows         = params[:rows] || 10
-      @export       = params[:export] || ""
-
-      @q,@works,@facets = Index.fetch(@query, @filter, @sort, @page, @facet_count, @rows)
-
-      #@TODO: This WILL need updating as we don't have *ALL* Work info from Solr!
-      # Process:
-      # 1) Get AR objects (works) from Solr results
-      # 2) Init the WorkExport class
-      # 3) Pass the export variable and Works to Citeproc for processing
-
-      if @export && !@export.empty?
-        works = Work.find(@works.collect{|c| c["pk_i"]}, :order => "publication_date desc")
-        ce = WorkExport.new
-        @works = ce.drive_csl(@export,works)
-      end
-      
-      @view = "all"
-      @title = @current_object.name
-
+      search(params)
+      @publication = @current_object
 
       @authority_for = Publication.find(
         :all,
-        :conditions => ["authority_id = ?", current_object.id],
+        :conditions => ["authority_id = ?", @current_object.id],
         :order => "name"
       )
     end

@@ -39,7 +39,7 @@ class Group < ActiveRecord::Base
   end 
   
   def solr_filter
-    'groups:"' + self.name + '"'
+    'group_id:"' + self.id.to_s + '"'
   end
 
   #Update Machine Name of Group (called by after_save callback)

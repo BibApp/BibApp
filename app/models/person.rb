@@ -219,7 +219,7 @@ class Person < ActiveRecord::Base
   end
   
   def solr_filter
-    'people:"' + self.first_last + '"'
+    'person_id:"' + self.id.to_s + '"'
   end
 
   class << self
