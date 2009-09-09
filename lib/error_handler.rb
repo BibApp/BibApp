@@ -44,8 +44,7 @@ class ActionController::Base
           exception, 
           clean_backtrace(exception), 
           session,
-          params, 
-          request.env
+          params
         )
       rescue => e
         logger.error(e)
