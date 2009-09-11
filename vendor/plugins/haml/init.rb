@@ -1,8 +1,10 @@
 begin
   require File.join(File.dirname(__FILE__), 'lib', 'haml') # From here
 rescue LoadError
-  require 'haml' # From gem
+  require 'haml' if defined? Haml # From gem
 end
 
 # Load Haml and Sass
-Haml.init_rails(binding)
+if defined? Haml
+  Haml.init_rails(binding)
+end
