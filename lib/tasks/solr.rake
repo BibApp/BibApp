@@ -11,7 +11,7 @@ require 'index'
 namespace :solr do
 
   desc 'Starts Solr. Options accepted: RAILS_ENV=your_env, PORT=XX. Defaults to development if none.'
-  task :start do
+  task :start => :environment do
     begin
       n = Net::HTTP.new('localhost', SOLR_PORT)
       n.request_head('/').value
@@ -52,7 +52,7 @@ namespace :solr do
   end
 
   desc 'Stops Solr. Specify the environment by using: RAILS_ENV=your_env. Defaults to development if none.'
-  task :stop do
+  task :stop => :environment do
     #If Windows
     if RUBY_PLATFORM.include?('mswin32')
       #taskkill is only available in Windows XP
@@ -87,7 +87,7 @@ namespace :solr do
   end
 
   desc 'Remove Solr index'
-  task :destroy_index do
+  task :destroy_index => :environment do
     raise "In production mode. I'm not going to delete the index, sorry." if ENV['RAILS_ENV'] == "production"
     if File.exists?("#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}")
       Dir[ SOLR_HOME_PATH + "/data/#{ENV['RAILS_ENV']}/index/*"].each{|f| File.unlink(f)}
@@ -97,14 +97,14 @@ namespace :solr do
   end
   
   desc 'Optimize Solr index'
-  task :optimize_index do
+  task :optimize_index => :environment do
     puts "\nOptimizing Solr index...\n\n"
     Index.optimize_index
      puts "Finished optimization!"
   end
   
   desc 'Refresh Solr index'
-  task :refresh_index do
+  task :refresh_index => :environment do
     puts "\nRe-indexing all BibApp Works in Solr...\n\n"
     puts "**** Depending on the number of works, \n"
     puts "**** this may take a long time.\n\n"
@@ -128,7 +128,7 @@ namespace :solr do
   end
   
   desc 'Refresh Solr Spelling index'
-  task :refresh_spelling_suggestions do
+  task :refresh_spelling_suggestions => :environment do
     puts "\nRefreshing BibApp spelling suggestions in Solr...\n"
 
     #Call build_spelling_suggestions
