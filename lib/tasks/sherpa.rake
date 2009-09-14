@@ -8,7 +8,7 @@ require 'active_record'
 namespace :sherpa do
 
   desc 'Update SHERPA/RoMEO data.'
-  task :update_publisher_data do
+  task :update_publisher_data => :environment do
     puts "\nUpdating all SHERPA/RoMEO data in BibApp...\n"
 
     #Call update_sherpa_data, which re-indexes *everything* in BibApp
