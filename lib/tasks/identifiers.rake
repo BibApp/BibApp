@@ -8,7 +8,7 @@ require 'active_record'
 namespace :identifiers do
 
   desc 'Update Publication identifier data.'
-  task :validate_issn_isbns do
+  task :validate_issn_isbns => :environment do
     puts "\nUpdating all Publication identifier data in BibApp...\n"
     
     publications = Publication.find(:all)
