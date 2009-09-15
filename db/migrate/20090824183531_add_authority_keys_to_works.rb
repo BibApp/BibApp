@@ -24,7 +24,7 @@ class AddAuthorityKeysToWorks < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :works, :authority_publication_id
-    drop_column :works, :authority_publisher_id
+    remove_column :works, :authority_publication_id
+    remove_column :works, :authority_publisher_id
   end
 end
