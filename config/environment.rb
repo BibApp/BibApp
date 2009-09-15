@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
   config.gem "haml", :version=>'>=2.2.3'
 
   #Hpricot - used for various HTML parsing purposes
-  config.gem "hpricot", :version=>"~>0.6", :source=>"http://code.whytheluckystiff.net"
+  config.gem "hpricot", :version=>"~>0.6"
 
   #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
   config.gem "htmlentities", :version=>"~>4.0.0"
