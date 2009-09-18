@@ -18,7 +18,7 @@
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
     %div#image.span-4
-      =image_tag(@person.image_url, :class => "person-image", :width => "125")
+      =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
 
     %div.span-11
       - unless @person.groups.empty?
