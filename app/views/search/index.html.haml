@@ -36,7 +36,7 @@
           =render :partial => "advanced_search_form"
       - else
         / People
-        = render :partial => "shared/people", :locals => {:count => 10}
+        = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
 
         / Groups
         = render :partial => "shared/groups", :locals => {:count => 10}
