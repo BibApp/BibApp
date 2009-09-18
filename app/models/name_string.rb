@@ -10,9 +10,6 @@ class NameString < ActiveRecord::Base
   has_many :pen_names
   
   #### Callbacks ####
-  def after_create
-    set_name
-  end
   
   #### Named Scopes ####
   #Author and Editor name_strings
@@ -21,33 +18,6 @@ class NameString < ActiveRecord::Base
   
   def save_without_callbacks
     update_without_callbacks
-  end
-  
-  def set_name
-    # We use the machine_name field to find_or_create new NameString records
-    # If we have a new NameString row, we need to "best-guess" the name field
-    
-    # Run the machine name through NameCase:
-    # ex. "smith john w" => "Smith John W"
-    name = NameCase.new(self.machine_name).nc
-    
-    # If we have an isolated letter, it's probably an initial
-    # Split the string and measure each element, if it's one character long
-    # we'll add a period to the initial:
-    # ex. "Smith John W" => ["Smith", "John", "W."]
-    name = name.split.collect{|c| c = c.size > 1 ? c : c+"."}
-    
-    # The first array element is going to be the last_name, so we'll give it
-    # a comma:
-    # ex. ["Smith,", "John", "W."]
-    name[0] = name[0]+","
-    
-    # Last step, join on an empty space:
-    # ex. "Larson, John W."
-    self.name = name.join(" ")
-    
-    # Save the name, but avoid callbacks
-    self.save_without_callbacks
   end
   
   def to_param

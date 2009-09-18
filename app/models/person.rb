@@ -66,21 +66,46 @@ class Person < ActiveRecord::Base
     # with spaces and making sure double-spaces are reduced to single spaces
     
     # Clean first name "John"
-    first_name = self.first_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+    first_name = self.first_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
 
     # Clean middle name "William"
-    middle_name = self.middle_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+    middle_name = self.middle_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
 
     # Clean last name "Smith" 
-    last_name = self.last_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip.downcase
+    last_name = self.last_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
     
     # Collect the variant possibilities
     variants = Array.new
-    variants << (last_name + " " + first_name + " " + middle_name).downcase.strip
-    variants << (last_name + " " + first_name + " " + middle_name.first(1)).downcase.strip
-    variants << (last_name + " " + first_name).downcase.strip
-    variants << (last_name + " " + first_name.first(1) + " " + middle_name.first(1)).strip
-    variants << (last_name + " " + first_name.first(1)).downcase.strip
+    
+    # Smith, John William | smith john william
+    variants << {
+      :name => (last_name + ", " + first_name + " " + middle_name).strip, 
+      :machine_name => (last_name.downcase + " " + first_name.downcase + " " + middle_name.downcase).strip
+    }
+    
+    # Smith, John W. | smith john w
+    variants << {
+      :name => (last_name + ", " + first_name + " " + middle_name.first(1) + ".").strip,
+      :machine_name => (last_name.downcase + " " + first_name.downcase + " " + middle_name.first(1).downcase).strip
+    }
+    
+    # Smith, John | smith john
+    variants << {
+      :name => (last_name + ", " + first_name),
+      :machine_name => (last_name.downcase + " " + first_name.downcase).strip
+    }
+    
+    # Smith, J. W. | smith j w
+    variants << {
+      :name => (last_name + ", " + first_name.first(1) + ". " + middle_name.first(1) + ".").strip,
+      :machine_name => (last_name.downcase + " " + first_name.first(1).downcase + " " + middle_name.first(1).downcase).strip
+    }
+    
+    # Smith, J. | smith j
+    variants << {
+      :name => (last_name + ", " + first_name.first(1) + ".").strip,
+      :machine_name => (last_name.downcase + " " + first_name.first(1).downcase).strip
+    }
 
     # Find or create
     variants.uniq.each do |v|
