@@ -25,42 +25,9 @@ class ContributorshipsController < ApplicationController
   end
   
   def admin
-    
-    #find all visible, unverified contributorships
-    @unverified = Contributorship.unverified.visible.group_by do |i|
-      i[:work_id]
-    end
 
-    @current_page = params[:page].to_i || 1
-    @last_page = 1
-
-    if @unverified.length > 1
-      @last_page = @unverified.length
-    end
-
-    if @current_page < 1
-      @current_page = 1
-    end
-
-    if @current_page > @last_page
-      @current_page = @last_page
-    end
-    
-    @contributorship = nil
-    if @unverified.length > 0 
-      @contributorship = @unverified.values[@current_page - 1][0]
-    end
-    
-    if @contributorship == nil
-      # Do Nothing
-    else
-      @claims = Contributorship.unverified.visible.find(
-        :all, 
-        :conditions => ["work_id = ?", @contributorship.work_id],
-        :order => "score desc"
-      )
-    end
-    t=true
+    @people = Contributorship.unverified.visible.group_by{|c| c.person_id}
+    t = true
   end
 
   def verify_multiple

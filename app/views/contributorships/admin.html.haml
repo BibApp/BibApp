@@ -1,36 +1,19 @@
 / === Contributorships === Admin ===
 / Main
 
--#Require personalize.rb for Abstracts and Keywords
--require 'config/personalize.rb'
 
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %div{:style => "float:right;"}
-      - if @current_page < 2
-        %span
-          = "« Previous"
-      - else
-        %span
-          = link_to "« Previous", admin_contributorships_path(:page => @current_page - 1)
-      = "|"
-      - if @current_page < @last_page
-        %span
-          = link_to "Next »", admin_contributorships_path(:page => @current_page + 1)
-      - else
-        %span
-          = "Next »"
-    %h2= "Admin: Contributions (#{@unverified.size} unverified)"
-    - if @contributorship == nil
+    %h2= "Admin: Unverified Contributorships"
+    - if @people.length == 0
       %p Congratulations! Nothing to do here.
     - else
-      = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(@contributorship.work)}
-      -if $DISPLAY_ABSTRACTS_AND_KEYWORDS and !@contributorship.work.keywords.blank?
-        %h4 Keywords
-        %p
-          - @contributorship.work.keywords.each do |k|
-            %span{:id => "keyword-id-#{k.id}"}=k.name
-    
-      %div{:class => "span-22"}
-        %ol#claims
-          = render :partial => 'claim', :collection => @claims
+      %table
+        %tr
+          %th Person
+          %th{:style=>"text-align:center"} Potential Matches
+        - @people.each do |p|
+          - person = Person.find(p[0])
+          %tr
+            %td=link_to person.name, contributorships_path(:person_id=>p[0])
+            %td{:style=>"text-align:center"}=p[1].length
