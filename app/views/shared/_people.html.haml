@@ -7,6 +7,9 @@
     -# if there's a count specified, only show the first few
     - people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]
 
+    - if randomize
+      - people = people.sort_by{rand}
+
     - people.each do |p|
       - last_name, id, image_url, group_ids = Person.parse_solr_data(p.name)
       - if controller.controller_name == "groups"

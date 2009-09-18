@@ -89,12 +89,12 @@ class ApplicationController < ActionController::Base
     filter.uniq!
     
     # Default SolrRuby params
-    @query        = params[:q]            || "*:*" # Lucene syntax for "find everything"
+    @query        = params[:q]            || "*:*"  # Lucene syntax for "find everything"
     @filter       = filter
     @sort         = params[:sort]         || "year"
     @order        = params[:order]        || "descending"
     @page         = params[:page]         || 0
-    @facet_count  = params[:facet_count]  || 50
+    @facet_count  = params[:facet_count]            # Don't limit facet results
     @rows         = params[:rows]         || 10
     @export       = params[:export]       || ""
     
