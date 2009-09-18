@@ -33,6 +33,9 @@ class Contributorship   < ActiveRecord::Base
     self.send_later(:refresh_contributorships)
     
     if self.contributorship_state_id_changed?
+      # Update Person's scoring hash
+      self.person.update_scoring_hash
+
       # Update Solr!
       Index.update_solr(self.work)
     end
@@ -220,7 +223,7 @@ class Contributorship   < ActiveRecord::Base
       
       refresh.each do |r|
         r.hide = true
-        r.save_without_callbacks
+        r.save
       end
     end
   end
