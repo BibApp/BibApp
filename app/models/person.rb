@@ -165,7 +165,7 @@ class Person < ActiveRecord::Base
    known_years.delete(nil)
 
     
-    known_publication_ids = vps.collect{|vp| vp.work.publication.id}.uniq
+    known_publication_ids = vps.collect{|vp| vp.work.publication.id if vp.work.publication}.uniq
     known_collaborator_ids = vps.collect{|vp| vp.work.name_strings.collect{|ns| ns.id}}.flatten.uniq
     known_keyword_ids = vps.collect{|vp| vp.work.keywords.collect{|k| k.id}}.flatten.uniq
     

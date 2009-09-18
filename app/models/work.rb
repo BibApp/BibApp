@@ -290,9 +290,7 @@ class Work < ActiveRecord::Base
       end
 
       if publication == 'Unknown'
-        if issn_isbn.blank?
-          publication = nil
-        else
+        unless issn_isbn.blank?
           publication = "Unknown (#{issn_isbn})"
         end
       end
