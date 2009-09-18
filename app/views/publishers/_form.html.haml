@@ -1,6 +1,6 @@
 %fieldset
   %legend="Publisher"
-  - form_for @publisher, :url => {:controller => "publishers", :action => "update"} do |form|
+  - form_for @publisher do |form|
     %p
       %label="Name"
       %br/
@@ -21,9 +21,10 @@
       %label="Publisher's Copy Allowed?"
       %br/
       = form.check_box :publisher_copy
-    %p
-      %label Publisher Authority Record
-      %br/
-      = form.collection_select :authority_id, @publishers, :id, :name, {}, {:class => "span-12"}
+    -if @publisher.authority_id
+      %p
+        %label Publisher Authority Record
+        %br/
+        = form.collection_select :authority_id, @publishers, :id, :name, {}, {:class => "span-12"}
     %p.submit
       = submit_tag :save
