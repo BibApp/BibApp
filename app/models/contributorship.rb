@@ -223,7 +223,7 @@ class Contributorship   < ActiveRecord::Base
       
       refresh.each do |r|
         r.hide = true
-        r.save
+        r.save_without_callbacks
       end
     end
   end
