@@ -18,7 +18,8 @@
 
     %div.span-22.prepend-1
       %h2= @publication.name
-      %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
+      -if @publication.publisher
+        %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
       
       / Authority check
       - if @authority_for.size == 0
@@ -67,4 +68,5 @@
                   %tr
                     %td=link_to auth.name, publication_path(auth)
                     %td= auth.issn_isbn
-                    %td= auth.publisher.name
+                    -if auth.publisher
+                      %td= auth.publisher.name
