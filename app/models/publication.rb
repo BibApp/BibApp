@@ -39,6 +39,9 @@ class Publication < ActiveRecord::Base
   end
   
   def publisher_name=(name)
+    if name.blank?
+      name = "Unknown"
+    end
     self.publisher = Publisher.find_or_create_by_name(name) unless name.blank?
   end
   

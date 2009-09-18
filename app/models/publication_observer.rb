@@ -2,7 +2,9 @@ class PublicationObserver < ActiveRecord::Observer
  
   # On create, map publisher_id to initial_publisher authority id
   def before_create(publication)
-    publication.publisher_id = Publisher.find(:first, :conditions => ["publishers.id = ?", publication.initial_publisher_id]).authority.id
+    unless publication.initial_publisher_id.nil?
+      publication.publisher_id = Publisher.find(:first, :conditions => ["publishers.id = ?", publication.initial_publisher_id]).authority.id
+    end
   end
 
   # Anytime a Publication is saved (during create or update)
