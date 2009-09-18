@@ -63,8 +63,8 @@
         our researchers.
       
       %div.span-15
-        / People
-        = render :partial => "shared/people", :locals => {:count => 15}
+        / People - Randomized
+        = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
 
       / Works
       %div.span-7.last
