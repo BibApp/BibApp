@@ -5,11 +5,11 @@
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
-        %li=link_to_unless_current "Show all Imports", user_imports_path
-        %li=link_to_unless_current "Add an Import", new_user_import_path
+        %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
+        %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
         
   %div.span-22.prepend-1
-    %h2="Imports"
+    %h2="Imports for #{User.find(params[:user_id]).login}"
     
     = will_paginate @imports
     
@@ -20,10 +20,11 @@
           %td Imported For
           %td Date
           %td Status
-      - @imports.each do |import|
-        %tbody
-          %tr
-            %td=link_to "Batch-#{import.id}", user_import_path(current_user, import.id)
-            %td=imported_for(import)
-            %td=import.created_at
-            %td=import.state
+      - if @authorized
+        - @imports.each do |import|
+          %tbody
+            %tr
+              %td=link_to "Batch-#{import.id}", user_import_path(current_user, import.id)
+              %td=imported_for(import)
+              %td=import.created_at
+              %td=import.state

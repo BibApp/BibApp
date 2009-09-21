@@ -105,8 +105,8 @@ class User < ActiveRecord::Base
     ##################################################
     unless authorizable_obj.is_a? Class and authorizable_obj.to_s == 'System'
       #If user is a System Admin,
-        #then user has permissions to do ANYTHING 
-        return true if has_role?("admin", System) 
+      #then user has permissions to do ANYTHING 
+      return true if has_role?("admin", System)
       
       #If user has this role System-Wide,
       #then this role should cascade to everything else!

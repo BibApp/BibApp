@@ -4,8 +4,16 @@ class ImportsController < ApplicationController
   before_filter :login_required
   
   def index
-    # List all current_user.imports
-    @imports = Import.paginate_by_user_id(current_user.id, :page => params[:page], :order => 'updated_at DESC')
+    # List all imports
+    params[:user_id] ||= current_user.id
+    @imports = Import.paginate_by_user_id(params[:user_id], :page => params[:page], :order => 'updated_at DESC')
+
+    # Only allow users to view their own imports, unless they are System editors
+    @authorized = true
+    if params[:user_id].to_i != current_user.id.to_i && !current_user.has_role?("editor", System)
+      flash[:error] = "Unauthorized."
+      @authorized = false
+    end
   end
   
   def new
