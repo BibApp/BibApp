@@ -79,7 +79,7 @@ class ImportsController < ApplicationController
       
       #determine number of duplicates in batch
       @work_batch.each do |work_id|
-        work = Work.find(work_id)
+        work = Work.find_by_id(work_id)
         @dupe_count+=1 if !work.nil? and work.duplicate?
       end
       
@@ -91,7 +91,7 @@ class ImportsController < ApplicationController
     end
     
     #Return path for any actions that take place on 'Review Batch' page
-    @return_path = review_batch_works_path(:page=>@page, :rows=>@rows)
+    @return_path = user_imports_path(@import, :page=>@page, :rows=>@rows)
   end
   
   def update
@@ -114,7 +114,7 @@ class ImportsController < ApplicationController
         elsif @import.state == "rejected"
           flash[:notice] = "Batch rejected"
         end
-        format.html { redirect_to user_imports_path }
+        format.html { redirect_to user_imports_path(@import) }
       end
     else
       # Error!
