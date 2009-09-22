@@ -3,7 +3,7 @@ Hi <%=@user.login %>,
 
 Your batch import has been processed.  Please visit the following URL to review the import results:
 
-<%= "#{$APPLICATION_URL}#{user_import_path(@user, @import_id)}" %>
+<%= "#{$APPLICATION_URL.chomp("/")}#{user_import_path(@user, @import_id)}" %>
 
 Thanks!
 - Your happy <%= "#{$APPLICATION_NAME}" %> robot worker
