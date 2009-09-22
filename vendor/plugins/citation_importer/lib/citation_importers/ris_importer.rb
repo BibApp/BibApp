@@ -89,6 +89,7 @@ class RisImporter < BaseImporter
     # Parse publication dates
     @value_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     @value_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
+    @value_translators[:y2] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     
     
     #Mapping of RIS Publication Types => valid BibApp Types
