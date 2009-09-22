@@ -162,6 +162,39 @@ class PublicationsController < ApplicationController
     end
   end
 
+  def destroy
+    permit "admin"
+
+    publication = Publication.find(params[:id])
+    return_path = params[:return_path] || publications_url
+
+    full_success = true
+
+    #Find all works associated with this publication
+    works = publication.works
+
+    #Don't allow deletion of publications with works associated
+    if works.blank?
+      #Destroy the publication
+      publication.destroy
+    else
+      full_success = false
+    end
+
+    respond_to do |format|
+      if full_success
+        flash[:notice] = "Publications were successfully deleted."
+        #forward back to path which was specified in params
+        format.html {redirect_to return_path }
+        format.xml  {head :ok}
+      else
+        flash[:warning] = "This publication has #{works.length} work associated with it, which must be altered or removed before this publication can be deleted."
+        format.html {redirect_to edit_publication_path(publication.id)  }
+        format.xml  {head :ok}
+      end
+    end
+  end
+
   private
   
   def current_objects
