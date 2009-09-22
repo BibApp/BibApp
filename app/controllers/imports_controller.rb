@@ -91,7 +91,7 @@ class ImportsController < ApplicationController
     end
     
     #Return path for any actions that take place on 'Review Batch' page
-    @return_path = user_imports_path(@import, :page=>@page, :rows=>@rows)
+    @return_path = user_imports_path(current_user, :page=>@page, :rows=>@rows)
   end
   
   def update
@@ -114,7 +114,7 @@ class ImportsController < ApplicationController
         elsif @import.state == "rejected"
           flash[:notice] = "Batch rejected"
         end
-        format.html { redirect_to user_imports_path(@import) }
+        format.html { redirect_to user_imports_path() }
       end
     else
       # Error!

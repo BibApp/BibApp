@@ -95,7 +95,7 @@ class Import < ActiveRecord::Base
     
     self.works_added.each do |work_added|
       work = Work.find_by_id(work_added)
-      work.destroy
+      work.destroy if work
     end
     
     self.works_added = []

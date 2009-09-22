@@ -17,6 +17,7 @@ class MedlineParser < CitationParser
   #Determine if given data is Medline,
   # and if so, parse it!
   def parse_data(data)
+    data.strip!
     data = data.mb_chars.dup
     data.mb_chars.strip!
     

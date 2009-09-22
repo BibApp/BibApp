@@ -11,6 +11,10 @@ class BaseImporter < CitationImporter
   require 'parsedate'
   
   attr_reader :attribute_mapping, :value_translators
+
+  def logger
+    CitationImporter.logger
+  end
   
   class << self
     #Base importer doesn't support any formats...you should
@@ -132,7 +136,8 @@ class BaseImporter < CitationImporter
   # (returns nil if date cannot be parsed)
   def parse_date(date_to_parse)
     date = nil
- 
+    logger.debug("\nTrying to parse date: #{date_to_parse}")
+
     #Make sure we are working with a string which isn't empty
     date_string = date_to_parse.to_s.strip
     return nil if date_string.empty?
@@ -181,8 +186,10 @@ class BaseImporter < CitationImporter
     
     unless date.nil?
       #return date in YYYY-MM-DD format
+      logger.debug("Date parsed as: #{date.to_s}")
       return date.to_s 
     else
+      logger.debug("Could not parse this date!\n")
       return nil
     end
   end

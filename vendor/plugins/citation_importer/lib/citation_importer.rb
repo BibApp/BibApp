@@ -22,6 +22,11 @@ class CitationImporter
     def importers
       @@importers
     end
+
+    def logger
+      #Use RAILS_DEFAULT_LOGGER by default for all logging
+      @@logger ||= ::RAILS_DEFAULT_LOGGER
+    end
   end
   
   def imps

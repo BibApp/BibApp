@@ -44,8 +44,11 @@
                 %strong or
             %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
             -if @works.blank?
-              %div.warning
+              %div.clear
                 %p This import is reviewable, but contians no works. They may have been deleted.
+            -else
+              %div.clear
+                %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
         - when "accepted"
           %div.notice
