@@ -72,85 +72,85 @@
             %div.clear
               %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
+    -unless @import.state == "processing"
+      %div
+        %h3 Batch report
 
-    %div
-      %h3 Batch report
+        - if @person
+          %div.left.span-8.append-1
+            %table#pen_names
+              %thead
+                %tr
+                  %th{:style => "border-bottom:1px solid #000"} My Names
+                  %th{:style => "border-bottom:1px solid #000"} Works Matched
+              %tbody#current
+                = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
 
-      - if @person
-        %div.left.span-8.append-1
-          %table#pen_names
+              %tfoot
+                %tr
+                  %td{:style => "border-top:1px dotted #CCC"} Total
+                  %td{:id => "pen_names_count_total", :style => "border-top:1px dotted #CCC"} 0
+
+        %div.left.span-6.append-1
+          / Works added
+          %table
             %thead
               %tr
-                %th{:style => "border-bottom:1px solid #000"} My Names
-                %th{:style => "border-bottom:1px solid #000"} Works Matched
-            %tbody#current
-              = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
-
+                %th{:style => "border-bottom:1px solid #000"} Works
+                %th{:style => "border-bottom:1px solid #000"} Count
+            %tbody
+              %tr
+                %td New works
+                %td= @work_batch.size - @dupe_count
+              %tr
+                %td Duplicate works
+                %td= @dupe_count
             %tfoot
               %tr
                 %td{:style => "border-top:1px dotted #CCC"} Total
-                %td{:id => "pen_names_count_total", :style => "border-top:1px dotted #CCC"} 0
-
-      %div.left.span-6.append-1
-        / Works added
-        %table
-          %thead
-            %tr
-              %th{:style => "border-bottom:1px solid #000"} Works
-              %th{:style => "border-bottom:1px solid #000"} Count
-          %tbody
-            %tr
-              %td New works
-              %td= @work_batch.size - @dupe_count
-            %tr
-              %td Duplicate works
-              %td= @dupe_count
-          %tfoot
-            %tr
-              %td{:style => "border-top:1px dotted #CCC"} Total
-              %td#works_imported_total{:style => "border-top:1px dotted #CCC"}= @work_batch.size
+                %td#works_imported_total{:style => "border-top:1px dotted #CCC"}= @work_batch.size
 
 
-      %div.left.span-6.last
-        / Errors
-        %table
-          %thead
-            %tr
-              %th{:style => "border-bottom:1px solid #000"} Errors
-          %tbody
-            - if !@errors.empty?
-              - @errors.each do |key, value|
-                %tr
-                  %td=value
-            - else
+        %div.left.span-6.last
+          / Errors
+          %table
+            %thead
               %tr
-                %td{:colspan => "2"}
-                  %p No errors encountered during import.
+                %th{:style => "border-bottom:1px solid #000"} Errors
+            %tbody
+              - if !@errors.empty?
+                - @errors.each do |key, value|
+                  %tr
+                    %td=value
+              - else
+                %tr
+                  %td{:colspan => "2"}
+                    %p No errors encountered during import.
 
-      %div.clear
-        - if @person
-          %p
-            Matched
-            %strong#matched_total="#{@match_count} works"
-            = "to #{imported_for(@import)}."
-            %strong#remaining_total="#{@work_batch.size - @match_count} remain to match."
+        %div.clear
+          - if @person
+            %p
+              Matched
+              %strong#matched_total="#{@match_count} works"
+              = "to #{imported_for(@import)}."
+              %strong#remaining_total="#{@work_batch.size - @match_count} remain to match."
 
-      %hr/
-    - if @person
-      %div.left.span-7
-        %h3 Import Names
-        %p Select missing variations of your name.
-        / PenName matches
-        %div.left.append-1
-          %ul#import_names{:style => "padding:0; margin:0;"}
-            -@import.name_string_work_count.sort.inspect
-            - @import.name_string_work_count.sort.each do |ns|
-              = import_name_string_line(ns, @person)
+        %hr/
+      - if @person
+        %div.left.span-7
+          %h3 Import Names
+          %p Select missing variations of your name.
+          / PenName matches
+          %div.left.append-1
+            %ul#import_names{:style => "padding:0; margin:0;"}
+              -@import.name_string_work_count.sort.inspect
+              - @import.name_string_work_count.sort.each do |ns|
+                = import_name_string_line(ns, @person)
 
-    %div.left.prepend-1
-      - ct = @works ? @works.length : 0
-      %h3#works="Works Imported (#{ct})"
-      = render :partial => "works" if @works
+      %div.left.prepend-1
+        - ct = @works ? @works.length : 0
+        %h3#works="Works Imported (#{ct})"
+        = render :partial => "works" if @works
         
 :javascript
   // Matched PenNames
