@@ -2,7 +2,7 @@ namespace :citation_importer do
 
   desc 'Translates each of the Test Fixtures, and dumps the result to YAML files in [rails-app]/tmp/ \n
         This is useful for debugging the citation_importer plugin.'
-  task :test_dump do
+  task :test_dump => :environment do
     
     importer = CitationImporter.new
     
