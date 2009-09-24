@@ -2,7 +2,7 @@ namespace :citation_parser do
 
   desc 'Parses each of the Test Fixtures, and dumps them to YAML files in [rails-app]/tmp/ \n
         This is useful for debugging or auto-generating fixtures for citation_importer plugin.'
-  task :test_dump do
+  task :test_dump => :environment do
     
     parser = CitationParser.new
     
