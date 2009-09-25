@@ -19,11 +19,14 @@
               = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
               %div.person-image-metadata
                 %strong= p.value
-                %h6.person-last-name=link_to last_name, person_path(id)
+              %div.person-last-name.left
+                %strong=link_to last_name, person_path(id)
       -else
         %li.inline
-          %div.person{:class => "span-3"}
-            = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
+          %div.person.span-3
+            %div.person-image-wrapper
+              = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => 'person-image'), person_path(id))
             %div.person-image-metadata
               %strong= p.value
-              %h6.person-last-name=link_to last_name, person_path(id)
+            %div.person-last-name.left
+              %strong=link_to last_name, person_path(id)

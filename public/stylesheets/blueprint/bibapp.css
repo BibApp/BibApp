@@ -606,12 +606,10 @@ span.gbs-link {
 /*lists of people */
 #people { padding:0em; margin:0em; }
 .people { padding:0em; margin:0em; }
-div.person { padding:0em; margin:0em; }
-
+div.person { padding:0em; margin:0em; height:157px; }
 .person-image { border:2px dashed #CCC; padding:3px; }
 .person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
-
-.person-last-name {padding-right:0.5em;}
+.person-last-name {width:75px; padding-left:0.5em; position:relative; bottom:2em;}
 
 /* lists of groups/publications/publishers*/
 #groups{padding:0.5em 0; margin:0;}
