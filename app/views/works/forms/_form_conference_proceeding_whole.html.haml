@@ -16,11 +16,13 @@
     %li
       = render :partial => 'works/forms/fields/date_range', :locals => {:form => form}
     %li
+      = render :partial => 'works/forms/fields/location', :locals => {:form => form}
+    %li
       = render :partial => 'works/forms/fields/issn_isbn', :locals => {:isbn => true}
     %li
       = render :partial => 'works/forms/fields/publisher'
     %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
+      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/publication_date'
     %li
