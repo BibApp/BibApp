@@ -1,0 +1,11 @@
+-# Location field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Conference Location)
+
+-# Initialize optional input variables
+- label ||= "Conference Location"
+
+= form.label :location, "#{label}:"
+= form.text_field :location, :class=>'text'

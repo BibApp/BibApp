@@ -227,6 +227,8 @@ class Work < ActiveRecord::Base
   
   # Creates a new work from an attribute hash
   def self.create_from_hash(h)
+    logger.debug("\n\n===CREATE NEW WORK FROM HASH===\n\n")
+
         # Initialize the Work
     klass = h[:klass]
 
@@ -242,6 +244,7 @@ class Work < ActiveRecord::Base
 
   # Updates an existing work from an attribute hash
   def self.update_from_hash(h, work)
+    logger.debug("\n\n===UPDATING WORK PROPERTIES FROM HASH===\n\n")
 
     begin
 
@@ -257,6 +260,7 @@ class Work < ActiveRecord::Base
       klass = klass.constantize
 
       h[:work_name_strings].each do |wns|
+        logger.debug("Work name string: #{wns[:name]}")
         role = wns[:role]
         if role == 'Author'
           role = klass.creator_role
@@ -477,6 +481,7 @@ class Work < ActiveRecord::Base
     
     if self.new_record?
       #Defer saving to Work object directly, until it is created
+      logger.debug("Will set name strings later, once the work has been saved...\n")
       @work_name_strings_cache = work_name_string_hash
     else
       # Create name_strings and save to database
@@ -953,9 +958,18 @@ class Work < ActiveRecord::Base
       name_strings_hash.flatten.each do |cns|
         #Generate the "machine_name" for this namestring...this is our unique name with punctuation removed, etc.
         machine_name = cns[:name].gsub(".", " ").gsub(",", " ").gsub(/ +/, " ").strip.downcase
-        name_string = NameString.find_or_create_by_machine_name(machine_name)
+        
+        # Create the hash for NameString.find_or_create_by_machine_name
+        ns_hash = {:name => cns[:name].strip, :machine_name => machine_name}
+
+        # TODO: it isn't obvious that this method takes a hash
+        name_string = NameString.find_or_create_by_machine_name(ns_hash)
+
+        logger.debug("\nCreating new namestring:")
+        logger.debug("Name = #{name_string.name}; Machine name= #{name_string.machine_name}\n\n")
         
         #add it to this Work
+        logger.debug("Adding name string '#{name_string.name}' to work #{work.id}")
         WorkNameString.create(
           :work_id => work.id,
           :name_string_id => name_string.id, 

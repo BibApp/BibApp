@@ -62,6 +62,22 @@ class BaseImporter < CitationImporter
    
     #if not already taken care of, copy the entire citation into :original_data
     r_hash[:original_data] = parsed_citation.properties[:original_data].to_s if r_hash[:original_data].nil?
+
+    # TODO: this is ugly!
+    # Hack for RefWorks export of Conference Proceedings:
+    # RefWorks XML uses <ed> (:edition) for Conference Location
+    # RefWorks RIS uses :vl
+    if r_hash[:klass][0].to_s == "ConferencePaper"
+      if parsed_citation.citation_type.to_s == "refworks_xml"
+        r_hash[:location] = parsed_citation.properties[:edition]
+        r_hash[:edition] = nil
+      end
+      if parsed_citation.citation_type.to_s == "ris"
+        r_hash[:location] = parsed_citation.properties[:vl]
+        r_hash[:volume] = nil
+      end
+    end
+
     
     #Note: At this point, we have a hash where some values are
     # Arrays.  However, we'll want to clean them up a bit, as we
@@ -90,7 +106,7 @@ class BaseImporter < CitationImporter
       
       #remove keys which have nil or empty values
       #This removes empty Arrays, Hashes and Strings
-      if value.nil? or value.empty?
+      if value.nil? or value.empty? or value[0].to_s.blank?
         hash.delete(key)
         next
       end
