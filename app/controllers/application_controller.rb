@@ -81,8 +81,8 @@ class ApplicationController < ActionController::Base
       @sort = "year"
       
     else
-      # Recent additions list sorted by "updated_at"
-      params[:sort] = "updated_at" unless params[:sort]
+      # Recent additions list sorted by "created_at"
+      params[:sort] = "created_at" unless params[:sort]
     end
     
     # Make certain filters are uniq before continuing
