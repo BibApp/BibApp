@@ -275,12 +275,12 @@
 
   - unless @work.links.blank?
     %tr
-      %td.label URL:
+      %td.label DOI/URL:
       %td
         -#to keep long, unbroken URLS from expanding the table
         %div.span-11{:style => "overflow:auto"}
           - @work.links.split(";").each do |link|
-            %a{:href=> link}=link
+            %p=link
 
   - unless @work.identifier.blank?
     %tr
