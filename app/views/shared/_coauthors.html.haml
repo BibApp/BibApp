@@ -7,13 +7,21 @@
   %h3
     ="Co-authors at #{$UNIVERSITY_SHORT_NAME}"
   %ol#coauthors{:style => "span-6 append-1"}
+    -count = 0
     -@facets[:people_data].each do |p|
       - last_name, id, image_url = Person.parse_solr_data(p.name)
       - #Skip over the current person in the co-author listing
       - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
+      - count += 1
+      -if count > 9
+        - break
       %li.inline
         %div.person{:style => "float:left; padding-right:0.75em;"}
           = link_to(image_tag(image_url, :size => "56x74", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           %div.person-image-metadata
             %strong= p.value
             %h6.person-last-name=link_to last_name, person_path(id)
+    - if @facets[:people_data].length > 10
+      %li.inline
+        %p{:style => "float:right; padding-right:0.75em;"}
+          ="+#{@facets[:people_data].length - 10} more..."
