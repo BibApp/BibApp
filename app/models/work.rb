@@ -323,6 +323,9 @@ class Work < ActiveRecord::Base
       # @TODO add external_systems to work import
       h.delete(:external_id)
 
+      # When adding a work to a person, person_id causes work.save to fail
+      h.delete(:person_id) if h[:person_id]
+
       #save remaining hash attributes
       work.attributes=h
       saved = work.save
