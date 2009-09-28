@@ -43,6 +43,6 @@
 
         %ol.span-17{:style => "padding:0; margin:0; clear:both;"}
           - @works.each do |work|
-            = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => []}
+            = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => [:edit]}
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

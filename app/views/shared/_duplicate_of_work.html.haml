@@ -20,4 +20,8 @@
     = render :partial => "shared/work_subclasses/#{dupe['type'].downcase.gsub(" ", "_")}", :locals => {:work => dupe}
 
     .links
-      =link_to "Side-by-side edit", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe['pk_i']
+      -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
+        =link_to "Edit", edit_work_path(dupe['pk_i'], :return_path=>@return_path)
+      -if @return_path.nil?
+        =link_to "Edit", edit_work_path(dupe['pk_i'])
+      -#=link_to "Side-by-side edit", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe['pk_i']
