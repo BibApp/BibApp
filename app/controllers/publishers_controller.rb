@@ -65,7 +65,7 @@ class PublishersController < ApplicationController
       #Anyone with 'editor' role (anywhere) can update publishers
       permit "editor"
       
-      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publishers = Publisher.find(:all, :order => "name")
       @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
     end
     
