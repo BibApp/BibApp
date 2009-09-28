@@ -21,7 +21,9 @@
       =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
 
     %div.span-11
-      - unless @person.groups.empty?
+      - if @person.groups.empty?
+        &nbsp;
+      - else
         %h3 Groups
         = render :partial => 'shared/group_list'
                 
