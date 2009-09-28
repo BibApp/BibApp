@@ -40,7 +40,7 @@ class WorksController < ApplicationController
     before :new do
       #check if we are adding new works directly to a person
       if params[:person_id]
-        @person = Person.find(params[:person_id])
+        @person = Person.find(params[:person_id].split("-")[0])
       end
       
       if @person
@@ -130,7 +130,7 @@ class WorksController < ApplicationController
   def create
     #check if we are adding new works directly to a person
     if params[:person_id]
-      @person = Person.find(params[:person_id])
+      @person = Person.find(params[:person_id].split("-")[0])
     end
 
     if @person
