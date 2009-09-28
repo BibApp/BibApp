@@ -16,11 +16,13 @@
       -if count > 9
         - break
       %li.inline
-        %div.person{:style => "float:left; padding-right:0.75em;"}
-          = link_to(image_tag(image_url, :size => "56x74", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
+        %div.person-coauthor
+          %div.person-image-wrapper
+            = link_to(image_tag(image_url, :size => "56x74", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           %div.person-image-metadata
             %strong= p.value
-            %h6.person-last-name=link_to last_name, person_path(id)
+          %div.person-last-name.left
+            %strong=link_to last_name, person_path(id)
     - if @facets[:people_data].length > 10
       %li.inline
         %p{:style => "float:right; padding-right:0.75em;"}

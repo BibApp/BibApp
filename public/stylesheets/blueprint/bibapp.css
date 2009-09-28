@@ -607,6 +607,7 @@ span.gbs-link {
 #people { padding:0em; margin:0em; }
 .people { padding:0em; margin:0em; }
 div.person { padding:0em; margin:0em; height:157px; }
+.person-coauthor { float:left ;padding:0em; margin:0em;  padding-right:0.75em; height:128px; }
 .person-image { border:2px dashed #CCC; padding:3px; }
 .person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
 .person-last-name {width:75px; padding-left:0.5em; position:relative; bottom:2em;}
