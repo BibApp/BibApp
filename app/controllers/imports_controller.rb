@@ -18,7 +18,7 @@ class ImportsController < ApplicationController
   
   def new
     if params[:person_id]
-      @person = Person.find_by_id(params[:person_id])
+      @person = Person.find_by_id(params[:person_id].split("-")[0])
     else
       @person = nil
     end
