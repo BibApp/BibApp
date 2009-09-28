@@ -68,7 +68,7 @@ class PublicationsController < ApplicationController
       permit "editor"
       
       @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
-      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publications = Publication.find(:all, :order => "name")
     end
     
     before :update do

@@ -22,5 +22,11 @@
       %br/
       = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => formatted_publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
 
+    -if @publication.authority_id
+      %p
+        %label Publication Authority Record
+        %br/
+        = form.collection_select :authority_id, @publications, :id, :name, {}, {:class => "span-12"}
+
     %p.submit
       = submit_tag :save
