@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090903151853) do
+ActiveRecord::Schema.define(:version => 20090924211335) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(:version => 20090903151853) do
     t.integer  "authority_publisher_id"
     t.integer  "initial_publication_id"
     t.integer  "initial_publisher_id"
+    t.string   "location"
   end
 
   add_index "works", ["batch_index"], :name => "batch_index"
