@@ -17,7 +17,15 @@ namespace :bibapp do
     begin
       # Start Delayed Job
       puts "\n\n* Starting - Delayed Job."
-      sh "script/delayed_job start #{ENV['RAILS_ENV']}"
+
+      # Create the tmp/pids directory if it's not there
+      if File.exists?(RAILS_ROOT + '/tmp/pids')
+        sh "script/delayed_job start #{ENV['RAILS_ENV']}"
+      else
+        sh "mkdir #{RAILS_ROOT + '/tmp/pids'}"
+        sleep(2)
+        sh "script/delayed_job start #{ENV['RAILS_ENV']}"
+      end
     rescue
       RuntimeError
       puts "### ERROR - Starting - Delayed Job."
