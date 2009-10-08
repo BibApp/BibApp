@@ -91,19 +91,15 @@ class Import < ActiveRecord::Base
   
   def reject_import
     logger.debug("\n=== Rejected Import - #{self.id}\n\n")
-    logger.debug("\n* Destroying Import Works - #{self.works_added.inspect}\n\n")
-    
+    logger.debug("\n* Destroying Import Works")
+
     self.works_added.each do |work_added|
       work = Work.find_by_id(work_added)
-      work.destroy if work
+      logger.debug("\n- Work: #{work.id}")
+      work.send_later(:destroy) if work
     end
     
     self.works_added = []
-    
-    # Delete Import -- no longer necessary?
-    # Return success_path?
-    # 1. Go to root_path -- general imports, flash success
-    # 2. Go to person_path(@person) -- person imports, flash success
   end
 
   ###
