@@ -47,7 +47,7 @@ class Import < ActiveRecord::Base
   end
    
   def notify_user
-    logger.debug("\n=== Notifiy User - #{self.id}\n\n\n")
+    logger.debug("\n=== Notifiy User - #{self.id} ===\n\n\n")
     
     # @TODO: Email should send via delayed job?
     Notifier.deliver_import_review_notification(self.user, self.id)
@@ -58,7 +58,7 @@ class Import < ActiveRecord::Base
   end
   
   def process_accepted_import
-    logger.debug("\n=== Accepted Import - #{self.id}\n\n")
+    logger.debug("\n=== Accepted Import - #{self.id} ===\n\n")
     works = Work.find(:all, :conditions => ["id in (?)", self.works_added])
     
     # Create unverified contributorships for each non-duplicate work
@@ -90,7 +90,7 @@ class Import < ActiveRecord::Base
   end
   
   def reject_import
-    logger.debug("\n=== Rejected Import - #{self.id}\n\n")
+    logger.debug("\n=== Rejected Import - #{self.id} ===\n\n")
     logger.debug("\n* Destroying Import Works")
 
     self.works_added.each do |work_added|
@@ -152,7 +152,7 @@ class Import < ActiveRecord::Base
           str =Iconv.iconv('UTF-8', encoding, str).to_s
         else
           # Log an error...this file has a character encoding we cannot handle!
-          logger.error("Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
+          logger.error("\nCitations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
 
           #return nothing, which will inform user that file format was invalid
           self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
@@ -178,7 +178,6 @@ class Import < ActiveRecord::Base
     begin
       #Attempt to parse the data
       pcites = p.parse(str)
-
     #Rescue any errors in parsing
     rescue Exception =>e
       #re-raise this exception to create()...it will handle logging the error
@@ -190,7 +189,7 @@ class Import < ActiveRecord::Base
         
     # @TODO: Check to make sure there were not errors while parsing the data.
     #No citations were parsed
-    if pcites.nil? || pcites.empty?
+    if pcites.blank?
       logger.debug("\n* Unsupported file format!\n\n")
       self.import_errors[:no_parsed_citations] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
       logger.debug("\n* Before save: #{self.inspect}\n\n")
@@ -207,7 +206,7 @@ class Import < ActiveRecord::Base
     begin
       # Map Import hashes
       attr_hashes = i.citation_attribute_hashes(pcites)
-      logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
+      logger.debug "\n#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
 
       # Make sure there is data in the Attribute Hash
       return nil if attr_hashes.nil?
@@ -215,7 +214,12 @@ class Import < ActiveRecord::Base
       # Now, actually *create* these works in database
       attr_hashes.map { |h|
         
-        work, import_error = Work.create_from_hash(h)
+        work, error = Work.create_from_hash(h)
+
+        unless error.nil?
+          self.import_errors[:import_error] = error.message
+          raise(error)
+        end
         
         #add to batch of works created
         self.works_added << work
@@ -230,7 +234,7 @@ class Import < ActiveRecord::Base
     # to the database.
     rescue Exception => e
       # remove anything already added to the database (i.e. rollback ALL changes)
-      unless works_added.nil?
+      unless works_added.blank?
         works_added.each do |work_id|
           work = Work.find(work_id)
           work.destroy unless work.nil?     
@@ -238,13 +242,7 @@ class Import < ActiveRecord::Base
       end
 
       #re-raise this exception to create()...it will handle logging the error
-      self.import_errors[:exception] = e
-      self.save
-      if !self.import_errors.blank?
-        self.error!
-      else
-        self.review!
-      end
+      self.import_errors[:exception] = e.message
     end
    
     # At this point, some or all of the works were saved to the database successfully.

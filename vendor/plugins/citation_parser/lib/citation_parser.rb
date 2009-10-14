@@ -42,13 +42,13 @@ class CitationParser
     
     @@parsers.each do |klass|
       parser = klass.new
-      
+
       @citations = parser.parse_data(data) if parser.respond_to?(:parse_data)
 
-      unless @citations.nil? or @citations.empty?
+      unless @citations.blank?
         @citations = cleanup_cites(@citations)
         
-        CitationParser.logger.debug("\n Successfully parsed #{@citations.size} citations using: #{klass}!\n")
+        CitationParser.logger.debug("\nSuccessfully parsed #{@citations.size} citations using: #{klass}!\n")
         return @citations          
       end       
     end
