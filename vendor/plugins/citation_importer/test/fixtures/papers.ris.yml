@@ -2,611 +2,259 @@
 - !ruby/object:ParsedCitation 
   citation_type: :ris
   properties: 
-    :is: 
-    - "3"
-    :y1: 
-    - "2004"
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish"
-    :ab: 
-    - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
-    :sp: 
-    - "168"
     :m1: 
-    - Journal
-    :kw: 
-    - Androgens/metabolism
-    - Animals
-    - Brain/metabolism
-    - Estrogens/metabolism
-    - Humans
-    - Ligands
-    - Progestins/metabolism
-    - Receptors, Androgen/metabolism
-    - Receptors, Estrogen/metabolism
-    - Receptors, Progesterone/metabolism
-    - Receptors, Steroid/classification/metabolism
-    - Reproductive Behavior/physiology
-    - Sexual Behavior, Animal/physiology
-    - Signal Transduction/physiology
-    :ad: 
-    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-    :ep: 
-    - "172"
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CHI '07 extended abstracts on Human factors in computing systems
     :y2: 
-    - Mar
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Apr 28-May 3 2007
     :t1: 
-    - Steroid receptor control of reproductive behavior
-    :a1: 
-    - Auger,A. P.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 116
-      A1  - Auger,A. P.
-      T1  - Steroid receptor control of reproductive behavior
-      Y1  - 2004
-      Y2  - Mar
-      VL  - 45
-      IS  - 3
-      SP  - 168
-      EP  - 172
-      KW  - Androgens/metabolism
-      KW  - Animals
-      KW  - Brain/metabolism
-      KW  - Estrogens/metabolism
-      KW  - Humans
-      KW  - Ligands
-      KW  - Progestins/metabolism
-      KW  - Receptors, Androgen/metabolism
-      KW  - Receptors, Estrogen/metabolism
-      KW  - Receptors, Progesterone/metabolism
-      KW  - Receptors, Steroid/classification/metabolism
-      KW  - Reproductive Behavior/physiology
-      KW  - Sexual Behavior, Animal/physiology
-      KW  - Signal Transduction/physiology
-      AB  - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
-      N1  - LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish
-      CY  - United States
-      A3  - Anonymous
-      SN  - 0018-506X
-      AD  - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-      JF  - Hormones and behavior
-      JA  - Horm.Behav.
-      M1  - Journal
-    :jf: 
-    - Hormones and behavior
-    :a3: 
-    - Anonymous
-    :vl: 
-    - "45"
-    :id: 
-    - "116"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Horm.Behav.
-    :sn: 
-    - 0018-506X
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "HCI and new media arts: Methodology and evaluation"
     :cy: 
-    - United States
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: San Jose, CA
+    :ep: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2816"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Hamilton,Kevin
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Bailey,Brian P.
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595936424"
+    :ab: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Successful collaborations between New Media Arts and HCI tend to develop hybrid techniques that promote balanced contributions from both disciplines. However, since many of these collaborations are one-off or highly dependent on the researchers/artists involved, systematic discussions of the role and impact of the various evaluation techniques and methodologies are missing. This workshop is aimed at practitioners from both HCI and the Arts as a venue to discuss the contribution that one another's techniques have made to their own practice, evaluate critical issues in HCI/New Media Collaboration, and examine ways that existing approaches can be extended for a deeper role in practice, design, and research.
+    :kw: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Evaluation methods
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Aesthetic inquiry
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New Media Collaboration
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1127"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2813"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        TY  - CONF
+        ID  - 1127
+        A1  - Adamczyk,Piotr D.
+        A1  - Hamilton,Kevin
+        A1  - Twidale,Michael B.
+        A1  - Bailey,Brian P.
+        T1  - HCI and new media arts: Methodology and evaluation
+        Y1  - 2007
+        Y2  - Apr 28-May 3 2007
+        SP  - 2813
+        EP  - 2816
+        KW  - Creativity support tools
+        KW  - Evaluation methods
+        KW  - Aesthetic inquiry
+        KW  - New Media Collaboration
+        AB  - Successful collaborations between New Media Arts and HCI tend to develop hybrid techniques that promote balanced contributions from both disciplines. However, since many of these collaborations are one-off or highly dependent on the researchers/artists involved, systematic discussions of the role and impact of the various evaluation techniques and methodologies are missing. This workshop is aimed at practitioners from both HCI and the Arts as a venue to discuss the contribution that one another's techniques have made to their own practice, evaluate critical issues in HCI/New Media Collaboration, and examine ways that existing approaches can be extended for a deeper role in practice, design, and research.
+        T2  - CHI '07 extended abstracts on Human factors in computing systems
+        VL  - San Jose, CA
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595936424
+        M1  - Conference Proceedings
+
 - !ruby/object:ParsedCitation 
   citation_type: :ris
   properties: 
-    :is: 
-    - "6"
-    :y1: 
-    - "2003"
-    :n1: 
-    - "LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish"
-    :ab: 
-    - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
-    :sp: 
-    - "622"
     :m1: 
-    - Journal
-    :kw: 
-    - Animals
-    - Brain/growth & development/metabolism
-    - CREB-Binding Protein
-    - Cyclic AMP Response Element-Binding Protein/metabolism
-    - Female
-    - Male
-    - Nuclear Proteins/metabolism
-    - Phosphorylation
-    - Rats
-    - Sex Characteristics
-    - Sexual Behavior/physiology
-    - Signal Transduction
-    - Trans-Activators/metabolism
-    :ad: 
-    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-    :ep: 
-    - "627"
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "Proceedings of the 6th Conference on Creativity and Cognition, CC2007 - Seeding Creativity: Tools, Media, and Environments"
     :y2: 
-    - Jun
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: 13-15 Jun 2007
     :t1: 
-    - "Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein"
-    :a1: 
-    - Auger,A. P.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 117
-      A1  - Auger,A. P.
-      T1  - Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein
-      Y1  - 2003
-      Y2  - Jun
-      VL  - 15
-      IS  - 6
-      SP  - 622
-      EP  - 627
-      KW  - Animals
-      KW  - Brain/growth & development/metabolism
-      KW  - CREB-Binding Protein
-      KW  - Cyclic AMP Response Element-Binding Protein/metabolism
-      KW  - Female
-      KW  - Male
-      KW  - Nuclear Proteins/metabolism
-      KW  - Phosphorylation
-      KW  - Rats
-      KW  - Sex Characteristics
-      KW  - Sexual Behavior/physiology
-      KW  - Signal Transduction
-      KW  - Trans-Activators/metabolism
-      AB  - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
-      N1  - LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish
-      CY  - England
-      A3  - Anonymous
-      SN  - 0953-8194
-      AD  - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
-      JF  - Journal of neuroendocrinology
-      JA  - J.Neuroendocrinol.
-      M1  - Journal
-    :jf: 
-    - Journal of neuroendocrinology
-    :a3: 
-    - Anonymous
-    :vl: 
-    - "15"
-    :id: 
-    - "117"
-    :ty: 
-    - JOUR
-    :ja: 
-    - J.Neuroendocrinol.
-    :sn: 
-    - 0953-8194
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Tools in support of creative collaboration
     :cy: 
-    - England
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Washington, DC
+    :ep: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "274"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Hamilton,Kevin
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Bailey,Brian P.
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595937129"
+    :ab: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools are set an especially difficult task when they are applied to art/science collaboration. Not because of any fundamental incompatibility between the disciplines, but because creativity support tools are rarely supple enough to manage dramatically shifting requirements at various stages of design or handle the diversity of artifacts that might be generated. Traditional methods of evaluation of collaborative support tools may not address these aspects. This workshop aims to examine three specific areas open to expanded modes of evaluation; the social aspects of tools and tool use, how artifacts are created and manipulated in support tools, and how the expanding contexts of art/science collaborations may be rapidly changing support tool requirements.
+    :kw: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Multidisciplinary collaboration
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1136"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "273"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        
+        
+        TY  - CONF
+        ID  - 1136
+        A1  - Adamczyk,Piotr D.
+        A1  - Hamilton,Kevin
+        A1  - Twidale,Michael B.
+        A1  - Bailey,Brian P.
+        T1  - Tools in support of creative collaboration
+        Y1  - 2007
+        Y2  - 13-15 Jun 2007
+        SP  - 273
+        EP  - 274
+        KW  - Creativity support tools
+        KW  - Multidisciplinary collaboration
+        AB  - Creativity support tools are set an especially difficult task when they are applied to art/science collaboration. Not because of any fundamental incompatibility between the disciplines, but because creativity support tools are rarely supple enough to manage dramatically shifting requirements at various stages of design or handle the diversity of artifacts that might be generated. Traditional methods of evaluation of collaborative support tools may not address these aspects. This workshop aims to examine three specific areas open to expanded modes of evaluation; the social aspects of tools and tool use, how artifacts are created and manipulated in support tools, and how the expanding contexts of art/science collaborations may be rapidly changing support tool requirements.
+        T2  - Proceedings of the 6th Conference on Creativity and Cognition, CC2007 - Seeding Creativity: Tools, Media, and Environments
+        VL  - Washington, DC
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595937129
+        M1  - Conference Proceedings
+
 - !ruby/object:ParsedCitation 
   citation_type: :ris
   properties: 
-    :is: 
-    - "1"
-    :y1: 
-    - "2006"
-    :n1: 
-    - "PUBM: Print-Electronic; DEP: 20051227; JID: 0045503; 0 (DNA Primers); 0 (Nerve Tissue Proteins); 57-83-0 (Progesterone); 2005/06/10 [received]; 2005/10/07 [revised]; 2005/10/16 [accepted]; 2005/12/27 [aheadofprint]; ppublish"
-    :ab: 
-    - Progesterone can influence various behaviors in adult male rats, however, little is known about which particular genes are regulated by progesterone in the male rat brain. Using focused microarray technology, we where able to define a subset of genes that are responsive to progesterone. Nylon membrane-based cDNA microarrays were used to profile gene expression patterns in the preoptic area/mediobasal hypothalamus (POA/MBH) of male rat brain 7 h following a single injection of progesterone. RNA was isolated from the brains of 6 male rats injected with progesterone and 6 male rats injected with sesame oil. Next, we hybridized the RNA from each animal to individual cDNA microarrays that contained more than 100 target genes, all of which are involved in cAMP and or calcium signaling pathways. Direct side-by-side comparison of all 12 arrays revealed differences in the expression patterns of 12 different genes. We confirmed the data gathered from the arrays on 4 different genes using Real-Time PCR. These data begin to outline the important role played by progesterone in mediating changes in gene expression within the male brain.
-    :sp: 
-    - "58"
     :m1: 
-    - Journal
-    :kw: 
-    - Animals
-    - DNA Primers
-    - Gene Expression Profiling
-    - Gene Expression Regulation/drug effects
-    - Male
-    - Nerve Tissue Proteins/genetics
-    - Oligonucleotide Array Sequence Analysis
-    - Progesterone/pharmacology
-    - Rats
-    - Rats, Sprague-Dawley
-    :ad: 
-    - Department of Zoology, Birge Hall, 430 Lincoln Drive, University of Wisconsin, Madison, WI 53706, USA. cauger@wisc.edu
-    :ep: 
-    - "66"
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CHI '07 extended abstracts on Human factors in computing systems
     :y2: 
-    - Jan 5
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Apr 28-May 3 2007
     :t1: 
-    - Microarray profiling of gene expression patterns in adult male rat brain following acute progesterone treatment
-    :a1: 
-    - Auger,C. J.
-    - Jessen,H. M.
-    - Auger,A. P.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 112
-      A1  - Auger,C. J.
-      A1  - Jessen,H. M.
-      A1  - Auger,A. P.
-      T1  - Microarray profiling of gene expression patterns in adult male rat brain following acute progesterone treatment
-      Y1  - 2006
-      Y2  - Jan 5
-      VL  - 1067
-      IS  - 1
-      SP  - 58
-      EP  - 66
-      KW  - Animals
-      KW  - DNA Primers
-      KW  - Gene Expression Profiling
-      KW  - Gene Expression Regulation/drug effects
-      KW  - Male
-      KW  - Nerve Tissue Proteins/genetics
-      KW  - Oligonucleotide Array Sequence Analysis
-      KW  - Progesterone/pharmacology
-      KW  - Rats
-      KW  - Rats, Sprague-Dawley
-      AB  - Progesterone can influence various behaviors in adult male rats, however, little is known about which particular genes are regulated by progesterone in the male rat brain. Using focused microarray technology, we where able to define a subset of genes that are responsive to progesterone. Nylon membrane-based cDNA microarrays were used to profile gene expression patterns in the preoptic area/mediobasal hypothalamus (POA/MBH) of male rat brain 7 h following a single injection of progesterone. RNA was isolated from the brains of 6 male rats injected with progesterone and 6 male rats injected with sesame oil. Next, we hybridized the RNA from each animal to individual cDNA microarrays that contained more than 100 target genes, all of which are involved in cAMP and or calcium signaling pathways. Direct side-by-side comparison of all 12 arrays revealed differences in the expression patterns of 12 different genes. We confirmed the data gathered from the arrays on 4 different genes using Real-Time PCR. These data begin to outline the important role played by progesterone in mediating changes in gene expression within the male brain.
-      N1  - PUBM: Print-Electronic; DEP: 20051227; JID: 0045503; 0 (DNA Primers); 0 (Nerve Tissue Proteins); 57-83-0 (Progesterone); 2005/06/10 [received]; 2005/10/07 [revised]; 2005/10/16 [accepted]; 2005/12/27 [aheadofprint]; ppublish
-      CY  - Netherlands
-      A3  - Anonymous
-      SN  - 0006-8993
-      AD  - Department of Zoology, Birge Hall, 430 Lincoln Drive, University of Wisconsin, Madison, WI 53706, USA. cauger@wisc.edu
-      JF  - Brain research
-      JA  - Brain Res.
-      M1  - Journal
-    :jf: 
-    - Brain research
-    :a3: 
-    - Anonymous
-    :vl: 
-    - "1067"
-    :id: 
-    - "112"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Brain Res.
-    :sn: 
-    - 0006-8993
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "Supporting multidisciplinary collaboration: Requirements from novel HCI education"
     :cy: 
-    - Netherlands
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :y1: 
-    - "2006"
-    :n1: 
-    - "PUBM: Print-Electronic; DEP: 20060829; JID: 101129617; aheadofprint"
-    :ab: 
-    - "We previously applied selective breeding on outbred mice to increase maternal aggression (maternal defense). In this study, we compared gene expression within a continuous region of the central nervous system (CNS) involved in maternal aggression (hypothalamus and preoptic regions) between lactating selected (S) and nonselected control (C) mice (n= 6 per group). Using microarrays representing over 40 000 genes or expressed sequence tags, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray and the probe logarithmic intensity error method. Approximately 200 genes were identified as significant using an intersection from both techniques. A subset of genes was examined for confirmation by real-time polymerase chain reaction (PCR). Significant decreases were found in S mice for neurotensin and neuropeptide Y receptor Y2 (both confirmed by PCR). Significant increases were found in S mice for neuronal nitric oxide synthase (confirmed by PCR), the K+ channel subunit, Kcna1 (confirmed by PCR), corticotrophin releasing factor binding protein (just above significance using PCR; P= 0.051) and GABA A receptor subunit 1A (not confirmed by PCR, but similar direction). S mice also exhibited significantly higher levels of the neurotransmitter receptor, adenosine A1 receptor and the transcription factors, c-Fos, and Egr-1. Interestingly, for 24 genes related to metabolism, all were significantly elevated in S mice, suggesting altered metabolism in these mice. Together, this study provides a list of candidate genes (some previously implicated in maternal aggression and some novel) that may play an important role in the production of this behavior."
-    :m1: 
-    - Journal
-    :ad: 
-    - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
-    :y2: 
-    - Aug 29
-    :t1: 
-    - Altered gene expression in mice selected for high maternal aggression
-    :a1: 
-    - Gammie,S. C.
-    - Auger,A. P.
-    - Jessen,H. M.
-    - Vanzo,R. J.
-    - Awad,T. A.
-    - Stevenson,S. A.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 111
-      A1  - Gammie,S. C.
-      A1  - Auger,A. P.
-      A1  - Jessen,H. M.
-      A1  - Vanzo,R. J.
-      A1  - Awad,T. A.
-      A1  - Stevenson,S. A.
-      T1  - Altered gene expression in mice selected for high maternal aggression
-      Y1  - 2006
-      Y2  - Aug 29
-      AB  - We previously applied selective breeding on outbred mice to increase maternal aggression (maternal defense). In this study, we compared gene expression within a continuous region of the central nervous system (CNS) involved in maternal aggression (hypothalamus and preoptic regions) between lactating selected (S) and nonselected control (C) mice (n= 6 per group). Using microarrays representing over 40 000 genes or expressed sequence tags, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray and the probe logarithmic intensity error method. Approximately 200 genes were identified as significant using an intersection from both techniques. A subset of genes was examined for confirmation by real-time polymerase chain reaction (PCR). Significant decreases were found in S mice for neurotensin and neuropeptide Y receptor Y2 (both confirmed by PCR). Significant increases were found in S mice for neuronal nitric oxide synthase (confirmed by PCR), the K+ channel subunit, Kcna1 (confirmed by PCR), corticotrophin releasing factor binding protein (just above significance using PCR; P= 0.051) and GABA A receptor subunit 1A (not confirmed by PCR, but similar direction). S mice also exhibited significantly higher levels of the neurotransmitter receptor, adenosine A1 receptor and the transcription factors, c-Fos, and Egr-1. Interestingly, for 24 genes related to metabolism, all were significantly elevated in S mice, suggesting altered metabolism in these mice. Together, this study provides a list of candidate genes (some previously implicated in maternal aggression and some novel) that may play an important role in the production of this behavior.
-      N1  - PUBM: Print-Electronic; DEP: 20060829; JID: 101129617; aheadofprint
-      A3  - Anonymous
-      SN  - 1601-1848
-      AD  - Department of Zoology, Neuroscience Training Program, Department of Psychology, University of Wisconsin, Madison, WI.
-      JA  - Genes Brain Behav.
-      M1  - Journal
-    :a3: 
-    - Anonymous
-    :id: 
-    - "111"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Genes Brain Behav.
-    :sn: 
-    - 1601-1848
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :is: 
-    - "2"
-    :y1: 
-    - "2005"
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 8908640; 0 (Neuropeptide Y); 66796-54-1 (Pro-Opiomelanocortin); 2004/10/13 [received]; 2005/04/20 [revised]; 2005/05/12 [accepted]; ppublish"
-    :ab: 
-    - "A dramatic example of neuronal and physiological plasticity in adult mammals occurs during the transition from a non-maternal to a maternal, lactating state. In this study, we compared gene expression within a large continuous region of the CNS involved in maternal behaviors (hypothalamus, preoptic regions, and nucleus accumbens) between lactating (L) (postpartum Day 7) and randomly cycling virgin (V) outbred mice. Using high-density oligonucleotide arrays representing 11,904 genes, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray (P < 0.001) (n = 92 genes) and significance analysis of microarrays using a 10% false discover rate (n = 114 genes). 27 common genes were identified as significant using both techniques. A subset of genes (n = 5) were selected and examined by real-time PCR. Our findings were consistent with previous published work. For example, neuropeptide Y (NPY) and proenkephalin were elevated in L mice, whereas POMC was decreased. Increased levels of NPY Y2 receptor and polo-like kinase and decreased levels of endothelin receptor type b in L mice are examples of novel gene expression changes not previously identified. Expression differences occurred in broad classes. Together, our findings provide possible new material on gene expression changes that may support maternal behaviors. The advantages and drawbacks of sampling large CNS regions using arrays are discussed."
-    :sp: 
-    - "201"
-    :m1: 
-    - Journal
-    :kw: 
-    - Animals
-    - Central Nervous System/anatomy & histology/metabolism
-    - Female
-    - Gene Expression/physiology
-    - Gene Expression Profiling
-    - Lactation/physiology
-    - Male
-    - Maternal Behavior/physiology
-    - Mice
-    - Mice, Inbred ICR
-    - Neuropeptide Y/genetics/metabolism
-    - Pro-Opiomelanocortin/genetics/metabolism
-    :ad: 
-    - Department of Zoology, University of Wisconsin, 1117 W. Johnson Street, Madison, WI 53706, USA. scgammie@wisc.edu
-    :ep: 
-    - "211"
-    :y2: 
-    - Oct 3
-    :t1: 
-    - Gene array profiling of large hypothalamic CNS regions in lactating and randomly cycling virgin mice
-    :a1: 
-    - Gammie,S. C.
-    - Hasen,N. S.
-    - Awad,T. A.
-    - Auger,A. P.
-    - Jessen,H. M.
-    - Panksepp,J. B.
-    - Bronikowski,A. M.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 113
-      A1  - Gammie,S. C.
-      A1  - Hasen,N. S.
-      A1  - Awad,T. A.
-      A1  - Auger,A. P.
-      A1  - Jessen,H. M.
-      A1  - Panksepp,J. B.
-      A1  - Bronikowski,A. M.
-      T1  - Gene array profiling of large hypothalamic CNS regions in lactating and randomly cycling virgin mice
-      Y1  - 2005
-      Y2  - Oct 3
-      VL  - 139
-      IS  - 2
-      SP  - 201
-      EP  - 211
-      KW  - Animals
-      KW  - Central Nervous System/anatomy & histology/metabolism
-      KW  - Female
-      KW  - Gene Expression/physiology
-      KW  - Gene Expression Profiling
-      KW  - Lactation/physiology
-      KW  - Male
-      KW  - Maternal Behavior/physiology
-      KW  - Mice
-      KW  - Mice, Inbred ICR
-      KW  - Neuropeptide Y/genetics/metabolism
-      KW  - Pro-Opiomelanocortin/genetics/metabolism
-      AB  - A dramatic example of neuronal and physiological plasticity in adult mammals occurs during the transition from a non-maternal to a maternal, lactating state. In this study, we compared gene expression within a large continuous region of the CNS involved in maternal behaviors (hypothalamus, preoptic regions, and nucleus accumbens) between lactating (L) (postpartum Day 7) and randomly cycling virgin (V) outbred mice. Using high-density oligonucleotide arrays representing 11,904 genes, two statistical algorithms were used to identify significant differences in gene expression: robust multiarray (P < 0.001) (n = 92 genes) and significance analysis of microarrays using a 10% false discover rate (n = 114 genes). 27 common genes were identified as significant using both techniques. A subset of genes (n = 5) were selected and examined by real-time PCR. Our findings were consistent with previous published work. For example, neuropeptide Y (NPY) and proenkephalin were elevated in L mice, whereas POMC was decreased. Increased levels of NPY Y2 receptor and polo-like kinase and decreased levels of endothelin receptor type b in L mice are examples of novel gene expression changes not previously identified. Expression differences occurred in broad classes. Together, our findings provide possible new material on gene expression changes that may support maternal behaviors. The advantages and drawbacks of sampling large CNS regions using arrays are discussed.
-      N1  - LR: 20061115; PUBM: Print; JID: 8908640; 0 (Neuropeptide Y); 66796-54-1 (Pro-Opiomelanocortin); 2004/10/13 [received]; 2005/04/20 [revised]; 2005/05/12 [accepted]; ppublish
-      CY  - Netherlands
-      A3  - Anonymous
-      SN  - 0169-328X
-      AD  - Department of Zoology, University of Wisconsin, 1117 W. Johnson Street, Madison, WI 53706, USA. scgammie@wisc.edu
-      JF  - Brain research.Molecular brain research
-      JA  - Brain Res.Mol.Brain Res.
-      M1  - Journal
-    :jf: 
-    - Brain research.Molecular brain research
-    :a3: 
-    - Anonymous
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
     :vl: 
-    - "139"
-    :id: 
-    - "113"
-    :ty: 
-    - JOUR
-    :ja: 
-    - Brain Res.Mol.Brain Res.
-    :sn: 
-    - 0169-328X
-    :cy: 
-    - Netherlands
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :is: 
-    - "4"
-    :y1: 
-    - "2005"
-    :n1: 
-    - "LR: 20061115; PUBM: Print; JID: 8913461; 0 (Gonadal Steroid Hormones); 0 (Proto-Oncogene Proteins c-fos); 0 (Transcription Factors); ppublish"
-    :ab: 
-    - Sex differences in the brain and behaviour are mostly a result of transient increases in testosterone during the perinatal period. Testosterone influences brain development primarily through aromatization to oestradiol and subsequent binding to oestrogen receptors. Although some studies report that steroid hormones regulate the expression of the inducible transcription factor, Fos, in developing brain, it is not known if there is a sex difference in Fos expression. Changes in Fos protein can be used as an indicator of neuronal/genomic activity. Thus, it provides a useful tool to identify brain regions responding directly or indirectly to steroid hormones. In a first experiment, we examined Fos protein expression in the developing male and female rat brain using western immunoblotting. Dissections were taken from male and female rat pups on the day of birth (postnatal day 0; PN 0), PN1, PN5, PN11 or PN20. Although there was no difference on PN 0, males expressed significantly greater levels of Fos protein on PN1, PN5 and PN20. In a second experiment, we localized the sex difference in Fos protein expression using immunocytochemistry. We found that males expressed significantly higher levels of Fos within a variety of brain regions. These data indicate a sex difference in Fos protein expression during brain development, suggesting a potential role for Fos in differentiating male from female rat brain.
-    :sp: 
-    - "255"
-    :m1: 
-    - Journal
-    :kw: 
-    - Age Factors
-    - Animals
-    - Animals, Newborn/growth & development/metabolism
-    - Brain/growth & development/metabolism
-    - Female
-    - Gonadal Steroid Hormones/physiology
-    - Male
-    - Proto-Oncogene Proteins c-fos/metabolism
-    - Rats
-    - Rats, Sprague-Dawley
-    - Sex Characteristics
-    - Transcription Factors/metabolism
-    :ad: 
-    - Department of Psychology, University of Wisconsin, Madison, WI 53706, USA.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: San Jose, CA
     :ep: 
-    - "261"
-    :y2: 
-    - Apr
-    :t1: 
-    - Sex differences in Fos protein expression in the neonatal rat brain
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1076"
     :a1: 
-    - Olesen,K. M.
-    - Auger,A. P.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 115
-      A1  - Olesen,K. M.
-      A1  - Auger,A. P.
-      T1  - Sex differences in Fos protein expression in the neonatal rat brain
-      Y1  - 2005
-      Y2  - Apr
-      VL  - 17
-      IS  - 4
-      SP  - 255
-      EP  - 261
-      KW  - Age Factors
-      KW  - Animals
-      KW  - Animals, Newborn/growth & development/metabolism
-      KW  - Brain/growth & development/metabolism
-      KW  - Female
-      KW  - Gonadal Steroid Hormones/physiology
-      KW  - Male
-      KW  - Proto-Oncogene Proteins c-fos/metabolism
-      KW  - Rats
-      KW  - Rats, Sprague-Dawley
-      KW  - Sex Characteristics
-      KW  - Transcription Factors/metabolism
-      AB  - Sex differences in the brain and behaviour are mostly a result of transient increases in testosterone during the perinatal period. Testosterone influences brain development primarily through aromatization to oestradiol and subsequent binding to oestrogen receptors. Although some studies report that steroid hormones regulate the expression of the inducible transcription factor, Fos, in developing brain, it is not known if there is a sex difference in Fos expression. Changes in Fos protein can be used as an indicator of neuronal/genomic activity. Thus, it provides a useful tool to identify brain regions responding directly or indirectly to steroid hormones. In a first experiment, we examined Fos protein expression in the developing male and female rat brain using western immunoblotting. Dissections were taken from male and female rat pups on the day of birth (postnatal day 0; PN 0), PN1, PN5, PN11 or PN20. Although there was no difference on PN 0, males expressed significantly greater levels of Fos protein on PN1, PN5 and PN20. In a second experiment, we localized the sex difference in Fos protein expression using immunocytochemistry. We found that males expressed significantly higher levels of Fos within a variety of brain regions. These data indicate a sex difference in Fos protein expression during brain development, suggesting a potential role for Fos in differentiating male from female rat brain.
-      N1  - LR: 20061115; PUBM: Print; JID: 8913461; 0 (Gonadal Steroid Hormones); 0 (Proto-Oncogene Proteins c-fos); 0 (Transcription Factors); ppublish
-      CY  - England
-      A3  - Anonymous
-      SN  - 0953-8194
-      AD  - Department of Psychology, University of Wisconsin, Madison, WI 53706, USA.
-      JF  - Journal of neuroendocrinology
-      JA  - J.Neuroendocrinol.
-      M1  - Journal
-    :jf: 
-    - Journal of neuroendocrinology
-    :a3: 
-    - Anonymous
-    :vl: 
-    - "17"
-    :id: 
-    - "115"
-    :ty: 
-    - JOUR
-    :ja: 
-    - J.Neuroendocrinol.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
     :sn: 
-    - 0953-8194
-    :cy: 
-    - England
-- !ruby/object:ParsedCitation 
-  citation_type: :ris
-  properties: 
-    :is: 
-    - "9"
-    :y1: 
-    - "2005"
-    :n1: 
-    - "LR: 20061115; PUBM: Print-Electronic; DEP: 20050526; JID: 0375040; 0 (Dopamine Agonists); 0 (Estrogen Antagonists); 0 (Estrogen Receptor alpha); 0 (Receptors, Dopamine D1); 0 (Receptors, Progesterone); 10540-29-1 (Tamoxifen); 50-28-2 (Estradiol); 51-61-6 (Dopamine); 67287-49-4 (2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine); CIN: Endocrinology. 2005 Sep;146(9):3702-4. PMID: 16105829; 2005/05/26 [aheadofprint]; ppublish"
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595935932"
     :ab: 
-    - Steroid receptor activation in developing brain influences a variety of cellular processes that endure into adulthood, altering both behavior and physiology. We report that estrogen receptors can be activated in a ligand-independent manner within developing brain by membrane dopamine receptors. Neonatal treatment with either estradiol or a dopamine D1 receptor agonist can increase the expression of an estrogen receptor-regulated gene (i.e. progestin receptors) and later juvenile social play. More importantly, increases in social play behavior induced by neonatal treatment with estradiol or a dopamine D1 receptor agonist can be prevented by prior treatment with an estrogen receptor antagonist. This suggests that changes in dopamine transmission in developing brain can activate estrogen receptors in a ligand-independent manner to influence gene expression and have lasting consequences on social behavior.
-    :sp: 
-    - "3705"
-    :m1: 
-    - Journal
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Many collaborative design tools may suffer from being too generic to address the specific complexities inherent in multidisciplinary collaboration. We provide accounts of several multidisciplinary HCI courses at our institution, elaborating on the challenges student teams face when integrating design practice from a wide variety of disciplines. Of particular interest are the distinct approaches that these multidisciplinary teams adopt that differ from more common forms of collaborative design. We suggest reasons for the poor rate of adoption of existing collaborative support tools and outline specific suggestions for directions in both ethnographic studies of multidisciplinary collaboration and collaborative systems design.
     :kw: 
-    - 2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine/pharmacology
-    - Animals
-    - Animals, Newborn
-    - Behavior, Animal/drug effects/physiology
-    - Brain/growth & development/metabolism
-    - Dopamine/metabolism
-    - Dopamine Agonists/pharmacology
-    - Estradiol/pharmacology
-    - Estrogen Antagonists/pharmacology
-    - Estrogen Receptor alpha/antagonists & inhibitors/metabolism
-    - Female
-    - Male
-    - Play and Playthings
-    - Pregnancy
-    - Rats
-    - Rats, Sprague-Dawley
-    - Receptors, Dopamine D1/agonists/metabolism
-    - Receptors, Progesterone/metabolism
-    - Social Behavior
-    - Tamoxifen/pharmacology
-    :ad: 
-    - Department of Psychology, University of Wisconsin, Madison, 1202 West Johnson Street, Madison, Wisconsin 53706, USA.
-    :ep: 
-    - "3712"
-    :y2: 
-    - Sep
-    :t1: 
-    - Dopaminergic activation of estrogen receptors in neonatal brain alters progestin receptor expression and juvenile social play behavior
-    :a1: 
-    - Olesen,K. M.
-    - Jessen,H. M.
-    - Auger,C. J.
-    - Auger,A. P.
-    :original_data: |-
-      TY  - JOUR
-      ID  - 114
-      A1  - Olesen,K. M.
-      A1  - Jessen,H. M.
-      A1  - Auger,C. J.
-      A1  - Auger,A. P.
-      T1  - Dopaminergic activation of estrogen receptors in neonatal brain alters progestin receptor expression and juvenile social play behavior
-      Y1  - 2005
-      Y2  - Sep
-      VL  - 146
-      IS  - 9
-      SP  - 3705
-      EP  - 3712
-      KW  - 2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine/pharmacology
-      KW  - Animals
-      KW  - Animals, Newborn
-      KW  - Behavior, Animal/drug effects/physiology
-      KW  - Brain/growth & development/metabolism
-      KW  - Dopamine/metabolism
-      KW  - Dopamine Agonists/pharmacology
-      KW  - Estradiol/pharmacology
-      KW  - Estrogen Antagonists/pharmacology
-      KW  - Estrogen Receptor alpha/antagonists & inhibitors/metabolism
-      KW  - Female
-      KW  - Male
-      KW  - Play and Playthings
-      KW  - Pregnancy
-      KW  - Rats
-      KW  - Rats, Sprague-Dawley
-      KW  - Receptors, Dopamine D1/agonists/metabolism
-      KW  - Receptors, Progesterone/metabolism
-      KW  - Social Behavior
-      KW  - Tamoxifen/pharmacology
-      AB  - Steroid receptor activation in developing brain influences a variety of cellular processes that endure into adulthood, altering both behavior and physiology. We report that estrogen receptors can be activated in a ligand-independent manner within developing brain by membrane dopamine receptors. Neonatal treatment with either estradiol or a dopamine D1 receptor agonist can increase the expression of an estrogen receptor-regulated gene (i.e. progestin receptors) and later juvenile social play. More importantly, increases in social play behavior induced by neonatal treatment with estradiol or a dopamine D1 receptor agonist can be prevented by prior treatment with an estrogen receptor antagonist. This suggests that changes in dopamine transmission in developing brain can activate estrogen receptors in a ligand-independent manner to influence gene expression and have lasting consequences on social behavior.
-      N1  - LR: 20061115; PUBM: Print-Electronic; DEP: 20050526; JID: 0375040; 0 (Dopamine Agonists); 0 (Estrogen Antagonists); 0 (Estrogen Receptor alpha); 0 (Receptors, Dopamine D1); 0 (Receptors, Progesterone); 10540-29-1 (Tamoxifen); 50-28-2 (Estradiol); 51-61-6 (Dopamine); 67287-49-4 (2,3,4,5-Tetrahydro-7,8-dihydroxy-1-phenyl-1H-3-benzazepine); CIN: Endocrinology. 2005 Sep;146(9):3702-4. PMID: 16105829; 2005/05/26 [aheadofprint]; ppublish
-      CY  - United States
-      A3  - Anonymous
-      SN  - 0013-7227
-      AD  - Department of Psychology, University of Wisconsin, Madison, 1202 West Johnson Street, Madison, Wisconsin 53706, USA.
-      JF  - Endocrinology
-      JA  - Endocrinology
-      M1  - Journal
-    :jf: 
-    - Endocrinology
-    :a3: 
-    - Anonymous
-    :vl: 
-    - "146"
-    :id: 
-    - "114"
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Design education
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Design tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Low fidelity prototyping
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Multidisciplinary collaboration
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Social bookmarking
     :ty: 
-    - JOUR
-    :ja: 
-    - Endocrinology
-    :sn: 
-    - 0013-7227
-    :cy: 
-    - United States
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1123"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1073"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        
+        
+        TY  - CONF
+        ID  - 1123
+        A1  - Adamczyk,Piotr D.
+        A1  - Twidale,Michael B.
+        T1  - Supporting multidisciplinary collaboration: Requirements from novel HCI education
+        Y1  - 2007
+        Y2  - Apr 28-May 3 2007
+        SP  - 1073
+        EP  - 1076
+        KW  - Design education
+        KW  - Design tools
+        KW  - Low fidelity prototyping
+        KW  - Multidisciplinary collaboration
+        KW  - Social bookmarking
+        AB  - Many collaborative design tools may suffer from being too generic to address the specific complexities inherent in multidisciplinary collaboration. We provide accounts of several multidisciplinary HCI courses at our institution, elaborating on the challenges student teams face when integrating design practice from a wide variety of disciplines. Of particular interest are the distinct approaches that these multidisciplinary teams adopt that differ from more common forms of collaborative design. We suggest reasons for the poor rate of adoption of existing collaborative support tools and outline specific suggestions for directions in both ethnographic studies of multidisciplinary collaboration and collaborative systems design.
+        T2  - CHI '07 extended abstracts on Human factors in computing systems
+        VL  - San Jose, CA
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595935932
+        M1  - Conference Proceedings
+

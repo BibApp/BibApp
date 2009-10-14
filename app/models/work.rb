@@ -335,6 +335,7 @@ class Work < ActiveRecord::Base
     end
 
     if saved
+      logger.debug("\nWork #{work.id} has been saved!")
       return work.id, nil
     else
       return nil, "Validation Error: Primary Title is missing."

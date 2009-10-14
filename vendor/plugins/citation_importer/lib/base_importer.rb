@@ -26,11 +26,17 @@ class BaseImporter < CitationImporter
   
   ## Generate our BibApp Attribute Hash, from the given parsed citation
   def generate_attribute_hash(parsed_citation)
+
+    logger.debug("\nGenerating attribute hash from parsed citation...\n")
+
     #initialize our final attribute hash
     r_hash = Hash.new
     
     #return immediately, if this parsed citation is not supported by importer
-    return false if !self.class.import_formats.include?(parsed_citation.citation_type)
+    if !self.class.import_formats.include?(parsed_citation.citation_type)
+      logger.warning("\nThis parsed citation is not supported by importer! Skipping.\n")
+      return false
+    end
     
     #loop through parsed citation's keys & values
     parsed_citation.properties.each do |key, values|
@@ -91,6 +97,7 @@ class BaseImporter < CitationImporter
     end
   
     #puts "Mapped Hash: #{r_hash.inspect}"
+    logger.debug("\nSuccessfully generated attribute hash!\n")
     return r_hash
   end
   
@@ -152,7 +159,7 @@ class BaseImporter < CitationImporter
   # (returns nil if date cannot be parsed)
   def parse_date(date_to_parse)
     date = nil
-    logger.debug("\nTrying to parse date: #{date_to_parse}")
+    logger.debug("\nTrying to parse date: #{date_to_parse}...\n")
 
     #Make sure we are working with a string which isn't empty
     date_string = date_to_parse.to_s.strip

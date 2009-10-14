@@ -32,7 +32,7 @@ class MedlineParser < CitationParser
     if not data.mb_chars =~ /^PMID/
       return nil
     end
-    logger.debug("This file is Medline format.")
+    logger.debug("\n\n* This file is Medline format.")
     
     # Each record starts with a 'PMID' (PubMedID) field
     record = data.mb_chars.split(/(?=^PMID\-)/)

@@ -27,7 +27,7 @@ class RefworksXmlParser < BaseXmlParser
     if row_count.size < 1
       return nil
     end
-    logger.debug("This file is the Refworks XML format.")
+    logger.debug("\n\n* This file is the Refworks XML format.")
   
     # Each record is enclosed in a <reference> tag
     (xml/:reference).each { |ref|
