@@ -106,7 +106,7 @@ class Publisher < ActiveRecord::Base
       #Machine name is Name with:
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
       self.save_without_callbacks
     end
   end
