@@ -214,7 +214,7 @@ class Person < ActiveRecord::Base
       #Machine name is Full Name with:
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.full_name.chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = self.full_name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
       self.save_without_callbacks
     end
   end
