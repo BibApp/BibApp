@@ -4,11 +4,14 @@
 %div{:class => "span-15"}
   %h3 People
   %ol#people
-    -# if there's a count specified, only show the first few
-    - people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]
+    - people = @facets[:people_data]
 
     - if randomize
       - people = people.sort_by{rand}
+
+    -# if there's a count specified, only show the first few
+    - unless count.nil?
+      - people = people.first(count)
 
     - people.each do |p|
       - last_name, id, image_url, group_ids = Person.parse_solr_data(p.name)
