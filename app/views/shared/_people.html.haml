@@ -9,27 +9,20 @@
     - if randomize
       - people = people.sort_by{rand}
 
-    -# if there's a count specified, only show the first few
-    - unless count.nil?
-      - people = people.first(count)
+    - counter = 0
 
     - people.each do |p|
       - last_name, id, image_url, group_ids = Person.parse_solr_data(p.name)
-      - if controller.controller_name == "groups"
-        - if group_ids.include?(@group.id)
-          %li.inline
-            %div.person{:class => "span-3"}
-              = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
-              %div.person-image-metadata
-                %strong= p.value
-              %div.person-last-name.left
-                %strong=link_to last_name, person_path(id)
-      -else
-        %li.inline
-          %div.person.span-3
-            %div.person-image-wrapper
-              = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => 'person-image'), person_path(id))
-            %div.person-image-metadata
-              %strong= p.value
-            %div.person-last-name.left
-              %strong=link_to last_name, person_path(id)
+      - if controller.controller_name == "groups" and !group_ids.include?(@group.id)
+        - next
+      - if count and counter >= count
+        - break
+      - counter += 1
+      %li.inline
+        %div.person.span-3
+          %div.person-image-wrapper
+            = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => 'person-image'), person_path(id))
+          %div.person-image-metadata
+            %strong= p.value
+          %div.person-last-name.left
+            %strong=link_to last_name, person_path(id)
