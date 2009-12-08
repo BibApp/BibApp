@@ -1,7 +1,9 @@
 - form_for :attachment, :url => {:controller => "attachments", :action => "create"}, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div
     %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
-    %span.asset= render :partial => "works/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }  
+    -# %span.asset= render :partial => "works/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }
+    - ce = WorkExport.new
+    %span.asset= ce.drive_csl("apa", @asset)
 
   %fieldset
     %legend="Content Files"
