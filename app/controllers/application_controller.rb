@@ -15,10 +15,14 @@ class ApplicationController < ActionController::Base
   
   # Adds a work.id to the session[:saved] array
   def add_to_saved
-    @saved = find_saved
-    work = Work.find(params[:id])
-    @saved.add_work(work)
-    redirect_to :back
+    if request.env["HTTP_REFERER"].nil?
+      redirect_to works_path
+    else
+      @saved = find_saved
+      work = Work.find(params[:id])
+      @saved.add_work(work)
+      redirect_to :back
+    end
   end
   
   def add_many_to_saved
