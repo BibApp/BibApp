@@ -81,7 +81,7 @@ class PeopleController < ApplicationController
       # Collect a list of the person's top-level groups for the tree view
       @top_level_groups = Array.new
       @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
-        @top_level_groups << m.group.top_level_parent
+        @top_level_groups << m.group.top_level_parent unless m.nil?
       end
       @top_level_groups.uniq!
     end
