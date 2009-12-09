@@ -76,7 +76,7 @@
           -# Plain-text Citation in APA Citation Format
           %epdcx:valueString=encode_for_xml(work.to_s)
           -# OpenURL ContextObject
-          = render :partial => 'works/epdcx_openurl', :locals => {:work => work}
+          = render :partial => 'works/epdcx_openurl.mets', :locals => {:work => work}
           
         -# Reference to Manifestation of an Expression of item (see below)
         -# There is one Manifestation per FILE!
