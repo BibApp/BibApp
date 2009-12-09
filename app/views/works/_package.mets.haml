@@ -9,7 +9,7 @@
   -# Descriptive Metadata Section
   %dmdSec{ :ID=>"sword-mets-dmd-#{work.id}", :CREATED=>"#{work.created_at.to_s(:xsd)}" }
     -# Metadata in EPrints DC XML Schema - As necessary for SWORD
-    = render :partial => 'works/epdcx', :locals => {:work => work, :filenames_only => filenames_only}
+    = render :partial => 'works/epdcx.mets', :locals => {:work => work, :filenames_only => filenames_only}
  
   -# Files Section
   %fileSec
