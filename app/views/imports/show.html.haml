@@ -101,17 +101,21 @@
             %tbody
               %tr
                 %td New works
-                %td= @work_batch.size - @dupe_count
+                - ct = (@work_batch.size - @dupe_count - @errors.size)
+                %td= ct < 0 ? 0 : ct
               %tr
                 %td Duplicate works
                 %td= @dupe_count
+              %tr
+                %td Errors
+                %td= @errors.size
             %tfoot
               %tr
                 %td{:style => "border-top:1px dotted #CCC"} Total
                 %td#works_imported_total{:style => "border-top:1px dotted #CCC"}= @work_batch.size
 
 
-        %div.left.span-6.last
+        %div.left.span-14.last
           / Errors
           %table
             %thead
@@ -119,9 +123,11 @@
                 %th{:style => "border-bottom:1px solid #000"} Errors
             %tbody
               - if !@errors.empty?
+                - count = 0
                 - @errors.each do |key, value|
+                  - count += 1
                   %tr
-                    %td=value
+                    %td="#{count}. #{value}"
               - else
                 %tr
                   %td{:colspan => "2"}
@@ -148,7 +154,8 @@
                 = import_name_string_line(ns, @person)
 
       %div.left.prepend-1
-        - ct = @works ? @works.length : 0
+        - ct = @work_batch.size - @errors.size
+        - ct = ct < 0 ? 0 : ct
         %h3#works="Works Imported (#{ct})"
         = render :partial => "works" if @works
         
