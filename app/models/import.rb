@@ -212,19 +212,18 @@ class Import < ActiveRecord::Base
       return nil if attr_hashes.nil?
       
       # Now, actually *create* these works in database
-      attr_hashes.map { |h|
-        
+      attr_hashes.each do |h|
+     
         work, error = Work.create_from_hash(h)
 
-        unless error.nil?
-          self.import_errors[:import_error] = error.message
-          raise(error)
+        if error.nil?
+          #add to batch of works created
+          self.works_added << work
+        else
+          self.import_errors[:import_error] = "Title: <em>#{h[:title_primary]}</em><br/>#{error}"
         end
         
-        #add to batch of works created
-        self.works_added << work
-        self.import_errors[:import_error]
-      }
+      end
       
       #index everything in Solr
       Index.batch_index
