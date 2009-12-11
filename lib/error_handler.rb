@@ -5,7 +5,8 @@ class ActionController::Base
     "ActionController::RoutingError", 
     "ActionController::UnknownController", 
     "ActionController::UnknownAction", 
-    "ActionController::MethodNotAllowed"
+    "ActionController::MethodNotAllowed",
+    "ActionView::MissingTemplate"
   ]
   
   def rescue_action_in_public(exception)
