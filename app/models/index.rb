@@ -115,13 +115,14 @@ class Index
       Index.optimize_index
     end
     
-    def start(page)
+    def start(page, rows)
       if page.to_i < 2
         start = 0
       else 
-        start = ((page.to_i-1)*10)
+        start = ((page.to_i-1)*(rows.to_i))
       end
     end
+
     
     #Re-index *everything* in Solr
     #  This method is useful in case your Solr index 
@@ -238,7 +239,7 @@ class Index
               :mincount => 1, 
               :limit => facet_count
             },
-            :start => self.start(page),
+            :start => self.start(page, rows),
             :sort => [{"#{sort}" => order.to_sym}],
             :rows => rows
       }
