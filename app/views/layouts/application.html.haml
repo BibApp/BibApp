@@ -23,3 +23,7 @@
         = render :partial => "shared/flash_messages"
       = yield
       = render :partial => "shared/footer"
+
+    -if $DISPLAY_GOOGLE_ANALYTICS == true
+      %div
+        = render :partial => "shared/google_analytics"

@@ -139,3 +139,11 @@ $DISPLAY_ABSTRACTS_AND_KEYWORDS = true
 # set this value to 'false' to prevent abstracts and keywords from
 # being exported via web services (xml, yml, json).
 $EXPORT_ABSTRACTS_AND_KEYWORDS = true
+
+####
+# Google Analytics
+#
+# The standard GA tracking code script will be displayed at the
+# bottom of every page.
+$DISPLAY_GOOGLE_ANALYTICS = false
+$GOOGLE_ANALYTICS_ID = "UA-xxxxxx-x"
