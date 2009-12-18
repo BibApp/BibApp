@@ -21,7 +21,7 @@ class ConferencePaper < Work
     open_url_kevs[:genre]       = "&rft.genre=proceeding"
     open_url_kevs[:title]       = "&rft.title=#{CGI.escape(self.title_primary)}"
     unless self.publication.nil?
-      open_url_kevs[:source]      = "&rft.jtitle=#{self.publication.authority.name}"
+      open_url_kevs[:source]      = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn]        = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
       open_url_kevs[:isbn]        = "&rft.isbn=#{self.publication.isbns.first[:name]}" if !self.publication.isbns.empty?
     end
