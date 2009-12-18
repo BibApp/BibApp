@@ -117,7 +117,7 @@ module Bibapp
     end
     
     def convert_date(date)
-      if date
+      unless date.blank?
         date = date + "-01-01" if date.length == 4
         Date.parse(date)
       end
