@@ -675,9 +675,11 @@ class Work < ActiveRecord::Base
   
   #Update Publication and Publisher Authorities (called by after_save callback)
   def update_authorities
-    self.publication_id  = self.publication.authority_id
-    self.publisher_id    = self.publication.authority.publisher_id
-    self.save_without_callbacks
+    if self.publication
+      self.publication_id  = self.publication.authority_id
+      self.publisher_id    = self.publication.authority.publisher_id
+      self.save_without_callbacks
+    end
   end
   
   # Returns to Work Type URI based on the EPrints Application Profile's
