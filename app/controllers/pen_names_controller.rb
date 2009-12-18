@@ -100,11 +100,23 @@ class PenNamesController < ApplicationController
     a1 = "%"
     a2 = "%"
     @searchphrase = a1 + @phrase + a2
-    @results = NameString.find(
-      :all,
-      :conditions => [ "name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
-      :order => "name"
-    )
+    
+    #Hack for postgresql, for which LIKE is case-sensitive 
+    #TODO: is there a better way?
+    if @person.configurations[RAILS_ENV]['adapter'] == "postgresql"
+      @results = NameString.find(
+        :all,
+        :conditions => [ "name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%"],
+        :order => "name"
+      )
+    else
+      @results = NameString.find(
+        :all,
+        :conditions => [ "name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
+        :order => "name"
+      )
+    end
+    
     @number_match = @results.length
     @results = @results - @person.name_strings
         
