@@ -853,7 +853,7 @@ class Work < ActiveRecord::Base
     open_url_kevs[:genre]      = "&rft.genre=article"
     open_url_kevs[:title]      = "&rft.atitle=#{CGI.escape(self.title_primary)}"
     unless self.publication.nil?
-      open_url_kevs[:source]     = "&rft.jtitle=#{self.publication.authority.name}"
+      open_url_kevs[:source]     = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn]       = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
     end
     open_url_kevs[:date]       = "&rft.date=#{self.publication_date}"

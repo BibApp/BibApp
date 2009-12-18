@@ -7,7 +7,7 @@
 
     - if @tab_name == "works"
       %ul#tasks
-        %li=link_to "Add works", new_work_path
+        %li=link_to "Add works", new_user_import_path(current_user)
         %li=link_to "Verify contributorships", admin_contributorships_path
         //%li=link_to "Edit Works", edit_work_path
         %li=link_to "View duplicate works", :controller=>"admin", :action =>"duplicates"
