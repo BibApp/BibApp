@@ -95,7 +95,7 @@ class Import < ActiveRecord::Base
 
     self.works_added.each do |work_added|
       work = Work.find_by_id(work_added)
-      logger.debug("\n- Work: #{work.id}")
+      logger.debug("\n- Work: #{work.id}") if work
       work.send_later(:destroy) if work
     end
     
@@ -220,7 +220,9 @@ class Import < ActiveRecord::Base
           #add to batch of works created
           self.works_added << work
         else
-          self.import_errors[:import_error] = "Title: <em>#{h[:title_primary]}</em><br/>#{error}"
+          #error = truncate(error) if error
+          self.import_errors[:import_error] = Array.new unless self.import_errors[:import_error]
+          self.import_errors[:import_error] << "#{error} (record title: <em>#{h[:title_primary]}</em>)<br/>"
         end
         
       end

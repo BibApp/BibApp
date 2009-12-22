@@ -73,6 +73,7 @@
               %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
     -unless @import.state == "processing"
+      - err_ct = @errors[:import_error] ? @errors.size + @errors[:import_error].size : @errors.size
       %div
         %h3 Batch report
 
@@ -101,14 +102,14 @@
             %tbody
               %tr
                 %td New works
-                - ct = (@work_batch.size - @dupe_count - @errors.size)
+                - ct = (@work_batch.size - @dupe_count - err_ct)
                 %td= ct < 0 ? 0 : ct
               %tr
                 %td Duplicate works
                 %td= @dupe_count
               %tr
                 %td Errors
-                %td= @errors.size
+                %td= err_ct
             %tfoot
               %tr
                 %td{:style => "border-top:1px dotted #CCC"} Total
@@ -123,11 +124,9 @@
                 %th{:style => "border-bottom:1px solid #000"} Errors
             %tbody
               - if !@errors.empty?
-                - count = 0
                 - @errors.each do |key, value|
-                  - count += 1
                   %tr
-                    %td="#{count}. #{value}"
+                    %td="<strong>#{key.to_s.humanize}:</strong> #{value}"
               - else
                 %tr
                   %td{:colspan => "2"}
@@ -154,7 +153,7 @@
                 = import_name_string_line(ns, @person)
 
       %div.left.prepend-1
-        - ct = @work_batch.size - @errors.size
+        - ct = @work_batch.size - err_ct
         - ct = ct < 0 ? 0 : ct
         %h3#works="Works Imported (#{ct})"
         = render :partial => "works" if @works
