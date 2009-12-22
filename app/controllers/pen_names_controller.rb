@@ -53,7 +53,7 @@ class PenNamesController < ApplicationController
     permit "editor of person"
 
     name = params[:name_string][:name]
-    machine_name = name.chars.gsub(/[\W]+/, " ").strip.downcase
+    machine_name = name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
     
     @name_string = NameString.find_or_create_by_machine_name(machine_name)
     @name_string.name = name
