@@ -751,7 +751,7 @@ class Work < ActiveRecord::Base
     # All APA Citation formats start out the same:
     #---------------------------------------------
     #Add authors
-    self.name_strings.author.each do |ns|
+    self.name_strings.author.first(5).each do |ns|
       if citation_string == ""
         citation_string << ns.name
       else
@@ -760,7 +760,7 @@ class Work < ActiveRecord::Base
     end
     
     #Add editors
-    self.name_strings.editor.each do |ns|
+    self.name_strings.editor.first(5).each do |ns|
       if citation_string == ""
         citation_string << ns.name
       else
