@@ -17,8 +17,6 @@ class MembershipsController < ApplicationController
 
     before :new do
       @person = Person.find(params[:person_id])
-      @page   = params[:page] || 1
-      @rows = params[:rows] || 10
 
       member = @person.groups.empty? ? "non_member" : "member"
       @status = params[:status] || member
@@ -83,11 +81,9 @@ class MembershipsController < ApplicationController
       @groups  = @groups.flatten.uniq
       @parents.uniq!
 
-      @parents = @parents.paginate(
-          :page => @page,
-          :per_page => @rows,
-          :order => 'name'
-        )
+      @groups.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+      @parents.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+
     end
 
   end
@@ -132,7 +128,7 @@ class MembershipsController < ApplicationController
 
     #Return path for any actions that take place on the memberships page
     return_path = new_person_membership_path(:person_id=>params[:person_id],
-                                   :status=>params[:status])
+                                   :status=>full_success ? 'member' : params[:status])
 
     respond_to do |format|
       if full_success

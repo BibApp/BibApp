@@ -61,25 +61,12 @@
                     /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
                     =button_to_function "Join selected groups", "submit_memberships_form(document.memberships_form, 'group_id[]', '#{create_multiple_memberships_path}')"
 
-                  #sort-by
-                    %label Show:
-                    %select{:name => "rows"}
-                      - ["10", "20", "50", "100", "250", "500"].each do |opt|
-                        - if opt == @rows
-                          %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-                        - else
-                          %option{:value => "#{opt}"}= opt.titleize
-
-                    - @page = 1 if @page == 0
                     = hidden_field_tag "person_id", @person.id
                     = hidden_field_tag "status", @status
                     -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
                     = hidden_field_tag "authenticity_token", form_authenticity_token
 
-                    = submit_tag 'Go'
-
                 %div{:class => "span-15 append-1 last"}
-                  = will_paginate @parents
                   = render :partial => "group_list"
 
                   %script{:type => "text/javascript"}
