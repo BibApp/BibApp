@@ -7,9 +7,9 @@
     %div{:class => "span-9 prepend-3 last"}
       %ul#global-nav
         %li
-          %a{:href => "about"} About
+          %a{:href => "/about"} About
         %li
-          %a{:href => "faq"} FAQ
+          %a{:href => "/faq"} FAQ
         - if logged_in?
           %li=link_to "Welcome: #{current_user.login}", edit_user_path(current_user)
           %li=link_to "Logout", logout_path
