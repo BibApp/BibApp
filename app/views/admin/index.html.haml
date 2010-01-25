@@ -1,5 +1,8 @@
 / === Admin === Index ===
 / Main
+
+- @title = "Administrative Tasks"  # Specify text at end of HTML <title> tag
+
 %div{:class => "span-24"}
   %div.span-22.prepend-1
     %h2 Administrative Tasks:
@@ -12,6 +15,7 @@
         //%li=link_to "Edit Works", edit_work_path
         %li=link_to "View duplicate works", :controller=>"admin", :action =>"duplicates"
         %li=link_to "Prepare files for archiving", :action => "ready_to_archive"
+        %li=link_to "Manage imports", user_imports_path(@current_user)
 
     - if @tab_name == "groups"
       %ul#tasks
