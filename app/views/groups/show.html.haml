@@ -20,16 +20,23 @@
       = @group.name
       =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss"))
     = render :partial => "shared/local_nav", :locals => {:object => "group"}
-      
 
-  %div.span-22.prepend-1
+  %div.span-15.prepend-1
     / People
     = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
 
+    %div.span-15
+      / Description
+      %h3.heading Description
+      %p= @group.description
+      %p= link_to @group.url
+
+
+  %div.span-7.last
     / Sub-Groups
     %div.span-6
       - if !@group.parent.nil?
-        %h3.heading Belongs to:
+        %h3.heading Belongs to
         %ul.parent-group
           %li= link_to @group.parent.name, group_path(@group.parent)
       - if !@group.children.empty?
