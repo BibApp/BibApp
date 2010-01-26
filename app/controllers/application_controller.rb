@@ -72,21 +72,21 @@ class ApplicationController < ActionController::Base
 
     # Are we showing an object's works?
     if !@current_object.nil?
-     facet_field = @current_object.class.to_s.downcase
-     # We want to show the citation list results page
-     params[:view] = "all"
+      facet_field = @current_object.class.to_s.downcase
+      # We want to show the citation list results page
+      params[:view] = "all"
 
-     # Append @current_object to filters
-     filter = filter << "#{facet_field}_id:\"#{@current_object.id}\""
-     @title = @current_object.name
+      # Append @current_object to filters
+      filter = filter << "#{facet_field}_id:\"#{@current_object.id}\""
+      @title = @current_object.name
      
-    elsif params[:view] && params[:sort].nil?
+    elsif !params[:view].blank? && params[:sort].blank?
       # If showing all works, default sort is "year"
       @sort = "year"
       
     else
       # Recent additions list sorted by "created_at"
-      params[:sort] = "created_at" unless params[:sort]
+      params[:sort] = "created_at" if params[:sort].blank? || params[:sort]=="created"
     end
     
     # Make certain filters are uniq before continuing
@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
     @rows         = params[:rows]         || 10
     @export       = params[:export]       || ""
     
-    @sort += "_sort" if @sort != "score"
+    @sort += "_sort" unless @sort == "score" || @sort == "created_at"
     
     # Public resultset... only show "accepted" Works
     @filter << "status:3"
