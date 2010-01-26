@@ -19,7 +19,8 @@ class ContributorshipsController < ApplicationController
           :include => [:work],
           :order => 'works.publication_date desc'
         )
-        
+      else
+        render :controller => "application", :action => "error_404"
       end
     end
   end
