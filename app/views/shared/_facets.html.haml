@@ -107,3 +107,22 @@
                 =add_filter(params,"publication_facet",p.name,p.value)
 
           %p.more_filters=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+
+    / Publishers
+    -#Remove Publisher facets that represents the current publisher or "Unknown"
+    -@facets[:publishers].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publisher) and @current_object.name==p.name) }
+    -if !@facets[:publications].empty?
+      %div.facet
+        %div.facet_heading Publishers
+        %ol#top-five-publishers.facet_filters
+          -@facets[:publishers].first(5).each do |p|
+            %li.show
+              =add_filter(params,"publisher_facet",p.name,p.value)
+
+        - if @facets[:publications].size > 5
+          %ol#all-publishers.facet_filters{:style => "display:none"}
+            -@facets[:publishers].each do |p|
+              %li.show
+                =add_filter(params,"publisher_facet",p.name,p.value)
+
+          %p.more_filters=link_to_function "More Publishers", "$('all-publishers').show(); $('top-five-publishers').hide(); this.hide();"
