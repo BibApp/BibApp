@@ -153,39 +153,56 @@ class Publisher < ActiveRecord::Base
       require 'open-uri'
       require 'net/http'
       require 'config/personalize.rb'
+      
+      # First check that solr is running
+      # We need it to be in order for the new publishers to be indexed
+      begin
+        n = Net::HTTP.new('localhost', SOLR_PORT)
+        n.request_head('/').value
+        
+      rescue Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
+        puts "Warning: Updating Sherpa data requires Solr to be running. Exiting...\n"
+        
+      rescue Net::HTTPServerException #responding
 
-      # SHERPA's API is not-cached! Opening the URI directly will likely 
-      # produce a ruby net/http timeout.
-      #
-      # Todo:
-      # 1. Offer a cached copy within /trunk?
-      # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
-      #
-      # UPDATE:
-      # The SHERPA API has gotten better, and requests are no longer timing
-      # out. Unless those problems reëmerge, it's probably safe to download
-      # the SHERPA data via net/http.
+        # SHERPA's API is not-cached! Opening the URI directly will likely
+        # produce a ruby net/http timeout.
+        #
+        # Todo:
+        # 1. Offer a cached copy within /trunk?
+        # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
+        #
+        # UPDATE:
+        # The SHERPA API has gotten better, and requests are no longer timing
+        # out. Unless those problems reëmerge, it's probably safe to download
+        # the SHERPA data via net/http.
 
-      #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
-      sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
-      data = REXML::Document.new(sherpa_response.body)
+        #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
+        sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
+        data = REXML::Document.new(sherpa_response.body)
 
-      data.elements.each('/romeoapi/publishers/publisher') do |pub|
-        sherpa_id = pub.attributes['id']
-        name = pub.elements['name'].text
-        url = pub.elements['homeurl'].text
-        romeo_color = pub.elements['romeocolour'].text
+        data.elements.each('/romeoapi/publishers/publisher') do |pub|
+          sherpa_id = pub.attributes['id']
+          name = pub.elements['name'].text
+          url = pub.elements['homeurl'].text
+          romeo_color = pub.elements['romeocolour'].text
 
-        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
-        add.update_attributes!({
-          :name         => name,
-          :url          => url,
-          :romeo_color  => romeo_color,
-          :sherpa_id    => sherpa_id,
-          :source_id    => 1
-        })
-        t = true
+          add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+          add.update_attributes!({
+              :name         => name,
+              :url          => url,
+              :romeo_color  => romeo_color,
+              :sherpa_id    => sherpa_id,
+              :source_id    => 1
+            })
+          t = true
+        end
+        
+      rescue
+        puts "Unexpected Error: #{$!.class.to_s} #{$!}"
+        raise
       end
+
     end
     
     #Parse Solr data (produced by to_solr_data)
