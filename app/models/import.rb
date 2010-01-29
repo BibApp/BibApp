@@ -222,7 +222,7 @@ class Import < ActiveRecord::Base
         else
           #error = truncate(error) if error
           self.import_errors[:import_error] = Array.new unless self.import_errors[:import_error]
-          self.import_errors[:import_error] << "#{error} (record title: <em>#{h[:title_primary]}</em>)<br/>"
+          self.import_errors[:import_error] << "<em>#{h[:title_primary]}</em> could not be imported. #{error}<br/>"
         end
         
       end
@@ -235,8 +235,8 @@ class Import < ActiveRecord::Base
     # to the database.
     rescue Exception => e
       # remove anything already added to the database (i.e. rollback ALL changes)
-      unless works_added.blank?
-        works_added.each do |work_id|
+      unless self.works_added.blank?
+        self.works_added.each do |work_id|
           work = Work.find(work_id)
           work.destroy unless work.nil?     
         end
@@ -248,7 +248,6 @@ class Import < ActiveRecord::Base
    
     # At this point, some or all of the works were saved to the database successfully.
     # return works_added, errors
-    self.works_added = works_added
     self.save
     
     # Trigger AASM reviewable event

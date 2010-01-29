@@ -14,6 +14,17 @@ class Publication < ActiveRecord::Base
   has_many :identifiers, :through => :identifyings
   
   named_scope :authorities, :conditions => ["id = authority_id"]
+
+  # This is necessary due to very long titles for conference
+  # proceedings. For example:
+  # Cultivating the future based on science. Volume 1: Organic Crop
+  # Production. Proceedings of the Second Scientific Conference of the
+  # International Society of Organic Agriculture Research (ISOFAR), held at
+  # the 16th IFOAM Organic World Conference in Cooperation with the
+  # International Federation of Organic Agriculture Movements (IFOAM) and
+  # the Consorzio ModenaBio in Modena, Italy, 18-20 June, 2008
+  validates_length_of :name, :maximum => 255,
+    :too_long => "is too long (maximum is 255 characters): {{value}}"
   
   #### Callbacks ####
   
