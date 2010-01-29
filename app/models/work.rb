@@ -535,7 +535,7 @@ class Work < ActiveRecord::Base
               :initial_publisher_id => set_publisher.id
           )
 
-        elsif not(publisher.nil?)
+        elsif not(set_publisher.nil?)
           publication = Publication.find_or_create_by_name_and_initial_publisher_id(
               :name => pub_name,
               :initial_publisher_id => set_publisher.id
@@ -545,6 +545,7 @@ class Work < ActiveRecord::Base
         end
 
         #save or update Work
+        publication.save!
         self.publication = publication.authority
         self.initial_publication_id = publication.id
       end

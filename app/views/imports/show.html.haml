@@ -73,7 +73,7 @@
               %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
     -unless @import.state == "processing"
-      - err_ct = @errors[:import_error] ? @errors.size + @errors[:import_error].size : @errors.size
+      - err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
       %div
         %h3 Batch report
 
