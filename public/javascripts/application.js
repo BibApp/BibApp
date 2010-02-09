@@ -12,7 +12,9 @@ function populate_person_form(ldap_result_index, form) {
   if (res.generationqualifier) { f['person_suffix'].value = res.generationqualifier }
   if (res.displayname) { f['person_display_name'].value = res.displayname }
   if (res.postaladdress) { 
-    f['person_postal_address'].value = res.postaladdress.replace(/\$/g, "\n")
+    var pa = res.postaladdress.replace(/\$/g, "\n")
+    pa = pa.replace(/\\N/g, "\n")
+    f['person_postal_address'].value = pa
   }
   //if (res.postaladdress) {
   //  var aparts = res.postaladdress.split('$');
@@ -22,8 +24,6 @@ function populate_person_form(ldap_result_index, form) {
   
   if (res.mail) { f['person_email'].value = res.mail }
   if (res.telephonenumber) { f['person_phone'].value = res.telephonenumber  }
-  if (res.l) { f['person_office_city'].value = res.l }
-  if (res.st) { f['person_office_state'].value = res.st }
 
   // Jump down to the form
   Element.scrollTo('personal_info')

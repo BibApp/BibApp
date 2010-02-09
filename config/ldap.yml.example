@@ -5,10 +5,19 @@
 #
 # Required settings:
 #   'host' => Host of local LDAP server
-#   'port'  => Port of local LDAP server (usually port 389)
+#   'port' => Port of local LDAP server (usually port 389)
 #   'base' => Base Distinguished Name (Base DN) which BibApp 
 #             will search for people matching a particular name.
 #             This is usually similar to "dc=myu,dc=edu" for universities.
+#
+# Optional settings:
+#   'username'   => Only use if required for LDAP bind
+#   'password'   => Only use if required for LDAP bind
+#
+# Institution-specific mappings:
+#   'middlename' => Since middle name is not part of the standard LDAP
+#                   schema, mappings might vary from institution to
+#                   institution. (e.g., middlename: myuMiddleName)
 #
 development:
   host: ldap.services.myu.edu
