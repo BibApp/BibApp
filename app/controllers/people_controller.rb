@@ -68,6 +68,8 @@ class PeopleController < ApplicationController
         @ldap_results = ldap_search(params[:q])
         if @ldap_results.nil?
           @fail = true
+        else
+          @ldap_results = @ldap_results.compact
         end
       end
       @title = "Add a Person"
@@ -198,17 +200,36 @@ class PeopleController < ApplicationController
         logger.info "Connecting to #{config['host']}:#{config['port']}"
         logger.info "Base DN: #{config['base']}"
         logger.info "Search query: #{query}"
-        
-        ldap = Net::LDAP.new(
-          :host => config['host'], 
-          :port => config['port'].to_i, 
-          :base => config['base']
-        )
-        
+
+        if config['username'].blank? or config['password'].blank?
+          ldap = Net::LDAP.new(
+            :host => config['host'],
+            :port => config['port'].to_i,
+            :base => config['base']
+          )
+        else
+          ldap = Net::LDAP.new(
+            :auth => {
+              :method => :simple,
+              :username => config['username'],
+              :password => config['password']
+            },
+            :host => config['host'],
+            :port => config['port'].to_i,
+            :base => config['base'],
+            :encryption => :simple_tls
+          )
+          unless ldap.bind
+            @fail_message = "Error authenticating LDAP user."
+            return nil
+          end
+        end
+
         cn_filt = Net::LDAP::Filter.eq("cn", "*#{query}*")
         uid_filt = Net::LDAP::Filter.eq("uid", "*#{query}*")
+        ad_filt = Net::LDAP::Filter.eq("samaccountname", "*#{query}*")
         mail_filt = Net::LDAP::Filter.eq("mail", "*#{query}*")
-        ldap_result = ldap.search( :filter => cn_filt | uid_filt | mail_filt ).map{|entry| clean_ldap(entry)}
+        ldap_result = ldap.search( :filter => cn_filt | uid_filt | ad_filt | mail_filt ).map{|entry| clean_ldap(entry)}
 
         # Map university-specific fields
         ldap_result.collect! { |entry|
@@ -224,6 +245,7 @@ class PeopleController < ApplicationController
         }
         return ldap_result
       end
+
     rescue Exception => e
       if ldap.get_operation_result.code != 0
         if ldap.get_operation_result.code == 4
@@ -244,14 +266,22 @@ class PeopleController < ApplicationController
   
   def clean_ldap(entry)
     res = Hash.new("")
+
+    # Weed out bad records
+    return nil if entry[:uid].blank? and entry[:samaccountname].blank?
+
+    config = YAML::load(File.read("#{RAILS_ROOT}/config/ldap.yml"))[RAILS_ENV]
+
     entry.each do |key, val|
-      res[key] = val[0]
-      if [:sn, :givenname].include?(key)
-        res[key] = NameCase.new(val[0]).nc!
-      end
-      if [:title, :o, :postaladdress, :l].include?(key)
-        res[key] = res[key].titleize
-      end
+      #res[key] = val[0]
+      # only get the fields we need
+      res[:uid] = val[0] unless val[0].blank? if [:uid, :samaccountname].include?(key)
+      res[key] = NameCase.new(val[0]).nc! if [:sn, :givenname, :middlename, :generationqualifier, :displayname].include?(key)
+      res[key] = val[0].titleize if [:title, :ou, :postaladdress, :l].include?(key)
+      res[key] = val[0] if [:mail, :telephonenumber].include?(key)
+
+      # map university-specific values
+      res[config.index(key.to_s)] = val[0] if config.has_value? key.to_s
     end
     return res
   end
