@@ -225,24 +225,11 @@ class PeopleController < ApplicationController
           end
         end
 
-        cn_filt = Net::LDAP::Filter.eq("cn", "*#{query}*")
-        uid_filt = Net::LDAP::Filter.eq("uid", "*#{query}*")
-        ad_filt = Net::LDAP::Filter.eq("samaccountname", "*#{query}*")
-        mail_filt = Net::LDAP::Filter.eq("mail", "*#{query}*")
-        ldap_result = ldap.search( :filter => cn_filt | uid_filt | ad_filt | mail_filt ).map{|entry| clean_ldap(entry)}
+        cn_filt = Net::LDAP::Filter.eq("#{config['cn']}", "*#{query}*")
+        uid_filt = Net::LDAP::Filter.eq("#{config['uid']}", "*#{query}*")
+        mail_filt = Net::LDAP::Filter.eq("#{config['mail']}", "*#{query}*")
+        ldap_result = ldap.search( :filter => cn_filt | uid_filt | mail_filt ).map{|entry| clean_ldap(entry)}
 
-        # Map university-specific fields
-        ldap_result.collect! { |entry|
-          res = Hash.new("")
-          entry.each do |key, val|
-            if config.has_value? key.to_s
-              res[config.index(key.to_s)] = val
-            else
-              res[key] = val
-            end
-          end
-          res
-        }
         return ldap_result
       end
 
@@ -267,21 +254,19 @@ class PeopleController < ApplicationController
   def clean_ldap(entry)
     res = Hash.new("")
 
-    # Weed out bad records
-    return nil if entry[:uid].blank? and entry[:samaccountname].blank?
-
     config = YAML::load(File.read("#{RAILS_ROOT}/config/ldap.yml"))[RAILS_ENV]
 
     entry.each do |key, val|
       #res[key] = val[0]
-      # only get the fields we need
-      res[:uid] = val[0] unless val[0].blank? if [:uid, :samaccountname].include?(key)
-      res[key] = NameCase.new(val[0]).nc! if [:sn, :givenname, :middlename, :generationqualifier, :displayname].include?(key)
-      res[key] = val[0].titleize if [:title, :ou, :postaladdress, :l].include?(key)
-      res[key] = val[0] if [:mail, :telephonenumber].include?(key)
 
       # map university-specific values
-      res[config.index(key.to_s)] = val[0] if config.has_value? key.to_s
+      if config.has_value? key.to_s
+        k = config.index(key.to_s).to_sym
+        res[k] = val[0]
+        res[k] = NameCase.new(val[0]).nc! if [:sn, :givenname, :middlename, :generationqualifier, :displayname].include?(k)
+        res[k] = val[0].titleize if [:title, :ou, :postaladdress].include?(k)
+      end
+
     end
     return res
   end
