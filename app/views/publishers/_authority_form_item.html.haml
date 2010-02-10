@@ -4,6 +4,6 @@
   %td=radio_button_tag "auth_id", authority_form_item.id
   %td=link_to "#{authority_form_item.authority.name}", edit_publisher_path(authority_form_item)
   -#%td.span-2=link_to_remote 'remove', {:url => { :action => :remove_from_box, :rem_pa => authority_form_item.id }}, {:class => "remove", :href => url_for(:action => :remove_from_box, :rem_pa => authority_form_item.id, :page => page)}
-  %td=authority_form_item.publisher_source.name unless publisher.publisher_source.nil?
+  %td=authority_form_item.publisher_source.name unless authority_form_item.publisher_source.nil?
   %td=authority_form_item.publications.length
   %td=link_to 'remove', url_for(:action => :remove_from_box, :rem_pa => authority_form_item.id, :page => page)
