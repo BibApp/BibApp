@@ -1,9 +1,14 @@
-Your account has been created.
+Dear <%= @user.login %>,
 
-  Username: <%= @user.login %>
+Your account has been created!
 
 Visit this url to activate your account:
 
   <%= @url %>
-  
+
 Thanks for signing up!
+- Your happy <%= "#{$APPLICATION_NAME}" %> robot worker
+
+- - - -
+
+Questions, concerns, suggestions? - Contact <%= "#{$SYSADMIN_EMAIL}" %>.
