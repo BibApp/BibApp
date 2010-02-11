@@ -19,9 +19,8 @@ class IndexObserver < ActiveRecord::Observer
       else #multiple works
         works = get_associated_works(record)
         
-        # @TODO: Asynchronously update Solr index for affected Works
         works.each{|work| work.save_and_set_for_index_without_callbacks}
-        Index.batch_index
+        Index.send_later(:batch_index)
       end
     end  
   end
@@ -36,11 +35,10 @@ class IndexObserver < ActiveRecord::Observer
     else #destroyed a different model -> just want to re-indexed associate works
       works = get_associated_works(record)
 
-      # @TODO: Asynchronously update Solr index for affected Works
       # Check to see if object has associated works -- attachments for archiving will not.
       if !works.nil?
         works.each{|work| work.save_and_set_for_index_without_callbacks}
-        Index.batch_index
+        Index.send_later(:batch_index)
       end
     end
   end
@@ -60,7 +58,7 @@ class IndexObserver < ActiveRecord::Observer
     
     #Group: only update index if name or machine_name changed
     when Group
-      return true if record.name_changed? or record.machine_name_changed?
+      return true if record.name_changed? or record.machine_name_changed? or record.hide_changed?
 
     #Publication/Publisher: only update index if Authority, name or machine_name changed
     when Publication, Publisher
