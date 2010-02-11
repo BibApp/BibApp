@@ -43,17 +43,18 @@
   %div.span-7.last
     / Sub-Groups
     %div.span-6
-      - if !@group.parent.nil?
+      - unless @group.parent.nil? or @group.parent.hide?
         %h3.heading Belongs to
         %ul.parent-group
           %li= link_to @group.parent.name, group_path(@group.parent)
-      - if !@group.children.empty?
+      - unless @group.children.empty?
         %h3.heading Sub-Groups
         %ul.sub-groups
           -@group.children.each do |g|
-            %li
-              =link_to g.name, group_path(g)
-              ="(#{g.works.size})"
+            - unless g.hide?
+              %li
+                =link_to g.name, group_path(g)
+                ="(#{g.works.size})"
 
     %div.span-7.last
       %h3.heading

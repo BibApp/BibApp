@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
     end
     
     before :new do
-     @groups = Group.find(:all, :order => "name")
+     @groups = Group.find(:all, :order => "name", :conditions => ["hide = ?", false])
     end
    
     
@@ -54,7 +54,7 @@ class GroupsController < ApplicationController
       #'editor' of group can edit that group
       permit "editor of group"
       
-      @groups = Group.find(:all, :order => "name")
+      @groups = Group.find(:all, :order => "name", :conditions => ["hide = ?", false])
     end
   end
   
@@ -105,15 +105,30 @@ class GroupsController < ApplicationController
   
   def hide
     @group = Group.find(params[:id])
-
+    
     permit "editor on group"
+    
+    children = @group.children.collect{|c| c unless c.hide?}
 
-    @group.hide = true
-    @group.save
+    # don't hide groups with children
+    if children.blank? 
+      @group.hide = true
+      @group.save
       respond_to do |format|
-       flash[:notice] = "Group was successfully removed."
-       format.html {redirect_to :action => "index"}
+        flash[:notice] = "Group was successfully removed."
+        format.html {redirect_to :action => "index"}
       end
+    else
+      respond_to do |format|
+        ul = "<ul>"
+        children.each do |c|
+          ul += "<li>#{c.name}</li>"
+        end
+        ul += "</ul>"
+        flash[:error] = "Group cannot be hidden. It has visible child groups: #{ul}"
+        format.html {redirect_to :action => "edit"}
+      end
+    end
   end
 
   def unhide
@@ -121,6 +136,15 @@ class GroupsController < ApplicationController
 
     permit "editor on group"
 
+    parent = @group.parent
+
+    if parent.hide?
+      respond_to do |format|
+       flash[error] = "Group cannot be unhidden until its parent group is visible. <ul><li>#{parent.name}</li></ul>"
+       format.html {redirect_to :action => "edit"}
+      end
+
+    end
     @group.hide = false
     @group.save
       respond_to do |format|
@@ -137,16 +161,29 @@ class GroupsController < ApplicationController
     #check memberships
     memberships = Membership.find_all_by_group_id(@group)
 
-    if memberships.empty?
+    #check children
+    children = @group.children
+
+    if memberships.blank? and children.blank?
       @group.destroy
       respond_to do |format|
        flash[:notice] = "Group was successfully removed."
        format.html {redirect_to groups_path()}
       end
-    else
+    elsif !memberships.blank?
       respond_to do |format|
        flash[:error] = "Group cannot be deleted. Memberships exist."
        format.html {redirect_to :action => "edit"}
+      end
+    elsif !children.blank?
+      respond_to do |format|
+        ul = "<ul>"
+        children.each do |c|
+          ul += "<li>#{c.name}</li>"
+        end
+        ul += "</ul>"
+        flash[:error] = "Group cannot be deleted. It has visible child groups: #{ul}"
+        format.html {redirect_to :action => "edit"}
       end
     end
   end
