@@ -150,7 +150,6 @@ class Index
     #Update a single record in Solr
     # (for bulk updating, use 'batch_update_solr', as it is faster)
     def update_solr(record, commit_records=true)
-      logger.debug("\n\n===Updating Solr===\n\n")
       if record.publication_date != nil
           #add dates to our mapping
           mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
