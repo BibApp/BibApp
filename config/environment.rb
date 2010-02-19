@@ -21,7 +21,7 @@ AUTHORIZATION_MIXIN = "object roles"
 # NOTE : If you use modular controllers like '/admin/products' be sure
 # to redirect to something like '/sessions' controller (with a leading slash)
 # as shown in the example below or you will not get redirected properly
-# 
+#
 # This can be set to a hash or to an explicit path like '/login'
 #
 LOGIN_REQUIRED_REDIRECTION = { :controller => 'sessions', :action => 'new' }
@@ -53,7 +53,7 @@ Rails::Initializer.run do |config|
 
   #Rack - Rails 2.3.3 no longer bundles rack.
   config.gem "rack", :version=>'>=1.0.0'
-  
+
   #Haml - Haml plugin will fail initialization if haml gem is not installed.
   config.gem "haml", :version=>'>=2.2.3'
 
@@ -62,44 +62,47 @@ Rails::Initializer.run do |config|
 
   #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
   config.gem "htmlentities", :version=>"~>4.0.0"
-  
+
+  #Daemons - needed to run delayed_job
+  config.gem "daemons", :version=>"~>1.0.10"
+
   #LibXML Ruby - Dependency of Solr Ruby
   config.gem "libxml-ruby", :lib=>"xml/libxml", :version=>"~>0.8.3"
-  
+
   #Namecase - converts strings to be properly cased
   config.gem "namecase", :version=>"~>1.1.0"
-  
+
   #RedCloth - converts plain text or textile to HTML (also used by HAML)
   config.gem "RedCloth", :lib=>"redcloth", :version=>"~>4.1.9"
 
   #Ruby-Net-LDAP - used to perform LDAP queries
   config.gem "ruby-net-ldap", :lib=>"net/ldap", :version=>"~>0.0.4"
-  
+
   #RubyZip - used to create Zip file to send via SWORD
   config.gem "rubyzip", :lib=>"zip/zip", :version=>"~>0.9.1"
 
   #Solr-Ruby - Solr connections for ruby
   config.gem "solr-ruby", :lib=>"solr", :version=>"~>0.0.6"
-  
+
   #Will Paginate - for fancy pagination
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
 
   #CMess - Assists with handling parsing citations from a non-Unicode text file
   #  See: http://prometheus.rubyforge.org/cmess/
   config.gem 'cmess', :version=>"~>0.1.2"
-  
+
   #AASM - Acts as State Machine - helps manage batch import state
   config.gem 'rubyist-aasm', :version => '~> 2.0.2', :lib => 'aasm', :source => "http://gems.github.com"
-  
+
   #ISBN Tools - Helps validate ISBNs
   # See: http://isbn-tools.rubyforge.org/rdoc/index.html
   config.gem 'isbn-tools', :lib=>"isbn/tools", :version => "~>0.1.0"
-  
+
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
   config.load_paths += %W( #{RAILS_ROOT}/app/models/identifier_subclasses )
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
+  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir|
     File.directory?(lib = "#{dir}/lib") ? lib : dir
   end
 
@@ -126,12 +129,12 @@ Rails::Initializer.run do |config|
   # config.active_record.schema_format = :sql
 
   # Activate observers that should always be running
-  config.active_record.observers = :work_observer, :user_observer, 
+  config.active_record.observers = :work_observer, :user_observer,
                                    :group_observer, :person_observer,
                                    :pen_name_observer,
                                    :publication_observer, :publisher_observer,
                                    :index_observer
-                                   
+
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
