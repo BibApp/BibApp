@@ -103,6 +103,7 @@ class Index
     # Index all Works which have been flagged for batch indexing
     def batch_index
       records = Work.to_batch_index
+      logger.debug("\n\n=====records to batch index = #{records.size}")
       
       #Batch index 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
@@ -150,6 +151,7 @@ class Index
     #Update a single record in Solr
     # (for bulk updating, use 'batch_update_solr', as it is faster)
     def update_solr(record, commit_records=true)
+      logger.debug("\n\n===Updating Solr===\n\n")
       if record.publication_date != nil
           #add dates to our mapping
           mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
