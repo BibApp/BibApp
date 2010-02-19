@@ -103,7 +103,6 @@ class Index
     # Index all Works which have been flagged for batch indexing
     def batch_index
       records = Work.to_batch_index
-      logger.debug("\n\n=====records to batch index = #{records.size}")
       
       #Batch index 100 records at a time...wait to commit till the end.
       records.each_slice(100) do |records_slice|
