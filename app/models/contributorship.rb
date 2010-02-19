@@ -31,6 +31,7 @@ class Contributorship   < ActiveRecord::Base
     # Delayed Job - Remove false positives from other PenName claimants
     logger.debug("\n=== REFRESHING ===\n")
     self.send_later(:refresh_contributorships)
+    #self.refresh_contributorships
 
 # I'm moving this block into :refresh_contributorships
 # so that it will be done later. - bill 1/26/10
@@ -227,15 +228,13 @@ class Contributorship   < ActiveRecord::Base
         r.hide = true
         r.save_without_callbacks
       end
-
-      if self.contributorship_state_id_changed?
-        # Update Person's scoring hash
-        self.person.update_scoring_hash
-
-        # Update Solr!
-        Index.update_solr(self.work)
-      end
-
     end
+    
+    # Update Person's scoring hash
+    self.person.update_scoring_hash
+
+    # Update Solr!
+    Index.update_solr(self.work)
+
   end
 end
