@@ -1,0 +1,27 @@
+/ === Users === Index ===
+/ Main
+%div{:class => "span-24"}
+      
+  %div{:class => "span-22 prepend-1"}
+    %h2="Users"
+    
+    = render :partial => "shared/alpha_pagination"
+
+    %table#users.prepend-1
+      %tr
+        %th.span-6="Username"
+        %th.span-6="Email"
+        %th.span-8.last="Roles"
+      -@current_objects.each do |user|
+        %tr{:class => cycle("odd", "even")}
+          %td=link_to user.login, user_path(user)
+          %td=user.email
+          %td
+            %ul
+              - user.roles.each do |role|
+                - if role.authorizable_type == 'System' or role.authorizable_type == 'Group'
+                  %li=role.description
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"

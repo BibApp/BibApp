@@ -1,0 +1,57 @@
+/ === Works === Show ===
+/ Main
+
+-#Require personalize.rb for Abstracts and Keywords
+-require 'config/personalize.rb'
+
+-# @title=@work.title_primary # Specify text at end of HTML <title> tag
+
+- if logged_in?
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      - if logged_in? && current_user.has_role?("editor", @work)
+        %ul#edit-actions
+          %li= link_to "Add a work", new_work_path
+          %li= link_to "Edit this work", edit_work_path
+          -#%li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
+          - if !@work.archived?
+            %li= link_to "Archive Research", new_work_attachment_path(@work)
+          -#If SWORD is configured, and Work is "Ready for Archiving"
+          -if SwordClient.configured? and @work.ready_to_archive?
+            %li= link_to "Deposit Attachments", :controller => "admin", :action => "deposit_via_sword", :work_id => @work
+      - elsif logged_in?
+        %ul#edit-actions
+          %li= link_to "Add a work", new_work_path
+          %li= link_to "Edit Tags", {:controller => "works", :action => "edit_tags", :id => @work.id}
+
+%div.span-24
+  %div.span-22.prepend-1
+    / Work Title
+    %h2
+      = @work.title_primary
+      %span{:style => "font-size:small;color:grey;display:block;"}
+        = @work.type.underscore.humanize
+    
+    / Work Details
+    %div#work-details.span-14
+
+      / COinS
+      %span.Z3988{:title => "#{coin(@work)}"}
+
+      / Google Book Link
+      = link_to_google_book(@work)
+
+      / Attachments
+      -# attachements include the Find It link
+      = render :partial => 'attachments', :locals => { :files => @work.attachments }
+
+      / Metadata
+      = render :partial => "metadata"
+
+    %div#local-relations.span-7.prepend-1.last
+      / Local Authors
+      = render :partial => "local_authors"
+
+      / Local Recommendations
+      = render :partial => "local_recommendations"

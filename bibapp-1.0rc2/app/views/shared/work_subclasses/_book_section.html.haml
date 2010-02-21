@@ -1,0 +1,14 @@
+%p.metadata 
+  - #Authors
+  = link_to_authors(work)
+
+  %br/
+  - if work['editors_data'] != nil
+    - #Editors
+    = link_to_editors(work)
+
+  - #Publication
+  = link_to_work_publication(work)
+
+  -if work['year'] != nil
+    ="(#{work['year']})"

@@ -1,0 +1,11 @@
+-# Title (Tertiary) field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Series Title)
+
+-# Initialize optional input variables
+- label ||= "Series Title"
+
+= form.label :title_tertiary, "#{label}:"
+= form.text_field :title_tertiary, :class=>'text'

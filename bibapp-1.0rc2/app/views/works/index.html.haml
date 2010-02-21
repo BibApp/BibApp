@@ -1,0 +1,90 @@
+/ === Works === Index ===
+/ Main
+- @title = "Works" # Specify text at end of HTML <title> tag
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      - if params[:person_id]
+        = render :partial => "people/admin_actions"
+      - else
+        %ul#edit-actions
+          %li=link_to "Add a Work", new_user_import_path(current_user)
+
+/ ### Main ###
+%div.span-24
+  / If they want to see *everything*, let them see it!
+  / params[:view] = "all"
+  - if @view == "all"
+  
+    %div.span-22.prepend-1
+
+      / ### Person / Works ###
+      - if params[:person_id]
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag person_works_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = submit_tag 'Go'
+
+        %div.span-17.last
+          %h2="#{link_to @person.display_name, person_path(@person)}"
+          = render :partial => "shared/local_nav", :locals => {:object => "person"}
+
+      / ### Group / Works ###
+      - if params[:group_id]
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag group_works_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = submit_tag 'Go'
+
+        %div.span-17.last
+          %h2="#{link_to @group.name, group_path(@group)}"
+          = render :partial => "shared/local_nav", :locals => {:object => "group"}
+          
+
+    / Render
+    %div#results.span-22.prepend-1
+      = render :partial => "shared/facets"
+        
+      / Works
+      = render :partial => "shared/works"
+
+  - else
+    %div.span-22.prepend-1
+
+      %h2 
+        At the library, we
+        %span{:style => "color:#990000;"} &hearts; 
+        our researchers.
+      
+      %div.span-15
+        / People - Randomized
+        = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
+
+      / Works
+      %div.span-7.last
+        %h3.heading
+          =link_to "Works", works_url(:view => "all")
+          &ndash; Recent additions
+        %ol#works.works
+          - @works.first(3).each do |work|
+            = render :partial => "shared/work", :locals => {:work => work}
+
+    %div#facets.span-24
+      
+      / Groups
+      %div.span-6.prepend-1
+        = render :partial => "shared/groups", :locals => {:count => 10}
+
+      / Publications
+      %div.span-6.prepend-1.append-2
+        = render :partial => "shared/publications", :locals => {:count => 10}
+
+      / Publishers
+      %div.span-6.last
+        = render :partial => "shared/publishers", :locals => {:count => 10}

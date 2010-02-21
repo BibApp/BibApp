@@ -1,0 +1,91 @@
+# Config file for local LDAP settings.
+# Your local LDAP can be used to pre-populate information
+# about a Person in BibApp.  This means you won't have to
+# type in all their information by hand!
+#
+# Connection settings (required):
+#   'host' => Host of local LDAP server
+#   'port' => Port of local LDAP server (usually port 389)
+#   'base' => Base Distinguished Name (Base DN) which BibApp
+#             will search for people matching a particular name.
+#             This is usually similar to "dc=myu,dc=edu" for universities.
+#
+# Institution-specific mappings (required):
+#   Since LDAP schema elements may vary from institution to institution,
+#   you must set the appropriate mappings. (e.g., middlename: myuMiddleName)
+#   NB: only 'uid', 'cn', 'sn', and 'mail' are required
+#
+#   'uid'                 => Unique identifer (e.g., sAMAccountName for AD)
+#   'cn'                  => Common name (useful lookup forms of name)
+#   'givenname            => First name
+#   'sn'                  => Last name
+#   'middlename'          => Middle name
+#   'generationqualifier' => Name suffix (e.g., Jr, Sr, III)
+#   'displayname'         => Prefered display name
+#   'ou'                  => Organizational unit (department)
+#   'title'               => Title
+#   'postaladdress'       => Postal address
+#   'mail'                => Email address
+#   'telephone'           => Telephone number
+#
+# Authentication settings (optional):
+#   'username'   => Only use if required for LDAP bind
+#   'password'   => Only use if required for LDAP bind
+#
+development:
+  host:                 ldap.services.myu.edu
+  port:                 389
+  base:                 dc=myu,dc=edu
+  uid:                  uid
+  cn:                   cn
+  givenname:            givenname
+  sn:                   sn
+  middlename:           middlename
+  generationqualifier:  generationqualifier
+  displayname:          displayname
+  ou:                   ou
+  title:                title
+  postaladdress:        postaladdress
+  mail:                 mail
+  telephone:            telephone
+  username:             username
+  password:             password
+
+test:
+  host:                 ldap.services.myu.edu
+  port:                 389
+  base:                 dc=myu,dc=edu
+  uid:                  uid
+  cn:                   cn
+  givenname:            givenname
+  sn:                   sn
+  middlename:           middlename
+  generationqualifier:  generationqualifier
+  displayname:          displayname
+  ou:                   ou
+  title:                title
+  postaladdress:        postaladdress
+  mail:                 mail
+  telephone:            telephone
+  username:             username
+  password:             password
+
+production:
+  host:                 ldap.services.myu.edu
+  port:                 389
+  base:                 dc=myu,dc=edu
+  uid:                  uid
+  cn:                   cn
+  givenname:            givenname
+  sn:                   sn
+  middlename:           middlename
+  generationqualifier:  generationqualifier
+  displayname:          displayname
+  ou:                   ou
+  title:                title
+  postaladdress:        postaladdress
+  mail:                 mail
+  telephone:            telephone
+  username:             username
+  password:             password
+

@@ -1,0 +1,32 @@
+%fieldset
+  %legend="Publication"
+  - form_for @publication do |form|
+    %p
+      %label Name
+      %br/
+      = form.text_field :name
+    %p
+      %label URL
+      %br/
+      = form.text_field :url
+    %p
+      %label ISSN or ISBN
+      %br/
+      = form.text_field :issn_isbn
+    -#%p
+    -#%label Code
+    -#%br/
+    -#= form.text_field :code
+    %p
+      %label Publisher
+      %br/
+      = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => formatted_publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
+
+    -if @publication.authority_id
+      %p
+        %label Publication Authority Record
+        %br/
+        = form.collection_select :authority_id, @publications, :id, :name, {}, {:class => "span-12"}
+
+    %p.submit
+      = submit_tag :save

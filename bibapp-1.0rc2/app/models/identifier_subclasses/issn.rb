@@ -1,0 +1,69 @@
+class ISSN < Identifier
+  validates_presence_of :name
+
+  class << self
+    def id_formats
+      [:issn]
+    end
+  end
+
+  def parse_identifier(identifier)
+    #issn_request = XISSNRequest.new(identifier, {:method => "getMetadata"})
+    
+=begin
+    if issn_request.valid?
+      issn_response = issn_request.get_response
+      if issn_response.data['stat'] == "ok"
+        format = "ISSN"
+        identifier = issn_response.data["group"][0]["list"][0]["issn"]
+        return format, identifier, clean_response(issn_response)
+      else
+        return nil
+      end
+=end
+    if is_valid?(identifier)
+      format = "ISSN"
+      response = true
+      return format, identifier, response
+    else
+      return nil
+    end
+  end
+  
+  private
+  
+  def is_valid?(identifier)
+    issn = identifier.gsub(/[^\dX]/i, '')
+    if issn.length != 8 
+      return false
+    end
+    
+    chars = issn.split('')
+    if chars[7].upcase == 'X'
+      chars[7] = 10
+    end
+    
+    sum = 0
+    
+    0.upto(chars.size) do |i|
+      sum += ((8-i) * chars[i].to_i)
+    end
+    
+    return ((sum % 11) == 0)
+  end
+  
+  def clean_response(issn_response)
+    # Assuming we want first result from response list
+    data = Hash.new
+    data[:issn]         = issn_response.data["group"][0]["list"][0]["issn"]
+    data[:issnl]        = issn_response.data["group"][0]["list"][0]["issnl"]
+    data[:rssurl]       = issn_response.data["group"][0]["list"][0]["rssurl"]
+    data[:title]        = issn_response.data["group"][0]["list"][0]["title"]
+    data[:publisher]    = issn_response.data["group"][0]["list"][0]["publisher"]
+    data[:peerreview]   = issn_response.data["group"][0]["list"][0]["peerreview"]
+    data[:form]         = issn_response.data["group"][0]["list"][0]["form"]
+    data[:rawcoverage]  = issn_response.data["group"][0]["list"][0]["rawcoverage"]
+    data[:oclcnum]      = issn_response.data["group"][0]["list"][0]["oclcnum"]
+    return data
+  end
+end

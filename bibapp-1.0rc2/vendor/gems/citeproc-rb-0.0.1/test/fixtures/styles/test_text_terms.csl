@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="http://xbiblio.svn.sourceforge.net/viewvc/*checkout*/xbiblio/csl/schema/trunk/csl.rnc" type="compact"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" xml:lang="en">
+  <info>
+    <title>American Psychological Association</title>
+    <id>http://www.zotero.org/styles/apa</id>
+    <link href="http://www.zotero.org/styles/apa"/>
+    <author>
+      <name>Simon Kornblith</name>
+      <email>simon@simonster.com</email>
+    </author>
+    <contributor>
+      <name>Bruce D'Arcus</name>
+    </contributor>
+    <category term="psychology"/>
+    <category term="generic-base"/>
+    <category term="author-date"/>
+    <updated>2008-05-07T12:08:52+00:00</updated>
+  </info>
+  <macro name="container-contributors">
+    <text term="in" text-case="capitalize-first" suffix=" "/>
+    <choose>
+      <if type="chapter">
+    <names variable="editor translator" delimiter=", " suffix=", ">
+      <name and="symbol" initialize-with=". " delimiter=", "/>
+      <label form="short" prefix=" (" text-case="capitalize-first" suffix=".)"/>
+    </names>
+      </if>
+    </choose>
+  </macro>
+  <citation>
+    <layout suffix=".">
+    </layout>
+  </citation>
+  <bibliography>
+    <layout suffix=".">
+      <text macro="container-contributors"/>
+    </layout>
+  </bibliography>
+</style>

@@ -1,0 +1,45 @@
+/ === People === Index ===
+/ Main
+- @title="People" # Specify text at end of HTML <title> tag
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to "Add a Person", new_person_path
+
+%div.span-24
+  %div.span-22.prepend-1
+    / ### Group / People ###
+    - if params[:group_id]
+      %h2= @group.name
+      = render :partial => "shared/local_nav", :locals => {:object => "group"}
+
+    - else
+      %h2="People"
+
+    - if params[:group_id]
+      = render :partial => "shared/alpha_pagination", :locals => {:path => group_people_path(@group.id)}
+    - else
+      = render :partial => "shared/alpha_pagination"
+
+    %table#people
+      %tr
+        %th.span-1
+        %th.span-6="Name"
+        %th.span-12="Recent Publication"
+        %th.span-1.last="Works"
+      -@current_objects.each do |person|
+        %tr{:class => cycle("odd", "even")}
+          %td=link_to image_tag(person.image_url, :class => "person-image", :size => "50x66"), person_path(person)
+          %td=link_to "#{person.display_name}", person_path(person)
+          - if person.works.length > 0
+            %td=link_to person.works.first, work_path(person.works.first)
+          - else
+            %td
+          %td{:style => "text-align:right;"}=person.works.verified.length
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"

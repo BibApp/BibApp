@@ -1,0 +1,39 @@
+@import "bibapp.css";
+/*
+ * Choose two colors for your institution:
+ * 1. A border color: #CC9933 (UW-Madison Gold)
+ * 2. A heading color: #990000 (UW-Madison Red)
+ * Add your colors below where necessary.
+*/
+
+.container {
+ border-left:1px dotted #000;
+ border-right:1px dotted #000;
+}
+
+#header {
+ color: #990000; /* Red */
+ border-bottom: 3px double #990000; /* Gold */
+ background-image:url('../../images/header.png');
+}
+
+#header a{color:#990000;} /* Red */
+#filter {color:#CC9933;} /* Gold */
+
+#footer {
+	color:#A2A2A2;
+	border-top: 1px solid #990000;
+	border-bottom: 3px solid #000; /* Gold */
+	background-image:url('../../images/header.png');
+}
+
+#footer a {
+	color:#990000;
+}
+
+/* Style for displaying Deposit License Agreement, etc. in nice scrollable div */
+.scrollarea {
+    width: 550px;
+    height: 250px;
+    overflow: scroll;
+}

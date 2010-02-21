@@ -1,0 +1,96 @@
+a:
+  !ruby/object:Bibo::Document 
+  date: 2007-11-21 16:20:37.402371 +11:00
+  accessed: 2007-11-21 16:20:37.402371 +11:00
+  uri: http://wiki.Bibo.com/index.php/Ontology_Working_Draft
+  locator: 1
+  locator_type: volume
+  pages: '1'
+  contributions: 
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself
+      given_name: Me
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 1
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself2
+      given_name: Me2
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 2
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself3
+      given_name: Me3
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 3
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself4
+      given_name: Me4
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 4
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself5
+      given_name: Me5
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 5
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself6
+      given_name: Me6
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 6
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Myself7
+      given_name: Me7
+      homepage: http://mydomain.com
+      mbox: me@mydomain.com
+    position: 7
+    role: !ruby/object:Bibo::ContributionRole
+      name: author
+  - !ruby/object:Bibo::Contribution 
+    contributor: !ruby/object:Bibo::FOAF::Person 
+      family_name: Yourself
+      given_name: You
+      homepage: http://yourdomain.com
+      mbox: you@yourdomain.com
+    position: 2
+    role: !ruby/object:Bibo::ContributionRole
+      name: editor
+
+  presented_at: !ruby/object:Bibo::Events::Event 
+    agent: !ruby/object:Bibo::FOAF::Organisation 
+      name: Conference Organiser
+    name: An Important Conference
+    place: !ruby/object:Bibo::Wgs84_pos::SpatialThing 
+      name: London
+    product: Some textual product.
+    time: !ruby/object:Bibo::Times::Interval 
+      end: 2007-11-17 17:15:32.433835 +11:00
+      start: 2007-11-17 14:28:52.433817 +11:00
+  title: My Document
+  translation_of: !ruby/object:Bibo::Document 
+    contributions: []
+    title: Mon Document

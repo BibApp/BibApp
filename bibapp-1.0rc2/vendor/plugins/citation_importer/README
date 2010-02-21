@@ -1,0 +1,116 @@
+BibApp CitationImporter plugin
+==============================
+
+
+Plugin Requirements:
+--------------------
+  * 'CitationParser' plugin - The Ruby Hash output of this plugin is expected
+    as an input to this one.
+
+
+Details:
+--------
+Transforms a format-specific Ruby Hash (as returned from the 'citation_parser' 
+plugin) into a Work attribute hash valid for import into BibApp:
+http://bibapp.googlecode.com/
+
+During the transformation the following occurs:
+  (1) Field values are translated into valid BibApp Work attribute values:
+      (e.g. A citation 'type' in the original Ruby Hash is translated
+            into a valid BibApp Work 'type')
+  (2) Date fields are parsed into valid Ruby Dates.  This includes adding
+      a default month (January) and day (1) if necessary.
+      (e.g. "2005" => "2005-01-01")
+  (3) Fields that are not used by BibApp are dropped
+
+
+An RIS Hash example:
+--------------------
+Parsing of the below RIS Ruby Hash:
+{
+ :ty => ["THES"],
+ :id => ["1031"],
+ :a1 => ["Gill, Pat"],
+ :t1 => ["A trick done with mirrors : women and morality in Restoration satiric comedy"],
+ :y1 => ["1987"],
+ :kw => ["English drama", "Restoration drama"],
+ :vl => ["Ph. D."],
+ :pb => ["Cornell University"],
+ :a3 => ["Anonymous"],
+ :m1 => ["Dissertation/Thesis"],
+ :original_data  => "<<entire original citation in RIS format appears here>>"
+}
+
+Produces a BibApp Work Attribute Hash of the following structure:
+(see the 'citation_importers/ris_importer.rb' to find how the
+ field mapping and value translation occurs)
+{
+ :klass             => "DissertationThesis",  #The BibApp class for Theses & Dissertations
+ :work_name_strings => {:name => "Gill, Pat", :type=> "Author"},
+ :title_primary     => "A trick done with mirrors : women and morality in Restoration satiric comedy",
+ :publication_date  => "1987-01-01",
+ :keywords          => ["English drama", "Restoration drama"],
+ :volume            => "Ph. D.",
+ :publisher         => "Cornell University",
+ :notes             => "Dissertation/Thesis",
+ :original_data     => "<<entire original citation in RIS format appears here>>"
+}
+
+Other formats (besides RIS) will produce a similar BibApp Work Attribute Hash, 
+essentially mapping those formats into a Hash format which is understood by the 
+BibApp system.
+
+===============================
+Template BibApp Attribute Hash:
+
+Required fields
+   :klass, :title_primary, 
+   :original_data
+===============================
+
+{
+ :klass             => <<Name of SubClass of Work class>>, 
+ :work_name_strings => <<Array of Hashes which specify :name and :type of contributor>>
+                       (e.g. [{:name => "Jones, John", :type=> "Author"},
+                              {:name => "Smith, Sam", :type=> "Editor"}]),
+ :title_primary     => <<Primary Title of the work>>,
+ :title_secondary   => <<Secondary Title of the work>>,
+ :title_tertiary    => <<Tertiary Title of the work>>,
+ :affiliation       => <<Affiliation text for author(s)>>,
+ :volume            => <<Volume of the work>>,
+ :issue             => <<Issue of the work>>,
+ :start_page        => <<Start Page of the work>>,
+ :end_page          => <<End Page of the work>>,
+ :abstract          => <<Abstract for the work>>,
+ :notes             => <<Any notes attached to work>>,
+ :links             => <<Any web addresses associated with the work>>,
+ :publication_date  => <<Publication date in format: YYYY-MM-DD>>,
+ :language          => <<Language of the work>>,
+ :copyright_holder  => <<Name of the copyright holder (if known) for this work>>,
+ :keywords          => <<Array of keywords>>,
+ :issn_isbn         => <<ISSN or ISBN of the work, or its parent publication>>,
+ :publication       => <<Name of Publication in which work appears>>
+                       (e.g. may be a Journal Title, Book Title, etc.),
+ :publication_place => <<Location of Publication>>, #NOT CURRENTLY USED
+ :publisher         => <<Name of Publisher of the work>>,
+ :source            => <<Name of Source of this citation>>, #NOT CURRENTLY USED
+ :external_id       => <<Unique ID of this work in an external application>>, #NOT CURRENTLY USED
+ :original_data     => <<entire original citation in its original format>>
+}
+
+
+Testing:
+--------
+
+If you would like to see more sample outputs of this CitationImporter plugin,
+there is a rake task to do so.  From your Rails Application ([rails-app])
+root directory run:
+
+rake citation_importer:test_dump
+
+This will run through all Test Fixtures (in [citation_importer]/test/fixtures/)
+and write the output to YAML files in your [rails-app]/tmp/ directory
+(with the extension ".bibapp.yml" appended).
+
+
+

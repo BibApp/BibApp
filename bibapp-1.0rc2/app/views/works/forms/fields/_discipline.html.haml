@@ -1,0 +1,11 @@
+-# Discipline field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Discipline)
+
+-# Initialize optional input variables
+- label ||= "Discipline"
+
+= form.label :discipline, "#{label}:"
+= form.text_field :discipline, :class=>'text'

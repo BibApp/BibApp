@@ -1,0 +1,8 @@
+a:
+    type: "newspaperArticle"
+    dateIssued: "2007-01-01"
+    title: "Some Title"
+    containerTitle: "Journal News"
+    pages: "A5"
+    URL: "http://ex.net/1"
+    dateAccessed: "2007-11-12"

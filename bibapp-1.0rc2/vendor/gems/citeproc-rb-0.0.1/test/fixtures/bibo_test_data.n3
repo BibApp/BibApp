@@ -1,0 +1,191 @@
+@prefix address: <http://schemas.talis.com/2005/address/schema#>.
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix bibo_degrees: <http://purl.org/ontology/bibo_degrees/> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix bibo:  <http://purl.org/ontology/bibo/> .
+@prefix cc:    <http://creativecommons.org/ns#> .
+@prefix event: <http://purl.org/NET/c4dm/event.owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix tl:    <http://purl.org/NET/c4dm/timeline.owl#> .
+@prefix time:    <http://purl.org/NET/c4dm/timeline.owl#> .
+@prefix timeline:    <http://purl.org/NET/c4dm/timeline.owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+<http://examples.net/contributors/1>
+    a foaf:Person ;
+    foaf:givenname "Jane" ;
+    foaf:family_name "Doe" .
+
+<http://examples.net/contributors/2>
+    a foaf:Person .
+
+<http://examples.net/contributors/3>
+    a foaf:Person .
+
+<http://examples.net/contributors/4>
+    a foaf:Organization ;
+    foaf:name "ABC Publishers" ;
+    address:localityName "New York" .
+
+<http://examples.net/contributors/5>
+    a foaf:Organization ;
+    foaf:name "XYZ Archive, National University".
+
+
+
+<urn:isbn:23983498> a bibo:Book ;
+    dc:creator <http://examples.net/contributors/2> ;
+    dc:title "Book Title"@en ;
+    dc:date "2000" ;
+    dc:publisher <http://ex.net/agents/1> .
+
+
+
+
+
+<info:doi/10.1134/S0003683806040089> a bibo:Article ;
+    dc:title "Effect of argillaceous minerals on the growth of phosphate-mobilizing bacteria Bacillus subtilis"@en ;
+    dc:date "2006-01-01" ;
+    dcterms:isPartOf <urn:issn:23346587> ;
+    bibo:volume "42" ;
+    bibo:issue "4" ;
+    bibo:pageStart "388" ;
+    bibo:pageEnd "391" ;
+    dc:creator <http://examples.net/contributors/2> ; 
+    dc:creator <http://examples.net/contributors/1> ; 
+    bibo:authorList ( <http://examples.net/contributors/2> <http://examples.net/contributors/1>) .
+
+<urn:issn:23346587> a bibo:Journal ;
+    dc:title "Applied Biochemistry and Microbiology"@en ;
+    bibo:shortTitle "App Biochem and Biol"@en .
+
+
+
+
+<http://www.nytimes.com/2007/07/09/us/09cnd-penn.html> a bibo:Article;
+    dcterms:isPartOf <http://www.nytimes.com> ;
+    dc:date "2007-07-09" ;
+    bibo:uri "http://www.nytimes.com/2007/07/09/us/09cnd-penn.html" ;
+    dc:creator <http://examples.net/contributors/100> .        
+    
+<http://www.nytimes.com> a bibo:Periodical ;
+    bibo:uri "http://www.nytimes.com" ;
+    dc:title "New York Times" .
+    
+<http://examples.net/contributors/100> a foaf:Person;
+    foaf:givenname "Anahad" ;
+    foaf:family_name "O'Connor" .
+
+
+
+
+<http://examples.net/dissertation> a bibo:Thesis ;
+    dc:date "1998-01-01" ;
+    dc:title "Dissertation Title"@en ;
+    bibo:issuer <http://examples.net/things/6> ;
+    bibo:degree bibo_degrees:phd ;
+    dc:creator <http://examples.net/contributors/1> .
+    
+<http://examples.net/things/6> a foaf:Organization ;
+    foaf:name "National University" ;
+    address:localityName "Singapore" .
+
+
+
+
+<http://examples.net/letter> a bibo:Letter ;
+    dc:date "2000-10-12" ;
+    dc:creator <http://examples.net/contributors/1> ;
+    bibo:recipient <http://examples.net/people/alice/me/> .
+
+
+
+
+<http://ex.net/x1> a bibo:Article ;
+    dc:creator <http://examples.net/contributors/1> ; 
+    dc:title "Conference Paper" ;
+    bibo:presentedAt <http://ex.net/conference> ; 
+    bibo:reproducedIn <http://ex.net/x2> .
+
+<http://ex.net/conference> a bibo:Conference ;
+    bibo:organizer <http://ex.net> ;
+    event:place <http://dbpedia.org/resource/> ;
+    event:time [ time:Interval [ timeline:beginsAtDateTime "2007-03-01" ; timeline:endsAtDateTime "2007-03-13"] ] .
+
+<http://ex.net/x2> a bibo:Proceedings ;
+    dc:title "Proceedings of the ABC Conference"@en ;
+    dc:date "2000" ;
+    dc:publisher <http://ex.net/z1> .
+
+
+
+
+<http://www.w3.org/2007/Talks/0619-Nancy-IH/> a cc:Work, bibo:Slideshow ;
+     cc:license <http://creativecommons.org/licenses/by-nd/3.0/> ;
+     dc:date "2008-06-18"^^xsd:dateTime ;
+     dc:hasFormat  <http://www.w3.org/2008/Talks/0619-Nancy-IH/Slides.odp> ;
+     dc:subject <http://lcsh.info/sh2002000569#concept> ;
+     dc:title "State of the Semantic Web"@en, 
+              "États des lieux du Web sémantique"@fr ;
+     bibo:authorList ( <http://www.ivan-herman.net/me> ) ;
+     bibo:presentedAt <http://ic2008.loria.fr/> . 
+
+<http://www.ivan-herman.net/me> a foaf:Person ;
+     rdfs:seeAlso <http://www.ivan-herman.net/foaf> ;
+     foaf:name "Ivan Herman" .
+
+<http://ic2008.loria.fr/> a bibo:Conference ;
+     event:place <http://dbpedia.org/resource/Nancy> ;
+     event:time
+         [ a tl:Interval ;
+             tl:beginsAt "2008-06-18"^^xsd:dateTime ;
+             tl:endsAt "2008-06-20"^^xsd:dateTime
+         ];
+     dc:title "19th Francophone Knowledge Engineering Days"@en, 
+              "19èmes Journées Francophones d’Ingénierie des Connaissances"@fr .  
+
+<http://www.w3.org/2008/Talks/0619-Nancy-IH/Slides.odp> 
+     dc:format "application/vnd.oasis.opendocument.presentation" ;
+     dc:isFormatOf <http://www.w3.org/2007/Talks/0619-Nancy-IH/> . 
+
+
+
+
+<http://examples.net/case/1> a bibo:LegalDecision ;
+    dcterms:issued "2006-01-01" ;
+    bibo:argued "2005-10-12" ;
+    dc:title "Doe v. Smith"@en ;
+    bibo:number "123223" ;
+    bibo:court [ foaf:name "Some Court" ] ;
+    bibo:affirmedBy <http://examples.net/case/2> ;
+    bibo:affirmedBy <http://examples.net/case/3> ;
+    dcterms:isPartOf <http://examples.net/periodicals/1> .
+    
+<http://examples.net/periodicals/1> a bibo:CourtReporter ;
+    dc:title "Court Reporter Title"@en ;
+    bibo:shortTitle "CRT"@en .
+
+
+
+
+
+
+<http://examples.net/manuscript> a bibo:Manuscript ;
+    dc:title "Manuscript Title"@en ;
+    dcterms:isPartOf <http://examples.net/collections/1> ;
+    bibo:locator "Box 12, Folder 3" ;
+    dc:creator <http://examples.net/contributors/1> .
+    
+<http://examples.net/collections/1> a bibo:Collection ;
+    dc:title "Manuscript Collection Title"@en ;
+    bibo:owner <http://examples.net/contributors/5> .
+
+<http://examples.net/places/1> a foaf:Organization ;
+    foaf:name "XYZ Archive, National University" ;
+    address:localityName "London" ;
+    foaf:based_near <http://dbpedia.org/resource/London> .
+

@@ -1,0 +1,56 @@
+--- 
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :is: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: August
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "TY  - JOUR\n\
+        ID  - 44\n\
+        A1  - Althaus,S. L.\n\
+        A1  - Gonz\xC3\xA1lez,L. (Trans)\n\
+        T1  - El car\xC3\xA1cter conservador de la opini\xC3\xB3n p\xC3\xBAblica\n\
+        Y1  - 1994\n\
+        VL  - 42\n\
+        IS  - August\n\
+        SP  - 324\n\
+        PB  - Desarrollo de Opinion Publica\n\
+        SN  - 0188-5405\n\
+        JF  - Este Pais\n\
+        M1  - Journal Article"
+    :jf: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: Este Pais
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "42"
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: JOUR
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "1994"
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: Desarrollo de Opinion Publica
+    :t1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "El car\xC3\xA1cter conservador de la opini\xC3\xB3n p\xC3\xBAblica"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: Althaus,S. L.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "Gonz\xC3\xA1lez,L. (Trans)"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "324"
+    :m1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: Journal Article
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: "44"
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      string: 0188-5405

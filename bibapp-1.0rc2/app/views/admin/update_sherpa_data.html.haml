@@ -1,0 +1,11 @@
+/ === Admin === Update SHERPA Data ===
+/ Main
+- @title="Update SHERPA Data" # Specify text at end of HTML <title> tag
+%div{:class => "span-24"}
+  %div{:class => "span-22 prepend-1"}
+
+    %h2="Update SHERPA Data"
+    %p Publisher records will be <strong>replaced</strong> with those retrieved from SHERPA/RoMEO; local changes may be lost.
+    %p SHERPA data may take several moments to load.
+
+    = button_to "Update Publishers", :action => :update_publishers_from_sherpa

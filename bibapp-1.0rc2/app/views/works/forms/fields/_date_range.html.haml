@@ -1,0 +1,11 @@
+-# Date Range field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Date Range)
+
+-# Initialize optional input variables
+- label ||= "Dates"
+
+= form.label :date_range, "#{label}:"
+= form.text_field :date_range, :class=>'text'

@@ -1,0 +1,17 @@
+<%= require 'config/personalize.rb' %>
+Hi <%=@user.login %>,
+
+Your batch import has been processed.  Please visit the following URL to review the import results:
+
+<%= "#{$APPLICATION_URL.chomp("/")}#{user_import_path(@user, @import_id)}" %>
+
+Thanks!
+- Your happy <%= "#{$APPLICATION_NAME}" %> robot worker
+
+- - - -
+
+Questions, concerns, suggestions? - Contact <%= "#{$SYSADMIN_EMAIL}" %>.
+
+
+
+  

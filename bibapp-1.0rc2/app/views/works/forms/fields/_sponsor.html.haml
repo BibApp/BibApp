@@ -1,0 +1,11 @@
+-# Sponsor field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Sponsor)
+
+-# Initialize optional input variables
+- label ||= "Sponsor"
+
+= form.label :sponsor, "#{label}:"
+= form.text_field :sponsor, :class=>'text'

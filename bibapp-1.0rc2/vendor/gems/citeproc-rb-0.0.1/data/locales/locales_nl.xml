@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms xmlns="http://purl.org/net/xbiblio/csl">
+	<locale xml:lang="nl">
+		<info>
+			<translator>
+				<name>Johan Kool</name>
+				<email>johankool@users.sourceforge.net</email>
+			</translator>
+			<updated>2006-08-30T11:40:23+05:00</updated>
+		</info>
+		<term name="in">in</term>
+		<term name="ibid">ibid</term>
+		<term name="accessed">benaderd</term>
+		<term name="forthcoming">in voorbereiding</term>
+		<term name="references">Referenties</term>
+		<term name="and">en</term>
+		<term name="from">uit</term>
+		<term name="et-al">et al.</term>
+		
+		<!-- LONG LOCATOR FORMS -->
+		<term name="page">
+			<single>pagina</single>
+			<multiple>pagina’s</multiple>
+		</term>
+		<term name="paragraph">
+			<single>paragraaf</single>
+			<multiple>paragrafen</multiple>
+		</term>
+		<term name="volume">volumen</term>
+		<term name="issue">deel</term>
+		
+		<!-- SHORT LOCATOR FORMS -->
+		<term name="page" form="short">
+			<single>p.</single>
+			<multiple>p.</multiple>
+		</term>
+		<term name="paragraph" form="short">
+			<single>§</single>
+			<multiple>§</multiple>
+		</term>
+		<term name="volume" form="short">vol.</term>
+		<term name="issue" form="short">deel</term>
+		
+		<!-- LONG ROLE FORMS -->
+		<term name="editor">
+			<single>redacteur</single>
+			<multiple>redacteuren</multiple>
+		</term>
+		<term name="translator">
+			<single>vertaler</single>
+			<multiple>vertalers</multiple>
+		</term>
+		
+		<!-- SHORT ROLE FORMS -->
+		<term name="editor" form="short">
+			<single>red.</single>
+			<multiple>red.</multiple>
+		</term>
+		<term name="translator" form="short">
+			<single>vert.</single>
+			<multiple>vert.</multiple>
+		</term>
+		
+		<!-- VERB ROLE FORMS -->
+		<term name="editor" form="verb">redactie door</term>
+		<term name="translator" form="verb">vertaald door</term>
+		
+		<!-- LONG MONTH FORMS -->
+		<term name="month-01">januari</term>
+		<term name="month-02">februari</term>
+		<term name="month-03">maart</term>
+		<term name="month-04">april</term>
+		<term name="month-05">mei</term>
+		<term name="month-06">juni</term>
+		<term name="month-07">juli</term>
+		<term name="month-08">augustus</term>
+		<term name="month-09">september</term>
+		<term name="month-10">oktober</term>
+		<term name="month-11">november</term>
+		<term name="month-12">december</term>
+		
+		<!-- SHORT MONTH FORMS -->
+		<term name="month-01" form="short">jan</term>
+		<term name="month-02" form="short">feb</term>
+		<term name="month-03" form="short">maa</term>
+		<term name="month-04" form="short">apr</term>
+		<term name="month-05" form="short">mei</term>
+		<term name="month-06" form="short">jun</term>
+		<term name="month-07" form="short">jul</term>
+		<term name="month-08" form="short">aug</term>
+		<term name="month-09" form="short">sep</term>
+		<term name="month-10" form="short">okt</term>
+		<term name="month-11" form="short">nov</term>
+		<term name="month-12" form="short">dec</term>
+	</locale>
+</terms>

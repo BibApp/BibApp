@@ -1,0 +1,80 @@
+##################################################
+# SWORD Client Configuration
+#
+# Configures the BibApp SWORD Client, so that it
+# is able to send requests to an external SWORD
+# Server.  SWORD Servers are available
+# out-of-the-box with most current repository 
+# software (DSpace, Fedora, EPrints)
+#
+# More info on SWORD:
+#  http://www.swordapp.org/
+##################################################
+
+development:
+  # SWORD Server's Service Document URL
+  service_doc_url: http://localhost:8080/sword-app/servicedocument
+  
+  # SWORD Server default login credentials
+  username:
+  password:
+  
+  # Proxy Settings
+  #   Only necessary if you require a Proxy 
+  #   to connect to SWORD Server.  If using
+  #   a proxy, only the proxy_server is required.
+  #proxy_server: my.proxy.edu
+  #proxy_port: 80
+  #proxy_username: myproxyuser
+  #proxy_password: myproxypass
+  
+  # Default Collection to deposit to
+  #   URL should correspond to the Deposit URL
+  #   of a collection as returned by Service Document.
+  #
+  #   Either specify the Name of the Collection
+  #   OR specify the URL (but not BOTH!)
+  #default_collection_url: http://localhost:8080/sword-app/deposit/123456789/4
+  #default_collection_name: My Collection
+  
+  # Turns on debugging mode: Logs all HTTP request/responses to STDERR
+  #debug_mode: true
+test:
+  # SWORD Server's Service Document URL
+  service_doc_url: http://localhost:8080/sword-app/servicedocument
+  
+  # SWORD Server default login credentials
+  username: 
+  password:
+  
+  # Proxy Settings
+  #proxy_server: my.proxy.edu
+  #proxy_port: 80
+  #proxy_username: myproxyuser
+  #proxy_password: myproxypass
+
+  # Default Collection to deposit to
+  #   Either specify the Name of the Collection
+  #   OR specify the URL (but not BOTH!)
+  #default_collection_url: http://localhost:8080/sword-app/deposit/123456789/4
+  #default_collection_name: My Collection 
+
+production:
+  # SWORD Server's Service Document URL
+  service_doc_url: http://localhost:8080/sword-app/servicedocument
+  
+  # SWORD Server default login credentials
+  username:
+  password:
+  
+  # Proxy Settings
+  #proxy_server: my.proxy.edu
+  #proxy_port: 80
+  #proxy_username: myproxyuser
+  #proxy_password: myproxypass
+  
+  # Default Collection to deposit to
+  #   Either specify the Name of the Collection
+  #   OR specify the URL (but not BOTH!)
+  #default_collection_url: http://localhost:8080/sword-app/deposit/123456789/4
+  #default_collection_name: My Collection

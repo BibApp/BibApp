@@ -1,0 +1,34 @@
+xml.instruct!
+xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
+  xml.channel do
+    xml.title $UNIVERSITY_SHORT_NAME + ": " + @publication.name
+    xml.link url_for(:only_path => false,
+                      :controller => 'publication',
+                      :action => 'show',
+                      :id => @publication.id)
+    xml.description h("Latest #{$UNIVERSITY_SHORT_NAME} work from #{@publication.name}.")
+    @works.each do |work|
+      xml.item do
+        xml.title work['title']
+
+        xml.description {
+          xml.cdata!(work['type'])
+          xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
+          xml.cdata!(work['abstract'])
+        }
+        
+        xml.link url_for(:only_path => false,
+                         :controller => 'works',
+                         :action => 'show',
+                         :id => work['id'].split("-")[1])
+
+        xml.guid url_for(:only_path => false,
+                         :controller => 'works',
+                         :action => 'show',
+                         :id => work['id'].split("-")[1])
+
+        xml.author h(@publication.name)
+      end
+    end
+  end
+end

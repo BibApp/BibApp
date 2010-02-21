@@ -1,0 +1,31 @@
+# Config file for starting Solr (from /vendor/solr) in BibApp.
+#
+# Because BibApp uses Solr *very heavily*, we currently require
+# Solr run on 'localhost'.  The following options are available:
+#
+#   port:       Port on which Solr will run
+#   stop_port:  Port on which Solr will listen for 'stop' requests.  This is 
+#               used to shutdown Solr nicely. (Not used for Windows)
+#
+# If you need to make more major changes to how Solr runs, you can override
+# Solr's initialization settings (from config/initializers/solr.rb) in your
+# environment.rb.
+#
+# Start Solr via:   
+#   rake solr:start
+# Once started, the Solr Admin interface should be available at:
+#   http://localhost:[port]/solr/admin/
+# Stop Solr via:
+#   rake solr:stop
+
+development:
+  port: 8982
+  stop_port: 8096
+  
+test:
+  port: 8984
+  stop_port: 8098
+  
+production:
+  port: 8983
+  stop_port: 8097 
