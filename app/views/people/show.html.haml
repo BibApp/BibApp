@@ -17,6 +17,7 @@
     
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
+  / ## Content ###
   %div.span-15.prepend-1
 
     %div#image.span-4
@@ -44,17 +45,21 @@
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
 
-
+  / ### Sidebar ###
   %div.span-7.last
     - if @facets[:people_data].size > 1
-      %div.span-7
+      %div.span-7.right_box_no_border
         = render :partial => "shared/coauthors"
 
-    %div.span-7
-      %h3.heading Types of Work
+    %div.span-7.right_box_no_border
+      %h3 Types of Work
       %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
 
+    %div#tagcloud.right_box_no_border.span-7
+      %h3 Popular research topics
+      = render :partial => "keyword_cloud"
+
     / Publications
-    %div.span-7
+    %div.span-7.right_box_no_border
       = render :partial => "shared/publications", :locals => {:count => 10}
 

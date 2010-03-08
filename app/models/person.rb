@@ -247,6 +247,7 @@ class Person < ActiveRecord::Base
     'person_id:"' + self.id.to_s + '"'
   end
 
+  # TODO: do this the rails way.
   def publication_reftypes
     publication_reftypes = Person.find_by_sql(
       ["select type as ref_type,
@@ -257,6 +258,34 @@ class Person < ActiveRecord::Base
       group by type
       order by count desc", self.id, 2]
     )
+  end
+
+  # TODO: do this the rails way.
+  def keywords(limit = 15, bin_count = 5)
+    keywords = Keyword.find_by_sql(
+      ["select count(keywordings.keyword_id) as count, name
+      from keywords
+      join keywordings on (keywords.id = keywordings.keyword_id)
+      join works on (keywordings.work_id = works.id)
+      join contributorships on (works.id = contributorships.work_id)
+      where contributorships.person_id = ?
+      and contributorships.contributorship_state_id = ?
+      group by name
+      order by count DESC
+      limit ?", self.id, 2, limit]
+    )
+
+    max_kw_freq = bin_count.to_i
+    max_kw = keywords.max {|a, b| a.count.to_i <=> b.count.to_i}
+    max_kw_freq = max_kw.count.to_i if max_kw and max_kw.count.to_i > max_kw_freq
+
+    keywords.map { |kw|
+      bin = ((kw.count.to_f * bin_count.to_f)/max_kw_freq).ceil
+      kw.count = bin
+    }
+
+    return keywords.sort { |a, b| a.name <=> b.name}
+
   end
 
   class << self
