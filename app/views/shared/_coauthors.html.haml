@@ -4,7 +4,7 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 - if @facets[:people_data].size > 1
-  %h3
+  %h3.heading
     ="Co-authors at #{$UNIVERSITY_SHORT_NAME}"
   - if @facets[:people_data].size <= 7
     %ol#coauthors{:style => "span-6 append-1"}
@@ -19,7 +19,7 @@
             %div.person-image-metadata
               %strong= p.value
             %div.person-last-name.left
-              %strong=link_to last_name, person_path(id)
+              %strong=link_to truncate(last_name, 12), person_path(id)
   - else
     %ol#coauthors{:style => "span-6 append-1"}
       -@facets[:people_data].each do |p|
@@ -33,4 +33,4 @@
             %div.person-image-metadata-tiny
               %strong= p.value
             %div.person-last-name-tiny.left
-              %strong=link_to last_name, person_path(id)
+              %strong=link_to truncate(last_name, 10), person_path(id)
