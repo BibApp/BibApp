@@ -247,6 +247,18 @@ class Person < ActiveRecord::Base
     'person_id:"' + self.id.to_s + '"'
   end
 
+  def publication_reftypes
+    publication_reftypes = Person.find_by_sql(
+      ["select type as ref_type,
+      count(type) as count from works
+      join contributorships on (works.id = contributorships.work_id)
+      where contributorships.person_id = ?
+      and contributorships.contributorship_state_id = ?
+      group by type
+      order by count desc", self.id, 2]
+    )
+  end
+
   class << self
     # return the first letter of each name, ordered alphabetically
     def letters

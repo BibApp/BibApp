@@ -616,9 +616,11 @@ div.person { padding:0em; margin:0em; height:157px; }
 .person-last-name-tiny { font-size:x-small; width:42px; padding-left:0.25em; position:relative; bottom:2em;}
 
 /* lists of groups/publications/publishers*/
-#groups{padding:0.5em 0; margin:0;}
-#publications {padding:0.5em 0; margin:0;}
-#publishers {padding:0.5em 0; margin:0;}
+#groups{padding:0.5em 0; margin:0; font-size: 0.9em;}
+#publications {padding:0.5em 0; margin:0; font-size: 0.9em;}
+#publishers {padding:0.5em 0; margin:0; font-size: 0.9em;}
+
+.heading { margin-top: 6px; }
 
 .heading a {
 	text-decoration:none;

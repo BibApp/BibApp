@@ -17,35 +17,44 @@
     
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
+  %div.span-15.prepend-1
+
     %div#image.span-4
       =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
 
-    %div.span-11
+    %div.span-10
       - if @person.groups.empty?
         &nbsp;
       - else
-        %h3 Groups
+        %h3.heading Groups
         = render :partial => 'shared/group_list'
-                
-      - if @person.research_focus.strip.length > 0
-        %div#research-focus.span-10
-          %h3 Research Focus
-          %p=@person.research_focus
-    
-    - if @facets[:people_data].size > 1
-      %div.span-7.last
-        = render :partial => "shared/coauthors"
 
-  %div.span-22.prepend-1{:style => "padding-top:2em;"}
+    - if @person.research_focus.strip.length > 0
+      %div#research-focus.span-14
+        %h3.heading Research Focus
+        %p=@person.research_focus
+
+
     - if @works.size > 0
-      %div#works.span-14.append-1
+      %div#works.span-14
         %h3.heading
           =link_to "Works", person_works_path(@person)
           &ndash; recent additions
         %ol.works
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
-            
-      / Publications
-      %div.span-7.last
-        = render :partial => "shared/publications", :locals => {:count => 10}
+
+
+  %div.span-7.last
+    - if @facets[:people_data].size > 1
+      %div.span-7
+        = render :partial => "shared/coauthors"
+
+    %div.span-7
+      %h3.heading Types of Work
+      %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
+
+    / Publications
+    %div.span-7
+      = render :partial => "shared/publications", :locals => {:count => 10}
+

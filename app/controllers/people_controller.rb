@@ -86,6 +86,28 @@ class PeopleController < ApplicationController
         @top_level_groups << m.group.top_level_parent unless m.nil? or m.group.top_level_parent.hide?
       end
       @top_level_groups.uniq!
+
+      #generate the google chart URI
+      #see http://code.google.com/apis/chart/docs/making_charts.html
+      #
+      chd = "chd=t:"
+      chl = "chl="
+      chdl = "chdl="
+      chdlp = "chdlp=b|"
+      @person.publication_reftypes.each_with_index do |r,i|
+        perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
+        chd += "#{perc},"
+        ref = r.ref_type.to_s == 'BookWhole' ? 'Book' : r.ref_type.to_s
+        chl += "#{ref.titleize.pluralize}|"
+        chdl += "#{perc}% #{ref.titleize.pluralize}|"
+        chdlp += "#{i.to_s},"
+      end
+      chd = chd[0...(chd.length-1)]
+      chl = chl[0...(chl.length-1)]
+      chdl = chdl[0...(chdl.length-1)]
+      chdlp = chdlp[0...(chdlp.length-1)]
+      @chart_url = "http://chart.apis.google.com/chart?cht=p3&chs=350x100&#{chd}&#{chl}&#{chdl}&#{chdlp}"
+      t = true
     end
 
   end
