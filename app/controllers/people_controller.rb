@@ -107,6 +107,9 @@ class PeopleController < ApplicationController
       chdl = chdl[0...(chdl.length-1)]
       chdlp = chdlp[0...(chdlp.length-1)]
       @chart_url = "http://chart.apis.google.com/chart?cht=p3&chs=350x100&#{chd}&#{chl}&#{chdl}&#{chdlp}"
+
+      #get keywords for the tag cloud
+      @keywords = @person.keywords(10)
       t = true
     end
 

@@ -165,7 +165,7 @@ div.right_box {
 div.right_box_no_border {
     clear:both; 
     width: 100%; 
-    margin:0.5em;
+    margin:0.5em 0 1em;
 }
 /*Box to left of main content (e.g. facet filters) */
 div.left_box {
@@ -187,6 +187,21 @@ div.box_heading {
     margin-bottom: 1em; 
     border-top:1px solid #CCC; 
     border-bottom:1px solid #CCC; 
+    height: 1.25em;
+    line-height: 1.25;
+    color: #111111;
+    font-size: 1.2em;
+    font-weight:normal;
+}
+
+div.right_box_no_border h3 {
+    text-align:center;
+    background-color: #EEEEEE;
+    padding:0.5em;
+    margin-top: 0;
+    margin-bottom: 1em;
+    border-top:1px solid #CCC;
+    border-bottom:1px solid #CCC;
     height: 1.25em;
     line-height: 1.25;
     color: #111111;
@@ -620,8 +635,6 @@ div.person { padding:0em; margin:0em; height:157px; }
 #publications {padding:0.5em 0; margin:0; font-size: 0.9em;}
 #publishers {padding:0.5em 0; margin:0; font-size: 0.9em;}
 
-.heading { margin-top: 6px; }
-
 .heading a {
 	text-decoration:none;
 	color:#000;
@@ -673,7 +686,7 @@ a:hover {
 }
 
 h2 {border-bottom: 1px dotted #000;}
-h3 {color:#000;}
+h3 {color:#000; margin-top: .5em;}
 
 thead td {font-weight:bold;}
 
@@ -745,3 +758,24 @@ ul#edit-actions {
 .yellow {background-color:#FFFF00;}
 .white {background-color:#FFFFFF;}
 .unknown {background-color:#E6E6E6;}
+
+
+/* Tag clouds */
+#tagcloud li { margin: .25em .25em .25em 0; list-style: none; line-height: 1.1em; display: inline; }
+#tagcloud ul { display: none; }
+
+/*.tag1 {font-size: .75em; color: #666; }
+.tag2 {font-size: 1.25em; color: #444; }
+.tag3 {font-size: 1.75em; color: #333; }
+.tag4 {font-size: 2.25em; color: #222; }
+.tag5 {font-size: 2.75em; color: #111; }*/
+
+.tag1 {font-size: 10px; color: #acc1f3; }
+.tag2 {font-size: 14px; color: #86a0dc; }
+.tag3 {font-size: 18px; color: #607ec5; }
+.tag4 {font-size: 22px; color: #264ca2; }
+.tag5 {font-size: 26px; color: #133b97; }
+.tag6 {font-size: 32px; color: #002a8b; }
+.tag7 {font-size: 36px; color: #071a41; }
+.tag8 {font-size: 40px; color: #081122; }
+.tag9 {font-size: 44px; color: #000000; }
