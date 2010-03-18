@@ -98,4 +98,4 @@
             %ol#current
               = render :partial => "group", :collection => @person.groups(true)
 
-      =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
+          =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
