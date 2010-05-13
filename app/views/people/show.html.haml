@@ -53,13 +53,14 @@
 
     %div.span-7.right_box_no_border
       %h3 Types of Work
-      %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
+      %div{:style => "text-align:center;"}
+        %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
 
     %div#tagcloud.right_box_no_border.span-7
       %h3 Popular research topics
-      = render :partial => "keyword_cloud"
+      %div{:style => "text-align:center;"}
+        = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
 
     / Publications
     %div.span-7.right_box_no_border
       = render :partial => "shared/publications", :locals => {:count => 10}
-

@@ -85,7 +85,6 @@ ul#global-nav a:hover {
 }
 
 #navigation #current a {
-  padding-bottom: 0.5em;
   color: #990000;
   font-weight: bold;
 }
@@ -631,9 +630,9 @@ div.person { padding:0em; margin:0em; height:157px; }
 .person-last-name-tiny { font-size:x-small; width:42px; padding-left:0.25em; position:relative; bottom:2em;}
 
 /* lists of groups/publications/publishers*/
-#groups{padding:0.5em 0; margin:0; font-size: 0.9em;}
-#publications {padding:0.5em 0; margin:0; font-size: 0.9em;}
-#publishers {padding:0.5em 0; margin:0; font-size: 0.9em;}
+#groups{padding:0.5em 0; margin:0; }
+#publications {padding:0.5em 0; margin:0; }
+#publishers {padding:0.5em 0; margin:0; }
 
 .heading a {
 	text-decoration:none;
@@ -762,15 +761,24 @@ ul#edit-actions {
 
 /* Tag clouds */
 #tagcloud li { margin: .25em .25em .25em 0; list-style: none; line-height: 1.1em; display: inline; }
-#tagcloud ul { display: none; }
+#tagcloud li a {margin: .25em .25em .25em 0; line-height: 1.1em; }
+#tagcloud ul { margin: 0; }
 
-/*.tag1 {font-size: .75em; color: #666; }
-.tag2 {font-size: 1.25em; color: #444; }
-.tag3 {font-size: 1.75em; color: #333; }
-.tag4 {font-size: 2.25em; color: #222; }
-.tag5 {font-size: 2.75em; color: #111; }*/
+/* timeline tagcloud */
+#timeline-tagcloud li { margin: .25em .25em .25em 0; list-style: none; line-height: 1.1em; display: inline; }
+#timeline-tagcloud li a {margin: .25em .25em .25em 0; line-height: 1.1em; }
+#timeline-tagcloud ul { display: none; margin-left: 0; height: 250px; }
+#yearnav { margin-bottom: 2em; position: relative; }
+/*#yearnav .handle { font-size: 75%; display: inline; background-color:#911; color:#fafaf0; cursor: move; top: -8px; }*/
+#yearnav .track {  }
 
-.tag1 {font-size: 10px; color: #acc1f3; }
+.tag1 a {font-size: 1em; color: #acc1f3; }
+.tag2 a {font-size: 1.25em; color: #86a0dc; }
+.tag3 a {font-size: 1.5em; color: #607ec5; }
+.tag4 a {font-size: 1.75em; color: #264ca2; }
+.tag5 a {font-size: 2em; color: #133b97; }
+
+/*.tag1 {font-size: 10px; color: #acc1f3; }
 .tag2 {font-size: 14px; color: #86a0dc; }
 .tag3 {font-size: 18px; color: #607ec5; }
 .tag4 {font-size: 22px; color: #264ca2; }
@@ -778,4 +786,7 @@ ul#edit-actions {
 .tag6 {font-size: 32px; color: #002a8b; }
 .tag7 {font-size: 36px; color: #071a41; }
 .tag8 {font-size: 40px; color: #081122; }
-.tag9 {font-size: 44px; color: #000000; }
+.tag9 {font-size: 44px; color: #000000; }*/
+
+/* timeline chart */
+#timeline-chart div#chart-img {text-align:center;margin-left:-20px;}

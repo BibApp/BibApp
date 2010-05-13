@@ -64,6 +64,8 @@ ActionController::Routing::Routes.draw do |map|
     p.resources :memberships
     # Make URLs like /people/1/roles/3 for user roles on a specific Person
     p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
+    # Make URLs like /people/1/keywords/
+    p.resources :keywords, :collection => {:timeline => :get}
   end
  
   #####
@@ -79,6 +81,8 @@ ActionController::Routing::Routes.draw do |map|
     g.resources :people
     # Make URLs like /group/1/roles/3 for roles on a specific Group
     g.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
+    # Make URLs like /group/1/keywords/
+    g.resources :keywords, :collection => {:timeline => :get}
   end
 
   #####

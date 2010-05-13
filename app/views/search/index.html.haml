@@ -9,8 +9,11 @@
   - else
     %div{:class => "span-22 prepend-1"}
       %h2
-        ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
-        %strong=" #{@query}"
+        -if @query = "*:*"
+          ="#{pluralize(@q.total_hits, "Result", "Results")}"
+        -else
+          ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
+          %strong=" #{@query}"
 
       -if !@spelling_suggestions.empty? && !@q.total_hits == 0
         %p.warning{:class => "span-22"} 
