@@ -79,13 +79,7 @@ class PeopleController < ApplicationController
 
       search(params)
       @person = @current_object
-
-      # Collect a list of the person's top-level groups for the tree view
-      @top_level_groups = Array.new
-      @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
-        @top_level_groups << m.group.top_level_parent unless m.nil? or m.group.top_level_parent.hide?
-      end
-      @top_level_groups.uniq!
+      work_count = @q.data['response']['numFound']
 
       #generate the google chart URI
       #see http://code.google.com/apis/chart/docs/making_charts.html
@@ -94,10 +88,10 @@ class PeopleController < ApplicationController
       chl = "chl="
       chdl = "chdl="
       chdlp = "chdlp=b|"
-      @person.publication_reftypes.each_with_index do |r,i|
-        perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
+      @facets[:types].each_with_index do |r,i|
+        perc = (r.value.to_f/work_count.to_f*100).round.to_s
         chd += "#{perc},"
-        ref = r.ref_type.to_s == 'BookWhole' ? 'Book' : r.ref_type.to_s
+        ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
         chl += "#{ref.titleize.pluralize}|"
         chdl += "#{perc}% #{ref.titleize.pluralize}|"
         chdlp += "#{i.to_s},"
@@ -106,11 +100,28 @@ class PeopleController < ApplicationController
       chl = chl[0...(chl.length-1)]
       chdl = chdl[0...(chdl.length-1)]
       chdlp = chdlp[0...(chdlp.length-1)]
-      @chart_url = "http://chart.apis.google.com/chart?cht=p3&chs=350x100&#{chd}&#{chl}&#{chdl}&#{chdlp}"
+      @chart_url = "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
 
-      #get keywords for the tag cloud
-      @keywords = @person.keywords(10)
-      t = true
+      #generate normalized keyword list
+      max = 10
+      bin_count = 5
+      kwords = @facets[:keywords].first(max)
+      max_kw_freq = kwords[0].value.to_i > bin_count ? kwords[0].value.to_i : bin_count
+
+      @keywords = kwords.map { |kw|
+        bin = ((kw.value.to_f * bin_count.to_f)/max_kw_freq).ceil
+        s = Struct.new(:name, :count)
+        s.new(kw.name, bin)
+      }.sort { |a, b| a.name <=> b.name }
+      true
+
+      # Collect a list of the person's top-level groups for the tree view
+      @top_level_groups = Array.new
+      @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
+        @top_level_groups << m.group.top_level_parent unless m.nil? or m.group.top_level_parent.hide?
+      end
+      @top_level_groups.uniq!
+
     end
 
   end
@@ -199,6 +210,46 @@ class PeopleController < ApplicationController
       format.html {redirect_to return_path }
       format.xml  {head :ok}
     end
+  end
+
+  def load_reftype_chart
+    @person = Person.find(params[:person_id])
+
+    #generate the google chart URI
+    #see http://code.google.com/apis/chart/docs/making_charts.html
+    #
+    chd = "chd=t:"
+    chl = "chl="
+    chdl = "chdl="
+    chdlp = "chdlp=b|"
+    @person.publication_reftypes.each_with_index do |r,i|
+      perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
+      chd += "#{perc},"
+      ref = r.ref_type.to_s == 'BookWhole' ? 'Book' : r.ref_type.to_s
+      chl += "#{ref.titleize.pluralize}|"
+      chdl += "#{perc}% #{ref.titleize.pluralize}|"
+      chdlp += "#{i.to_s},"
+    end
+    chd = chd[0...(chd.length-1)]
+    chl = chl[0...(chl.length-1)]
+    chdl = chdl[0...(chdl.length-1)]
+    chdlp = chdlp[0...(chdlp.length-1)]
+    @chart_url = "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
+
+    render :update do |page|
+      page.replace_html "loading_reftype_chart", "<img src='#{@chart_url}' alt='work-type chart' style='margin-left: -50px;margin-bottom:20px;' />"
+    end
+
+  end
+
+  def load_keyword_cloud
+    #get keywords for the tag cloud
+    @person = Person.find(params[:person_id])
+    @keywords = @person.keywords(10)
+
+     render :update do |page|
+          page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
+     end
   end
 
 

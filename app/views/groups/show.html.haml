@@ -15,7 +15,7 @@
 / ### Main ###
 %div.span-24
   %div.span-22.prepend-1
-      
+
     %h2
       = @group.name
       =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss"))
@@ -42,7 +42,7 @@
 
   %div.span-7.last
     / Sub-Groups
-    %div.span-6
+    %div.span-6.right_box_no_border
       - unless @group.parent.nil? or @group.parent.hide?
         %h3.heading Belongs to
         %ul.parent-group
@@ -56,9 +56,19 @@
                 =link_to g.name, group_path(g)
                 ="(#{g.works.size})"
 
-    %div.span-7.last
+    %div.span-7.right_box_no_border
+      %h3 Types of Work
+      %div{:style => "text-align:center;"}
+        %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
+
+    %div#tagcloud.right_box_no_border.span-7
+      %h3 Popular research topics
+      %div{:style => "text-align:center;"}
+        = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
+
+    %div.span-7.last.right_box_no_border
       %h3.heading
         =link_to "Recent Works", group_works_path(@group)
       %ol#works{:class => "span-7 works"}
-        - @works.first(5).each do |work|
+        - @works.first(3).each do |work|
           = render :partial => "shared/work", :locals => {:work => work}

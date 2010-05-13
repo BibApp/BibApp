@@ -1,0 +1,14 @@
+%ul
+  -if keywords
+    - keywords.each do |kw|
+      %li{:class => "tag#{kw.count}"}
+        - filter = Array.new
+        - filter << "keyword_facet:" + '"' + kw.name + '"'
+        - unless @current_object.nil?
+          - filter << "#{@current_object.class.to_s.downcase}_facet:" + '"' + @current_object.name + '"'
+        = link_to h(kw.name), search_path(:fq => filter)
+%div{:style => "text-align: center; margin-top:10px;"}
+  - if current_object.class.to_s.downcase == "group"
+    = link_to "<button type='button'>See Timeline View</button>", "#{group_keywords_path(current_object)}/timeline"
+  - elsif current_object.class.to_s.downcase == "person"
+    = link_to "<button type='button'>See Timeline View</button>", "#{person_keywords_path(current_object)}/timeline"

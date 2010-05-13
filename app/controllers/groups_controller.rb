@@ -43,6 +43,41 @@ class GroupsController < ApplicationController
     before :show do
       search(params)
       @group = @current_object
+      work_count = @q.data['response']['numFound']
+
+      #generate the google chart URI
+      #see http://code.google.com/apis/chart/docs/making_charts.html
+      #
+      chd = "chd=t:"
+      chl = "chl="
+      chdl = "chdl="
+      chdlp = "chdlp=b|"
+      @facets[:types].each_with_index do |r,i|
+        perc = (r.value.to_f/work_count.to_f*100).round.to_s
+        chd += "#{perc},"
+        ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
+        chl += "#{ref.titleize.pluralize}|"
+        chdl += "#{perc}% #{ref.titleize.pluralize}|"
+        chdlp += "#{i.to_s},"
+      end
+      chd = chd[0...(chd.length-1)]
+      chl = chl[0...(chl.length-1)]
+      chdl = chdl[0...(chdl.length-1)]
+      chdlp = chdlp[0...(chdlp.length-1)]
+      @chart_url = "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
+
+      #generate normalized keyword list
+      max = 10
+      bin_count = 5
+      kwords = @facets[:keywords].first(max)
+      max_kw_freq = kwords[0].value.to_i > bin_count ? kwords[0].value.to_i : bin_count
+
+      @keywords = kwords.map { |kw|
+        bin = ((kw.value.to_f * bin_count.to_f)/max_kw_freq).ceil
+        s = Struct.new(:name, :count)
+        s.new(kw.name, bin)
+      }.sort { |a, b| a.name <=> b.name }
+      true
     end
     
     before :new do

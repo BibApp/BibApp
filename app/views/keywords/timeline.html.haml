@@ -1,0 +1,79 @@
+/ === Timeline ===
+/ Main
+
+%style
+  :plain
+    html {overflow-y: scroll;}
+
+%div.span-24
+  %div.span-22.prepend-1
+    %h2
+      = link_to "#{@current_object.name}", url_for(@current_object)
+      = " - Timeline"
+
+    %div#yearnav
+      %h3#curyear
+      %div.track#track1{:style=>"width:300px;height:4px;border-bottom:5px solid #aaa;"}
+        %div.handle#handle1{:style=>"width:19px;height:20px;left:6px;position:relative;"}
+          %img{:style=>"float:left;", :alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
+      
+    %div#timeline-tagcloud.span-12
+      %h3 Popular Research Topics by Year
+      = render :partial => "timeline_list", :collection => @year_keywords
+
+    %div#timeline-chart.span-7.prepend-1.last-1
+      %h3 Work Types by Year
+      %div#chart-img
+        %img{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
+
+    %script{:type=>"text/javascript"}
+      = update_page do |page|
+        = page.assign 'year_index', 0
+        = page.assign 'year_tags', @years
+        = page.assign 'charts', @chart_urls
+        = page.assign 'work_counts', @work_counts
+
+      :plain
+        <!--
+        function show_list(year) {
+          var items = $('timeline-tagcloud').getElementsByTagName('ul');
+          for (var i = 0; i < items.length; i++) {
+            var l = items[i];
+            if ( l.id == "list-" + year ) {
+              l.style.display = "block";
+            }
+            else {
+              l.style.display = "none";
+            }
+          }
+        }
+
+        function set_year(ydata, num) {
+          if (ydata) {
+            var header = document.getElementById("curyear");
+            header.innerHTML = ydata;
+            var chart = document.getElementById("chart-img");
+            if(work_counts[num]==0){
+              chart.innerHTML = "<p>No data</p>"
+            }else{
+              chart.innerHTML = "<img src='"+charts[num]+"' title='Work Types'/>";
+            }
+            show_list(ydata);
+          }
+        }
+
+        var year_range = new Array(year_tags.length);
+        for (var i = 0; i < year_range.length; i++) {
+          year_range[i] = i;
+        }
+
+        var slider = new Control.Slider('handle1', 'track1', {
+          axis:       'horizontal',
+          range: $R(0, year_range.length-1),
+          values: year_range
+          });
+
+        set_year(year_tags[0], 0);
+        slider.options.onSlide = function(v){set_year(year_tags[v], v);};
+        slider.setEnabled();
+        // -->

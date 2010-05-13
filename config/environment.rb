@@ -52,7 +52,7 @@ Rails::Initializer.run do |config|
   #################################
 
   #Rack - Rails 2.3.3 no longer bundles rack.
-  config.gem "rack", :version=>'>=1.0.0'
+  config.gem "rack", :version=>'~>1.0.0'
 
   #Haml - Haml plugin will fail initialization if haml gem is not installed.
   config.gem "haml", :version=>'>=2.2.3'
