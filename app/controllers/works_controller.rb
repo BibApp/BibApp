@@ -27,6 +27,7 @@ class WorksController < ApplicationController
     response_for :show do |format| 
       format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
       format.mets  #loads show.mets.haml
+      format.rdf
     end
 
     response_for :index do |format|
@@ -34,6 +35,7 @@ class WorksController < ApplicationController
       format.xml
       format.yaml
       format.json
+      format.rdf
     end
 
     #initialize variables used by 'new.html.haml'
@@ -66,6 +68,7 @@ class WorksController < ApplicationController
       @recommendations = Index.recommendations(@current_object)
       # Specify text at end of HTML <title> tag
       @title=@current_object.title_primary
+
     end
     
     before :edit do
@@ -91,6 +94,9 @@ class WorksController < ApplicationController
     elsif params[:group_id]
       @current_object = Group.find_by_id(params[:group_id].split("-")[0])
       @group = @current_object
+      search(params)
+    elsif params[:format] == "rdf"
+      params[:rows] = 100
       search(params)
     else
       logger.debug("\n\n===Works: #{@current_object.inspect}")

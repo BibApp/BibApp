@@ -824,7 +824,7 @@ class Work < ActiveRecord::Base
   #Get all Author names on a Work, return as an array of hashes
   def authors
     authors = Array.new
-    names = self.name_strings.find(:all, :conditions => [ 'role=?', 'Author']).collect{|ns| {:name => ns.name, :id => ns.id}}
+    names = self.name_strings.find(:all, :conditions => [ 'role=?', self.class.creator_role]).collect{|ns| {:name => ns.name, :id => ns.id}}
     names.each do |name|
       authors << {:name => name[:name], :id => name[:id]}
     end
@@ -834,7 +834,7 @@ class Work < ActiveRecord::Base
    #Get all Editor Strings of a Work, return as an array of hashes
   def editors
     editors = Array.new
-    names = self.name_strings.find(:all, :conditions => [ 'role=?', 'Editor']).collect{|ns| {:name => ns.name, :id => ns.id}}
+    names = self.name_strings.find(:all, :conditions => [ 'role=?', self.class.contributor_role]).collect{|ns| {:name => ns.name, :id => ns.id}}
     names.each do |name|
       editors << {:name => name[:name], :id => name[:id]}
     end
