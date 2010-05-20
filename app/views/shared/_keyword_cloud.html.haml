@@ -7,8 +7,26 @@
         - unless @current_object.nil?
           - filter << "#{@current_object.class.to_s.downcase}_facet:" + '"' + @current_object.name + '"'
         = link_to h(kw.name), search_path(:fq => filter)
+
 %div{:style => "text-align: center; margin-top:10px;"}
   - if current_object.class.to_s.downcase == "group"
-    = link_to "<button type='button'>See Timeline View</button>", "#{group_keywords_path(current_object)}/timeline"
+    - form_tag "#{group_keywords_path(current_object)}/timeline", :method=>:get do
+      = submit_tag "Load Timeline View", :onclick=>"go_dim()"
   - elsif current_object.class.to_s.downcase == "person"
-    = link_to "<button type='button'>See Timeline View</button>", "#{person_keywords_path(current_object)}/timeline"
+    - form_tag "#{person_keywords_path(current_object)}/timeline", :method=>:get do
+      = submit_tag "Load Timeline View", :onclick=>"go_dim()"
+
+%div{:class=>"darkenBackground", :name=>"darkBackgroundLayer", :id=>"darkBackgroundLayer", :style=>"display:none;"}
+%img{:src=>"/images/ajax-loader.gif", :class=>"highZ", :id=>"spinner", :style=>"display:none;"}
+
+%script{:type=>"text/javascript"}
+  :plain
+    <!--
+    document.getElementsByName("darkBackgroundLayer")[0].style.display = "none";
+    document.getElementById("spinner").style.display = "none";
+    function go_dim () {
+      document.getElementsByName("darkBackgroundLayer")[0].style.display = "";
+      document.getElementById("spinner").style.display = "";
+      return;
+    }
+    // -->
