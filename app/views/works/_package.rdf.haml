@@ -1,0 +1,52 @@
+-authors = ""
+-work.authors.each { |a| authors += "#{a[:name]}, " }
+-authors = authors[0..authors.length-3]
+-editors = ""
+-work.editors.each { |a| authors += "#{a[:name]}, " }
+-editors = editors[0..editors.length-3]
+
+-ce = WorkExport.new
+-citation = ce.drive_csl("apa",work)
+-citation = h(citation.gsub(/<[^>]*>/,""))
+-citation = citation.gsub(/&amp;amp;/,"&amp;")
+
+
+%Description
+  %type{'resource'=>"http://purl.org/ontology/bibo/AcademicArticle"}
+  -# %type{'resource'=>"http://vitro.mannlib.cornell.edu/ns/vitro/0.7#Flag1Value1Thing"}
+  -unless authors.blank?
+    %j0:authorList{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+      =authors
+  -unless editors.blank?
+    %j0:editorList{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+      =editors
+  %j2:title
+    =h(work.title_primary)
+  -unless work.publication_authority.blank?
+    %j2:publishedInTitle
+      =h(work.publication_authority.name)
+  -unless work.abstract.blank?
+    %j0:abstract
+      =h(work.abstract)
+  -unless work.year.blank?
+    %j2:year{'resource'=>"http://www.w3.org/2001/XMLSchema#gYear"}
+      =work.year
+  -unless work.links.blank?
+    %j0:doi{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+      =work.links
+  %j0:locator
+    =link_to_findit(Index.work_to_solr_hash(work))
+  %j3:citation{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+    =citation
+  -unless work.start_page.blank?
+    %j0:pageStart{'resource'=>"http://www.w3.org/2001/XMLSchema#int"}
+      =work.start_page
+  -unless work.end_page.blank?
+    %j0:pageEnd{'resource'=>"http://www.w3.org/2001/XMLSchema#int"}
+      =work.end_page
+  %j2:refereedStatus{'resource'=>"http://www.w3.org/2001/XMLSchema#boolean"}
+    =(!work.peer_reviewed.nil? and work.peer_reviewed == true) ? "true" : "false"
+  %j3:timekey{'resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}
+    =work.publication_date
+  %j3:modTime{'resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}
+    =work.updated_at
