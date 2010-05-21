@@ -2,7 +2,7 @@
 -work.authors.each { |a| authors += "#{a[:name]}, " }
 -authors = authors[0..authors.length-3]
 -editors = ""
--work.editors.each { |a| authors += "#{a[:name]}, " }
+-work.editors.each { |e| editors += "#{e[:name]}, " }
 -editors = editors[0..editors.length-3]
 
 -ce = WorkExport.new
