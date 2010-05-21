@@ -834,6 +834,7 @@ class Work < ActiveRecord::Base
    #Get all Editor Strings of a Work, return as an array of hashes
   def editors
     editors = Array.new
+    return editors if self.class.contributor_role == self.class.creator_role
     names = self.name_strings.find(:all, :conditions => [ 'role=?', self.class.contributor_role]).collect{|ns| {:name => ns.name, :id => ns.id}}
     names.each do |name|
       editors << {:name => name[:name], :id => name[:id]}
