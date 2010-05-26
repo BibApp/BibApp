@@ -33,11 +33,11 @@
     %core:publishedInTitle=h(work.publication.name)
     %core:publishedIn{'rdf:about'=>publication_url(work.publication)}
   -unless work.year.blank?
-    %core:year{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#gYear"}=work.year
+    %core:year{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#gYear"}=h(work.year)
   -unless work.start_page.blank?
-    %bibo:pageStart{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=work.start_page
+    %bibo:pageStart{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.start_page)
   -unless work.end_page.blank?
-    %bibo:pageEnd{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=work.end_page
+    %bibo:pageEnd{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.end_page)
   -unless peer_reviewed.blank?
     %core:refereedStatus{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#boolean"}=peer_reviewed
   -unless work.links.blank?
