@@ -5,10 +5,10 @@
 -work.editors.each { |e| editors += "#{e[:name]}, " }
 -editors = editors[0..editors.length-3]
 
--ce = WorkExport.new
--citation = ce.drive_csl("apa",work)
--citation = h(citation.gsub(/<[^>]*>/,""))
--citation = citation.gsub(/&amp;amp;/,"&amp;")
+-#ce = WorkExport.new
+-#citation = ce.drive_csl("apa",work)
+-#citation = h(citation.gsub(/<[^>]*>/,""))
+-#citation = citation.gsub(/&amp;amp;/,"&amp;")
 
 -locator = link_to_findit(Index.work_to_solr_hash(work))
 -locator = locator.gsub(/<a\shref=\"/,"")
@@ -44,8 +44,8 @@
     %bibo:doi{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=work.links
   %core:localLibraryLink{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#URI"}=locator
   %bibo:coins{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}=h(coin(work))
-  %vitro:citation{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}
-    =citation
+  -#%vitro:citation{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+    -#=citation
   %vitro:timekey{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.created_at
   %vitro:modTime{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.updated_at
   -unless work.people.blank?
