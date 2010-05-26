@@ -41,7 +41,7 @@
   -unless peer_reviewed.blank?
     %core:refereedStatus{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#boolean"}=peer_reviewed
   -unless work.links.blank?
-    %bibo:doi{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=work.links
+    %bibo:doi{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=h(work.links)
   %core:localLibraryLink{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#URI"}=locator
   %bibo:coins{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}=h(coin(work))
   -#%vitro:citation{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}
