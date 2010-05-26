@@ -18,6 +18,12 @@ class PeopleController < ApplicationController
     response_for :show do |format| 
       format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
       format.rss  #loads show.rss.rxml
+      format.rdf
+    end
+
+    response_for :index do |format|
+      format.html
+      format.rdf
     end
       
     before :index do
