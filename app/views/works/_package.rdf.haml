@@ -22,37 +22,38 @@
 %rdf:Description{'rdf:about'=>"#{work_url(work)}"}
   %rdf:type{'rdf:resource'=>"http://purl.org/ontology/bibo/Document"}
   -unless authors.blank?
-    %bibo:authorList{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=authors
+    %bibo:authorList{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=authors
   -unless editors.blank?
-    %bibo:editorList{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=editors
+    %bibo:editorList{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=editors
   %core:title=h(work.title_primary)
   -unless work.abstract.blank?
     %bibo:abstract
       =h(work.abstract)
   -unless work.publication_id.blank?
     %core:publishedInTitle=h(work.publication.name)
-    %core:publishedIn{'rdf:about'=>publication_url(work.publication)}
+    %core:publishedIn{'rdf:resource'=>publication_url(work.publication)}
   -unless work.year.blank?
-    %core:year{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#gYear"}=h(work.year)
+    %core:year{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#gYear"}=h(work.year)
   -unless work.start_page.blank?
-    %bibo:pageStart{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.start_page)
+    %bibo:pageStart{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.start_page)
   -unless work.end_page.blank?
-    %bibo:pageEnd{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.end_page)
+    %bibo:pageEnd{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#int"}=h(work.end_page)
   -unless peer_reviewed.blank?
-    %core:refereedStatus{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#boolean"}=peer_reviewed
+    %core:refereedStatus{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#boolean"}=peer_reviewed
   -unless work.links.blank?
-    %bibo:doi{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}=h(work.links)
-  %core:localLibraryLink{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#URI"}=locator
-  %bibo:coins{'resource'=>"http://www.w3.org/2001/XMLSchema#string"}=h(coin(work))
-  -#%vitro:citation{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#string"}
+    %bibo:doi{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=h(work.links)
+  %core:localLibraryLink{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=locator
+  %bibo:coins{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=h(coin(work))
+  -#%vitro:citation{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}
     -#=citation
-  %vitro:timekey{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.created_at
-  %vitro:modTime{'rdf:resource'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.updated_at
+  %vitro:timekey{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.created_at
+  %vitro:modTime{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#dateTime"}=work.updated_at
   -unless work.people.blank?
     %core:informationResourceInAuthorship{'rdf:resource'=>"#{work_url(work)}#Authorship"}
 
 %rdf:Description{'rdf:about'=>"#{work_url(work)}#Authorship"}
   %rdf:type{'rdf:resource'=>"http://vivoweb.org/ontology/core#Authorship"}
+  %core:linkedInformationResource{'rdf:resource'=>"#{work_url(work)}"}
   -work.people.each do |p|
-    %core:linkedAuthor{'rdf:about'=>"#{person_url(p)}"}
+    %core:linkedAuthor{'rdf:resource'=>"#{person_url(p)}"}
 
