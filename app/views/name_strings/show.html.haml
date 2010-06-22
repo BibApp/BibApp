@@ -25,5 +25,5 @@
                 %div{:style => "width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center;"}
                   %strong= person.works.size
                   %h7{:style => "padding-right:0.5em;"}=link_to person.last_name, person_path(person)
-        - else
-          %p="Nobody at #{$UNIVERSITY_SHORT_NAME} has claimed this name.  This might be somebody from another campus."
+      - else
+        %p="Nobody at #{$UNIVERSITY_SHORT_NAME} has claimed this name.  This might be somebody from another campus."
