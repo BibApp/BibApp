@@ -1,5 +1,5 @@
-%ul
-  -if keywords
+-if keywords
+  %ul
     - keywords.each do |kw|
       %li{:class => "tag#{kw.count}"}
         - filter = Array.new
@@ -8,13 +8,13 @@
           - filter << "#{@current_object.class.to_s.downcase}_facet:" + '"' + @current_object.name + '"'
         = link_to h(kw.name), search_path(:fq => filter)
 
-%div{:style => "text-align: center; margin-top:10px;"}
-  - if current_object.class.to_s.downcase == "group"
-    - form_tag "#{group_keywords_path(current_object)}/timeline", :method=>:get do
-      = submit_tag "Load Timeline View", :onclick=>"go_dim()"
-  - elsif current_object.class.to_s.downcase == "person"
-    - form_tag "#{person_keywords_path(current_object)}/timeline", :method=>:get do
-      = submit_tag "Load Timeline View", :onclick=>"go_dim()"
+  %div{:style => "text-align: center; margin-top:10px;"}
+    - if current_object.class.to_s.downcase == "group"
+      - form_tag "#{group_keywords_path(current_object)}/timeline", :method=>:get do
+        = submit_tag "Load Timeline View", :onclick=>"go_dim()"
+    - elsif current_object.class.to_s.downcase == "person"
+      - form_tag "#{person_keywords_path(current_object)}/timeline", :method=>:get do
+        = submit_tag "Load Timeline View", :onclick=>"go_dim()"
 
 %div{:class=>"darkenBackground", :name=>"darkBackgroundLayer", :id=>"darkBackgroundLayer", :style=>"display:none;"}
 %img{:src=>"/images/ajax-loader.gif", :class=>"highZ", :id=>"spinner", :style=>"display:none;"}
