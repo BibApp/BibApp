@@ -260,14 +260,15 @@ class Import < ActiveRecord::Base
     name_strings = Hash.new
     works = Array.new
     self.works_added.each do |work_id|
-      works << Work.find_by_id(work_id)
+      w = Work.find_by_id(work_id)
+      works << w if w
     end
 
     works.each do |work|
       work.name_strings.each do |ns|
         name_strings[ns.name] = {} # Init empty Hash for each name_string
         name_strings[ns.name][:id] = ns.id
-        name_strings[ns.name][:works] = [] # Init empty works Array for each name_string
+        name_strings[ns.name][:works] = [] # Init empty works Array for each name_stringz
       end
     end
     
