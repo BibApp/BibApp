@@ -1,0 +1,38 @@
+/ === Publications === Index ===
+/ Main
+- @title="Publications" # Specify text at end of HTML <title> tag
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to "Add a Publication", new_publication_path
+        - if current_user.has_role?("admin", System)
+          %li=link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])
+
+%div.span-24
+  %div.span-22.prepend-1
+    %h2="Publications"
+    
+    = render :partial => "shared/alpha_pagination"
+
+    %table#publications
+      %tr
+        %th="ISSN / ISBN"
+        %th="Publication Name"
+        %th="Publisher"
+        %th="Works"
+      -@current_objects.each do |publication|
+        %tr{:class => cycle("odd", "even")}
+          - if publication.issn_isbn.nil?
+            %td
+          - else
+            %td=link_to publication.issn_isbn, publication
+          %td=link_to publication.name, publication
+          %td=link_to publication.publisher.name, publisher_path(publication.publisher)
+          %td=publication.works.count
+
+    %br/
+    %br/
+    = render :partial => "shared/alpha_pagination"

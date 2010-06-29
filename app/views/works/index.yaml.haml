@@ -1,0 +1,16 @@
+:plain
+  ---
+  works:
+- @works.each do |w|
+  - work = Work.find(w['pk_i'])
+  :plain
+      - type: #{work.type}
+        id: #{work.id}
+        link:
+          href: "#{work_url(work.id)}.yaml"
+- if @has_next_page
+  -@page = @page == 0 ? 1 : @page
+  :plain
+      - link:
+        rel: "next"
+        href: "#{works_url()}.yaml?page=#{@page.to_i+1}"

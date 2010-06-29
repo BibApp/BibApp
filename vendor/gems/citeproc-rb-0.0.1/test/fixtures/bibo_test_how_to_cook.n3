@@ -1,0 +1,63 @@
+<http://demo.openlibrary.org/b/How_to_Cook_Edition> a bibo:Book ;
+
+    dcterms:title "How to Cook  Revised Edition - An Easy and Imaginative Guide for the Beginner" ;
+
+    dcterms:subject <http://purl.org/umbel/sc/CookingFood> ;
+    dcterms:subject <http://purl.org/umbel/sc/Chef> ;
+
+    bibo:language "eng" ;
+    bibo:upc "099455014953" ;
+    bibo:eanucc13 "9780060083915" ;    
+    bibo:isbn13 "9780060083915" ;
+    bibo:isbn10 "0060083913" ;
+    dcterms:date "2004-05-01" ;
+    bibo:number_of_page "320" ;
+    bibo:status <http://purl.org/ontology/bibo/status/published> ;
+    foaf:depiction <http://demo.openlibrary.org/static/bookcovers/full/0/0/0060083913.jpg> ;
+  
+    dcterms:creator <http://demo.openlibrary.org/b/Raymond_Sokolov> ;
+
+    dcterms:publisher <http://demo.openlibrary.org/b/HarperCollins> ;
+    dcterms:publisher <http://demo.openlibrary.org/b/Morrow_Cookbooks>
+    
+    dcterms:description  "<P><B>A fully revised and updated edition of Raymond
+Sokolov's classic kitchen primer for beginning chefs of all ages,
+filled with 150 simple, sophisticated recipes, easy-to-learn
+techniques, and indispensable advice. </B></P> <P>First published in
+1986, Ray Sokolov's <I>How To Cook</I> is the ultimate book for
+beginning cooks of all ages. Unlike most kitchen primers, How To Cook
+does not assume any prior cooking instruction or skills, but rather
+guides the reader through the entire cooking process with simple
+explanations in ordinary language. There are no fancy cooking terms or
+special gadget here, just easy, indispensable techniques and foolproof
+recipes for every occasion. In this revised paperback edition, Sokolov
+addresses the increased sophistication of even adamant non-cooks in
+today's food-obsessed climate, while he sticks to the unfussy,
+straightforward approach that made the original such a hit. Home cooks
+will learn everything they need for years worth of fabulous meals,
+from how to decipher recipe measurements, to how to fry an egg, to how
+to steam a lobster. Even readers weaned on frozen pizza will find
+recipes they can master, for last minute meals, special occasions and
+entertaining, and even holidays-all made from scratch with fresh,
+accessible ingredients. Experienced cooks will appreciate the simple
+elegance of such flavorful dishes as Veal Scallopini or Pears Poached
+in Red Wine. Written with Sokolov's trademark wit and wisdom, <I>How
+To Cook</I> is an invaluable kitchen classic you'll turn to again and
+again.</P>".
+
+
+<http://demo.openlibrary.org/b/Raymond_Sokolov> a foaf:Person ;
+    bibo:givenName "Raymond" ;
+    bibo:familyName "Sokolov" .
+ 
+<http://demo.openlibrary.org/b/HarperCollins> a foaf:Organization ;
+    foaf:name "Harper Collins" ;
+    foaf:homepage <http://www.harpercollins.com/> .
+
+
+<http://demo.openlibrary.org/b/Morrow_Cookbooks> a foaf:Organization ;
+    foaf:name "Harper Collins" ;
+    foaf:homepage <http://www.harpercollins.com/imprints/index.aspx?imprintid=517982> ;
+    owl:sameAs <http://demo.openlibrary.org/b/HarperCollins>.
+
+

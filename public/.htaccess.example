@@ -1,0 +1,14 @@
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# If your Rails application is accessed via an Alias directive,
+# then you MUST also set the RewriteBase in this htaccess file.
+#
+# Example:
+#   Alias /myrailsapp /path/to/myrailsapp/public
+#   RewriteBase /myrailsapp
+
+RewriteBase /bibapp
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* http://127.0.0.1:2021%{REQUEST_URI} [L,P,QSA]

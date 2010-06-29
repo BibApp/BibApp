@@ -1,0 +1,76 @@
+################################################################
+# MySQL (default setup).  Versions 4.1 and 5.0 are recommended.
+#
+# Install the MySQL driver:
+#   gem install mysql
+# On MacOS X:
+#   sudo gem install mysql -- --with-mysql-dir=/usr/local/mysql
+# On Windows:
+#   gem install mysql
+#       Choose the win32 build.
+#       Install MySQL and put its /bin directory on your path.
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+#
+# For PostgreSQL, see example at the bottom of this file.
+################################################################
+
+development:
+  adapter: mysql
+  encoding: utf8
+  database: bibapp_development
+  username: root
+  password: 
+  socket: /tmp/mysql.sock
+  # Note: for Ubuntu / Debian, the MySQL socket is often located at
+  # socket: /var/run/mysqld/mysqld.sock
+
+# Warning: The database defined as 'test' will be erased and
+# re-generated from your development database when you run 'rake'.
+# Do not set this db to the same as development or production.
+test:
+  adapter: mysql
+  encoding: utf8
+  database: bibapp_test
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+production:
+  adapter: mysql
+  encoding: utf8
+  database: bibapp_production
+  username: root
+  password: 
+  socket: /tmp/mysql.sock
+
+############################################################### 
+# PostgreSQL is also an option!  Version 8.x is recommended, 
+# but 7.4 and above *should* work.
+# 
+# Install the PostgreSQL driver:
+#   gem install postgres -- --with-pgsql-dir=/path/to/pgsql
+#
+postgresql_example:
+  adapter: postgresql
+  encoding: utf8
+  database: bibapp_development
+  username: root
+  password:
+  
+  # NOTE: There is no 'socket:' option for PostgreSQL.
+  # So comment it out in MySQL examples above!
+  
+  # Connect on a TCP socket.  Omitted by default since the client uses a
+  # domain socket that doesn't need configuration.
+  #host: remote-database
+  #port: 5432
+
+  # Minimum log levels, in increasing order:
+  #   debug5, debug4, debug3, debug2, debug1,
+  #   info, notice, warning, error, log, fatal, or panic
+  # The server defaults to notice.
+  #min_messages: warning
+
+  

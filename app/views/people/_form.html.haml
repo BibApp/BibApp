@@ -1,0 +1,41 @@
+%fieldset#personal_info
+  %legend="Personal Info"
+  - form_for @person do |form|
+    %div
+      = submit_tag "Save", :disable_with => "Saving...", :class=>"button positive"
+      = submit_tag "Cancel", :name => "cancel", :class =>"button negative"
+    %div.span-10
+      %div
+        %label="University ID*"
+        = form.text_field :uid
+        = error_for "person", "uid"
+      %div
+        %label="First Name"
+        = form.text_field :first_name
+      %div
+        %label="Middle Name"
+        = form.text_field :middle_name
+      %div
+        %label="Last Name"
+        = form.text_field :last_name
+      %div
+        %label="Suffix"
+        = form.text_field :suffix
+      %div
+        %label="Display Name"
+        = form.text_field :display_name
+      %div
+        %label="Email"
+        = form.text_field :email
+      %div
+        %label="IM"
+        = form.text_field :im
+      %div
+        %label="Phone"
+        = form.text_field :phone
+      %div
+        %label="Postal Address"
+        = form.text_area :postal_address, :class => "smallbox"
+    %div
+      %label.lar="Research Focus"
+      = form.text_area :research_focus

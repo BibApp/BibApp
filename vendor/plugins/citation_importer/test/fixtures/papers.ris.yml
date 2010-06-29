@@ -1,0 +1,260 @@
+--- 
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :m1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CHI '07 extended abstracts on Human factors in computing systems
+    :y2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Apr 28-May 3 2007
+    :t1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "HCI and new media arts: Methodology and evaluation"
+    :cy: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: San Jose, CA
+    :ep: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2816"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Hamilton,Kevin
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Bailey,Brian P.
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595936424"
+    :ab: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Successful collaborations between New Media Arts and HCI tend to develop hybrid techniques that promote balanced contributions from both disciplines. However, since many of these collaborations are one-off or highly dependent on the researchers/artists involved, systematic discussions of the role and impact of the various evaluation techniques and methodologies are missing. This workshop is aimed at practitioners from both HCI and the Arts as a venue to discuss the contribution that one another's techniques have made to their own practice, evaluate critical issues in HCI/New Media Collaboration, and examine ways that existing approaches can be extended for a deeper role in practice, design, and research.
+    :kw: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Evaluation methods
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Aesthetic inquiry
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New Media Collaboration
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1127"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2813"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        TY  - CONF
+        ID  - 1127
+        A1  - Adamczyk,Piotr D.
+        A1  - Hamilton,Kevin
+        A1  - Twidale,Michael B.
+        A1  - Bailey,Brian P.
+        T1  - HCI and new media arts: Methodology and evaluation
+        Y1  - 2007
+        Y2  - Apr 28-May 3 2007
+        SP  - 2813
+        EP  - 2816
+        KW  - Creativity support tools
+        KW  - Evaluation methods
+        KW  - Aesthetic inquiry
+        KW  - New Media Collaboration
+        AB  - Successful collaborations between New Media Arts and HCI tend to develop hybrid techniques that promote balanced contributions from both disciplines. However, since many of these collaborations are one-off or highly dependent on the researchers/artists involved, systematic discussions of the role and impact of the various evaluation techniques and methodologies are missing. This workshop is aimed at practitioners from both HCI and the Arts as a venue to discuss the contribution that one another's techniques have made to their own practice, evaluate critical issues in HCI/New Media Collaboration, and examine ways that existing approaches can be extended for a deeper role in practice, design, and research.
+        T2  - CHI '07 extended abstracts on Human factors in computing systems
+        VL  - San Jose, CA
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595936424
+        M1  - Conference Proceedings
+
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :m1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "Proceedings of the 6th Conference on Creativity and Cognition, CC2007 - Seeding Creativity: Tools, Media, and Environments"
+    :y2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: 13-15 Jun 2007
+    :t1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Tools in support of creative collaboration
+    :cy: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Washington, DC
+    :ep: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "274"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Hamilton,Kevin
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Bailey,Brian P.
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595937129"
+    :ab: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools are set an especially difficult task when they are applied to art/science collaboration. Not because of any fundamental incompatibility between the disciplines, but because creativity support tools are rarely supple enough to manage dramatically shifting requirements at various stages of design or handle the diversity of artifacts that might be generated. Traditional methods of evaluation of collaborative support tools may not address these aspects. This workshop aims to examine three specific areas open to expanded modes of evaluation; the social aspects of tools and tool use, how artifacts are created and manipulated in support tools, and how the expanding contexts of art/science collaborations may be rapidly changing support tool requirements.
+    :kw: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Creativity support tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Multidisciplinary collaboration
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1136"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "273"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        
+        
+        TY  - CONF
+        ID  - 1136
+        A1  - Adamczyk,Piotr D.
+        A1  - Hamilton,Kevin
+        A1  - Twidale,Michael B.
+        A1  - Bailey,Brian P.
+        T1  - Tools in support of creative collaboration
+        Y1  - 2007
+        Y2  - 13-15 Jun 2007
+        SP  - 273
+        EP  - 274
+        KW  - Creativity support tools
+        KW  - Multidisciplinary collaboration
+        AB  - Creativity support tools are set an especially difficult task when they are applied to art/science collaboration. Not because of any fundamental incompatibility between the disciplines, but because creativity support tools are rarely supple enough to manage dramatically shifting requirements at various stages of design or handle the diversity of artifacts that might be generated. Traditional methods of evaluation of collaborative support tools may not address these aspects. This workshop aims to examine three specific areas open to expanded modes of evaluation; the social aspects of tools and tool use, how artifacts are created and manipulated in support tools, and how the expanding contexts of art/science collaborations may be rapidly changing support tool requirements.
+        T2  - Proceedings of the 6th Conference on Creativity and Cognition, CC2007 - Seeding Creativity: Tools, Media, and Environments
+        VL  - Washington, DC
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595937129
+        M1  - Conference Proceedings
+
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :m1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Conference Proceedings
+    :t2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CHI '07 extended abstracts on Human factors in computing systems
+    :y2: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Apr 28-May 3 2007
+    :t1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "Supporting multidisciplinary collaboration: Requirements from novel HCI education"
+    :cy: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: New York, NY
+    :pb: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Association for Computing Machinery
+    :vl: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: San Jose, CA
+    :ep: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1076"
+    :a1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Adamczyk,Piotr D.
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Twidale,Michael B.
+    :sn: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1595935932"
+    :ab: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Many collaborative design tools may suffer from being too generic to address the specific complexities inherent in multidisciplinary collaboration. We provide accounts of several multidisciplinary HCI courses at our institution, elaborating on the challenges student teams face when integrating design practice from a wide variety of disciplines. Of particular interest are the distinct approaches that these multidisciplinary teams adopt that differ from more common forms of collaborative design. We suggest reasons for the poor rate of adoption of existing collaborative support tools and outline specific suggestions for directions in both ethnographic studies of multidisciplinary collaboration and collaborative systems design.
+    :kw: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Design education
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Design tools
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Low fidelity prototyping
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Multidisciplinary collaboration
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: Social bookmarking
+    :ty: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: CONF
+    :id: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1123"
+    :sp: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "1073"
+    :y1: 
+    - !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: "2007"
+    :original_data: !ruby/object:ActiveSupport::Multibyte::Chars 
+      wrapped_string: |
+        
+        
+        TY  - CONF
+        ID  - 1123
+        A1  - Adamczyk,Piotr D.
+        A1  - Twidale,Michael B.
+        T1  - Supporting multidisciplinary collaboration: Requirements from novel HCI education
+        Y1  - 2007
+        Y2  - Apr 28-May 3 2007
+        SP  - 1073
+        EP  - 1076
+        KW  - Design education
+        KW  - Design tools
+        KW  - Low fidelity prototyping
+        KW  - Multidisciplinary collaboration
+        KW  - Social bookmarking
+        AB  - Many collaborative design tools may suffer from being too generic to address the specific complexities inherent in multidisciplinary collaboration. We provide accounts of several multidisciplinary HCI courses at our institution, elaborating on the challenges student teams face when integrating design practice from a wide variety of disciplines. Of particular interest are the distinct approaches that these multidisciplinary teams adopt that differ from more common forms of collaborative design. We suggest reasons for the poor rate of adoption of existing collaborative support tools and outline specific suggestions for directions in both ethnographic studies of multidisciplinary collaboration and collaborative systems design.
+        T2  - CHI '07 extended abstracts on Human factors in computing systems
+        VL  - San Jose, CA
+        PB  - Association for Computing Machinery
+        CY  - New York, NY
+        SN  - 1595935932
+        M1  - Conference Proceedings
+

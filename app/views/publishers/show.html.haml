@@ -1,0 +1,56 @@
+/ === Publishers === Show ===
+/ Main
+- if !@export.empty?
+  %div.span-24
+    %div.span-22.prepend-1
+      %h2 Works
+      = @works
+
+- else
+  - if logged_in? && current_user.has_role?("editor", @name_string)
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
+        %ul#edit-actions
+          %li=link_to "Edit this publisher", edit_publisher_path(@publisher)
+
+  %div.span-24
+
+    %div.span-22.prepend-1
+      %h2= @publisher.name
+
+      / People
+      = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
+
+      / Groups
+      = render :partial => "shared/groups", :locals => {:count => 10}
+
+      %div#results.span-22
+      
+        / Search Within
+        %div.span-5
+          %div.left_box{:style => "padding-bottom:1.25em"}
+            %div.box_heading Search Within
+            - form_tag publisher_path, :method => :get, :style => "padding-left:0.5em" do
+              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = submit_tag 'Go'
+
+          / Facets
+          = render :partial => "shared/facets"
+
+        / Works 
+        = render :partial => "shared/works"
+  
+      / Authority
+      %div#authority.span-22
+        - if @publisher.authority_for.size > 0
+          %h4
+            =@publisher.name
+            &ndash; authorized name for:
+          %ul.authority-children
+            -# @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
+            - @publisher.authority_for.uniq.each do |auth|
+              %li= link_to auth.name, publisher_path(auth.id)
+        - else
+          %h3 Authorized Title
+          %p=link_to @publisher.authority.name, publisher_path(@publisher.authority)

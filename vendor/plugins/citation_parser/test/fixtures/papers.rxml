@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refworks xmlns:refworks="www.refworks.com/xml/">
+
+
+<reference>
+<rt>Conference Proceedings</rt>
+<sr> Print(0)</sr>
+<id>1127</id>
+<a1>Adamczyk,Piotr D.</a1>
+<a1>Hamilton,Kevin</a1>
+<a1>Twidale,Michael B.</a1>
+<a1>Bailey,Brian P.</a1>
+<t1>HCI and new media arts: Methodology and evaluation</t1>
+<yr>2007</yr>
+<fd>Apr 28-May 3 2007</fd>
+<sp>2813</sp>
+<op>2816</op>
+<k1>Creativity support tools</k1>
+<k1>Evaluation methods</k1>
+<k1>Aesthetic inquiry</k1>
+<k1>New Media Collaboration</k1>
+<ab>Successful collaborations between New Media Arts and HCI tend to develop hybrid techniques that promote balanced contributions from both disciplines. However, since many of these collaborations are one-off or highly dependent on the researchers/artists involved, systematic discussions of the role and impact of the various evaluation techniques and methodologies are missing. This workshop is aimed at practitioners from both HCI and the Arts as a venue to discuss the contribution that one another&amp;#39;s techniques have made to their own practice, evaluate critical issues in HCI/New Media Collaboration, and examine ways that existing approaches can be extended for a deeper role in practice, design, and research.</ab>
+<t2>CHI &amp;#39;07 extended abstracts on Human factors in computing systems</t2>
+<ed>San Jose, CA</ed>
+<pb>Association for Computing Machinery</pb>
+<pp>New York, NY</pp>
+<sn>1595936424</sn>
+<do>10.1145/1240866.1241084</do>
+<ol>Unknown(0)</ol></reference>
+<reference>
+<rt>Conference Proceedings</rt>
+<sr> Print(0)</sr>
+<id>1136</id>
+<a1>Adamczyk,Piotr D.</a1>
+<a1>Hamilton,Kevin</a1>
+<a1>Twidale,Michael B.</a1>
+<a1>Bailey,Brian P.</a1>
+<t1>Tools in support of creative collaboration</t1>
+<yr>2007</yr>
+<fd>13-15 Jun 2007</fd>
+<sp>273</sp>
+<op>274</op>
+<k1>Creativity support tools</k1>
+<k1>Multidisciplinary collaboration</k1>
+<ab>Creativity support tools are set an especially difficult task when they are applied to art/science collaboration. Not because of any fundamental incompatibility between the disciplines, but because creativity support tools are rarely supple enough to manage dramatically shifting requirements at various stages of design or handle the diversity of artifacts that might be generated. Traditional methods of evaluation of collaborative support tools may not address these aspects. This workshop aims to examine three specific areas open to expanded modes of evaluation; the social aspects of tools and tool use, how artifacts are created and manipulated in support tools, and how the expanding contexts of art/science collaborations may be rapidly changing support tool requirements.</ab>
+<t2>Proceedings of the 6th Conference on Creativity and Cognition, CC2007 - Seeding Creativity: Tools, Media, and Environments</t2>
+<ed>Washington, DC</ed>
+<pb>Association for Computing Machinery</pb>
+<pp>New York, NY</pp>
+<sn>1595937129</sn>
+<do>10.1145/1254960.1255010</do>
+<ol>Unknown(0)</ol></reference>
+<reference>
+<rt>Conference Proceedings</rt>
+<sr> Print(0)</sr>
+<id>1123</id>
+<a1>Adamczyk,Piotr D.</a1>
+<a1>Twidale,Michael B.</a1>
+<t1>Supporting multidisciplinary collaboration: Requirements from novel HCI education</t1>
+<yr>2007</yr>
+<fd>Apr 28-May 3 2007</fd>
+<sp>1073</sp>
+<op>1076</op>
+<k1>Design education</k1>
+<k1>Design tools</k1>
+<k1>Low fidelity prototyping</k1>
+<k1>Multidisciplinary collaboration</k1>
+<k1>Social bookmarking</k1>
+<ab>Many collaborative design tools may suffer from being too generic to address the specific complexities inherent in multidisciplinary collaboration. We provide accounts of several multidisciplinary HCI courses at our institution, elaborating on the challenges student teams face when integrating design practice from a wide variety of disciplines. Of particular interest are the distinct approaches that these multidisciplinary teams adopt that differ from more common forms of collaborative design. We suggest reasons for the poor rate of adoption of existing collaborative support tools and outline specific suggestions for directions in both ethnographic studies of multidisciplinary collaboration and collaborative systems design.</ab>
+<t2>CHI &amp;#39;07 extended abstracts on Human factors in computing systems</t2>
+<ed>San Jose, CA</ed>
+<pb>Association for Computing Machinery</pb>
+<pp>New York, NY</pp>
+<sn>1595935932</sn>
+<do>10.1145/1240624.1240787</do>
+<ol>Unknown(0)</ol></reference></refworks>

@@ -1,0 +1,9 @@
+%ol#alpha-nav.pagination
+  - path ||= nil
+  - ('A'..'Z').each do |letter|
+    - current = false
+    - if letter == @page
+      - current = true
+      = letter_link_for(@a_to_z, letter, current, :path => path)
+    - else
+      = letter_link_for(@a_to_z, letter, current, :path => path)

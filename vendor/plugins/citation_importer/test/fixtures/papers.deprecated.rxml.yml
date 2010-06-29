@@ -1,0 +1,1857 @@
+--- 
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "40"
+    :abstract: 
+    - "This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats. &#x26;copy; 2004 Published by Elsevier B.V."
+    :issue: 
+    - 3-4 SPEC ISS
+    :pub_year: 
+    - "2005"
+    :keyword: 
+    - Electric power systems
+    - Marketing
+    - Costs
+    - Control systems
+    - Decision support systems
+    - Stability
+    :user_2: 
+    - Real time pricing
+    - Congestion management
+    - Optimal power flow
+    - OPF
+    - RTP
+    :start_page: 
+    - "495"
+    :title_primary: 
+    - Controlling power systems with price signals
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0167-9236
+    :other_pages: 
+    - "504"
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"Real time pricing; Congestion management; Optimal power flow; OPF; RTP\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"Decis.Support Syst.\" AuthorPrimary=\"Alvarado,Fernando L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:05\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats. &#x26;copy; 2004 Published by Elsevier B.V.\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"http://dx.doi.org/10.1016/j.dss.2004.05.012\" PlaceOfPublication=\"\" Issue=\"3-4 SPEC ISS\" TitlePrimary=\"Controlling power systems with price signals\" UserRefID=\"67\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2005\" DataSource=\"\" PubDateFreeForm=\"\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"\" RefType=\"1\" InternalRefID=\"1\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"40\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0167-9236\" OtherPages=\"504\" Keyword=\"Electric power systems|Marketing|Costs|Control systems|Decision support systems|Stability\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:54\" User1=\"05399386576\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"ECE Department, University of Wisconsin, Madison, WI 53706, United States\" Publisher=\"Elsevier, Amsterdam, 1000 AE, Netherlands\" StartPage=\"495\" PeriodicalFull=\"Decision Support Systems\" TitleTertiary=\"\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - ECE Department, University of Wisconsin, Madison, WI 53706, United States
+    :periodical_full: 
+    - Decision Support Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1016/j.dss.2004.05.012
+    :user_1: 
+    - 05399386576
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - Decis.Support Syst.
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Elsevier, Amsterdam, 1000 AE, Netherlands
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Ames, IA, United States
+    :abstract: 
+    - The power system and the real-time market operation are closely coupled with the future market positions taken by market participants. Assessing the stability of the real-time market is critical because an unstable market will be characterized not only by fluctuating prices that do not settle to constant values, but more worrisome, it could create the possibility of inducing slow electromechanical oscillations if left unchecked. We study the relation between the real-time market, potential market power exercise and the stability of equilibrium. We conclude that the role of futures markets on the real time market is closely related with market power mitigation and risk hedging. The stability of the clearing prices and generator output is not directly tied to future market positions taken by market participants. We finally conclude that market power potential has a significant impact on the stability of the market, raising a new tradeoff between market efficiency and market dynamics.
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - Electric rates
+    - Electricity
+    - Electric industry
+    - Marketing
+    - Costs
+    - Decision making
+    - Computer simulation
+    - Customer satisfaction
+    - Probability distributions
+    - Mathematical models
+    :user_2: 
+    - Pricing
+    - Market design
+    - Power market
+    - Dynamic stability
+    - Market dynamics
+    - Electro mechanical dynamics
+    :start_page: 
+    - "20"
+    :title_primary: 
+    - Futures market impacts on electricity prices
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0976131919
+    :other_pages: 
+    - "25"
+    :title_secondary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004
+    :original_data: <z:row WebsiteTitle="" User2="Pricing; Market design; Power market; Dynamic stability; Market dynamics; Electro mechanical dynamics" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Watts,David|Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:05" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The power system and the real-time market operation are closely coupled with the future market positions taken by market participants. Assessing the stability of the real-time market is critical because an unstable market will be characterized not only by fluctuating prices that do not settle to constant values, but more worrisome, it could create the possibility of inducing slow electromechanical oscillations if left unchecked. We study the relation between the real-time market, potential market power exercise and the stability of equilibrium. We conclude that the role of futures markets on the real time market is closely related with market power mitigation and risk hedging. The stability of the clearing prices and generator output is not directly tied to future market positions taken by market participants. We finally conclude that market power potential has a significant impact on the stability of the market, raising a new tradeoff between market efficiency and market dynamics." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Ames, IA, United States" Issue="" TitlePrimary="Futures market impacts on electricity prices" UserRefID="68" URL="" TextAttributes="" RetrievedDate="" PubYear="2004" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004" RefType="5" InternalRefID="2" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0976131919" OtherPages="25" Keyword="Electric rates|Electricity|Electric industry|Marketing|Costs|Decision making|Computer simulation|Customer satisfaction|Probability distributions|Mathematical models" AuthorSecondary="" LastModified="2006-08-21T07:29:55" User1="05108877235" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="University of Wisconsin Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States" StartPage="20" PeriodicalFull="" TitleTertiary="2004 International Conference on Probabilistic Methods Applied to Power Systems"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - University of Wisconsin Madison, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems
+    :user_1: 
+    - 05108877235
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Watts,David
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Ames, IA, United States
+    :abstract: 
+    - "Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a non-competitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions."
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - Electricity
+    - Uncertain systems
+    - Marketing
+    - Competition
+    - Electric power transmission
+    - Probability
+    - Electric generators
+    - Decision making
+    :user_2: 
+    - Market power
+    - Power system economics
+    - Market prices
+    - Generator capacity
+    :start_page: 
+    - "433"
+    :title_primary: 
+    - The impact of uncertainty on incentives to collude in electricity markets
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0976131919
+    :other_pages: 
+    - "438"
+    :title_secondary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"Market power; Power system economics; Market prices; Generator capacity\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Cain,Mary B.|Alvarado,Fernando L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:05\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a non-competitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions.\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Ames, IA, United States\" Issue=\"\" TitlePrimary=\"The impact of uncertainty on incentives to collude in electricity markets\" UserRefID=\"69\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2004\" DataSource=\"\" PubDateFreeForm=\"\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"2004 International Conference on Probabilistic Methods Applied to Power Systems, Sep 12-16 2004\" RefType=\"5\" InternalRefID=\"3\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0976131919\" OtherPages=\"438\" Keyword=\"Electricity|Uncertain systems|Marketing|Competition|Electric power transmission|Probability|Electric generators|Decision making\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:55\" User1=\"05108877304\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States\" Publisher=\"Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States\" StartPage=\"433\" PeriodicalFull=\"\" TitleTertiary=\"2004 International Conference on Probabilistic Methods Applied to Power Systems\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems
+    :user_1: 
+    - 05108877304
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Cain,Mary B.
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Ames, IA, USA
+    :abstract: 
+    - "Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a noncompetitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions"
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - power generation economics
+    - power markets
+    - pricing
+    :user_2: 
+    - uncertainty
+    - incentives
+    - electricity markets
+    - physics
+    - generators
+    - tacit collusion
+    - competitive bid
+    - noncompetitive bid
+    - threshold levels
+    - uniform price
+    - discriminatory price auctions
+    - power system economics
+    :start_page: 
+    - "433"
+    :title_primary: 
+    - The impact of uncertainty on incentives to collude in electricity markets
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 9761319 1 9
+    :other_pages: 
+    - "8"
+    :title_secondary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems, 12-16 Sept. 2004
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"uncertainty; incentives; electricity markets; physics; generators; tacit collusion; competitive bid; noncompetitive bid; threshold levels; uniform price; discriminatory price auctions; power system economics\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Cain,M.B.|Alvarado,F.L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:05\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"Market power in any market can result in higher prices than in a truly competitive market. Electricity markets pose unique problems to detection of market power due to the properties of electricity: it cannot be stored, which implies that the amount of energy supplied must always equal the amount demanded, and it must obey the laws of physics. A group of generators may exercise market power through tacit collusion, all raising prices together without communicating their intentions. Generators will use their expectations of market conditions to choose a competitive (low) bid, or a noncompetitive (high) bid. We use expected residual demand to describe market conditions, and calculate threshold levels where a generator would decide to change from low to high bid. We examine the effects of uncertainty in load and competitor behavior on collusion decisions in both uniform price and discriminatory price auctions\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Ames, IA, USA\" Issue=\"\" TitlePrimary=\"The impact of uncertainty on incentives to collude in electricity markets\" UserRefID=\"70\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2004\" DataSource=\"\" PubDateFreeForm=\"/\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"2004 International Conference on Probabilistic Methods Applied to Power Systems, 12-16 Sept. 2004\" RefType=\"5\" InternalRefID=\"4\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0 9761319 1 9\" OtherPages=\"8\" Keyword=\"power generation economics|power markets|pricing\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:55\" User1=\"8331625\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA\" Publisher=\"IEEE\" StartPage=\"433\" PeriodicalFull=\"\" TitleTertiary=\"2004 International Conference on Probabilistic Methods Applied to Power Systems (IEEE Cat. No.04EX853)\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2004 International Conference on Probabilistic Methods Applied to Power Systems (IEEE Cat. No.04EX853)
+    :user_1: 
+    - "8331625"
+    :author_primary: 
+    - Cain,M.B.
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Halifax, NS, United States
+    :abstract: 
+    - One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent costs and bids. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators will bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions are particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios.
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - Electric industry
+    - Industrial economics
+    - Electricity
+    - Marketing
+    - Costs
+    - Quadratic programming
+    - Piecewise linear techniques
+    - Electric generators
+    - Electric transformers
+    - Graph theory
+    :user_2: 
+    - Power system economics
+    - Pricing
+    - Market design
+    - Marginal costs
+    :start_page: 
+    - "2"
+    :title_primary: 
+    - "Implications of cost and bid format on electricity market studies: Linear versus quadratic costs"
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0780383869
+    :other_pages: 
+    - "6"
+    :title_secondary: 
+    - "2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow, Jul 28-30 2004"
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"Power system economics; Pricing; Market design; Marginal costs\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Cain,Mary B.|Alvarado,Fernando L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:05\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent costs and bids. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators will bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions are particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios.\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Halifax, NS, United States\" Issue=\"\" TitlePrimary=\"Implications of cost and bid format on electricity market studies: Linear versus quadratic costs\" UserRefID=\"71\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2004\" DataSource=\"\" PubDateFreeForm=\"\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow, Jul 28-30 2004\" RefType=\"5\" InternalRefID=\"5\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0780383869\" OtherPages=\"6\" Keyword=\"Electric industry|Industrial economics|Electricity|Marketing|Costs|Quadratic programming|Piecewise linear techniques|Electric generators|Electric transformers|Graph theory\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:55\" User1=\"05108874542\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States\" Publisher=\"Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States\" StartPage=\"2\" PeriodicalFull=\"\" TitleTertiary=\"2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - "2004 Large Engineering Systems Conference on Power Engineering - Conference Proceedings; Theme: Energy for the Day After Tomorrow"
+    :user_1: 
+    - 05108874542
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Cain,Mary B.
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc., New York, NY 10016-5997, United States
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Halifax, NS, Canada
+    :abstract: 
+    - One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent cost and bid. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions arc particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - costing
+    - piecewise linear techniques
+    - power markets
+    - power system economics
+    :user_2: 
+    - bid format
+    - electricity market studies
+    - quadratic costs
+    - linear costs
+    - economic theory
+    - piecewise linear bid curves
+    - electricity generators
+    - quadratic bid curves
+    - calculus-based analysis
+    - profit calculations
+    :start_page: 
+    - "2"
+    :title_primary: 
+    - "Implications of cost and bid format on electricity market studies: linear versus quadratic costs"
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7803 8386 9
+    :other_pages: 
+    - "6"
+    :title_secondary: 
+    - 2004 Large Engineering Systems Conference on Power Engineering, 28-30 July 2004
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"bid format; electricity market studies; quadratic costs; linear costs; economic theory; piecewise linear bid curves; electricity generators; quadratic bid curves; calculus-based analysis; profit calculations\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Cain,M.B.|Alvarado,F.L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:05\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"One important assumption in a model of an electricity market is the format of bids and costs. Most literature on electricity markets uses piecewise linear or quadratic functions to represent cost and bid. Economic theory holds that a firm in a perfectly competitive market maximizes its profit when it sells at marginal cost. This implies that profit-maximizing generators bid at marginal cost. Different markets have varying rules regarding bid formats. Piecewise linear bid curves are compatible with physical characteristics of electricity generators, but cause difficulties in certain analysis techniques. Quadratic bid curves provide smooth dispatch, revenue, and profit curves that facilitate calculus-based analysis. In profit calculations, bids and marginal costs may either be coupled or independent of each other. The relation between bids and marginal costs impacts the profit-maximizing bid, and thus impacts generator strategies. These assumptions arc particularly important for marginal generators, since different bid structures may yield different dispatch results, especially if the system is constrained. We compare markets with all piecewise linear bids, all quadratic bids, and a mixture of bids, and study the impacts of bid format and profit calculation on market outcomes in different scenarios\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Halifax, NS, Canada\" Issue=\"\" TitlePrimary=\"Implications of cost and bid format on electricity market studies: linear versus quadratic costs\" UserRefID=\"72\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2004\" DataSource=\"\" PubDateFreeForm=\"/\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"2004 Large Engineering Systems Conference on Power Engineering, 28-30 July 2004\" RefType=\"5\" InternalRefID=\"6\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0 7803 8386 9\" OtherPages=\"6\" Keyword=\"costing|piecewise linear techniques|power markets|power system economics\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:55\" User1=\"8169790\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA\" Publisher=\"IEEE\" StartPage=\"2\" PeriodicalFull=\"\" TitleTertiary=\"2004 Large Engineering Systems Conference on Power Engineering (IEEE Cat. No.04EX819)\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2004 Large Engineering Systems Conference on Power Engineering (IEEE Cat. No.04EX819)
+    :user_1: 
+    - "8169790"
+    :author_primary: 
+    - Cain,M.B.
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "26"
+    :abstract: 
+    - In bulk electric power transfer capability computations, the transmission reliability margin accounts for uncertainties related to the transmission system conditions, contingencies, and parameter values. We propose a formula which quantifies transmission reliability margin based on transfer capability sensitivities and a probabilistic characterization of the various uncertainties. The formula is verified by comparison with results from two systems small enough to permit accurate Monte Carlo simulations. The formula contributes to more accurate and defensible transfer capability calculations. &#x26;copy; 2004 Elsevier Ltd. All rights reserved.
+    :issue: 
+    - "9"
+    :pub_year: 
+    - "2004"
+    :keyword: 
+    - Electric power transmission
+    - Electric power systems
+    - Uncertain systems
+    - Reliability theory
+    - Probability
+    - Monte Carlo methods
+    - Computer simulation
+    :user_2: 
+    - Transfer capability
+    - Uncertainty
+    - Power transmission reliability
+    - Power system models
+    :start_page: 
+    - "697"
+    :title_primary: 
+    - Quantifying transmission reliability margin
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0142-0615
+    :other_pages: 
+    - "702"
+    :original_data: <z:row WebsiteTitle="" User2="Transfer capability; Uncertainty; Power transmission reliability; Power system models" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="Int J Electr Power Energy Syst" AuthorPrimary="Zhang,Jianfeng|Dobson,Ian|Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="In bulk electric power transfer capability computations, the transmission reliability margin accounts for uncertainties related to the transmission system conditions, contingencies, and parameter values. We propose a formula which quantifies transmission reliability margin based on transfer capability sensitivities and a probabilistic characterization of the various uncertainties. The formula is verified by comparison with results from two systems small enough to permit accurate Monte Carlo simulations. The formula contributes to more accurate and defensible transfer capability calculations. &#x26;copy; 2004 Elsevier Ltd. All rights reserved." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1016/j.ijepes.2004.05.002" PlaceOfPublication="" Issue="9" TitlePrimary="Quantifying transmission reliability margin" UserRefID="73" URL="" TextAttributes="" RetrievedDate="" PubYear="2004" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="7" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="26" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0142-0615" OtherPages="702" Keyword="Electric power transmission|Electric power systems|Uncertain systems|Reliability theory|Probability|Monte Carlo methods|Computer simulation" AuthorSecondary="" LastModified="2006-08-21T07:29:55" User1="04358327498" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States" Publisher="Elsevier Ltd, Oxford, United Kingdom" StartPage="697" PeriodicalFull="International Journal of Electrical Power and Energy System" TitleTertiary=""></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Department of Electrical Engineering, University of Wisconsin, Madison, WI 53706, United States
+    :periodical_full: 
+    - International Journal of Electrical Power and Energy System
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1016/j.ijepes.2004.05.002
+    :user_1: 
+    - 04358327498
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - Int J Electr Power Energy Syst
+    :author_primary: 
+    - Zhang,Jianfeng
+    - Dobson,Ian
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Elsevier Ltd, Oxford, United Kingdom
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Big Island, HI, USA
+    :abstract: 
+    - "This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power, and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats"
+    :pub_year: 
+    - "2003"
+    :keyword: 
+    - load regulation
+    - power markets
+    - power system control
+    - power system economics
+    :user_2: 
+    - price feasibility
+    - power system control
+    - price signals
+    - linear cost structures
+    - response delays
+    - varying costs
+    - market power
+    - stability problems
+    - market interactions
+    - system interactions
+    :start_page: 
+    - "6"
+    :title_primary: 
+    - Is system control entirely by price feasible?
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 36th Hawaii International Conference on Systems Sciences, 6-9 Jan. 2003
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"price feasibility; power system control; price signals; linear cost structures; response delays; varying costs; market power; stability problems; market interactions; system interactions\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Alvarado,F.L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:06\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"This paper revisits the possibility of controlling the power system entirely by means of price signals. It expands on notions introduced in an earlier paper and addresses several unresolved issues: problems with linear cost structures, response delays, varying costs, market power, and stability problems caused by market/system interactions. The results suggest that control by price can, in fact, be made to work with some caveats\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Big Island, HI, USA\" Issue=\"\" TitlePrimary=\"Is system control entirely by price feasible?\" UserRefID=\"74\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2003\" DataSource=\"\" PubDateFreeForm=\"/\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"36th Hawaii International Conference on Systems Sciences, 6-9 Jan. 2003\" RefType=\"5\" InternalRefID=\"8\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"\" OtherPages=\"\" Keyword=\"load regulation|power markets|power system control|power system economics\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:56\" User1=\"8150266\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Wisconsin-Madison Univ., Madison, WI, USA\" Publisher=\"IEEE Comput. Soc\" StartPage=\"6\" PeriodicalFull=\"\" TitleTertiary=\"36th Hawaii International Conference on Systems Sciences\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Wisconsin-Madison Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 36th Hawaii International Conference on Systems Sciences
+    :user_1: 
+    - "8150266"
+    :author_primary: 
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE Comput. Soc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - Vol. 1
+    :place_of_publication: 
+    - Toronto, Ont., Canada
+    :abstract: 
+    - "Summary form only given. Nodal pricing and flowgate pricing are fundamentally two ways of mapping the same effective quantity: the value of a transmission line when it is congested. This presentation argues for the merits of nodal pricing over flowgate pricing on the grounds of how the risk of system changes affects the various parties engaging in transactions based on nodal pricing, and further describes other advantages of nodal pricing. It also presents a number of practical examples, and shows the virtues and limitations of a hybrid system for the coexistence of both approaches, including an analysis of arbitrage opportunities that may arise if improperly done"
+    :pub_year: 
+    - "2003"
+    :keyword: 
+    - power transmission economics
+    - pricing
+    :user_2: 
+    - nodal pricing
+    - flowgate pricing
+    - transmission line
+    - hybrid system
+    :start_page: 
+    - 39 Vol. 1
+    :title_primary: 
+    - Nodal pricing versus flowgate pricing
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7803 7989 6
+    :title_secondary: 
+    - 2003 IEEE Power Engineering Society General Meeting, 13-17 July 2003
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"nodal pricing; flowgate pricing; transmission line; hybrid system\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"Also available on CD-ROM in PDF format\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Alvarado,F.L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:06\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"Summary form only given. Nodal pricing and flowgate pricing are fundamentally two ways of mapping the same effective quantity: the value of a transmission line when it is congested. This presentation argues for the merits of nodal pricing over flowgate pricing on the grounds of how the risk of system changes affects the various parties engaging in transactions based on nodal pricing, and further describes other advantages of nodal pricing. It also presents a number of practical examples, and shows the virtues and limitations of a hybrid system for the coexistence of both approaches, including an analysis of arbitrage opportunities that may arise if improperly done\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"Toronto, Ont., Canada\" Issue=\"\" TitlePrimary=\"Nodal pricing versus flowgate pricing\" UserRefID=\"75\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"2003\" DataSource=\"\" PubDateFreeForm=\"/\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"2003 IEEE Power Engineering Society General Meeting, 13-17 July 2003\" RefType=\"5\" InternalRefID=\"9\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"Vol. 1\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0 7803 7989 6\" OtherPages=\"\" Keyword=\"power transmission economics|pricing\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:56\" User1=\"7978966\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA\" Publisher=\"IEEE\" StartPage=\"39 Vol. 1\" PeriodicalFull=\"\" TitleTertiary=\"2003 IEEE Power Engineering Society General Meeting (IEEE Cat. No.03CH37491)\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2003 IEEE Power Engineering Society General Meeting (IEEE Cat. No.03CH37491)
+    :user_1: 
+    - "7978966"
+    :notes: 
+    - Also available on CD-ROM in PDF format
+    :author_primary: 
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "18"
+    :abstract: 
+    - This paper compares methods for converting system limits into market signals. One classification of methods is according to reliability driven (TLR and similar) versus market driven (LMP and similar) methods. A second classification is according to direct versus indirect methods. Direct methods deal with individual limits and constraints. Indirect methods include various ways of converting one type of limit to another, equivalent limit for purposes of making the handling of the limit more expeditious. An example of an indirect method is the conversion of a voltage limit to either a flow limit or an interface limit. Another example is the use of flow limits on interfaces as surrogates for stability limits. These transformed limits are often represented by nomograms. Conversion of one type of limit to another and the construction of nomograms has the advantage of reducing the problem of imposing system limits within a market context to a &#x22;previously solved&#x22; market problem. If a market already has learned how to cope with an import limit into a load pocket, conversion of a voltage limit into a load pocket import limit makes it easy for a market to react and respond to the condition. However, any conversion from one type of limit to another entails an approximation. This paper discusses the nature of some of these approximations.
+    :issue: 
+    - "2"
+    :pub_year: 
+    - "2003"
+    :keyword: 
+    - Electric power systems
+    - Electric power transmission
+    - Electric power distribution
+    - Marketing
+    - Deregulation
+    :user_2: 
+    - Available transfer capability
+    - Locational marginal pricing
+    - Stability limits
+    - Transfer limits
+    - Transmission limits
+    - Voltage limits
+    :start_page: 
+    - "422"
+    :title_primary: 
+    - Converting system limits to market signals
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0885-8950
+    :other_pages: 
+    - "427"
+    :original_data: <z:row WebsiteTitle="" User2="Available transfer capability; Locational marginal pricing; Stability limits; Transfer limits; Transmission limits; Voltage limits" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="IEEE Trans.Power Syst." AuthorPrimary="Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="This paper compares methods for converting system limits into market signals. One classification of methods is according to reliability driven (TLR and similar) versus market driven (LMP and similar) methods. A second classification is according to direct versus indirect methods. Direct methods deal with individual limits and constraints. Indirect methods include various ways of converting one type of limit to another, equivalent limit for purposes of making the handling of the limit more expeditious. An example of an indirect method is the conversion of a voltage limit to either a flow limit or an interface limit. Another example is the use of flow limits on interfaces as surrogates for stability limits. These transformed limits are often represented by nomograms. Conversion of one type of limit to another and the construction of nomograms has the advantage of reducing the problem of imposing system limits within a market context to a &#x22;previously solved&#x22; market problem. If a market already has learned how to cope with an import limit into a load pocket, conversion of a voltage limit into a load pocket import limit makes it easy for a market to react and respond to the condition. However, any conversion from one type of limit to another entails an approximation. This paper discusses the nature of some of these approximations." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/TPWRS.2003.810669" PlaceOfPublication="" Issue="2" TitlePrimary="Converting system limits to market signals" UserRefID="76" URL="" TextAttributes="" RetrievedDate="" PubYear="2003" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="10" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="18" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0885-8950" OtherPages="427" Keyword="Electric power systems|Electric power transmission|Electric power distribution|Marketing|Deregulation" AuthorSecondary="" LastModified="2006-08-21T07:29:56" User1="03267515869" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="University of Wisconsin, Christensen Associates, Madison, WI 53705, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="422" PeriodicalFull="IEEE Transactions on Power Systems" TitleTertiary=""></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - University of Wisconsin, Christensen Associates, Madison, WI 53705, United States
+    :periodical_full: 
+    - IEEE Transactions on Power Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1109/TPWRS.2003.810669
+    :user_1: 
+    - 03267515869
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - IEEE Trans.Power Syst.
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "17"
+    :abstract: 
+    - Bulk power transfers in electric power systems are limited by transmission network security. Transfer capability measures the maximum power transfer permissible under certain assumptions. Once a transfer capability has been computed for one set of assumptions, it is useful to quickly estimate the effect on the transfer capability of modifying those assumptions. This paper presents a computationally efficient formula for the first order sensitivity of the transfer capability with respect to the variation of any parameters. The sensitivity formula is very fast to evaluate. The approach is consistent with the current industrial practice of using DC load flow models and significantly generalizes that practice to more detailed AC power system models that include voltage and reive power limits. The computation is illustrated and tested on a 3357 bus power system
+    :issue: 
+    - "1"
+    :pub_year: 
+    - "2002"
+    :keyword: 
+    - load flow
+    - power system analysis computing
+    - power system interconnection
+    - power system security
+    - sensitivity analysis
+    - transmission network calculations
+    :user_2: 
+    - transfer capability margins sensitivity
+    - bulk power transfers
+    - transmission network security
+    - maximum power transfer
+    - first order sensitivity
+    - parameters variation
+    - sensitivity formula
+    - DC load flow models
+    - voltage limits
+    - reactive power limits
+    - computer simulation
+    :start_page: 
+    - "34"
+    :title_primary: 
+    - Sensitivity of transfer capability margins with a fast formula
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0885-8950
+    :other_pages: 
+    - "40"
+    :original_data: <z:row WebsiteTitle="" User2="transfer capability margins sensitivity; bulk power transfers; transmission network security; maximum power transfer; first order sensitivity; parameters variation; sensitivity formula; DC load flow models; voltage limits; reactive power limits; computer simulation" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="IEEE Trans.Power Syst." AuthorPrimary="Greene,S.|Dobson,I.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Bulk power transfers in electric power systems are limited by transmission network security. Transfer capability measures the maximum power transfer permissible under certain assumptions. Once a transfer capability has been computed for one set of assumptions, it is useful to quickly estimate the effect on the transfer capability of modifying those assumptions. This paper presents a computationally efficient formula for the first order sensitivity of the transfer capability with respect to the variation of any parameters. The sensitivity formula is very fast to evaluate. The approach is consistent with the current industrial practice of using DC load flow models and significantly generalizes that practice to more detailed AC power system models that include voltage and reive power limits. The computation is illustrated and tested on a 3357 bus power system" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/59.982190" PlaceOfPublication="" Issue="1" TitlePrimary="Sensitivity of transfer capability margins with a fast formula" UserRefID="77" URL="" TextAttributes="" RetrievedDate="" PubYear="2002" DataSource="" PubDateFreeForm="02/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="11" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="17" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0885-8950" OtherPages="40" Keyword="load flow|power system analysis computing|power system interconnection|power system security|sensitivity analysis|transmission network calculations" AuthorSecondary="" LastModified="2006-08-21T07:29:56" User1="7180897" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="L. R. Christensen Associates, Madison, WI, USA" Publisher="IEEE" StartPage="34" PeriodicalFull="IEEE Transactions on Power Systems" TitleTertiary="IEEE Trans. Power Syst. (USA)"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - L. R. Christensen Associates, Madison, WI, USA
+    :periodical_full: 
+    - IEEE Transactions on Power Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1109/59.982190
+    :title_tertiary: 
+    - IEEE Trans. Power Syst. (USA)
+    :user_1: 
+    - "7180897"
+    :periodical_abbrev: 
+    - IEEE Trans.Power Syst.
+    :author_primary: 
+    - Greene,S.
+    - Dobson,I.
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - New York, NY
+    :abstract: 
+    - In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts.
+    :pub_year: 
+    - "2002"
+    :keyword: 
+    - Electric industry
+    - Electric load management
+    - Customer satisfaction
+    - Optimization
+    - Cost effectiveness
+    :user_2: 
+    - Customer demand management
+    :start_page: 
+    - "26"
+    :title_primary: 
+    - Using utility information to calibrate customer demand management behavior models
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002
+    :original_data: <z:row WebsiteTitle="" User2="Customer demand management" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Fahrioglu,Murat|Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.2002.984935" PlaceOfPublication="New York, NY" Issue="" TitlePrimary="Using utility information to calibrate customer demand management behavior models" UserRefID="78" URL="" TextAttributes="" RetrievedDate="" PubYear="2002" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002" RefType="5" InternalRefID="12" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="" Keyword="Electric industry|Electric load management|Customer satisfaction|Optimization|Cost effectiveness" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="02277002786" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electrical and Comp. Eng., University of Wisconsin - Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="26" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electrical and Comp. Eng., University of Wisconsin - Madison, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.2002.984935
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - 02277002786
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Fahrioglu,Murat
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "2"
+    :place_of_publication: 
+    - New York, NY
+    :abstract: 
+    - The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch up-dates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch.
+    :pub_year: 
+    - "2002"
+    :keyword: 
+    - Electric power system interconnection
+    - System stability
+    - Electric power distribution
+    - Electric utilities
+    - Industrial economics
+    - Electric power generation
+    - Eigenvalues and eigenfunctions
+    :user_2: 
+    - Market dynamics
+    :start_page: 
+    - "1009"
+    :title_primary: 
+    - Stability analysis of interconnected power systems coupled with market dynamics
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002
+    :original_data: <z:row WebsiteTitle="" User2="Market dynamics" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F.L.|Meng,J.|DeMarco,C.L.|Mota,W.S." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch up-dates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.2002.985160" PlaceOfPublication="New York, NY" Issue="" TitlePrimary="Stability analysis of interconnected power systems coupled with market dynamics" UserRefID="79" URL="" TextAttributes="" RetrievedDate="" PubYear="2002" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2002 IEEE Power Engineering Society Winter Meeting, Jan 27-31 2002" RefType="5" InternalRefID="13" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="2" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="" Keyword="Electric power system interconnection|System stability|Electric power distribution|Electric utilities|Industrial economics|Electric power generation|Eigenvalues and eigenfunctions" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="02277003004" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Department of Elec. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="1009" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Department of Elec. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.2002.985160
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - "02277003004"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,F.L.
+    - Meng,J.
+    - DeMarco,C.L.
+    - Mota,W.S.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Big Island, HI, USA
+    :abstract: 
+    - The definition of a service is key to the ability to meter it, measure it, regulate it, price it, or otherwise take it into consideration. Reserves (a form of power supply insurance) are key to power system operability. Traditionally, reserves have been characterized in terms of time-domain quantities, such as ramping rate capabilities and the like. Also, traditionally such measures have not considered the possibility that some of the reserve services may be energy- or otherwise time-limited. This paper illustrates how to take into consideration energy-constrained reserve services, and also how to classify and measure both the need for reserves as well as the ability to provide them in terms of frequency-domain techniques. In a sense, the use of frequency-domain quantities is more &#x22;natural&#x22; for this problem where the characterization of the speed of response is in fact quite important. The paper illustrates a number of numerical examples
+    :pub_year: 
+    - "2002"
+    :keyword: 
+    - frequency-domain analysis
+    - power supply quality
+    - power system measurement
+    - power system simulation
+    - spectral analysis
+    :user_2: 
+    - spectral analysis
+    - energy-constrained reserve services
+    - service definition
+    - power supply insurance
+    - power system operability
+    - ramping rate capabilities
+    - time-domain quantities
+    - frequency-domain quantities
+    - time-limited reserves
+    - response speed
+    :start_page: 
+    - "749"
+    :title_primary: 
+    - Spectral analysis of energy-constrained reserves
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7695 1435 9
+    :other_pages: 
+    - "56"
+    :title_secondary: 
+    - Proceedings of the 35th Annual Hawaii International Conference on System Sciences, 7-10 Jan. 2002
+    :original_data: <z:row WebsiteTitle="" User2="spectral analysis; energy-constrained reserve services; service definition; power supply insurance; power system operability; ramping rate capabilities; time-domain quantities; frequency-domain quantities; time-limited reserves; response speed" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The definition of a service is key to the ability to meter it, measure it, regulate it, price it, or otherwise take it into consideration. Reserves (a form of power supply insurance) are key to power system operability. Traditionally, reserves have been characterized in terms of time-domain quantities, such as ramping rate capabilities and the like. Also, traditionally such measures have not considered the possibility that some of the reserve services may be energy- or otherwise time-limited. This paper illustrates how to take into consideration energy-constrained reserve services, and also how to classify and measure both the need for reserves as well as the ability to provide them in terms of frequency-domain techniques. In a sense, the use of frequency-domain quantities is more &#x22;natural&#x22; for this problem where the characterization of the speed of response is in fact quite important. The paper illustrates a number of numerical examples" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/HICSS.2002.993957" PlaceOfPublication="Big Island, HI, USA" Issue="" TitlePrimary="Spectral analysis of energy-constrained reserves" UserRefID="80" URL="" TextAttributes="" RetrievedDate="" PubYear="2002" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of the 35th Annual Hawaii International Conference on System Sciences, 7-10 Jan. 2002" RefType="5" InternalRefID="14" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0 7695 1435 9" OtherPages="56" Keyword="frequency-domain analysis|power supply quality|power system measurement|power system simulation|spectral analysis" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="7198063" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Wisconsin Univ., Madison, WI, USA" Publisher="IEEE Comput. Soc" StartPage="749" PeriodicalFull="" TitleTertiary="Proceedings of the 35th Annual Hawaii International Conference on System Sciences"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/HICSS.2002.993957
+    :title_tertiary: 
+    - Proceedings of the 35th Annual Hawaii International Conference on System Sciences
+    :user_1: 
+    - "7198063"
+    :author_primary: 
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE Comput. Soc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - Columbus, OH, United States
+    :abstract: 
+    - The interdependencies that exist in large scale infrastructure often have a network structure. This tructure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control, and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk will describe recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids.
+    :issue: 
+    - WITER MEETIG
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric power transmission networks
+    - Electric utilities
+    - Electric power transmission
+    - Electric power systems
+    - Graph theory
+    - Matrix algebra
+    - Electric fault location
+    :user_2: 
+    - Interdependencies
+    - Electric infrastructure
+    :start_page: 
+    - "199"
+    :title_primary: 
+    - Interdependencies in networks
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001
+    :original_data: <z:row WebsiteTitle="" User2="Interdependencies; Electric infrastructure" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,Fernando" Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The interdependencies that exist in large scale infrastructure often have a network structure. This tructure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control, and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk will describe recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Columbus, OH, United States" Issue="WITER MEETIG" TitlePrimary="Interdependencies in networks" UserRefID="81" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001" RefType="5" InternalRefID="15" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="" Keyword="Electric power transmission networks|Electric utilities|Electric power transmission|Electric power systems|Graph theory|Matrix algebra|Electric fault location" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="03307562424" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Electrical and Computer Engineering, University of Wisconsin-Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="199" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Electrical and Computer Engineering, University of Wisconsin-Madison, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - "03307562424"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,Fernando
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - Columbus, OH, United States
+    :abstract: 
+    - From the perspective of the bulk power supply transmission system, the value of a specific &#x22;nominal&#x22; distributed generation resource as a function of time and as a function of location within the grid was examined. In making the assessment, the comparisons will include not only the value of the energy, but also the value of the reliability levels that may or may not be attainable and without the distributed resource. This paper discusses the principles that can be ued in rational selection of sites for distriburted resources, as well asthetypes of resources that might best serve a particular location.
+    :issue: 
+    - WITER MEETIG
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric power distribution
+    - Electric power system interconnection
+    - Electric load management
+    - Voltage control
+    - Reliability
+    - Electric power transmission
+    - Availability
+    :user_2: 
+    - Distributed generator
+    - Demand management program
+    - End-user reliability
+    :start_page: 
+    - "140"
+    :title_primary: 
+    - Locational aspects of distributed generation
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001
+    :original_data: <z:row WebsiteTitle="" User2="Distributed generator; Demand management program; End-user reliability" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="From the perspective of the bulk power supply transmission system, the value of a specific &#x22;nominal&#x22; distributed generation resource as a function of time and as a function of location within the grid was examined. In making the assessment, the comparisons will include not only the value of the energy, but also the value of the reliability levels that may or may not be attainable and without the distributed resource. This paper discusses the principles that can be ued in rational selection of sites for distriburted resources, as well asthetypes of resources that might best serve a particular location." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.2001.917017" PlaceOfPublication="Columbus, OH, United States" Issue="WITER MEETIG" TitlePrimary="Locational aspects of distributed generation" UserRefID="82" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001" RefType="5" InternalRefID="16" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="" Keyword="Electric power distribution|Electric power system interconnection|Electric load management|Voltage control|Reliability|Electric power transmission|Availability" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="03307562401" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="The University of Wisconsin, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="140" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - The University of Wisconsin, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.2001.917017
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - "03307562401"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - Columbus, OH, United States
+    :abstract: 
+    - Transmission Loading Relief (TLR) as a means forattaining secure operation is a methodology advocated and implemented by the North American Electric Reliability Council (NERC). The methodology is based on the design of a procedure for selecting and ordering curtailments of transactions as they occur. While the arbitrary formula is effective for purposes of load relief, it can benefit a highly distortive economic effect on the system. This formula leads to inefficient operation, possible price spikes and potential gaming opportunities.
+    :issue: 
+    - WITER MEETIG
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric rates
+    - Electric power transmission
+    - Electric load management
+    - Economic and social effects
+    - Marketing
+    - Cost effectiveness
+    :user_2: 
+    - Transmission loading relief
+    - Locational prices
+    - Transmission congestion contract
+    :start_page: 
+    - "163"
+    :title_primary: 
+    - Why are TLR&#x27;s inefficient and how to correct them with locational prices
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :title_secondary: 
+    - 2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001
+    :original_data: <z:row WebsiteTitle="" User2="Transmission loading relief; Locational prices; Transmission congestion contract" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Transmission Loading Relief (TLR) as a means forattaining secure operation is a methodology advocated and implemented by the North American Electric Reliability Council (NERC). The methodology is based on the design of a procedure for selecting and ordering curtailments of transactions as they occur. While the arbitrary formula is effective for purposes of load relief, it can benefit a highly distortive economic effect on the system. This formula leads to inefficient operation, possible price spikes and potential gaming opportunities." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.2001.917026" PlaceOfPublication="Columbus, OH, United States" Issue="WITER MEETIG" TitlePrimary="Why are TLR&#x27;s inefficient and how to correct them with locational prices" UserRefID="83" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2001 IEEE Power Engineering Society Winter Meeting, Jan 28-Feb 1 2001" RefType="5" InternalRefID="17" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="" Keyword="Electric rates|Electric power transmission|Electric load management|Economic and social effects|Marketing|Cost effectiveness" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="03307562411" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="ECE Department, The University of Wisconsin, Madison, WI 53706, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="163" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - ECE Department, The University of Wisconsin, Madison, WI 53706, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.2001.917026
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - "03307562411"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - Vancouver, BC, Canada
+    :abstract: 
+    - Deregulation of electric utilities has led to a new competitive regime for utilities. In traditional systems, the main objective is to estimate voltages and flows. Estimators that include the ability to determine system parameters along with system conditions have been developed. In the evolving deregulated environment there are a host of new estimation needs. The various costs of the participants, estimation of the degree of market power, estimation of the price elasticities of the participants, and estimation of the volatilities of prices. This paper addresses two estimation needs. It defines the problem of estimation system status based on the knowledge of published PTDFs (Power Transfer Distribution Factors) by describing a new procedure for estimating parameters. It also reformulates a previously presented but not much publicized method for estimating the cost elasticities of generators.
+    :issue: 
+    - SUMMER
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric power distribution
+    - Electric network parameters
+    - State estimation
+    - Deregulation
+    - Standardization
+    - Electric utilities
+    - Voltage control
+    - Electric load flow
+    - SCADA systems
+    :user_2: 
+    - Power transfer distribution factors
+    - Spot pricing
+    - International Organization for Standardization
+    :start_page: 
+    - "442"
+    :title_primary: 
+    - State estimation for the detection of market parameters
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "447"
+    :title_secondary: 
+    - 2001 IEEE Power Engineering Society Summer Meeting, Jul 15-19 2001
+    :original_data: <z:row WebsiteTitle="" User2="Power transfer distribution factors; Spot pricing; International Organization for Standardization" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Deregulation of electric utilities has led to a new competitive regime for utilities. In traditional systems, the main objective is to estimate voltages and flows. Estimators that include the ability to determine system parameters along with system conditions have been developed. In the evolving deregulated environment there are a host of new estimation needs. The various costs of the participants, estimation of the degree of market power, estimation of the price elasticities of the participants, and estimation of the volatilities of prices. This paper addresses two estimation needs. It defines the problem of estimation system status based on the knowledge of published PTDFs (Power Transfer Distribution Factors) by describing a new procedure for estimating parameters. It also reformulates a previously presented but not much publicized method for estimating the cost elasticities of generators." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESS.2001.970065" PlaceOfPublication="Vancouver, BC, Canada" Issue="SUMMER" TitlePrimary="State estimation for the detection of market parameters" UserRefID="84" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="2001 IEEE Power Engineering Society Summer Meeting, Jul 15-19 2001" RefType="5" InternalRefID="18" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="447" Keyword="Electric power distribution|Electric network parameters|State estimation|Deregulation|Standardization|Electric utilities|Voltage control|Electric load flow|SCADA systems" AuthorSecondary="" LastModified="2006-08-21T07:29:57" User1="03097384085" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="The University of Wisconsin, Madison, WI 53706, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="442" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - The University of Wisconsin, Madison, WI 53706, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESS.2001.970065
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - 03097384085
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "30"
+    :abstract: 
+    - This paper implements a power flow application and variations using the IEEE Power System Application Data Dictionary (PSADD) within a Matlab environment. It describes a number of useful data and implementation techniques for a variety of applications. The techniques include the use of very compact and efficient code for the computation of Power Transfer Distribution Factors (PTDF). PTDF are an important element of present and proposed congestion management strategies for power systems, particularly when these systems must operate in a deregulated environment.
+    :issue: 
+    - "3"
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric power systems
+    - Database systems
+    - Data communication systems
+    - Data structures
+    - Computer software
+    - Interfaces (computer)
+    - Computer systems programming
+    :user_2: 
+    - Software package Matlab
+    - Power Transfer Distribution Factors (PTDF)
+    - Power System Application Data Dictionary (PSADD)
+    - Common information model (CIM)
+    :start_page: 
+    - "243"
+    :title_primary: 
+    - Solving power flow problems with a Matlab implementation of the Power System Applications Data Dictionary
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0167-9236
+    :other_pages: 
+    - "254"
+    :original_data: <z:row WebsiteTitle="" User2="Software package Matlab; Power Transfer Distribution Factors (PTDF); Power System Application Data Dictionary (PSADD); Common information model (CIM)" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="Decis.Support Syst." AuthorPrimary="Alvarado,Fernando L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="This paper implements a power flow application and variations using the IEEE Power System Application Data Dictionary (PSADD) within a Matlab environment. It describes a number of useful data and implementation techniques for a variety of applications. The techniques include the use of very compact and efficient code for the computation of Power Transfer Distribution Factors (PTDF). PTDF are an important element of present and proposed congestion management strategies for power systems, particularly when these systems must operate in a deregulated environment." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1016/S0167-9236(00)00102-0" PlaceOfPublication="" Issue="3" TitlePrimary="Solving power flow problems with a Matlab implementation of the Power System Applications Data Dictionary" UserRefID="85" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="19" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="30" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0167-9236" OtherPages="254" Keyword="Electric power systems|Database systems|Data communication systems|Data structures|Computer software|Interfaces (computer)|Computer systems programming" AuthorSecondary="" LastModified="2006-08-21T07:29:58" User1="01015462613" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Univ of Wisconsin, Madison, WI, USA" Publisher="Elsevier Science B.V., Amsterdam, Netherlands" StartPage="243" PeriodicalFull="Decision Support Systems" TitleTertiary=""></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Univ of Wisconsin, Madison, WI, USA
+    :periodical_full: 
+    - Decision Support Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1016/S0167-9236(00)00102-0
+    :user_1: 
+    - "01015462613"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - Decis.Support Syst.
+    :author_primary: 
+    - Alvarado,Fernando L.
+    :publisher: 
+    - Elsevier Science B.V., Amsterdam, Netherlands
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "16"
+    :abstract: 
+    - The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch updates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch.
+    :issue: 
+    - "4"
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric power system interconnection
+    - System stability
+    - Economic and social effects
+    - Eigenvalues and eigenfunctions
+    - Electric power generation
+    - Electric load dispatching
+    - Power control
+    :user_2: 
+    - Market dynamics
+    - Detailed generator dynamics
+    - Detailed turbin dynamics
+    - Detailed governor dynamics
+    - Physical generator controls
+    :start_page: 
+    - "695"
+    :title_primary: 
+    - Stability analysis of interconnected power systems coupled with market dynamics
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0885-8950
+    :other_pages: 
+    - "701"
+    :original_data: <z:row WebsiteTitle="" User2="Market dynamics; Detailed generator dynamics; Detailed turbin dynamics; Detailed governor dynamics; Physical generator controls" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="IEEE Trans.Power Syst." AuthorPrimary="Alvarado,F.L.|Meng,J.|DeMarco,C.L.|Mota,W.S." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. As the frequency of market-based dispatch updates increases, there will inevitably be interaction between the dynamics of markets determining the generator dispatch commands, and the physical response of generators and network interconnections. This paper examines questions of stability in such coupled systems by means of numeric tests using various market update models, (including detailed generator/turbine/governor dynamics) for the New England 39 bus test system. The results highlight the nature of potential instabilities and show the interaction modes between physical and market quantities through eigen-analysis. Understanding of potential modes of instability in such coupled systems is crucial both for designing suitable rules for power markets, and for designing physical generator controls that are compatible with market-based dispatch." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/59.962415" PlaceOfPublication="" Issue="4" TitlePrimary="Stability analysis of interconnected power systems coupled with market dynamics" UserRefID="86" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="20" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="16" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0885-8950" OtherPages="701" Keyword="Electric power system interconnection|System stability|Economic and social effects|Eigenvalues and eigenfunctions|Electric power generation|Electric load dispatching|Power control" AuthorSecondary="" LastModified="2006-08-21T07:29:58" User1="01546796424" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Elect. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="695" PeriodicalFull="IEEE Transactions on Power Systems" TitleTertiary=""></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Elect. and Comp. Eng., University of Wisconsin-Madison, Madison, WI, United States
+    :periodical_full: 
+    - IEEE Transactions on Power Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1109/59.962415
+    :user_1: 
+    - 01546796424
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - IEEE Trans.Power Syst.
+    :author_primary: 
+    - Alvarado,F.L.
+    - Meng,J.
+    - DeMarco,C.L.
+    - Mota,W.S.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - Columbus, OH, USA
+    :abstract: 
+    - Summary form only, as given. The interdependencies that exist in a large scale infrastructure often have a network structure. This structure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk describes recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - failure analysis
+    - graph theory
+    - power system interconnection
+    - power system reliability
+    - sparse matrices
+    - transmission networks
+    :user_2: 
+    - large scale infrastructure interdependencies
+    - electric power system
+    - transmission system
+    - network graph
+    - sparse matrices
+    - graph structure
+    - failures
+    - power grids
+    :start_page: 
+    - 199 vol.1
+    :title_primary: 
+    - Interdependencies in networks
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7803 6672 7
+    :title_secondary: 
+    - Proceedings of 2001 Winter Meeting of the IEEE Power Engineering Society, 28 Jan.-1 Feb. 2001
+    :original_data: <z:row WebsiteTitle="" User2="large scale infrastructure interdependencies; electric power system; transmission system; network graph; sparse matrices; graph structure; failures; power grids" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Summary form only, as given. The interdependencies that exist in a large scale infrastructure often have a network structure. This structure may reflect an explicit, physical set of network interconnects, as exists in the transmission system of an electric power system, or this structure may reflect implicit interconnections created by communications, control and functional dependence. It is our premise that the network graph describing interdependencies, and more formal techniques that relate sparse matrices to the graph structure, offer powerful tools for exploring vulnerabilities and modes of failure in such interdependent structures. This talk describes recent research progress in this area, with particular focus on complex mechanisms of interdependent failures in power grids" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Columbus, OH, USA" Issue="" TitlePrimary="Interdependencies in networks" UserRefID="87" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of 2001 Winter Meeting of the IEEE Power Engineering Society, 28 Jan.-1 Feb. 2001" RefType="5" InternalRefID="21" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0 7803 6672 7" OtherPages="" Keyword="failure analysis|graph theory|power system interconnection|power system reliability|sparse matrices|transmission networks" AuthorSecondary="" LastModified="2006-08-21T07:29:58" User1="7022754" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="IEEE" StartPage="199 vol.1" PeriodicalFull="" TitleTertiary="2001 IEEE Power Engineering Society Winter Meeting. Conference Proceedings (Cat. No.01CH37194)"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - 2001 IEEE Power Engineering Society Winter Meeting. Conference Proceedings (Cat. No.01CH37194)
+    :user_1: 
+    - "7022754"
+    :author_primary: 
+    - Alvarado,F.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "16"
+    :abstract: 
+    - In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts.
+    :issue: 
+    - "2"
+    :pub_year: 
+    - "2001"
+    :keyword: 
+    - Electric load management
+    - Electric utilities
+    - Electric power utilization
+    - Electric rates
+    - Costs
+    - Outages
+    - Mathematical models
+    - Electric load shedding
+    - Reliability
+    :user_2: 
+    - Contract design
+    - Customer cost
+    - Data calibration
+    - Load curtailment
+    - System security
+    :start_page: 
+    - "317"
+    :title_primary: 
+    - Using utility information to calibrate customer demand management behavior models
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0885-8950
+    :other_pages: 
+    - "323"
+    :original_data: <z:row WebsiteTitle="" User2="Contract design; Customer cost; Data calibration; Load curtailment; System security" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="IEEE Trans.Power Syst." AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="In times of stress customers can help a utility by means of voluntary demand management programs if they are offered the right incentives. The incentives offered can be optimized if the utility can estimate the outage or substitution costs of its customers. This paper illustrates how existing utility data can be used to predict customer demand management behavior. More specifically, it shows how estimated customer cost functions can be calibrated to help in designing efficient demand management contracts." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/59.918305" PlaceOfPublication="" Issue="2" TitlePrimary="Using utility information to calibrate customer demand management behavior models" UserRefID="88" URL="" TextAttributes="" RetrievedDate="" PubYear="2001" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="22" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="16" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0885-8950" OtherPages="323" Keyword="Electric load management|Electric utilities|Electric power utilization|Electric rates|Costs|Outages|Mathematical models|Electric load shedding|Reliability" AuthorSecondary="" LastModified="2006-08-21T07:29:58" User1="01266555043" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Elec. and Computer Engr., The University of Wisconsin-Madison, WI Madison, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="317" PeriodicalFull="IEEE Transactions on Power Systems" TitleTertiary=""></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Elec. and Computer Engr., The University of Wisconsin-Madison, WI Madison, United States
+    :periodical_full: 
+    - IEEE Transactions on Power Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1109/59.918305
+    :user_1: 
+    - "01266555043"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :periodical_abbrev: 
+    - IEEE Trans.Power Syst.
+    :author_primary: 
+    - Fahrioglu,M.
+    - Alvarado,F.L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "4"
+    :place_of_publication: 
+    - Seattle, WA, United States
+    :abstract: 
+    - Dynamic representation of power markets provide insight into market behavior that is not available in static models. Under the assumption of continuous market updates, this work examines the coupled system that results when market driven response of generation and load interacts with the physical dynamics of governors, turbines, and generators, and the network power flow. Numerical stability analyses are performed for the New England 39 bus test system, and plausible scenarios are presented in which the decoupled components (market dynamics alone, physical dynamics alone) are each stable, yet the coupled system is unstable. The general observation that two individual stable systems may be coupled to create an unstable system is commonplace. However, the existence of such scenarios in realistic models of power markets coupled with grid dynamics has significant policy implications for ongoing efforts to design power markets structures and electromechanical system controls complementary to these markets.
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - Electric industry
+    - Electric power systems
+    - Marketing
+    - Mathematical models
+    - Electric power generation
+    - Electric loads
+    - Governors
+    - Turbines
+    - Electric generators
+    - Convergence of numerical methods
+    - Electromechanical devices
+    - Eigenvalues and eigenfunctions
+    - Electric utilities
+    :user_2: 
+    - Power markets
+    - Network power flow
+    - Electromechanical system
+    - Power system dynamics
+    :start_page: 
+    - "2201"
+    :title_primary: 
+    - Dynamic coupling between power markets and power systems
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "2205"
+    :title_secondary: 
+    - Proceedings of the 2000 Power Engineering Society Summer Meeting, Jul 16-20 2000
+    :original_data: <z:row WebsiteTitle="" User2="Power markets; Network power flow; Electromechanical system; Power system dynamics" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F.L.|Meng,J.|Mota,W.S.|DeMarco,C.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Dynamic representation of power markets provide insight into market behavior that is not available in static models. Under the assumption of continuous market updates, this work examines the coupled system that results when market driven response of generation and load interacts with the physical dynamics of governors, turbines, and generators, and the network power flow. Numerical stability analyses are performed for the New England 39 bus test system, and plausible scenarios are presented in which the decoupled components (market dynamics alone, physical dynamics alone) are each stable, yet the coupled system is unstable. The general observation that two individual stable systems may be coupled to create an unstable system is commonplace. However, the existence of such scenarios in realistic models of power markets coupled with grid dynamics has significant policy implications for ongoing efforts to design power markets structures and electromechanical system controls complementary to these markets." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESS.2000.866987" PlaceOfPublication="Seattle, WA, United States" Issue="" TitlePrimary="Dynamic coupling between power markets and power systems" UserRefID="89" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of the 2000 Power Engineering Society Summer Meeting, Jul 16-20 2000" RefType="5" InternalRefID="23" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="4" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="2205" Keyword="Electric industry|Electric power systems|Marketing|Mathematical models|Electric power generation|Electric loads|Governors|Turbines|Electric generators|Convergence of numerical methods|Electromechanical devices|Eigenvalues and eigenfunctions|Electric utilities" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="03307562215" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Elec. and Comp. Engineering, University of Wisconsin-Madison, Madison, WI, United States" Publisher="Institute of Electrical and Electronics Engineers Inc" StartPage="2201" PeriodicalFull="" TitleTertiary="Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Elec. and Comp. Engineering, University of Wisconsin-Madison, Madison, WI, United States
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESS.2000.866987
+    :title_tertiary: 
+    - Proceedings of the IEEE Power Engineering Society Transmission and Distribution Conference
+    :user_1: 
+    - "03307562215"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,F.L.
+    - Meng,J.
+    - Mota,W.S.
+    - DeMarco,C.L.
+    :publisher: 
+    - Institute of Electrical and Electronics Engineers Inc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - Waterloo, Ont., Canada
+    :abstract: 
+    - The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. Dynamic equations provide insight into the behavior and stability of markets which are not available from static models. The updating of price based on system conditions is often a periodic computation, based on recent but past snapshot of system operating state. Moreover, once computed, there is often delay in communication of this price to market participants. This paper studies such a time delay on the stability of power markets. Both the precise matrix pencil and the Pade approximation methods are used to illustrate the stability of time delay power market dynamics using the New England 39 bus system as the test example. Finally the Smith predictor scheme is used to improve the stability of power market dynamics
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - delays
+    - eigenvalues and eigenfunctions
+    - electricity supply industry
+    - matrix algebra
+    - power generation dispatch
+    - power system analysis computing
+    - power system dynamic stability
+    - power system economics
+    :user_2: 
+    - power markets
+    - time delay
+    - stability
+    - generation dispatch
+    - economic efficiency
+    - market updates
+    - dynamic equations
+    - system operating state
+    - price communication
+    - market participants
+    - precise matrix pencil
+    - Pade approximation
+    - New England 39 bus system
+    - Smith predictor scheme
+    - eigenvalues
+    :start_page: 
+    - "6"
+    :title_primary: 
+    - Stability of time-delay power markets
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "36"
+    :title_secondary: 
+    - Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000
+    :original_data: <z:row WebsiteTitle="" User2="power markets; time delay; stability; generation dispatch; economic efficiency; market updates; dynamic equations; system operating state; price communication; market participants; precise matrix pencil; Pade approximation; New England 39 bus system; Smith predictor scheme; eigenvalues" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Meng,J.|DeMarco,C.L.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The use of market mechanisms to determine generation dispatch, and the natural tendency to seek improved economic efficiency through rapid market updates, raises a critical issue. Dynamic equations provide insight into the behavior and stability of markets which are not available from static models. The updating of price based on system conditions is often a periodic computation, based on recent but past snapshot of system operating state. Moreover, once computed, there is often delay in communication of this price to market participants. This paper studies such a time delay on the stability of power markets. Both the precise matrix pencil and the Pade approximation methods are used to illustrate the stability of time delay power market dynamics using the New England 39 bus system as the test example. Finally the Smith predictor scheme is used to improve the stability of power market dynamics" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Waterloo, Ont., Canada" Issue="" TitlePrimary="Stability of time-delay power markets" UserRefID="90" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000" RefType="5" InternalRefID="24" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="36" Keyword="delays|eigenvalues and eigenfunctions|electricity supply industry|matrix algebra|power generation dispatch|power system analysis computing|power system dynamic stability|power system economics" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="7327172" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="Univ. Waterloo" StartPage="6" PeriodicalFull="" TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings of the Thirty-Second Annual North American Power Symposium
+    :user_1: 
+    - "7327172"
+    :author_primary: 
+    - Meng,J.
+    - DeMarco,C.L.
+    - Alvarado,F.L.
+    :publisher: 
+    - Univ. Waterloo
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - Waterloo, Ont., Canada
+    :abstract: 
+    - Demand management can be a tool that help utilities and other energy serving entities as well as independent system operators solve various system problems. The main job of an ISO is to maintain a reliable grid in the interest of all buyers and sellers of electricity. Hence it is the ISO&#x27;s responsibility to avoid congestion and keep the &#x26;ldquo;available transfer capacity&#x26;rdquo; (ATC) at a high level. During times of congestion a loss of economic surplus occurs. To relieve congestion, ISOs will have a choice between congestion pricing, mandatory transmission load relief or the use of interruptible power contracts. Interruptible power contracts are &#x26;ldquo;standing&#x26;rdquo; offers for power &#x26;ldquo;delivery&#x26;rdquo; at a given price. Hence interruptible customers participate in a spot market by designating their power as interruptible. The idea is that the power market itself should resolve congestion issues. However when the market is too slow or cannot help relieve congestion, demand management can help solve the problem. Another tool the ISO requires for security purposes is reserves. Even though demand management contracts may not be a good substitute for spinning reserves, they are adequate to augment or replace supplemental and backup reserves. A demand management program permits the packaging of a uniform product with well determined parameters
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - contracts
+    - costing
+    - demand side management
+    - electricity supply industry
+    - power system reliability
+    - power system security
+    :user_2: 
+    - uniform product packaging
+    - demand management contracts
+    - deregulated environments
+    - utilities
+    - energy serving entities
+    - independent system operators
+    - ISO
+    - reliable grid
+    - electricity buyers
+    - electricity sellers
+    - congestion relief
+    - available transfer capacity
+    - congestion time
+    - congestion pricing
+    - transmission load relief
+    - interruptible power contracts
+    - power delivery
+    - interruptible customers
+    - spot market
+    - power market
+    - security
+    - backup reserves
+    - well defined parameters
+    :start_page: 
+    - "1"
+    :title_primary: 
+    - Packaging demand management contracts for deregulated environments
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "1"
+    :title_secondary: 
+    - Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000
+    :original_data: <z:row WebsiteTitle="" User2="uniform product packaging; demand management contracts; deregulated environments; utilities; energy serving entities; independent system operators; ISO; reliable grid; electricity buyers; electricity sellers; congestion relief; available transfer capacity; congestion time; congestion pricing; transmission load relief; interruptible power contracts; power delivery; interruptible customers; spot market; power market; security; backup reserves; well defined parameters" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Demand management can be a tool that help utilities and other energy serving entities as well as independent system operators solve various system problems. The main job of an ISO is to maintain a reliable grid in the interest of all buyers and sellers of electricity. Hence it is the ISO&#x27;s responsibility to avoid congestion and keep the &#x26;ldquo;available transfer capacity&#x26;rdquo; (ATC) at a high level. During times of congestion a loss of economic surplus occurs. To relieve congestion, ISOs will have a choice between congestion pricing, mandatory transmission load relief or the use of interruptible power contracts. Interruptible power contracts are &#x26;ldquo;standing&#x26;rdquo; offers for power &#x26;ldquo;delivery&#x26;rdquo; at a given price. Hence interruptible customers participate in a spot market by designating their power as interruptible. The idea is that the power market itself should resolve congestion issues. However when the market is too slow or cannot help relieve congestion, demand management can help solve the problem. Another tool the ISO requires for security purposes is reserves. Even though demand management contracts may not be a good substitute for spinning reserves, they are adequate to augment or replace supplemental and backup reserves. A demand management program permits the packaging of a uniform product with well determined parameters" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Waterloo, Ont., Canada" Issue="" TitlePrimary="Packaging demand management contracts for deregulated environments" UserRefID="91" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000" RefType="5" InternalRefID="25" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="1" Keyword="contracts|costing|demand side management|electricity supply industry|power system reliability|power system security" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="7327133" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="Univ. Waterloo" StartPage="1" PeriodicalFull="" TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings of the Thirty-Second Annual North American Power Symposium
+    :user_1: 
+    - "7327133"
+    :author_primary: 
+    - Fahrioglu,M.
+    - Alvarado,F.L.
+    :publisher: 
+    - Univ. Waterloo
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - Waterloo, Ont., Canada
+    :abstract: 
+    - Cascading contingency is one of the possible reasons to cause system blackout. This paper uses an efficient recursive algorithm to find significant cascading contingencies and calculate their probabilities. The algorithm is compared with an importance sampling based algorithm. The paper also proposes a fast approximation method to find the probability sensitivity to system parameters
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - approximation theory
+    - power transmission faults
+    - power transmission lines
+    - probability
+    - recursive estimation
+    - sensitivity analysis
+    :user_2: 
+    - cascading contingency analysis
+    - system blackout
+    - recursive algorithm
+    - fast approximation method
+    - probability sensitivity
+    - system parameters
+    - line tripping probability
+    :start_page: 
+    - "1"
+    :title_primary: 
+    - Cascading contingency analysis
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "11"
+    :title_secondary: 
+    - Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000
+    :original_data: <z:row WebsiteTitle="" User2="cascading contingency analysis; system blackout; recursive algorithm; fast approximation method; probability sensitivity; system parameters; line tripping probability" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Zhang,J.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Cascading contingency is one of the possible reasons to cause system blackout. This paper uses an efficient recursive algorithm to find significant cascading contingencies and calculate their probabilities. The algorithm is compared with an importance sampling based algorithm. The paper also proposes a fast approximation method to find the probability sensitivity to system parameters" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Waterloo, Ont., Canada" Issue="" TitlePrimary="Cascading contingency analysis" UserRefID="92" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of 2000 North American Power Symposium, 23-24 Oct. 2000" RefType="5" InternalRefID="26" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="11" Keyword="approximation theory|power transmission faults|power transmission lines|probability|recursive estimation|sensitivity analysis" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="7327135" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="Univ. Waterloo" StartPage="1" PeriodicalFull="" TitleTertiary="Proceedings of the Thirty-Second Annual North American Power Symposium"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings of the Thirty-Second Annual North American Power Symposium
+    :user_1: 
+    - "7327135"
+    :author_primary: 
+    - Zhang,J.
+    - Alvarado,F.L.
+    :publisher: 
+    - Univ. Waterloo
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "15"
+    :abstract: 
+    - Demand relief from customers can help a utility (or any &#x26;ldquo;load serving entity&#x26;rdquo;) solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed, and to do so in a cost effective way. Customers sign up for programs when the benefits they derive in the form of up front payments, demand discounts and interruption payments exceed their cost of interruption. In order to design such contracts, mechanism design with the revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design an incentive structure that encourages customers to sign up for the right contract and reveal their true value of power (and thus, the value of power interruptibility)
+    :issue: 
+    - "4"
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - contracts
+    - demand side management
+    - electricity supply industry
+    - game theory
+    - power system economics
+    - power system faults
+    - power system security
+    - tariffs
+    :user_2: 
+    - demand management
+    - incentive compatible contracts design
+    - demand relief
+    - load serving entity
+    - up front payments
+    - demand discounts
+    - interruption payments
+    - interruption costs
+    - revelation principle
+    - game theory
+    - incentive structure
+    :start_page: 
+    - "1255"
+    :title_primary: 
+    - Designing incentive compatible contracts for effective demand management
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0885-8950
+    :other_pages: 
+    - "60"
+    :original_data: <z:row WebsiteTitle="" User2="demand management; incentive compatible contracts design; demand relief; load serving entity; up front payments; demand discounts; interruption payments; interruption costs; revelation principle; game theory; incentive structure" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="IEEE Trans.Power Syst." AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Demand relief from customers can help a utility (or any &#x26;ldquo;load serving entity&#x26;rdquo;) solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed, and to do so in a cost effective way. Customers sign up for programs when the benefits they derive in the form of up front payments, demand discounts and interruption payments exceed their cost of interruption. In order to design such contracts, mechanism design with the revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design an incentive structure that encourages customers to sign up for the right contract and reveal their true value of power (and thus, the value of power interruptibility)" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/59.898098" PlaceOfPublication="" Issue="4" TitlePrimary="Designing incentive compatible contracts for effective demand management" UserRefID="93" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="11/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="" RefType="1" InternalRefID="27" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="15" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0885-8950" OtherPages="60" Keyword="contracts|demand side management|electricity supply industry|game theory|power system economics|power system faults|power system security|tariffs" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="6843712" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="IEEE" StartPage="1255" PeriodicalFull="IEEE Transactions on Power Systems" TitleTertiary="IEEE Trans. Power Syst. (USA)"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :periodical_full: 
+    - IEEE Transactions on Power Systems
+    :ref_type: 
+    - "1"
+    :links: 
+    - http://dx.doi.org/10.1109/59.898098
+    :title_tertiary: 
+    - IEEE Trans. Power Syst. (USA)
+    :user_1: 
+    - "6843712"
+    :periodical_abbrev: 
+    - IEEE Trans.Power Syst.
+    :author_primary: 
+    - Fahrioglu,M.
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - Maui, HI, USA
+    :abstract: 
+    - The paper illustrates notions of volatility associated with power systems spot prices for electricity. The paper demonstrates a frequency-domain method useful to separate out periodic price variations from random variations. It then uses actual observed price data to estimate parameters such as volatility and the coefficient of mean reversion associated with the random variation of prices. It also examines spatial volatility of prices
+    :pub_year: 
+    - "2000"
+    :keyword: 
+    - costing
+    - frequency-domain analysis
+    - parameter estimation
+    - power system economics
+    - power system simulation
+    - random processes
+    :user_2: 
+    - price volatility
+    - electricity markets
+    - power systems spot prices
+    - frequency-domain method
+    - periodic price variations
+    - random variations
+    - observed price data
+    - parameter estimation
+    - volatility
+    - mean reversion coefficient
+    - random price variation
+    - spatial volatility
+    :start_page: 
+    - "5"
+    :title_primary: 
+    - Understanding price volatility in electricity markets
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7695 0493 0
+    :title_secondary: 
+    - Proceedings of the 33rd Annual Hawaii International Conference on System Sciences, 4-7 Jan. 2000
+    :original_data: <z:row WebsiteTitle="" User2="price volatility; electricity markets; power systems spot prices; frequency-domain method; periodic price variations; random variations; observed price data; parameter estimation; volatility; mean reversion coefficient; random price variation; spatial volatility" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F.L.|Rajaraman,R." Marked="0         " Created="2006-06-27T11:10:06" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="The paper illustrates notions of volatility associated with power systems spot prices for electricity. The paper demonstrates a frequency-domain method useful to separate out periodic price variations from random variations. It then uses actual observed price data to estimate parameters such as volatility and the coefficient of mean reversion associated with the random variation of prices. It also examines spatial volatility of prices" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="Maui, HI, USA" Issue="" TitlePrimary="Understanding price volatility in electricity markets" UserRefID="94" URL="" TextAttributes="" RetrievedDate="" PubYear="2000" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of the 33rd Annual Hawaii International Conference on System Sciences, 4-7 Jan. 2000" RefType="5" InternalRefID="28" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0 7695 0493 0" OtherPages="" Keyword="costing|frequency-domain analysis|parameter estimation|power system economics|power system simulation|random processes" AuthorSecondary="" LastModified="2006-08-21T07:29:59" User1="6598125" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Wisconsin Univ., WI, USA" Publisher="IEEE Comput. Soc" StartPage="5" PeriodicalFull="" TitleTertiary="Proceedings of the 33rd Annual Hawaii International Conference on Systems Sciences"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Wisconsin Univ., WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings of the 33rd Annual Hawaii International Conference on Systems Sciences
+    :user_1: 
+    - "6598125"
+    :author_primary: 
+    - Alvarado,F.L.
+    - Rajaraman,R.
+    :publisher: 
+    - IEEE Comput. Soc
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - San Luis Obispo, CA, USA
+    :abstract: 
+    - "This paper proposes a novel fast computational method to determine the simultaneous power available transfer capability (ATC) in a power system. This method consists of a fast estimation algorithm and a constrained power flow iteration. The ATC limiting factors considered in the method are: line thermal limits; bus voltage limits; and generator reactive power limits. When combined with the first line contingency considerations, this method gives the fastest ATC computing. The feature of this method is that it uses only one steady state power flow result for the fast estimation algorithm. Without further time consuming power flow iterations, it is the fastest estimation algorithm available. Based on the fast estimation, with a few more constrained power flow iterations, precise ATC value can be obtained. This method can be used to improve the speed of many available ATC programs. Especially, it may be used in addition to the widely used DC power flow program or simply replace it to provide additional voltage and var information, since DC power flow generally ignore voltage or var problems. This method can help the independent system operator (ISO) to determine the validity of the bidding results in an open access deregulated electricity market when timely ATC information is very important. It can also help the power market participants to place bids strategically when congestion happens"
+    :pub_year: 
+    - "1999"
+    :keyword: 
+    - estimation theory
+    - iterative methods
+    - load flow
+    - power system analysis computing
+    :user_2: 
+    - simultaneous available transfer capability determination
+    - fast computational method
+    - fast estimation algorithm
+    - constrained power flow iteration
+    - line thermal limits
+    - bus voltage limits
+    - generator reactive power limits
+    - independent system operator
+    - open access deregulated electricity market
+    - power market participants
+    :start_page: 
+    - "177"
+    :title_primary: 
+    - Fast determination of simultaneous available transfer capability (ATC)
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "82"
+    :title_secondary: 
+    - Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"simultaneous available transfer capability determination; fast computational method; fast estimation algorithm; constrained power flow iteration; line thermal limits; bus voltage limits; generator reactive power limits; independent system operator; open access deregulated electricity market; power market participants\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"\" SubFile_Database=\"\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"Ronghai Wang|Lasseter,R.H.|Jiangping Meng|Alvarado,F.L.\" Marked=\"0         \" Created=\"2006-06-27T11:10:07\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"This paper proposes a novel fast computational method to determine the simultaneous power available transfer capability (ATC) in a power system. This method consists of a fast estimation algorithm and a constrained power flow iteration. The ATC limiting factors considered in the method are: line thermal limits; bus voltage limits; and generator reactive power limits. When combined with the first line contingency considerations, this method gives the fastest ATC computing. The feature of this method is that it uses only one steady state power flow result for the fast estimation algorithm. Without further time consuming power flow iterations, it is the fastest estimation algorithm available. Based on the fast estimation, with a few more constrained power flow iterations, precise ATC value can be obtained. This method can be used to improve the speed of many available ATC programs. Especially, it may be used in addition to the widely used DC power flow program or simply replace it to provide additional voltage and var information, since DC power flow generally ignore voltage or var problems. This method can help the independent system operator (ISO) to determine the validity of the bidding results in an open access deregulated electricity market when timely ATC information is very important. It can also help the power market participants to place bids strategically when congestion happens\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - ev|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"San Luis Obispo, CA, USA\" Issue=\"\" TitlePrimary=\"Fast determination of simultaneous available transfer capability (ATC)\" UserRefID=\"95\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"1999\" DataSource=\"\" PubDateFreeForm=\"/\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"\" AccessionNumber=\"\" TitleSecondary=\"Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999\" RefType=\"5\" InternalRefID=\"29\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"\" OtherPages=\"82\" Keyword=\"estimation theory|iterative methods|load flow|power system analysis computing\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:29:59\" User1=\"6512107\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA\" Publisher=\"California Polytech. State Univ\" StartPage=\"177\" PeriodicalFull=\"\" TitleTertiary=\"Proceedings Thirty-First Annual North American Power Symposium\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings Thirty-First Annual North American Power Symposium
+    :user_1: 
+    - "6512107"
+    :author_primary: 
+    - Ronghai Wang
+    - Lasseter,R.H.
+    - Jiangping Meng
+    - Alvarado,F.L.
+    :publisher: 
+    - California Polytech. State Univ
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - New York, NY, USA
+    :abstract: 
+    - Demand relief from customers can help an electric utility solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed. If the contracts are designed to be cost effective they can help the utility reduce costs. Customers sign up for programs when the benefits they derive in the form of up front payments and interruption payments exceeds their cost of interruption. In order to design such contracts, mechanism design with revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design a program incentive structure that encourages customers to reveal their true value of power (and thus, the value of power interruptibility) without the need to explicitly have customers declare the value. This economic analysis is combined with power system sensitivity analysis to help determine the value of interruptibility for each system location
+    :pub_year: 
+    - "1999"
+    :keyword: 
+    - contracts
+    - demand side management
+    - electricity supply industry
+    - game theory
+    - power system economics
+    - power system reliability
+    - sensitivity analysis
+    :user_2: 
+    - cost-effective demand management contracts design
+    - game theory
+    - electric utility
+    - load relief
+    - up front payments
+    - interruption payments
+    - power interruptibility value
+    - economic analysis
+    - power system sensitivity analysis
+    - DSM
+    :start_page: 
+    - "427"
+    :title_primary: 
+    - Designing cost effective demand management contracts using game theory
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7803 4893 1
+    :other_pages: 
+    - "32"
+    :title_secondary: 
+    - IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999
+    :original_data: <z:row WebsiteTitle="" User2="cost-effective demand management contracts design; game theory; electric utility; load relief; up front payments; interruption payments; power interruptibility value; economic analysis; power system sensitivity analysis; DSM" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:07" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Demand relief from customers can help an electric utility solve a variety of problems. There exist all sorts of different demand management programs that utilities use. A critical issue is the incentive paid to the customer to participate in demand management programs and provide load relief. The utility has to design cost effective yet attractive demand management contracts. The main goal is to get load relief when needed. If the contracts are designed to be cost effective they can help the utility reduce costs. Customers sign up for programs when the benefits they derive in the form of up front payments and interruption payments exceeds their cost of interruption. In order to design such contracts, mechanism design with revelation principle is adopted from game theory and applied to the interaction between a utility and its customers. The idea behind mechanism design is to design a program incentive structure that encourages customers to reveal their true value of power (and thus, the value of power interruptibility) without the need to explicitly have customers declare the value. This economic analysis is combined with power system sensitivity analysis to help determine the value of interruptibility for each system location" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.1999.747493" PlaceOfPublication="New York, NY, USA" Issue="" TitlePrimary="Designing cost effective demand management contracts using game theory" UserRefID="96" URL="" TextAttributes="" RetrievedDate="" PubYear="1999" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999" RefType="5" InternalRefID="30" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0 7803 4893 1" OtherPages="32" Keyword="contracts|demand side management|electricity supply industry|game theory|power system economics|power system reliability|sensitivity analysis" AuthorSecondary="" LastModified="2006-08-21T07:30:00" User1="6209738" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="IEEE" StartPage="427" PeriodicalFull="" TitleTertiary="IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.1999.747493
+    :title_tertiary: 
+    - IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)
+    :user_1: 
+    - "6209738"
+    :author_primary: 
+    - Fahrioglu,M.
+    - Alvarado,F.L.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - "1"
+    :place_of_publication: 
+    - New York, NY, USA
+    :abstract: 
+    - Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example.
+    :pub_year: 
+    - "1999"
+    :keyword: 
+    - Reactive power
+    - Marketing
+    - Utility rates
+    - Electric utilities
+    - Electric power systems
+    - Electric power transmission
+    :user_2: 
+    - Market concentration
+    :start_page: 
+    - "294"
+    :title_primary: 
+    - Measuring reactive market power
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "296"
+    :title_secondary: 
+    - Proceedings of the 1999 Winter Meeting of IEEE Power Engineering Society. Part 1 (of 2), Jan 31-Feb 4 1999
+    :original_data: <z:row WebsiteTitle="" User2="Market concentration" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,Fernando L.|Overbye,Thomas" Marked="0         " Created="2006-06-27T11:10:07" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example." SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="New York, NY, USA" Issue="" TitlePrimary="Measuring reactive market power" UserRefID="97" URL="" TextAttributes="" RetrievedDate="" PubYear="1999" DataSource="" PubDateFreeForm="" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of the 1999 Winter Meeting of IEEE Power Engineering Society. Part 1 (of 2), Jan 31-Feb 4 1999" RefType="5" InternalRefID="31" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="296" Keyword="Reactive power|Marketing|Utility rates|Electric utilities|Electric power systems|Electric power transmission" AuthorSecondary="" LastModified="2006-08-21T07:30:00" User1="99044630790" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Univ of Wisconsin, Madison, WI, USA" Publisher="IEEE, Piscataway, NJ, USA" StartPage="294" PeriodicalFull="" TitleTertiary="IEEE Engineering Society, Winter Meeting"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Univ of Wisconsin, Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - IEEE Engineering Society, Winter Meeting
+    :user_1: 
+    - "99044630790"
+    :notes: 
+    - Compilation and indexing terms, Copyright 2006 Elsevier Inc. All rights reserved
+    :author_primary: 
+    - Alvarado,Fernando L.
+    - Overbye,Thomas
+    :publisher: 
+    - IEEE, Piscataway, NJ, USA
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :place_of_publication: 
+    - San Luis Obispo, CA, USA
+    :abstract: 
+    - Demand management programs can help alleviate the stress brought on the system by events and contingencies. Some problems can be solved by system-wide load reduction, and other problems need location specific attention. If a utility has demand management contracts with the customers at critical locations, most problems can be solved more efficiently. This paper illustrates how locational attributes of customers incorporated into demand management contract design, can have a significant impact in solving system problems. Having locational variance in demand management programs can help improve both the engineering and economic analysis of the system. Demand management contracts become more efficient economically, bringing more monetary benefits to the utility, and system security issues are addressed more efficiently
+    :pub_year: 
+    - "1999"
+    :keyword: 
+    - demand side management
+    - power system security
+    :user_2: 
+    - customer location
+    - demand management contracts
+    - demand management programs
+    - system-wide load reduction
+    - location specific attention
+    - critical locations
+    - locational variance
+    - economic analysis
+    - engineering analysis
+    - system security issues
+    - sensitivity analysis
+    :start_page: 
+    - "33"
+    :title_primary: 
+    - On the importance of customer location in demand management contracts
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :other_pages: 
+    - "7"
+    :title_secondary: 
+    - Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999
+    :original_data: <z:row WebsiteTitle="" User2="customer location; demand management contracts; demand management programs; system-wide load reduction; location specific attention; critical locations; locational variance; economic analysis; engineering analysis; system security issues; sensitivity analysis" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Fahrioglu,M.|Alvarado,F.L." Marked="0         " Created="2006-06-27T11:10:07" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Demand management programs can help alleviate the stress brought on the system by events and contingencies. Some problems can be solved by system-wide load reduction, and other problems need location specific attention. If a utility has demand management contracts with the customers at critical locations, most problems can be solved more efficiently. This paper illustrates how locational attributes of customers incorporated into demand management contract design, can have a significant impact in solving system problems. Having locational variance in demand management programs can help improve both the engineering and economic analysis of the system. Demand management contracts become more efficient economically, bringing more monetary benefits to the utility, and system security issues are addressed more efficiently" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="" PlaceOfPublication="San Luis Obispo, CA, USA" Issue="" TitlePrimary="On the importance of customer location in demand management contracts" UserRefID="98" URL="" TextAttributes="" RetrievedDate="" PubYear="1999" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="Proceedings of the Thirty-First North American Power Symposium, 11-12 Oct. 1999" RefType="5" InternalRefID="32" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="" OtherPages="7" Keyword="demand side management|power system security" AuthorSecondary="" LastModified="2006-08-21T07:30:00" User1="6512084" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA" Publisher="California Polytech. State Univ" StartPage="33" PeriodicalFull="" TitleTertiary="Proceedings Thirty-First Annual North American Power Symposium"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Dept. of Electr. &#x26; Comput. Eng., Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :title_tertiary: 
+    - Proceedings Thirty-First Annual North American Power Symposium
+    :user_1: 
+    - "6512084"
+    :author_primary: 
+    - Fahrioglu,M.
+    - Alvarado,F.L.
+    :publisher: 
+    - California Polytech. State Univ
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :volume: 
+    - vol.1
+    :place_of_publication: 
+    - New York, NY, USA
+    :abstract: 
+    - Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example
+    :pub_year: 
+    - "1999"
+    :keyword: 
+    - commerce
+    - electricity supply industry
+    - marketing
+    - power system economics
+    - reactive power
+    - tariffs
+    :user_2: 
+    - reactive market power measurement
+    - electricity service providers
+    - market concentration degree
+    - market power analysis
+    - Herfindahl-Hirschman Index
+    :start_page: 
+    - "294"
+    :title_primary: 
+    - Measuring reactive market power
+    :folder: 
+    - Alvarado F* - ev|Alvarado F* - comb
+    :issn_isbn: 
+    - 0 7803 4893 1
+    :other_pages: 
+    - "6"
+    :title_secondary: 
+    - IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999
+    :original_data: <z:row WebsiteTitle="" User2="reactive market power measurement; electricity service providers; market concentration degree; market power analysis; Herfindahl-Hirschman Index" AuthorTertiary="" SponsoringLibraryLocation="" SponsoringLibrary="" User3="" Notes="" SubFile_Database="" Edition="" PeriodicalAbbrev="" AuthorPrimary="Alvarado,F.L.|Overbye,T." Marked="0         " Created="2006-06-27T11:10:07" AuthorQuinary="" AuthorQuaternary="" User4="" Abstract="Market power refers to conditions where the providers of a service can consistently charge prices above those that would be established by a competitive market. There are many well known definitions of market power, including indices intended to quantify the degree of market concentration of energy supplies. This paper explores a method by which one of the standard indices in market power analysis (the Herfindahl-Hirschman Index) can be used to measure reactive power market concentration. The proposed method is illustrated by means of a simple example" SourceType="0" User5="" Folder="Alvarado F* - ev|Alvarado F* - comb" Links="http://dx.doi.org/10.1109/PESW.1999.747469" PlaceOfPublication="New York, NY, USA" Issue="" TitlePrimary="Measuring reactive market power" UserRefID="99" URL="" TextAttributes="" RetrievedDate="" PubYear="1999" DataSource="" PubDateFreeForm="/" OverFlow="" CitedRefs="" DatabaseName="" Language="" AccessionNumber="" TitleSecondary="IEEE Power Engineering Society. 1999 Winter Meeting, 31 Jan.-4 Feb. 1999" RefType="5" InternalRefID="33" UserID="10852" PubDateElectronic="" WebsiteVersion="" CallNumber="" WebsiteEditor="" IdentifyingPhrase="" DOI="" Volume="vol.1" Comments="" Objects="" ShortenedTitle="" Availability="" ISSN_ISBN="0 7803 4893 1" OtherPages="6" Keyword="commerce|electricity supply industry|marketing|power system economics|reactive power|tariffs" AuthorSecondary="" LastModified="2006-08-21T07:30:01" User1="6209713" OriginalForeignTitle="" Classification="" Author_Address_Affiliation="Wisconsin Univ., Madison, WI, USA" Publisher="IEEE" StartPage="294" PeriodicalFull="" TitleTertiary="IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)"></z:row>
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - Wisconsin Univ., Madison, WI, USA
+    :ref_type: 
+    - "5"
+    :links: 
+    - http://dx.doi.org/10.1109/PESW.1999.747469
+    :title_tertiary: 
+    - IEEE Power Engineering Society. 1999 Winter Meeting (Cat. No.99CH36233)
+    :user_1: 
+    - "6209713"
+    :author_primary: 
+    - Alvarado,F.L.
+    - Overbye,T.
+    :publisher: 
+    - IEEE
+- !ruby/object:ParsedCitation 
+  citation_type: :refworks_deprecated_xml
+  properties: 
+    :subfile_database: 
+    - "DT: Article"
+    :volume: 
+    - "23"
+    :place_of_publication: 
+    - NEW YORK; 345 E 47TH ST, NEW YORK, NY 10017-2394
+    :issue: 
+    - "1"
+    :pub_year: 
+    - "1976"
+    :keyword: 
+    - Automation & Control Systems
+    - Engineering, Electrical & Electronic
+    - Instruments & Instrumentation
+    :language: 
+    - English
+    :start_page: 
+    - "44"
+    :title_primary: 
+    - Digital Method for Dc Motor Speed Control
+    :folder: 
+    - Alvarado F* - wos|Alvarado F* - comb
+    :issn_isbn: 
+    - 0018-9421
+    :other_pages: 
+    - "46"
+    :original_data: "<z:row WebsiteTitle=\"\" User2=\"\" AuthorTertiary=\"\" SponsoringLibraryLocation=\"\" SponsoringLibrary=\"\" User3=\"\" Notes=\"PT: J; CR: HAWKINS J, 1972, IEEE T IND APPL, V21, P155 KUSKO A, 1972, IEEE SPECTRUM OCT, P54 MASON J, 1964, MACHINE DESIGN 1008, P157 MESNIAEFF PG, 1972, CONTROL ENGINEER MAY, P56 REASON J, 1972, AUTOMATION NOV, P58; NR: 5; TC: 13; J9: IEEE TRANS IND ELECTRON CONTR; PG: 3; GA: BD818; UT: ISI:A1976BD81800010\" SubFile_Database=\"DT: Article\" Edition=\"\" PeriodicalAbbrev=\"\" AuthorPrimary=\"MALONEY,T.J.|ALVARADO,F.L.\" Marked=\"0         \" Created=\"2006-07-17T07:05:37\" AuthorQuinary=\"\" AuthorQuaternary=\"\" User4=\"\" Abstract=\"\" SourceType=\"0\" User5=\"\" Folder=\"Alvarado F* - wos|Alvarado F* - comb\" Links=\"\" PlaceOfPublication=\"NEW YORK; 345 E 47TH ST, NEW YORK, NY 10017-2394\" Issue=\"1\" TitlePrimary=\"Digital Method for Dc Motor Speed Control\" UserRefID=\"4948\" URL=\"\" TextAttributes=\"\" RetrievedDate=\"\" PubYear=\"1976\" DataSource=\"\" PubDateFreeForm=\"\" OverFlow=\"\" CitedRefs=\"\" DatabaseName=\"\" Language=\"English\" AccessionNumber=\"\" TitleSecondary=\"\" RefType=\"1\" InternalRefID=\"212\" UserID=\"10852\" PubDateElectronic=\"\" WebsiteVersion=\"\" CallNumber=\"\" WebsiteEditor=\"\" IdentifyingPhrase=\"\" DOI=\"\" Volume=\"23\" Comments=\"\" Objects=\"\" ShortenedTitle=\"\" Availability=\"\" ISSN_ISBN=\"0018-9421\" OtherPages=\"46\" Keyword=\"Automation &amp; Control Systems|Engineering, Electrical &amp; Electronic|Instruments &amp; Instrumentation\" AuthorSecondary=\"\" LastModified=\"2006-08-21T07:31:00\" User1=\"\" OriginalForeignTitle=\"\" Classification=\"\" Author_Address_Affiliation=\"MONROE CTY COMMUNITY COLL,MONROE,MI 48161. UNIV WISCONSIN,MADISON,WI 53706.\" Publisher=\"IEEE-INST ELECTRICAL ELECTRONICS ENGINEERS INC\" StartPage=\"44\" PeriodicalFull=\"Ieee Transactions on Industrial Electronics and Control Instrumentation\" TitleTertiary=\"\"></z:row>"
+    :source_type: 
+    - "0"
+    :author_address_affiliations: 
+    - MONROE CTY COMMUNITY COLL,MONROE,MI 48161. UNIV WISCONSIN,MADISON,WI 53706.
+    :periodical_full: 
+    - Ieee Transactions on Industrial Electronics and Control Instrumentation
+    :ref_type: 
+    - "1"
+    :notes: 
+    - "PT: J; CR: HAWKINS J, 1972, IEEE T IND APPL, V21, P155 KUSKO A, 1972, IEEE SPECTRUM OCT, P54 MASON J, 1964, MACHINE DESIGN 1008, P157 MESNIAEFF PG, 1972, CONTROL ENGINEER MAY, P56 REASON J, 1972, AUTOMATION NOV, P58; NR: 5; TC: 13; J9: IEEE TRANS IND ELECTRON CONTR; PG: 3; GA: BD818; UT: ISI:A1976BD81800010"
+    :author_primary: 
+    - MALONEY,T.J.
+    - ALVARADO,F.L.
+    :publisher: 
+    - IEEE-INST ELECTRICAL ELECTRONICS ENGINEERS INC

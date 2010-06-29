@@ -1,0 +1,33 @@
+%fieldset
+  %legend Grant
+
+  = hidden_field_tag :klass, 'Grant'
+  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+
+  %ul
+    %li
+      = render :partial => 'works/forms/fields/author_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/contributor_name_strings'
+    %li
+      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Dates Funded"}
+    %li
+      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Institution"}
+
+    - if current_user.has_role?("admin", System)
+      %li
+        = render :partial => 'works/forms/fields/keywords'
+    %li
+      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form, :label => "Funding Agency / Sponsor"}
+    %li
+      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+    %li
+      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form, :label => "Grant Identifier"}
+    %li
+      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}

@@ -1,0 +1,15 @@
+#footer{:class => "span-24"}
+  %div{:class => "span-23 prepend-1"}
+    %p
+      %strong
+        %a{:href => $UNIVERSITY_URL}= $UNIVERSITY_FULL_NAME 
+        | 
+        %a{:href => $LIBRARY_URL}= $LIBRARY_NAME
+      %br/
+      = $UNIVERSITY_FULL_ADDRESS
+      %br/
+      ="Powered by"
+      %strong
+        =link_to "BibApp", "http://bibapp.org/"
+
+        

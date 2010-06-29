@@ -1,0 +1,11 @@
+-# Medium field
+-#
+-# Possible Input Variables:
+-#    :form     => current form (REQUIRED)
+-#    :label    => Label to diplay (default: Medium)
+
+-# Initialize optional input variables
+- label ||= "Medium"
+
+= form.label :medium, "#{label}:"
+= form.text_field :medium, :class=>'text'

@@ -1,0 +1,74 @@
+/ === Groups === Show ===
+/ Main
+
+- @title = @group.name  # Specify text at end of HTML <title> tag
+
+- if logged_in? && current_user.has_role?("editor", @name_string)
+  - content_for :admin_bar do
+    / #### Admin Actions ###
+    %div.span-24#admin-actions
+      %ul#edit-actions
+        %li=link_to "Add a Group", new_group_path
+        %li= link_to "Edit this group", edit_group_path
+        %li=link_to "Manage Roles", group_roles_path(@group)
+
+/ ### Main ###
+%div.span-24
+  %div.span-22.prepend-1
+
+    %h2
+      = @group.name
+      =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss"))
+    = render :partial => "shared/local_nav", :locals => {:object => "group"}
+
+  %div.span-15.prepend-1
+    / People
+    = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
+
+    %div.span-15
+      / Description
+      %h3.heading Description
+      %p= @group.description
+      %p= link_to @group.url
+
+      / Publications
+      %div.span-6.append-2
+        = render :partial => "shared/publications", :locals => {:count => 10}
+
+      / Publishers
+      %div.span-6.last
+        = render :partial => "shared/publishers", :locals => {:count => 10}
+
+
+  %div.span-7.last
+    / Sub-Groups
+    %div.span-6.right_box_no_border
+      - unless @group.parent.nil? or @group.parent.hide?
+        %h3.heading Belongs to
+        %ul.parent-group
+          %li= link_to @group.parent.name, group_path(@group.parent)
+      - unless @group.children.empty?
+        %h3.heading Sub-Groups
+        %ul.sub-groups
+          -@group.children.each do |g|
+            - unless g.hide?
+              %li
+                =link_to g.name, group_path(g)
+                ="(#{g.works.size})"
+
+    %div.span-7.right_box_no_border
+      %h3 Types of Work
+      %div{:style => "text-align:center;"}
+        %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
+
+    %div#tagcloud.right_box_no_border.span-7
+      %h3 Popular research topics
+      %div{:style => "text-align:center;"}
+        = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
+
+    %div.span-7.last.right_box_no_border
+      %h3.heading
+        =link_to "Recent Works", group_works_path(@group)
+      %ol#works{:class => "span-7 works"}
+        - @works.first(3).each do |work|
+          = render :partial => "shared/work", :locals => {:work => work}

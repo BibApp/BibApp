@@ -1,0 +1,4 @@
+- if !o.image_url?
+  = image_tag(o.image_url, :size => "110x150", :style => "border:2px dashed #CCC; padding:3px;")
+- else
+  =image_tag("man.jpg", :style => "border:2px dashed #CCC; padding:3px;")

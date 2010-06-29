@@ -1,0 +1,179 @@
+--- 
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :a3: 
+    - Anonymous
+    :is: 
+    - "3"
+    :jf: 
+    - Hormones and behavior
+    :vl: 
+    - "45"
+    :ty: 
+    - JOUR
+    :ja: 
+    - Horm.Behav.
+    :cy: 
+    - United States
+    :y1: 
+    - "2004///Spring"
+    :original_data: |-
+      TY  - JOUR
+      ID  - 116
+      A1  - Auger,A. P.
+      T1  - Steroid receptor control of reproductive behavior
+      Y1  - 2004
+      Y2  - Mar
+      VL  - 45
+      IS  - 3
+      SP  - 168
+      EP  - 172
+      KW  - Androgens/metabolism
+      KW  - Animals
+      KW  - Brain/metabolism
+      KW  - Estrogens/metabolism
+      KW  - Humans
+      KW  - Ligands
+      KW  - Progestins/metabolism
+      KW  - Receptors, Androgen/metabolism
+      KW  - Receptors, Estrogen/metabolism
+      KW  - Receptors, Progesterone/metabolism
+      KW  - Receptors, Steroid/classification/metabolism
+      KW  - Reproductive Behavior/physiology
+      KW  - Sexual Behavior, Animal/physiology
+      KW  - Signal Transduction/physiology
+      AB  - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
+      N1  - LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish
+      CY  - United States
+      A3  - Anonymous
+      SN  - 0018-506X
+      AD  - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+      JF  - Hormones and behavior
+      JA  - Horm.Behav.
+      M1  - Journal
+    :n1: 
+    - "LR: 20061115; PUBM: Print; JID: 0217764; 0 (Androgens); 0 (Estrogens); 0 (Ligands); 0 (Progestins); 0 (Receptors, Androgen); 0 (Receptors, Estrogen); 0 (Receptors, Progesterone); 0 (Receptors, Steroid); RF: 48; 2003/08/14 [received]; 2003/09/17 [revised]; 2003/09/17 [accepted]; ppublish"
+    :ab: 
+    - Steroid hormone receptors in the brain were thought to be only activated by steroid hormones. Once steroid binds to the receptor, it would act on DNA to regulate gene transcription. Recent data indicate that steroid receptor action is more complex. Steroid receptor activity in the brain is under the control of co-regulatory proteins, such as coactivators. It is the expression of these additional proteins that modulate the activity of steroid receptors. Furthermore, steroid receptors are not only activated by steroid, but can also be activated by neurotransmitters in the absence of steroid. For example, progestin receptors in rodent brain are sensitive to progesterone and to social cues in the environment. This review discusses these emerging mechanisms for steroid receptor control in developing and adult brain.
+    :t1: 
+    - Steroid receptor control of reproductive behavior
+    :a1: 
+    - Auger,A. P.
+    :sp: 
+    - "168"
+    :m1: 
+    - Journal
+    :kw: 
+    - Androgens/metabolism
+    - Animals
+    - Brain/metabolism
+    - Estrogens/metabolism
+    - Humans
+    - Ligands
+    - Progestins/metabolism
+    - Receptors, Androgen/metabolism
+    - Receptors, Estrogen/metabolism
+    - Receptors, Progesterone/metabolism
+    - Receptors, Steroid/classification/metabolism
+    - Reproductive Behavior/physiology
+    - Sexual Behavior, Animal/physiology
+    - Signal Transduction/physiology
+    :y2: 
+    - Mar
+    :id: 
+    - "116"
+    :ad: 
+    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+    :sn: 
+    - 0018-506X
+    :ep: 
+    - "172"
+- !ruby/object:ParsedCitation 
+  citation_type: :ris
+  properties: 
+    :a3: 
+    - Anonymous
+    :is: 
+    - "6"
+    :jf: 
+    - Journal of neuroendocrinology
+    :vl: 
+    - "15"
+    :ty: 
+    - JOUR
+    :ja: 
+    - J.Neuroendocrinol.
+    :cy: 
+    - England
+    :y1: 
+    - "20-This is an invalid date"
+    :original_data: |-
+      TY  - JOUR
+      ID  - 117
+      A1  - Auger,A. P.
+      T1  - Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein
+      Y1  - 2003
+      Y2  - Jun
+      VL  - 15
+      IS  - 6
+      SP  - 622
+      EP  - 627
+      KW  - Animals
+      KW  - Brain/growth & development/metabolism
+      KW  - CREB-Binding Protein
+      KW  - Cyclic AMP Response Element-Binding Protein/metabolism
+      KW  - Female
+      KW  - Male
+      KW  - Nuclear Proteins/metabolism
+      KW  - Phosphorylation
+      KW  - Rats
+      KW  - Sex Characteristics
+      KW  - Sexual Behavior/physiology
+      KW  - Signal Transduction
+      KW  - Trans-Activators/metabolism
+      AB  - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
+      N1  - LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish
+      CY  - England
+      A3  - Anonymous
+      SN  - 0953-8194
+      AD  - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+      JF  - Journal of neuroendocrinology
+      JA  - J.Neuroendocrinol.
+      M1  - Journal
+    :n1: 
+    - "LR: 20051117; PUBM: Print; JID: 8913461; 0 (Crebbp protein, rat); 0 (Cyclic AMP Response Element-Binding Protein); 0 (Nuclear Proteins); 0 (Trans-Activators); EC 2.3.1.48 (CREB-Binding Protein); RF: 53; ppublish"
+    :ab: 
+    - Although it is widely known that steroid hormones differentiate the brain, little is known about the signal transduction pathways that are influenced by steroid hormones during development. This review focuses on divergence in the phosphorylation of cAMP response element binding protein (CREB) in the developing male and female rat brain. At birth, males have an increased phosphorylation of CREB compared to females. As CREB mediates changes in cellular morphology, function and survival rates, its activation may underlie an important event in steroid-mediated sexual differentiation of the brain. The importance of CREB is further supported by a sex difference in the expression of the nuclear receptor coactivator, CREB-binding protein, a critical factor involved in the genomic actions of CREB. This suggests that the developing male brain may be in a hyper-responsive state to factors that lead to increased phosphorylation of CREB, resulting in divergent responses in males versus females. An example of this divergence is the response to GABA. In the male rat brain, GABA action leads to increased phosphorylation of CREB; whereas GABA action in the female brain leads to decreased phosphorylation of CREB. The potential consequences of this divergence in the regulation of CREB are discussed in relation to adult sexually dimorphic brain morphology, physiology and behaviour.
+    :t1: 
+    - "Sex differences in the developing brain: crossroads in the phosphorylation of cAMP response element binding protein"
+    :a1: 
+    - Auger,A. P.
+    :sp: 
+    - "622"
+    :m1: 
+    - Journal
+    :kw: 
+    - Animals
+    - Brain/growth & development/metabolism
+    - CREB-Binding Protein
+    - Cyclic AMP Response Element-Binding Protein/metabolism
+    - Female
+    - Male
+    - Nuclear Proteins/metabolism
+    - Phosphorylation
+    - Rats
+    - Sex Characteristics
+    - Sexual Behavior/physiology
+    - Signal Transduction
+    - Trans-Activators/metabolism
+    :y2: 
+    - Jun
+    :id: 
+    - "117"
+    :ad: 
+    - Department of Psychology, University of Wisconsin-Madison, Madison, WI 53706, USA. apauger@wisc.edu
+    :sn: 
+    - 0953-8194
+    :ep: 
+    - "627"
