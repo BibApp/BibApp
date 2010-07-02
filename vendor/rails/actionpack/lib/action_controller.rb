@@ -31,7 +31,7 @@ rescue LoadError
   end
 end
 
-gem 'rack', '~> 1.0.0'
+gem 'rack', '~> 1.1.0'
 require 'rack'
 
 module ActionController

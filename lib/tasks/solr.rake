@@ -19,7 +19,7 @@ namespace :solr do
     rescue Net::HTTPServerException #responding
       puts "Port #{SOLR_PORT} already in use" and return
 
-    rescue Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
+    rescue NoMethodError, Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
   
       SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
       
