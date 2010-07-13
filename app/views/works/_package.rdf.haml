@@ -1,10 +1,3 @@
--authors = ""
--work.authors.each { |a| authors += "#{a[:name]}, " }
--authors = authors[0..authors.length-3]
--editors = ""
--work.editors.each { |e| editors += "#{e[:name]}, " }
--editors = editors[0..editors.length-3]
-
 -#ce = WorkExport.new
 -#citation = ce.drive_csl("apa",work)
 -#citation = h(citation.gsub(/<[^>]*>/,""))
@@ -21,10 +14,16 @@
 
 %rdf:Description{'rdf:about'=>"#{work_url(work)}"}
   %rdf:type{'rdf:resource'=>"http://purl.org/ontology/bibo/Document"}
-  -unless authors.blank?
-    %bibo:authorList{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=authors
-  -unless editors.blank?
-    %bibo:editorList{'rdf:datatype'=>"http://www.w3.org/2001/XMLSchema#string"}=editors
+  -unless work.authors.blank?
+    %bibo:authorList
+      %rdf:Seq
+        -work.authors.each do |a|
+          %rdf:li="#{a[:name]}"
+  -unless work.editors.blank?
+    %bibo:editorList
+      %rdf:Seq
+        -work.editors.each do |e|
+          %rdf:li="#{e[:name]}"
   %core:title=h(work.title_primary)
   -unless work.abstract.blank?
     %bibo:abstract

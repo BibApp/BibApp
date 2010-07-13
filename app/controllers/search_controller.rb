@@ -5,26 +5,31 @@ class SearchController < ApplicationController
     search(params)
     
     respond_to do |format|
-      format.html # Do HTML
-      format.yaml { render :yaml => @works }
-      format.json {
-      
-        # Too much processing move to view!
-        @items = Hash.new
-        @items["items"] = Array.new
-        @works.each do |work|
-          item = Hash.new
-          item["type"] = work["type"]
-          item["label"] = work["title"]
-          item["authors"] = work["authors"]
-          item["year"] = work["year"]
-          item["publication"] = work["publication"]
-          @items["items"] << item
-        end
-        
-        render :json => @items, :callback => params[:callback] 
-      }
-      format.xml  # Do XML
+      format.html # Do HTML      
+#      format.json {
+#
+#        # Too much processing move to view!
+#        @items = Hash.new
+#        @items["items"] = Array.new
+#        @works.each do |work|
+#          item = Hash.new
+#          item["type"] = work["type"]
+#          item["label"] = work["title"]
+#          item["authors"] = work["authors"]
+#          item["year"] = work["year"]
+#          item["publication"] = work["publication"]
+#          @items["items"] << item
+#        end
+#
+#        render :json => @items, :callback => params[:callback]
+#      }
+      format.json
+      format.yaml
+      format.xml
+      format.rdf
+#      format.yaml { render :yaml => @works }
+      format.xml  
+      format.rdf  
     end
   end
   
