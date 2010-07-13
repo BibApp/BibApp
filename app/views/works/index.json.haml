@@ -5,7 +5,7 @@
   - work = Work.find(w['pk_i'])
   :plain
         {
-          "type: "#{work.type}", 
+          "type": "#{work.type}",
           "id": "#{work.id}",
           "link": {
             "href": "#{work_url(work.id)}.json"
