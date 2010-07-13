@@ -7,4 +7,4 @@
 
   -if @has_next_page
     -@page = @page == 0 ? 1 : @page
-    %link{:rel => "next", :href => "#{works_url()}.rdf?page=#{@page.to_i+1}"}
+    %link{:rel => "next", :href => "#{search_url()}?q=#{@query}&format=rdf&page=#{@page.to_i+1}"}
