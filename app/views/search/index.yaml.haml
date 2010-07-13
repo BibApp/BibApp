@@ -13,4 +13,4 @@
   :plain
       - link:
         rel: "next"
-        href: "#{works_url()}.yaml?page=#{@page.to_i+1}"
+        href: "#{search_url()}?q=#{@query}&format=yaml&page=#{@page.to_i+1}"

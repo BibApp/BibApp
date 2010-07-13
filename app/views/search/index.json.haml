@@ -17,7 +17,7 @@
         {
           "link": {
             "rel": "next",
-            "href": "#{works_url()}.json?page=#{@page.to_i+1}"
+            "href": "#{search_url()}?q=#{@query}&format=json&page=#{@page.to_i+1}"
           }
         }
 :plain
