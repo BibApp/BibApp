@@ -17,6 +17,8 @@
         ="#{user.login} (#{user.email}) - "
         - if user.has_role? @role_name.downcase, @authorizable
           %strong
-            ="Already has #{@role_name} permissions"              
+            ="Already has #{@role_name} permissions"
+          - role_id = Role.find_by_authorizable_id(@authorizable)
+          =link_to " [remove]", {:controller => "roles", :action => "destroy", :role_id => role_id, :user_id => user.id}, :method=>:delete
         - else
           =link_to "Add as #{@role_name}", {:controller => "roles", :action => "create", :name => @role_name, :user_id => user.id}, :method=>:post
