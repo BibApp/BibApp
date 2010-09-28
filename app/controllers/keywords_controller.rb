@@ -17,7 +17,9 @@ class KeywordsController < ApplicationController
 
     search(params)
 
-    years_with_papers = Range.new(@facets[:years].first.name, @facets[:years].last.name)
+    first_year = @facets[:years].first.nil? ? nil : @facets[:years].first.name
+    last_year = @facets[:years].last.nil? ? nil : @facets[:years].last.name
+    years_with_papers = Range.new(first_year, last_year)
     # Ensure we have an array; we'll need this to get the list of years
     if years_with_papers.is_a?(Enumerable)
       year_arr = years_with_papers.to_a
