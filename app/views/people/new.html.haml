@@ -19,12 +19,12 @@
         %legend="Search results"
         - if @ldap_results.length > 0
           %div{:style => "max-height:10em; overflow-x:hidden;overflow-y:auto;"}
-            %ul#ldap_results
+            %ul#ldap_query_results
               - @ldap_results.each_with_index do |l, i|
                 - # I don't know why :collection doesn't work here
                 = render :partial => "ldap_result", :object => l, :locals => {:i => i}
           %script{ :type => "text/javascript" }
-            = update_page do |p|
+            = update_page_tag do |p|
               = p.assign "ldap_results", @ldap_results
         - else
           %p="No results for #{params[:q]}"
