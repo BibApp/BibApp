@@ -1,17 +1,16 @@
 / === Groups === Edit ===
 / Main
-- if logged_in? && current_user.has_role?("editor", @name_string)
+- if logged_in? && current_user.has_role?("editor", @group)
   - content_for :admin_bar do
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
-        - if logged_in? && current_user.has_role?("editor", @person) && !current_user.has_role?("admin", @person)
-          %li=link_to "Remove Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
-        - if logged_in? && current_user.has_role?("admim", @person)
+        - if logged_in? && current_user.has_role?("editor", @group)
           - if @group.hide == true
             %li=link_to "Unhide Group", {:id => @group.id, :controller => "groups", :action => "unhide"}, :confirm => 'Are you sure?'
           - else
             %li=link_to "Hide Group", {:id => @group.id, :controller => "groups", :action => "hide"}, :confirm => 'Are you sure?'
+        - if logged_in? && current_user.has_role?("admin", @group)
           %li=link_to "Delete Group", {:id => @group.id, :controller => "groups", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this group? This cannot be undone.'
 
   %div{:class => "span-22 prepend-1"}

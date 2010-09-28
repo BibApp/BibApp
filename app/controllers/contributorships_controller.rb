@@ -34,7 +34,7 @@ class ContributorshipsController < ApplicationController
   def verify_multiple
     # Anyone who is minimally an admin (on anything in system) can verify
     # contributorships
-    permit "admin"
+    #permit "admin"
 
     contrib_ids = params[:contrib_id]
     full_success = true
@@ -45,11 +45,12 @@ class ContributorshipsController < ApplicationController
         contributorship = Contributorship.find(contrib_id)
 
         #One final check...only an admin on this contributorship can verify it
-        if logged_in? && current_user.has_role?("admin", contributorship)
-          contributorship.verify_contributorship
-        else
-          full_success = false
-        end
+#        if logged_in? && current_user.has_role?("admin", contributorship)
+#          contributorship.verify_contributorship
+#        else
+#          full_success = false
+#        end
+        contributorship.verify_contributorship
       end
     end
     
@@ -72,7 +73,7 @@ class ContributorshipsController < ApplicationController
   def unverify_multiple
     #Anyone who is minimally an admin (on anything in system) can unverify
     #       contributorships
-    permit "admin"
+    #permit "admin"
 
     contrib_ids = params[:contrib_id]
 
@@ -84,12 +85,14 @@ class ContributorshipsController < ApplicationController
         contributorship = Contributorship.find(contrib_id)
 
         #One final check...only an admin on this contributorship can verify it
-        if logged_in? && current_user.has_role?("admin", contributorship)
-          contributorship.unverify_contributorship
-          contributorship.save
-        else
-          full_success = false
-        end
+#        if logged_in? && current_user.has_role?("admin", contributorship)
+#          contributorship.unverify_contributorship
+#          contributorship.save
+#        else
+#          full_success = false
+#        end
+        contributorship.unverify_contributorship
+        contributorship.save
       end
     end
 
@@ -112,7 +115,7 @@ class ContributorshipsController < ApplicationController
   def deny_multiple
     #Anyone who is minimally an admin (on anything in system) can verify
     #       contributorships
-    permit "admin"
+    #permit "admin"
 
     contrib_ids = params[:contrib_id]
 
@@ -124,12 +127,14 @@ class ContributorshipsController < ApplicationController
         contributorship = Contributorship.find(contrib_id)
 
         #One final check...only an admin on this contributorship can verify it
-        if logged_in? && current_user.has_role?("admin", contributorship)
-          contributorship.deny_contributorship
-          contributorship.save
-        else
-          full_success = false
-        end
+#        if logged_in? && current_user.has_role?("admin", contributorship)
+#          contributorship.deny_contributorship
+#          contributorship.save
+#        else
+#          full_success = false
+#        end
+        contributorship.deny_contributorship
+        contributorship.save
       end
     end
 

@@ -6,9 +6,9 @@
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
-        %li=link_to_unless_current "My Account", edit_user_path
         %li=link_to_unless_current "Show all Imports", user_imports_path(@user)
-        %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
+        - if logged_in? and @current_user.has_any_role?("editor", Group)
+          %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
 
   %div.span-22.prepend-1
     = error_messages_for :user, :class => 'notice'

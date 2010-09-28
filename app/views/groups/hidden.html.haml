@@ -2,7 +2,7 @@
 / Main
 - @title="Hidden Groups" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("admin", @name_string)
+- if logged_in? && current_user.has_role?("editor", System)
   %div{:class => "span-24"}
     %div{:class => "span-22 prepend-1"}
       %h2="Hidden Groups"

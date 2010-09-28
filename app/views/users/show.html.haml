@@ -19,6 +19,8 @@
           %label="Roles in #{$APPLICATION_NAME}:"
           %ul.roles
             - @user.roles.each do |role|
-              - if role.authorizable_type == 'System' or role.authorizable_type == 'Group'
-                %li=role.description
+              - if role.authorizable_type == 'System' or role.authorizable_type == 'Group' or role.authorizable_type == 'Person'
+                %li
+                  = role.description
+                  = link_to " [remove]", {:controller => "roles", :action => "destroy", :role_id => role.id, :user_id => @user.id}, :method=>:delete
   

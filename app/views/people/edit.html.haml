@@ -1,7 +1,7 @@
 / === People === Edit ===
 / Main
 - @title = "#{@person.display_name}: Personal Info"
-- if logged_in? && current_user.has_role?("admin", @name_string)
+- if logged_in? && current_user.has_role?("admin", @person)
   - content_for :admin_bar do
     / #### Admin Actions ###
     %div.span-24#admin-actions
