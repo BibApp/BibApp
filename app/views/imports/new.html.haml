@@ -1,13 +1,13 @@
 / === Import === New ===
 / Main
 %div.span-24
-
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to_unless_current "Show all Imports", user_imports_path
-        %li=link_to_unless_current "Add an Import", new_user_import_path
+  - if logged_in? and @current_user.has_any_role?("editor", Group)
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
+        %ul#edit-actions
+          %li=link_to_unless_current "Show all Imports", user_imports_path
+          %li=link_to_unless_current "Add an Import", new_user_import_path
 
   %div.span-22.prepend-1
 

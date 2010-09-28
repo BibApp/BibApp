@@ -2,16 +2,22 @@
 / Main
 - @title="Groups" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @name_string)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      - if params[:person_id]
+
+- if params[:person_id]
+  - if logged_in? && current_user.has_role?("editor", Person.find(params[:person_id]))
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
         = render :partial => "people/admin_actions"
-      - else
+
+- else
+  - if logged_in? && current_user.has_any_role?("editor", Group)
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
         %ul#edit-actions
           %li=link_to "Add a Group", new_group_path
-          - if logged_in? && current_user.has_role?("admin", @name_string)
+          - if logged_in? && current_user.has_role?("admin", System)
             %li=link_to "Show Hidden Groups", hidden_groups_path
 
 %div.span-24

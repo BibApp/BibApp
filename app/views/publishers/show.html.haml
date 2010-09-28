@@ -7,7 +7,7 @@
       = @works
 
 - else
-  - if logged_in? && current_user.has_role?("editor", @name_string)
+  - if logged_in? && current_user.has_any_role?("editor", Group)
     - content_for :admin_bar do
       / #### Admin Actions ###
       %div.span-24#admin-actions

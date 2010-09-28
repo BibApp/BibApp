@@ -1,7 +1,7 @@
 / === Works === Edit ===
 / Main
 
-- if logged_in? && current_user.has_role?("admin", @name_string)
+- if logged_in? && current_user.has_role?("editor", @work)
   - content_for :admin_bar do
     / #### Admin Actions ###
     %div.span-24#admin-actions

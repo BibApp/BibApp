@@ -2,13 +2,19 @@
 / Main
 - @title = "Works" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @name_string)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      - if params[:person_id]
+/ ### Person / Works ###
+- if params[:person_id]
+  - if logged_in? && current_user.has_role?("editor", Person.find(params[:person_id]))
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
         = render :partial => "people/admin_actions"
-      - else
+
+- else
+  - if logged_in? && current_user.has_any_role?("editor", Group)
+    - content_for :admin_bar do
+      / #### Admin Actions ###
+      %div.span-24#admin-actions
         %ul#edit-actions
           %li=link_to "Add a Work", new_user_import_path(current_user)
 

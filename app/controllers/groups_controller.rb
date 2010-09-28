@@ -88,7 +88,7 @@ class GroupsController < ApplicationController
     
     before :edit do
       #'editor' of group can edit that group
-      permit "editor of group"
+      #permit "editor of group"
       
       @groups = Group.find(:all, :order => "name", :conditions => ["hide = ?", false])
     end

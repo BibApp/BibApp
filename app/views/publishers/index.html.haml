@@ -2,14 +2,13 @@
 / Main
 - @title="Publishers" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @name_string)
+- if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
         %li=link_to "Add a Publisher", new_publisher_path
-        - if current_user.has_role?("admin", System)
-          %li=link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])
+        %li=link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])
 
 %div.span-24
   %div.span-22.prepend-1
