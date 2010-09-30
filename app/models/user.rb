@@ -176,6 +176,20 @@ class User < ActiveRecord::Base
   # The above would check if the user has the 'editor' role
   # on ANY group within the system.
   def has_any_role?( role_name, authorizable_class )
+
+    ##################################################
+    # Cacade System Roles to everything!
+    ##################################################
+    unless authorizable_class.to_s == 'System'
+      #If user is a System Admin,
+      #then user has permissions to do ANYTHING
+      return true if has_role?("admin", System)
+
+      #If user has this role System-Wide,
+      #then this role should cascade to everything else!
+      return true if has_role?(role_name, System)
+    end
+
     #loop through user's roles, to look for any that match
     self.roles.each do |role|
       if (role.name == role_name) and (role.authorizable_type == authorizable_class.to_s) 
