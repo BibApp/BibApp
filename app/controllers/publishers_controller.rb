@@ -76,8 +76,8 @@ class PublishersController < ApplicationController
   end
   
   def authorities
-    #Only system-wide editors can assign authorities
-    permit "editor of System"
+    #Only group editors can assign authorities
+    permit "editor of Group"
     
     @a_to_z = Publisher.letters.collect { |d| d.letter }
     
@@ -134,7 +134,7 @@ class PublishersController < ApplicationController
 
   def update_multiple
     #Only system-wide editors can assign authorities
-    permit "editor of System"
+    permit "editor of Group"
     
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]

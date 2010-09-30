@@ -135,6 +135,9 @@ class User < ActiveRecord::Base
     # If this is a Class object, then cascade based on class types
     if authorizable_obj.is_a? Class
       case authorizable_obj.to_s
+      when "Group"
+        #If user has this role on any group in system, return true
+        return true if has_any_role?(role_name, Group)
       when "Person"
         #Group class role cascades to Person class
         return true if has_role?(role_name, Group)
