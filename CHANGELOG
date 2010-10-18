@@ -1,3 +1,17 @@
+1.0.1 - October 18, 2010
+--------------
+Adds json, yaml, xml/rdf output for search results
+Fixes errors in rdf and json output
+Fixes security hole which allowed anyone logged in to add new works
+Adds a listing for Person roles on the User index
+Adds the ability to remove roles from new_admin and new_editor pages
+Improves authorization:
+- Fixes bugs
+- Increases the importance of the Group editor role (e.g., Group editors can now admin authorities)
+- Restricts access of regular users
+Fixes IE error on new Person page
+Fixes LDAP error
+
 1.0 - June 30, 2010
 --------------
 
