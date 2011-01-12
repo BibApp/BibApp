@@ -4,7 +4,7 @@ require 'keywordings_controller'
 # Re-raise errors caught by the controller.
 class KeywordingsController; def rescue_action(e) raise e end; end
 
-class KeywordingsControllerTest < ActiveSupport::TestCase
+class KeywordingsControllerTest < ActionController::TestCase
   def setup
     @controller = KeywordingsController.new
     @request    = ActionController::TestRequest.new
