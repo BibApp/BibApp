@@ -4,7 +4,7 @@ require 'contributorships_controller'
 # Re-raise errors caught by the controller.
 class ContributorshipsController; def rescue_action(e) raise e end; end
 
-class ContributorshipsControllerTest < Test::Unit::TestCase
+class ContributorshipsControllerTest < ActiveSupport::TestCase
   def setup
     @controller = ContributorshipsController.new
     @request    = ActionController::TestRequest.new
