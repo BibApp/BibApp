@@ -1,0 +1,15 @@
+.rvmrc
+config/database.yml
+config/ldap.yml
+config/smtp.yml
+config/solr.yml
+config/sword.yml
+config/personalize.rb
+tmp/
+public/
+public.old/
+log/
+vendor/bibapp-solr/data
+vendor/solr/logs
+doc/
+coverage/
