@@ -62,11 +62,11 @@ class UsersController < ApplicationController
   # Activates a new user account (after user clicks on link in activation email)
   def activate
     user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
-    if !user.active?
+    if user and !user.active?
       user.activate
       flash[:notice] = "Signup is complete!  You may now login using your username and password."
     end
-    redirect_back_or_default($APPLICATION_URL)
+    redirect_back_or_default(root_url)
   end
 
 end
