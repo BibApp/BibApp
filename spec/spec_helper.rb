@@ -10,8 +10,9 @@ require 'spec/rails'
 #require 'webrat/integrations/rspec-rails'
 
 # Requires supporting files with custom matchers and macros, etc,
-# in ./support/ and its subdirectories.
+# in ./support/ and its subdirectories. Also require all factories, even in subdirectories
 Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
+Dir[File.expand_path(File.join(File.dirname(__FILE__),'factories','**','*.rb'))].each {|f| require f}
 
 ActionMailer::Base.delivery_method = :test
 
