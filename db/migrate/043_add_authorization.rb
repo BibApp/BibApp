@@ -2,7 +2,7 @@ class AddAuthorization < ActiveRecord::Migration
   def self.up
    
     # Roles to Users Table
-    create_table :roles_users, :force => true  do |t|
+    create_table :roles_users, :force => true, :id => false  do |t|
       t.column :user_id,          :integer
       t.column :role_id,          :integer
       t.column :created_at,       :datetime
