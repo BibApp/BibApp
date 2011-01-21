@@ -24,4 +24,5 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec', :version => '1.3.1', :lib => false
 config.gem 'rspec-rails', :version => '1.3.3', :lib => false
 config.gem 'shoulda', :lib => false
-config.gem 'factory_girl', :lib => false
+config.gem 'factory_girl'
+config.gem 'rcov'
