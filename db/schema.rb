@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090924211335) do
+ActiveRecord::Schema.define(:version => 20110113174527) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -315,7 +315,7 @@ ActiveRecord::Schema.define(:version => 20090924211335) do
     t.string   "role"
   end
 
-  add_index "work_name_strings", ["work_id", "name_string_id"], :name => "work_name_string_join", :unique => true
+  add_index "work_name_strings", ["work_id", "name_string_id", "role"], :name => "work_name_string_role_join", :unique => true
 
   create_table "works", :force => true do |t|
     t.string   "type"
