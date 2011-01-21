@@ -4,9 +4,6 @@
 # you don't control web/app server and can't set it the proper way
 # ENV['RAILS_ENV'] ||= 'production'
 
-# Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
-
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -42,61 +39,6 @@ Rails::Initializer.run do |config|
   # Only load the plugins named here, in the order given. By default all plugins in vendor/plugins are loaded, in alphabetical order
   # :all can be used as a placeholder for all plugins not explicitly named.
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
-  #################################
-  # Gem Dependencies for BibApp
-  #   rake gems - to see required application Gems (and which are missing)
-  #   rake gems:install - installs any necessary application Gems
-  #   rake gems:unpack - unpacks the gems into /vendor/gems/
-  #   rake gems:build - builds gems that require local building
-  #################################
-
-  #Rack - Rails 2.3.3 no longer bundles rack.
-  config.gem "rack", :version=>'~>1.0.0'
-
-  #Haml - Haml plugin will fail initialization if haml gem is not installed.
-  config.gem "haml", :version=>'>=2.2.3'
-
-  #Hpricot - used for various HTML parsing purposes
-  config.gem "hpricot", :version=>"~>0.6"
-
-  #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
-  config.gem "htmlentities", :version=>"~>4.0.0"
-
-  #Daemons - needed to run delayed_job
-  config.gem "daemons", :version=>"~>1.0.10"
-
-  #LibXML Ruby - Dependency of Solr Ruby
-  config.gem "libxml-ruby", :lib=>"xml/libxml", :version=>"~>0.8.3"
-
-  #Namecase - converts strings to be properly cased
-  config.gem "namecase", :version=>"~>1.1.0"
-
-  #RedCloth - converts plain text or textile to HTML (also used by HAML)
-  config.gem "RedCloth", :lib=>"redcloth", :version=>"~>4.1.9"
-
-  #Ruby-Net-LDAP - used to perform LDAP queries
-  config.gem "ruby-net-ldap", :lib=>"net/ldap", :version=>"~>0.0.4"
-
-  #RubyZip - used to create Zip file to send via SWORD
-  config.gem "rubyzip", :lib=>"zip/zip", :version=>"~>0.9.1"
-
-  #Solr-Ruby - Solr connections for ruby
-  config.gem "solr-ruby", :lib=>"solr", :version=>"~>0.0.6"
-
-  #Will Paginate - for fancy pagination
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :version => '~> 2.3.2', :source => 'http://gems.github.com'
-
-  #CMess - Assists with handling parsing citations from a non-Unicode text file
-  #  See: http://prometheus.rubyforge.org/cmess/
-  config.gem 'cmess', :version=>"~>0.1.2"
-
-  #AASM - Acts as State Machine - helps manage batch import state
-  config.gem 'rubyist-aasm', :version => '~> 2.0.2', :lib => 'aasm', :source => "http://gems.github.com"
-
-  #ISBN Tools - Helps validate ISBNs
-  # See: http://isbn-tools.rubyforge.org/rdoc/index.html
-  config.gem 'isbn-tools', :lib=>"isbn/tools", :version => "~>0.1.0"
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
