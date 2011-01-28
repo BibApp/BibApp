@@ -6,7 +6,6 @@ config/solr.yml
 config/sword.yml
 config/personalize.rb
 tmp/
-public/
 public.old/
 log/
 vendor/bibapp-solr/data
