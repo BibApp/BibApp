@@ -1,24 +1,63 @@
 require 'bundler/capistrano'
 
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+set :application, "Bibapp"
+set :repository,  "https://track.library.uiuc.edu/svn/bibapp/trunk"
+set :env, ENV['RAILS_ENV'] || 'production'
 
 set :scm, :subversion
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
+#directories on the server to deploy the application
+#the running instance gets links to [deploy_to]/current
+set :deploy_to, "/services/ideals-bibapp/tmp/cap-test"
+set :current, "#{deploy_to}/current"
+set :shared, "#{deploy_to}/shared"
+set :shared_config, "#{shared}/config"
 
-# If you are using Passenger mod_rails uncomment this:
-# if you're still using the script/reapear helper you will need
-# these http://github.com/rails/irs_process_scripts
+set :user, 'ideals-bibapp'
+set :use_sudo, false
+#this prevents capistrano from hanging after running some of the tasks
+default_run_options[:pty] = true 
 
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+role :web, "athena.cites.illinois.edu"                          # Your HTTP server, Apache/etc
+role :app, "athena.cites.illinois.edu"                          # This may be the same as your `Web` server
+role :db,  "athena.cites.illinois.edu", :primary => true # This is where Rails migrations will run
+#role :db,  "your slave db-server here"
+
+namespace :deploy do
+  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "touch #{current}/tmp/restart.txt"
+  end
+
+  desc "create a config directory under shared"
+  task :create_shared_config_dir do
+    run "mkdir #{shared_config}"
+  end
+
+  desc "copy shared configuration"
+  task :copy_config do
+    ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml', 
+     'solr.yml', 'sword.yml'].each do |file|
+      f = "#{shared_config}/#{file}"
+      run "[ -e #{f} ] && (cp #{f} #{current}/config/#{file})"
+    end
+  end
+
+end
+
+namespace :bibapp do
+  [:stop, :start, :restart].each do |action|
+    desc "#{action} Bibapp services" 
+    task action do
+      run "cd #{current}; RAILS_ENV=#{env} rake bibapp:#{action}; echo 'DONE'"
+    end
+  end
+end
+
+after 'deploy:update', 'deploy:copy_config'
+after 'deploy:setup', 'deploy:create_shared_config_dir'
+
+after 'deploy:start', 'bibapp:start'
+after 'deploy:stop', 'bibapp:stop'
+after 'deploy:restart', 'bibapp:restart'
