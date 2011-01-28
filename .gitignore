@@ -7,6 +7,7 @@ config/sword.yml
 config/personalize.rb
 tmp/
 public.old/
+.svn
 log/
 vendor/bibapp-solr/data
 vendor/solr/logs
