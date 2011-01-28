@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 
 set :application, "Bibapp"
-set :repository,  "https://track.library.uiuc.edu/svn/bibapp/trunk"
+set :repository,  "http://bibapp.googlecode.com/svn/trunk/"
 set :env, ENV['RAILS_ENV'] || 'production'
 
 set :scm, :subversion
