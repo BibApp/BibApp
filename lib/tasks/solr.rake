@@ -30,15 +30,26 @@ namespace :solr do
           puts "#{ENV['RAILS_ENV']} Solr started sucessfully on #{SOLR_PORT}."
         end
       else #Else if Linux, Mac OSX, etc.
-        Dir.chdir(SOLR_PATH) do
-          pid = fork do
-            #Start Solr and tell Jetty to listen on specified port for "stop" commands
-            exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop #{SOLR_STARTUP_OPTS} -jar start.jar"
-          end
-          sleep(5)
-          File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
-          puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}, pid: #{pid}."
+        pid = fork
+        unless(pid)
+          #child
+          #daemonize
+          File.umask(0)
+          Process.setsid
+          Dir.chdir('/')
+          STDIN.reopen('/dev/null', 'r')
+          STDOUT.reopen('/dev/null', 'w')
+          STDERR.reopen('/dev/null', 'w')
+          #do work
+          Dir.chdir(SOLR_PATH)
+          exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop #{SOLR_STARTUP_OPTS} -jar start.jar"
         end
+        #parent
+	puts "probelm forking child" if pid < 0
+        Process.detach(pid)
+#        sleep(5)
+        File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
+        puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}, pid: #{pid}."
       end
     rescue
       puts "Unexpected Error: #{$!.class.to_s} #{$!}"
