@@ -1,8 +1,8 @@
 require 'bundler/capistrano'
 
 set :application, "Bibapp"
-set :repository,  "http://bibapp.googlecode.com/svn/trunk/"
-set :env, ENV['RAILS_ENV'] || 'production'
+set :repository,  "http://bibapp.googlecode.com/svn/trunk"
+set :rails_env, ENV['RAILS_ENV'] || 'production'
 
 set :scm, :subversion
 
@@ -16,7 +16,7 @@ set :shared_config, "#{shared}/config"
 set :user, 'ideals-bibapp'
 set :use_sudo, false
 #this prevents capistrano from hanging after running some of the tasks
-default_run_options[:pty] = true 
+#default_run_options[:pty] = true 
 
 role :web, "athena.cites.illinois.edu"                          # Your HTTP server, Apache/etc
 role :app, "athena.cites.illinois.edu"                          # This may be the same as your `Web` server
@@ -50,12 +50,14 @@ namespace :bibapp do
   [:stop, :start, :restart].each do |action|
     desc "#{action} Bibapp services" 
     task action do
-      run "cd #{current}; RAILS_ENV=#{env} rake bibapp:#{action}; echo 'DONE'"
+#      run "cd #{current}; RAILS_ENV=#{rails_env} rake bibapp:#{action}"
+      run "cd #{current}; RAILS_ENV=#{rails_env} rake solr:#{action}"#, :pty => true
     end
   end
 end
 
 after 'deploy:update', 'deploy:copy_config'
+before 'deploy:update', 'bibapp:stop'
 after 'deploy:setup', 'deploy:create_shared_config_dir'
 
 after 'deploy:start', 'bibapp:start'
