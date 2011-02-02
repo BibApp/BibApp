@@ -12,15 +12,18 @@ set :deploy_to, "/services/ideals-bibapp/tmp/cap-test"
 set :current, "#{deploy_to}/current"
 set :shared, "#{deploy_to}/shared"
 set :shared_config, "#{shared}/config"
+set :public, "#{current}/public"
 
 set :user, 'ideals-bibapp'
 set :use_sudo, false
-#this prevents capistrano from hanging after running some of the tasks
-#default_run_options[:pty] = true 
 
-role :web, "athena.cites.illinois.edu"                          # Your HTTP server, Apache/etc
-role :app, "athena.cites.illinois.edu"                          # This may be the same as your `Web` server
-role :db,  "athena.cites.illinois.edu", :primary => true # This is where Rails migrations will run
+# Your HTTP server, Apache/etc
+role :web, "athena.cites.illinois.edu"
+# This may be the same as your `Web` server
+role :app, "athena.cites.illinois.edu"
+# This is where Rails migrations will run
+role :db,  "athena.cites.illinois.edu", :primary => true
+#your slave db-server here
 #role :db,  "your slave db-server here"
 
 namespace :deploy do
@@ -31,8 +34,11 @@ namespace :deploy do
   end
 
   desc "create a config directory under shared"
-  task :create_shared_config_dir do
-    run "mkdir #{shared_config}"
+  task :create_shared_dirs do
+    run "mkdir #{shared}/config"
+    [:attachments, :groups, :people].each do | dir|
+      run "mkdir #{shared}/system/#{dir}"
+    end
   end
 
   desc "copy shared configuration"
@@ -44,21 +50,33 @@ namespace :deploy do
     end
   end
 
+  desc "symlink shared subdirectories of public"
+  task :symlink_shared_dirs do
+    [:attachments, :groups, :people].each do |dir|
+      run "ln -fs #{public}/system/#{dir} #{public}/#{dir}"
+    end
+  end
+
 end
 
 namespace :bibapp do
   [:stop, :start, :restart].each do |action|
     desc "#{action} Bibapp services" 
     task action do
-#      run "cd #{current}; RAILS_ENV=#{rails_env} rake bibapp:#{action}"
-      run "cd #{current}; RAILS_ENV=#{rails_env} rake solr:#{action}"#, :pty => true
+      begin
+        run "cd #{current}; RAILS_ENV=#{rails_env} rake bibapp:#{action}"
+      rescue
+        puts "Current directory doesn't exist yet"
+      end
     end
   end
 end
 
+after 'deploy:setup', 'deploy:create_shared_dirs'
+
 after 'deploy:update', 'deploy:copy_config'
+after 'deploy:update', 'deploy:symlink_shared_dirs'
 before 'deploy:update', 'bibapp:stop'
-after 'deploy:setup', 'deploy:create_shared_config_dir'
 
 after 'deploy:start', 'bibapp:start'
 after 'deploy:stop', 'bibapp:stop'
