@@ -4,15 +4,23 @@
   <tr>
   </tr>
 
-<% for keyword in @keywords %>
-  <tr>
-    <td><%= link_to 'Show', keyword %></td>
-    <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
-    <td><%= link_to 'Destroy', keyword, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+  <% if @keywords %>
+      <% for keyword in @keywords %>
+          <tr>
+            <td><%= link_to 'Show', keyword %></td>
+            <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+            <td><%= link_to 'Destroy', keyword, :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+      <% end %>
+  <% else %>
+    <tr>
+      <td>
+        No keywords exist.
+      </td>
+    </tr>
+  <% end %>
 </table>
 
-<br />
+<br/>
 
 <%= link_to 'New keyword', new_keyword_path %>
