@@ -4,8 +4,7 @@ class KeywordsController < ApplicationController
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
   
   make_resourceful do
-    build :none
-
+    build :all
   end
 
   caches_page :timeline
