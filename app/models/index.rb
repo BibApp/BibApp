@@ -351,9 +351,9 @@ class Index
       
       #Get the Work corresponding to each doc returned by Solr
       docs.each do |doc|
-        dupes << Work.find(doc["pk_i"])
+        dupes << Work.find(doc["pk_i"]) rescue nil
       end
-      return dupes
+      return dupes.compact
     end
 
     # Retrieve all possible *unaccepted* duplicates from Solr, based
