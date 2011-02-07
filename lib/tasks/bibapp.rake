@@ -39,6 +39,8 @@ namespace :bibapp do
       RuntimeError
       puts "### ERROR - Starting - Passenger."
     end
+
+    puts "Finished bibapp:start"
   end
   
   desc 'Stop all BibApp services: solr, delayed_jobs, passenger'
@@ -53,6 +55,8 @@ namespace :bibapp do
       # Spin passenger
       sh "touch tmp/restart.txt"
     end
+
+    puts "Finished bibapp:stop"
   end
   
   desc 'Restart all BibApp services: solr, delayed_jobs, passenger'

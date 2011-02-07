@@ -21,10 +21,8 @@
       = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Venue"}
     %li
       = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
-
-    - if current_user.has_role?("admin", System)
-      %li
-        = render :partial => 'works/forms/fields/keywords'
+    %li
+      = render :partial => 'works/forms/fields/keywords'
     %li
       = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
     %li

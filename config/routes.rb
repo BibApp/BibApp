@@ -1,49 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
-  
-  # The priority is based upon order of creation: first created -> highest priority.
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-
-  # See how all your routes lay out with "rake routes"
-
-  #####
-  # Work routes
-  ##### 
-  # Add Auto-Complete Routes for Web-Based Work entry
   map.resources :works,
-                :collection => {:auto_complete_for_author_string => :get,
-                        :auto_complete_for_editor_string => :get,
-                        :auto_complete_for_keyword_name => :get,
-                        :auto_complete_for_publication_name => :get,
-                        :auto_complete_for_publisher_name => :get,
-                        :auto_complete_for_tag_name => :get,
-                        :review_batch => :get,
-                        :destroy_multiple => :delete},
-                :member => {:merge_duplicates => :get} do |c|
+      :collection => {:auto_complete_for_author_string => :get,
+          :auto_complete_for_editor_string => :get,
+          :auto_complete_for_keyword_name => :get,
+          :auto_complete_for_publication_name => :get,
+          :auto_complete_for_publisher_name => :get,
+          :auto_complete_for_tag_name => :get,
+          :review_batch => :get,
+          :destroy_multiple => :delete},
+      :member => {:merge_duplicates => :get} do |c|
     # Make URLs like /work/2/attachments/4 for Work Content Files
     c.resources :attachments
   end
@@ -67,14 +33,14 @@ ActionController::Routing::Routes.draw do |map|
     # Make URLs like /people/1/keywords/
     p.resources :keywords, :collection => {:timeline => :get}
   end
- 
+
   #####
   # Group routes
   ##### 
   # Add Auto-Complete routes for adding new groups
-  map.resources :groups, 
-                :collection => {:auto_complete_for_group_name => :get,
-                                :hidden => :get} do |g|
+  map.resources :groups,
+      :collection => {:auto_complete_for_group_name => :get,
+          :hidden => :get} do |g|
     # Make URLs like /group/1/works/4
     g.resources :works
     # Make URLs like /group/1/people/4
@@ -89,39 +55,39 @@ ActionController::Routing::Routes.draw do |map|
   # Membership routes
   #####
   # Add Auto-Complete routes
-  map.resources :memberships, 
-                :collection => {:auto_complete_for_group_name => :get,
-                                :create_multiple => :put
-                                }
-  
+  map.resources :memberships,
+      :collection => {:auto_complete_for_group_name => :get,
+          :create_multiple => :put
+      }
+
   #####
   # Contributorship routes
   #####
   map.resources :contributorships,
-                :collection => { :admin => :get,
-                                 :archivable => :get,
-                                 :verify_multiple => :put,
-                                 :unverify_multiple => :put,
-                                 :deny_multiple => :put },
-                :member => { :verify => :put, :deny => :put }
-    
+      :collection => {:admin => :get,
+          :archivable => :get,
+          :verify_multiple => :put,
+          :unverify_multiple => :put,
+          :deny_multiple => :put},
+      :member => {:verify => :put, :deny => :put}
+
   #####
   # Publisher routes
   #####   
-  map.resources :publishers,    :collection => {:authorities => :get, 
-                                                :update_multiple => :put,
-                                                :add_to_box => :get,
-                                                :remove_from_box => :get }
-  
-  
+  map.resources :publishers, :collection => {:authorities => :get,
+      :update_multiple => :put,
+      :add_to_box => :get,
+      :remove_from_box => :get}
+
+
   #####
   # Publication routes
   #####
-  map.resources :publications,  :collection => {:authorities => :get, 
-                                                :update_multiple => :put,
-                                                :add_to_box => :get,
-                                                :remove_from_box => :get}
-  
+  map.resources :publications, :collection => {:authorities => :get,
+      :update_multiple => :put,
+      :add_to_box => :get,
+      :remove_from_box => :get}
+
   ####
   # User routes
   ####
@@ -129,7 +95,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :has_one => [:password] do |u|
     u.resources :imports
   end
-  
   ####
   # Import routes
   ####
@@ -142,60 +107,58 @@ ActionController::Routing::Routes.draw do |map|
   ####
   map.search 'search', :controller => 'search', :action => 'index'
   map.advanced_search 'search/advanced', :controller => 'search', :action => 'advanced'
-  
   ####
   # Saved routes
   ####
   map.saved '/saved',
-    :controller => 'sessions',
-    :action => 'saved'
+      :controller => 'sessions',
+      :action => 'saved'
   map.delete_saved '/sessions/delete_saved',
-    :controller => 'sessions',
-    :action => 'delete_saved'
+      :controller => 'sessions',
+      :action => 'delete_saved'
   map.add_many_to_saved '/sessions/add_many_to_saved',
-    :controller => 'sessions',
-    :action => 'add_many_to_saved'
-  
+      :controller => 'sessions',
+      :action => 'add_many_to_saved'
+
   ####
   # Authentication routes
   ####
   # Make easier routes for authentication (via restful_authentication)
   map.signup '/signup',
-    :controller => 'users',
-    :action => 'new'
+      :controller => 'users',
+      :action => 'new'
   map.login '/login',
-    :controller => 'sessions',
-    :action => 'new'
+      :controller => 'sessions',
+      :action => 'new'
   map.logout '/logout',
-    :controller => 'sessions',
-    :action => 'destroy'
+      :controller => 'sessions',
+      :action => 'destroy'
   map.activate '/activate/:activation_code',
-    :controller => 'users',
-    :action => 'activate'
-  
+      :controller => 'users',
+      :action => 'activate'
+
   ####
   # DEFAULT ROUTES 
   ####
   # Install the default routes as the lowest priority.
   map.resources :name_strings,
-    :memberships,
-    :pen_names,
-    :keywords,
-    :keywordings,
-    :sessions,
-    :passwords,
-    :attachments
+      :memberships,
+      :pen_names,
+      :keywords,
+      :keywordings,
+      :sessions,
+      :passwords,
+      :attachments
 
   # Default homepage to works index action
-  map.connect "/",
-    :controller => 'works',
-    :action => 'index'
-    
+  map.root :controller => 'works',
+      :action => 'index'
+
   map.connect "citations",
-    :controller => 'works',
-    :action => 'index'
-    
+      :controller => 'works',
+      :action => 'index'
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-  
+
 end

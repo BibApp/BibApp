@@ -29,10 +29,8 @@
       = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
     %li
       = render :partial => 'works/forms/fields/language', :locals => {:form => form}
-
-    - if current_user.has_role?("admin", System)
-      %li
-        = render :partial => 'works/forms/fields/keywords'
+    %li
+      = render :partial => 'works/forms/fields/keywords'
     %li
       = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
     %li

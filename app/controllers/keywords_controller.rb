@@ -4,8 +4,7 @@ class KeywordsController < ApplicationController
   before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
   
   make_resourceful do
-    build :none
-
+    build :all
   end
 
   caches_page :timeline
@@ -17,16 +16,15 @@ class KeywordsController < ApplicationController
 
     search(params)
 
-    first_year = @facets[:years].first.nil? ? nil : @facets[:years].first.name
-    last_year = @facets[:years].last.nil? ? nil : @facets[:years].last.name
-    years_with_papers = Range.new(first_year, last_year)
-    # Ensure we have an array; we'll need this to get the list of years
-    if years_with_papers.is_a?(Enumerable)
-      year_arr = years_with_papers.to_a
+    facet_years = @facets[:years].compact
+    if facet_years.empty?
+      year_arr = []
     else
-      year_arr = [years_with_papers]
+      first_year = facet_years.first.name
+      last_year = facet_years.last.name
+      year_arr = Range.new(first_year, last_year).to_a
     end
-
+    
     @year_keywords = Array.new
     @chart_urls = Array.new
     @work_counts = Array.new

@@ -1,9 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-# Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
-# Then, you can remove it from this and the units test.
-include AuthenticatedTestHelper
-
 describe UsersController do
   fixtures :users
 
@@ -59,7 +55,7 @@ describe UsersController do
   it 'activates user' do
     User.authenticate('aaron', 'test').should be_nil
     get :activate, :activation_code => users(:aaron).activation_code
-    response.should redirect_to('/')
+    response.should redirect_to(root_url)
     flash[:notice].should_not be_nil
     User.authenticate('aaron', 'test').should == users(:aaron)
   end
