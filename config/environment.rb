@@ -41,10 +41,10 @@ Rails::Initializer.run do |config|
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
-  config.load_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
-  config.load_paths += %W( #{RAILS_ROOT}/app/models/identifier_subclasses )
-  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir|
+  config.autoload_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
+  config.autoload_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
+  config.autoload_paths += %W( #{RAILS_ROOT}/app/models/identifier_subclasses )
+  config.autoload_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir|
     File.directory?(lib = "#{dir}/lib") ? lib : dir
   end
 
