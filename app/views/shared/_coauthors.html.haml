@@ -33,4 +33,4 @@
             %div.person-image-metadata-tiny
               %strong= p.value
             %div.person-last-name-tiny.left
-              %strong=link_to truncate(last_name, 10), person_path(id)
+              %strong=link_to truncate(last_name, :length => 10), person_path(id)
