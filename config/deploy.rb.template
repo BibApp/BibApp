@@ -1,10 +1,17 @@
 require 'bundler/capistrano'
 
 set :application, "Bibapp"
-set :repository,  "http://bibapp.googlecode.com/svn/trunk"
 set :rails_env, ENV['RAILS_ENV'] || 'production'
 
-set :scm, :subversion
+#To deploy from one of these repositories, use subversion as the scm
+#and uncomment the appropriate repository
+#set :scm, :subversion
+#set :repository,  "http://bibapp.googlecode.com/svn/trunk"
+#set :repository,  "https://track.library.uiuc.edu/svn/bibapp/trunk"
+
+#To deploy from the GitHub project
+set :scm, :git
+set :repository, "git://github.com/BibApp/BibApp.git"
 
 #directories on the server to deploy the application
 #the running instance gets links to [deploy_to]/current
