@@ -72,6 +72,15 @@ namespace :bibapp do
   end
 end
 
+#The sleep is to make sure that solr has enough time to start up before
+#running this.
+namespace :solr do
+  desc "Reindex solr"
+  task :refresh_index do
+    run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} rake solr:refresh_index"
+  end
+end
+
 after 'deploy:setup', 'deploy:create_shared_dirs'
 
 after 'deploy:update', 'deploy:copy_config'
@@ -81,3 +90,6 @@ before 'deploy:update', 'bibapp:stop'
 after 'deploy:start', 'bibapp:start'
 after 'deploy:stop', 'bibapp:stop'
 after 'deploy:restart', 'bibapp:restart'
+
+after 'bibapp:start', 'solr:refresh_index'
+after 'bibapp:restart', 'solr:refresh_index'
