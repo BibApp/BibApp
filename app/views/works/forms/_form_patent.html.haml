@@ -13,10 +13,8 @@
       = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Filing Date"}
     %li
       = render :partial => 'works/forms/fields/publication_date', :locals => {:label => "Date Issued"}
-
-    - if current_user.has_role?("admin", System)
-      %li
-        = render :partial => 'works/forms/fields/keywords'
+    %li
+      = render :partial => 'works/forms/fields/keywords'
     %li
       = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
     %li
