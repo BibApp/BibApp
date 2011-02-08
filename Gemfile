@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "2.3.10"
+gem "rails", "3.0.1"
 
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
 gem "haml", '>=2.2.3'
@@ -36,7 +36,7 @@ gem "rubyzip", "~>0.9.1", :require => "zip/zip"
 gem "solr-ruby", "~>0.0.6", :require => "solr"
 
 #Will Paginate - for fancy pagination
-gem 'mislav-will_paginate', '~> 2.3.2', :require => 'will_paginate'
+gem 'will_paginate', "3.0.pre2", :require => 'will_paginate'
 
 #CMess - Assists with handling parsing citations from a non-Unicode text file
 #  See: http://prometheus.rubyforge.org/cmess/
