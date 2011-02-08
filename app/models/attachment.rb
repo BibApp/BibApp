@@ -47,7 +47,7 @@ class Attachment < ActiveRecord::Base
   
   # Return the full path of the file on the local filesystem
   def absolute_path
-    "#{RAILS_ROOT}/public/#{self.public_filename}"
+    "#{Rails.root}/public/#{self.public_filename}"
   end
   
   def save_without_callbacks
