@@ -1,164 +1,178 @@
-ActionController::Routing::Routes.draw do |map|
+Bibapp::Application.routes.draw do
 
-  map.resources :works,
-      :collection => {:auto_complete_for_author_string => :get,
-          :auto_complete_for_editor_string => :get,
-          :auto_complete_for_keyword_name => :get,
-          :auto_complete_for_publication_name => :get,
-          :auto_complete_for_publisher_name => :get,
-          :auto_complete_for_tag_name => :get,
-          :review_batch => :get,
-          :destroy_multiple => :delete},
-      :member => {:merge_duplicates => :get} do |c|
-    # Make URLs like /work/2/attachments/4 for Work Content Files
-    c.resources :attachments
+  resources :works do
+    collection do
+      get :auto_complete_for_author_string
+      get :auto_complete_for_editor_string
+      get :auto_complete_for_keyword_name
+      get :auto_complete_for_publication_name
+      get :auto_complete_for_publisher_name
+      get :auto_complete_for_tag_name
+      get :review_batch
+      delete :destroy_multiple
+    end
+    member do
+      get :merge_duplicates
+    end
+
+    resources :attachments
   end
-
   #####
   # Person routes
   #####
-  map.resources :people do |p|
-    # Make URLs like /people/1/attachments/2 for Person Images
-    p.resources :attachments
-    # Make URLs like /people/1/works (and allow adding Works to People)
-    p.resources :works
-    # Make URLs like /people/1/groups
-    p.resources :groups
-    # Make URLs like /people/1/pen_names
-    p.resources :pen_names
-    # Make URLs like /people/1/memberships
-    p.resources :memberships
-    # Make URLs like /people/1/roles/3 for user roles on a specific Person
-    p.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
-    # Make URLs like /people/1/keywords/
-    p.resources :keywords, :collection => {:timeline => :get}
+  resources :people do
+    resources :attachments
+    resources :works
+    resources :groups
+    resources :pen_names
+    resources :memberships
+    resources :roles do
+      collection do
+        get :new_admin
+        get :new_editor
+      end
+    end
+    resources :keywords do
+      collection do
+        get :timeline
+      end
+    end
   end
 
   #####
   # Group routes
   ##### 
   # Add Auto-Complete routes for adding new groups
-  map.resources :groups,
-      :collection => {:auto_complete_for_group_name => :get,
-          :hidden => :get} do |g|
-    # Make URLs like /group/1/works/4
-    g.resources :works
-    # Make URLs like /group/1/people/4
-    g.resources :people
-    # Make URLs like /group/1/roles/3 for roles on a specific Group
-    g.resources :roles, :collection => {:new_admin => :get, :new_editor => :get}
-    # Make URLs like /group/1/keywords/
-    g.resources :keywords, :collection => {:timeline => :get}
+  resources :groups do
+    collection do
+      get :auto_complete_for_group_name
+      get :hidden
+    end
+    resources :works
+    resources :people
+    resources :roles do
+      collection do
+        get :new_admin
+        get :new_editor
+      end
+    end
+    resources :keywords do
+      collection do
+        get :timeline
+      end
+    end
   end
 
   #####
   # Membership routes
   #####
   # Add Auto-Complete routes
-  map.resources :memberships,
-      :collection => {:auto_complete_for_group_name => :get,
-          :create_multiple => :put
-      }
-
+  resources :memberships do
+    collection do
+      get :auto_complete_for_group_name
+      put :create_multiple
+    end
+  end
+  
   #####
   # Contributorship routes
   #####
-  map.resources :contributorships,
-      :collection => {:admin => :get,
-          :archivable => :get,
-          :verify_multiple => :put,
-          :unverify_multiple => :put,
-          :deny_multiple => :put},
-      :member => {:verify => :put, :deny => :put}
+  resources :contributorships do
+    collection do
+      get :admin
+      get :archivable
+      put :verify_multiple
+      put :unverify_multiple
+      put :deny_multiple
+    end
 
+    member do
+      put :verify
+      put :deny
+    end
+  end
   #####
   # Publisher routes
   #####   
-  map.resources :publishers, :collection => {:authorities => :get,
-      :update_multiple => :put,
-      :add_to_box => :get,
-      :remove_from_box => :get}
-
+  resources :publishers do
+    collection do
+      get :authorities
+      put :update_multiple
+      get :add_to_box
+      get :remove_from_box
+    end
+  end
 
   #####
   # Publication routes
   #####
-  map.resources :publications, :collection => {:authorities => :get,
-      :update_multiple => :put,
-      :add_to_box => :get,
-      :remove_from_box => :get}
+  resources :publications do
+    collection do
+      get :authorities
+      put :update_multiple
+      get :add_to_box
+      get :remove_from_box
+    end
+  end
 
   ####
   # User routes
   ####
   # Make URLs like /user/1/password/edit for Users managing their passwords
-  map.resources :users, :has_one => [:password] do |u|
-    u.resources :imports
+  resources :users do
+    resources :imports
+    resource :password
   end
+
   ####
   # Import routes
   ####
-  map.resources :imports, :has_one => [:user] do |i|
-    i.resources :attachments
+  resources :imports do
+    resource :user
+    resources :attachments
   end
 
   ####
   # Search route
   ####
-  map.search 'search', :controller => 'search', :action => 'index'
-  map.advanced_search 'search/advanced', :controller => 'search', :action => 'advanced'
+  match 'search', :to => 'search#index', :as => 'search'
+  match 'search/advanced', :to => 'search#advanced', :as => 'advanced_search'
+
   ####
   # Saved routes
   ####
-  map.saved '/saved',
-      :controller => 'sessions',
-      :action => 'saved'
-  map.delete_saved '/sessions/delete_saved',
-      :controller => 'sessions',
-      :action => 'delete_saved'
-  map.add_many_to_saved '/sessions/add_many_to_saved',
-      :controller => 'sessions',
-      :action => 'add_many_to_saved'
+  match 'sessions/saved', :as => 'saved'
+  match 'sessions/delete_saved', :as => 'delete_saved'
+  match 'sessions/add_many_to_saved', :as => 'add_many_to_saved'
 
   ####
   # Authentication routes
   ####
   # Make easier routes for authentication (via restful_authentication)
-  map.signup '/signup',
-      :controller => 'users',
-      :action => 'new'
-  map.login '/login',
-      :controller => 'sessions',
-      :action => 'new'
-  map.logout '/logout',
-      :controller => 'sessions',
-      :action => 'destroy'
-  map.activate '/activate/:activation_code',
-      :controller => 'users',
-      :action => 'activate'
+  match 'signup', :to => 'users#new', :as => 'signup'
+  match 'login', :to => 'sessions#new', :as => 'login'
+  match 'logout', :to => 'sessions#destroy', :as => 'logout'
+  match 'activate/:activation_code', :to => 'users#activate', :as => 'activate'
+
 
   ####
   # DEFAULT ROUTES 
   ####
   # Install the default routes as the lowest priority.
-  map.resources :name_strings,
-      :memberships,
-      :pen_names,
-      :keywords,
-      :keywordings,
-      :sessions,
-      :passwords,
-      :attachments
+  resources :name_strings
+  resources :memberships
+  resources :pen_names
+  resources :keywords
+  resources :keywordings
+  resources :sessions
+  resources :passwords
+  resources :attachments
 
   # Default homepage to works index action
-  map.root :controller => 'works',
-      :action => 'index'
+  root :to => 'works#index'
 
-  map.connect "citations",
-      :controller => 'works',
-      :action => 'index'
+  match 'citations', :to => 'works#index'
 
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  match ':controller(/:action(/:id))'
 
 end
