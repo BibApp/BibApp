@@ -19,10 +19,10 @@ namespace :bibapp do
       puts "\n\n* Starting - Delayed Job."
 
       # Create the tmp/pids directory if it's not there
-      if File.exists?(RAILS_ROOT + '/tmp/pids')
+      if File.exists?("#{Rails.root}/tmp/pids")
         sh "script/delayed_job start #{ENV['RAILS_ENV']}"
       else
-        sh "mkdir #{RAILS_ROOT + '/tmp/pids'}"
+        sh "mkdir #{Rails.root}/tmp/pids"
         sleep(2)
         sh "script/delayed_job start #{ENV['RAILS_ENV']}"
       end
