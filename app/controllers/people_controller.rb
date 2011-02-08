@@ -268,7 +268,7 @@ class PeopleController < ApplicationController
     begin
       require 'rubygems'
       require 'net/ldap'
-      config = YAML::load(File.read("#{RAILS_ROOT}/config/ldap.yml"))[RAILS_ENV]
+      config = YAML::load(File.read("#{Rails.root}/config/ldap.yml"))[Rails.env]
 
       if config.blank?
         @fail_message = "LDAP is not properly configured"
