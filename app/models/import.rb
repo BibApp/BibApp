@@ -132,7 +132,7 @@ class Import < ActiveRecord::Base
     
     # Step: 1 -- Read the data
     begin       
-      str = "#{RAILS_ROOT}/public#{self.import_file.public_filename}"
+      str = "#{Rails.root}/public#{self.import_file.public_filename}"
       if str.respond_to? :read
         str = str.read
       elsif File.readable?(str)
