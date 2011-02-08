@@ -67,6 +67,9 @@ gem 'pg'
 #as I am porting to Rails 3 I'm not going to worry about it.
 gem 'yaml_db'
 
+#authorization, replacing plugin used previously
+gem 'authorization'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause

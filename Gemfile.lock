@@ -39,6 +39,7 @@ GEM
     acts_as_list (0.1.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
+    authorization (1.0.12)
     builder (2.1.2)
     cmess (0.1.2.288)
       htmlentities
@@ -123,6 +124,7 @@ DEPENDENCIES
   RedCloth (~> 4.1.9)
   acts_as_list
   acts_as_tree (~> 1.2.3)!
+  authorization
   cmess (~> 0.1.2)
   daemons (~> 1.0.10)
   delayed_job
