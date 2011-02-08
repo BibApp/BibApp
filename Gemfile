@@ -63,6 +63,10 @@ gem 'acts_as_tree', "~> 1.2.3", :git => 'https://github.com/parasew/acts_as_tree
 #pretty quickly.
 gem 'pg'
 
+#dump database in YAML form - honestly, I'm not sure why we need this, but
+#as I am porting to Rails 3 I'm not going to worry about it.
+gem 'yaml_db'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause
