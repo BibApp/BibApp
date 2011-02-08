@@ -103,7 +103,7 @@ class PenNamesController < ApplicationController
     
     #Hack for postgresql, for which LIKE is case-sensitive 
     #TODO: is there a better way?
-    if @person.configurations[RAILS_ENV]['adapter'] == "postgresql"
+    if @person.configurations[Rails.env]['adapter'] == "postgresql"
       @results = NameString.find(
         :all,
         :conditions => [ "name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%"],
