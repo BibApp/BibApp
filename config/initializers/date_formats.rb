@@ -8,6 +8,5 @@ bibapp_date_formats = {
 }
 
 #Load custom formats for Date / DateTime / Time classes
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(bibapp_date_formats)
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(bibapp_date_formats)
-ActiveSupport::CoreExtensions::Date::Conversions::DATE_FORMATS.merge!(bibapp_date_formats)
+Time::DATE_FORMATS.merge!(bibapp_date_formats)
+Date::DATE_FORMATS.merge!(bibapp_date_formats)
