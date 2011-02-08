@@ -19,24 +19,29 @@ module Bibapp
 
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
-    config.autoload_paths += %W( #{RAILS_ROOT}/app/models/work_subclasses )
-    config.autoload_paths += %W( #{RAILS_ROOT}/app/models/attachment_subclasses )
-    config.autoload_paths += %W( #{RAILS_ROOT}/app/models/identifier_subclasses )
-    config.autoload_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir|
+    config.autoload_paths += %W( #{Rails.root}/app/models/work_subclasses )
+    config.autoload_paths += %W( #{Rails.root}/app/models/attachment_subclasses )
+    config.autoload_paths += %W( #{Rails.root}/app/models/identifier_subclasses )
+    config.autoload_paths += Dir["#{Rails.root}/vendor/gems/**"].map do |dir|
       File.directory?(lib = "#{dir}/lib") ? lib : dir
     end
 
     # Your secret key for verifying cookie session data integrity.
     # If you change this key, all old sessions will become invalid!
-    config.action_controller.session = {
-        :session_key => '_zoom_session',
-        :secret => '6ef4f4bba39aae6ef1a1da02e1ace6d8'
-    }
+#    config.action_controller.session = {
+#        :session_key => '_zoom_session',
+#        :secret => '6ef4f4bba39aae6ef1a1da02e1ace6d8'
+#    }
+#
+#    # Use the database for sessions instead of the cookie-based default,
+#    # which shouldn't be used to store highly confidential information
+#    # (create the session table with 'rake db:sessions:create')
+#    config.action_controller.session_store = :active_record_store
 
-    # Use the database for sessions instead of the cookie-based default,
-    # which shouldn't be used to store highly confidential information
-    # (create the session table with 'rake db:sessions:create')
-    config.action_controller.session_store = :active_record_store
+    #I think this is the right way of doing the above two in Rails 3 - leaving them
+    #in for now for reference
+    config.session_store(:active_record_store, :session_key => '_zoom_session',
+        :secret => '6ef4f4bba39aae6ef1a1da02e1ace6d8')
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
