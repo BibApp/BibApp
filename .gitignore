@@ -13,3 +13,4 @@ vendor/bibapp-solr/data
 vendor/solr/logs
 doc/
 coverage/
+.idea/
