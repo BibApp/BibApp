@@ -19,7 +19,7 @@
                 
         - form_for :work, @work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
           =hidden_field_tag "return_path" , url_for(:controller=>"admin", :action =>"duplicates")
-          -if (File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html"))
+          -if (File.exist?("#{Rails.root}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html"))
             = render :partial => "works/forms/form_merge_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
           -else
             = render :partial => "works/forms/form_merge_generic", :locals => { :form => form }
