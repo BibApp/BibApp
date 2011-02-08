@@ -25,7 +25,7 @@ SOLR_JAVA_OPTS = "-Xms256M -Xmx512M"  unless defined? SOLR_JAVA_OPTS
 SOLR_CONFIG = "#{File.dirname(__FILE__)}/../../config/solr.yml" unless defined? SOLR_CONFIG
 
 # Load our Solr Configuration (from solr.yml) for our current environment
-SOLR_SETTINGS = YAML::load(File.read(SOLR_CONFIG))[RAILS_ENV] if File.exists?(SOLR_CONFIG)
+SOLR_SETTINGS = YAML::load(File.read(SOLR_CONFIG))[Rails.env] if File.exists?(SOLR_CONFIG)
 
 # Set Solr port (default to port 8983 if no port found in solr.yml)
 # (This SOLR_PORT variable is used by /lib/tasks/solr.rake when starting Solr)
