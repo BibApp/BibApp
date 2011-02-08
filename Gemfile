@@ -5,7 +5,7 @@ source "http://gems.github.com"
 gem "rails", "3.0.1"
 
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
-gem "haml", '>=2.2.3'
+gem "haml"
 
 #Hpricot - used for various HTML parsing purposes
 gem "hpricot", "~>0.6"
