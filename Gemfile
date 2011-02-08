@@ -49,6 +49,9 @@ gem 'rubyist-aasm', '~> 2.0.2', :require => 'aasm'
 # See: http://isbn-tools.rubyforge.org/rdoc/index.html
 gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
 
+#delayed jobs
+gem 'delayed_job'
+
 #Change this as appropriate if you are using a different database
 #You can also use groups to set it differently for development and
 #production, for example. Note that the appropriate database for your
