@@ -52,6 +52,10 @@ gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
 #delayed jobs
 gem 'delayed_job'
 
+#data structures
+gem 'acts_as_list'
+gem 'acts_as_tree', "~> 1.2.3", :git => 'https://github.com/parasew/acts_as_tree.git'
+
 #Change this as appropriate if you are using a different database
 #You can also use groups to set it differently for development and
 #production, for example. Note that the appropriate database for your

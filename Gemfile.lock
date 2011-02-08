@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/parasew/acts_as_tree.git
+  revision: ed52495d1671c99e1add582628403bf8104e9077
+  specs:
+    acts_as_tree (1.2.3)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -30,6 +36,7 @@ GEM
       activemodel (= 3.0.1)
       activesupport (= 3.0.1)
     activesupport (3.0.1)
+    acts_as_list (0.1.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     builder (2.1.2)
@@ -113,6 +120,8 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.1.9)
+  acts_as_list
+  acts_as_tree (~> 1.2.3)!
   cmess (~> 0.1.2)
   daemons (~> 1.0.10)
   delayed_job
