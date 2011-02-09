@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110113174527) do
+ActiveRecord::Schema.define(:version => 20110209180706) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -304,6 +304,7 @@ ActiveRecord::Schema.define(:version => 20110113174527) do
     t.datetime "remember_token_expires_at"
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
+    t.string   "persistence_token",                       :default => "abc", :null => false
   end
 
   create_table "work_name_strings", :force => true do |t|

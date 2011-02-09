@@ -56,6 +56,9 @@ gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
 #pretty quickly.
 gem 'pg'
 
+#authentication
+gem 'authlogic'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause

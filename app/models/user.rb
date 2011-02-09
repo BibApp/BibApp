@@ -1,6 +1,12 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
-  
+
+  acts_as_authentic do |c|
+    c.act_like_restful_authentication = true
+  end
+
+  #Authlogic::ActsAsAuthentic::Password::REST_AUTH_SITE_KEY = ''
+
   # Authorization plugin
   acts_as_authorized_user
   acts_as_authorizable
