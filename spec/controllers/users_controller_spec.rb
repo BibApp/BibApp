@@ -10,9 +10,6 @@ describe UsersController do
     end.should change(User, :count).by(1)
   end
 
-  
-
-  
   it 'signs up user with activation code' do
     create_user
     assigns(:user).reload
@@ -53,11 +50,12 @@ describe UsersController do
   
   
   it 'activates user' do
-    User.authenticate('aaron', 'test').should be_nil
-    get :activate, :activation_code => users(:aaron).activation_code
+    user = Factory.create(:unactivated_user, :password => 'password', :password_confirmation => 'password')
+    User.authenticate(user.login, 'password').should be_nil
+    get :activate, :activation_code => user.activation_code
     response.should redirect_to(root_url)
     flash[:notice].should_not be_nil
-    User.authenticate('aaron', 'test').should == users(:aaron)
+    User.authenticate(user.login, 'password').should == user
   end
   
   it 'does not activate user without key' do

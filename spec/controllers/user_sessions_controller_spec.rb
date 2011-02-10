@@ -1,70 +1,43 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UserSessionsController do
-  fixtures :users
 
-  it 'logins and redirects' do
-    post :create, :login => 'quentin', :password => 'test'
-    session[:user_id].should_not be_nil
-    response.should be_redirect
-  end
-  
-  it 'fails login and does not redirect' do
-    post :create, :login => 'quentin', :password => 'bad password'
-    session[:user_id].should be_nil
-    response.should be_success
-  end
+  context 'logged in' do
+    before(:each) do
+      @a_user = login_as(:activated_user, :password => 'password', :password_confirmation => 'password')
+    end
 
-  it 'logs out' do
-    login_as :login_user
-    get :destroy
-    session[:user_id].should be_nil
-    response.should be_redirect
+    it 'destroys logged in session' do
+      get :destroy
+      flash[:notice].should == "Logout successful!"
+      response.should redirect_to(new_user_session_url)
+    end
+
   end
 
-  it 'remembers me' do
-    post :create, :login => 'quentin', :password => 'test', :remember_me => "1"
-    response.cookies["auth_token"].should_not be_nil
-  end
-  
-  it 'does not remember me' do
-    post :create, :login => 'quentin', :password => 'test', :remember_me => "0"
-    response.cookies["auth_token"].should be_nil
+  context 'not logged in' do
+    before(:each) do
+      @a_user = Factory.create(:activated_user, :password => 'password', :password_confirmation => 'password')
+      ensure_logged_out(@a_user)
+    end
+
+    it 'gets new' do
+      get :new
+      response.should render_template('new')
+      response.should be_success
+    end
+
+    it 'logs in with correct password' do
+      get :create, :user_session => {:login => @a_user.login, :password => 'password'}
+      response.should redirect_to(root_url)
+      flash[:notice].should == "Login successful!"
+    end
+
+    it 'renders new with incorrect password' do
+      get :create, :user_session => {:login => @a_user.login, :password => 'not_the_password'}
+      response.should render_template('new')
+    end
+
   end
 
-  it 'deletes token on logout' do
-    login_as :login_user
-    get :destroy
-    response.cookies["auth_token"].should be_nil
-  end
-
-  it 'logs in with cookie' do
-    users(:quentin).remember_me
-    request.cookies["auth_token"] = cookie_for(:quentin)
-    get :new
-    controller.send(:logged_in?).should be_true
-  end
-  
-  it 'fails expired cookie login' do
-    users(:quentin).remember_me
-    users(:quentin).update_attribute :remember_token_expires_at, 5.minutes.ago
-    request.cookies["auth_token"] = cookie_for(:quentin)
-    get :new
-    controller.send(:logged_in?).should_not be_true
-  end
-  
-  it 'fails cookie login' do
-    users(:quentin).remember_me
-    request.cookies["auth_token"] = auth_token('invalid_auth_token')
-    get :new
-    controller.send(:logged_in?).should_not be_true
-  end
-
-  def auth_token(token)
-    CGI::Cookie.new('name' => 'auth_token', 'value' => token)
-  end
-    
-  def cookie_for(user)
-    auth_token users(user).remember_token
-  end
 end

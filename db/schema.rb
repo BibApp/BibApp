@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(:version => 20110209180706) do
     t.datetime "remember_token_expires_at"
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
-    t.string   "persistence_token",                       :default => "abc", :null => false
+    t.string   "persistence_token",                       :default => "", :null => false
   end
 
   create_table "work_name_strings", :force => true do |t|
