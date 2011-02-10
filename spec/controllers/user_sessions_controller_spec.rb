@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe SessionsController do
+describe UserSessionsController do
   fixtures :users
 
   it 'logins and redirects' do
@@ -16,7 +16,7 @@ describe SessionsController do
   end
 
   it 'logs out' do
-    login_as :quentin
+    login_as :login_user
     get :destroy
     session[:user_id].should be_nil
     response.should be_redirect
@@ -33,7 +33,7 @@ describe SessionsController do
   end
 
   it 'deletes token on logout' do
-    login_as :quentin
+    login_as :login_user
     get :destroy
     response.cookies["auth_token"].should be_nil
   end
