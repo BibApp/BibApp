@@ -52,45 +52,6 @@ describe User do
         User.authenticate(@user.login, 'password').should == @user
       end
 
-      it 'sets remember token' do
-        @user.remember_me
-        @user.remember_token.should_not be_nil
-        @user.remember_token_expires_at.should_not be_nil
-      end
-
-      it 'unsets remember token' do
-        @user.remember_me
-        @user.remember_token.should_not be_nil
-        @user.forget_me
-        @user.remember_token.should be_nil
-      end
-
-      it 'remembers me for one week' do
-        before = 1.week.from_now.utc
-        @user.remember_me_for 1.week
-        after = 1.week.from_now.utc
-        @user.remember_token.should_not be_nil
-        @user.remember_token_expires_at.should_not be_nil
-        @user.remember_token_expires_at.between?(before, after).should be_true
-      end
-
-      it 'remembers me until one week' do
-        time = 1.week.from_now.utc
-        @user.remember_me_until time
-        @user.remember_token.should_not be_nil
-        @user.remember_token_expires_at.should_not be_nil
-        @user.remember_token_expires_at.should == time
-      end
-
-      it 'remembers me default two weeks' do
-        before = 2.weeks.from_now.utc
-        @user.remember_me
-        after = 2.weeks.from_now.utc
-        @user.remember_token.should_not be_nil
-        @user.remember_token_expires_at.should_not be_nil
-        @user.remember_token_expires_at.between?(before, after).should be_true
-      end
-
   end
 
 end

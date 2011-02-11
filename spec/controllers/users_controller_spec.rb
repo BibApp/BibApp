@@ -51,11 +51,12 @@ describe UsersController do
   
   it 'activates user' do
     user = Factory.create(:unactivated_user, :password => 'password', :password_confirmation => 'password')
-    User.authenticate(user.login, 'password').should be_nil
+    user.active?.should be_false
     get :activate, :activation_code => user.activation_code
     response.should redirect_to(root_url)
     flash[:notice].should_not be_nil
-    User.authenticate(user.login, 'password').should == user
+    user.reload
+    user.active?.should be_true
   end
   
   it 'does not activate user without key' do
