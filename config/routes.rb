@@ -175,6 +175,6 @@ Bibapp::Application.routes.draw do
 
   match ':controller(/:action(/:id))'
 
-  map.resource :user_session
+  resource :user_session
   
 end
