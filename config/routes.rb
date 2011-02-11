@@ -111,13 +111,13 @@ ActionController::Routing::Routes.draw do |map|
   # Saved routes
   ####
   map.saved '/saved',
-      :controller => 'sessions',
+      :controller => 'user_sessions',
       :action => 'saved'
   map.delete_saved '/sessions/delete_saved',
-      :controller => 'sessions',
+      :controller => 'user_sessions',
       :action => 'delete_saved'
   map.add_many_to_saved '/sessions/add_many_to_saved',
-      :controller => 'sessions',
+      :controller => 'user_sessions',
       :action => 'add_many_to_saved'
 
   ####
@@ -128,10 +128,10 @@ ActionController::Routing::Routes.draw do |map|
       :controller => 'users',
       :action => 'new'
   map.login '/login',
-      :controller => 'sessions',
+      :controller => 'user_sessions',
       :action => 'new'
   map.logout '/logout',
-      :controller => 'sessions',
+      :controller => 'user_sessions',
       :action => 'destroy'
   map.activate '/activate/:activation_code',
       :controller => 'users',
@@ -161,4 +161,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 
+  map.resource :user_session
+  
 end

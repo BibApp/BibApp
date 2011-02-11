@@ -2,7 +2,7 @@
 module ApplicationHelper
   require 'config/personalize.rb'
   require 'htmlentities' if defined? HTMLEntities
-  
+
   def ajax_checkbox_toggle(model, person, selected, reload=nil)
     person = Person.find(person.id)
     if selected

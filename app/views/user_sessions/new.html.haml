@@ -4,17 +4,17 @@
   %div{:class => "span-22 prepend-1"}
     %h2 Login
     %fieldset
-      - form_tag sessions_path do
+      - form_for @user_session, :url => user_session_path do |f|
         %p
           %label="Username"
           %br/
-          = text_field_tag 'login'
+          = f.text_field 'login'
         %p
           %label="Password"
           %br/
-          = password_field_tag 'password'
+          = f.password_field 'password'
         %p
-          = check_box_tag 'remember_me'
+          = f.check_box 'remember_me'
           %label="Remember Me"
           ="(requires browser cookies be enabled)"
         %p

@@ -14,3 +14,6 @@ vendor/solr/logs
 doc/
 coverage/
 .idea/
+public/attachments/
+public/groups/
+public/people/
