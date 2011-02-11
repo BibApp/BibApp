@@ -82,12 +82,12 @@ group :development do
 end
 
 group :test, :development do
-  gem 'rspec', :require => false
-  gem 'rspec-rails', :require => false
+  gem 'rspec'
+  gem 'rspec-rails'
   gem 'ruby-debug-base'
   gem 'ruby-debug'
   gem 'ruby-debug-ide'
-  gem 'shoulda', :require => false
+  gem 'shoulda'
   gem 'factory_girl'
   gem 'rcov'
 end
