@@ -40,16 +40,16 @@ describe User do
 
     it 'resets password' do
         @user.update_attributes(:password => 'new password', :password_confirmation => 'new password')
-        User.authenticate(@user.login, 'new password').should == @user
+        @user.valid_password?('new_password')
       end
 
       it 'does not rehash password' do
         @user.update_attributes(:login => 'quentin2')
-        User.authenticate('quentin2', 'password').should == @user
+        @user.valid_password?('password')
       end
 
       it 'authenticates user' do
-        User.authenticate(@user.login, 'password').should == @user
+        @user.valid_password?('password')
       end
 
   end

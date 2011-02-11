@@ -44,17 +44,6 @@ class User < ActiveRecord::Base
     activation_code.nil?
   end
 
-  # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
-  def self.authenticate(login, password)
-    u = self.find_by_login(login)
-    return u if (u and u.active? and u.authenticated?(password))
-    nil
-  end
-
-  def authenticated?(password)
-    self.valid_password?(password)
-  end
-
   # Returns true if the user has just been activated.
   def recently_activated?
     @activated
