@@ -1,9 +1,7 @@
 # This controller allows users to change their passwords, or request a new password
 #   Code borrowed from: http://blog.compulsivoco.com/2008/03/24/how-to-change-or-reset-your-password-with-restful_authentication/
 class PasswordsController < ApplicationController
-  
-   before_filter :login_from_cookie
-   
+
    # require user is logged in, except for "forgot password" page
    before_filter :login_required, :except => [:create, :new]  
   
@@ -52,7 +50,7 @@ class PasswordsController < ApplicationController
      @user.attributes = params[:user]  
    
      respond_to do |format|  
-       if @user.authenticated?(old_password) && @user.save
+       if @user.valid_password?(old_password) && @user.save
          flash[:notice] = "Your password was updated successfully."
          format.html { redirect_to edit_user_path(@user) }  
        else

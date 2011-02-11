@@ -5,6 +5,7 @@ require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environ
 require 'shoulda'
 require 'spec/autorun'
 require 'spec/rails'
+require "authlogic/test_case" # include at the top of test_helper.rb
 
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
@@ -24,8 +25,6 @@ Spec::Runner.configure do |config|
   config.use_instantiated_fixtures  = false
   config.fixture_path = Rails.root.to_s + '/spec/fixtures/'
 
-  include AuthenticatedTestHelper
-  
   # == Fixtures
   #
   # You can declare fixtures for each example_group like this:
@@ -38,7 +37,7 @@ Spec::Runner.configure do |config|
   #
   # config.global_fixtures = :table_a, :table_b
   #
-  config.global_fixtures = :users
+  # config.global_fixtures = :users
 
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
@@ -59,4 +58,22 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+
+  include Authlogic::TestCase
+  config.before(:each) do
+    activate_authlogic        
+  end
+
+  def login_as(factory = :activated_user, opts = {})
+    user = Factory.create(factory, opts)
+    UserSession.create!(user)
+    user
+  end
+
+  def ensure_logged_out(user)
+    if session = UserSession.find(user)
+      session.destroy
+    end
+  end
+
 end

@@ -141,19 +141,19 @@ Bibapp::Application.routes.draw do
   ####
   # Saved routes
   ####
-  match 'sessions/saved', :as => 'saved'
-  match 'sessions/delete_saved', :as => 'delete_saved'
-  match 'sessions/add_many_to_saved', :as => 'add_many_to_saved'
-
+  match 'saved', :to => 'user_sessions#saved', :as => saved
+  match 'sessions/delete_saved', :to => 'user_sessions#delete_saved', 
+    :as => 'delete_saved'
+  match 'sessions/add_many_to_saved', :to => 'user_sessions#add_many_to_saved',
+    :as => 'add_many_to_saved'
   ####
   # Authentication routes
   ####
   # Make easier routes for authentication (via restful_authentication)
   match 'signup', :to => 'users#new', :as => 'signup'
-  match 'login', :to => 'sessions#new', :as => 'login'
-  match 'logout', :to => 'sessions#destroy', :as => 'logout'
+  match 'login', :to => 'user_sessions#new', :as => 'login'
+  match 'logout', :to => 'user_sessions#destroy', :as => 'logout'
   match 'activate/:activation_code', :to => 'users#activate', :as => 'activate'
-
 
   ####
   # DEFAULT ROUTES 
@@ -175,4 +175,6 @@ Bibapp::Application.routes.draw do
 
   match ':controller(/:action(/:id))'
 
+  map.resource :user_session
+  
 end

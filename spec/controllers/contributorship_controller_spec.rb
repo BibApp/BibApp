@@ -15,7 +15,7 @@ describe ContributorshipsController do
   context "logged in" do
 
     before(:each) do
-      login_as(:quentin)
+      login_as(:activated_user)
     end
 
   end

@@ -70,6 +70,9 @@ gem 'yaml_db'
 #authorization, replacing plugin used previously
 gem 'authorization'
 
+#authentication
+gem 'authlogic'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause
