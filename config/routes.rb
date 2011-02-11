@@ -141,7 +141,7 @@ Bibapp::Application.routes.draw do
   ####
   # Saved routes
   ####
-  match 'saved', :to => 'user_sessions#saved', :as => saved
+  match 'saved', :to => 'user_sessions#saved', :as => 'saved'
   match 'sessions/delete_saved', :to => 'user_sessions#delete_saved', 
     :as => 'delete_saved'
   match 'sessions/add_many_to_saved', :to => 'user_sessions#add_many_to_saved',
