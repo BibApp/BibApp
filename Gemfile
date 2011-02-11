@@ -81,13 +81,13 @@ group :development do
   gem 'thin'
 end
 
-group :test do
-  gem 'rspec', '~> 1.3.1', :require => false
-  gem 'rspec-rails', '~> 1.3.3', :require => false
+group :test, :development do
+  gem 'rspec', :require => false
+  gem 'rspec-rails', :require => false
   gem 'ruby-debug-base'
   gem 'ruby-debug'
   gem 'ruby-debug-ide'
-  gem 'shoulda', '~> 2.11.3', :require => false
-  gem 'factory_girl', '~> 1.3.3'
-  gem 'rcov', '~> 0.9.9'
+  gem 'shoulda', :require => false
+  gem 'factory_girl'
+  gem 'rcov'
 end
