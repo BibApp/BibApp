@@ -12,7 +12,7 @@ describe KeywordsController do
     assigns(:keywords).should_not be_nil
   end
 
-  it "show show keyword" do
+  it "should show keyword" do
     get :show, :id => @keyword.id
     response.should be_success
   end
@@ -28,9 +28,9 @@ describe KeywordsController do
     end
 
     it "should create keyword" do
-      assert_difference('Keyword.count') do
-        post :create, :keyword => {:name => 'keyword'}
-      end
+      count = Keyword.count
+      post :create, :keyword => {:name => 'keyword'}
+      Keyword.count.should == count + 1
       response.should redirect_to(keyword_path(assigns(:keyword)))
     end
 
@@ -46,9 +46,9 @@ describe KeywordsController do
     end
 
     it "should destroy keyword" do
-      assert_difference('Keyword.count', -1) do
-        delete :destroy, :id => @keyword.id
-      end
+      count = Keyword.count
+      delete :destroy, :id => @keyword.id
+      Keyword.count.should == count - 1
       response.should redirect_to(keywords_url())
       Keyword.find_by_id(@keyword.id).should be_nil
     end
