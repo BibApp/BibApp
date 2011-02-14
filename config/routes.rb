@@ -88,6 +88,12 @@ ActionController::Routing::Routes.draw do |map|
       :add_to_box => :get,
       :remove_from_box => :get}
 
+
+    ###
+  # for batch loading
+  map.batchcsv_person 'person/batchcsv', :controller => 'people', :action => 'batchcsv'
+  map.batchcsv_processed 'person/batchcsv', :controller => 'people', :action => 'batchcsv', :method => 'get'
+
   ####
   # User routes
   ####

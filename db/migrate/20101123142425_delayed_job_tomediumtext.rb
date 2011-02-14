@@ -1,9 +1,13 @@
 class DelayedJobTomediumtext < ActiveRecord::Migration
   def self.up
-    change_column :delayed_jobs, :handler, :text, :size => 16777215
+    if adapter_name.downcase == 'mysql'
+      change_column :delayed_jobs, :handler, :mediumtext
+    end
   end
 
   def self.down
-    change_column :delayed_jobs, :handler, :text
+    if adapter_name.downcase == 'mysql'
+      change_column :delayed_jobs, :handler, :text
+    end
   end
 end

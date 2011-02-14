@@ -95,3 +95,7 @@ require 'lib/error_handler'
 ### Mongrel Users ###
 # Rails 2.3.3 patch for Mongel
 #require 'lib/mongrel_patch'
+
+#batch importing
+require 'lib/author_batch_load'
+

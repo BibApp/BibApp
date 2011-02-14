@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   require 'redcloth'
   
   # Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
+  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :batchcsv ]
   
   make_resourceful do 
     build :index, :new, :create, :show, :edit, :update, :destroy
@@ -261,6 +261,57 @@ class PeopleController < ApplicationController
      end
   end
 
+  # loading persons via csv
+  def batchcsv
+
+    permit "admin"
+
+    if request.post?
+
+        begin
+          msg = ''
+          data = params[:person][:import_file]
+          filename = params[:person][:import_file].original_filename
+
+          str = ''
+          if data.respond_to?(:read)
+            str = data.read
+          elsif File.readable?(data)
+            str = File.read(data)
+          else
+            msg = 'The File you submitted could not be read.'
+          end
+
+          if msg.empty?
+            unless str.is_utf8?
+              encoding = CMess::GuessEncoding::Automatic.guess(str)
+              unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
+                str =Iconv.iconv('UTF-8', encoding, str).to_s
+              else
+                logger.error("The character encoding could not be determined or could not be converted to UTF-8.\n")
+                flash[:notice] = "The character encoding could not be determined or could not be converted to UTF-8."
+                msg = 'The file could not be converted to UTF8.'
+              end
+            end
+
+            if msg.empty?
+              # is it better to pass the filename instead of storing the csv contents in the db
+              # even if the db row is temporary ?
+              Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
+              msg = "Your file was accepted for processing. An email will notify you when the job is completed."
+            end
+          end
+
+        rescue Exception => e
+          flash[:notice] = "Exception: #{e.to_s}"
+          msg = 'An error was generated processing your request.'
+        end
+
+        redirect_to batchcsv_processed_path(:completed => msg)
+    end
+
+    # render a get to action template
+  end
 
   private
   

@@ -5,6 +5,17 @@ class Notifier < ActionMailer::Base
     body(:user => user, :import_id => import_id)
   end
   
+   def batch_import_persons_notification(user_id, results, filename = "Unknown")
+    require 'config/personalize.rb'
+    
+    user = User.find(user_id)
+    setup_email(user)
+    subject "BibApp Synapse - batch upload of persons has completed"
+    body(:login => user.login, :results => results, :filename => filename)
+  end
+
+  
+  
   def error_summary(exception, clean_backtrace, params, session)
     recipients  "#{$SYSADMIN_EMAIL}"
     from        "#{$SYSADMIN_EMAIL}"
