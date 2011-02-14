@@ -6,7 +6,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
-AUTHORIZATION_MIXIN = "object roles"
+#AUTHORIZATION_MIXIN = "object roles"
 LOGIN_REQUIRED_REDIRECTION = {:controller => 'sessions', :action => 'new'}
 PERMISSION_DENIED_REDIRECTION = {:controller => 'works', :action => 'index'}
 STORE_LOCATION_METHOD = :store_location
