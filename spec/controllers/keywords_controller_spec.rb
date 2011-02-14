@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe KeywordsController do
 
   before(:each) do
+    include Authlogic::TestCase
+    activate_authlogic
     @keyword = Factory.create(:keyword)
   end
 

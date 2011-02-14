@@ -13,19 +13,8 @@ Dir[Rails.root.join("spec/factories/**/*.rb")].each { |f| require f }
 ActionMailer::Base.delivery_method = :test
 
 RSpec.configure do |config|
-  # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-  config.mock_with :rspec
 
-  include Authlogic::TestCase
-  config.before(:each) do
-    activate_authlogic
-  end
+  config.mock_with :rspec
 
   def login_as(factory = :activated_user, opts = {})
     user = Factory.create(factory, opts)

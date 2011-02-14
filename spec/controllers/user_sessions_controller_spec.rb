@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UserSessionsController do
 
+  before(:each) do
+    include Authlogic::TestCase
+    activate_authlogic
+  end
+
   context 'logged in' do
     before(:each) do
       @a_user = login_as(:activated_user, :password => 'password', :password_confirmation => 'password')
