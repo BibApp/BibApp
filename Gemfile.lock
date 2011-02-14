@@ -51,6 +51,7 @@ GEM
     delayed_job (2.1.4)
       activesupport (~> 3.0)
       daemons
+    diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
@@ -91,10 +92,19 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     rcov (0.9.9)
-    rspec (1.3.1)
-    rspec-rails (1.3.3)
-      rack (>= 1.0.0)
-      rspec (= 1.3.1)
+    rspec (2.5.0)
+      rspec-core (~> 2.5.0)
+      rspec-expectations (~> 2.5.0)
+      rspec-mocks (~> 2.5.0)
+    rspec-core (2.5.1)
+    rspec-expectations (2.5.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.5.0)
+    rspec-rails (2.5.0)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
+      rspec (~> 2.5.0)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -131,7 +141,7 @@ DEPENDENCIES
   cmess (~> 0.1.2)
   daemons (~> 1.0.10)
   delayed_job
-  factory_girl (~> 1.3.3)
+  factory_girl
   haml
   hpricot (~> 0.6)
   htmlentities (~> 4.0.0)
@@ -140,16 +150,16 @@ DEPENDENCIES
   namecase (~> 1.1.0)
   pg
   rails (= 3.0.1)
-  rcov (~> 0.9.9)
-  rspec (~> 1.3.1)
-  rspec-rails (~> 1.3.3)
+  rcov
+  rspec
+  rspec-rails
   ruby-debug
   ruby-debug-base
   ruby-debug-ide
   ruby-net-ldap (~> 0.0.4)
   rubyist-aasm (~> 2.0.2)
   rubyzip (~> 0.9.1)
-  shoulda (~> 2.11.3)
+  shoulda
   solr-ruby (~> 0.0.6)
   thin
   will_paginate (= 3.0.pre2)
