@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe UsersController do
-  fixtures :users
-
+  
   it 'allows signup' do
     lambda do
       create_user
