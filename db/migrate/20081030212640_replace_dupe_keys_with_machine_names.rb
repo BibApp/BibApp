@@ -12,7 +12,7 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
         # machine name is primary title, downcased, with all punctuation/spaces converted to single space
         machine_name = work.title_primary.chars.gsub(/[\W]+/, " ").strip.downcase
         work.machine_name = machine_name
-        work.save_without_callbacks
+        work.save
         say "Work with id=#{work.id} updated!", true
       end
     end
@@ -28,7 +28,7 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
         # machine name is Publication name, downcased, with all punctuation/spaces converted to single space
         machine_name =  pub.name.chars.gsub(/[\W]+/, " ").strip.downcase
         pub.machine_name = machine_name
-        pub.save_without_callbacks
+        pub.save
         say "Publication with id=#{pub.id} updated!", true
       end
     end
@@ -60,7 +60,7 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
         # machine name is Person name, downcased, with all punctuation/spaces converted to single space
         machine_name =  person.full_name.chars.gsub(/[\W]+/, " ").strip.downcase
         person.machine_name = machine_name
-        person.save_without_callbacks
+        person.save
         say "Person with id=#{person.id} updated!", true
       end
     end
@@ -76,7 +76,7 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
         # machine name is Group name, downcased, with all punctuation/spaces converted to single space
         machine_name =  group.name.chars.gsub(/[\W]+/, " ").strip.downcase
         group.machine_name = machine_name
-        group.save_without_callbacks
+        group.save
         say "Group with id=#{group.id} updated!", true
       end
     end

@@ -1,18 +1,19 @@
 class Publication < ActiveRecord::Base
-     
+
+  attr_accessor :do_reindex
   #### Validations ####
 
   #### Associations ####
-  
+
   belongs_to :publisher
   belongs_to :authority,
-    :class_name => "Publication",
-    :foreign_key => :authority_id
+      :class_name => "Publication",
+      :foreign_key => :authority_id
   has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
-  
+
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
-  
+
   named_scope :authorities, :conditions => ["id = authority_id"]
 
   # This is necessary due to very long titles for conference
@@ -24,23 +25,36 @@ class Publication < ActiveRecord::Base
   # International Federation of Organic Agriculture Movements (IFOAM) and
   # the Consorzio ModenaBio in Modena, Italy, 18-20 June, 2008
   validates_length_of :name, :maximum => 255,
-    :too_long => "is too long (maximum is 255 characters): {{value}}"
-  
+      :too_long => "is too long (maximum is 255 characters): {{value}}"
+
   #### Callbacks ####
+  after_create :after_create_actions
+  before_create :before_create_actions
+  before_save :before_save_actions
+  after_save :reindex, :if => :do_reindex
   
   #Called after create only
-  def after_create
+  def after_create_actions
     #Authority defaults to self
     self.authority_id = self.id
     self.save
   end
-  
-  #Note: 'after_save' callback is located in 'publication_observer.rb', to make
-  # sure it is called *before* after_save in 'index_observer.rb'
-  # (That way Publication info is updated completely *before* re-indexing of works)
-  
+
+  def before_create_actions
+    unless self.initial_publisher_id.nil?
+      self.publisher_id = Publisher.find(:first,
+          :conditions => ["publishers.id = ?", self.initial_publisher_id]).authority.id
+    end
+  end
+
+  def before_save_actions
+    self.update_authorities
+    self.update_machine_name
+    self.parse_identifiers
+  end
+
   #### Methods ####
-  
+
   def validate_name
     "#{self.name} #{self.issn_isbn}".downcase.gsub(/[^a-zA-Z0-9]+/, "")
   end
@@ -48,33 +62,33 @@ class Publication < ActiveRecord::Base
   def publisher_name
     publisher.name if publisher
   end
-  
+
   def publisher_name=(name)
     if name.blank?
       name = "Unknown"
     end
     self.publisher = Publisher.find_or_create_by_name(name) unless name.blank?
   end
-  
+
   def isbns
     isbns = Array.new
-    ids = self.identifiers.find(:all, :conditions => [ 'type=?', 'ISBN']).collect{|isbn| {:name => isbn.name, :id => isbn.id}}
+    ids = self.identifiers.find(:all, :conditions => ['type=?', 'ISBN']).collect { |isbn| {:name => isbn.name, :id => isbn.id} }
     ids.each do |id|
       isbns << {:name => id[:name], :id => id[:id]}
     end
     return isbns
   end
-  
+
   def issns
-    issns = self.identifiers.find(:all, :conditions => [ 'type=?', 'ISSN']).collect{|issn| {:name => issn.name, :id => issn.id}}
+    issns = self.identifiers.find(:all, :conditions => ['type=?', 'ISSN']).collect { |issn| {:name => issn.name, :id => issn.id} }
   end
-  
+
   def parse_identifiers
     if self.issn_isbn.blank?
       return
     else
       # Loop thru all publication issn_isbn values
-      self.issn_isbn.each do |issn_isbn| 
+      self.issn_isbn.each do |issn_isbn|
 
         # Field might be separated
         issn_isbn.split("; ").each do |identifier|
@@ -94,7 +108,6 @@ class Publication < ActiveRecord::Base
             else
               self.identifiers << pub_id
             end
-            self.save_without_callbacks
           else
             # Do Nothing
           end
@@ -102,22 +115,18 @@ class Publication < ActiveRecord::Base
       end
     end
   end
-  
-  def save_without_callbacks
-    update_without_callbacks
-  end
-  
+
   def to_param
     param_name = name.gsub(" ", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
   end
-  
+
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
     "#{name}||#{id}" unless self.nil?
   end
-  
+
   def solr_filter
     'publication_id:"' + self.id.to_s + '"'
   end
@@ -128,16 +137,16 @@ class Publication < ActiveRecord::Base
 
   def authority_for
     authority_for = Publication.find(
-      :all, 
-      :conditions => ["authority_id = ?", self.id]
+        :all,
+            :conditions => ["authority_id = ?", self.id]
     )
     return authority_for
   end
-  
+
   def authority_for_work_count
     Work.find(:all, :conditions => ["authority_publication_id = ? and work_state_id = ?", self.id, 3]).size
   end
-  
+
   #Update authorities for related models, when Publication Authority changes
   # (called by after_save callback)
   def update_authorities
@@ -145,28 +154,30 @@ class Publication < ActiveRecord::Base
     # to each related model.
     logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
     if self.authority_id_changed? and self.authority_id != self.id or self.publisher_id_changed?
-      
+
       # Update publications
       logger.debug("\n\n===Updating Publications===\n\n")
       self.authority_for.each do |pub|
         pub.authority_id = self.authority_id
         pub.save
       end
-      
+
       # Update works
       logger.debug("\n\n===Updating Works===\n\n")
       self.works.each do |work|
         work.publication_id = self.authority_id
         work.publisher_id = self.authority.publisher.authority_id
-        work.save_and_set_for_index_without_callbacks
+        work.save_and_set_for_index
       end
-      
-      # Reindex
-      logger.debug("\n\n===Reindexing Works===\n\n")
-      Index.batch_index
+      self.do_reindex = true
     end
   end
-  
+
+  def reindex
+    logger.debug("\n\n===Reindexing Works===\n\n")
+    Index.batch_index
+  end
+
   #Update Machine Name of Publication (called by after_save callback)
   def update_machine_name
     #Machine name only needs updating if there was a name change
@@ -175,21 +186,20 @@ class Publication < ActiveRecord::Base
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
       self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-      self.save_without_callbacks
     end
   end
-  
+
   class << self
 
     # return the first letter of each name, ordered alphabetically
     def letters
       find(
-        :all,
-        :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
-        :order  => 'letter'
+          :all,
+              :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
+              :order => 'letter'
       )
     end
-  
+
     def update_multiple(pub_ids, auth_id)
       pub_ids.each do |pub|
         update = Publication.find_by_id(pub)
@@ -197,7 +207,7 @@ class Publication < ActiveRecord::Base
         update.save
       end
     end
-    
+
     #Parse Solr data (produced by to_solr_data)
     # return Publication name and ID
     def parse_solr_data(publication_data)

@@ -27,24 +27,15 @@ class Person < ActiveRecord::Base
   validates_presence_of :uid
   
   #### Callbacks ####
- 
-  def after_create
-    set_pen_names
-  end
+  after_create :set_pen_names
+  after_update :set_pen_names
+  before_save :before_save_actions
 
-  def after_update
-    set_pen_names
+  def before_save_actions
+    self.update_machine_name
   end
-  
-  #Note: 'after_save' callback is located in 'person_observer.rb', to make
-  # sure it is called *before* after_save in 'index_observer.rb'
-  # (That way Person info is updated completely *before* re-indexing of works)
  
   #### Methods ####
-  
-  def save_without_callbacks
-    update_without_callbacks
-  end
 
   def set_pen_names
     # Accept Person.new form name field params and autogenerate pen_name associations 
@@ -215,7 +206,6 @@ class Person < ActiveRecord::Base
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
       self.machine_name = self.full_name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-      self.save_without_callbacks
     end
   end
   

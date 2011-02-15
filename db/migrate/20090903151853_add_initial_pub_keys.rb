@@ -72,7 +72,7 @@ class AddInitialPubKeys < ActiveRecord::Migration
       
         ### Save everything.
         # Save work and mark for batch indexing
-        work.save_and_set_for_index_without_callbacks
+        work.save_and_set_for_index
         say "\n", true
       end
     end

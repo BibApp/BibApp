@@ -11,17 +11,15 @@ class Group < ActiveRecord::Base
 
   #### Callbacks ####
   
-  #Note: 'after_save' callback is located in 'group_observer.rb', to make
-  # sure it is called *before* after_save in 'index_observer.rb'
-  # (That way Group info is updated completely *before* re-indexing of works)
- 
-  #### Methods ####
-  
-  def save_without_callbacks
-    update_without_callbacks
+  before_save :before_save_actions
+
+  def before_save_actions
+    self.update_machine_name
   end
-  
-  
+
+
+  #### Methods ####
+
   def works
     # @TODO: Do this the Rails way.
     self.people.collect{|p| p.works.verified}.uniq.flatten
@@ -50,7 +48,6 @@ class Group < ActiveRecord::Base
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
       self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-      self.save_without_callbacks
     end
   end
 

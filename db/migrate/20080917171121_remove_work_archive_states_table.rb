@@ -7,7 +7,7 @@ class RemoveWorkArchiveStatesTable < ActiveRecord::Migration
     works = Work.find(:all).each do |w|
       if w.work_archive_state_id==7  #old archived state ID
         w.work_archive_state_id=3    #new archived state ID
-        w.save_without_callbacks
+        w.save
       end
     end
     
@@ -32,7 +32,7 @@ class RemoveWorkArchiveStatesTable < ActiveRecord::Migration
     works = Work.find(:all).each do |w|
       if w.work_archive_state_id==3   #new archived state ID
         w.work_archive_state_id=7     #old archived state ID
-        w.save_without_callbacks
+        w.save
       end
     end
     
