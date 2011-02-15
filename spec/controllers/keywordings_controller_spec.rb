@@ -19,7 +19,7 @@ describe KeywordingsController do
 
   context "logged in" do
     before(:each) do
-      login_as(:activated_user)
+      @user = login_as(:activated_user)
     end
 
     it "should get new" do
@@ -36,6 +36,7 @@ describe KeywordingsController do
     end
 
     it "should get edit" do
+      @user.has_role 'editor', Work
       get :edit, :id => @keywording.id
       response.should be_success
     end
@@ -46,6 +47,7 @@ describe KeywordingsController do
     end
 
     it "should destroy" do
+      @user.has_role 'admin', Work
       lambda {
         delete :destroy, :id => @keywording.id
       }.should change(Keywording, :count).by(-1)

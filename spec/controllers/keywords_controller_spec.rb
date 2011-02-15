@@ -19,7 +19,7 @@ describe KeywordsController do
 
   context "requiring login" do
     before(:each) do
-      login_as :activated_user
+      @user = login_as :activated_user
     end
 
     it "should get new" do
@@ -35,6 +35,7 @@ describe KeywordsController do
     end
 
     it "should get edit" do
+      @user.has_role 'editor', Work
       get :edit, :id => @keyword.id
       response.should be_success
     end
@@ -46,6 +47,7 @@ describe KeywordsController do
     end
 
     it "should destroy keyword" do
+      @user.has_role 'admin', Work
       lambda {
       delete :destroy, :id => @keyword.id
       }.should change(Keyword, :count).by(-1)
