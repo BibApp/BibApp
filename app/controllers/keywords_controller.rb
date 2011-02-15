@@ -9,6 +9,10 @@ class KeywordsController < ApplicationController
 
   caches_page :timeline
 
+  def show
+    @keyword = Keyword.find(params[:id])
+  end
+
   def timeline
 
     @current_object = Group.find(params[:group_id]) if params[:group_id]

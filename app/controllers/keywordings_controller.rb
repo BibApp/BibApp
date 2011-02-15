@@ -7,4 +7,9 @@ class KeywordingsController < ApplicationController
     build :all
 
   end
+
+  def show
+    @keywording = Keywording.find(params[:id])
+  end
+
 end
