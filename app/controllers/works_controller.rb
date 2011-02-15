@@ -73,7 +73,7 @@ class WorksController < ApplicationController
     
     before :edit do
       #Anyone with 'editor' role on this work can edit it
-      permit "editor on work"
+      permit "editor on Work"
       
       #Check if there was a path passed along to return to
       @return_path = params[:return_path]
@@ -81,7 +81,7 @@ class WorksController < ApplicationController
     
     before :destroy do
       #Anyone with 'admin' role on this work can destroy it
-      permit "admin on work"
+      permit "admin on Work"
     end
     
   end # end make_resourceful
