@@ -73,6 +73,9 @@ gem 'authorization'
 #authentication
 gem 'authlogic'
 
+#batch loading of authors
+gem 'fastercsv'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause

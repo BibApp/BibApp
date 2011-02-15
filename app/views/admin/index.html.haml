@@ -25,6 +25,7 @@
     - if @tab_name == "people"
       %ul#tasks
         %li=link_to "Add a person", new_person_path
+        %li=link_to "CSV load", batchcsv_person_path
 
     - if @tab_name == "publications"
       %ul#tasks

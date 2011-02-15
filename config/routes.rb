@@ -115,6 +115,12 @@ Bibapp::Application.routes.draw do
     end
   end
 
+
+    ###
+  # for batch loading
+  match 'person/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
+  match 'person/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person'
+
   ####
   # User routes
   ####
