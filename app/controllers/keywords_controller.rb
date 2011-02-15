@@ -9,6 +9,10 @@ class KeywordsController < ApplicationController
 
   caches_page :timeline
 
+  def new
+    @keyword = Keyword.new
+  end
+
   def show
     @keyword = Keyword.find(params[:id])
   end

@@ -23,7 +23,6 @@ describe KeywordsController do
     end
 
     it "should get new" do
-      @user.has_role 'editor'
       get :new
       response.should be_success
     end

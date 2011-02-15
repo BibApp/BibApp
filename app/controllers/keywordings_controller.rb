@@ -12,4 +12,8 @@ class KeywordingsController < ApplicationController
     @keywording = Keywording.find(params[:id])
   end
 
+  def new
+    @keywording = Keywording.new
+  end
+  
 end
