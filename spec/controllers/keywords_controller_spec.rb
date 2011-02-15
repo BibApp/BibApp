@@ -28,9 +28,9 @@ describe KeywordsController do
     end
 
     it "should create keyword" do
-      count = Keyword.count
-      post :create, :keyword => {:name => 'keyword'}
-      Keyword.count.should == count + 1
+      lambda {
+        post :create, :keyword => {:name => 'keyword'}
+      }.should change(Keyword, :count).by(1)
       response.should redirect_to(keyword_path(assigns(:keyword)))
     end
 
@@ -46,9 +46,9 @@ describe KeywordsController do
     end
 
     it "should destroy keyword" do
-      count = Keyword.count
+      lambda {
       delete :destroy, :id => @keyword.id
-      Keyword.count.should == count - 1
+      }.should change(Keyword, :count).by(-1)
       response.should redirect_to(keywords_url())
       Keyword.find_by_id(@keyword.id).should be_nil
     end

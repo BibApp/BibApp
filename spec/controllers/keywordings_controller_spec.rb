@@ -29,9 +29,9 @@ describe KeywordingsController do
 
     it "should create" do
       keyword = Factory.create(:keyword)
-      assert_difference('Keywording.count') do
+      lambda {
         post :create, :keywording => {:keyword_id => keyword.id, :work_id => @keywording.work.id}
-      end
+      }.should change(Keywording, :count).by(1)
       response.should redirect_to(keywording_url(assigns(:keywording)))
     end
 
@@ -46,9 +46,9 @@ describe KeywordingsController do
     end
 
     it "should destroy" do
-      assert_difference('Keywording.count', -1) do
+      lambda {
         delete :destroy, :id => @keywording.id
-      end
+      }.should change(Keywording, :count).by(-1)
       response.should redirect_to(keywordings_url)
     end
   end
