@@ -1,0 +1,14 @@
+This file is here to temporarily keep track of what needs to be done for
+Rails 3 migration.
+
+- The authorization plugin seems to be causing problems, even though
+I used a fork that was supposed to be Rails 3 compatible. Most of the
+remaining spec failures seem to occur here.
+- There are numerous deprecations that will need to be fixed, but 
+this doesn't seem urgent.
+- The server will start, but try to do anything and there is a 
+mysterious error that doesn't seem to relate to the application code
+at all. I want to fix the authorization stuff before trying to look
+into this too deeply (on the outside chance that it is related).
+
+There are doubtless more issues, but this is what I've run into so far.
