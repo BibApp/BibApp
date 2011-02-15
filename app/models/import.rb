@@ -54,7 +54,7 @@ class Import < ActiveRecord::Base
   end
 
   def accept_import
-    self.send_later(:process_accepted_import)
+    self.delay.process_accepted_import
   end
   
   def process_accepted_import
@@ -85,7 +85,7 @@ class Import < ActiveRecord::Base
       Index.batch_index
     
       #Delayed Job - Update scoring hash for Person
-      person.send_later(:queue_update_scoring_hash)
+      person.delay.queue_update_scoring_hash
     end
   end
   
@@ -96,7 +96,7 @@ class Import < ActiveRecord::Base
     self.works_added.each do |work_added|
       work = Work.find_by_id(work_added)
       logger.debug("\n- Work: #{work.id}") if work
-      work.send_later(:destroy) if work
+      work.delay.destroy if work
     end
     
     self.works_added = []
@@ -108,7 +108,7 @@ class Import < ActiveRecord::Base
   
   # Add Import to Delayed Job queue
   def queue_import
-    self.send_later(:batch_import)
+    self.delay.batch_import
   end
   
   # Process Batch Import

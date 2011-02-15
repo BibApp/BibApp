@@ -33,7 +33,7 @@ class Contributorship < ActiveRecord::Base
   def after_save_actions
     # Delayed Job - Remove false positives from other PenName claimants
     logger.debug("\n=== REFRESHING ===\n")
-    #self.send_later(:refresh_contributorships)
+    #self.delay.refresh_contributorships
     self.refresh_contributorships
 
 # I'm moving this block into :refresh_contributorships

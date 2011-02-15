@@ -20,7 +20,7 @@ class IndexObserver < ActiveRecord::Observer
         works = get_associated_works(record)
         
         works.each{|work| work.save_and_set_for_index}
-        Index.send_later(:batch_index)
+        Index.delay.batch_index
       end
     end  
   end
@@ -38,7 +38,7 @@ class IndexObserver < ActiveRecord::Observer
       # Check to see if object has associated works -- attachments for archiving will not.
       if !works.nil?
         works.each{|work| work.save_and_set_for_index}
-        Index.send_later(:batch_index)
+        Index.delay.batch_index
       end
     end
   end
