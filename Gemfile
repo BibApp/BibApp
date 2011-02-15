@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "3.0.1"
+gem "rails", "3.0.4"
 
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
 gem "haml"
