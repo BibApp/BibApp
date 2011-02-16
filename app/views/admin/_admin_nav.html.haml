@@ -1,31 +1,9 @@
-%div#admin-nav
+#admin-nav
   %ul
-    - if @tab_name == "works"
-      %li.current=link_to "Works", {:controller => "admin", :tab => "works"}
-    - else
-      %li=link_to "Works", {:controller => "admin", :tab => "works"}
+    %li{give_current_class_if_equal('works', @tab_name)}=link_to "Works", admin_index_url(:tab => "works")
+    %li{give_current_class_if_equal('groups', @tab_name)}=link_to "Groups", admin_index_url(:tab => "groups")
+    %li{give_current_class_if_equal('people', @tab_name)}=link_to "People", admin_index_url(:tab => "people")
+    %li{give_current_class_if_equal('publications', @tab_name)}=link_to "Publications", admin_index_url(:tab => "publications")
+    %li{give_current_class_if_equal('publishers', @tab_name)}=link_to "Publishers", admin_index_url(:tab => "publishers")
+    %li{give_current_class_if_equal('users', @tab_name)}=link_to "Users/Roles", admin_index_url(:tab => "users")
 
-    - if @tab_name == "groups"
-      %li.current=link_to "Groups", {:controller => "admin", :tab => "groups"}
-    - else
-      %li=link_to "Groups", {:controller => "admin", :tab => "groups"}
-
-    - if @tab_name == "people"
-      %li.current=link_to "People", {:controller => "admin", :tab => "people"}
-    - else
-      %li=link_to "People", {:controller => "admin", :tab => "people"}
-
-    - if @tab_name == "publications"
-      %li.current=link_to "Publications", {:controller => "admin", :tab => "publications"}
-    - else
-      %li=link_to "Publications", {:controller => "admin", :tab => "publications"}
-
-    - if @tab_name == "publishers"
-      %li.current=link_to "Publishers", {:controller => "admin", :tab => "publishers"}
-    - else
-      %li=link_to "Publishers", {:controller => "admin", :tab => "publishers"}
-
-    - if @tab_name == "users"
-      %li.current=link_to "Users/Roles", {:controller => "admin", :tab => "users"}
-    - else
-      %li=link_to "Users/Roles", {:controller => "admin", :tab => "users"}

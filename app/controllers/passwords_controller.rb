@@ -9,8 +9,8 @@ class PasswordsController < ApplicationController
    filter_parameter_logging :old_password, :password, :password_confirmation  
    
    # GETs should be safe  
-   verify :method => :post, :only => [:create], :redirect_to => { :controller => :site }  
-   verify :method => :put, :only => [:update], :redirect_to => { :controller => :site }  
+   verify :method => :post, :only => [:create], :redirect_to => root_url
+   verify :method => :put, :only => [:update], :redirect_to => root_url  
    
    # POST /passwords  
    # Forgot password  

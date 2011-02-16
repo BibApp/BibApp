@@ -16,25 +16,26 @@
         ="#{$APPLICATION_TAGLINE}"
     
     .span-16
+      - controller_name = params[:controller]
       %ul#navigation
         - if logged_in?
           - if current_user.has_role?("admin", System)
-            %li{mark_current_if_controller_is("admin")}
+            %li{give_current_id_if_equal("admin", controller_name)}
               %span=link_to "Admin", admin_index_url
             
-        %li{mark_current_if_controller_is("works")}
+        %li{give_current_id_if_equal("works", controller_name)}
           %span=link_to "Works", works_path(:view => "all")
         
-        %li{mark_current_if_controller_is("groups")}
+        %li{give_current_id_if_equal("groups", controller_name)}
           %span=link_to "Groups", groups_path
 
-        %li{mark_current_if_controller_is('people')}
+        %li{give_current_id_if_equal('people', controller_name)}
           %span=link_to "People", people_path
 
-        %li{mark_current_if_controller_is('publications')}
+        %li{give_current_id_if_equal('publications', controller_name)}
           %span=link_to "Publications", publications_path
 
-        %li{mark_current_if_controller_is('publishers')}
+        %li{give_current_id_if_equal('publishers', controller_name)}
           %span=link_to "Publishers", publishers_path
 
         - if !session[:saved].nil? && session[:saved].items.size > 0

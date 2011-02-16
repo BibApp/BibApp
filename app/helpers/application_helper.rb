@@ -171,7 +171,7 @@ module ApplicationHelper
   end
   
   def link_to_delete_saved
-    link_to "Empty saved items?", :controller => "sessions", :action => "delete_saved"
+    link_to "Empty saved items?", delete_saved_url
   end
   
   def coin(work)
@@ -292,8 +292,12 @@ module ApplicationHelper
   end
 
   #create a hash for Haml that gives id => current if the controller matches the argument
-  def mark_current_if_controller_is(controller)
-    params[:controller] == controller ? {:id => 'current'} : {}
+  def give_current_id_if_equal(name1, name2)
+    name1 == name2 ? {:id => 'current'} : {}
+  end
+
+  def give_current_class_if_equal(name1, name2)
+    name1 == name2 ? {:class => 'current'} : {}
   end
 
   private
