@@ -14,8 +14,7 @@
       %td.label
         = "#{creator_role}(s):"
       %td
-        - creators.collect!{ |c| "#{link_to c[:ns].name.gsub(",", ", "), name_string_path(c[:ns])}"}
-        = creators.join(', ')
+        = creators.collect { |c| (link_to h(c[:ns].name.gsub(",", ", ")), name_string_path(c[:ns]))}.join(', ').html_safe
 
   -# Get the contributors associated with this work
   -# Omit the first role for this work subklass (usually Author)
