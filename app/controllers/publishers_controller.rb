@@ -22,6 +22,10 @@ class PublishersController < ApplicationController
       format.rss  #loads show.rss.rxml
     end
 
+    response_for :index do |format|
+      format.html
+    end
+
     before :index do
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters.collect { |d| d.letter.upcase }
