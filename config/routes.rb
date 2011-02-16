@@ -179,8 +179,6 @@ Bibapp::Application.routes.draw do
 
   match 'citations', :to => 'works#index'
 
-  match ':controller(/:action(/:id))'
-
   resource :user_session
   
 end
