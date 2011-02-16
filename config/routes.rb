@@ -10,10 +10,12 @@ Bibapp::Application.routes.draw do
       get :auto_complete_for_tag_name
       get :review_batch
       delete :destroy_multiple
+      get :reorder_list
     end
     member do
       get :merge_duplicates
       get :add_to_saved
+      put :change_type
     end
 
     resources :attachments
