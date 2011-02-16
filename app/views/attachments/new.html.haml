@@ -7,7 +7,7 @@
       / #### Admin Actions ###
       %div.span-24#admin-actions
         %ul#edit-actions
-          %li=link_to "Delete this person", {:id => @person.id, :controller => "people", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+          %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
           %li= link_to "Add a new person", new_person_path
 -else
   - @title = "Upload #{@attachment.class.to_s.underscore.titleize}"

@@ -8,7 +8,7 @@
 - dupes = Index.possible_accepted_duplicates(work)
 
 / Duplicate candidates
-%div.duplicate_box
+.duplicate_box
   - dupes.each do |dupe|
     - if dupe['issn_isbn'] != nil
       %span{:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
@@ -24,4 +24,3 @@
         =link_to "Edit", edit_work_path(dupe['pk_i'], :return_path=>@return_path)
       -if @return_path.nil?
         =link_to "Edit", edit_work_path(dupe['pk_i'])
-      -#=link_to "Side-by-side edit", :controller => 'works', :action => "merge_duplicates", :dupe_id => work['pk_i'], :id => dupe['pk_i']

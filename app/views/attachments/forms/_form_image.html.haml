@@ -3,7 +3,7 @@
 -#
 
 -# Determine Form URL and Method based on whether we are editing or creating an image
-- form_url = {:controller => "attachments", :action => "create"}
+- form_url = attachments_url
 - form_method = :post
 - if !@attachment.new_record?
   - form_url = attachment_path(@attachment)
@@ -16,12 +16,12 @@
   -# If there is an existing image, display it
   -if !@attachment.new_record?
 
-    %div.span-4.prepend-1
+    .span-4.prepend-1
       #picture.span-3
         %p= render :partial => "shared/person_image", :locals => {:o => @asset}
 
       -if @person.image
-        = link_to "delete image", {:controller => "attachments", :action => "destroy", :id => @asset.image.id}, :method => :delete
+        = link_to "delete image", attachment_url(:id => @asset.image.id), :method => :delete
 
   %fieldset
     %legend="New Image"

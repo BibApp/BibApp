@@ -49,6 +49,10 @@ Bibapp::Application.routes.draw do
       get :auto_complete_for_group_name
       get :hidden
     end
+    member do
+      get :hide
+      get :unhide
+    end
     resources :works
     resources :people
     resources :roles do
@@ -119,8 +123,8 @@ Bibapp::Application.routes.draw do
 
     ###
   # for batch loading
-  match 'person/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
-  match 'person/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person'
+  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
+  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person', :via => 'post'
 
   ####
   # User routes
@@ -192,5 +196,7 @@ Bibapp::Application.routes.draw do
   match 'admin/deposit_via_sword'
   
   match 'roles/index'
-
+  match 'roles/destroy'
+  match 'roles/create'
+  
 end

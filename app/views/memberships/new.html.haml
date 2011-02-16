@@ -6,7 +6,7 @@
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
-        %li=link_to "Delete this person", {:id => @person.id, :controller => "people", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
         %li= link_to "Add a new person", new_person_path
 
 %div{:class => "span-24"}
@@ -39,10 +39,11 @@
                 = submit_tag 'Search Groups'
 
         %ul.actions
-          %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "member"}})
+          %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})",
+              memberships(:person_id => @person.id, :status => 'member'), :method => :post)
           |
-          %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.find(:all).size})", {:controller => "memberships", :action => "new", :params => {"person_id", @person.id, "status", "non_member"}})
-
+          %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.find(:all).size})",
+              memberships(:person_id => @person.id, :status => 'non_member'), :method => :post)
 
         - if @status == "non_member"
           / Sort Form

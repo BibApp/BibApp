@@ -5,7 +5,7 @@
     / #### Admin Actions ###
     %div.span-24#admin-actions
       %ul#edit-actions
-        %li=link_to "Delete this publication", {:id => @publication.id, :controller => "publications", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this publication? This cannot be undone.'
+        %li=link_to "Delete this publication", publication_url(@publication), :method => :delete, :confirm => 'Permanently delete this publication? This cannot be undone.'
 
 / Main
 %div{:class => "span-24"}

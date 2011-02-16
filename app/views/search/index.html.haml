@@ -19,7 +19,7 @@
         %p.warning.span-22
           Did you mean:
           - @spelling_suggestions.each do |suggestion|
-            %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
+            %em.spelling-suggestion=link_to suggestion, search_url( :q => suggestion)
 
       -if @q.total_hits == 0
         .span-20.prepend-1
@@ -28,7 +28,7 @@
             -if !@spelling_suggestions.empty?
               Did you mean:
               - @spelling_suggestions.each do |suggestion|
-                %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
+                %em.spelling-suggestion=link_to suggestion, search_url(:q => suggestion)
               ?
           %h4 Suggestions:
           %ul

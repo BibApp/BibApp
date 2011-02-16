@@ -28,7 +28,7 @@
             -else
               =link_to ct, new_work_path(:klass => ct)
 
-    - form_for :import, @import, :url => {:controller => "imports", :action => "create"}, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+    - form_for :import, @import, imports_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
       %fieldset.span-15
         %legend Batch Import (RIS | Medline | Refworks XML)
 
