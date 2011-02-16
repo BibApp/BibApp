@@ -9,7 +9,7 @@
   - else
     %div{:class => "span-22 prepend-1"}
       %h2
-        -if @query = "*:*"
+        -if @query == "*:*"
           ="#{pluralize(@q.total_hits, "Result", "Results")}"
         -else
           ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
