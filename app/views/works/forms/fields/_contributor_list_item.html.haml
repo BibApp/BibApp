@@ -30,4 +30,4 @@
   -#= select :roles, ns_id, roles, {:include_blank => false, :selected => ns_role.to_s }
   = text_field_tag "contributors[]", ns_name, {:class=>'text'}
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote "[remove]", :url => { :action => :remove_contributor_from_list, :ns_id => ns_id}
+  = link_to "[remove]", :url => { :action => :remove_contributor_from_list, :ns_id => ns_id}, :remote => true

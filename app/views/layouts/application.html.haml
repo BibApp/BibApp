@@ -9,7 +9,8 @@
     = javascript_include_tag 'lowpro'
     = javascript_include_tag 'scriptaculous'
     = javascript_include_tag 'gbsclasses'
-    
+    = csrf_meta_tag
+
     - if (@feeds)
       - @feeds.each do |feed|
         = auto_discovery_link_tag(feed[:format].to_sym, { :action => feed[:action], :id => feed[:id], :format => feed[:format] })

@@ -22,7 +22,7 @@
   %br/
   = text_field_with_auto_complete :tag, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote "add", :url => { :action => :add_item_to_list}, :condition => "$('tag_name').value.length > 0", :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
+  = link_to "add", :url => { :action => :add_item_to_list}, :condition => "$('tag_name').value.length > 0", :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'", :remote => true
   %ul.form_item_list#tags_list
     -# Build list of existing tags
     - if tags
