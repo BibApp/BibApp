@@ -20,7 +20,7 @@
         - if logged_in?
           - if current_user.has_role?("admin", System)
             %li{mark_current_if_controller_is("admin")}
-              %span=link_to "Admin", {:controller => "admin", :action => "index"}
+              %span=link_to "Admin", admin_index_url
             
         %li{mark_current_if_controller_is("works")}
           %span=link_to "Works", works_path(:view => "all")

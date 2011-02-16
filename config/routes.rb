@@ -184,5 +184,7 @@ Bibapp::Application.routes.draw do
   match 'citations', :to => 'works#index'
 
   resource :user_session
-  
+
+  match 'admin/index'
+
 end
