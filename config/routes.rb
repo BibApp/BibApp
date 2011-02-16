@@ -186,5 +186,10 @@ Bibapp::Application.routes.draw do
   resource :user_session
 
   match 'admin/index'
+  match 'admin/duplicates'
+  match 'admin/ready_to_archive'
+  match 'admin/update_sherpa_data'
 
+  match 'roles/index'
+  
 end

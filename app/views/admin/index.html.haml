@@ -13,8 +13,8 @@
         %li=link_to "Add works", new_user_import_path(current_user)
         %li=link_to "Verify contributorships", admin_contributorships_path
         //%li=link_to "Edit Works", edit_work_path
-        %li=link_to "View duplicate works", :controller=>"admin", :action =>"duplicates"
-        %li=link_to "Prepare files for archiving", :action => "ready_to_archive"
+        %li=link_to "View duplicate works", admin_duplicates_url
+        %li=link_to "Prepare files for archiving", admin_ready_to_archive_url
         %li=link_to "Manage imports", user_imports_path(@current_user)
 
     - if @tab_name == "groups"
@@ -36,11 +36,11 @@
       %ul#tasks
         %li=link_to "Add a publisher", new_publication_path
         %li=link_to "Update publisher authorities", authorities_publishers_path
-        %li=link_to "Update publisher data from SHERPA/RoMEO", url_for(:action => :update_sherpa_data)
+        %li=link_to "Update publisher data from SHERPA/RoMEO", admin_update_sherpa_data_url
 
     - if @tab_name == "users"
       %ul#tasks
-        %li=link_to "Add a user", :controller=>"users", :action =>"new"
-        %li=link_to "View all users", :controller=>"users", :action =>"index"
-        %li=link_to "Update system roles", :controller=>"roles", :action =>"index"
+        %li=link_to "Add a user", new_user_url
+        %li=link_to "View all users", users_url
+        %li=link_to "Update system roles", roles_index_url
           
