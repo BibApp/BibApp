@@ -7,6 +7,6 @@
 -# Initialize optional input variables
 - label ||= "Title"
   
-= form.label :title_primary, "#{label} <span style='color:grey;'>(required)</span>:"
+= form.label :title_primary, "#{label} <span style='color:grey;'>(required)</span>:".html_safe
 = form.text_field :title_primary, :class=>'text'
 = error_for 'work', 'title_primary'
