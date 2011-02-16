@@ -34,7 +34,7 @@
           - @page = 1 if @page == 0
           = hidden_field_tag "page", @page
           = hidden_field_tag "authenticity_token", form_authenticity_token
-          = hidden_field_tag "return_path" , url_for(:controller=>"admin", :action =>"duplicates")
+          = hidden_field_tag "return_path" , admin_duplicates_url
 
           = submit_tag 'Go'
 

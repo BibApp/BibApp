@@ -26,7 +26,7 @@
       %tbody
         -@current_objects.each do |publisher|
           %tr.publisher{:id => "publisher_#{publisher.id}", :class => cycle("odd", "even")}
-            %td=link_to 'add', url_for(:action => :add_to_box, :new_pa => publisher.id, :page => @page)
+            %td=link_to 'add', add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)
             %td=link_to "#{publisher.name}", publisher_path(publisher)
             %td=publisher.publisher_source.name unless publisher.publisher_source.nil?
             %td=publisher.publications.length

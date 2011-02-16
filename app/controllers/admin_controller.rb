@@ -86,13 +86,13 @@ class AdminController < ApplicationController
     rescue Exception => e
       respond_to do |format|
         flash[:notice] = "Error updating publisher data: #{e.message}"
-        format.html {redirect_to url_for(:controller => :admin, :action => :update_sherpa_data)}
+        format.html {redirect_to admin_update_sherpa_data_url}
         format.xml  {head :error}
       end
     else
       respond_to do |format|
         flash[:notice] = "Update successful."
-        format.html {redirect_to url_for(:controller => :admin, :action => :update_sherpa_data)}
+        format.html {redirect_to admin_update_sherpa_data_url}
         format.xml  {head :ok}
       end
     end

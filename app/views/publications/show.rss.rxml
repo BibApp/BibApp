@@ -2,10 +2,7 @@ xml.instruct!
 xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
   xml.channel do
     xml.title $UNIVERSITY_SHORT_NAME + ": " + @publication.name
-    xml.link url_for(:only_path => false,
-                      :controller => 'publication',
-                      :action => 'show',
-                      :id => @publication.id)
+    xml.link publication_url(:only_path => false, :id => @publication.id)
     xml.description h("Latest #{$UNIVERSITY_SHORT_NAME} work from #{@publication.name}.")
     @works.each do |work|
       xml.item do
@@ -17,15 +14,9 @@ xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
           xml.cdata!(work['abstract'])
         }
         
-        xml.link url_for(:only_path => false,
-                         :controller => 'works',
-                         :action => 'show',
-                         :id => work['id'].split("-")[1])
+        xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])
 
-        xml.guid url_for(:only_path => false,
-                         :controller => 'works',
-                         :action => 'show',
-                         :id => work['id'].split("-")[1])
+        xml.guid work_url(:only_path => false, :id => work['id'].split("-")[1])
 
         xml.author h(@publication.name)
       end

@@ -2,10 +2,7 @@ xml.instruct!
 xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
   xml.channel do
     xml.title $UNIVERSITY_SHORT_NAME + ": " + @group.name
-    xml.link url_for(:only_path => false,
-                      :controller => 'people',
-                      :action => 'show',
-                      :id => @group.id)
+    xml.link group_url(:only_path => false, :id => @group.id)
     xml.image h($APPLICATION_URL + $APPLICATION_LOGO)
     xml.description h("My latest scholarly work")
     @works.each do |work|
@@ -18,15 +15,9 @@ xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
           xml.cdata!(work['abstract'])
         }
         
-        xml.link url_for(:only_path => false,
-                         :controller => 'works',
-                         :action => 'show',
-                         :id => work['id'].split("-")[1])
+        xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])
 
-        xml.guid url_for(:only_path => false,
-                         :controller => 'works',
-                         :action => 'show',
-                         :id => work['id'].split("-")[1])
+        xml.guid work_url(:only_path => false, :id => work['id'].split("-")[1])
 
         xml.author h(@group.name)
       end
