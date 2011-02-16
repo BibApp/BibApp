@@ -189,7 +189,8 @@ Bibapp::Application.routes.draw do
   match 'admin/duplicates'
   match 'admin/ready_to_archive'
   match 'admin/update_sherpa_data'
-
+  match 'admin/deposit_via_sword'
+  
   match 'roles/index'
 
 end

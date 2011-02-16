@@ -10,7 +10,7 @@
         .file
           %strong Download File: #{link_to(f.filename, f.public_filename)}
           (#{f.filesize}) -
-          = link_to "remove", {:controller => "attachments", :action => "destroy", :id => f.id}, :method => :delete
+          = link_to "remove", attachment_url(f), :method => :delete
       -if SwordClient.configured?
         %br/
         %p

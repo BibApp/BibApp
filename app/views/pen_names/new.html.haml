@@ -4,19 +4,19 @@
 - if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    .span-24#admin-actions
       %ul#edit-actions
-        %li=link_to "Delete this person", {:id => @person.id, :controller => "people", :action => "destroy"}, :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
         %li= link_to "Add a new person", new_person_path
 
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+.span-24
+  .span-22.prepend-1
     %h2="#{link_to @person.display_name, person_path(@person)}: Pen Names"
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
-    %div{:class => "span-4 prepend-1"}
-      #picture{:class => "span-3"}
+    .span-4.prepend-1
+      #picture.span-3
       %p= render :partial => "shared/person_image", :locals => {:o => @person}
 
     %fieldset
