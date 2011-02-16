@@ -1,13 +1,13 @@
 / === Search === Index ===
 / Main
-%div{:class => "span-24"}
+.span-24
   - if @q.nil?
-    %div{:class => "span-22 prepend-1"}
+    .span-22.prepend-1
       %h2 Search
-      %div{:class => "span-20 prepend-1"}
+      .span-20.prepend-1
         = render :partial => "advanced_search_form"
   - else
-    %div{:class => "span-22 prepend-1"}
+    .span-22.prepend-1
       %h2
         -if @query == "*:*"
           ="#{pluralize(@q.total_hits, "Result", "Results")}"
@@ -16,13 +16,13 @@
           %strong=" #{@query}"
 
       -if !@spelling_suggestions.empty? && !@q.total_hits == 0
-        %p.warning{:class => "span-22"} 
+        %p.warning.span-22
           Did you mean:
           - @spelling_suggestions.each do |suggestion|
             %em.spelling-suggestion=link_to suggestion, {:controller => "search", :q => suggestion }
 
       -if @q.total_hits == 0
-        %div{:class => "span-20 prepend-1"}
+        .span-20.prepend-1
           %h4.error
             = "Sorry, your search for &ldquo;#{@query}&rdquo; came up empty."
             -if !@spelling_suggestions.empty?
@@ -44,7 +44,7 @@
         / Groups
         = render :partial => "shared/groups", :locals => {:count => 10}
 
-        %div#results{:class => "span-22"}
+        #results.span-22
           / Facets
           = render :partial => "shared/facets"
                   
