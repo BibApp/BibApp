@@ -63,7 +63,7 @@ module ApplicationHelper
     if work['authors_data'] != nil
       work['authors_data'].first(5).each do |au|
         name, id = NameString.parse_solr_data(au)
-        links << link_to("#{name.gsub(",", ", ")}", name_string_path(id), {:class => "name_string"})
+        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
       end
     
       if work['authors_data'].size > 5
@@ -71,7 +71,7 @@ module ApplicationHelper
       end
     end
 
-    return links.join(", ")
+    return links.join(", ").html_safe
   end
  
   def link_to_editors(work)
