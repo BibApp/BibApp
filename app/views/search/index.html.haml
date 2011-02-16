@@ -24,7 +24,7 @@
       -if @q.total_hits == 0
         .span-20.prepend-1
           %h4.error
-            = "Sorry, your search for &ldquo;#{@query}&rdquo; came up empty."
+            = "Sorry, your search for \"#{@query}\" came up empty."
             -if !@spelling_suggestions.empty?
               Did you mean:
               - @spelling_suggestions.each do |suggestion|
