@@ -291,7 +291,11 @@ module ApplicationHelper
     content_tag("p",err || "", options )     
   end
 
-  
+  #create a hash for Haml that gives id => current if the controller matches the argument
+  def mark_current_if_controller_is(controller)
+    params[:controller] == controller ? {:id => 'current'} : {}
+  end
+
   private
   
   #Find information necessary to build our OpenURL query
