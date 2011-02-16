@@ -13,6 +13,7 @@ Bibapp::Application.routes.draw do
     end
     member do
       get :merge_duplicates
+      get :add_to_saved
     end
 
     resources :attachments
@@ -128,6 +129,9 @@ Bibapp::Application.routes.draw do
   resources :users do
     resources :imports
     resource :password
+    collection do
+      match 'activate(/:activation_code)', :to => 'users#activate', :as => 'activate'
+    end
   end
 
   ####
