@@ -26,7 +26,7 @@
       %ol#current
         = render :partial => "name_string", :collection => @person.name_strings(true), :locals => { :selected => true }
 
-      - remote_form_for :name_string, NameString.new, :url => {:action => :create_name_string }, :method => :post do |form|
+      - form_for :name_string, NameString.new, :url => {:action => :create_name_string }, :method => :post, :remote => true do |form|
         Add a name string (ex. "Smith, J")
         %br/
         = form.text_field :name, :size => 20
@@ -45,7 +45,7 @@
           = render :partial => "name_string", :collection => @suggestions - @person.name_strings, :locals => { :person => @person, :selected => false }
 
 
-      - form_remote_tag :url => '/pen_names/live_search_for_name_strings' do
+      - form_tag :url => '/pen_names/live_search_for_name_strings', :remote => true do
         Search other last names to add suggestions (ex. "Smith")
         %br/
         = text_field_tag(:q, value = nil, options = {})

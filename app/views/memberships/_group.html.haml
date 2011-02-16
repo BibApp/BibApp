@@ -6,7 +6,7 @@
       = link_to "Leave group", {:action => "destroy", :person_id => @person.id, :group_id => group.id}, :confirm => "Are you sure you want to leave this group?", :method => :delete
 
   %div{:style => "margin-bottom:10px;"}
-    - remote_form_for :membership,  Membership.find_by_person_id_and_group_id(@person.id, group.id),  :url => {:action => :update, :id => Membership.find_by_person_id_and_group_id(@person.id, group.id)}, :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put} do |form|
+    - form_for :membership,  Membership.find_by_person_id_and_group_id(@person.id, group.id),  :url => {:action => :update, :id => Membership.find_by_person_id_and_group_id(@person.id, group.id)}, :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put}, :remote => true do |form|
       Title
       = form.text_field :title
 
