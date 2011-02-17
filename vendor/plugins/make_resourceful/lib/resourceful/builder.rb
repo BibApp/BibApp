@@ -53,8 +53,20 @@ module Resourceful
       kontroller.hidden_actions.reject! &@ok_actions.method(:include?)
       kontroller.send :include, @action_module
 
-      kontroller.resourceful_callbacks.merge! @callbacks
-      kontroller.resourceful_responses.merge! @responses
+      #Commented out and replaced by patch
+      #https://github.com/dweinand/make_resourceful/commit/ee5ae754e33d1ff792e9f68ee583f069705ab1c6
+      #""Ensure each controller has its own unique callback and response hashes."
+      #kontroller.resourceful_callbacks.merge! @callbacks
+      #kontroller.resourceful_responses.merge! @responses
+
+      #Replacement patch
+      merged_callbacks = kontroller.resourceful_callbacks.merge @callbacks
+      merged_responses = kontroller.resourceful_responses.merge @responses
+
+      kontroller.resourceful_callbacks = merged_callbacks
+      kontroller.resourceful_responses = merged_responses
+      #end replacement patch
+      
       kontroller.made_resourceful = true
 
       kontroller.parents = @parents
