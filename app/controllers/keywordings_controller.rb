@@ -5,15 +5,6 @@ class KeywordingsController < ApplicationController
   
   make_resourceful do
     build :all
-
-  end
-
-  def show
-    @keywording = Keywording.find(params[:id])
-  end
-
-  def new
-    @keywording = Keywording.new
   end
   
 end

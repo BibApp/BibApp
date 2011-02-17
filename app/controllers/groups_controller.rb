@@ -16,11 +16,7 @@ class GroupsController < ApplicationController
       format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
       format.rss   #loads show.rss.rxml
     end
-
-    response_for :index do |format|
-      format.html
-    end
-
+    
     before :index do
       # find first letter of group names (in uppercase, for paging mechanism)
       @a_to_z = Group.letters.collect { |g| g.letter.upcase }
