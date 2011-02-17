@@ -15,5 +15,5 @@
   .list_item_value
     = hidden_field_tag "#{list_type}[]", "#{item_value}"
     = item_value
-  = link_to "remove", :url => { :action => :remove_item_from_list, :list_type => list_type, :item_id => item_id}, :remote => true
+  = link_to_remote "remove", :url => remove_item_from_list_works_url(:list_type => list_type, :item_id => item_id)
    

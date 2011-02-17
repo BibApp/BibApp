@@ -25,7 +25,8 @@
   %br/
   = text_field_with_auto_complete :keyword, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
   -# Ajax-enabled link to add new items to below list
-  = link_to "add", :url => { :action => :add_item_to_list}, :condition => "$('keyword_name').value.length > 0", :with => "'list_type=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'", :remote => true
+  = link_to_remote "add", add_item_to_list_url, :condition => "$('keyword_name').value.length > 0",
+      :with => "'list_type=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'"
   %ul.form_item_list#keywords_list
     -# Build list of existing keywords
     - if keywords

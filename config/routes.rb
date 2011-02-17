@@ -10,9 +10,14 @@ Bibapp::Application.routes.draw do
       get :auto_complete_for_tag_name
       get :review_batch
       delete :destroy_multiple
-      get :reorder_list
+      #Following support legacy RJS stuff
+      post :reorder_list
+      post :add_item_to_list
+      post :remove_item_from_list
       post :add_author_to_list
       post :remove_author_from_list
+      post :add_contributor_to_list
+      post :remove_contributor_from_list
     end
     member do
       get :merge_duplicates
@@ -179,12 +184,21 @@ Bibapp::Application.routes.draw do
   # Install the default routes as the lowest priority.
   resources :name_strings
   resources :memberships
-  resources :pen_names
+  resources :pen_names do
+    collection do
+      post :create_name_string
+      post :live_search_for_name_strings
+    end
+  end
   resources :keywords
   resources :keywordings
   resources :sessions
   resources :passwords
-  resources :attachments
+  resources :attachments do
+    collection do
+      post :add_upload_box
+    end
+  end
 
   # Default homepage to works index action
   root :to => 'works#index'
