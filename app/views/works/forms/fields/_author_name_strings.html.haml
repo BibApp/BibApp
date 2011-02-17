@@ -33,7 +33,7 @@
 
   -# Ajax-enabled link to add new items to below list
   = #link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
-  = link_to "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'", :remote => true
+  = link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'", :remote => true
 
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
