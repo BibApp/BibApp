@@ -11,6 +11,8 @@ Bibapp::Application.routes.draw do
       get :review_batch
       delete :destroy_multiple
       get :reorder_list
+      post :add_author_to_list
+      post :remove_author_from_list
     end
     member do
       get :merge_duplicates

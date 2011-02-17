@@ -25,14 +25,15 @@
         -#= text_field_with_auto_complete :author, :string, {:class=>'text'}, {:method => :get, :skip_style => true, :on_show => "function(element, update) {show_autocomplete_names(element, update);}", :on_hide => "function(element, update) {hide_autocomplete_names(element, update);}"}
         = hidden_field_tag "author_roles[]", "#{role}"
         = text_field_tag "authors[]", nil, {:class => 'text'}
-        = link_to "[remove]", :url => { :action => :remove_author_from_list, :ns_id => count}, :remote => true
+        = link_to_remote "[remove]",  :url => remove_author_from_list_works_url(:ns_id => count, :id => @work.id)
     -else
       - authors.each do |author|
         = render :partial => 'works/forms/fields/author_list_item', :locals => {:ns_id=>count, :ns_name=>author[:name], :ns_role=>author[:role]}
         - count += 1
 
   -# Ajax-enabled link to add new items to below list
-  = link_to "[add more #{role.downcase}s]", :url => { :action => :add_author_to_list}, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'", :remote => true
+  = #link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
+  = link_to "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'", :remote => true
 
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
