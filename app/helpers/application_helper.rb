@@ -283,7 +283,7 @@ module ApplicationHelper
   # Borrowed from: http://www.sciwerks.com/blog/category/ruby-on-rails/page/2/
   def error_for(object, method = nil, options={})
     if method
-      err = instance_variable_get("@#{object}").errors.on(method).to_sentence rescue instance_variable_get("@#{object}").errors.on(method)
+      err = instance_variable_get("@#{object}").errors[method].to_sentence rescue instance_variable_get("@#{object}").errors[method]
     else
       err = @errors["#{object}"] rescue nil
     end 
