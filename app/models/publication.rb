@@ -84,36 +84,31 @@ class Publication < ActiveRecord::Base
   end
 
   def parse_identifiers
-    if self.issn_isbn.blank?
-      return
-    else
-      # Loop thru all publication issn_isbn values
-      self.issn_isbn.each do |issn_isbn|
+    return if self.issn_isbn.blank?
 
-        # Field might be separated
-        issn_isbn.split("; ").each do |identifier|
+    # Loop thru all publication issn_isbn values
+    self.issn_isbn.each do |issn_isbn|
 
-          # No spaces, no hyphens, no quotes -- @TODO: Do this better!
-          identifier = identifier.strip.gsub(" ", "").gsub("-", "").gsub('"', "")
+      # Field might be separated
+      issn_isbn.split("; ").each do |identifier|
 
-          # Init new Identifier
-          id = Identifier.new
-          parsed_id = id.parse(identifier)
-          if !parsed_id[0].blank?
-            pub_id = Identifier.find_or_initialize_by_name(:name => parsed_id[1])
-            pub_id[:type] = parsed_id[0] if !parsed_id[0].blank?
-            pub_id.save
-            if self.identifiers.include?(pub_id)
-              # Do nothing
-            else
-              self.identifiers << pub_id
-            end
-          else
-            # Do Nothing
+        # No spaces, no hyphens, no quotes -- @TODO: Do this better!
+        identifier = identifier.strip.gsub(" ", "").gsub("-", "").gsub('"', "")
+
+        # Init new Identifier
+        parsed_identifiers = Identifier.parse(identifier)
+        parsed_identifiers.each do |pi|
+          klass, id = pi
+          puts "#{klass.format_string}:#{id}"
+          pub_id = Identifier.find_or_create_by_name_and_type(id, klass.format_string)
+          unless self.identifiers.include?(pub_id)
+            self.identifiers << pub_id
           end
         end
+
       end
     end
+    self.save_without_callbacks
   end
 
   def to_param

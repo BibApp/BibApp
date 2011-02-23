@@ -7,32 +7,9 @@ class ISSN < Identifier
     end
   end
 
-  def parse_identifier(identifier)
-    #issn_request = XISSNRequest.new(identifier, {:method => "getMetadata"})
-    
-=begin
-    if issn_request.valid?
-      issn_response = issn_request.get_response
-      if issn_response.data['stat'] == "ok"
-        format = "ISSN"
-        identifier = issn_response.data["group"][0]["list"][0]["issn"]
-        return format, identifier, clean_response(issn_response)
-      else
-        return nil
-      end
-=end
-    if is_valid?(identifier)
-      format = "ISSN"
-      response = true
-      return format, identifier, response
-    else
-      return nil
-    end
-  end
+  protected
   
-  private
-  
-  def is_valid?(identifier)
+  def self.is_valid?(identifier)
     issn = identifier.gsub(/[^\dX]/i, '')
     if issn.length != 8 
       return false
