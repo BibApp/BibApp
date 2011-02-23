@@ -9,30 +9,13 @@ class ISBN < Identifier
     end
   end
 
-  def parse_identifier(identifier)
-    #isbn_request = XISBNRequest.new(identifier, {:method => "getMetadata"})
+  protected
 
-=begin
-    if isbn_request.valid?
-      isbn_response = isbn_request.get_response
-      if isbn_response.data['stat'] == "ok"
-        format = "ISBN"
-        identifier = isbn_response.data["list"][0]["isbn"].flatten.to_s
-        return format, identifier, clean_response(isbn_response)
-=end
-    if is_valid?(identifier)
-      format = "ISBN"
-      identifier = ISBN_Tools.cleanup(identifier)
-      response = true
-      return format, identifier, response
-    else
-      return false
-    end
+  def self.cleanup(identifier)
+    ISBN_Tools.cleanup(identifier)
   end
-  
-  private
-  
-  def is_valid?(identifier)
+
+  def self.is_valid?(identifier)
     ISBN_Tools.is_valid?(identifier)
   end
   
