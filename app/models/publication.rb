@@ -108,7 +108,6 @@ class Publication < ActiveRecord::Base
 
       end
     end
-    self.save_without_callbacks
   end
 
   def to_param
