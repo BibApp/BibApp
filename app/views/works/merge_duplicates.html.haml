@@ -17,7 +17,7 @@
       - else
         %p Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to "Save Changes".
                 
-        - form_for :work, @work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
+        - form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
           =hidden_field_tag "return_path" , admin_duplicates_url
           -if (File.exist?("#{Rails.root}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{RAILS_ROOT}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html"))
             = render :partial => "works/forms/form_merge_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
