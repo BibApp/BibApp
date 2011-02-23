@@ -7,7 +7,7 @@
 
   %div{:style => "margin-bottom:10px;"}
     -membership = Membership.find_by_person_id_and_group_id(@person.id, group.id)
-    - remote_form_for :membership,  membership,  :url => membership_url(membership),
+    = remote_form_for :membership,  membership,  :url => membership_url(membership),
        :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put} do |form|
       Title
       = form.text_field :title

@@ -16,7 +16,7 @@
   
     %fieldset
       %legend="User Account"
-      - form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
+      = form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
         %p
           %label="Username:"
           =@user.login       

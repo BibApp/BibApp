@@ -11,7 +11,7 @@
 .span-24
   .span-22.prepend-1
     #change_type{:style=>"float:right;"}
-      - form_for :work, change_type_work_url(@work), :method => :put do |form|
+      = form_for :work, change_type_work_url(@work), :method => :put do |form|
         %label Change Type
         %select{:name => 'type'}
           - Work.types.each do |t|
@@ -25,7 +25,7 @@
 
     .span-22
 
-      - form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
+      = form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
         -if (File.exist?("#{Rails.root}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{Rails.root}/app/views/works/forms/_form_#{@work.class.name.to_s.underscore}.html"))
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
         -else

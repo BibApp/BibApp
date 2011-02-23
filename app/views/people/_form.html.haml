@@ -1,6 +1,6 @@
 %fieldset#personal_info
   %legend="Personal Info"
-  - form_for @person do |form|
+  = form_for @person do |form|
     %div
       = submit_tag "Save", :disable_with => "Saving...", :class=>"button positive"
       = submit_tag "Cancel", :name => "cancel", :class =>"button negative"

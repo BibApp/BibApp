@@ -8,7 +8,7 @@
 
 %div.span-22.prepend-1
 
-  - form_for :person, 'whather', batchcsv_person_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+  = form_for :person, 'whather', batchcsv_person_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
     %fieldset.span-15
 
       - unless results.nil? || results.empty?

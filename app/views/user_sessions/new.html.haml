@@ -4,7 +4,7 @@
   .span-22.prepend-1
     %h2 Login
     %fieldset
-      - form_for @user_session, :url => user_session_path do |f|
+      = form_for @user_session, :url => user_session_path do |f|
         %p
           %label="Username"
           %br/

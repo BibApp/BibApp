@@ -12,7 +12,7 @@
   - @asset ||= @attachment.asset
 
 -# Actually build the form
-- form_for :attachment, :url => form_url, :html => { :method => form_method, :multipart => true } do |form|
+= form_for :attachment, :url => form_url, :html => { :method => form_method, :multipart => true } do |form|
   -# If there is an existing image, display it
   -if !@attachment.new_record?
 

@@ -10,10 +10,10 @@
 
   %div{:style => "text-align: center; margin-top:10px;"}
     - if current_object.class.to_s.downcase == "group"
-      - form_tag "#{group_keywords_path(current_object)}/timeline", :method=>:get do
+      = form_tag "#{group_keywords_path(current_object)}/timeline", :method=>:get do
         = submit_tag "Load Timeline View", :onclick=>"go_dim()"
     - elsif current_object.class.to_s.downcase == "person"
-      - form_tag "#{person_keywords_path(current_object)}/timeline", :method=>:get do
+      = form_tag "#{person_keywords_path(current_object)}/timeline", :method=>:get do
         = submit_tag "Load Timeline View", :onclick=>"go_dim()"
 
 %div{:class=>"darkenBackground", :name=>"darkBackgroundLayer", :id=>"darkBackgroundLayer", :style=>"display:none;"}

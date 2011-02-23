@@ -22,7 +22,7 @@
 
     / Sort Form
     %div{:class => "span-13 append-1 last"}
-      - form_tag "#", :method => :get, :name => "contributorships_form" do
+      = form_tag "#", :method => :get, :name => "contributorships_form" do
         #bulk_links
           = check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
           %strong="Select All"

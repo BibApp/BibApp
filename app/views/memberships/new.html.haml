@@ -30,7 +30,7 @@
         - if @status == "non_member"
           /Search Form
           %div{:class => "span-8 append-1 last", :style => "float:right;"}
-            - form_tag :action => "search_groups", :method => :get, :class => "memberships_search_form" do
+            = form_tag :action => "search_groups", :method => :get, :class => "memberships_search_form" do
 
               %div#search-box
                 = text_field_tag(:q, value = nil, options = {:size => 21})
@@ -56,7 +56,7 @@
             - if @groups.length < 1
               %p No groups found
             - else
-              - form_tag "javascript:void(0)", :method => :get, :name => "memberships_form" do
+              = form_tag "javascript:void(0)", :method => :get, :name => "memberships_form" do
                 %div
                   #bulk_links
                     /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"

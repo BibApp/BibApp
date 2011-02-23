@@ -1,6 +1,6 @@
 / Sort Form
 %div.span-13.append-1.last
-  - form_tag "#works", :method => :get, :name => "works_form" do
+  = form_tag "#works", :method => :get, :name => "works_form" do
     #bulk_links
       = check_box_tag "select_works", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
       %strong="Select All"

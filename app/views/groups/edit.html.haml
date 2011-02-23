@@ -18,5 +18,5 @@
     %h2="Edit #{link_to @group.name, group_path(@group)}"
     
     %div{:class => "column span-16"}
-      - form_for @group, :as => :group, :url => group_path(@group), :html => {:method => :put} do |form|
+      = form_for @group, :as => :group, :url => group_path(@group), :html => {:method => :put} do |form|
         = render :partial => 'form', :locals => { :form => form }

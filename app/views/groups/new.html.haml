@@ -4,5 +4,5 @@
   %div{:class => "span-22 prepend-1"}
 
     %h2 Add a Group
-    - form_for @group, :as => :group, :url => groups_url, :html => {:method => :post} do |form|
+    = form_for @group, :as => :group, :url => groups_url, :html => {:method => :post} do |form|
       = render :partial => 'form', :locals => { :form => form }

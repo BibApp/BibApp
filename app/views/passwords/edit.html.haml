@@ -4,7 +4,7 @@
   %div.span-22.prepend-1
     %h2 Change Password
     %fieldset
-      - form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
+      = form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
         %p
           %label="Old Password"
           %br/

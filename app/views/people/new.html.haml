@@ -6,7 +6,7 @@
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "new"}
 
-    - form_tag( {:action => :new}, {:method => :get} ) do
+    = form_tag( {:action => :new}, {:method => :get} ) do
       %p
         Search campus directory (to pre-populate person information):
       %p

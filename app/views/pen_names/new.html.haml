@@ -26,7 +26,7 @@
       %ol#current
         = render :partial => "name_string", :collection => @person.name_strings(true), :locals => { :selected => true }
 
-      - remote_form_for :name_string, NameString.new, :url => create_name_string_pen_names_url, :method => :post do |form|
+      = remote_form_for :name_string, NameString.new, :url => create_name_string_pen_names_url, :method => :post do |form|
         Add a name string (ex. "Smith, J")
         %br/
         = form.text_field :name, :size => 20

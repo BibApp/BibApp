@@ -31,7 +31,7 @@
         %div.span-5
           %div.left_box{:style => "padding-bottom:1.25em"}
             %div.box_heading Search Within
-            - form_tag person_works_path, :method => :get, :style => "padding-left:0.5em" do
+            = form_tag person_works_path, :method => :get, :style => "padding-left:0.5em" do
               = text_field_tag(:q, value = params[:q], {:size => 15})
               = submit_tag 'Go'
 
@@ -44,7 +44,7 @@
         %div.span-5
           %div.left_box{:style => "padding-bottom:1.25em"}
             %div.box_heading Search Within
-            - form_tag group_works_path, :method => :get, :style => "padding-left:0.5em" do
+            = form_tag group_works_path, :method => :get, :style => "padding-left:0.5em" do
               = text_field_tag(:q, value = params[:q], {:size => 15})
               = submit_tag 'Go'
 

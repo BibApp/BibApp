@@ -9,7 +9,7 @@
 
     / Sort Form
     %div{:class => "span-15 append-1 last"}
-      - form_tag "#works", :name => "dupes_form", :method => :get do
+      = form_tag "#works", :name => "dupes_form", :method => :get do
         #bulk_links
           = check_box_tag "select_dupes", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
           %strong="Select All"
