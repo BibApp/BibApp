@@ -43,16 +43,16 @@ class Work < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Work Statuses
-  named_scope :in_process, :conditions => ["work_state_id = ?", 1]
-  named_scope :duplicate, :conditions => ["work_state_id = ?", 2]
-  named_scope :accepted, :conditions => ["work_state_id = ?", 3]
+  scope :in_process, :conditions => ["work_state_id = ?", 1]
+  scope :duplicate, :conditions => ["work_state_id = ?", 2]
+  scope :accepted, :conditions => ["work_state_id = ?", 3]
 
   #Various Work Archival Statuses
-  named_scope :ready_to_archive, :conditions => ["work_archive_state_id = ?", 2]
-  named_scope :archived, :conditions => ["work_archive_state_id = ?", 3]
+  scope :ready_to_archive, :conditions => ["work_archive_state_id = ?", 2]
+  scope :archived, :conditions => ["work_archive_state_id = ?", 3]
 
   # Work flagged for batch indexing
-  named_scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
+  scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
     # Method to mark all these Works as 'indexed'
     # by resetting 'batch_index' flag to false
     def indexed
@@ -64,10 +64,10 @@ class Work < ActiveRecord::Base
   end
 
   #Various Work Contribution Statuses
-  named_scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]
-  named_scope :verified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 2]
-  named_scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
-  named_scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
+  scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]
+  scope :verified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 2]
+  scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
+  scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
 
   #### Callbacks ####
   before_validation_on_create :set_initial_states

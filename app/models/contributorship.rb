@@ -7,17 +7,17 @@ class Contributorship < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Contributorship statuses
-  named_scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
-  named_scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
-  named_scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
+  scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
+  scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
+  scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
   # TODO: For now we don't want editors showing up as contributors
   #   although in the future we might want them to show up for whole
   #   conference preceedings, entire books, et cetera
-  named_scope :visible, :conditions => ["contributorships.hide = ? and contributorships.role = ?", false, "Author"]
+  scope :visible, :conditions => ["contributorships.hide = ? and contributorships.role = ?", false, "Author"]
   #By default, show all verified, visible contributorships
-  named_scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
+  scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
   #All contributorships for a specified work
-  named_scope :for_work, lambda { |work_id| {:conditions => ["contributorships.work_id = ?", work_id]} }
+  scope :for_work, lambda { |work_id| {:conditions => ["contributorships.work_id = ?", work_id]} }
 
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id

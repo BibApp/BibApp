@@ -17,9 +17,9 @@ class Publisher < ActiveRecord::Base
 
   #### Callbacks ####
 
-  named_scope :authorities, :conditions => ["id = authority_id"]
+  scope :authorities, :conditions => ["id = authority_id"]
 
-  before_validation_on_create :set_initial_states
+  before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_create :before_create_actions
   after_save :reindex, :if => :do_reindex

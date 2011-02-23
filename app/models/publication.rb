@@ -14,7 +14,7 @@ class Publication < ActiveRecord::Base
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
 
-  named_scope :authorities, :conditions => ["id = authority_id"]
+  scope :authorities, :conditions => ["id = authority_id"]
 
   # This is necessary due to very long titles for conference
   # proceedings. For example:
