@@ -11,7 +11,7 @@
 .span-24
   .span-22.prepend-1
     #change_type{:style=>"float:right;"}
-      = form_for :work, change_type_work_url(@work), :method => :put do |form|
+      = form_for :work, :url => change_type_work_url(@work), :method => :put do |form|
         %label Change Type
         %select{:name => 'type'}
           - Work.types.each do |t|
