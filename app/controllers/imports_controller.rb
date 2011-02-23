@@ -6,7 +6,8 @@ class ImportsController < ApplicationController
   def index
     # List all imports
     params[:user_id] ||= current_user.id
-    @imports = Import.paginate_by_user_id(params[:user_id], :page => params[:page], :order => 'updated_at DESC')
+    @imports = Import.paginate(:conditions => {:user_id => params[:user_id]},
+        :page => params[:page], :order => 'updated_at DESC')
 
     # Only allow users to view their own imports, unless they are System editors
     @authorized = true
