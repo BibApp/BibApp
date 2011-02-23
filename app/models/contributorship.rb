@@ -24,7 +24,7 @@ class Contributorship < ActiveRecord::Base
   validates_uniqueness_of :work_id, :scope => :person_id
 
   #### Callbacks ####
-  before_validation_on_create :set_initial_states
+  before_validation :set_initial_states, :on => :create
   before_create :calculate_score
   after_save :after_save_actions
 

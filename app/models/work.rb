@@ -70,7 +70,7 @@ class Work < ActiveRecord::Base
   scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
 
   #### Callbacks ####
-  before_validation_on_create :set_initial_states
+  before_validation :set_initial_states, :on => :create
   before_create :before_create_actions
   before_save :before_save_actions
 
