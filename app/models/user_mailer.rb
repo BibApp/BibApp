@@ -3,20 +3,20 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += 'Please activate your new account'
   
-    @body[:url]  = "#{$APPLICATION_URL.chomp('/')}/activate/#{user.activation_code}"
+    @url  = "#{$APPLICATION_URL.chomp('/')}/activate/#{user.activation_code}"
   
   end
   
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = "#{$APPLICATION_URL.chomp('/')}/"
+    @url  = "#{$APPLICATION_URL.chomp('/')}/"
   end
   
   def new_password(user, new_password)
     setup_email(user)
     @subject    += 'New password'
-    @body[:url]  = "#{$APPLICATION_URL.chomp('/')}/login"
+    @url  = "#{$APPLICATION_URL.chomp('/')}/login"
   end
   
   protected
@@ -26,6 +26,6 @@ class UserMailer < ActionMailer::Base
       @from        = SMTP_SETTINGS['from_email'] if SMTP_SETTINGS
       @subject     = "[#{$APPLICATION_NAME}] "
       @sent_on     = Time.now
-      @body[:user] = user
+      @user = user
     end
 end
