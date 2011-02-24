@@ -12,7 +12,14 @@ class Saved < ActiveRecord::BaseWithoutTable
     @items.uniq!
   end
   
-  def remove_work(work)
-    @items.delete(work)
+  def remove_work(work_id)
+    @items.delete(work_id)
   end
+
+  def all_works
+    @items.collect do |id|
+      Work.find_by_id(id)
+    end.compact
+  end
+
 end

@@ -6,7 +6,7 @@
       %h2 Saved
       %p Nothing added yet.
 
-    - elsif !@export.empty?
+    - elsif !@export.blank?
       %h2 Works
       = @works
 
@@ -40,10 +40,10 @@
 
             = submit_tag 'Go'
       
-        %div{:class => "span-14"}= will_paginate @works
+        %div{:class => "span-14"}= @works.paginate
 
         %ol{:class => "span-14 works", :style => "clear:both;"}
           - @works.each do |work|
             = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
 
-        %div{:class => "span-14"}= will_paginate @works
+        %div{:class => "span-14"}= @works.paginate
