@@ -43,7 +43,7 @@ gem 'will_paginate', "3.0.pre2", :require => 'will_paginate'
 gem 'cmess', "~>0.1.2"
 
 #AASM - Acts as State Machine - helps manage batch import state
-gem 'rubyist-aasm', '~> 2.0.2', :require => 'aasm'
+gem 'aasm'
 
 #ISBN Tools - Helps validate ISBNs
 # See: http://isbn-tools.rubyforge.org/rdoc/index.html

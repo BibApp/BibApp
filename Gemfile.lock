@@ -9,6 +9,7 @@ GEM
   remote: http://gems.github.com/
   specs:
     RedCloth (4.1.9)
+    aasm (2.2.0)
     abstract (1.0.0)
     actionmailer (3.0.4)
       actionpack (= 3.0.4)
@@ -115,7 +116,6 @@ GEM
       rake (>= 0.8.1)
     ruby-net-ldap (0.0.4)
     ruby-nuggets (0.6.9)
-    rubyist-aasm (2.0.7)
     rubyzip (0.9.4)
     shoulda (2.11.3)
     solr-ruby (0.0.8)
@@ -135,6 +135,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.1.9)
+  aasm
   acts_as_list
   acts_as_tree (~> 1.2.3)!
   authlogic
@@ -160,7 +161,6 @@ DEPENDENCIES
   ruby-debug-base
   ruby-debug-ide
   ruby-net-ldap (~> 0.0.4)
-  rubyist-aasm (~> 2.0.2)
   rubyzip (~> 0.9.1)
   shoulda
   solr-ruby (~> 0.0.6)
