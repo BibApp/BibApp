@@ -19,13 +19,13 @@
     %div.span-22.prepend-1
       %h2= @publication.name
       -if @publication.publisher
-        %h4="Published by: #{link_to @publication.publisher.name, publisher_path(@publication.publisher)}"
+        %h4 Published by: #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
       
       / Authority check
       - if @authority_for.size == 0
         %div.notice
           %h3 Authorized Title
-          %p=link_to @publication.authority.name, publication_path(@publication.authority)
+          %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
         
       -else
 

@@ -11,7 +11,7 @@
     %h2="Admin Publication Authorities"
 
     %div#authority_form
-      %p="To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
+      %p To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.
       =render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
 
     = render :partial => "shared/alpha_pagination"
