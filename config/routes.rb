@@ -85,6 +85,7 @@ Bibapp::Application.routes.draw do
     collection do
       get :auto_complete_for_group_name
       put :create_multiple
+      post :sort
     end
   end
   

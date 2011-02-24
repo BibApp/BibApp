@@ -11,7 +11,7 @@
 
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
-    %h2="#{link_to @person.display_name, person_path(@person)}: Group Memberships"
+    %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Group Memberships
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
@@ -40,10 +40,10 @@
 
         %ul.actions
           %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})",
-              memberships(:person_id => @person.id, :status => 'member'), :method => :post)
+              memberships_url(:person_id => @person.id, :status => 'member'), :method => :post)
           |
           %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.find(:all).size})",
-              memberships(:person_id => @person.id, :status => 'non_member'), :method => :post)
+              memberships_url(:person_id => @person.id, :status => 'non_member'), :method => :post)
 
         - if @status == "non_member"
           / Sort Form
@@ -99,4 +99,4 @@
             %ol#current
               = render :partial => "group", :collection => @person.groups(true)
 
-          =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
+          =sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)
