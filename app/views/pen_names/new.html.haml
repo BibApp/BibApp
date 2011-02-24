@@ -11,7 +11,7 @@
 
 .span-24
   .span-22.prepend-1
-    %h2="#{link_to @person.display_name, person_path(@person)}: Pen Names"
+    %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Pen Names
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
@@ -52,4 +52,4 @@
         = hidden_field_tag(:person_id, value = @person.id)
         = submit_tag 'Search'
 
-      =sortable_element 'current', :url => {:action => "sort", :person_id => @person.id }
+      =sortable_element 'current', :url => sort_pen_names_url(:person_id => @person.id)
