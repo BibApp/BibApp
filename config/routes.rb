@@ -190,6 +190,7 @@ Bibapp::Application.routes.draw do
     collection do
       post :create_name_string
       post :live_search_for_name_strings
+      post :sort
     end
   end
   resources :keywords
