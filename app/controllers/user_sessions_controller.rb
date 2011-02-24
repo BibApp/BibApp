@@ -1,7 +1,5 @@
 class UserSessionsController < ApplicationController
-  # Don't write passwords as plain text to the log files
-  filter_parameter_logging :password, :password_confirmation
-
+  
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:destroy, :saved]
 
