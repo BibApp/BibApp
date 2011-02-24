@@ -76,6 +76,9 @@ gem 'authlogic'
 #batch loading of authors
 gem 'fastercsv'
 
+#Adds in some things removed from Rails 3 that are used, including error_messages_for
+gem 'dynamic_form'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause

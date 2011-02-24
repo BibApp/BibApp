@@ -51,6 +51,7 @@ GEM
       activesupport (~> 3.0)
       daemons
     diff-lcs (1.1.2)
+    dynamic_form (1.1.3)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
@@ -141,6 +142,7 @@ DEPENDENCIES
   cmess (~> 0.1.2)
   daemons (~> 1.0.10)
   delayed_job
+  dynamic_form
   factory_girl
   fastercsv
   haml
