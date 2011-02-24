@@ -15,7 +15,7 @@
 
   %div{:class => "span-22 prepend-1"}
       
-    %h2="Edit #{link_to @group.name, group_path(@group)}"
+    %h2 Edit #{link_to(h(@group.name), group_path(@group)).html_safe}
     
     %div{:class => "column span-16"}
       = form_for @group, :as => :group, :url => group_path(@group), :html => {:method => :put} do |form|
