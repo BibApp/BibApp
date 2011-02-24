@@ -59,9 +59,9 @@
             - if !@saved.nil? && !@saved.items.nil?
               - if @saved.items.include?(work['pk_i'].to_i)
                 %strong Saved -
-                = link_to "Remove ", remove_from_saved_work_url(id)
+                = link_to "Remove ", remove_from_saved_work_url(work['pk_i'])
             - if @saved.nil? || !@saved.items.include?(work['pk_i'].to_i)
-              = link_to "Save", add_to_saved_work_url(id)
+              = link_to "Save", add_to_saved_work_url(work['pk_i'])
 
           -#"Edit" link
           -if link==:edit
