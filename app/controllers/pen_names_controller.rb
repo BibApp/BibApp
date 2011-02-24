@@ -1,26 +1,26 @@
 class PenNamesController < ApplicationController
-  
+
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy ]
-  
+  before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
+
   before_filter :find_pen_name, :only => [:destroy]
   before_filter :find_person, :only => [:create, :create_name_string, :new, :destroy, :sort]
-  before_filter :find_name_string,  :only => [:create, :create_name_string, :destroy]
+  before_filter :find_name_string, :only => [:create, :create_name_string, :destroy]
 
-  make_resourceful do 
+  make_resourceful do
     build :index, :show, :new, :update
-    
-    before :new do 
+
+    before :new do
       #only 'editor' of person can assign a pen name
       permit "editor of person"
-      
+
       @suggestions = NameString.find(
-        :all, 
-        :conditions => ["name like ?", "%" + @person.last_name + "%"],
-        :order => :name
+          :all,
+              :conditions => ["name like ?", "%" + @person.last_name + "%"],
+              :order => :name
       )
     end
-    
+
     before :update do
       #only 'editor' of person can assign a pen name
       permit "editor of person"
@@ -31,16 +31,16 @@ class PenNamesController < ApplicationController
   def create
     #only 'editor' of person can assign a pen name
     permit "editor of person"
-    
-    
+
+
     logger.debug("\n\n\n\n\n\n\n\n\n\n==== Params: #{params.inspect}")
-    
+
     if params[:reload]
       @reload = true
     end
 
-    logger.debug("\n\n\n\n\n\n\n\n\n\n==== reload? #{@reload.inspect}")    
-    
+    logger.debug("\n\n\n\n\n\n\n\n\n\n==== reload? #{@reload.inspect}")
+
     @person.name_strings << @name_string
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -54,7 +54,7 @@ class PenNamesController < ApplicationController
 
     name = params[:name_string][:name]
     machine_name = name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-    
+
     @name_string = NameString.find_or_create_by_machine_name(machine_name)
     @name_string.name = name
     @name_string.save
@@ -69,11 +69,11 @@ class PenNamesController < ApplicationController
   def destroy
     #only 'editor' of person can destroy a pen name
     permit "editor of :person", :person => @pen_name.person
-    
+
     if params[:reload]
       @reload = true
     end
-    
+
     @pen_name.destroy if @pen_name
     respond_to do |format|
       format.js { render :action => :regen_lists }
@@ -100,26 +100,26 @@ class PenNamesController < ApplicationController
     a1 = "%"
     a2 = "%"
     @searchphrase = a1 + @phrase + a2
-    
+
     #Hack for postgresql, for which LIKE is case-sensitive 
     #TODO: is there a better way?
     if @person.configurations[Rails.env]['adapter'] == "postgresql"
       @results = NameString.find(
-        :all,
-        :conditions => [ "name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%"],
-        :order => "name"
+          :all,
+              :conditions => ["name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%"],
+              :order => "name"
       )
     else
       @results = NameString.find(
-        :all,
-        :conditions => [ "name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
-        :order => "name"
+          :all,
+              :conditions => ["name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
+              :order => "name"
       )
     end
-    
+
     @number_match = @results.length
     @results = @results - @person.name_strings
-        
+
     respond_to do |format|
       format.js { render :action => :name_string_filter }
       format.html { redirect_to new_pen_name_path(:person_id => @person.id) }
@@ -136,10 +136,12 @@ class PenNamesController < ApplicationController
   end
 
   def find_pen_name
-    @pen_name = PenName.find_by_person_id_and_name_string_id(
-      params[:person_id],
-      params[:name_string_id]
-    )
+    if params[:id].blank? and params[:pen_name_id].blank?
+      @pen_name = PenName.find_by_person_id_and_name_string_id(params[:person_id], params[:name_string_id])
+    else
+      @pen_name = PenName.find_by_id(params[:id])
+      @pen_name ||= PenName.find_by_id(params[:pen_name_id])
+    end
   end
-  
+
 end
