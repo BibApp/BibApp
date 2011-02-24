@@ -14,7 +14,7 @@
       - content_for :admin_bar do
         %div.span-24#admin-actions
           %ul#edit-actions
-            %li=link_to_delete_saved
+            %li= link_to "Empty saved items?", delete_saved_url
       
       %h2="Saved (#{@saved.items.size})"
 

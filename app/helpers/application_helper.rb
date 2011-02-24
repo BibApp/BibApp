@@ -146,18 +146,6 @@ module ApplicationHelper
     end
   end
 
-  def link_to_add_to_saved(id)
-    link_to "Save", :action => "add_to_saved", :id => id
-  end
-
-  def link_to_remove_from_saved(id)
-    link_to "Remove ", :action => "remove_from_saved", :id => id
-  end
-
-  def link_to_delete_saved
-    link_to "Empty saved items?", delete_saved_url
-  end
-
   def coin(work)
     # @TODO - improve - probably have subklass.to_coin methods for each.
     # Genre differences: journal/article = atitle ; book/proceeding = title
