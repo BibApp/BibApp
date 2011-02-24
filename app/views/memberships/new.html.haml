@@ -40,10 +40,10 @@
 
         %ul.actions
           %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.size})",
-              memberships_url(:person_id => @person.id, :status => 'member'), :method => :post)
+              new_membership_url(:person_id => @person.id, :status => 'member'))
           |
           %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.find(:all).size})",
-              memberships_url(:person_id => @person.id, :status => 'non_member'), :method => :post)
+              new_membership_url(:person_id => @person.id, :status => 'non_member'))
 
         - if @status == "non_member"
           / Sort Form
