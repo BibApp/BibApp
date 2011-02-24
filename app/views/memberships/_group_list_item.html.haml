@@ -4,7 +4,7 @@
     %li.parent{:style => "list-style: none;"}
       %div{:id => "group_id-#{group_list_item.id}", :style => "border-top: 1px dotted #CCC;"}
         - if group_list_item.children.empty?
-          = "&nbsp;&nbsp;"
+          &nbsp;&nbsp;
         - else
           - if @query.blank?
             = link_to "+", "javascript:void(0)", {:onclick => "toggle_folder(#{group_list_item.id});", :id => "toggle_switch_#{group_list_item.id}"}
