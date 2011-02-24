@@ -49,7 +49,7 @@
               = submit_tag 'Go'
 
         %div.span-17.last
-          %h2="#{link_to @group.name, group_path(@group)}"
+          %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
           = render :partial => "shared/local_nav", :locals => {:object => "group"}
           
 
