@@ -3,32 +3,16 @@ module ApplicationHelper
   require 'config/personalize.rb'
   require 'htmlentities' if defined? HTMLEntities
 
-  def ajax_checkbox_toggle(model, person, selected, reload=nil)
-    person = Person.find(person.id)
+  def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected
-      js = remote_function(
-        :url => {
-          :controller => :pen_names,
-          :action => :destroy,
-          :person_id => person.id, 
-          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id,
-          :reload => reload
-          },
-        :method => :delete
-      )
+      pen_name = PenName.find_by_person_id_and_name_string_id(person.id, name_string.id)
+      js = remote_function(:url => pen_name_url(pen_name, :reload => reload, :person_id => person.id, :name_string_id => name_string.id),
+          :method => :delete)
     else
-      js = remote_function(
-        :url => {
-          :controller => :pen_names,
-          :action => :create,
-          :person_id => person.id, 
-          "#{model.class.to_s.tableize.singularize}_id".to_sym => model.id,
-          :reload => reload
-          },
-        :method => :post
-      )
+      js = remote_function(:url => pen_names_url(:person_id => person.id, :reload => reload, :name_string_id => name_string.id),
+          :method => :post)
     end
-    check_box_tag("#{model.class.to_s.tableize.singularize}_#{model.id}_toggle", 1, selected, {:onclick => js})
+    check_box_tag("name_string_#{name_string.id}_toggle", 1, selected, {:onclick => js})
   end
 
   def letter_link_for(letters, letter, current, path)
@@ -46,17 +30,17 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def link_to_related_works(work)
     #link_to "Related Works", search_url(:q => "id:#{work-solr_id}", :qt  => "mlt")
     "Related Works"
   end
-  
+
   def link_to_download_from_archive(work)
     #link_to "Download from #{$REPOSITORY_NAME}"
     "Download from #{$REPOSITORY_NAME}"
   end
-  
+
   def link_to_authors(work)
     links = Array.new
 
@@ -65,7 +49,7 @@ module ApplicationHelper
         name, id = NameString.parse_solr_data(au)
         links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
       end
-    
+
       if work['authors_data'].size > 5
         links << link_to("more...", work_path(work['pk_i']))
       end
@@ -73,9 +57,9 @@ module ApplicationHelper
 
     return links.join(", ").html_safe
   end
- 
+
   def link_to_editors(work)
-    if work['editors_data'] != nil    
+    if work['editors_data'] != nil
       # If no authors, editors go first
       if work['authors_data'] == nil
         str = ""
@@ -89,7 +73,7 @@ module ApplicationHelper
         name, id = NameString.parse_solr_data(ed)
         links << link_to("#{name.gsub(",", ", ")}", name_string_path(id), {:class => "name_string"})
       end
-  
+
       if work['editors_data'].size > 5
         links << link_to("more...", work_path(work['pk_i']))
       end
@@ -99,16 +83,16 @@ module ApplicationHelper
       return str
     end
   end
-  
+
   def link_to_work_publication(work)
     if work['publication_data'].blank?
       return "Unknown"
     else
       pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
       return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
-    end 
+    end
   end
-  
+
   def link_to_work_publisher(work)
     if work['publisher_data'].blank?
       return "Unknown"
@@ -121,16 +105,16 @@ module ApplicationHelper
   #Generate a "Find It!" OpenURL link, 
   # based on Work information as received from Solr
   def link_to_findit(work)
-    
+
     #Get our OpenURL information
     link_text, base_url, suffix = find_openurl_info
-    
+
     suffix =coin(work)
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
   end
-  
+
   def work_details(work)
     str = ""
     str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id) if work.publication.authority != nil && work.publication.authority.name != "Unknown"
@@ -143,74 +127,74 @@ module ApplicationHelper
     str += "#{work.end_page}." if work.end_page != nil
     return str
   end
-  
+
   def link_to_google_book(work)
     if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
-          work.publication.isbns.first[:name]
+        work.publication.isbns.first[:name]
         haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end      
+      end
     elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
-          work.publication.issn_isbn
+        work.publication.issn_isbn
         haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     else
       # Nothing
     end
   end
-  
+
   def link_to_add_to_saved(id)
     link_to "Save", :action => "add_to_saved", :id => id
   end
-  
+
   def link_to_remove_from_saved(id)
-      link_to "Remove ", :action => "remove_from_saved", :id => id
+    link_to "Remove ", :action => "remove_from_saved", :id => id
   end
-  
+
   def link_to_delete_saved
     link_to "Empty saved items?", delete_saved_url
   end
-  
+
   def coin(work)
     # @TODO - improve - probably have subklass.to_coin methods for each.
     # Genre differences: journal/article = atitle ; book/proceeding = title
-    
+
     # We want AR objects!
     if work.class == Hash
       work = Work.find(work["pk_i"])
     end
 
     coin = String.new
-    coin += "ctx_ver=Z39.88-2004"                                             # OpenURL 1.0
-    
+    coin += "ctx_ver=Z39.88-2004" # OpenURL 1.0
+
     if !work.open_url_kevs.empty?
-      work.open_url_kevs.each do |kev, value|                                 # Work Subklass Kevs
+      work.open_url_kevs.each do |kev, value| # Work Subklass Kevs
         coin += value
       end
     end
-    
-    work.authors.each do |au|                                                 # Authors
+
+    work.authors.each do |au| # Authors
       coin += "&rft.au=#{au[:name]}"
     end
-    
+
     return coin
   end
-  
+
   # NOT USED BY BIBAPP, by Default
   def archivable_count
     if Publisher.find(:all, :conditions => ["publisher_copy = ?", true]).empty?
       return @archivable_count = 0
     end
-    
+
     archivable_publishers = Publisher.find(
-      :all, 
-      :select => "pub1.id, pub2.id as auth", 
-      :from => "publishers pub1", 
-      :joins => "join publishers pub2 on pub1.id = pub2.authority_id", 
-      :conditions => ["pub1.publisher_copy = ?", true]
+        :all,
+            :select => "pub1.id, pub2.id as auth",
+            :from => "publishers pub1",
+            :joins => "join publishers pub2 on pub1.id = pub2.authority_id",
+            :conditions => ["pub1.publisher_copy = ?", true]
     )
 
     pub_ids = Array.new
@@ -219,12 +203,12 @@ module ApplicationHelper
     end
 
     @archivable_count = Work.accepted.count(
-      :all, 
-      :conditions => ["publisher_id in (?)", pub_ids.join(", ")]
+        :all,
+            :conditions => ["publisher_id in (?)", pub_ids.join(", ")]
     )
     return @archivable_count
   end
-  
+
   def add_filter(params, facet, value, count)
     filter = Hash.new
     if params[:fq]
@@ -232,13 +216,13 @@ module ApplicationHelper
     else
       filter[:fq] = []
     end
-    
+
     filter[:fq] << "#{facet}:\"#{value}\""
     filter[:fq].uniq!
-    
+
     link_to "#{value} (#{count})", params.merge(filter)
   end
-  
+
   def remove_filter(params, facet)
     filter = Hash.new
     if params[:fq]
@@ -251,31 +235,31 @@ module ApplicationHelper
       link_to "#{display_value}", params.merge(filter)
     end
   end
-  
+
   #Encodes UTF-8 data such that it is valid in HTML
   def encode_for_html(data)
     code = HTMLEntities.new
     code.encode(data, :decimal)
   end
-  
+
   #Encodes UTF-8 data such that it is valid in XML
   def encode_for_xml(data)
     code = HTMLEntities.new
     code.encode(data, :basic)
   end
-  
+
   #Determines the pretty name of a particular Work Status
   def work_state_name(work_state_id)
     #Load Work States hash from personalize.rb
     return $WORK_STATUS[work_state_id]
   end
-  
+
   #Determines the pretty name of a particular Work Archival Status
   def work_archive_state_name(work_archive_state_id)
     #Load Work States hash from personalize.rb
     return $WORK_ARCHIVE_STATUS[work_archive_state_id]
   end
-  
+
   #Finds the Error message for a *specific field* in a Form
   # This is useful to display the error messages next to the
   # appropriate field in a form.
@@ -286,9 +270,9 @@ module ApplicationHelper
       err = instance_variable_get("@#{object}").errors[method].to_sentence rescue instance_variable_get("@#{object}").errors[method]
     else
       err = @errors["#{object}"] rescue nil
-    end 
-    options.merge!(:class=>'fieldWithErrors', :id=>"#{[object,method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
-    content_tag("p",err || "", options )     
+    end
+    options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
+    content_tag("p", err || "", options)
   end
 
   #create a hash for Haml that gives id => current if the controller matches the argument
@@ -301,7 +285,7 @@ module ApplicationHelper
   end
 
   private
-  
+
   #Find information necessary to build our OpenURL query
   #  In particular:
   #    OpenURL link text, base url, and query suffixes
@@ -372,7 +356,7 @@ module ApplicationHelper
       # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
       session[:openurl_info] = true
     end #end if session[:openurl_info]
-=end  
+=end
     return link_text, base_url, suffix
   end
 end
