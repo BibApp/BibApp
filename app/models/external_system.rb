@@ -6,12 +6,7 @@ class ExternalSystem < ActiveRecord::Base
   validates_presence_of :name, :base_url
    
   #### Callbacks ####
-  
-  #Called after create or save
-  def after_save
-    update_machine_name
-  end
-  
+  after_save :update_machine_name
   
   #### Methods ####
   

@@ -5,9 +5,6 @@ class PasswordsController < ApplicationController
    # require user is logged in, except for "forgot password" page
    before_filter :login_required, :except => [:create, :new]  
   
-   # Don't write passwords as plain text to the log files  
-   filter_parameter_logging :old_password, :password, :password_confirmation
-   
    # POST /passwords  
    # Forgot password  
    def create  

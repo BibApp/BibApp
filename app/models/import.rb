@@ -13,9 +13,11 @@ class Import < ActiveRecord::Base
 
   has_one :import_file, :as => :asset,
     :dependent => :delete
-    
+
+  after_create :after_create_actions
+
   # ActiveRecord Callbacks
-  def after_create
+  def after_create_actions
     self.process!
   end
 
