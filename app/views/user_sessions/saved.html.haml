@@ -40,10 +40,10 @@
 
             = submit_tag 'Go'
       
-        %div{:class => "span-14"}= @works.paginate
+        %div{:class => "span-14"}= will_paginate @works.paginate
 
         %ol{:class => "span-14 works", :style => "clear:both;"}
           - @works.each do |work|
             = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
 
-        %div{:class => "span-14"}= @works.paginate
+        %div{:class => "span-14"}= will_paginate @works.paginate
