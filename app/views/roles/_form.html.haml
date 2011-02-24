@@ -1,11 +1,11 @@
 / === Roles === Form ===
 %div{:class => "span-22 prepend-1"}
   - if @authorizable.is_a? Class and @authorizable==System
-    %h2="Add System-wide #{@role_name}: #{$APPLICATION_NAME}"
+    %h2 Add System-wide #{@role_name}: #{$APPLICATION_NAME}
   - elsif @authorizable.kind_of?(Group)
-    %h2="Add #{@role_name} on Group: #{link_to @authorizable.name, group_path(@authorizable)}"
+    %h2 Add #{@role_name} on Group: #{link_to(h(@authorizable.name), group_path(@authorizable)).html_safe}
   - elsif @authorizable.kind_of?(Person)
-    %h2="Add #{@role_name} on Person: #{link_to @authorizable.name, person_path(@authorizable)}"
+    %h2 Add #{@role_name} on Person: #{link_to(h(@authorizable.name), person_path(@authorizable)).html_safe}
       
   %h3="Users (#{@page})"
     
