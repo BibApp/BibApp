@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110209180706) do
+ActiveRecord::Schema.define(:version => 20110223231449) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -261,10 +261,8 @@ ActiveRecord::Schema.define(:version => 20110209180706) do
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "sessions", :force => true do |t|
