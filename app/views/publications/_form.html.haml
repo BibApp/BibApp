@@ -20,7 +20,7 @@
     %p
       %label Publisher
       %br/
-      = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => formatted_publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
+      = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
 
     -if @publication.authority_id
       %p
