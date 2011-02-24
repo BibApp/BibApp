@@ -12,7 +12,7 @@
 %div.span-24
   %div.span-22.prepend-1
     %h2
-      ="#{link_to @person.display_name, person_path(@person)}"
+      #{link_to(h(@person.display_name), person_path(@person)).html_safe}
       =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
     
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
