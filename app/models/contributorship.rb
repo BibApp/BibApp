@@ -7,17 +7,17 @@ class Contributorship < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Contributorship statuses
-  scope :unverified, :conditions => ["contributorships.contributorship_state_id = ?", 1]
-  scope :verified, :conditions => ["contributorships.contributorship_state_id = ?", 2]
-  scope :denied, :conditions => ["contributorships.contributorship_state_id = ?", 3]
+  scope :unverified, where(:contributorship_state_id => 1)
+  scope :verified, where(:contributorship_state_id => 2)
+  scope :denied, where(:contributorship_state_id => 3)
   # TODO: For now we don't want editors showing up as contributors
   #   although in the future we might want them to show up for whole
   #   conference preceedings, entire books, et cetera
-  scope :visible, :conditions => ["contributorships.hide = ? and contributorships.role = ?", false, "Author"]
+  scope :visible, where(:hide => false, :role => "Author")
   #By default, show all verified, visible contributorships
-  scope :to_show, :conditions => ["contributorships.hide = ? and contributorships.contributorship_state_id = ?", false, 2]
+  scope :to_show, where(:hide => false, :contributorship_state_id => 2)
   #All contributorships for a specified work
-  scope :for_work, lambda { |work_id| {:conditions => ["contributorships.work_id = ?", work_id]} }
+  scope :for_work, lambda { |work_id| where(:work_id => work_id)}
 
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id
@@ -28,23 +28,9 @@ class Contributorship < ActiveRecord::Base
   before_create :calculate_score
   after_save :after_save_actions
 
-  #TODO possibly move this back to running under delayed job - but for now I want it to error out directly
-  #if there is a problem
   def after_save_actions
-    # Delayed Job - Remove false positives from other PenName claimants
     logger.debug("\n=== REFRESHING ===\n")
-    #self.delay.refresh_contributorships
     self.refresh_contributorships
-
-# I'm moving this block into :refresh_contributorships
-# so that it will be done later. - bill 1/26/10
-#    if self.contributorship_state_id_changed?
-#      # Update Person's scoring hash
-#      self.person.update_scoring_hash
-#
-#      # Update Solr!
-#      Index.update_solr(self.work)
-#    end
   end
 
   ## Note: no 'after_destroy' is necessary here, as PenNameObserver 
@@ -189,20 +175,14 @@ class Contributorship < ActiveRecord::Base
 
   # Get a count of other unverified contributorships for current Work
   def candidates
-    candidates = Contributorship.unverified.for_work(self.work_id).size
+    Contributorship.unverified.for_work(self.work_id).size
   end
 
   # Get a count of possible Person matches to contributorships for current Work
   def possibilities
-    count = Array.new
-    # I don't think this is working as intended
-    #possibilities = self.work.name_strings.each{|ns| count << ns if ns.name == self.pen_name.name_string.name }
-
-    Contributorship.find_all_by_work_id(self.work_id).each { |c|
-      possibilities = self.work.name_strings.each { |ns| count << ns if ns.name == c.pen_name.name_string.name }
-    }
-
-    return count.size
+    Contributorship.for_work(self.work_id).inject(0) do |acc, c|
+      acc + self.work.name_strings.where(:name => c.pen_name.name_string.name).count
+    end
   end
 
   def refresh_contributorships
@@ -212,9 +192,7 @@ class Contributorship < ActiveRecord::Base
     # - Set Contributorship.hide = true
 
     if Contributorship.verified.for_work(self.work_id).size == self.possibilities
-      refresh = Contributorship.find(:all, :conditions => ["work_id = ? and contributorship_state_id = ? and id <> ?",
-          self.work_id, 1, self.id])
-
+      refresh = Contributorship.for_work(self.work).unverified.where('id <> ?', self.id)
       #This previously used save_without_callbacks
       #In this case there is a possibility that removing it will cause an infinite recursion - I'm not sure
       #I understand it well enough to know.
