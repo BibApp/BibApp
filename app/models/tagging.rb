@@ -5,7 +5,4 @@ class Tagging < ActiveRecord::Base
 
   validates_presence_of :tag_id, :taggable_id
   
-  def save_without_callbacks
-    update_without_callbacks
-  end
 end

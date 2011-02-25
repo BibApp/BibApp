@@ -49,8 +49,5 @@ class Attachment < ActiveRecord::Base
   def absolute_path
     "#{Rails.root}/public/#{self.public_filename}"
   end
-  
-  def save_without_callbacks
-    update_without_callbacks
-  end
+
 end

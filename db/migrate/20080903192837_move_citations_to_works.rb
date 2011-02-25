@@ -13,7 +13,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     attachments = Attachment.find(:all).each do |a|
       if a.asset_type == "Citation"
         a.asset_type = "Work"
-        a.save_without_callbacks
+        a.save
       end
     end
     
@@ -68,7 +68,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     taggings = Tagging.find(:all).each do |t|
       if t.taggable_type == "Citation"
         t.taggable_type = "Work"
-        t.save_without_callbacks
+        t.save
       end
     end
   end
@@ -79,7 +79,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     attachments = Attachment.find(:all).each do |a|
       if a.asset_type == "Work"
         a.asset_type = "Citation"
-        a.save_without_callbacks
+        a.save
       end
     end
     
@@ -134,7 +134,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     taggings = Tagging.find(:all).each do |t|
       if t.asset_type == "Work"
         t.asset_type = "Citation"
-        t.save_without_callbacks
+        t.save
       end
     end
   end
