@@ -390,7 +390,7 @@ class PeopleController < ApplicationController
   def clean_ldap(entry)
     res = Hash.new("")
 
-    config = YAML::load(File.read("#{RAILS_ROOT}/config/ldap.yml"))[RAILS_ENV]
+    config = YAML::load(File.read("#{Rails.root}/config/ldap.yml"))[Rails.env]
 
     entry.each do |key, val|
       #res[key] = val[0]
