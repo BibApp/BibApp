@@ -9,6 +9,12 @@ class Group < ActiveRecord::Base
     :order => "last_name, first_name"
   has_many :memberships
 
+  scope :hidden, where(:hide => true)
+  scope :unhidden, where(:hide => false)
+  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
+  scope :name_like, lambda {|name| where('name like ?', name)}
+  scope :order_by_upper_name, order('upper(name)')
+  scope :order_by_name, order('name')
   #### Callbacks ####
   
   before_save :before_save_actions

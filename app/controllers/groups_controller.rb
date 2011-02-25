@@ -22,22 +22,18 @@ class GroupsController < ApplicationController
       @a_to_z = Group.letters.collect { |g| g.letter.upcase }
       
       if params[:person_id]
-        @person = Person.find_by_id(params[:person_id].split("-")[0])
+        @person = Person.find(params[:person_id].split("-")[0])
 
         # Collect a list of the person's top-level groups for the tree view
         @top_level_groups = Array.new
-        @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
+        @person.memberships.active.select{|m| !m.group.hide?}.each do |m|
           @top_level_groups << m.group.top_level_parent
         end
         @top_level_groups.uniq!
       end
       
       @page = params[:page] || @a_to_z[0]
-      @current_objects = Group.find(
-        :all, 
-        :conditions => ["upper(name) like ? AND hide = ?", "#{@page}%", false], 
-        :order => "upper(name)"
-      )
+      @current_objects = Group.unhidden.upper_name_like("#{@page}%").order_by_upper_name
     end
     
     before :show do
@@ -85,7 +81,7 @@ class GroupsController < ApplicationController
     end
     
     before :new do
-     @groups = Group.find(:all, :order => "name", :conditions => ["hide = ?", false])
+     @groups = Group.unhidden.order_by_name
     end
    
     
@@ -93,13 +89,13 @@ class GroupsController < ApplicationController
       #'editor' of group can edit that group
       #permit "editor of group"
       
-      @groups = Group.find(:all, :order => "name", :conditions => ["hide = ?", false])
+      @groups = Group.unhidden.order_by_name
     end
   end
   
   def create
     
-    @duplicategroup = Group.find(:first, :conditions => ["name LIKE ?", params[:group][:name]])
+    @duplicategroup = Group.name_like(params[:group][:name]).first
    
     if @duplicategroup.nil?
       @group = Group.find_or_create_by_name(params[:group])
@@ -119,11 +115,7 @@ class GroupsController < ApplicationController
   end
 
   def hidden
-    @hidden_groups = Group.find(
-      :all,
-      :conditions => ["hide = ?", true],
-      :order => "upper(name)"
-    )
+    @hidden_groups = Group.hidden.order_by_upper_name
   end
   
   def auto_complete_for_group_name
@@ -133,11 +125,8 @@ class GroupsController < ApplicationController
     beginning_search = group_name + "%"
     #search at beginning of any other words in name
     word_search = "% " + group_name + "%"
-    
-    groups = Group.find(:all, 
-          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-        :order => 'name ASC',
-        :limit => 8)
+
+    groups = Group.order_by_name.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).limit(8)
       
     render :partial => 'autocomplete_list', :locals => {:objects => groups}
   end 
@@ -147,7 +136,7 @@ class GroupsController < ApplicationController
     
     permit "editor on group"
     
-    children = @group.children.collect{|c| c unless c.hide?}
+    children = @group.children.select {|c| !c.hide?}
 
     # don't hide groups with children
     if children.blank? 
@@ -198,7 +187,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
 
     #check memberships
-    memberships = Membership.find_all_by_group_id(@group)
+    memberships = @group.memberships
 
     #check children
     children = @group.children
