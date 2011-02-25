@@ -46,8 +46,7 @@ class Publication < ActiveRecord::Base
 
   def before_create_actions
     unless self.initial_publisher_id.nil?
-      self.publisher_id = Publisher.find(:first,
-          :conditions => ["publishers.id = ?", self.initial_publisher_id]).authority.id
+      self.publisher_id = Publisher.first(self.initial_publisher_id).authority.id
     end
   end
 
@@ -75,16 +74,11 @@ class Publication < ActiveRecord::Base
   end
 
   def isbns
-    isbns = Array.new
-    ids = self.identifiers.find(:all, :conditions => ['type=?', 'ISBN']).collect { |isbn| {:name => isbn.name, :id => isbn.id} }
-    ids.each do |id|
-      isbns << {:name => id[:name], :id => id[:id]}
-    end
-    return isbns
+    self.identifiers.where(:type => 'ISBN').collect { |isbn| {:name => isbn.name, :id => isbn.id} }
   end
 
   def issns
-    issns = self.identifiers.find(:all, :conditions => ['type=?', 'ISSN']).collect { |issn| {:name => issn.name, :id => issn.id} }
+    self.identifiers.where(:type => 'ISSN').collect { |issn| {:name => issn.name, :id => issn.id} }
   end
 
   def parse_identifiers
@@ -134,15 +128,11 @@ class Publication < ActiveRecord::Base
   end
 
   def authority_for
-    authority_for = Publication.find(
-        :all,
-            :conditions => ["authority_id = ?", self.id]
-    )
-    return authority_for
+    Publication.for_authority(self.id)
   end
 
   def authority_for_work_count
-    Work.find(:all, :conditions => ["authority_publication_id = ? and work_state_id = ?", self.id, 3]).size
+    Work.accepted.for_authority_publication(self.id).count
   end
 
   #Update authorities for related models, when Publication Authority changes
@@ -191,11 +181,7 @@ class Publication < ActiveRecord::Base
 
     # return the first letter of each name, ordered alphabetically
     def letters
-      find(
-          :all,
-              :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
-              :order => 'letter'
-      )
+      self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
     end
 
     def update_multiple(pub_ids, auth_id)

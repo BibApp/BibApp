@@ -69,6 +69,9 @@ class Work < ActiveRecord::Base
   scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
   scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
 
+  scope :for_authority_publication,
+        lambda {|authority_publication_id| where(:authority_publication_id => authority_publication_id)}
+
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   before_create :before_create_actions
