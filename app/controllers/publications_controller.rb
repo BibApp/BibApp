@@ -31,11 +31,8 @@ class PublicationsController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publication.find(
-          :all,
-          :conditions => ["publications.id = authority_id and upper(name) like ?", "#{@page}%"],
-          :order => "upper(name)"
-        )
+        #I'm not sure if the first condition here is the same as the authorities scope, but it might be
+        @current_objects = Publication.where("publications.id = authority_id").upper_name_like("#{@page}%").order_by_upper_name
       end
     end
 
@@ -43,19 +40,15 @@ class PublicationsController < ApplicationController
       search(params)
       @publication = @current_object
 
-      @authority_for = Publication.find(
-        :all,
-        :conditions => ["authority_id = ?", @current_object.id],
-        :order => "name"
-      )
+      @authority_for = Publication.for_authority(@current_object.id).order_by_name
     end
 
     before :new do
       #Anyone with 'editor' role (anywhere) can add publications
       permit "editor"
       
-      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
-      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publishers = Publisher.authorities.order_by_name
+      @publications = Publication.authorities.order_by_name
     end
 
     before :create do
@@ -67,8 +60,8 @@ class PublicationsController < ApplicationController
       #Anyone with 'editor' role (anywhere) can update publications
       permit "editor"
       
-      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
-      @publications = Publication.find(:all, :order => "name")
+      @publishers = Publisher.authorities.order_by_name
+      @publications = Publication.order_by_name
     end
     
     before :update do
@@ -89,11 +82,7 @@ class PublicationsController < ApplicationController
       query = params[:q]
       @current_objects = current_objects
     else
-      @current_objects = Publication.find(
-        :all, 
-        :conditions => ["id = authority_id and name like ?", "#{@page}%"], 
-        :order => "upper(name)"
-      )
+      @current_objects = Publication.authorities.upper_name_like("#{@page}%").order_by_upper_name
     end
 
     #Keep a list of publications in process in session[:publication_auths]
@@ -203,6 +192,6 @@ class PublicationsController < ApplicationController
     # * ISBN
     # * Name (abbreviations)
     # * Publisher
-    @current_objects ||= current_model.find_all_by_issn_isbn(params[:q])
+    @current_objects ||= current_model.find.where(:issn_isbn => params[:q])
   end
 end

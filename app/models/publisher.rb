@@ -18,7 +18,8 @@ class Publisher < ActiveRecord::Base
   #### Callbacks ####
 
   scope :authorities, :conditions => ["id = authority_id"]
-
+  scope :order_by_name, order('name')
+  
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_create :before_create_actions

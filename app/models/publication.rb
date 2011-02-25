@@ -14,8 +14,12 @@ class Publication < ActiveRecord::Base
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
 
-  scope :authorities, :conditions => ["id = authority_id"]
-
+  scope :authorities, where("id = authority_id")
+  scope :for_authority, lambda {|authority_id| where(:authority_id => authority_id)}
+  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
+  scope :order_by_upper_name, order('upper(name)')
+  scope :order_by_name, order('name')
+  
   # This is necessary due to very long titles for conference
   # proceedings. For example:
   # Cultivating the future based on science. Volume 1: Organic Crop
