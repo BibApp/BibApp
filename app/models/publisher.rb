@@ -17,9 +17,13 @@ class Publisher < ActiveRecord::Base
 
   #### Callbacks ####
 
-  scope :authorities, :conditions => ["id = authority_id"]
+  scope :authorities, where("id = authority_id")
+  scope :for_authority, lambda {|authority_id| where(:authority_id => authority_id)}
   scope :order_by_name, order('name')
-  
+  scope :order_by_upper_name, order('upper(name)')
+  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
+  scope :name_like, lambda {|name| where('name like ?', name)}
+
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_create :before_create_actions

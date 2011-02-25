@@ -26,14 +26,14 @@ class PublishersController < ApplicationController
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters.collect { |d| d.letter.upcase }
       
-      @authorities = Publisher.find(:all, :conditions => ["id = authority_id and upper(name) like ?", "%#{params[:search]}%"])
+      @authorities = Publisher.authorities.upper_name_like("%#{params[:search]}%")
       
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publisher.find(:all, :conditions => ["id = authority_id and upper(name) like ?", "#{@page}%"], :order => "upper(name)")
+        @current_objects = Publisher.authorities.upper_name_like("#{@page}%").order_by_upper_name
       end
     end
 
@@ -41,19 +41,15 @@ class PublishersController < ApplicationController
       search(params)
       @publication = @current_object
 
-      @authority_for = Publisher.find(
-        :all,
-        :conditions => ["authority_id = ?", current_object.id],
-        :order => "name"
-      )
+      @authority_for = Publisher.for_authority(current_object.id).order_by_name
     end
 
     before :new do
       #Anyone with 'editor' role (anywhere) can add publishers
       permit "editor"
       
-      @publishers = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
-      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publishers = Publisher.authorities.order_by_name
+      @publications = Publication.authorities.order_by_name
     end
     
     before :create do
@@ -65,8 +61,8 @@ class PublishersController < ApplicationController
       #Anyone with 'editor' role (anywhere) can update publishers
       permit "editor"
       
-      @publishers = Publisher.find(:all, :order => "name")
-      @publications = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
+      @publishers = Publisher.order_by_name
+      @publications = Publication.authorities.order_by_name
     end
     
     before :update do
@@ -86,10 +82,7 @@ class PublishersController < ApplicationController
       @current_objects = current_objects
     else
       @page = params[:page] || @a_to_z[0]
-      @current_objects = Publisher.find(
-        :all,
-        :conditions => ["id = authority_id and name like ?", "#{@page}%"],
-        :order => "name")
+      @current_objects = Publisher.authorities.name_like("#{@page}%").order_by_name
     end
 
     #Keep a list of publications in process in session[:publication_auths]
@@ -162,6 +155,6 @@ class PublishersController < ApplicationController
     if params[:q]
       query = '%' + params[:q] + '%'
     end
-    @current_objects ||= current_model.find(:all, :conditions => ["name like ?", query])
+    @current_objects ||= current_model.name_like(query)
   end
 end
