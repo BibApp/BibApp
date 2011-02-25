@@ -14,7 +14,7 @@ class PasswordsController < ApplicationController
          @new_password = random_password  
          user.password = user.password_confirmation = @new_password  
          user.save_without_validation  
-         UserMailer.deliver_new_password(user, @new_password)  
+         UserMailer.new_password(user, @new_password).deliver
    
          format.html {  
            flash[:notice] = "We sent a new password to #{params[:email]}"  
