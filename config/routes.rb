@@ -152,7 +152,6 @@ ActionController::Routing::Routes.draw do |map|
       :pen_names,
       :keywords,
       :keywordings,
-      :sessions,
       :passwords,
       :attachments
 
