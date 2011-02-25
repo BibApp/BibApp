@@ -26,16 +26,16 @@ class Attachment < ActiveRecord::Base
   def filesize
     # if >= billion bytes, specify in GB
     if self.size >= 1000000000
-      filesize=self.size.div(1000000000).round.to_s + "GB"
+      self.size.div(1000000000).round.to_s + "GB"
     # if >= million bytes, specify in MB
     elsif self.size >= 1000000
-      filesize=self.size.div(1000000).round.to_s + "MB"
+      self.size.div(1000000).round.to_s + "MB"
     # if >= thousand bytes, specify in KB
     elsif self.size >= 1000
-      filesize=self.size.div(1000).round.to_s + "KB"
+      self.size.div(1000).round.to_s + "KB"
     # if < thousand bytes, specify in bytes
     elsif self.size < 1000
-      filesize=self.size.to_s + "bytes"
+      self.size.to_s + "bytes"
     end
   end
   
