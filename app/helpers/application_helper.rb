@@ -6,11 +6,13 @@ module ApplicationHelper
   def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected
       pen_name = PenName.find_by_person_id_and_name_string_id(person.id, name_string.id)
-      js = remote_function(:url => pen_name_url(pen_name, :reload => reload, :person_id => person.id, :name_string_id => name_string.id),
-          :method => :delete)
+      js = remote_function(:url => pen_name_url(pen_name, :reload => reload, :person_id => person.id,
+                                                :name_string_id => name_string.id),
+                           :method => :delete)
     else
-      js = remote_function(:url => pen_names_url(:person_id => person.id, :reload => reload, :name_string_id => name_string.id),
-          :method => :post)
+      js = remote_function(:url => pen_names_url(:person_id => person.id, :reload => reload,
+                                                 :name_string_id => name_string.id),
+                           :method => :post)
     end
     check_box_tag("name_string_#{name_string.id}_toggle", 1, selected, {:onclick => js})
   end
@@ -55,7 +57,7 @@ module ApplicationHelper
       end
     end
 
-    return links.join(", ").html_safe
+    links.join(", ").html_safe
   end
 
   def link_to_editors(work)
@@ -80,25 +82,25 @@ module ApplicationHelper
 
       str += links.join(", ")
       str += " (Eds.), "
-      return str
+      str
     end
   end
 
   def link_to_work_publication(work)
     if work['publication_data'].blank?
-      return "Unknown"
+      "Unknown"
     else
       pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-      return link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
+      link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
     end
   end
 
   def link_to_work_publisher(work)
     if work['publisher_data'].blank?
-      return "Unknown"
+      "Unknown"
     else
       pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
-      return link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
+      link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
     end
   end
 
@@ -125,7 +127,7 @@ module ApplicationHelper
     str += " pgs."
     str += " #{work.start_page}-" if work.start_page != nil
     str += "#{work.end_page}." if work.end_page != nil
-    return str
+    str
   end
 
   def link_to_google_book(work)
@@ -168,33 +170,7 @@ module ApplicationHelper
       coin += "&rft.au=#{au[:name]}"
     end
 
-    return coin
-  end
-
-  # NOT USED BY BIBAPP, by Default
-  def archivable_count
-    if Publisher.find(:all, :conditions => ["publisher_copy = ?", true]).empty?
-      return @archivable_count = 0
-    end
-
-    archivable_publishers = Publisher.find(
-        :all,
-            :select => "pub1.id, pub2.id as auth",
-            :from => "publishers pub1",
-            :joins => "join publishers pub2 on pub1.id = pub2.authority_id",
-            :conditions => ["pub1.publisher_copy = ?", true]
-    )
-
-    pub_ids = Array.new
-    archivable_publishers.each do |p|
-      pub_ids << p.auth
-    end
-
-    @archivable_count = Work.accepted.count(
-        :all,
-            :conditions => ["publisher_id in (?)", pub_ids.join(", ")]
-    )
-    return @archivable_count
+    coin
   end
 
   def add_filter(params, facet, value, count)
@@ -239,13 +215,13 @@ module ApplicationHelper
   #Determines the pretty name of a particular Work Status
   def work_state_name(work_state_id)
     #Load Work States hash from personalize.rb
-    return $WORK_STATUS[work_state_id]
+    $WORK_STATUS[work_state_id]
   end
 
   #Determines the pretty name of a particular Work Archival Status
   def work_archive_state_name(work_archive_state_id)
     #Load Work States hash from personalize.rb
-    return $WORK_ARCHIVE_STATUS[work_archive_state_id]
+    $WORK_ARCHIVE_STATUS[work_archive_state_id]
   end
 
   #Finds the Error message for a *specific field* in a Form
