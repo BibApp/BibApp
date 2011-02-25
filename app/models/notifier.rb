@@ -1,38 +1,44 @@
 class Notifier < ActionMailer::Base
+
   def import_review_notification(user, import_id)
-    setup_email(user)
-    subject "BibApp - Batch import ready for review"
-    body(:user => user, :import_id => import_id)
-  end
-  
-   def batch_import_persons_notification(user_id, results, filename = "Unknown")
-    require 'config/personalize.rb'
-    
-    user = User.find(user_id)
-    setup_email(user)
-    subject "BibApp Synapse - batch upload of persons has completed"
-    body(:login => user.login, :results => results, :filename => filename)
+    with_setup_and_mailing(user) do
+      @subject = "BibApp - Batch import ready for review"
+      @user = user
+      @import_id = import_id
+    end
   end
 
-  
-  
+  def batch_import_persons_notification(user_id, results, filename = "Unknown")
+    @user = User.find(user_id)
+    with_setup_and_mailing(@user) do
+      @subject = "BibApp Synapse - batch upload of persons has completed"
+      @login = user.login
+      @results = results
+      @filename = filename
+    end
+  end
+
   def error_summary(exception, clean_backtrace, params, session)
-    recipients  "#{$SYSADMIN_EMAIL}"
-    from        "#{$SYSADMIN_EMAIL}"
-    subject     "BibApp - Exception summary: #{Time.now.strftime('%B %d, %Y')}"
-    body(
-      :exception => exception, 
-      :clean_backtrace => clean_backtrace,
-      :params => params, 
-      :session => session
-    )
+    with_setup_and_mailing do
+      @recipients = $SYSADMIN_EMAIL
+      @from = $SYSADMIN_EMAIL
+      @subject = "BibApp - Exception summary: #{Time.now.strftime('%B %d, %Y')}"
+      @exception = exception
+      @clean_backtrace = clean_backtrace
+      @params = params
+      @session = session
+    end
   end
 
   protected
-  def setup_email(user)
-    recipients  user.email
-    # SMTP_SETTINGS are loaded in /config/initializers/smtp.rb
-    from        "BibApp <no-reply@bibapp.org>"
-    sent_on     Time.now
+
+  #do setup and emailing while yielding to a block in between to do any additional
+  #actions, set up instance variables, etc.
+  def with_setup_and_mailing(user = nil)
+    @recipients = user.email if user
+    @from = "BibApp <no-reply@bibapp.org>"
+    yield
+    mail(:to => @recipients, :subject => @subject, :from => @from)
   end
+
 end

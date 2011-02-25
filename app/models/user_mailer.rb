@@ -1,31 +1,37 @@
 class UserMailer < ActionMailer::Base
+
   def signup_notification(user)
-    setup_email(user)
-    @subject    += 'Please activate your new account'
-  
-    @url  = "#{$APPLICATION_URL.chomp('/')}/activate/#{user.activation_code}"
-  
-  end
-  
-  def activation(user)
-    setup_email(user)
-    @subject    += 'Your account has been activated!'
-    @url  = "#{$APPLICATION_URL.chomp('/')}/"
-  end
-  
-  def new_password(user, new_password)
-    setup_email(user)
-    @subject    += 'New password'
-    @url  = "#{$APPLICATION_URL.chomp('/')}/login"
-  end
-  
-  protected
-    def setup_email(user)
-      @recipients  = "#{user.email}"
-      # SMTP_SETTINGS are loaded in /config/initializers/smtp.rb
-      @from        = SMTP_SETTINGS['from_email'] if SMTP_SETTINGS
-      @subject     = "[#{$APPLICATION_NAME}] "
-      @sent_on     = Time.now
-      @user = user
+    with_setup_and_mailing(user) do
+      @url = "#{$APPLICATION_URL.chomp('/')}/activate/#{user.activation_code}"
+      @subject += 'Please activate your new account'
     end
+  end
+
+  def activation(user)
+    with_setup_and_mailing(user) do
+      @subject += 'Your account has been activated!'
+      @url = "#{$APPLICATION_URL.chomp('/')}/"
+    end
+  end
+
+
+  def new_password(user, new_password)
+    with_setup_and_mailing(user) do
+      @subject += 'New password'
+      @url = "#{$APPLICATION_URL.chomp('/')}/login"
+    end
+  end
+
+  protected
+
+  #do the common setup and common mailing while yielding to a block
+  #which can set or modify instance variables as needed
+  def with_setup_and_mailing(user)
+    from = SMTP_SETTINGS['from_email'] if SMTP_SETTINGS
+    @subject = "[#{$APPLICATION_NAME}] "
+    @user = user
+    yield
+    mail(:to => user.email, :subject => @subject, :from => from)
+  end
+
 end
