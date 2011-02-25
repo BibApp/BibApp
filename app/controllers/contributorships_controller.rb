@@ -39,7 +39,7 @@ class ContributorshipsController < ApplicationController
     contrib_ids = params[:contrib_id]
     full_success = true
 
-    unless contrib_ids.nil? or contrib_ids.empty?
+    unless contrib_ids.blank?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       contrib_ids.each do |contrib_id|
         contributorship = Contributorship.find(contrib_id)
@@ -79,7 +79,7 @@ class ContributorshipsController < ApplicationController
 
     full_success = true
 
-    unless contrib_ids.nil? or contrib_ids.empty?
+    unless contrib_ids.blank?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       contrib_ids.each do |contrib_id|
         contributorship = Contributorship.find(contrib_id)
@@ -121,7 +121,7 @@ class ContributorshipsController < ApplicationController
 
     full_success = true
 
-    unless contrib_ids.nil? or contrib_ids.empty?
+    unless contrib_ids.blank?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       contrib_ids.each do |contrib_id|
         contributorship = Contributorship.find(contrib_id)
@@ -178,7 +178,7 @@ class ContributorshipsController < ApplicationController
   def deny
     # Find Contributorship
     @contributorship = Contributorship.find(params[:id])
-    @person = Person.find_by_id(@contributorship.person_id)
+    @person = @contributorship.person
 
     # only 'editor' of this person can deny contributorship   
     permit "editor of person"
@@ -213,14 +213,11 @@ class ContributorshipsController < ApplicationController
     # Build query which groups all Works (of this person) 
     # under appropriate Romeo Colors (based on publisher)
     # and retrieves a total number of each Romeo Color.
-    Contributorship.verified.all(
-        :select => "count(contributorships.id) as count, publishers.romeo_color as color",
-            :joins => "JOIN works ON contributorships.work_id=works.id
-                                    JOIN people ON contributorships.person_id=people.id
-                                    JOIN publishers ON works.publisher_id=publishers.id",
-            :conditions => ["people.id = ?", @person.id],
-            :group => "publishers.romeo_color",
-            :order => "publishers.romeo_color")
+    Contributorship.verified.for_person(@person).
+        select("count(contributorships.id) as count, publishers.romeo_color as color").
+        joins({:work => :publisher}, :person).
+        group("publishers.romeo_color").
+        order("publishers.romeo_color")
   end
 
 
@@ -228,15 +225,12 @@ class ContributorshipsController < ApplicationController
     # Build query which groups all works (of this person) 
     # by the Journal/Publication and Publisher
     # and retrieves a total number of each Journal/Publication
-    Contributorship.verified.all(
-        :select => "count(contributorships.id) as count, publications.name as name, publishers.name as pub_name, publishers.romeo_color as color, publishers.publisher_copy as pub_copy",
-            :joins => "JOIN works ON contributorships.work_id=works.id
-                                    JOIN people ON contributorships.person_id=people.id
-                                    JOIN publications ON works.publication_id = publications.id
-                                    JOIN publishers ON works.publisher_id=publishers.id",
-            :conditions => ["people.id = ?", @person.id],
-            :group => "publications.name, publishers.name, publishers.romeo_color, publishers.publisher_copy",
-            :order => "count(contributorships.id) desc")
+    Contributorship.verified.for_person(@person).
+        select("count(contributorships.id) as count, publications.name as name, publishers.name as pub_name,
+                publishers.romeo_color as color, publishers.publisher_copy as pub_copy").
+        joins({:work => [:publisher, :publication]}, :person).
+        group("publications.name, publishers.name, publishers.romeo_color, publishers.publisher_copy").
+        order("count(contributorships.id) desc")
   end
 
 end
