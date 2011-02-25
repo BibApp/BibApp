@@ -196,7 +196,6 @@ Bibapp::Application.routes.draw do
   end
   resources :keywords
   resources :keywordings
-  resources :sessions
   resources :passwords
   resources :attachments do
     collection do
