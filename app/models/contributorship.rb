@@ -16,8 +16,9 @@ class Contributorship < ActiveRecord::Base
   scope :visible, where(:hide => false, :role => "Author")
   #By default, show all verified, visible contributorships
   scope :to_show, where(:hide => false, :contributorship_state_id => 2)
-  #All contributorships for a specified work
+  #All contributorships for a specified work or person
   scope :for_work, lambda { |work_id| where(:work_id => work_id)}
+  scope :for_person, lambda {|person_id| where(:person_id => person_id)}
 
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id
