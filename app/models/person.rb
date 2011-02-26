@@ -303,11 +303,11 @@ class Person < ActiveRecord::Base
     end
 
     def find_all_by_publisher_id(publisher_id)
-      Publisher.find(publisher_id).works.collect {|w| w.people}.flatten.uniq
+      Publisher.find(publisher_id).works.collect {|w| w.people}.flatten.compact.uniq
     end
 
     def find_all_by_publication_id(publisher_id)
-      Publication.find(publisher_id).works.collect {|w| w.people}.flatten.uniq
+      Publication.find(publisher_id).works.collect {|w| w.people}.flatten.compact.uniq
     end
 
     def find_all_by_group_id(group_id)
