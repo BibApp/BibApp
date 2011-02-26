@@ -61,7 +61,7 @@ class Import < ActiveRecord::Base
   
   def process_accepted_import
     logger.debug("\n=== Accepted Import - #{self.id} ===\n\n")
-    works = Work.find(:all, :conditions => ["id in (?)", self.works_added])
+    works = Work.where("id in (?)", self.works_added)
     
     # Create unverified contributorships for each non-duplicate work
     works.each{|w| w.create_contributorships }
