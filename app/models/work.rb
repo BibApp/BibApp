@@ -16,21 +16,21 @@ class Work < ActiveRecord::Base
   belongs_to :publisher
 
   has_many :name_strings, :through => :work_name_strings,
-      :order => "position"
+           :order => "position"
 
   has_many :work_name_strings, :order => "position",
-      :dependent => :delete_all
+           :dependent => :delete_all
 
   has_many :people,
-      :through => :contributorships,
-      :conditions => ["contributorship_state_id = ?", 2]
+           :through => :contributorships,
+           :conditions => ["contributorship_state_id = ?", 2]
 
   has_many :contributorships,
-      :dependent => :delete_all
+           :dependent => :delete_all
 
   has_many :keywords, :through => :keywordings
   has_many :keywordings,
-      :dependent => :delete_all
+           :dependent => :delete_all
 
   has_many :taggings, :as => :taggable, :dependent => :delete_all
   has_many :tags, :through => :taggings
@@ -43,16 +43,19 @@ class Work < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Work Statuses
-  scope :in_process, :conditions => ["work_state_id = ?", 1]
-  scope :duplicate, :conditions => ["work_state_id = ?", 2]
-  scope :accepted, :conditions => ["work_state_id = ?", 3]
+  #TODO Get rid of magic numbers
+  scope :in_process, where(:work_state_id => 1)
+  scope :duplicate, where(:work_state_id => 2)
+  scope :accepted, where(:work_state_id => 3)
 
   #Various Work Archival Statuses
-  scope :ready_to_archive, :conditions => ["work_archive_state_id = ?", 2]
-  scope :archived, :conditions => ["work_archive_state_id = ?", 3]
+  scope :ready_to_archive, where(:work_archive_state_id => 2)
+  scope :archived, where(:work_archive_state_id => 3)
 
+  #TODO: This looks a little wonky to me. I suspect we can break it down
+  #somehow to get rid of the block.
   # Work flagged for batch indexing
-  scope :to_batch_index, :conditions => ["batch_index = ?", 1] do
+  scope :to_batch_index, where(:batch_index => 1) do
     # Method to mark all these Works as 'indexed'
     # by resetting 'batch_index' flag to false
     def indexed
@@ -64,13 +67,13 @@ class Work < ActiveRecord::Base
   end
 
   #Various Work Contribution Statuses
-  scope :unverified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 1]
-  scope :verified, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 2]
-  scope :denied, :include => :contributorships, :conditions => ["contributorships.contributorship_state_id = ?", 3]
-  scope :visible, :include => :contributorships, :conditions => ["contributorships.hide = ?", false]
+  scope :unverified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 1})
+  scope :verified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 2})
+  scope :denied, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 3})
+  scope :visible, joins(:contributorships).where(:contributorships => {:hide => false})
 
   scope :for_authority_publication,
-        lambda {|authority_publication_id| where(:authority_publication_id => authority_publication_id)}
+        lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
 
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
@@ -177,27 +180,27 @@ class Work < ActiveRecord::Base
     # more...   	    			  
     types = [
         "Artwork",
-            "Book (Section)",
-            "Book (Whole)",
-            "Book Review",
-            "Composition",
-            "Conference Paper",
-            "Conference Poster",
-            "Conference Proceeding (Whole)",
-            "Dissertation / Thesis",
-            "Exhibition",
-            "Grant",
-            "Journal (Whole)",
-            "Journal Article",
-            "Monograph",
-            "Patent",
-            "Performance",
-            "Presentation / Lecture",
-            "Recording (Moving Image)",
-            "Recording (Sound)",
-            "Report",
-            "Web Page",
-            "Generic"
+        "Book (Section)",
+        "Book (Whole)",
+        "Book Review",
+        "Composition",
+        "Conference Paper",
+        "Conference Poster",
+        "Conference Proceeding (Whole)",
+        "Dissertation / Thesis",
+        "Exhibition",
+        "Grant",
+        "Journal (Whole)",
+        "Journal Article",
+        "Monograph",
+        "Patent",
+        "Performance",
+        "Presentation / Lecture",
+        "Recording (Moving Image)",
+        "Recording (Sound)",
+        "Report",
+        "Web Page",
+        "Generic"
     ]
   end
 
@@ -284,8 +287,8 @@ class Work < ActiveRecord::Base
 
       publication_info = Hash.new
       publication_info = {:publication_name => publication,
-          :issn_isbn => issn_isbn,
-          :publisher_name => publisher}
+                          :issn_isbn => issn_isbn,
+                          :publisher_name => publisher}
 
       work.publication_info = publication_info
 
@@ -384,6 +387,7 @@ class Work < ActiveRecord::Base
 
     #save or update Work
     self.keywords = keywords
+
   end
 
   # Initializes an array of Tags
@@ -504,15 +508,13 @@ class Work < ActiveRecord::Base
 
           publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(
               :name => pub_name.to_s,
-                  :issn_isbn => publication_hash[:issn_isbn].to_s,
-                  :initial_publisher_id => set_publisher.id
-          )
+              :issn_isbn => publication_hash[:issn_isbn].to_s,
+              :initial_publisher_id => set_publisher.id)
 
         elsif not (set_publisher.nil?)
           publication = Publication.find_or_create_by_name_and_initial_publisher_id(
               :name => pub_name,
-                  :initial_publisher_id => set_publisher.id
-          )
+              :initial_publisher_id => set_publisher.id)
         else
           publication = Publication.find_or_create_by_name(pub_name)
         end
@@ -569,7 +571,7 @@ class Work < ActiveRecord::Base
     if self.accepted?
       self.work_name_strings.each do |cns|
         # Find all People with a matching PenName claim
-        claims = PenName.find(:all, :conditions => ["name_string_id = ?", cns.name_string_id])
+        claims = PenName.for_name_string(cns.name_string_id)
 
         # Debugger
         logger.debug("\n Claims: ")
@@ -580,11 +582,7 @@ class Work < ActiveRecord::Base
         # Find or create a Contributorship for each claim
         claims.each do |claim|
           contributorship=Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
-              self.id,
-                  claim.person.id,
-                  claim.id,
-                  cns.role
-          )
+              self.id, claim.person.id, claim.id, cns.role)
         end
       end
     end
@@ -600,7 +598,7 @@ class Work < ActiveRecord::Base
 
     publication_id = self.publication_id
     collaborator_ids = self.name_strings.collect { |ns| ns.id }
-    keyword_ids = self.keywords.collect { |k| k.id }
+    keyword_ids = self.keyword_ids
 
     # Return a hash comprising all the Contributorship scoring methods
     scoring_hash = {
@@ -667,35 +665,35 @@ class Work < ActiveRecord::Base
     type_map = {
         "Abstract" => "http://purl.org/eprint/type/ScholarlyText",
         "Artwork" => "http://purl.org/dc/dcmitype/Image", #DCMI Type
-    #"BillResolutions" => ??
-    "BookEdited" => "http://purl.org/eprint/type/Book",
+        #"BillResolutions" => ??
+        "BookEdited" => "http://purl.org/eprint/type/Book",
         "BookReview" => "http://purl.org/eprint/type/BookReview",
         "BookSection" => "http://purl.org/eprint/type/BookItem",
         "BookWhole" => "http://purl.org/eprint/type/Book",
         "ComputerProgram" => "http://purl.org/dc/dcmitype/Software", #DCMI Type
-    "ConferencePaper" => " http://purl.org/eprint/type/ConferencePaper",
+        "ConferencePaper" => " http://purl.org/eprint/type/ConferencePaper",
         "ConferencePoster" => "http ://purl.org/eprint/type/ConferencePoster",
         "ConferenceProceeding" => "http://purl.org/eprint/type/ConferenceItem",
         #"CourtCaseDecision" => ??
-    "DissertationThesis" => "http://purl.org/eprint/type/Thesis",
+        "DissertationThesis" => "http://purl.org/eprint/type/Thesis",
         "Generic" => "http://purl.org/eprint/type/ScholarlyText",
         "Grant" => "http://purl.org/eprint/type/ScholarlyText",
         #"Hearing" => ??
-    "JournalArticle" => "http://purl.org/eprint/type/JournalArticle",
+        "JournalArticle" => "http://purl.org/eprint/type/JournalArticle",
         #"LawStatutes" => ??
-    "MagazineArticle" => "http://purl.org/eprint/type/JournalArticle",
+        "MagazineArticle" => "http://purl.org/eprint/type/JournalArticle",
         "Map" => "http://purl.org/dc/dcmitype/StillImage", #DCMI Type
-    "Monograph" => "http://purl.org/eprint/type/Book",
+        "Monograph" => "http://purl.org/eprint/type/Book",
         "MotionPicture" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
-    "MusicScore" => "http://purl.org/dc/dcmitype/Text",
+        "MusicScore" => "http://purl.org/dc/dcmitype/Text",
         "NewspaperArticle" => "http://purl.org/eprint/type/NewsItem",
         "Patent" => "http://purl.org/eprint/type/Patent",
         #"PersonalCommunication" => ??
-    "Report" => "http://purl.org/eprint/type/Report",
+        "Report" => "http://purl.org/eprint/type/Report",
         "SoundRecording" => "http://purl.org/dc/dcmitype/Sound", #DCMI Type
-    "UnpublishedMaterial" => "http://purl.org/eprint/type/ScholarlyText",
+        "UnpublishedMaterial" => "http://purl.org/eprint/type/ScholarlyText",
         "Video" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
-    "WebPage" => "http://purl.org/dc/dcmitype/InteractiveResource", #DCMI Type
+        "WebPage" => "http://purl.org/dc/dcmitype/InteractiveResource", #DCMI Type
     }
 
     type_map[self.type]
@@ -789,31 +787,35 @@ class Work < ActiveRecord::Base
 
   #Get all Author names on a Work, return as an array of hashes
   def authors
-    authors = Array.new
-    names = self.name_strings.find(:all, :conditions => ['role=?', self.class.creator_role]).collect { |ns| {:name => ns.name, :id => ns.id} }
-    names.each do |name|
-      authors << {:name => name[:name], :id => name[:id]}
+    self.work_name_strings.with_role(self.class.creator_role).includes(:name_string).collect do |wns|
+      ns = wns.name_string
+      {:name => ns.name, :id => ns.id}
     end
-    return authors
   end
 
   #Get all Editor Strings of a Work, return as an array of hashes
   def editors
-    editors = Array.new
-    return editors if self.class.contributor_role == self.class.creator_role
-    names = self.name_strings.find(:all, :conditions => ['role=?', self.class.contributor_role]).collect { |ns| {:name => ns.name, :id => ns.id} }
-    names.each do |name|
-      editors << {:name => name[:name], :id => name[:id]}
+    return [] if self.class.contributor_role == self.class.creator_role
+    self.work_name_strings.with_role(self.class.contributor_role).includes(:name_string).collect do |wns|
+      ns = wns.name_string
+      {:name => ns.name, :id => ns.id}
     end
-    return editors
+  end
+
+  def creator_role
+    raise RuntimeError, 'Subclass responsibility'
+  end
+
+  def contributor_role
+    raise RuntimeError, 'Subclass responsibility'
   end
 
   def publication_authority
-    Publication.find(:first, :conditions => ["id = ?", self.authority_publication_id])
+    Publication.find(self.authority_publication_id)
   end
 
   def publisher_authority
-    Publisher.find(:first, :conditions => ["id = ?", self.authority_publisher_id])
+    Publisher.find(self.authority_publisher_id)
   end
 
   # In case there isn't a subklass open_url_kevs method
@@ -944,11 +946,9 @@ class Work < ActiveRecord::Base
 
         #add it to this Work
         logger.debug("Adding name string '#{name_string.name}' to work #{work.id}")
-        WorkNameString.create(
-            :work_id => work.id,
-                :name_string_id => name_string.id,
-                :role => cns[:role]
-        )
+        WorkNameString.create(:work_id => work.id,
+                              :name_string_id => name_string.id,
+                              :role => cns[:role])
       end
     end
   end

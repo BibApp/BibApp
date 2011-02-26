@@ -11,6 +11,8 @@ class PenName < ActiveRecord::Base
   after_save :after_save_actions
   before_destroy :before_destroy_actions
 
+  scope :for_name_string, lambda {|name_string_id| where(:name_string_id => name_string_id)}
+
   def after_save_actions
     self.set_contributorships
     self.works.each { |work| work.save_and_set_for_index }
