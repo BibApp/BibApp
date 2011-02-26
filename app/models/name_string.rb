@@ -17,7 +17,8 @@ class NameString < ActiveRecord::Base
   scope :author, where(:role => 'Author').order('position')
   scope :editor, where(:role => 'Editor').order('position')
   scope :order_by_name, order('name')
-
+  scope :name_like, lambda {|name| where('name like ?', "%#{name}%")}
+  
   def save_without_callbacks
     update_without_callbacks
   end
