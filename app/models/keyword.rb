@@ -13,4 +13,6 @@ class Keyword < ActiveRecord::Base
   validates_length_of :name, :maximum => 255,
     :message => "of keyword is too long (maximum is 255 characters). Make sure your keywords are separated with semicolons (;)."
 
+  scope :order_by_name, order('name')
+
 end

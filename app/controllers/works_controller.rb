@@ -1,32 +1,32 @@
 class WorksController < ApplicationController
   #require CMess to help guess encoding of uploaded text files
   require 'cmess/guess_encoding'
-  
+
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates ]
-   
+  before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates]
+
   before_filter :find_authorities, :only => [:new, :edit]
 
   make_resourceful do
     build :show, :new, :edit, :destroy
-    
+
     publish :xml, :json, :yaml, :only => :show, :attributes => [
-      :id, :type, :title_primary, :title_secondary, :title_tertiary,
-      :year, :volume, :issue, :start_page, :end_page, :links, :tags, {
-        :publication => [:id, :name]
+        :id, :type, :title_primary, :title_secondary, :title_tertiary,
+        :year, :volume, :issue, :start_page, :end_page, :links, :tags, {
+            :publication => [:id, :name]
         }, {
-        :publisher => [:id, :name]
+            :publisher => [:id, :name]
         }, {
-        :name_strings => [:id, :name]
+            :name_strings => [:id, :name]
         }, {
-        :people => [:id, :first_last]
+            :people => [:id, :first_last]
         }
-      ]
+    ]
 
     #Add a response for METS!
-    response_for :show do |format| 
-      format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
-      format.mets  #loads show.mets.haml
+    response_for :show do |format|
+      format.html #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
+      format.mets #loads show.mets.haml
       format.rdf
     end
 
@@ -44,7 +44,7 @@ class WorksController < ApplicationController
       if params[:person_id]
         @person = Person.find(params[:person_id].split("-")[0])
       end
-      
+
       if @person
         #If adding to a person, must be an 'editor' of that person
         permit "editor on person"
@@ -52,38 +52,38 @@ class WorksController < ApplicationController
         #Default: anyone with 'editor' role (anywhere) can add works
         permit "editor"
       end
-      
+
       #if 'type' unspecified, default to first type in list
       params[:klass] ||= Work.types[0]
 
       #initialize work subclass with any passed in work info
       @work = subklass_init(params[:klass], params[:work])
-      
+
       #check if there was a batch created previously
       # (if so, we'll provide a link to review that batch)
       #@last_batch = find_last_batch
     end
-    
+
     before :show do
       @recommendations = Index.recommendations(@current_object)
       # Specify text at end of HTML <title> tag
       @title=@current_object.title_primary
       true
     end
-    
+
     before :edit do
       #Anyone with 'editor' role on this work can edit it
       permit "editor on Work"
-      
+
       #Check if there was a path passed along to return to
       @return_path = params[:return_path]
     end
-    
+
     before :destroy do
       #Anyone with 'admin' role on this work can destroy it
       permit "admin on Work"
     end
-    
+
   end # end make_resourceful
 
   def index
@@ -111,25 +111,23 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
 
     # lazy mapping of all creator/contributor roles to top creator role
-    authors = work.work_name_strings.collect{|wns| [:name=>wns.name_string.name, :role=>t.constantize.creator_role]}
-    
+    authors = work.work_name_strings.collect { |wns| [:name=>wns.name_string.name, :role=>t.constantize.creator_role] }
+
     work.update_type_and_save_without_callbacks(t) if t
     work.work_name_strings=(authors)
 
     Index.update_solr(work)
 
     respond_to do |format|
-      format.html {redirect_to edit_work_path(work.id)}
-      format.xml  {head :ok}
+      format.html { redirect_to edit_work_path(work.id) }
+      format.xml { head :ok }
     end
   end
 
   # For paging make_resourceful publish
   def current_objects
     page = params[:page] || 1
-    @current_object ||= current_model.paginate(:order => "created_at DESC", 
-                                               :page => page,
-                                               :per_page => 10)
+    @current_object ||= current_model.order("created_at DESC").paginate(:page => page, :per_page => 10)
   end
 
   #Create a new Work or many new Works
@@ -146,17 +144,17 @@ class WorksController < ApplicationController
       #Default: anyone with 'editor' role (anywhere) can add works
       permit "editor"
     end
-    
+
     #Check if user hit cancel button    
     if params['cancel']
       #just return back to 'new' page
       respond_to do |format|
-        format.html {redirect_to new_work_url}
-        format.xml  {head :ok}
+        format.html { redirect_to new_work_url }
+        format.xml { head :ok }
       end
-  
+
     else #Only perform create if 'save' button was pressed
-    
+
       logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
 
       # Create the basic Work SubKlass
@@ -166,26 +164,26 @@ class WorksController < ApplicationController
       #Create attribute hash
       r_hash = create_attribute_hash
 
-      work_id, errors =  Work.create_from_hash(r_hash)
+      work_id, errors = Work.create_from_hash(r_hash)
 
       # current user automatically gets 'admin' permissions on work
       # (only if he/she doesn't already have that permission)
       if work_id
         @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?( 'admin', @work)
+        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
       end
 
       respond_to do |format|
         if work_id
           flash[:notice] = "Work was successfully created."
-          format.html {redirect_to work_url(work_id)}
-          format.xml  {head :created, :location => work_url(work_id)}
+          format.html { redirect_to work_url(work_id) }
+          format.xml { head :created, :location => work_url(work_id) }
         else
           flash[:notice] = errors
-          format.html {render :action => "new"}
-          format.xml  {render :xml => error.to_xml}
+          format.html { render :action => "new" }
+          format.xml { render :xml => error.to_xml }
         end
-      end 
+      end
 
     end #If 'save' button was pressed
   end
@@ -196,60 +194,57 @@ class WorksController < ApplicationController
     permit "editor on work"
     @dupe = Work.find(params[:dupe_id])
   end
-  
+
   # Generates a form which allows individuals to review the citations
   # that were just bulk loaded *before* they make it into the system.
   def review_batch
     @page = params[:page] || 1
     @rows = params[:rows] || 10
-    
+
     #load last batch from session
     @work_batch = find_last_batch
-   
+
     @dupe_count = 0
-      
+
     #As long as we have a batch of works to review, paginate them
     if !@work_batch.nil? and !@work_batch.empty?
-      
+
       #determine number of duplicates in batch
       @work_batch.each do |work_id|
         work = Work.find(work_id)
         @dupe_count+=1 if !work.nil? and work.duplicate?
       end
-      
-      @works = Work.paginate(
-        :page => @page, 
-        :per_page => @rows,
-        :conditions => ["id in (?)", @work_batch]
-      )
+
+      @works = Work.where("id in (?)", @work_batch).paginate(:page => @page, :per_page => @rows)
+
     end
-    
+
     #Return path for any actions that take place on 'Review Batch' page
     @return_path = review_batch_works_path(:page=>@page, :rows=>@rows)
-    
+
   end
-  
-  
+
+
   def update
-    
+
     @work = Work.find(params[:id])
-    
+
     #Check if there was a path and page passed along to return to
     return_path = params[:return_path]
-    
+
     #Check if user hit cancel button    
     if params['cancel']
       # just return back from where we came
       respond_to do |format|
         unless return_path.nil?
-          format.html {redirect_to return_path}
+          format.html { redirect_to return_path }
         else
           #default to returning to work page
-          format.html {redirect_to work_url(@work)}
+          format.html { redirect_to work_url(@work) }
         end
-        format.xml  {head :ok}
+        format.xml { head :ok }
       end
-      
+
     else #Only perform update if 'save' button was pressed
       #Anyone with 'editor' role on this work can edit it
       permit "editor on work"
@@ -263,13 +258,13 @@ class WorksController < ApplicationController
       # Create attribute hash from params
       r_hash = create_attribute_hash
 
-      work_id, errors =  Work.update_from_hash(r_hash, @work)
+      work_id, errors = Work.update_from_hash(r_hash, @work)
 
       # current user automatically gets 'admin' permissions on work
       # (only if he/she doesn't already have that permission)
       if work_id
         @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?( 'admin', @work)
+        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
       end
 
 
@@ -278,25 +273,25 @@ class WorksController < ApplicationController
           flash[:notice] = "Work was successfully updated."
           if return_path.nil?
             #default to returning to work page
-            format.html {redirect_to work_path(@work.id)}
+            format.html { redirect_to work_path(@work.id) }
           else
-            format.html {redirect_to return_path}
+            format.html { redirect_to return_path }
           end
-          format.xml  {head :ok}
+          format.xml { head :ok }
         else
           flash[:notice] = errors
-          format.html {redirect_to edit_work_path(@work.id)}
-          format.xml  {render :xml => errors.to_xml}
+          format.html { redirect_to edit_work_path(@work.id) }
+          format.xml { render :xml => errors.to_xml }
         end
       end #end respond to
-    end  
+    end
   end
-  
-  
+
+
   # Create a hash of Work attributes
   # This is called by both create() and update()
   def create_attribute_hash
-    
+
     #initialize our final attribute hash
     attr_hash = Hash.new
     attr_hash[:klass] = params[:klass]
@@ -305,7 +300,7 @@ class WorksController < ApplicationController
     # Person
     ###
     attr_hash[:person_id] = params[:person_id]
-    
+
     ###
     # Setting WorkNameStrings
     ###
@@ -317,12 +312,12 @@ class WorksController < ApplicationController
     #roles
     params[:author_roles] ||= []
     params[:contributor_roles] ||= []
-            
+
     #Set Author & Editor NameStrings for this Work
     @work_name_strings = Array.new
     @author_name_strings = Array.new
     @editor_name_strings = Array.new
-    
+
     ans = params[:authors]
     ans.each_with_index do |name, i|
       name.strip!
@@ -331,7 +326,7 @@ class WorksController < ApplicationController
         @work_name_strings << {:name => name, :role => params[:author_roles][i]}
       end
     end
-    
+
     @ens = params[:contributors]
     @ens.each_with_index do |name, i|
       name.strip!
@@ -342,7 +337,7 @@ class WorksController < ApplicationController
     end
 
     attr_hash[:work_name_strings] = @work_name_strings
-      
+
     ###
     # Setting Keywords
     ###
@@ -350,7 +345,7 @@ class WorksController < ApplicationController
     # in case any errors should occur in saving work
     @keywords = params[:keywords].split('; ') unless params[:keywords].blank?
     attr_hash[:keywords] = @keywords
-    
+
     ###
     # Setting Tags
     ###
@@ -380,12 +375,12 @@ class WorksController < ApplicationController
     else
       @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
     end
-    
+
 
     attr_hash[:issn_isbn] = @publication.issn_isbn
     attr_hash[:publication] = @publication.name
     attr_hash[:publisher] = @publisher.name
-    
+
     params[:work].each do |key, val|
       attr_hash[key.to_sym] = val
     end
@@ -417,7 +412,7 @@ class WorksController < ApplicationController
         work.destroy
       else
         full_success = false
-      end 
+      end
     end
 
 
@@ -425,17 +420,17 @@ class WorksController < ApplicationController
       if full_success
         flash[:notice] = "Works were successfully deleted."
         #forward back to path which was specified in params
-        format.html {redirect_to return_path }
-        format.xml  {head :ok}
+        format.html { redirect_to return_path }
+        format.xml { head :ok }
       else
         flash[:warning] = "This work has duplicates, which must be altered or deleted before this work can be deleted."
-        format.html {redirect_to edit_work_path(work.id)  }
-        format.xml  {head :ok}
+        format.html { redirect_to edit_work_path(work.id) }
+        format.xml { head :ok }
       end
     end
   end
-  
-  def destroy_multiple    
+
+  def destroy_multiple
     #Anyone who is minimally an admin (on anything in system) can delete works
     #(NOTE: User will actually have to be an 'admin' on all works in this batch, 
     #       otherwise he/she will not be able to destroy *all* the works)
@@ -443,9 +438,9 @@ class WorksController < ApplicationController
 
     work_ids = params[:work_id]
     return_path = params[:return_path]
-    
+
     full_success = true
-    
+
     unless work_ids.nil? or work_ids.empty?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       work_ids.each do |work_id|
@@ -459,7 +454,7 @@ class WorksController < ApplicationController
         end
       end
     end
-    
+
     respond_to do |format|
       if full_success
         flash[:notice] = "Works were successfully deleted."
@@ -467,159 +462,127 @@ class WorksController < ApplicationController
         flash[:warning] = "One or more works could not be deleted, as you have insufficient privileges"
       end
       #forward back to path which was specified in params
-      format.html {redirect_to return_path }
-      format.xml  {head :ok}
+      format.html { redirect_to return_path }
+      format.xml { head :ok }
     end
   end
-  
-  
+
+
   # Load name strings list from Request params
   # and set for the current work.
   # Also sets the instance variable @author_name_strings,
   # in case any errors should occur in saving work
   def set_author_name_strings(work)
-  	#default to empty array of author strings
-    params[:author_name_strings] ||= []	
-				    
+    #default to empty array of author strings
+    params[:author_name_strings] ||= []
+
     #Set NameStrings for this Work
     @author_name_strings = Array.new
     params[:author_name_strings].each do |add|
       name_string = NameString.find_or_initialize_by_name(add)
       @author_name_strings << {:name => name_string, :role => "Author"}
     end
-    work.work_name_strings = @author_name_strings 	
-   
- end
- 
+    work.work_name_strings = @author_name_strings
+
+  end
+
   # Load name strings list from Request params
   # and set for the current work.
   # Also sets the instance variable @editor_name_strings,
   # in case any errors should occur in saving work
   def set_editor_name_strings(work)
     #default to empty array of author strings
-    params[:editor_name_strings] ||= [] 
-           
+    params[:editor_name_strings] ||= []
+
     #Set NameStrings for this Work
     @editor_name_strings = Array.new
     params[:editor_name_strings].each do |add|
       name_string = NameString.find_or_initialize_by_name(add)
       @editor_name_strings << {:name => name_string, :role => "Editor"}
     end
-    work.work_name_strings = @editor_name_strings   
-   
+    work.work_name_strings = @editor_name_strings
+
   end
-    	
+
   #Auto-Complete for entering Author NameStrings in Web-based Work entry
   def auto_complete_for_author_string
     auto_complete_for_name_string(params[:author][:string])
   end
-  
+
   #Auto-Complete for entering Editor NameStrings in Web-based Work entry
   def auto_complete_for_editor_string
     auto_complete_for_name_string(params[:editor][:string])
-  end 
-  
+  end
+
   #Auto-Complete for entering NameStrings in Web-based Work entry
   #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
   def auto_complete_for_name_string(name_string)
     name_string = name_string.downcase
-  
+
     #search at beginning of name
     beginning_search = name_string + "%"
     #search at beginning of any other words in name
-    word_search = "% " + name_string + "%"  
-  
-    name_strings = NameString.find(:all, 
-      :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-      :order => 'name ASC',
-      :limit => 8)
-      
-    names = Array.new  
-    name_strings.each do |obj|
-      names << obj.name
-    end
-    
+    word_search = "% " + name_string + "%"
+
+    names = NameString.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                             beginning_search, word_search).order_by_name.limit(8).collect {|ns| ns.name}
+
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
   end
-  
-  
+
+
   #Auto-Complete for entering Keywords in Web-based Work entry
   #  This method provides users with a list of matching Keywords
   #  already in BibApp.  This also include Tags.
   def auto_complete_for_keyword_name
-   	keyword = params[:keyword][:name].downcase
-	  
+    keyword = params[:keyword][:name].downcase
+
     #search at beginning of word
     beginning_search = keyword + "%"
     #search at beginning of any other words
-    word_search = "% " + keyword + "%"	
-	  
+    word_search = "% " + keyword + "%"
+
     #Search both keyworks and tags
-    
-    keywords = Keyword.find(:all, 
-			  :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-			  :order => 'name ASC',
-			  :limit => 8)
-        
+
+    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                             beginning_search, word_search).order_by_name.limit(8)
 
 
-    tags =  Tag.find(:all, 
-        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-        :order => 'name ASC',
-        :limit => 8)
-    
+    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                     beginning_search, word_search).order_by_name.limit(8)
+
     #Combine both lists
-    keywordsandtags = Array.new
-    keywords.each do |obj|
-      keywordsandtags << obj.name
-    end
-    
-    tags.each do |obj|
-      keywordsandtags << obj.name
-    end         
-			
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
-  end  
-  
-  
+    keywordsandtags = (keywords + tags).collect {|x| x.name}
+
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+  end
+
+
   #This is the same as for keywords, except this is used with tags
   def auto_complete_for_tag_name
     tag = params[:tag][:name].downcase
-    
-    
+
+
     #search at beginning of word
     beginning_search = tag + "%"
     #search at beginning of any other words
-    word_search = "% " + tag + "%"  
-    
+    word_search = "% " + tag + "%"
+
     #Search both keyworks and tags
-    
-    keywords = Keyword.find(:all, 
-        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-        :order => 'name ASC',
-        :limit => 8)
-        
 
+    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                             beginning_search, word_search).order_by_name.limit(8)
 
-    tags =  Tag.find(:all, 
-        :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-        :order => 'name ASC',
-        :limit => 8)
-    
+    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                     beginning_search, word_search).order_by_name.limit(8)
+
     #Combine both lists
-    keywordsandtags = Array.new
-    keywords.each do |obj|
-      keywordsandtags << obj.name
-    end
-    
-    tags.each do |obj|
-      keywordsandtags << obj.name
-    end         
-      
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8) }
-  end  
-  
+    keywordsandtags = (keywords + tags).collect {|x| x.name}
+
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+  end
+
   #Auto-Complete for entering Publication Titles in Web-based Work entry
   #  This method provides users with a list of matching Publications
   #  already in BibApp.
@@ -631,33 +594,29 @@ class WorksController < ApplicationController
     #search at beginning of any other words in name
     word_search = "% " + publication_name + "%"
 
-    publications = Publication.find(:all, 
-                    :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-                    :order => 'name ASC',
-                    :limit => 8)
+    publications = Publication.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                                     beginning_search, word_search).order_by_name.limit(8)
 
     render :partial => 'works/forms/fields/publication_autocomplete_list', :locals => {:publications => publications}
-  end 
- 
+  end
+
   #Auto-Complete for entering Publisher Name in Web-based Work entry
   #  This method provides users with a list of matching Publishers
   #  already in BibApp.
   def auto_complete_for_publisher_name
     publisher_name = params[:publisher][:name].downcase
-    
+
     #search at beginning of name
     beginning_search = publisher_name + "%"
     #search at beginning of any other words in name
     word_search = "% " + publisher_name + "%"
+
+    publishers = Publisher.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
+                                 beginning_search, word_search).order_by_name.limit(8)
     
-    publishers = Publisher.find(:all, 
-          :conditions => [ "LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search ], 
-        :order => 'name ASC',
-        :limit => 8)
-      
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
-  end      
-        
+  end
+
   #Adds a single item value to list of items in Web-based Work entry
   # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:
@@ -711,7 +670,6 @@ class WorksController < ApplicationController
   end
 
 
-  
   #Removes a single item value from list of items in Web-based Work entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
   # Expects two parameters:
@@ -727,7 +685,7 @@ class WorksController < ApplicationController
     @list_type = params[:list_type]
     @item_id = params[:item_id]
     @update_action = 'remove'
-    
+
     #remove item value from list dynamically using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end
@@ -747,15 +705,15 @@ class WorksController < ApplicationController
     #remove item value from list dynamically using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end
-  
+
   # Reorders a list using Scriptaculous's 'sortable_element'
   def reorder_list
     list_type = params[:list_type]
-    
+
     #display message that reorder was successful
     render :partial => 'works/forms/fields/reorder_list', :locals => {:list_type=>list_type}
   end
-  
+
   def update_tags
     @work = Work.find(params[:id])
     ###
@@ -769,39 +727,39 @@ class WorksController < ApplicationController
     respond_to do |format|
       if @work.save and Index.update_solr(@work)
         flash[:notice] = "Work was successfully updated."
-        format.html {redirect_to work_url(@work)}
-        format.xml  {head :ok}
+        format.html { redirect_to work_url(@work) }
+        format.xml { head :ok }
       else
-        format.html {render :action => "edit"}
-        format.xml  {render :xml => @work.errors.to_xml}
+        format.html { render :action => "edit" }
+        format.xml { render :xml => @work.errors.to_xml }
       end
     end
   end
-  
+
   private
-  
+
   # Batch import Works
-  def import_batch!(data)    
-    
+  def import_batch!(data)
+
     #default errors to none
     errors = Array.new
-    
+
     # (1) Read the data
-    begin 
+    begin
       str = data
       if data.respond_to? :read
         str = data.read
       elsif File.readable?(data)
         str = File.read(data)
       end
-     
+
       #Convert string to Unicode, if it's not already Unicode
       unless str.is_utf8?
         #guess the character encoding
         encoding = CMess::GuessEncoding::Automatic.guess(str)
-        
+
         logger.debug("Guessed Encoding: #{encoding}")
-       
+
         #as long as encoding could be guessed, try to convert to UTF-8
         unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
           #convert to one big UTF-8 string
@@ -813,12 +771,12 @@ class WorksController < ApplicationController
           return nil
         end
       end
-     
+
     rescue Exception =>e
       #re-raise this exception to create()...it will handle logging the error
       raise
     end
-    
+
     # Init: Parser and Importer
     p = CitationParser.new
     i = CitationImporter.new
@@ -828,13 +786,13 @@ class WorksController < ApplicationController
       #Attempt to parse the data
       pcites = p.parse(str)
 
-    #Rescue any errors in parsing  
+      #Rescue any errors in parsing
     rescue Exception => e
       #re-raise this exception to create()...it will handle logging the error
       raise
     end
-        
-        
+
+
     #Check to make sure there were not errors while parsing the data.
 
     #No citations were parsed
@@ -843,7 +801,7 @@ class WorksController < ApplicationController
     end
 
     logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-    
+
     # (3) Import the data using CitationImporter Plugin
     begin
       # Map Import hashes
@@ -852,53 +810,53 @@ class WorksController < ApplicationController
 
       #Make sure there is data in the Attribute Hash
       return nil if attr_hashes.nil?
-      
-     
+
+
       #initialize an array of all the works we create in this batch
-      works_added = init_last_batch 
-      
+      works_added = init_last_batch
+
       # Now, actually *create* these works in database
       attr_hashes.map { |h|
-       
-        # Initialize the Work
+
+      # Initialize the Work
         klass = h[:klass]
-      
+
         # Are we working with a legit SubKlass?
         klass = klass.constantize
         if klass.superclass != Work
           raise NameError.new("#{klass_type} is not a subclass of Work") and return
         end
-      
+
         work = klass.new
-      
+
         ###
         # Setting WorkNameStrings
         ###
         work_name_strings = h[:work_name_strings]
         work.work_name_strings = work_name_strings
-      
+
         #If we are adding to a person, pre-verify that person's contributorship
         work.preverified_person = @person if @person
-    
+
         ###
         # Setting Publication Info, including Publisher
         ###
         issn_isbn = h[:issn_isbn]
         publication_info = Hash.new
-        publication_info = {:name => h[:publication], 
-                                    :issn_isbn => issn_isbn,
-                                    :publisher_name => h[:publisher]}
+        publication_info = {:name => h[:publication],
+                            :issn_isbn => issn_isbn,
+                            :publisher_name => h[:publisher]}
 
         work.publication_info = publication_info
-    
+
         # Very minimal validation -- just check that we have a title
         if h[:title_primary].nil? or h[:title_primary] == ""
           errors << "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
-          
+
           logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
           logger.warn("End Work \n\n")
         else
-     
+
           ###
           # Setting Keywords
           ###
@@ -916,45 +874,44 @@ class WorksController < ApplicationController
           h.delete(:source)
           # @TODO add external_systems to work import
           h.delete(:external_id)
-          
+
           #save remaining hash attributes
           work.attributes=h
           work.save_and_set_for_index
-   
+
           # current user automatically gets 'admin' permissions on work
           # (only if he/she doesn't already have that role on the work)
-          work.accepts_role 'admin', current_user if !current_user.has_role?( 'admin', work)
-        
+          work.accepts_role 'admin', current_user if !current_user.has_role?('admin', work)
+
           #add to batch of works created
           works_added << work.id
         end #end if no title
       }
       #index everything in Solr
       Index.batch_index
-      
-    #This error occurs if the works were parsed, but some bad data
-    #was entered which caused an error to occur when saving the data
-    #to the database.
+
+      #This error occurs if the works were parsed, but some bad data
+      #was entered which caused an error to occur when saving the data
+      #to the database.
     rescue Exception => e
       #remove anything already added to the database (i.e. rollback ALL changes)
       unless works_added.nil?
         works_added.each do |work_id|
           work = Work.find(work_id)
-          work.destroy unless work.nil?     
+          work.destroy unless work.nil?
         end
         #re-initialize batch in order to clear it from session
-        works_added = init_last_batch 
+        works_added = init_last_batch
       end
       #reraise the error to create(), which will make sure it is logged
       raise
     end
-   
+
     #At this point, some or all of the works were saved to the database successfully.
     return works_added, errors
   end
-  
-  
-  
+
+
   # Initializes a new work subclass, but doesn't create it in the database
   def subklass_init(klass_type, work)
     klass_type.gsub!(" ", "") #remove spaces
@@ -966,31 +923,31 @@ class WorksController < ApplicationController
     end
     work = klass.new(work)
   end
-  
+
   def find_authorities
-    @publication_authorities = Publication.find(:all, :conditions => ["id = authority_id"], :order => "name")
-    @publisher_authorities = Publisher.find(:all, :conditions => ["id = authority_id"], :order => "name")
+    @publication_authorities = Publication.authorities.order_by_name
+    @publisher_authorities = Publisher.authorities.order_by_name
   end
-  
+
   # Initialize information about the last batch of works
   # that was added during this current user's session
-  def init_last_batch 
+  def init_last_batch
     last_batch = find_last_batch
-    
+
     #clear last batch if not empty
     last_batch.clear unless last_batch.empty?
-    
+
     #return cleared batch
     return last_batch
   end
-  
+
   # Find the last batch of works that was added during
   # this current user's session.  Only work_ids are stored.
   def find_last_batch
     session[:works_batch] ||= Array.new
-    
+
     # Quick cleanup of batch...remove any items which have been deleted
-    session[:works_batch].delete_if{|work_id| !Work.exists?(work_id)}
+    session[:works_batch].delete_if { |work_id| !Work.exists?(work_id) }
   end
-    
+
 end

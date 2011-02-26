@@ -14,9 +14,10 @@ class NameString < ActiveRecord::Base
   
   #### Named Scopes ####
   #Author and Editor name_strings
-  scope :author, :conditions => ["role = ?", "Author"], :order => :position
-  scope :editor, :conditions => ["role = ?", "Editor"], :order => :position
-  
+  scope :author, where(:role => 'Author').order('position')
+  scope :editor, where(:role => 'Editor').order('position')
+  scope :order_by_name, order('name')
+
   def save_without_callbacks
     update_without_callbacks
   end
