@@ -217,19 +217,11 @@ class Person < ActiveRecord::Base
       order by count desc", self.id, Contributorship::STATE_VERIFIED])
   end
 
-  # TODO: do this the rails way.
   def keywords(limit = 15, bin_count = 5)
-    keywords = Keyword.find_by_sql(
-        ["select count(keywordings.keyword_id) as count, name
-      from keywords
-      join keywordings on (keywords.id = keywordings.keyword_id)
-      join works on (keywordings.work_id = works.id)
-      join contributorships on (works.id = contributorships.work_id)
-      where contributorships.person_id = ?
-      and contributorships.contributorship_state_id = ?
-      group by name
-      order by count DESC
-      limit ?", self.id, Contributorship::STATE_VERIFIED, limit])
+    keywords = Keyword.select('count(keywordings.keyword_id) as count, name').
+        joins({:keywordings => {:work => :contributorships}}).
+        where(:keywordings => {:work => {:contributorships => {:person_id => self.id, :contributorship_state_id => Contributorship::STATE_VERIFIED}}}).
+        group('name').order('count DESC').limit(limit)
 
     max_kw_freq = bin_count.to_i
     max_kw = keywords.max { |a, b| a.count.to_i <=> b.count.to_i }
