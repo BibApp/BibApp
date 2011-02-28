@@ -5,7 +5,7 @@
 class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :authorizable, :polymorphic => true
-  
+
   #Provide a string description of this role, including whether
   #it is a System-Wide, Class, or object-level role.
   def description
@@ -13,7 +13,7 @@ class Role < ActiveRecord::Base
     if self.authorizable_id
       @description << " of #{self.authorizable.class.to_s} '#{self.authorizable.name}'"
     elsif self.authorizable_type
-        @description << " of #{self.authorizable_type}"
+      @description << " of #{self.authorizable_type}"
     else
       @description << " (generic role)"
     end
