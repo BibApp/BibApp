@@ -252,7 +252,7 @@ class Person < ActiveRecord::Base
   #Parse Solr data (produced by to_solr_data)
   # return Person last_name, ID, and Image URL
   def self.parse_solr_data(person_data)
-    last_name, id_as_string, image_url, unparsed_group_ids  = person_data.split("||")
+    last_name, id_as_string, image_url, unparsed_group_ids = person_data.split("||")
     id = id_as_string.to_i
     if unparsed_group_ids
       group_ids = unparsed_group_ids.split(",").collect { |g| g.to_i }
@@ -279,11 +279,8 @@ class Person < ActiveRecord::Base
   end
 
   def abbreviate_name(name, for_machine_name = false)
-    if for_machine_name
-      name.first
-    else
-      name.first + "."
-    end
-
+    suffix = for_machine_name ? '' : '.'
+    name.first + suffix
   end
+
 end
