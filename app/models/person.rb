@@ -272,18 +272,6 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def self.find_all_by_publisher_id(publisher_id)
-    Publisher.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
-  end
-
-  def self.find_all_by_publication_id(publisher_id)
-    Publication.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
-  end
-
-  def self.find_all_by_group_id(group_id)
-    Group.find(group_id).people
-  end
-
   protected
 
   def clean_name(name)
