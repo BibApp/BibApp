@@ -651,6 +651,8 @@ class Work < ActiveRecord::Base
     # or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile)
     # @TODO - Is there a better place to store this mapping info?  DB maybe? 
     #         Should each Work subclass just define its own "type_uri"?
+    # TODO Yes. Given that these should remain constant it would be just as well
+    # to define them in individual subclasses. 
     type_map = {
         "Abstract" => "http://purl.org/eprint/type/ScholarlyText",
         "Artwork" => "http://purl.org/dc/dcmitype/Image", #DCMI Type
