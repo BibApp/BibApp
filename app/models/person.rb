@@ -252,29 +252,24 @@ class Person < ActiveRecord::Base
   #Parse Solr data (produced by to_solr_data)
   # return Person last_name, ID, and Image URL
   def self.parse_solr_data(person_data)
-    data = person_data.split("||")
-    last_name = data[0]
-    id = data[1].to_i
-    image_url = data[2]
-
-    if !data[3].nil?
-      group_ids = data[3].split(",").collect { |g| g.to_i }
+    last_name, id_as_string, image_url, unparsed_group_ids  = person_data.split("||")
+    id = id_as_string.to_i
+    if unparsed_group_ids
+      group_ids = unparsed_group_ids.split(",").collect { |g| g.to_i }
     else
       group_ids = []
     end
-
     return last_name, id, image_url, group_ids
   end
 
   def self.sort_by_most_recent_work(array_of_people)
     # For people with no works, time = Time.at(0)
     time = Time.at(0)
-    array_of_people.sort! { |a, b|
+    array_of_people.sort! do |a, b|
       t1 = a.most_recent_work.nil? ? time : a.most_recent_work.updated_at
       t2 = b.most_recent_work.nil? ? time : b.most_recent_work.updated_at
       t2 <=> t1
-    }
-    array_of_people
+    end
   end
 
   def self.find_all_by_publisher_id(publisher_id)
