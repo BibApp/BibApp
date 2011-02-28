@@ -1,7 +1,7 @@
 class Publisher < ActiveRecord::Base
 
   attr_accessor :do_reindex
-  
+
   #### Associations ####
 
   has_many :publications
@@ -14,11 +14,11 @@ class Publisher < ActiveRecord::Base
   #### Callbacks ####
 
   scope :authorities, where("id = authority_id")
-  scope :for_authority, lambda {|authority_id| where(:authority_id => authority_id)}
+  scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
   scope :order_by_upper_name, order('upper(name)')
-  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
-  scope :name_like, lambda {|name| where('name like ?', name)}
+  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
+  scope :name_like, lambda { |name| where('name like ?', name) }
 
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
@@ -54,15 +54,11 @@ class Publisher < ActiveRecord::Base
   end
 
   def solr_filter
-    'publisher_id:"' + self.id.to_s + '"'
+    %Q(publisher_id:"#{self.id}")
   end
 
   def authority_for
-    authority_for = Publisher.find(
-        :all,
-            :conditions => ["authority_id = ?", self.id]
-    )
-    return authority_for
+    Publisher.where(:authority_id => self.id)
   end
 
   #Update authorities for related models, when Publisher Authority changes
@@ -118,112 +114,95 @@ class Publisher < ActiveRecord::Base
 
   #Return the year of the most recent publication
   def most_recent_year
-    year = 0
-    self.publications.each do |publication|
-      publication.works.each do |work|
-        if work.year.to_i > year
-          year = work.year
-        end
-      end
-    end
-    return year > 0 ? year.to_s : ""
+    max_year = self.publications.collect { |p| p.works }.flatten.collect { |w| w.year.to_i }.max
+    return max_year > 0 ? year.to_s : ""
   end
 
 
-  class << self
+  # return the first letter of each name, ordered alphabetically
+  def self.letters
+    self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+  end
 
-    # return the first letter of each name, ordered alphabetically
-    def letters
-      find(
-          :all,
-              :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
-              :order => 'letter'
-      )
+  def self.update_multiple(pub_ids, auth_id)
+    pub_ids.each do |pub|
+      update = Publisher.find_by_id(pub)
+      update.authority_id = auth_id
+      update.save
     end
+  end
 
-    def update_multiple(pub_ids, auth_id)
-      pub_ids.each do |pub|
-        update = Publisher.find_by_id(pub)
-        update.authority_id = auth_id
-        update.save
-      end
-    end
+  def self.update_sherpa_data
 
-    def update_sherpa_data
+    # Hpricot chokes on UNICODE; use remxml instead
+    #require 'hpricot'
+    require 'rexml/document'
 
-      # Hpricot chokes on UNICODE; use remxml instead
-      #require 'hpricot'
-      require 'rexml/document'
+    require 'open-uri'
+    require 'net/http'
+    require 'config/personalize.rb'
 
-      require 'open-uri'
-      require 'net/http'
-      require 'config/personalize.rb'
+    # First check that solr is running
+    # We need it to be in order for the new publishers to be indexed
+    begin
+      n = Net::HTTP.new('localhost', SOLR_PORT)
+      n.request_head('/').value
 
-      # First check that solr is running
-      # We need it to be in order for the new publishers to be indexed
-      begin
-        n = Net::HTTP.new('localhost', SOLR_PORT)
-        n.request_head('/').value
+    rescue Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
+      puts "Warning: Updating Sherpa data requires Solr to be running. Exiting...\n"
 
-      rescue Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
-        puts "Warning: Updating Sherpa data requires Solr to be running. Exiting...\n"
+    rescue Net::HTTPServerException #responding
 
-      rescue Net::HTTPServerException #responding
+      # SHERPA's API is not-cached! Opening the URI directly will likely
+      # produce a ruby net/http timeout.
+      #
+      # Todo:
+      # 1. Offer a cached copy within /trunk?
+      # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
+      #
+      # UPDATE:
+      # The SHERPA API has gotten better, and requests are no longer timing
+      # out. Unless those problems reëmerge, it's probably safe to download
+      # the SHERPA data via net/http.
 
-        # SHERPA's API is not-cached! Opening the URI directly will likely
-        # produce a ruby net/http timeout.
-        #
-        # Todo:
-        # 1. Offer a cached copy within /trunk?
-        # 2. Add directions for placing a copy within /tmp/sherpa/publishers.xml
-        #
-        # UPDATE:
-        # The SHERPA API has gotten better, and requests are no longer timing
-        # out. Unless those problems reëmerge, it's probably safe to download
-        # the SHERPA data via net/http.
+      #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
+      sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
+      data = REXML::Document.new(sherpa_response.body)
 
-        #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
-        sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
-        data = REXML::Document.new(sherpa_response.body)
+      data.elements.each('/romeoapi/publishers/publisher') do |pub|
+        sherpa_id = pub.attributes['id']
+        name = pub.elements['name'].text
+        url = pub.elements['homeurl'].text
+        romeo_color = pub.elements['romeocolour'].text
 
-        data.elements.each('/romeoapi/publishers/publisher') do |pub|
-          sherpa_id = pub.attributes['id']
-          name = pub.elements['name'].text
-          url = pub.elements['homeurl'].text
-          romeo_color = pub.elements['romeocolour'].text
-
-          add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
-          add.update_attributes!({
-              :name => name,
-              :url => url,
-              :romeo_color => romeo_color,
-              :sherpa_id => sherpa_id,
-              :source_id => 1
-          })
-          t = true
-        end
-
-      rescue
-        puts "Unexpected Error: #{$!.class.to_s} #{$!}"
-        raise
+        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+        add.update_attributes!({
+                                   :name => name,
+                                   :url => url,
+                                   :romeo_color => romeo_color,
+                                   :sherpa_id => sherpa_id,
+                                   :source_id => 1
+                               })
+        t = true
       end
 
-    end
-
-    #Parse Solr data (produced by to_solr_data)
-    # return Publisher name and ID
-    def parse_solr_data(publisher_data)
-      if !publisher_data.nil?
-        data = publisher_data.split("||")
-        name = data[0]
-        id = data[1]
-      else
-        name = "Unknown"
-        id = nil
-      end
-
-      return name, id
+    rescue
+      puts "Unexpected Error: #{$!.class.to_s} #{$!}"
+      raise
     end
 
   end
+
+  #Parse Solr data (produced by to_solr_data)
+  # return Publisher name and ID
+  def self.parse_solr_data(publisher_data)
+    if publisher_data
+      name, id = publisher_data.split("||")
+    else
+      name = "Unknown"
+      id = nil
+    end
+    return name, id
+  end
+
 end
