@@ -7,7 +7,7 @@ class Publication < ActiveRecord::Base
 
   belongs_to :publisher
   belongs_to :authority, :class_name => "Publication", :foreign_key => :authority_id
-  has_many :works, :conditions => ["work_state_id = ?", WORK::STATE_ACCEPTED] #accepted works
+  has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
