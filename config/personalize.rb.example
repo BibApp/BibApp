@@ -113,8 +113,8 @@ $WORK_ARCHIVE_STATUS = {
 ####
 # BibApp Advanced Search Examples
 #
-# These are the out-of-the-box explanations for each of
-# the states that a work in the BibApp system can go through.
+# These are out-of-the-box examples of how to  
+# enter search queries in the Advanced Search form.
 $SEARCH_EXAMPLES ={
   :keywords   => "ex. plasma confinement physics",
   :title      => "ex. Transport Phenomena",
