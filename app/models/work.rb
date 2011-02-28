@@ -76,7 +76,7 @@ class Work < ActiveRecord::Base
         lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
 
   scope :most_recent_first, order('updated_at DESC')
-  
+
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   before_create :before_create_actions
@@ -284,12 +284,9 @@ class Work < ActiveRecord::Base
         end
       end
 
-      publication_info = Hash.new
-      publication_info = {:publication_name => publication,
-                          :issn_isbn => issn_isbn,
-                          :publisher_name => publisher}
-
-      work.publication_info = publication_info
+      work.publication_info = {:publication_name => publication,
+                               :issn_isbn => issn_isbn,
+                               :publisher_name => publisher}
 
       ###
       # Setting Keywords
