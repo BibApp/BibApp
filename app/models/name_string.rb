@@ -30,8 +30,7 @@ class NameString < ActiveRecord::Base
 
   #return what looks to be the last name in this name string
   def last_name
-    names = self.name.split(',')
-    names[0]
+    self.name.split(',').first
   end
   
   class << self
