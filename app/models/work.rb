@@ -356,11 +356,7 @@ class Work < ActiveRecord::Base
 
   # Finds year of publication for this work
   def year
-    if publication_date != nil
-      publication_date.year
-    else
-      nil
-    end
+    publication_date ? publication_date.year : nil
   end
 
   # Returns the 
@@ -501,14 +497,12 @@ class Work < ActiveRecord::Base
         # based on the information provided
 
         # English: If you have an issn or isbn and good publisher data
-        if not (publication_hash[:issn_isbn].nil? || publication_hash[:issn_isbn].empty?)
-
+        if publication_hash[:issn_isbn].present?
           publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(
               :name => pub_name.to_s,
               :issn_isbn => publication_hash[:issn_isbn].to_s,
               :initial_publisher_id => set_publisher.id)
-
-        elsif not (set_publisher.nil?)
+        elsif set_publisher
           publication = Publication.find_or_create_by_name_and_initial_publisher_id(
               :name => pub_name,
               :initial_publisher_id => set_publisher.id)
@@ -610,15 +604,13 @@ class Work < ActiveRecord::Base
   #Update archive status of Work
   def update_archive_state
     #if archived date set, its in archived state! 
-    if !self.archived_at.nil?
+    if self.archived_at
       #this Work is officially "archived"!
       self.is_archived
       #check if Work has attachments
-    elsif !self.attachments.nil? and !self.attachments.empty?
+    elsif self.attachments.present?
       #if attachments exist, change status to "ready to archive"
-      if !self.ready_to_archive?
-        self.is_ready_to_archive
-      end
+      self.is_ready_to_archive
     elsif self.ready_to_archive?
       #else if marked ready, but no attachments
       #then, revert to initial status  
