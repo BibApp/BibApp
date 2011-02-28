@@ -15,24 +15,19 @@ class Work < ActiveRecord::Base
   belongs_to :publication
   belongs_to :publisher
 
-  has_many :name_strings, :through => :work_name_strings,
-           :order => "position"
+  has_many :name_strings, :through => :work_name_strings, :order => "position"
 
-  has_many :work_name_strings, :order => "position",
-           :dependent => :delete_all
+  has_many :work_name_strings, :order => "position", :dependent => :destroy
 
-  has_many :people,
-           :through => :contributorships,
+  has_many :people, :through => :contributorships,
            :conditions => ["contributorship_state_id = ?", Contributorship::STATE_VERIFIED]
 
-  has_many :contributorships,
-           :dependent => :delete_all
+  has_many :contributorships, :dependent => :destroy
 
   has_many :keywords, :through => :keywordings
-  has_many :keywordings,
-           :dependent => :delete_all
+  has_many :keywordings, :dependent => :destroy
 
-  has_many :taggings, :as => :taggable, :dependent => :delete_all
+  has_many :taggings, :as => :taggable, :dependent => :destroy
   has_many :tags, :through => :taggings
   has_many :users, :through => :taggings
 
@@ -43,7 +38,6 @@ class Work < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Work Statuses
-  #TODO Get rid of magic numbers
   STATE_IN_PROCESS = 1
   STATE_DUPLICATE = 2
   STATE_ACCEPTED = 3
