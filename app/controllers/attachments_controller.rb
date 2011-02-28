@@ -96,7 +96,7 @@ class AttachmentsController < ApplicationController
             #Group or Person can only have one image attached
             @asset.image = @attachment
           end
-          attachment_count+=1
+          attachment_count += 1
         end
       end
     end
@@ -109,7 +109,7 @@ class AttachmentsController < ApplicationController
 
       elsif @asset.save
         
-        if attachment_count==1
+        if attachment_count == 1
           flash[:notice] = 'Attachment was successfully uploaded'
         else
           flash[:notice] = attachment_count.to_s + ' attachments were successfully uploaded'
@@ -137,7 +137,7 @@ class AttachmentsController < ApplicationController
     permit "editor of :asset", :asset => @attachment.asset
 
     if params[:attachement]
-      @attachment.attributes=params[:attachment]
+      @attachment.attributes = params[:attachment]
     else
       missing = true
     end
@@ -240,7 +240,7 @@ class AttachmentsController < ApplicationController
       if klass.superclass != Attachment
         raise NameError.new("#{klass_type} is not a subclass of Attachment") and return
       end
-      attachment = klass.new({:uploaded_data => file})
+      klass.new({:uploaded_data => file})
     end
   
     #Load the asset this attachment is attached to
