@@ -45,6 +45,7 @@ class Work < ActiveRecord::Base
   scope :duplicate, where(:work_state_id => STATE_DUPLICATE)
   scope :accepted, where(:work_state_id => STATE_ACCEPTED)
 
+  ARCHIVE_STATE_INITIAL = 1
   ARCHIVE_STATE_READY_TO_ARCHIVE = 2
   ARCHIVE_STATE_ARCHIVED = 3
   #Various Work Archival Statuses
@@ -102,30 +103,29 @@ class Work < ActiveRecord::Base
   #### Serialization ####
   serialize :serialized_data
 
-
   ##### Work State Methods #####
   def in_process?
-    return true if self.work_state_id==1
+    return true if self.work_state_id == STATE_IN_PROCESS
   end
 
   def is_in_process
-    self.work_state_id=1
+    self.work_state_id = STATE_IN_PROCESS
   end
 
   def duplicate?
-    return true if self.work_state_id==2
+    return true if self.work_state_id == STATE_DUPLICATE
   end
 
   def is_duplicate
-    self.work_state_id=2
+    self.work_state_id = STATE_DUPLICATE
   end
 
   def accepted?
-    return true if self.work_state_id==3
+    return true if self.work_state_id == STATE_ACCEPTED
   end
 
   def is_accepted
-    self.work_state_id=3
+    self.work_state_id = STATE_ACCEPTED
   end
 
   # The field for work status in BibApp's Solr Index
@@ -136,35 +136,35 @@ class Work < ActiveRecord::Base
   # The Solr filter for accepted works...this is used by default, as
   # we don't want incomplete works to normally appear in BibApp
   def self.solr_accepted_filter
-    return solr_status_field + "3" # 3 = accepted
+    return solr_status_field + STATE_ACCEPTED.to_s
   end
 
   # The Solr filter for duplicate works...these works are normally
   # hidden by BibApp, except to administrators
   def self.solr_duplicate_filter
-    return solr_status_field + "2" # 2 = duplicate
+    return solr_status_field + STATE_DUPLICATE.to_s
   end
 
 
   ##### Work Archival State Methods #####
   def init_archive_status
-    self.work_archive_state_id=1
+    self.work_archive_state_id = ARCHIVE_STATE_INITIAL
   end
 
   def ready_to_archive?
-    return true if self.work_archive_state_id==2
+    return true if self.work_archive_state_id == ARCHIVE_STATE_READY_TO_ARCHIVE
   end
 
   def is_ready_to_archive
-    self.work_archive_state_id=2
+    self.work_archive_state_id = ARCHIVE_STATE_READY_TO_ARCHIVE
   end
 
   def archived?
-    return true if self.work_archive_state_id==3
+    return true if self.work_archive_state_id == ARCHIVE_STATE_ARCHIVED
   end
 
   def is_archived
-    self.work_archive_state_id=3
+    self.work_archive_state_id = ARCHIVE_STATE_ARCHIVED
   end
 
 
