@@ -7,8 +7,7 @@ class RefactorPeople < ActiveRecord::Migration
 
     #Copy email name into UID
     say_with_time "Creating UID from email address..." do
-      people = Person.find(:all)
-      people.each do |p|
+      Person.all.each do |p|
         p.update_attribute(:uid, p.email.split("@")[0])
         say "Person #{p.uid} updated!", true
       end
@@ -16,8 +15,7 @@ class RefactorPeople < ActiveRecord::Migration
 
     #Create display name
     say_with_time "Creating display name..." do
-      people = Person.find(:all)
-      people.each do |p|
+      Person.all.each do |p|
         fn = p.first_name.nil? || p.first_name=="" ? "" : p.first_name + " "
         mn = p.middle_name.nil? || p.middle_name=="" ? "" : p.middle_name + " "
         ln = p.last_name.nil? || p.last_name=="" ? "" : p.last_name + " "
@@ -29,8 +27,7 @@ class RefactorPeople < ActiveRecord::Migration
 
     #Create postal address
     say_with_time "Creating postal address..." do
-      people = Person.find(:all)
-      people.each do |p|
+      Person.all.each do |p|
         oa1 = p.office_address_line_one.nil? || p.office_address_line_one=="" ? "" : p.office_address_line_one + "\n"
         oa2 = p.office_address_line_two.nil? || p.office_address_line_two=="" ? "" : p.office_address_line_two + "\n"
         oc = p.office_city.nil? || p.office_city=="" ? "" : p.office_city + "\n"

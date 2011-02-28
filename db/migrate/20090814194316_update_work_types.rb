@@ -14,8 +14,9 @@ class UpdateWorkTypes < ActiveRecord::Migration
   def self.up
 
     say_with_time "Updating work subtypes..." do
-      works = Work.find(:all,
-      :conditions => ['type = ? or type = ? or type = ? or type = ?', 'BookEdited', 'JournalEdited', 'SoundRecording', 'Video'])
+      works = ['BookEdited', 'JournalEdited', 'SoundRecording', 'Video'].collect do |type|
+        Work.where(:type => type).all
+      end.flatten
       ri_a = Array.new
       works.each do |w|
         if w.type.to_s == "BookEdited"

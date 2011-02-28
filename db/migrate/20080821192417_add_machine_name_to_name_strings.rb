@@ -8,7 +8,7 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
     
     # Populate the machine_name field
     NameString.reset_column_information
-    name_strings = NameString.find(:all)
+    name_strings = NameString.all
 
     name_strings.each do |ns|
       # Set the machine_name version of the name field
@@ -42,7 +42,7 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
     duplicates.each do |dupe|
       puts "Cleaning: #{dupe}"
       # Find all duplicates
-      dupe_candidates = NameString.find(:all, :conditions => ["machine_name = ?", dupe])
+      dupe_candidates = NameString.where(:machine_name => dupe).all
       puts "Count for #{dupe}: #{dupe_candidates.size}"
       
       # Clean them up - first is keeper, rest are dupes
@@ -78,7 +78,7 @@ class AddMachineNameToNameStrings < ActiveRecord::Migration
     
     # Return all NameStrings to ready state (cleaned = false)
     # People can use this flag to make manual edits to NameStrings
-    name_strings = NameString.find(:all)
+    name_strings = NameString.all
     name_strings.each{|ns| ns.update_attribute(:cleaned, false)}
 
     # Set unique index on machine_name

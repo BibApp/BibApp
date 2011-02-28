@@ -21,8 +21,7 @@ class AddInitialPubKeys < ActiveRecord::Migration
       add_column :publications, :initial_publisher_id, :integer
 
     
-      publications = Publication.find(:all)
-      publications.each do |publication|
+      Publication.all.each do |publication|
         say " = Publication #{publication.id}", true
   
         ### Populate the new intial pub_keys
@@ -37,8 +36,7 @@ class AddInitialPubKeys < ActiveRecord::Migration
         say "\n", true
       end
 
-      works = Work.find(:all)
-      works.each do |work|
+      Work.all.each do |work|
       
         say " = Work #{work.id}", true
         

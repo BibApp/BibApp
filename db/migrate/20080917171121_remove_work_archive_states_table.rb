@@ -4,7 +4,7 @@ class RemoveWorkArchiveStatesTable < ActiveRecord::Migration
     
     ## Also change state number of "repository record created"
     ## from state 7 to state 3 (since we only have 3 states total now)
-    works = Work.find(:all).each do |w|
+    works = Work.all.each do |w|
       if w.work_archive_state_id==7  #old archived state ID
         w.work_archive_state_id=3    #new archived state ID
         w.save
@@ -29,7 +29,7 @@ class RemoveWorkArchiveStatesTable < ActiveRecord::Migration
     
     ## Change state number of "repository record created"
     ## back to state 7 instead of state 3
-    works = Work.find(:all).each do |w|
+    works = Work.all.each do |w|
       if w.work_archive_state_id==3   #new archived state ID
         w.work_archive_state_id=7     #old archived state ID
         w.save

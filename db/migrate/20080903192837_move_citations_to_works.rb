@@ -10,7 +10,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     
     # Attachments
     # Update attachments set asset_type = "Work" where asset_type = "Citation"
-    attachments = Attachment.find(:all).each do |a|
+    Attachment.all.each do |a|
       if a.asset_type == "Citation"
         a.asset_type = "Work"
         a.save
@@ -65,7 +65,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     
     # Taggings
     # Update taggings set taggable_type = "Work" where taggable_type = "Citation"
-    taggings = Tagging.find(:all).each do |t|
+    Tagging.all.each do |t|
       if t.taggable_type == "Citation"
         t.taggable_type = "Work"
         t.save
@@ -76,7 +76,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
   def self.down
     # Attachments
     # Update attachments set asset_type = "Citation" where asset_type = "Work"
-    attachments = Attachment.find(:all).each do |a|
+    Attachment.all.each do |a|
       if a.asset_type == "Work"
         a.asset_type = "Citation"
         a.save
@@ -131,7 +131,7 @@ class MoveCitationsToWorks < ActiveRecord::Migration
     
     # Taggings
     # Update taggings set taggable_type = "Citation" where asset_type = "Work"
-    taggings = Tagging.find(:all).each do |t|
+    Tagging.all.each do |t|
       if t.asset_type == "Work"
         t.asset_type = "Citation"
         t.save

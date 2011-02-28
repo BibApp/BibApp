@@ -7,8 +7,7 @@ class FinalOnePointOhWorkSubklasses < ActiveRecord::Migration
   def self.up
     
     say_with_time "Updating work subtypes..." do
-      works = Work.find(:all,
-      :conditions => ['type = ?', 'ConferenceProceeding'])
+      works = Work.where(:type => 'ConferenceProceeding').all
       ri_a = Array.new
       works.each do |w|
         if w.type.to_s == "ConferenceProceeding"
