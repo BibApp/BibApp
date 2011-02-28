@@ -241,12 +241,10 @@ class Work < ActiveRecord::Base
       # from the subklasses
       # (e.g., for Artwork creator=>Artist, contributor=>Curator)
       ###
-      work_name_strings = Array.new
-
       klass = h[:klass]
       klass = klass.constantize
 
-      h[:work_name_strings].each do |wns|
+      work_name_strings = h[:work_name_strings].collect do |wns|
         logger.debug("Work name string: #{wns[:name]}")
         role = wns[:role]
         if role == 'Author'
@@ -254,7 +252,7 @@ class Work < ActiveRecord::Base
         elsif role == 'Editor'
           role = klass.contributor_role
         end
-        work_name_strings << {:name=>wns[:name], :role=>role}
+        {:name => wns[:name], :role => role}
       end
 
       work.work_name_strings = work_name_strings
