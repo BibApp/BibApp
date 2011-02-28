@@ -1,5 +1,9 @@
 class Contributorship < ActiveRecord::Base
 
+  STATE_UNVERIFIED = 1
+  STATE_VERIFIED = 2
+  STATE_DENIED = 3
+
   #### Associations ####
   belongs_to :person
   belongs_to :work
@@ -7,18 +11,18 @@ class Contributorship < ActiveRecord::Base
 
   #### Named Scopes ####
   #Various Contributorship statuses
-  scope :unverified, where(:contributorship_state_id => 1)
-  scope :verified, where(:contributorship_state_id => 2)
-  scope :denied, where(:contributorship_state_id => 3)
+  scope :unverified, where(:contributorship_state_id => STATE_UNVERIFIED)
+  scope :verified, where(:contributorship_state_id => STATE_VERIFIED)
+  scope :denied, where(:contributorship_state_id => STATE_DENIED)
   # TODO: For now we don't want editors showing up as contributors
   #   although in the future we might want them to show up for whole
   #   conference preceedings, entire books, et cetera
   scope :visible, where(:hide => false, :role => "Author")
   #By default, show all verified, visible contributorships
-  scope :to_show, where(:hide => false, :contributorship_state_id => 2)
+  scope :to_show, where(:hide => false, :contributorship_state_id => STATE_VERIFIED)
   #All contributorships for a specified work or person
-  scope :for_work, lambda { |work_id| where(:work_id => work_id)}
-  scope :for_person, lambda {|person_id| where(:person_id => person_id)}
+  scope :for_work, lambda { |work_id| where(:work_id => work_id) }
+  scope :for_person, lambda { |person_id| where(:person_id => person_id) }
 
   #### Validations ####
   validates_presence_of :person_id, :work_id, :pen_name_id
@@ -44,28 +48,28 @@ class Contributorship < ActiveRecord::Base
     # * state - "Unverified" 
     # * hide  - 0 (false)
     # * score - 0 (zero)
-    self.contributorship_state_id = 1
+    self.contributorship_state_id = STATE_UNVERIFIED
     self.hide = false
     self.score = 0
   end
 
   def unverified?
-    return true if self.contributorship_state_id == 1
+    self.contributorship_state_id == STATE_UNVERIFIED
   end
 
   def unverify_contributorship
-    self.contributorship_state_id = 1
+    self.contributorship_state_id = STATE_UNVERIFIED
     # if the contributorship is going from denied -> unverified
     # we need it to be unhidden
     self.hide = false
   end
 
   def verified?
-    return true if self.contributorship_state_id == 2
+    self.contributorship_state_id == STATE_VERIFIED
   end
 
   def verify_contributorship
-    self.contributorship_state_id = 2
+    self.contributorship_state_id = STATE_VERIFIED
     # if the contributorship is going from denied -> verified
     # we need it to be unhidden
     self.hide = false
@@ -73,7 +77,7 @@ class Contributorship < ActiveRecord::Base
   end
 
   def denied?
-    return true if self.contributorship_state_id == 3
+    self.contributorship_state_id == STATE_DENIED
   end
 
   def deny_contributorship
@@ -81,13 +85,13 @@ class Contributorship < ActiveRecord::Base
     # 1. Set state to "Denied"
     # 2. Set hide to "true"
     # 3. Set score to "zero"
-    self.contributorship_state_id = 3
+    self.contributorship_state_id = STATE_DENIED
     self.hide = true
     self.score = 0
   end
 
   def visible?
-    return true if self.hide == false
+    self.hide == false
   end
 
 
