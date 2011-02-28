@@ -52,7 +52,7 @@ class Work < ActiveRecord::Base
   scope :archived, where(:work_archive_state_id => ARCHIVE_STATE_ARCHIVED)
 
   #TODO: This looks a little wonky to me. I suspect we can break it down
-  #somehow to get rid of the block.
+  #somehow to get rid of the block. The only use is in lib/index.rb
   # Work flagged for batch indexing
   scope :to_batch_index, where(:batch_index => 1) do
     # Method to mark all these Works as 'indexed'
