@@ -1,7 +1,7 @@
 class Identifier < ActiveRecord::Base
 
   belongs_to :publication
-  has_many :identifyings, :dependent => :delete_all
+  has_many :identifyings, :dependent => :destroy
 
   @@parsers = [ISSN, ISBN]
 
