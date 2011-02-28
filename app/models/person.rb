@@ -28,11 +28,17 @@ class Person < ActiveRecord::Base
   after_update :set_pen_names
   before_save :update_machine_name
 
-  #### Methods ####
-
+  #### Methods ##
   def set_pen_names
-    # Accept Person.new form name field params and autogenerate pen_name associations 
+    # Accept Person.new form name field params and autogenerate pen_name associations
+    # Find or create
+    make_variant_names.uniq.each do |v|
+      ns = NameString.find_or_create_by_machine_name(v)
+      self.name_strings << ns unless self.name_strings.include?(ns)
+    end
+  end
 
+  def make_variant_names
     # Example is me...
     # first_name   => "John"
     # middle_name  => "William"
@@ -44,57 +50,42 @@ class Person < ActiveRecord::Base
     # => Smith, John         => smith john
     # => Smith, J W          => smith j w
     # => Smith, J            => smith j
+    # Clean each name part
 
-    # First, Middle and Last are all cleaned the same, not DRY, but there may 
-    # be a reason later to refactor. Removing periods and commas, replacing
-    # with spaces and making sure double-spaces are reduced to single spaces
+    first_name = self.clean_name(self.first_name)
+    middle_name = self.clean_name(self.middle_name)
+    last_name = self.clean_name(self.last_name)
 
-    # Clean first name "John"
-    first_name = self.first_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
-
-    # Clean middle name "William"
-    middle_name = self.middle_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
-
-    # Clean last name "Smith" 
-    last_name = self.last_name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
+    make_print_name = lambda do |names|
+      last_name = names.shift
+      "#{last_name}, #{names.join(" ")}".strip
+    end
+    make_machine_name = lambda do |names|
+      names.join(" ").downcase.strip
+    end
+    make_name = lambda do |first_status, middle_status, for_machine|
+      names = []
+      [[last_name, :full], [first_name, first_status], [middle_name, middle_status]].each do |name, status|
+        names << name if status == :full
+        names << abbreviate_name(name, for_machine) if status == :initial
+      end
+      name_function = for_machine ? make_machine_name : make_print_name
+      name_function.call(names)
+    end
+    #Call with each argument as :full to use the full name, :initial to use the first character, and :omit
+    #to not use it
+    variant_hash = lambda do |first_status, middle_status|
+      {:name => make_name.call(first_status, middle_status, false),
+       :machine_name => make_name.call(first_status, middle_status, true)}
+    end
 
     # Collect the variant possibilities
-    variants = Array.new
-
-    # Smith, John William | smith john william
-    variants << {
-        :name => (last_name + ", " + first_name + " " + middle_name).strip,
-        :machine_name => (last_name.downcase + " " + first_name.downcase + " " + middle_name.downcase).strip
-    }
-
-    # Smith, John W. | smith john w
-    variants << {
-        :name => (last_name + ", " + first_name + " " + middle_name.first(1) + ".").strip,
-        :machine_name => (last_name.downcase + " " + first_name.downcase + " " + middle_name.first(1).downcase).strip
-    }
-
-    # Smith, John | smith john
-    variants << {
-        :name => (last_name + ", " + first_name),
-        :machine_name => (last_name.downcase + " " + first_name.downcase).strip
-    }
-
-    # Smith, J. W. | smith j w
-    variants << {
-        :name => (last_name + ", " + first_name.first(1) + ". " + middle_name.first(1) + ".").strip,
-        :machine_name => (last_name.downcase + " " + first_name.first(1).downcase + " " + middle_name.first(1).downcase).strip
-    }
-
-    # Smith, J. | smith j
-    variants << {
-        :name => (last_name + ", " + first_name.first(1) + ".").strip,
-        :machine_name => (last_name.downcase + " " + first_name.first(1).downcase).strip
-    }
-
-    # Find or create
-    variants.uniq.each do |v|
-      ns = NameString.find_or_create_by_machine_name(v)
-      self.name_strings << ns unless self.name_strings.include?(ns)
+    Array.new.tap do |variants|
+      variants << variant_hash.call(:full, :full) # Smith, John William | smith john william
+      variants << variant_hash.call(:full, :initial) # Smith, John W. | smith john w
+      variants << variant_hash.call(:full, :omit) # Smith, John | smith john
+      variants << variant_hash.call(:initial, :initial) # Smith, J. W. | smith j w
+      variants << variant_hash.call(:initial, :omit) # Smith, J. | smith j
     end
   end
 
@@ -309,4 +300,18 @@ class Person < ActiveRecord::Base
 
   end
 
+  protected
+
+  def clean_name(name)
+    name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
+  end
+
+  def abbreviate_name(name, for_machine_name = false)
+    if for_machine_name
+      name.first
+    else
+      name.first + "."
+    end
+
+  end
 end
