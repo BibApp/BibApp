@@ -13,11 +13,11 @@ class Publication < ActiveRecord::Base
   has_many :identifiers, :through => :identifyings
 
   scope :authorities, where("id = authority_id")
-  scope :for_authority, lambda {|authority_id| where(:authority_id => authority_id)}
-  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
+  scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
+  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
   scope :order_by_upper_name, order('upper(name)')
   scope :order_by_name, order('name')
-  
+
   # This is necessary due to very long titles for conference
   # proceedings. For example:
   # Cultivating the future based on science. Volume 1: Organic Crop
@@ -27,14 +27,14 @@ class Publication < ActiveRecord::Base
   # International Federation of Organic Agriculture Movements (IFOAM) and
   # the Consorzio ModenaBio in Modena, Italy, 18-20 June, 2008
   validates_length_of :name, :maximum => 255,
-      :too_long => "is too long (maximum is 255 characters): {{value}}"
+                      :too_long => "is too long (maximum is 255 characters): {{value}}"
 
   #### Callbacks ####
   after_create :after_create_actions
   before_create :before_create_actions
   before_save :before_save_actions
   after_save :reindex, :if => :do_reindex
-  
+
   #Called after create only
   def after_create_actions
     #Authority defaults to self
@@ -173,33 +173,28 @@ class Publication < ActiveRecord::Base
     end
   end
 
-  class << self
+  # return the first letter of each name, ordered alphabetically
+  def self.letters
+    self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+  end
 
-    # return the first letter of each name, ordered alphabetically
-    def letters
-      self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
-    end
-
-    def update_multiple(pub_ids, auth_id)
-      pub_ids.each do |pub|
-        update = Publication.find_by_id(pub)
-        update.authority_id = auth_id
-        update.save
-      end
-    end
-
-    #Parse Solr data (produced by to_solr_data)
-    # return Publication name and ID
-    def parse_solr_data(publication_data)
-      if publication_data.blank?
-        return nil, nil
-      else
-        data = publication_data.split("||")
-        name = data[0]
-        id = data[1]
-
-        return name, id
-      end
+  def self.update_multiple(pub_ids, auth_id)
+    pub_ids.each do |pub|
+      update = Publication.find_by_id(pub)
+      update.authority_id = auth_id
+      update.save
     end
   end
+
+  #Parse Solr data (produced by to_solr_data)
+  # return Publication name and ID
+  def self.parse_solr_data(publication_data)
+    if publication_data.blank?
+      return nil, nil
+    else
+      name, id = publication_data.split("||")
+      return name, id
+    end
+  end
+
 end
