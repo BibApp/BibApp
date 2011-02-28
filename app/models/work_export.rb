@@ -12,7 +12,6 @@ class WorkExport
     @output = 'stdout'
   end
 
-
   def drive_csl(format, input)
     @input = input
     csl_style(format)
