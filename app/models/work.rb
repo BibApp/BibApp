@@ -310,7 +310,7 @@ class Work < ActiveRecord::Base
       h.delete(:person_id) if h[:person_id]
 
       #save remaining hash attributes
-      work.attributes=h
+      work.attributes = h
       saved = work.save
 
     rescue Exception => e
