@@ -50,7 +50,7 @@ class GroupsController < ApplicationController
         chdl = "chdl="
         chdlp = "chdlp=b|"
         @facets[:types].each_with_index do |r,i|
-          perc = (r.value.to_f/work_count.to_f*100).round.to_s
+          perc = (r.value.to_f / work_count.to_f * 100).round.to_s
           chd += "#{perc},"
           ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
           chl += "#{ref.titleize.pluralize}|"
