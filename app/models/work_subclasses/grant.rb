@@ -1,18 +1,19 @@
 class Grant < Work
   validates_presence_of :title_primary
 
-  class << self
-    def roles
-      ['Principal Investigator', 'Co-Principal Investigator']
-    end
-
-    def creator_role
-      'Principal Investigator'
-    end
-
-    def contributor_role
-      'Co-Principal Investigator'
-    end
+  def self.roles
+    ['Principal Investigator', 'Co-Principal Investigator']
   end
 
+  def self.creator_role
+    'Principal Investigator'
+  end
+
+  def self.contributor_role
+    'Co-Principal Investigator'
+  end
+
+  def type_uri
+    "http://purl.org/eprint/type/ScholarlyText"
+  end
 end

@@ -1,18 +1,19 @@
 class WebPage < Work
   validates_presence_of :title_primary
 
-  class << self
-    def roles
-      ['Author']
-    end
-
-    def creator_role
-      'Author'
-    end
-
-    def contributor_role
-      'Author'
-    end
+  def self.roles
+    ['Author']
   end
 
+  def self.creator_role
+    'Author'
+  end
+
+  def self.contributor_role
+    'Author'
+  end
+
+  def type_uri
+    "http://purl.org/dc/dcmitype/InteractiveResource" #DCMI Type
+  end
 end

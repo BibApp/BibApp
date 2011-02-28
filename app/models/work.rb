@@ -645,49 +645,15 @@ class Work < ActiveRecord::Base
   #
   # For more info on EPrints App. Profile, and it's Type vocabulary, see:
   # http://www.ukoln.ac.uk/repositories/digirep/index/EPrints_Application_Profile
+  #
+  #Maps our Work Types to EPrints Application Profile Type URIs,
+  # or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile
+  # Override in a subclass to assign a specific type_uri to that subclass
+  # By default return nil
+  #To get the full map used before breaking out into subclasses, which includes some types for
+  #which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
   def type_uri
-
-    #Maps our Work Types to EPrints Application Profile Type URIs,
-    # or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile)
-    # @TODO - Is there a better place to store this mapping info?  DB maybe? 
-    #         Should each Work subclass just define its own "type_uri"?
-    # TODO Yes. Given that these should remain constant it would be just as well
-    # to define them in individual subclasses. 
-    type_map = {
-        "Abstract" => "http://purl.org/eprint/type/ScholarlyText",
-        "Artwork" => "http://purl.org/dc/dcmitype/Image", #DCMI Type
-        #"BillResolutions" => ??
-        "BookEdited" => "http://purl.org/eprint/type/Book",
-        "BookReview" => "http://purl.org/eprint/type/BookReview",
-        "BookSection" => "http://purl.org/eprint/type/BookItem",
-        "BookWhole" => "http://purl.org/eprint/type/Book",
-        "ComputerProgram" => "http://purl.org/dc/dcmitype/Software", #DCMI Type
-        "ConferencePaper" => " http://purl.org/eprint/type/ConferencePaper",
-        "ConferencePoster" => "http ://purl.org/eprint/type/ConferencePoster",
-        "ConferenceProceeding" => "http://purl.org/eprint/type/ConferenceItem",
-        #"CourtCaseDecision" => ??
-        "DissertationThesis" => "http://purl.org/eprint/type/Thesis",
-        "Generic" => "http://purl.org/eprint/type/ScholarlyText",
-        "Grant" => "http://purl.org/eprint/type/ScholarlyText",
-        #"Hearing" => ??
-        "JournalArticle" => "http://purl.org/eprint/type/JournalArticle",
-        #"LawStatutes" => ??
-        "MagazineArticle" => "http://purl.org/eprint/type/JournalArticle",
-        "Map" => "http://purl.org/dc/dcmitype/StillImage", #DCMI Type
-        "Monograph" => "http://purl.org/eprint/type/Book",
-        "MotionPicture" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
-        "MusicScore" => "http://purl.org/dc/dcmitype/Text",
-        "NewspaperArticle" => "http://purl.org/eprint/type/NewsItem",
-        "Patent" => "http://purl.org/eprint/type/Patent",
-        #"PersonalCommunication" => ??
-        "Report" => "http://purl.org/eprint/type/Report",
-        "SoundRecording" => "http://purl.org/dc/dcmitype/Sound", #DCMI Type
-        "UnpublishedMaterial" => "http://purl.org/eprint/type/ScholarlyText",
-        "Video" => "http://purl.org/dc/dcmitype/MovingImage", #DCMI Type
-        "WebPage" => "http://purl.org/dc/dcmitype/InteractiveResource", #DCMI Type
-    }
-
-    type_map[self.type]
+    return nil
   end
 
   #Convert Work into a String

@@ -1,18 +1,19 @@
 class DissertationThesis < Work
   validates_presence_of :title_primary
 
-  class << self
-    def roles
-      ['Author', 'Advisor', 'Committee Chair', 'Committee Member', 'Director of Research']
-    end
-
-    def creator_role
-      'Author'
-    end
-
-    def contributor_role
-      'Committee Member'
-    end
+  def self.roles
+    ['Author', 'Advisor', 'Committee Chair', 'Committee Member', 'Director of Research']
   end
 
+  def self.creator_role
+    'Author'
+  end
+
+  def self.contributor_role
+    'Committee Member'
+  end
+
+  def type_uri
+    "http://purl.org/eprint/type/Thesis"
+  end
 end

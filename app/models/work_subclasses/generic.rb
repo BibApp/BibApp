@@ -1,18 +1,19 @@
 class Generic < Work
   validates_presence_of :title_primary
 
-  class << self
-    def roles
-      ['Creator', 'Contributor']
-    end
-
-    def creator_role
-      'Creator'
-    end
-
-    def contributor_role
-      'Contributor'
-    end
+  def self.roles
+    ['Creator', 'Contributor']
   end
 
+  def self.creator_role
+    'Creator'
+  end
+
+  def self.contributor_role
+    'Contributor'
+  end
+
+  def type_uri
+    "http://purl.org/eprint/type/ScholarlyText"
+  end
 end

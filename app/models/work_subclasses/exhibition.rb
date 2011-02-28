@@ -1,18 +1,16 @@
 class Exhibition < Work
-   validates_presence_of :title_primary
+  validates_presence_of :title_primary
 
-  class << self
-    def roles
-      ['Artist', 'Curator']
-    end
+  def self.roles
+    ['Artist', 'Curator']
+  end
 
-    def creator_role
-      'Author'
-    end
+  def self.creator_role
+    'Author'
+  end
 
-    def contributor_role
-      'Curator'
-    end
+  def self.contributor_role
+    'Curator'
   end
 
 end
