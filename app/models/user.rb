@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   #### Associations ####
   has_and_belongs_to_many :roles
   has_many :imports, :order => "created_at DESC"
-  has_many :taggings, :dependent => :delete_all
+  has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
   has_many :users, :through => :taggings
 
