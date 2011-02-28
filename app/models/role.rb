@@ -6,6 +6,10 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :authorizable, :polymorphic => true
 
+  scope :named, lambda {|name| where(:name => name)}
+  scope :authorizable_type, lambda {|authorizable_type| where(:authorizable_type => authorizable_type)}
+  scope :authorizable_id, lambda { |authorizable_id| where(:authorizable_id => nil)}
+
   #Provide a string description of this role, including whether
   #it is a System-Wide, Class, or object-level role.
   def description
