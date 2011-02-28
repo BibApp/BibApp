@@ -5,15 +5,11 @@ class Publisher < ActiveRecord::Base
   #### Associations ####
 
   has_many :publications
-  belongs_to :authority,
-      :class_name => "Publisher",
-      :foreign_key => :authority_id
+  belongs_to :authority, :class_name => "Publisher", :foreign_key => :authority_id
 
-  belongs_to :publisher_source,
-      :class_name => "PublisherSource",
-      :foreign_key => :source_id
+  belongs_to :publisher_source, :class_name => "PublisherSource", :foreign_key => :source_id
 
-  has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
+  has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
   #### Callbacks ####
 
@@ -44,10 +40,6 @@ class Publisher < ActiveRecord::Base
 
   def set_initial_states
     self.source_id = 2 # Import Data
-  end
-
-  def save_without_callbacks
-    update_without_callbacks
   end
 
   def to_param

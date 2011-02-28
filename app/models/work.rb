@@ -23,7 +23,7 @@ class Work < ActiveRecord::Base
 
   has_many :people,
            :through => :contributorships,
-           :conditions => ["contributorship_state_id = ?", 2]
+           :conditions => ["contributorship_state_id = ?", Contributorship::STATE_VERIFIED]
 
   has_many :contributorships,
            :dependent => :delete_all
@@ -44,13 +44,18 @@ class Work < ActiveRecord::Base
   #### Named Scopes ####
   #Various Work Statuses
   #TODO Get rid of magic numbers
-  scope :in_process, where(:work_state_id => 1)
-  scope :duplicate, where(:work_state_id => 2)
-  scope :accepted, where(:work_state_id => 3)
+  STATE_IN_PROCESS = 1
+  STATE_DUPLICATE = 2
+  STATE_ACCEPTED = 3
+  scope :in_process, where(:work_state_id => STATE_IN_PROCESS)
+  scope :duplicate, where(:work_state_id => STATE_DUPLICATE)
+  scope :accepted, where(:work_state_id => STATE_ACCEPTED)
 
+  ARCHIVE_STATE_READY_TO_ARCHIVE = 2
+  ARCHIVE_STATE_ARCHIVED = 3
   #Various Work Archival Statuses
-  scope :ready_to_archive, where(:work_archive_state_id => 2)
-  scope :archived, where(:work_archive_state_id => 3)
+  scope :ready_to_archive, where(:work_archive_state_id => ARCHIVE_STATE_READY_TO_ARCHIVE)
+  scope :archived, where(:work_archive_state_id => ARCHIVE_STATE_ARCHIVED)
 
   #TODO: This looks a little wonky to me. I suspect we can break it down
   #somehow to get rid of the block.

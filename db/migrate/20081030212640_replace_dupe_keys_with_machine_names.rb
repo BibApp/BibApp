@@ -92,7 +92,7 @@ class ReplaceDupeKeysWithMachineNames < ActiveRecord::Migration
         # machine name is Person name, downcased, with all punctuation/spaces converted to single space
         machine_name =  system.name.chars.gsub(/[\W]+/, " ").strip.downcase
         system.machine_name = machine_name
-        system.save_without_callbacks
+        system.save
         say "ExternalSystem with id=#{system.id} updated!", true
       end
     end
