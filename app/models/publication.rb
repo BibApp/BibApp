@@ -6,10 +6,8 @@ class Publication < ActiveRecord::Base
   #### Associations ####
 
   belongs_to :publisher
-  belongs_to :authority,
-      :class_name => "Publication",
-      :foreign_key => :authority_id
-  has_many :works, :conditions => ["work_state_id = ?", 3] #accepted works
+  belongs_to :authority, :class_name => "Publication", :foreign_key => :authority_id
+  has_many :works, :conditions => ["work_state_id = ?", WORK::STATE_ACCEPTED] #accepted works
 
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
@@ -67,9 +65,7 @@ class Publication < ActiveRecord::Base
   end
 
   def publisher_name=(name)
-    if name.blank?
-      name = "Unknown"
-    end
+    name ||= 'Unknown'
     self.publisher = Publisher.find_or_create_by_name(name) unless name.blank?
   end
 
@@ -120,11 +116,11 @@ class Publication < ActiveRecord::Base
   end
 
   def solr_filter
-    'publication_id:"' + self.id.to_s + '"'
+    %Q(publication_id:"#{self.id}")
   end
 
   def form_select
-    "#{name.first(100)+"..."} - #{issn_isbn}"
+    "#{name.first(100)}... - #{issn_isbn}"
   end
 
   def authority_for
