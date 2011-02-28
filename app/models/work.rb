@@ -66,9 +66,9 @@ class Work < ActiveRecord::Base
   end
 
   #Various Work Contribution Statuses
-  scope :unverified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 1})
-  scope :verified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 2})
-  scope :denied, joins(:contributorships).where(:contributorships => {:contributorship_state_id => 3})
+  scope :unverified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_UNVERIFIED})
+  scope :verified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_VERIFIED})
+  scope :denied, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_DENIED})
   scope :visible, joins(:contributorships).where(:contributorships => {:hide => false})
 
   scope :for_authority_publication,
