@@ -1,7 +1,6 @@
 class Keyword < ActiveRecord::Base
   has_many :keywordings
-  has_many :works,
-    :through => :keywordings
+  has_many :works, :through => :keywordings
 
   # This is necessary because of the common
   # mistake of NOT separating keywords with
