@@ -235,10 +235,10 @@ class Person < ActiveRecord::Base
     max_kw = keywords.max { |a, b| a.count.to_i <=> b.count.to_i }
     max_kw_freq = max_kw.count.to_i if max_kw and max_kw.count.to_i > max_kw_freq
 
-    keywords.map { |kw|
+    keywords.map do |kw|
       bin = ((kw.count.to_f * bin_count.to_f)/max_kw_freq).ceil
       kw.count = bin
-    }
+    end
 
     return keywords.sort { |a, b| a.name <=> b.name }
 
