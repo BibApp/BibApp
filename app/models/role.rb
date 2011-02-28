@@ -8,7 +8,7 @@ class Role < ActiveRecord::Base
 
   scope :named, lambda {|name| where(:name => name)}
   scope :authorizable_type, lambda {|authorizable_type| where(:authorizable_type => authorizable_type)}
-  scope :authorizable_id, lambda { |authorizable_id| where(:authorizable_id => nil)}
+  scope :authorizable_id, lambda { |authorizable_id| where(:authorizable_id => authorizable_id)}
 
   #Provide a string description of this role, including whether
   #it is a System-Wide, Class, or object-level role.
