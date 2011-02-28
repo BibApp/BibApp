@@ -205,16 +205,11 @@ class Person < ActiveRecord::Base
     %Q(person_id:"#{self.id}")
   end
 
-  # TODO: do this the rails way.
   def publication_reftypes
-    Person.find_by_sql(
-        ["select type as ref_type,
-      count(type) as count from works
-      join contributorships on (works.id = contributorships.work_id)
-      where contributorships.person_id = ?
-      and contributorships.contributorship_state_id = ?
-      group by type
-      order by count desc", self.id, Contributorship::STATE_VERIFIED])
+    Work.select('type, count(type)').
+        joins(:contributorships).
+        where(:contributorships => {:person_id => self.id, :contributorship_state_id => Contributorship::STATE_VERIFIED}).
+        group('type').order('count desc')
   end
 
   def keywords(limit = 15, bin_count = 5)
