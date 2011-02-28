@@ -5,10 +5,8 @@ class Identifier < ActiveRecord::Base
 
   @@parsers = [ISSN, ISBN]
 
-  class << self
-    def inherited(subclass)
-      @@parsers << subclass unless @@parsers.include?(subclass)
-    end
+  def self.inherited(subclass)
+    @@parsers << subclass unless @@parsers.include?(subclass)
   end
 
   #override for subclasses if this isn't appropriate
@@ -26,7 +24,7 @@ class Identifier < ActiveRecord::Base
     @@parsers.each do |klass|
       id = klass.parse_identifier(identifier)
       if id
-        identifiers << [klass, id]  
+        identifiers << [klass, id]
       end
     end
 
