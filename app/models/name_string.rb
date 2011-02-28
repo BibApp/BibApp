@@ -2,12 +2,9 @@ class NameString < ActiveRecord::Base
   require 'namecase'
   
   #### Associations ####
-  has_many :works, 
-    :through => :work_name_strings
-  has_many :work_name_strings,
-    :dependent => :delete_all
-  has_many :people,
-    :through => :pen_names
+  has_many :works, :through => :work_name_strings
+  has_many :work_name_strings, :dependent => :destroy
+  has_many :people, :through => :pen_names
   has_many :pen_names
   
   #### Callbacks ####
