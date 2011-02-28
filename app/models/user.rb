@@ -178,6 +178,10 @@ class User < ActiveRecord::Base
 
   protected
 
+  def require_password?
+    crypted_password.blank? || !password.blank?
+  end
+
   def make_activation_code
     self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
   end
@@ -187,8 +191,8 @@ class User < ActiveRecord::Base
     def letters
       find(
           :all,
-              :select => 'DISTINCT SUBSTR(login, 1, 1) AS letter',
-              :order => 'letter'
+          :select => 'DISTINCT SUBSTR(login, 1, 1) AS letter',
+          :order => 'letter'
       )
     end
   end
