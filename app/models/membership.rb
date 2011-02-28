@@ -7,6 +7,6 @@ class Membership < ActiveRecord::Base
   
   acts_as_list  :scope => :person
 
-  scope :active, :conditions => ["end_date is ?", nil]
+  scope :active, where("end_date is ?", nil)
 
 end
