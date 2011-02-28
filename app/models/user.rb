@@ -186,14 +186,9 @@ class User < ActiveRecord::Base
     self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
   end
 
-  class << self
-    # return the first letter of each login (i.e. username), ordered alphabetically
-    def letters
-      find(
-          :all,
-          :select => 'DISTINCT SUBSTR(login, 1, 1) AS letter',
-          :order => 'letter'
-      )
-    end
+  # return the first letter of each login (i.e. username), ordered alphabetically
+  def self.letters
+    self.select('DISTINCT SUBSTR(login, 1, 1) AS letter').order('letter')
   end
+
 end
