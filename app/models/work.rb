@@ -75,6 +75,8 @@ class Work < ActiveRecord::Base
   scope :for_authority_publication,
         lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
 
+  scope :most_recent_first, order('updated_at DESC')
+  
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   before_create :before_create_actions
