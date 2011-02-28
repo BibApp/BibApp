@@ -666,6 +666,8 @@ class Work < ActiveRecord::Base
   # This is currently used during generation of METS file
   # conforming to EPrints DC XML Schema for use with SWORD.
   # @TODO: There is likely a better way to do this more generically.
+  # TODO: it may also not be doing what it should - what if there are both authors and editors
+  # - it's not clear how they are distinguished.
   def to_apa
     citation_string = ""
 
@@ -794,12 +796,11 @@ class Work < ActiveRecord::Base
     return open_url_kevs
   end
 
-  def update_type_and_save_without_callbacks(new_type)
+  def update_type_and_save(new_type)
     self[:type] = new_type
     self.save
   end
 
-  ### PRIVATE METHODS ###
   private
 
   # Update Keywordings - updates list of keywords for Work
