@@ -214,7 +214,7 @@ class Person < ActiveRecord::Base
       where contributorships.person_id = ?
       and contributorships.contributorship_state_id = ?
       group by type
-      order by count desc", self.id, 2])
+      order by count desc", self.id, Contributorship::STATE_VERIFIED])
   end
 
   # TODO: do this the rails way.
@@ -229,7 +229,7 @@ class Person < ActiveRecord::Base
       and contributorships.contributorship_state_id = ?
       group by name
       order by count DESC
-      limit ?", self.id, 2, limit])
+      limit ?", self.id, Contributorship::STATE_VERIFIED, limit])
 
     max_kw_freq = bin_count.to_i
     max_kw = keywords.max { |a, b| a.count.to_i <=> b.count.to_i }
