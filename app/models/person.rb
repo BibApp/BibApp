@@ -26,11 +26,7 @@ class Person < ActiveRecord::Base
   #### Callbacks ####
   after_create :set_pen_names
   after_update :set_pen_names
-  before_save :before_save_actions
-
-  def before_save_actions
-    self.update_machine_name
-  end
+  before_save :update_machine_name
 
   #### Methods ####
 
