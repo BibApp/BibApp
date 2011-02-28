@@ -113,7 +113,7 @@ class WorksController < ApplicationController
     # lazy mapping of all creator/contributor roles to top creator role
     authors = work.work_name_strings.collect { |wns| [:name=>wns.name_string.name, :role=>t.constantize.creator_role] }
 
-    work.update_type_and_save_without_callbacks(t) if t
+    work.update_type_and_save(t) if t
     work.work_name_strings=(authors)
 
     Index.update_solr(work)
