@@ -8,8 +8,7 @@ class Saved < ActiveRecord::BaseWithoutTable
   end
   
   def add_work(work)
-    @items << work.id
-    @items.uniq!
+    @items << work.id unless @items.member?(work)
   end
   
   def remove_work(work_id)
