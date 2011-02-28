@@ -12,13 +12,11 @@ class ContributorshipsController < ApplicationController
         @page = params[:page] || 1
         @rows = params[:rows] || 10
         @status = params[:status] || "unverified"
+        #Don't want to allow an arbitrary send to @person.contributorships below - e.g. params[:status] = 'clear'
+        @status = 'unverified' unless ['unverified', 'verified', 'denied'].member(@status.to_s)
 
-        @contributorships = @person.contributorships.send(@status).paginate(
-            :page => @page,
-                :per_page => @rows,
-                :include => [:work],
-                :order => 'works.publication_date desc'
-        )
+        @contributorships = @person.contributorships.send(@status).includes(:work).
+            order('works.publication_date desc').paginate(:page => @page,:per_page => @rows)
       else
         render :status => 404
       end
@@ -26,9 +24,8 @@ class ContributorshipsController < ApplicationController
   end
 
   def admin
-
     @people = Contributorship.unverified.visible.group_by { |c| c.person_id }
-    t = true
+    true
   end
 
   def verify_multiple
