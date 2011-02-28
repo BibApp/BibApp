@@ -267,16 +267,17 @@ class Work < ActiveRecord::Base
       issn_isbn = h[:issn_isbn]
       publisher = h[:publisher]
 
-      case klass.to_s
-        when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
-          publication = h[:title_primary] ? h[:title_primary] : 'Unknown'
-        when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
-          publication = h[:title_secondary] ? h[:title_secondary] : 'Unknown'
-        when 'JournalArticle', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Generic'
-          publication = h[:publication] ? h[:publication] : 'Unknown'
-        else
-          publication = nil
-      end
+      publication =
+          case klass.to_s
+            when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
+              h[:title_primary] ? h[:title_primary] : 'Unknown'
+            when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
+              h[:title_secondary] ? h[:title_secondary] : 'Unknown'
+            when 'JournalArticle', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Generic'
+              h[:publication] ? h[:publication] : 'Unknown'
+            else
+              nil
+          end
 
       if publication == 'Unknown'
         unless issn_isbn.blank?
