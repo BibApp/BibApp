@@ -127,7 +127,6 @@ class Person < ActiveRecord::Base
 
   def name_strings_not
     suggestions = NameString.name_like(self.last_name).order_by_name.all
-
     # TODO: do this right. The vector subtraction is dumb.
     return suggestions - name_strings
   end
@@ -147,7 +146,6 @@ class Person < ActiveRecord::Base
       c.calculate_score
       Index.update_solr(c.work)
     end
-
   end
 
   def update_scoring_hash
@@ -158,10 +156,9 @@ class Person < ActiveRecord::Base
         vp.work.publication_date.year
       end
     end.uniq
-    known_years.delete(nil)
+    known_years.compact
 
-
-    known_publication_ids = vps.collect { |vp| vp.work.publication.id if vp.work.publication }.uniq
+    known_publication_ids = vps.collect { |vp| vp.work.publication.id if vp.work.publication }.uniq.compact
     known_collaborator_ids = vps.collect { |vp| vp.work.name_strings.collect { |ns| ns.id } }.flatten.uniq
     known_keyword_ids = vps.collect { |vp| vp.work.keywords.collect { |k| k.id } }.flatten.uniq
 
@@ -191,12 +188,7 @@ class Person < ActiveRecord::Base
 
   #A person's image file
   def image_url
-    if !self.image.nil?
-      self.image.public_filename
-    else
-      "man.jpg"
-    end
-
+    self.image ? self.image.public_filename : 'man.jpg'
   end
 
   #A person's group ids
@@ -210,7 +202,7 @@ class Person < ActiveRecord::Base
   end
 
   def solr_filter
-    'person_id:"' + self.id.to_s + '"'
+    %Q(person_id:"#{self.id}")
   end
 
   # TODO: do this the rails way.
@@ -252,52 +244,49 @@ class Person < ActiveRecord::Base
 
   end
 
-  class << self
-    # return the first letter of each name, ordered alphabetically
-    def letters
-      select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter')
+  # return the first letter of each name, ordered alphabetically
+  def self.letters
+    select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter')
+  end
+
+  #Parse Solr data (produced by to_solr_data)
+  # return Person last_name, ID, and Image URL
+  def self.parse_solr_data(person_data)
+    data = person_data.split("||")
+    last_name = data[0]
+    id = data[1].to_i
+    image_url = data[2]
+
+    if !data[3].nil?
+      group_ids = data[3].split(",").collect { |g| g.to_i }
+    else
+      group_ids = []
     end
 
-    #Parse Solr data (produced by to_solr_data)
-    # return Person last_name, ID, and Image URL
-    def parse_solr_data(person_data)
-      data = person_data.split("||")
-      last_name = data[0]
-      id = data[1].to_i
-      image_url = data[2]
+    return last_name, id, image_url, group_ids
+  end
 
-      if !data[3].nil?
-        group_ids = data[3].split(",").collect { |g| g.to_i }
-      else
-        group_ids = []
-      end
+  def self.sort_by_most_recent_work(array_of_people)
+    # For people with no works, time = Time.at(0)
+    time = Time.at(0)
+    array_of_people.sort! { |a, b|
+      t1 = a.most_recent_work.nil? ? time : a.most_recent_work.updated_at
+      t2 = b.most_recent_work.nil? ? time : b.most_recent_work.updated_at
+      t2 <=> t1
+    }
+    array_of_people
+  end
 
-      return last_name, id, image_url, group_ids
-    end
+  def self.find_all_by_publisher_id(publisher_id)
+    Publisher.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
+  end
 
-    def sort_by_most_recent_work(array_of_people)
-      # For people with no works, time = Time.at(0)
-      time = Time.at(0)
-      array_of_people.sort! { |a, b|
-        t1 = a.most_recent_work.nil? ? time : a.most_recent_work.updated_at
-        t2 = b.most_recent_work.nil? ? time : b.most_recent_work.updated_at
-        t2 <=> t1
-      }
-      array_of_people
-    end
+  def self.find_all_by_publication_id(publisher_id)
+    Publication.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
+  end
 
-    def find_all_by_publisher_id(publisher_id)
-      Publisher.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
-    end
-
-    def find_all_by_publication_id(publisher_id)
-      Publication.find(publisher_id).works.collect { |w| w.people }.flatten.compact.uniq
-    end
-
-    def find_all_by_group_id(group_id)
-      Group.find(group_id).people
-    end
-
+  def self.find_all_by_group_id(group_id)
+    Group.find(group_id).people
   end
 
   protected
