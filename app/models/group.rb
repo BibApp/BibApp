@@ -1,23 +1,38 @@
 class Group < ActiveRecord::Base
   acts_as_tree :order => "name"
-  acts_as_authorizable  #some actions on groups require authorization
-  
+  acts_as_authorizable #some actions on groups require authorization
+
   #### Associations ####
-  
+
   has_many :people,
-    :through => :memberships,
-    :order => "last_name, first_name"
+           :through => :memberships,
+           :order => "last_name, first_name"
   has_many :memberships
 
   scope :hidden, where(:hide => true)
   scope :unhidden, where(:hide => false)
-  scope :upper_name_like, lambda {|name| where('upper(name) like ?', name)}
-  scope :name_like, lambda {|name| where('name like ?', name)}
+  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
+  scope :name_like, lambda { |name| where('name like ?', name) }
   scope :order_by_upper_name, order('upper(name)')
   scope :order_by_name, order('name')
   #### Callbacks ####
-  
+
   before_save :before_save_actions
+
+  # return the first letter of each name, ordered alphabetically
+  def self.letters
+    self.unhidden.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+  end
+
+  #Parse Solr data (produced by to_solr_data)
+  # return Group name and ID
+  def self.parse_solr_data(group_data)
+    data = group_data.split("||")
+    name = data[0]
+    id = data[1]
+
+    return name, id
+  end
 
   def before_save_actions
     self.update_machine_name
@@ -28,20 +43,20 @@ class Group < ActiveRecord::Base
 
   def works
     # @TODO: Do this the Rails way.
-    self.people.collect{|p| p.works.verified}.uniq.flatten
+    self.people.collect { |p| p.works.verified }.uniq.flatten
   end
 
   def to_param
     param_name = name.gsub(" ", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
-  end 
+  end
 
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{name}||#{id}"
-  end 
-  
+    "#{name} || #{id}"
+  end
+
   def solr_filter
     'group_id:"' + self.id.to_s + '"'
   end
@@ -67,34 +82,11 @@ class Group < ActiveRecord::Base
   end
 
   def ancestors_and_descendants
-    family = Array.new
-    family << self.ancestors
-    family << self.descendants
+    self.ancestors + self.descendants
   end
 
   def descendants
     self.children.map(&:descendants).flatten + self.children
   end
-  
-  class << self
-    # return the first letter of each name, ordered alphabetically
-    def letters
-      find(
-        :all,
-        :select => 'DISTINCT SUBSTR(name, 1, 1) AS letter',
-        :order  => 'letter',
-        :conditions => ["hide = ?", false]
-      )
-    end
-    
-    #Parse Solr data (produced by to_solr_data)
-    # return Group name and ID
-    def parse_solr_data(group_data)
-      data = group_data.split("||")
-      name = data[0]
-      id = data[1]  
-      
-      return name, id
-    end
-  end
+
 end
