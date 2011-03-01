@@ -816,7 +816,7 @@ class WorksController < ApplicationController
       works_added = init_last_batch
 
       # Now, actually *create* these works in database
-      attr_hashes.map { |h|
+      attr_hashes.map do |h|
 
       # Initialize the Work
         klass = h[:klass]
@@ -886,7 +886,7 @@ class WorksController < ApplicationController
           #add to batch of works created
           works_added << work.id
         end #end if no title
-      }
+      end
       #index everything in Solr
       Index.batch_index
 
