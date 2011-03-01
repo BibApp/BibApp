@@ -921,7 +921,7 @@ class WorksController < ApplicationController
     if klass.superclass != Work
       raise NameError.new("#{klass_type} is not a subclass of Work") and return
     end
-    work = klass.new(work)
+    klass.new(work)
   end
 
   def find_authorities
