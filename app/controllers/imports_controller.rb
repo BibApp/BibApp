@@ -84,11 +84,8 @@ class ImportsController < ApplicationController
         @dupe_count+=1 if !work.nil? and work.duplicate?
       end
       
-      @works = Work.paginate(
-        :page => @page, 
-        :per_page => @rows,
-        :conditions => ["id in (?)", @work_batch]
-      )
+      @works = Work.where("id in (?)", @work_batch).paginate(:page => @page, :per_page => @rows)
+
     end
     
     #Return path for any actions that take place on 'Review Batch' page
