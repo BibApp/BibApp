@@ -10,11 +10,7 @@ class NameStringsController < ApplicationController
       @a_to_z = NameString.letters.collect { |d| d.letter }
       
       @page = params[:page] || @a_to_z[0]
-      @current_objects = NameString.find(
-        :all, 
-        :conditions => ["upper(name) like ?", "#{@page}%"], 
-        :order => "upper(name)"
-      ) 
+      @current_objects = NameString.where("upper(name) like ?", "#{@page}%").order('upper(name)')
     end
     
     response_for :index do |format|
