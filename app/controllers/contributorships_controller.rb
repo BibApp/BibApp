@@ -13,7 +13,7 @@ class ContributorshipsController < ApplicationController
         @rows = params[:rows] || 10
         @status = params[:status] || "unverified"
         #Don't want to allow an arbitrary send to @person.contributorships below - e.g. params[:status] = 'clear'
-        @status = 'unverified' unless ['unverified', 'verified', 'denied'].member(@status.to_s)
+        @status = 'unverified' unless ['unverified', 'verified', 'denied'].member?(@status.to_s)
 
         @contributorships = @person.contributorships.send(@status).includes(:work).
             order('works.publication_date desc').paginate(:page => @page,:per_page => @rows)
