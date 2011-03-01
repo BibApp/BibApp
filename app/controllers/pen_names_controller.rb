@@ -14,11 +14,8 @@ class PenNamesController < ApplicationController
       #only 'editor' of person can assign a pen name
       permit "editor of person"
 
-      @suggestions = NameString.find(
-          :all,
-              :conditions => ["name like ?", "%" + @person.last_name + "%"],
-              :order => :name
-      )
+      @suggestions = NameString.name_like(@person.last_name).order_by_name
+
     end
 
     before :update do
@@ -101,20 +98,15 @@ class PenNamesController < ApplicationController
     a2 = "%"
     @searchphrase = a1 + @phrase + a2
 
-    #Hack for postgresql, for which LIKE is case-sensitive 
+    #Hack for postgresql, for which LIKE is case-sensitive
+    #Alternately, one might view this as a hack for dbs where LIKE is _not_ case sensitive
+    #It's not clear to me that the SQL standard is definitive on this - for more evidence,
+    #Oracle also seems to be case sensitive, and DB2 seems to depend on individual database settings
     #TODO: is there a better way?
     if @person.configurations[Rails.env]['adapter'] == "postgresql"
-      @results = NameString.find(
-          :all,
-              :conditions => ["name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%"],
-              :order => "name"
-      )
+      @results = NameString.where("name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%").order_by_name
     else
-      @results = NameString.find(
-          :all,
-              :conditions => ["name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%"],
-              :order => "name"
-      )
+      @results = NameString.where("name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%").order_by_name
     end
 
     @number_match = @results.length
