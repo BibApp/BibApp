@@ -42,11 +42,7 @@ class PeopleController < ApplicationController
           end
           @a_to_z = @a_to_z.uniq
           @page = params[:page] || @a_to_z[0]
-          @current_objects = @group.people.find(
-            :all,
-            :conditions => ["upper(last_name) like ?", "#{@page}%"],
-            :order => "upper(last_name), upper(first_name)"
-          )
+          @current_objects = @group.people.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
         end
 
         @title = "#{@group.name} - People"
@@ -58,11 +54,7 @@ class PeopleController < ApplicationController
         else
           @a_to_z = Person.letters.collect { |d| d.letter.upcase }
           @page = params[:page] || @a_to_z[0]
-          @current_objects = Person.find(
-            :all,
-            :conditions => ["upper(last_name) like ?", "#{@page}%"],
-            :order => "upper(last_name), upper(first_name)"
-          )
+          @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
         end
 
         @title = "People"
