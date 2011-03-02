@@ -6,7 +6,7 @@ class Exhibition < Work
   end
 
   def self.creator_role
-    'Author'
+    'Artist'
   end
 
   def self.contributor_role
