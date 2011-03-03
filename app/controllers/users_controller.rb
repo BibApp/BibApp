@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     
     before :index do
       # find first letter of usernames (in uppercase, for paging mechanism)
-      @a_to_z = User.letters.collect { |d| d.letter.upcase }
+      @a_to_z = User.letters
         
       #get current page  
       @page = params[:page] || @a_to_z[0]

@@ -189,7 +189,7 @@ class User < ActiveRecord::Base
 
   # return the first letter of each login (i.e. username), ordered alphabetically
   def self.letters
-    self.select('DISTINCT SUBSTR(login, 1, 1) AS letter').order('letter')
+    self.select('DISTINCT SUBSTR(login, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}
   end
 
 end

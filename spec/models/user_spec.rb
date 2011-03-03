@@ -78,7 +78,7 @@ describe User do
     logins.each do |login|
       Factory.create(:user, :login => login)
     end
-    User.letters.collect { |u| u.letter }.should == ['A', 'F', 'J', 'P']
+    User.letters.should == ['A', 'F', 'J', 'P']
   end
 
   context "roles" do

@@ -15,7 +15,7 @@ class NameString < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
-    self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+    self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter}
   end
 
   #Parse Solr data (produced by to_solr_data)
@@ -28,16 +28,15 @@ class NameString < ActiveRecord::Base
     return name, id
   end
 
+# Convert object into semi-structured data to be stored in Solr
+  def to_solr_data
+    "#{name}||#{id}"
+  end
+
   def to_param
-    param_name = name.gsub(" ", "_")
     param_name = name.gsub("-", "_")
     param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
     "#{id}-#{param_name}"
-  end
-
-  # Convert object into semi-structured data to be stored in Solr
-  def to_solr_data
-    "#{name}||#{id}"
   end
 
   #return what looks to be the last name in this name string

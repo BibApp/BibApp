@@ -22,7 +22,7 @@ class RolesController < ApplicationController
       @role_name = params[:name] if params[:name]
         
       # find first letter of usernames (in uppercase, for paging mechanism)
-      @a_to_z = User.letters.collect { |d| d.letter.upcase }
+      @a_to_z = User.letters
         
       #get current page  
       @page = params[:page] || @a_to_z[0]

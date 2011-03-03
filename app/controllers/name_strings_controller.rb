@@ -7,7 +7,7 @@ class NameStringsController < ApplicationController
     build :all
     
     before :index do
-      @a_to_z = NameString.letters.collect { |d| d.letter }
+      @a_to_z = NameString.letters
       
       @page = params[:page] || @a_to_z[0]
       @current_objects = NameString.where("upper(name) like ?", "#{@page}%").order('upper(name)')
