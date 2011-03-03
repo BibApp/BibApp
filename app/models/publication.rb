@@ -93,8 +93,8 @@ class Publication < ActiveRecord::Base
         parsed_identifiers = Identifier.parse(identifier)
         parsed_identifiers.each do |pi|
           klass, id = pi
-          puts "#{klass.format_string}:#{id}"
-          pub_id = Identifier.find_or_create_by_name_and_type(id, klass.format_string)
+          puts "#{klass.id_type_string}:#{id}"
+          pub_id = Identifier.find_or_create_by_name_and_type(id, klass.id_type_string)
           unless self.identifiers.include?(pub_id)
             self.identifiers << pub_id
           end

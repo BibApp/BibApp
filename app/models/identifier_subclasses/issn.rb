@@ -8,9 +8,13 @@ class ISSN < Identifier
   end
 
   protected
-  
+
+  def self.cleanup(identifier)
+    identifier.gsub(/[^\dX]/i, '')
+  end
+
   def self.is_valid?(identifier)
-    issn = identifier.gsub(/[^\dX]/i, '')
+    issn = self.cleanup(identifier)
     if issn.length != 8 
       return false
     end

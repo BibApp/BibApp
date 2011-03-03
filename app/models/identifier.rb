@@ -1,16 +1,10 @@
 class Identifier < ActiveRecord::Base
 
-  belongs_to :publication
+  has_many :publications, :through => :identifyings
   has_many :identifyings, :dependent => :destroy
 
-  @@parsers = [ISSN, ISBN]
-
-  def self.inherited(subclass)
-    @@parsers << subclass unless @@parsers.include?(subclass)
-  end
-
   #override for subclasses if this isn't appropriate
-  def self.format_string
+  def self.id_type_string
     self.to_s
   end
 
@@ -21,7 +15,7 @@ class Identifier < ActiveRecord::Base
 
     identifiers = Array.new
 
-    @@parsers.each do |klass|
+    self.subclasses.each do |klass|
       id = klass.parse_identifier(identifier)
       if id
         identifiers << [klass, id]
@@ -51,3 +45,8 @@ class Identifier < ActiveRecord::Base
   end
 
 end
+
+#This is a bit kludgy, but we don't want the Identifier subclasses to be loaded lazily
+require 'identifier_subclasses/isbn'
+require "identifier_subclasses/issn"
+require 'identifier_subclasses/isrc'
