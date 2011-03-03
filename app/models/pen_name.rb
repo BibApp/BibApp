@@ -12,7 +12,7 @@ class PenName < ActiveRecord::Base
   after_save :index_works
   before_destroy :index_works
 
-  scope :for_name_string, lambda {|name_string_id| where(:name_string_id => name_string_id)}
+  scope :for_name_string, lambda { |name_string_id| where(:name_string_id => name_string_id) }
 
   def set_contributorships
     self.name_string.work_name_strings.each do |wns|
@@ -24,10 +24,7 @@ class PenName < ActiveRecord::Base
   end
 
   def index_works
-    #self.works.each { |w| w.save_and_set_for_index }
-    self.works.each do |w|
-      w.save_and_set_for_index
-    end
+    self.works.each { |w| w.save_and_set_for_index }
     Index.batch_index
   end
 
