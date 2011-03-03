@@ -13,10 +13,9 @@ class WorkNameString < ActiveRecord::Base
     "#{self.name_string.name}||#{self.name_string.id}||#{position}||#{role}"
   end
 
-
-  def self.create_batch!(name_string_id, work_data)
+  def self.create_batch!(name_string, work_data)
     cites = Work.import_batch!(work_data)
-    create_batch_from_works!(name_string_id, cites)
+    create_batch_from_works!(name_string, cites)
     return cites
   end
 
