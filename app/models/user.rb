@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
     ##################################################
     # Cacade System Roles to everything!
     ##################################################
-    unless authorizable_obj.is_a? Class and authorizable_obj.to_s == 'System'
+    unless authorizable_obj == System
       #If user is a System Admin,
       #then user has permissions to do ANYTHING 
       return true if has_role?("admin", System)
@@ -92,16 +92,16 @@ class User < ActiveRecord::Base
     # If this is a Class object, then cascade based on class types
     if authorizable_obj.is_a? Class
       case authorizable_obj.to_s
-        when "Group"
+        when 'Group'
           #If user has this role on any group in system, return true
           return true if has_any_role?(role_name, Group)
-        when "Person"
+        when 'Person'
           #Group class role cascades to Person class
           return true if has_role?(role_name, Group)
 
           #If user has this role on any group in system, also return true
           return true if has_any_role?(role_name, Group)
-        when "Work"
+        when 'Work'
           #Person class role cascades to Work class
           return true if has_role?(role_name, Person)
 
@@ -110,12 +110,12 @@ class User < ActiveRecord::Base
       end
     elsif authorizable_obj #else if instance of a Class
       case authorizable_obj.class.base_class.to_s
-        when "Person"
+        when 'Person'
           #Get groups of this person, and look for role on each group
           authorizable_obj.groups.each do |group|
             return true if has_role?(role_name, group)
           end
-        when "Work"
+        when 'Work'
           #Get all People associated with this Work, and look for role on each person
           authorizable_obj.people.each do |person|
             return true if has_role?(role_name, person)
@@ -168,13 +168,12 @@ class User < ActiveRecord::Base
   # The above would check if the user has the 'editor' role
   # specified explicitly for the group (and not at a system-wide level)
   def has_explicit_role?(role_name, authorizable_obj = nil)
-
-    #loop through all roles explicitly defined for this object
-    self.roles_for(authorizable_obj).each do |role|
-      # if name of roles match up, then it's explicitly there!
-      return true if role.name.downcase == role_name.downcase
+    if authorizable_obj.class == Class
+      self.roles.named(role_name).where(:authorizable_type => authorizable_obj.to_s).exists?
+    else
+      self.roles.named(role_name).where(:authorizable_type => authorizable_obj.class.to_s,
+          :authorizable_id => authorizable_obj.id).exists?
     end
-    return false
   end
 
   protected

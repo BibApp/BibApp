@@ -32,8 +32,11 @@ class Person < ActiveRecord::Base
   def set_pen_names
     # Accept Person.new form name field params and autogenerate pen_name associations
     # Find or create
-    make_variant_names.uniq.each do |v|
-      ns = NameString.find_or_create_by_machine_name(v)
+    names = make_variant_names.uniq
+    names.each do |v|
+      unless ns = NameString.find_by_machine_name(v[:machine_name])
+        ns = NameString.create(v)
+      end
       self.name_strings << ns unless self.name_strings.include?(ns)
     end
   end
@@ -266,6 +269,7 @@ class Person < ActiveRecord::Base
   end
 
   def abbreviate_name(name, for_machine_name = false)
+    return "" if name.blank?
     suffix = for_machine_name ? '' : '.'
     name.first + suffix
   end

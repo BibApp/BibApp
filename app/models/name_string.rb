@@ -10,7 +10,6 @@ class NameString < ActiveRecord::Base
   #### Callbacks ####
 
   #### Named Scopes ####
-  #Author and Editor name_strings
   scope :order_by_name, order('name')
   scope :name_like, lambda { |name| where('name like ?', "%#{name}%") }
 
