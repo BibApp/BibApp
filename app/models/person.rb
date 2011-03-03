@@ -236,7 +236,7 @@ class Person < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
-    select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter')
+    select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}
   end
 
   #Parse Solr data (produced by to_solr_data)

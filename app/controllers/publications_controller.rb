@@ -24,7 +24,7 @@ class PublicationsController < ApplicationController
 
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
-      @a_to_z = Publication.letters.collect { |d| d.letter.upcase }
+      @a_to_z = Publication.letters(true)
       
       if params[:q]
         query = params[:q]
@@ -75,7 +75,7 @@ class PublicationsController < ApplicationController
     #Only group editors can assign authorities
     permit "editor of Group"
     
-    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @a_to_z = Publication.letters
     @page = params[:page] || @a_to_z[0]
     
     if params[:q]
@@ -91,7 +91,7 @@ class PublicationsController < ApplicationController
   end
 
   def add_to_box
-    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @a_to_z = Publication.letters
     @page = params[:page] || @a_to_z[0]
     #Add new pubs to the list, and to the session var
     @pas = session[:publication_auths] || Array.new
@@ -109,7 +109,7 @@ class PublicationsController < ApplicationController
   end
 
   def remove_from_box
-    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @a_to_z = Publication.letters
     @page = params[:page] || @a_to_z[0]
     #Remove pubs from the list
     @pas = session[:publication_auths] || Array.new
@@ -133,7 +133,7 @@ class PublicationsController < ApplicationController
     pub_ids = params[:pub_ids]
     auth_id = params[:auth_id]
     
-    @a_to_z = Publication.letters.collect { |d| d.letter }
+    @a_to_z = Publication.letters
     @page = params[:page] || @a_to_z[0]
     
     if auth_id

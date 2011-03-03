@@ -19,7 +19,7 @@ class GroupsController < ApplicationController
     
     before :index do
       # find first letter of group names (in uppercase, for paging mechanism)
-      @a_to_z = Group.letters.collect { |g| g.letter.upcase }
+      @a_to_z = Group.letters
       
       if params[:person_id]
         @person = Person.find(params[:person_id].split("-")[0])

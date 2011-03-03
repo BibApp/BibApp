@@ -174,8 +174,10 @@ class Publication < ActiveRecord::Base
   end
 
   # return the first letter of each name, ordered alphabetically
-  def self.letters
-    self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+  def self.letters(upcase = nil)
+    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter}
+    letters = letters.collect {|x| x.upcase} if upcase
+    return letters
   end
 
   def self.update_multiple(pub_ids, auth_id)

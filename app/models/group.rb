@@ -21,7 +21,7 @@ class Group < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
-    self.unhidden.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter')
+    self.unhidden.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}
   end
 
   #Parse Solr data (produced by to_solr_data)

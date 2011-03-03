@@ -52,7 +52,7 @@ class PeopleController < ApplicationController
           query = params[:q]
           @current_objects = current_objects
         else
-          @a_to_z = Person.letters.collect { |d| d.letter.upcase }
+          @a_to_z = Person.letters
           @page = params[:page] || @a_to_z[0]
           @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
         end
