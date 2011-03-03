@@ -25,7 +25,7 @@ class PublicationsController < ApplicationController
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters.collect { |d| d.letter.upcase }
-      default_page = @a_to_z.find_index{|item| item > " "} #prevents returning everything when the name has a value of whitespace
+      default_page = @a_to_z.find_index{|i| i > " "} #prevent returning all every title when the name has a value of whitespace
       if params[:q]
         query = params[:q]
         @current_objects = current_objects
