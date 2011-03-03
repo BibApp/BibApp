@@ -9,3 +9,8 @@ end
 Factory.define(:activated_user, :parent => :unactivated_user) do |u|
   u.after_create { |u| u.activate}
 end
+
+#just a synonym for :activated_user for convenience
+Factory.define(:user, :parent => :activated_user) do
+
+end
