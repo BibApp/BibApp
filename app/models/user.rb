@@ -169,10 +169,11 @@ class User < ActiveRecord::Base
   # specified explicitly for the group (and not at a system-wide level)
   def has_explicit_role?(role_name, authorizable_obj = nil)
     if authorizable_obj.class == Class
-      self.roles.named(role_name).where(:authorizable_type => authorizable_obj.to_s).exists?
+      self.roles.named(role_name).where(:authorizable_type => authorizable_obj.to_s,
+                                        :authorizable_id => nil).exists?
     else
       self.roles.named(role_name).where(:authorizable_type => authorizable_obj.class.to_s,
-          :authorizable_id => authorizable_obj.id).exists?
+                                        :authorizable_id => authorizable_obj.id).exists?
     end
   end
 

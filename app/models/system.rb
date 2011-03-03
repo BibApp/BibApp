@@ -32,7 +32,7 @@ class System < ActiveRecord::BaseWithoutTable
 
     # Find all users having a system-based role of a particular name
     def self.has_role(name)
-      role = Role.named(name).authorizable_type(System.name).authorizable_id(nil)
+      role = Role.named(name).authorizable_type(System.name).authorizable_id(nil).first
       #return actual users, if role found
       role ? role.users : nil
     end
