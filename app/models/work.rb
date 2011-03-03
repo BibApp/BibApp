@@ -105,7 +105,7 @@ class Work < ActiveRecord::Base
 
   ##### Work State Methods #####
   def in_process?
-    return true if self.work_state_id == STATE_IN_PROCESS
+    self.work_state_id == STATE_IN_PROCESS
   end
 
   def is_in_process
@@ -113,7 +113,7 @@ class Work < ActiveRecord::Base
   end
 
   def duplicate?
-    return true if self.work_state_id == STATE_DUPLICATE
+    self.work_state_id == STATE_DUPLICATE
   end
 
   def is_duplicate
@@ -121,7 +121,7 @@ class Work < ActiveRecord::Base
   end
 
   def accepted?
-    return true if self.work_state_id == STATE_ACCEPTED
+    self.work_state_id == STATE_ACCEPTED
   end
 
   def is_accepted

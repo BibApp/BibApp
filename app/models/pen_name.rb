@@ -15,16 +15,19 @@ class PenName < ActiveRecord::Base
   scope :for_name_string, lambda {|name_string_id| where(:name_string_id => name_string_id)}
 
   def set_contributorships
-    self.name_string.work_name_strings.each do |cns|
+    self.name_string.work_name_strings.each do |wns|
       #only create Contributorship for "accepted" works
-      if cns.work.accepted?
-        self.contributorships.find_or_create_by_work_id_and_person_id_and_role(cns.work.id, self.person_id, cns.role)
+      if wns.work.accepted?
+        self.contributorships.find_or_create_by_work_id_and_person_id_and_role(wns.work.id, self.person_id, wns.role)
       end
     end
   end
 
   def index_works
-    self.works.each { |w| w.save_and_set_for_index }
+    #self.works.each { |w| w.save_and_set_for_index }
+    self.works.each do |w|
+      w.save_and_set_for_index
+    end
     Index.batch_index
   end
 
