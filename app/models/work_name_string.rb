@@ -7,6 +7,8 @@ class WorkNameString < ActiveRecord::Base
   validates_uniqueness_of :name_string_id, :scope => [:work_id, :role], :case_sensitive => true
 
   scope :with_role, lambda { |role| where(:role => role) }
+  scope :author, where(:role => 'Author').order('position')
+  scope :editor, where(:role => 'Editor').order('position')
 
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
