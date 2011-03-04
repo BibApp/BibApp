@@ -55,15 +55,11 @@ class Work < ActiveRecord::Base
   #TODO: This looks a little wonky to me. I suspect we can break it down
   #somehow to get rid of the block. The only use is in lib/index.rb
   # Work flagged for batch indexing
-  scope :to_batch_index, where(:batch_index => 1) do
-    # Method to mark all these Works as 'indexed'
-    # by resetting 'batch_index' flag to false
-    def indexed
-      each do |work|
-        work.batch_index=0
-        work.save
-      end
-    end
+  scope :to_batch_index, where(:batch_index => 1)
+
+  def mark_indexed
+    self.batch_index = 0
+    self.save
   end
 
   #Various Work Contribution Statuses

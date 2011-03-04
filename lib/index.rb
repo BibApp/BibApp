@@ -108,7 +108,10 @@ class Index
     end
 
     #Mark all these Works as indexed & commit changes to Solr
-    records.indexed
+    records.each do |r|
+      r.mark_indexed
+    end
+    
     #SOLRCONN.commit
     Index.optimize_index
   end
