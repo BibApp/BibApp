@@ -744,7 +744,7 @@ class Work < ActiveRecord::Base
 
   #Get all Author names on a Work, return as an array of hashes
   def authors
-    self.work_name_strings.with_role(self.class.creator_role).includes(:name_string).collect do |wns|
+    self.work_name_strings.with_role(self.creator_role).includes(:name_string).collect do |wns|
       ns = wns.name_string
       {:name => ns.name, :id => ns.id}
     end
@@ -752,21 +752,28 @@ class Work < ActiveRecord::Base
 
   #Get all Editor Strings of a Work, return as an array of hashes
   def editors
-    return [] if self.class.contributor_role == self.class.creator_role
-    self.work_name_strings.with_role(self.class.contributor_role).includes(:name_string).collect do |wns|
+    return [] if self.contributor_role == self.creator_role
+    self.work_name_strings.with_role(self.contributor_role).includes(:name_string).collect do |wns|
       ns = wns.name_string
       {:name => ns.name, :id => ns.id}
     end
   end
 
+  def self.creator_role
+    raise RuntimeError, 'Subclass responsibility'
+  end
+
+  def self.contributor_role
+    raise RuntimeError, 'Subclass responsibility'
+  end
+
   def creator_role
-    raise RuntimeError, 'Subclass responsibility'
+    self.class.creator_role
   end
-
+  
   def contributor_role
-    raise RuntimeError, 'Subclass responsibility'
+    self.class.contributor_role
   end
-
   # In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new

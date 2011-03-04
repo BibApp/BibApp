@@ -17,12 +17,45 @@ describe Work do
   it { should have_many(:attachments) }
   it { should belong_to(:work_archive_state) }
 
+  context "abstract methods" do
+    it "should raise errors on subclass responsibility" do
+      lambda { Work.contributor_role }.should raise_error
+      lambda { Work.class.creator_role }.should raise_error
+    end
+  end
+
+  context "should be able to return name information on creators" do
+
+    def make_test_data(work_type)
+      @work = Factory.create(work_type)
+      @author_name_strings = 5.times.collect { Factory.create(:name_string) }
+      @editor_name_strings = 5.times.collect { Factory.create(:name_string) }
+      @author_name_strings.each { |ns| @work.work_name_strings.create(:role => @work.creator_role, :name_string => ns) }
+      @editor_name_strings.each { |ns| @work.work_name_strings.create(:role => @work.contributor_role, :name_string => ns) }
+    end
+
+    it "returns for authors" do
+      make_test_data(:generic)
+      @work.authors.to_set.should == @author_name_strings.collect {|ns| {:name => ns.name, :id => ns.id}}.to_set
+    end
+
+    it "returns for editors" do
+      make_test_data(:generic)
+      @work.editors.to_set.should == @editor_name_strings.collect {|ns| {:name => ns.name, :id => ns.id}}.to_set
+    end
+
+    it "returns empty for editors if the author and editor roles are the same" do
+      make_test_data(:patent)
+      @work.editors.should == []
+    end
+  end
+
   context "should be able to return open_url kevs" do
     before(:each) do
       #to test the default implementation we need a work subclass that doesn't override open_url_kevs
       #Generic seems a safe choice, but if this test starts failing take that into consideration
       @work = Factory.create(:generic, :title_primary => 'WorkTitle', :publication_date => Date.parse('2011-03-04'),
-        :volume => '11', :issue => '9', :start_page => '211', :end_page => '310')
+                             :volume => '11', :issue => '9', :start_page => '211', :end_page => '310')
     end
 
     it "always returns a standard set" do
