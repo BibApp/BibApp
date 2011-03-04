@@ -269,6 +269,7 @@
  <!-- authors are a synonym for name_strings -->
  <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
+ <field name="person_active" type="boolean" indexed="true" stored="true" multiValued="true"/>
  <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
  <field name="publication" type="text" indexed="true" stored="true"/>
  <field name="publisher" type="text" indexed="true" stored="true"/>
