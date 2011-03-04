@@ -322,7 +322,7 @@ class Person < ActiveRecord::Base
     end
     
     #Parse Solr data (produced by to_solr_data)
-    # return Person last_name, ID, and Image URL
+    # return Person last_name, ID, Image URL, Active status, and research_focus
     def parse_solr_data(person_data)
       data = person_data.split("||")
       last_name = data[0]
@@ -335,7 +335,11 @@ class Person < ActiveRecord::Base
         group_ids = []
       end
       
-      return last_name, id, image_url, group_ids
+
+      is_active = data[4]
+      research_focus = data[5]
+      
+      return last_name, id, image_url, group_ids, is_active, research_focus
     end
 
     def sort_by_most_recent_work(array_of_people)
