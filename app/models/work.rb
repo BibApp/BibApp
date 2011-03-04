@@ -613,7 +613,7 @@ class Work < ActiveRecord::Base
 
   #base machine name of work on title_primary
   def update_machine_name
-    if self.title_primary_changed? or self.machine_name.nil?
+    if self.title_primary_changed? or self.machine_name.blank?
       self.machine_name = make_machine_name(self.title_primary)
     end
   end
