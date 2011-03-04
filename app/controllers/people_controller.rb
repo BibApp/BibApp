@@ -8,7 +8,7 @@ class PeopleController < ApplicationController
     build :index, :new, :create, :show, :edit, :update, :destroy
 
     publish :xml, :json, :yaml, :attributes => [
-      :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus,
+      :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus, :active,
        {:name_strings => [:id, :name]},
        {:groups => [:id, :name]},
        {:contributorships => [:work_id]}
