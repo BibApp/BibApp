@@ -145,7 +145,7 @@ class Work < ActiveRecord::Base
   end
 
   def ready_to_archive?
-    return true if self.work_archive_state_id == ARCHIVE_STATE_READY_TO_ARCHIVE
+    self.work_archive_state_id == ARCHIVE_STATE_READY_TO_ARCHIVE
   end
 
   def is_ready_to_archive

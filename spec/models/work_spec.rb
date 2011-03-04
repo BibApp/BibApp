@@ -125,5 +125,33 @@ describe Work do
       work.update_machine_name
       work.machine_name.should == 'new title for this'
     end
+
+    context "updating archive status" do
+      before(:each) do
+        @work = Factory.create(:work)
+      end
+
+      it "should mark itself as archived if an archive time has been recorded" do
+        @work.archived?.should be_false
+        @work.archived_at = Time.now
+        @work.save
+        @work.archived?.should be_true
+      end
+
+      it "should mark itself as ready to archive if it has attachments" do
+        @work.ready_to_archive?.should be_false
+        @work.title_primary = @work.title_primary + 'force a change'
+        @work.should_receive(:attachments).and_return([double('attachment')])
+        @work.save
+        @work.ready_to_archive?.should be_true
+      end
+
+      it "should revert to initial status if it is marked ready but has not attachements" do
+        @work.is_ready_to_archive
+        @work.save
+        @work.ready_to_archive?.should be_false
+      end
+
+    end
   end
 end
