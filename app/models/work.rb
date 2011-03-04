@@ -542,17 +542,16 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Ensures Contributorships are set for each WorkNameString claim
+  # If the Work is accepted ensures Contributorships are set for each WorkNameString claim
   # associated with the Work.
   def create_contributorships
-    # Only create contributorships for accepted Works...
     if self.accepted?
       self.work_name_strings.each do |cns|
         # Find all People with a matching PenName claim
         claims = PenName.for_name_string(cns.name_string_id)
         # Find or create a Contributorship for each claim
         claims.each do |claim|
-          contributorship=Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
+          Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
               self.id, claim.person.id, claim.id, cns.role)
         end
       end

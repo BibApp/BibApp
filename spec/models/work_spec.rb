@@ -157,16 +157,41 @@ describe Work do
     it "should update its scoring hash" do
       work = Factory.create(:work)
       publication = Factory.create(:publication)
-      keywords = 3.times.collect {Factory.create(:keyword)}
-      name_strings = 4.times.collect {Factory.create(:name_string)}
+      keywords = 3.times.collect { Factory.create(:keyword) }
+      name_strings = 4.times.collect { Factory.create(:name_string) }
       work.publication_date = Date.parse('2008-01-02')
       work.publication = publication
       work.keywords = keywords
       work.name_strings = name_strings
       work.save
       work.scoring_hash.should == {:year => 2008, :publication_id => publication.id,
-        :keyword_ids => keywords.collect {|kw| kw.id},
-        :collaborator_ids => name_strings.collect{|ns| ns.id}}
+                                   :keyword_ids => keywords.collect { |kw| kw.id },
+                                   :collaborator_ids => name_strings.collect { |ns| ns.id }}
+    end
+
+    #I've had a lot of trouble with how the various models interact and with their various callbacks
+    #making it difficult to assure that I'm really testing what I should be here, so I've marked the
+    #tests as pending, and the set up should be regarded as provisional as well.
+    context "creating contributorships" do
+      before(:each) do
+        #create work with exising contributorship and work_name_string/pen_name needed for another one
+        @work = Factory.create(:work)
+        @contributorship = Factory.create(:contributorship, :work => @work, :role => @work.creator_role)
+        @work_name_string = Factory.create(:work_name_string, :work => @work, :role => @work.contributor_role)
+        @pen_name = Factory.build(:pen_name, :name_string => @work_name_string.name_string)
+        #we need to intercept this or the pen_name will actually create the contributorship on save and we're trying
+        #to test the work side
+        @pen_name.should_receive(:set_contributorships)
+        @pen_name.save
+      end
+
+      it "should create any new contributorships if it is accepted" do
+        pending
+      end
+
+      it "should not create new contributorships if it is not accepted" do
+        pending
+      end
     end
   end
 end
