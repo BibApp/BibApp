@@ -14,7 +14,8 @@
     - people.each do |p|
       - person = Person.parse_solr_data(p.name)
       - last_name, id, image_url, group_ids, active, research_focus = Person.parse_solr_data(p.name)
-      - if active=="false"
+
+      - if active.empty? or active == "false"
         - next
 
       - if controller.controller_name == "groups" and !group_ids.include?(@group.id)
