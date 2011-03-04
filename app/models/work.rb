@@ -767,14 +767,6 @@ class Work < ActiveRecord::Base
     raise RuntimeError, 'Subclass responsibility'
   end
 
-  def publication_authority
-    Publication.find(self.authority_publication_id)
-  end
-
-  def publisher_authority
-    Publisher.find(self.authority_publisher_id)
-  end
-
   # In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new
