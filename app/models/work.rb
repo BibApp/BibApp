@@ -355,11 +355,6 @@ class Work < ActiveRecord::Base
     publication_date ? publication_date.year : nil
   end
 
-  # Returns the 
-  def name
-    return self.to_s
-  end
-
   # Initializes an array of Keywords
   # and saves them to the current Work
   # Arguments:
@@ -652,6 +647,13 @@ class Work < ActiveRecord::Base
     return nil
   end
 
+  # TODO As far as I can tell, to_s is only used in name and to_apa is only used in to_s
+  # to_apa claims in a comment to have a real use, but I haven't checked it. So these methods
+  # may be removable
+  def name
+    return self.to_s
+  end
+
   #Convert Work into a String
   def to_s
     # Default to displaying Work in APA citation format
@@ -706,13 +708,10 @@ class Work < ActiveRecord::Base
     #---------------------------------------
     case self.class
       when BookWhole
-
         citation_string << self.publisher.authority.name if self.publisher
         #Only add a period if the string doesn't currently end in a period.
         citation_string << ". " if !citation_string.match("\.\s*\Z")
-
       when ConferencePaper #Conference Proceeding in APA Format
-
         citation_string << "In #{self.title_secondary}" if self.title.secondary
         citation_string << ": Vol. #{self.volume}" if self.volume
         #Only add a period if the string doesn't currently end in a period.
@@ -725,9 +724,7 @@ class Work < ActiveRecord::Base
         citation_string << "." if !citation_string.match("\.\s*\Z")
         citation_string << self.publisher.authority.name if self.publisher
         citation_string << "."
-
       else #default to JournalArticle in APA format
-
         citation_string << "#{self.publication.authority.name}, " if self.publication
         citation_string << self.volume if self.volume
         citation_string << "(#{self.issue})" if self.issue
@@ -735,10 +732,7 @@ class Work < ActiveRecord::Base
         citation_string << self.start_page if self.start_page
         citation_string << "-#{self.end_page}" if self.end_page
         citation_string << "."
-
     end
-
-
     citation_string
   end
 
