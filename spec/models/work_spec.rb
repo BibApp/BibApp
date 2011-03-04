@@ -17,10 +17,14 @@ describe Work do
   it { should have_many(:attachments) }
   it { should belong_to(:work_archive_state) }
 
-  context "abstract methods" do
+  context "abstract and default methods" do
     it "should raise errors on subclass responsibility" do
       lambda { Work.contributor_role }.should raise_error
       lambda { Work.class.creator_role }.should raise_error
+    end
+
+    it "should return a default type_uri" do
+      Factory.build(:abstract_work).type_uri.should be_nil
     end
   end
 
@@ -36,12 +40,12 @@ describe Work do
 
     it "returns for authors" do
       make_test_data(:generic)
-      @work.authors.to_set.should == @author_name_strings.collect {|ns| {:name => ns.name, :id => ns.id}}.to_set
+      @work.authors.to_set.should == @author_name_strings.collect { |ns| {:name => ns.name, :id => ns.id} }.to_set
     end
 
     it "returns for editors" do
       make_test_data(:generic)
-      @work.editors.to_set.should == @editor_name_strings.collect {|ns| {:name => ns.name, :id => ns.id}}.to_set
+      @work.editors.to_set.should == @editor_name_strings.collect { |ns| {:name => ns.name, :id => ns.id} }.to_set
     end
 
     it "returns empty for editors if the author and editor roles are the same" do
@@ -82,4 +86,44 @@ describe Work do
     end
   end
 
+  context "automatic field updates and initialization" do
+    it "should call initialization methods when created" do
+      work = Factory.build(:work)
+      [:create_work_name_strings, :create_keywords, :create_tags].each do |method|
+        work.should_receive(method)
+      end
+      work.save
+    end
+
+    it "should call update methods when saving" do
+      work = Factory.create(:work)
+      work.title_primary = work.title_primary + 'make a change'
+      [:update_authorities, :update_scoring_hash, :update_archive_state, :update_machine_name, :deduplicate,
+       :create_contributorships].each do |method|
+        work.should_receive(method)
+      end
+      work.save
+    end
+
+    it "should automatically update publication and pubisher information when its publication is set" do
+      work = Factory.create(:work)
+      publisher = Factory.create(:publisher)
+      publication = Factory.create(:publication, :publisher => publisher)
+      publication.authority = publication
+      work.publisher_id.should be_nil
+      work.publication_id.should be_nil
+      work.publication = publication
+      work.save
+      work.publication_id.should == publication.id
+      work.publisher_id.should == publisher.id
+    end
+
+    it "should update the machine name when appropriate" do
+      new_title = '  New --- Title , For this'
+      work = Factory.create(:work)
+      work.title_primary = new_title
+      work.update_machine_name
+      work.machine_name.should == 'new title for this'
+    end
+  end
 end

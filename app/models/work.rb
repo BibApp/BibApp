@@ -1,4 +1,6 @@
+require 'machine_name'
 class Work < ActiveRecord::Base
+  include MachineName
 
   acts_as_authorizable #some actions on Works require authorization
 
@@ -609,14 +611,10 @@ class Work < ActiveRecord::Base
     end
   end
 
-  #Update Machine Name of Work (called by after_save callback)
+  #base machine name of work on title_primary
   def update_machine_name
-    #Machine name only needs updating if title primary changes or empty
     if self.title_primary_changed? or self.machine_name.nil?
-      #Machine name is Title Primary with:
-      #  1. all punctuation/spaces converted to single space
-      #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.title_primary.mb_chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = make_machine_name(self.title_primary)
     end
   end
 
