@@ -574,39 +574,21 @@ class Work < ActiveRecord::Base
 
   def update_scoring_hash
     logger.debug "\n\n===== UPDATE SCORING HASH ===== \n\n"
-    if self.publication_date != nil
-      year = self.publication_date.year
-    else
-      year = nil
-    end
-
-    publication_id = self.publication_id
-    collaborator_ids = self.name_strings.collect { |ns| ns.id }
-    keyword_ids = self.keyword_ids
 
     # Return a hash comprising all the Contributorship scoring methods
-    scoring_hash = {
-        :year => year,
-        :publication_id => publication_id,
-        :collaborator_ids => collaborator_ids,
-        :keyword_ids => keyword_ids
-    }
-    self.scoring_hash = scoring_hash
+    self.scoring_hash = {:year => self.publication_date.try(:year),
+                         :publication_id => self.publication_id,
+                         :collaborator_ids => self.name_string_ids,
+                         :keyword_ids => self.keyword_ids}
   end
 
-  #Update archive status of Work
   def update_archive_state
-    #if archived date set, its in archived state! 
     if self.archived_at
-      #this Work is officially "archived"!
       self.is_archived
-      #check if Work has attachments
     elsif self.attachments.present?
-      #if attachments exist, change status to "ready to archive"
       self.is_ready_to_archive
     elsif self.ready_to_archive?
-      #else if marked ready, but no attachments
-      #then, revert to initial status  
+      #if marked ready, but no attachments then revert to initial status
       self.init_archive_status
     end
   end
@@ -762,16 +744,17 @@ class Work < ActiveRecord::Base
   def creator_role
     self.class.creator_role
   end
-  
+
   def contributor_role
     self.class.contributor_role
   end
+
   # In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new
     open_url_kevs[:format] = "&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal"
     open_url_kevs[:genre] = "&rft.genre=article"
-      open_url_kevs[:title] = "&rft.atitle=#{CGI.escape(self.title_primary)}"
+    open_url_kevs[:title] = "&rft.atitle=#{CGI.escape(self.title_primary)}"
     unless self.publication.nil?
       open_url_kevs[:source] = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn] = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
