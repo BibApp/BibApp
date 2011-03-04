@@ -57,11 +57,6 @@ class Work < ActiveRecord::Base
 
   scope :to_batch_index, where(:batch_index => TO_BE_BATCH_INDEXED)
 
-  def mark_indexed
-    self.batch_index = NOT_TO_BE_BATCH_INDEXED
-    self.save
-  end
-
   #Various Work Contribution Statuses
   scope :unverified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_UNVERIFIED})
   scope :verified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_VERIFIED})
@@ -163,6 +158,11 @@ class Work < ActiveRecord::Base
     self.work_archive_state_id = ARCHIVE_STATE_ARCHIVED
   end
 
+  #batch indexing related
+  def mark_indexed
+    self.batch_index = NOT_TO_BE_BATCH_INDEXED
+    self.save
+  end
 
   ########## Methods ##########
   # Rule #1: Comment H-E-A-V-I-L-Y
@@ -780,7 +780,7 @@ class Work < ActiveRecord::Base
     open_url_kevs = Hash.new
     open_url_kevs[:format] = "&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal"
     open_url_kevs[:genre] = "&rft.genre=article"
-    open_url_kevs[:title] = "&rft.atitle=#{CGI.escape(self.title_primary)}"
+      open_url_kevs[:title] = "&rft.atitle=#{CGI.escape(self.title_primary)}"
     unless self.publication.nil?
       open_url_kevs[:source] = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn] = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
@@ -799,7 +799,7 @@ class Work < ActiveRecord::Base
     self.save
   end
 
-  private
+  protected
 
   # Update Keywordings - updates list of keywords for Work
   # Arguments:
