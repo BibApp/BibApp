@@ -238,6 +238,18 @@ class Person < ActiveRecord::Base
     gids.join(",")
   end
   
+  #Is the person active? Any blanks will be interpreted as false.
+  def person_active
+    self.active?.to_s   
+  end
+  
+  #A person's research focus.
+  #You get stack overflow without the dump method, I assume
+  #due to the new line or quote characters in the text
+  def person_research_focus
+    self.research_focus.dump
+  end
+  
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
     "#{last_name}||#{id}||#{image_url}||#{group_ids}"
