@@ -20,7 +20,7 @@ describe Work do
   context "abstract and default methods" do
     it "should raise errors on subclass responsibility" do
       lambda { Work.contributor_role }.should raise_error
-      lambda { Work.class.creator_role }.should raise_error
+      lambda { Work.creator_role }.should raise_error
     end
 
     it "should return a default type_uri" do
