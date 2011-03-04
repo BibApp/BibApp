@@ -153,5 +153,20 @@ describe Work do
       end
 
     end
+
+    it "should update its scoring hash" do
+      work = Factory.create(:work)
+      publication = Factory.create(:publication)
+      keywords = 3.times.collect {Factory.create(:keyword)}
+      name_strings = 4.times.collect {Factory.create(:name_string)}
+      work.publication_date = Date.parse('2008-01-02')
+      work.publication = publication
+      work.keywords = keywords
+      work.name_strings = name_strings
+      work.save
+      work.scoring_hash.should == {:year => 2008, :publication_id => publication.id,
+        :keyword_ids => keywords.collect {|kw| kw.id},
+        :collaborator_ids => name_strings.collect{|ns| ns.id}}
+    end
   end
 end

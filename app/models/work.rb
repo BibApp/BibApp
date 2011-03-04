@@ -542,27 +542,14 @@ class Work < ActiveRecord::Base
     end
   end
 
-
+  # Ensures Contributorships are set for each WorkNameString claim
+  # associated with the Work.
   def create_contributorships
-    logger.debug "\n\n===== CREATE CONTRIBUTORSHIPS =====\n\n"
-    # After save method
-    # Ensures Contributorships are set for each WorkNameString claim
-    # associated with the Work.
-    logger.debug "Work State: #{self.work_state_id}\n"
-    logger.debug "CNS Size: #{self.work_name_strings.size}"
-
     # Only create contributorships for accepted Works...
     if self.accepted?
       self.work_name_strings.each do |cns|
         # Find all People with a matching PenName claim
         claims = PenName.for_name_string(cns.name_string_id)
-
-        # Debugger
-        logger.debug("\n Claims: ")
-        claims.each do |c|
-          logger.debug("#{c.person.display_name}")
-        end
-
         # Find or create a Contributorship for each claim
         claims.each do |claim|
           contributorship=Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
@@ -572,13 +559,11 @@ class Work < ActiveRecord::Base
     end
   end
 
-  def update_scoring_hash
-    logger.debug "\n\n===== UPDATE SCORING HASH ===== \n\n"
-
-    # Return a hash comprising all the Contributorship scoring methods
+  # Return a hash comprising all the Contributorship scoring methods
+  def update_scoring_hash  
     self.scoring_hash = {:year => self.publication_date.try(:year),
                          :publication_id => self.publication_id,
-                         :collaborator_ids => self.name_string_ids,
+                         :collaborator_ids => self.name_strings.collect { |ns| ns.id }, #there's an error if one tries to do this the natural way
                          :keyword_ids => self.keyword_ids}
   end
 
