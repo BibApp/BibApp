@@ -300,6 +300,17 @@ class Person < ActiveRecord::Base
 
   end
 
+  #called by after_save callback
+  # @TODO Find bad dates, e.g. 0001-01-01, and replace them.
+  def update_memberships_end_dates
+    #Update memberships when person becomes inactive
+    if self.active_change == [true,false]
+      self.logger.info("#{self.changes}")
+      self.memberships.update_all({:end_date => Time.now}, ['end_date IS NULL'])
+    end
+  end
+
+
   class << self
     # return the first letter of each name, ordered alphabetically
     def letters
