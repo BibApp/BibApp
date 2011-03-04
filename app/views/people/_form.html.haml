@@ -36,6 +36,9 @@
       %div
         %label="Postal Address"
         = form.text_area :postal_address, :class => "smallbox"
+      %div
+        %label="Active?"
+        = form.check_box :active, :class => "checkbox"
     %div
       %label.lar="Research Focus"
       = form.text_area :research_focus
