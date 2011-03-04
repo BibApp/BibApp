@@ -104,6 +104,10 @@ class WorksController < ApplicationController
     else
       logger.debug("\n\n===Works: #{@current_object.inspect}")
       # Default BibApp search method - ApplicationController
+
+      #Solr filter query for active people
+      params[:filter] = []
+      params[:filter] << "person_active:true"
       search(params)
     end
   end
