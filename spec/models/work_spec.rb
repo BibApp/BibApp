@@ -268,4 +268,24 @@ describe Work do
       @work.initial_publication_id.should == @work.publication.id
     end
   end
+
+  context "work name strings" do
+    it "can be set from a hash for an existing record" do
+      work = Factory.create(:generic)
+      work.work_name_strings << (old_name_string = Factory.create(:work_name_string))
+      work.set_work_name_strings([{:name => 'Peters, Pete', :role => 'Creator'},
+                                  {:name => 'Josephs, Joe', :role => 'Contributor'}])
+      work.work_name_strings.size.should == 2
+      work.work_name_strings.member?(old_name_string).should be_false
+    end
+
+    it "can be set from a hash for a new record" do
+      work = Factory.build(:generic)
+      work.set_work_name_strings([{:name => 'Peters, Pete', :role => 'Creator'},
+                                  {:name => 'Josephs, Joe', :role => 'Contributor'}])
+      work.work_name_strings.should be_empty
+      work.save
+      work.work_name_strings.size.should == 2
+    end
+  end
 end

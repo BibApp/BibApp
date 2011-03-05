@@ -722,34 +722,32 @@ class Work < ActiveRecord::Base
   #   - Work object
   #   - collection of Keyword objects
   def update_keywordings(keywords)
-    if keywords
-      #first, remove any keyword(s) that are no longer in list
-      self.keywordings.each do |kw|
-        kw.destroy unless keywords.include?(kw.keyword)
-        keywords.delete(kw.keyword)
-      end
-      #next, add any new keyword(s) to list
-      keywords.each do |keyword|
-        #if this is a brand new keyword, we must save it first
-        keyword.save if keyword.new_record?
-        #add it to this Work
-        self.keywords << keyword
-      end
+    return unless keywords
+    #first, remove any keyword(s) that are no longer in list
+    self.keywordings.each do |kw|
+      kw.destroy unless keywords.include?(kw.keyword)
+      keywords.delete(kw.keyword)
+    end
+    #next, add any new keyword(s) to list
+    keywords.each do |keyword|
+      #if this is a brand new keyword, we must save it first
+      keyword.save if keyword.new_record?
+      #add it to this Work
+      self.keywords << keyword
     end
   end
 
   def update_taggings(tags)
-    if tags
-      #first, remove any tag(s) that are no longer in list
-      self.taggings.each do |kw|
-        kw.destroy unless tags.include?(kw.tag)
-        tags.delete(kw.tag)
-      end
-      #next, add any new tag(s) to list
-      tags.each do |tag|
-        tag.save if tag.new_record?
-        self.tags << tag
-      end
+    return unless tags
+    #first, remove any tag(s) that are no longer in list
+    self.taggings.each do |kw|
+      kw.destroy unless tags.include?(kw.tag)
+      tags.delete(kw.tag)
+    end
+    #next, add any new tag(s) to list
+    tags.each do |tag|
+      tag.save if tag.new_record?
+      self.tags << tag
     end
   end
 
