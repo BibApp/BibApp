@@ -72,13 +72,13 @@ class Work < ActiveRecord::Base
 
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
-  before_create :before_create_actions
+  after_create :after_create_actions
   before_save :before_save_actions
 
   # After Create only
   # (Note: after create callbacks *must* be placed in Work model, 
   #  for faux-accessors to work properly)
-  def before_create_actions
+  def after_create_actions
     create_work_name_strings
     create_keywords
     create_tags
@@ -395,7 +395,7 @@ class Work < ActiveRecord::Base
     end
 
     #save or update Work
-    self.tags = tags
+    self.set_tags(tags)
   end
 
   # Updates keywords for the current Work
@@ -428,15 +428,11 @@ class Work < ActiveRecord::Base
   #
   # Arguments:
   #  * array of Tags
-  def tags=(tags)
-    logger.debug("\n\n===SET TAGS===\n\n")
-    logger.debug("Tags= #{tags.inspect}")
+  def set_tags(tags)
     if self.new_record?
-      #Defer saving to Work object directly, until it is created
       @tags_cache = tags
     else
-      # Create keywords and save to database
-      Work.update_taggings(self, tags)
+      self.update_taggings(tags)
     end
   end
 
@@ -768,29 +764,19 @@ class Work < ActiveRecord::Base
     logger.debug("Work Keywords Saved= #{work.keywords.inspect}")
   end
 
-  def self.update_taggings(work, tags)
-    logger.debug("\n\n===UPDATE TAGS===\n\n")
-
-    unless tags.nil?
+  def update_taggings(tags)
+    if tags
       #first, remove any tag(s) that are no longer in list
-      work.taggings.each do |kw|
+      self.taggings.each do |kw|
         kw.destroy unless tags.include?(kw.tag)
         tags.delete(kw.tag)
       end
       #next, add any new tag(s) to list
       tags.each do |tag|
-        #if this is a brand new tag, we must save it first
-        if tag.new_record?
-          tag.save
-        end
-        #add it to this Work
-        work.tags << tag
-
+        tag.save if tag.new_record?
+        self.tags << tag
       end
-
-    end #end unless no tags
-
-    logger.debug("Work Tags Saved= #{work.tags.inspect}")
+    end
   end
 
   # Create keywords, after a Work is created successfully
@@ -804,10 +790,8 @@ class Work < ActiveRecord::Base
 
 
   def create_tags
-    logger.debug("===CREATE TAGS===")
-    logger.debug("Cached Tags= #{@tags_cache.inspect}")
     #Create any initialized tags and save to Work
-    self.tags = @tags_cache if @tags_cache
+    self.set_tags(@tags_cache) if @tags_cache
   end
 
   # Updates WorkNameStrings
