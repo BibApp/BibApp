@@ -44,7 +44,7 @@ class Publication < ActiveRecord::Base
 
   def before_create_actions
     unless self.initial_publisher_id.nil?
-      self.publisher_id = Publisher.first(self.initial_publisher_id).authority.id
+      self.publisher_id = Publisher.find(self.initial_publisher_id).authority.id
     end
   end
 
@@ -175,8 +175,8 @@ class Publication < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters(upcase = nil)
-    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter}
-    letters = letters.collect {|x| x.upcase} if upcase
+    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect { |x| x.letter }
+    letters = letters.collect { |x| x.upcase } if upcase
     return letters
   end
 

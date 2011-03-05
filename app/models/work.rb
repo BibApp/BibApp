@@ -287,7 +287,7 @@ class Work < ActiveRecord::Base
         end
       end
 
-      work.set_publication_info(:publication_name => publication,
+      work.set_publication_info(:name => publication,
                                 :issn_isbn => issn_isbn,
                                 :publisher_name => publisher)
 
@@ -469,14 +469,15 @@ class Work < ActiveRecord::Base
     return set_publisher
   end
 
-  def set_publication_from_name(publication_name, issn_isbn, set_publisher)
+  def set_publication_from_name(name, issn_isbn, set_publisher)
+    return unless name
     if issn_isbn.present?
-      publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(publication_name,
+      publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(name,
                                                                                               issn_isbn.to_s, set_publisher.id)
     elsif set_publisher
-      publication = Publication.find_or_create_by_name_and_initial_publisher_id(publication_name, set_publisher.id)
+      publication = Publication.find_or_create_by_name_and_initial_publisher_id(name, set_publisher.id)
     else
-      publication = Publication.find_or_create_by_name(publication_name)
+      publication = Publication.find_or_create_by_name(name)
     end
     publication.save!
     self.publication = publication.authority
@@ -495,11 +496,8 @@ class Work < ActiveRecord::Base
 
     # If there is no publisher name, set to Unknown
     set_publisher = set_publisher_from_name(publication_hash[:publisher_name])
-    if publication_hash[:publication_names]
-      publication_hash.each do |publication_name|
-        set_publication_from_name(publication_name, publication_hash[:issn_isbn], set_publisher)
-      end
-    end
+    set_publication_from_name(publication_hash[:name], publication_hash[:issn_isbn], set_publisher)
+    self.save
   end
 
   # All Works begin unverified
