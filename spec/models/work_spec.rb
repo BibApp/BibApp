@@ -283,9 +283,29 @@ describe Work do
       work = Factory.build(:generic)
       work.set_work_name_strings([{:name => 'Peters, Pete', :role => 'Creator'},
                                   {:name => 'Josephs, Joe', :role => 'Contributor'}])
-      work.work_name_strings.should be_empty
+      work.work_name_strings(true).should be_empty
       work.save
       work.work_name_strings.size.should == 2
+    end
+  end
+
+  context "tags" do
+    it "sets from a list of tags for an existing work" do
+      work = Factory.create(:generic)
+      work.tags << (old_tag = Factory.create(:tag))
+      new_tags = 3.times.collect {Factory.create(:tag)}
+      work.set_tags(new_tags)
+      work.tags(true).should_not include(old_tag)
+      work.tags.to_set.should == new_tags.to_set
+    end
+
+    it "sets from a list of tags for a new work" do
+      work = Factory.build(:generic)
+      new_tags = 3.times.collect {Factory.build(:tag)}
+      work.set_tags(new_tags)
+      work.tags(true).should be_empty
+      work.save
+      work.tags(true).size.should == 3
     end
   end
 end
