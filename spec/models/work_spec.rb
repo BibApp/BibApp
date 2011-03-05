@@ -194,4 +194,40 @@ describe Work do
       end
     end
   end
+
+  context "dupe_key checking" do
+    before(:each) do
+      @work = Factory.create(:generic, :title_primary => 'Work Name', :publication_date => Date.parse('2009-03-21'))
+    end
+
+    describe "title dupe key" do
+      it "returns nil if it has no publication" do
+        @work.title_dupe_key.should be_nil
+      end
+
+      it "returns nil if it has no publication authority" do
+        @work.publication = Factory.create(:publication)
+        @work.publication.should_receive(:authority).and_return(nil)
+        @work.title_dupe_key.should be_nil
+      end
+
+      it "returns a solr-like string if it has a publication authority" do
+        @work.publication = Factory.create(:publication)
+        @work.title_dupe_key.should == ['work name', '2009', @work.publication.authority.machine_name].join("||")
+      end
+    end
+
+    describe "name_string dupe key" do
+      it "returns nil without any name strings" do
+        @work.name_string_dupe_key.should be_nil
+      end
+
+      it "returns a solr like string with name_strings" do
+        name_string = Factory.create(:name_string, :name => 'Name String Name')
+        Factory.create(:work_name_string, :work => @work, :name_string => name_string)
+        @work.name_strings(true).should == [name_string]
+        @work.name_string_dupe_key.should == ['name string name', '2009', 'Generic', 'work name'].join('||')
+      end
+    end
+  end
 end

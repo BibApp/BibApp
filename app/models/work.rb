@@ -527,7 +527,7 @@ class Work < ActiveRecord::Base
   def title_dupe_key
     # Title Dupe Key Format:
     # [Work.machine_name]||[Work.year]||[Publication.machine_name]
-    unless self.publication.nil? or self.publication.authority.nil?
+    if self.publication and self.publication.authority
       self.machine_name.to_s + "||" + self.year.to_s + "||" + self.publication.authority.machine_name.to_s
     end
   end
@@ -537,7 +537,7 @@ class Work < ActiveRecord::Base
   def name_string_dupe_key
     # NameString Dupe Key Format:
     # [First NameString.machine_name]||[Work.year]||[Work.type]||[Work.machine_name]
-    unless self.name_strings.nil? or self.name_strings.empty?
+    if self.name_strings.present?
       self.name_strings[0].machine_name.to_s + "||" + self.year.to_s + "||" + self.type.to_s + "||" + self.machine_name.to_s
     end
   end

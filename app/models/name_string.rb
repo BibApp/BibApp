@@ -1,5 +1,8 @@
+require 'lib/machine_name'
+require 'namecase'
+
 class NameString < ActiveRecord::Base
-  require 'namecase'
+  include MachineName
 
   #### Associations ####
   has_many :works, :through => :work_name_strings
@@ -12,6 +15,8 @@ class NameString < ActiveRecord::Base
   #### Named Scopes ####
   scope :order_by_name, order('name')
   scope :name_like, lambda { |name| where('name like ?', "%#{name}%") }
+
+  before_save :update_machine_name
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
@@ -44,5 +49,7 @@ class NameString < ActiveRecord::Base
     self.name.split(',').first
   end
 
-
+  def update_machine_name
+    self.machine_name = make_machine_name(self.name) if self.name_changed?
+  end
 end
