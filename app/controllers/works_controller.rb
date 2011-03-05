@@ -258,7 +258,7 @@ class WorksController < ApplicationController
       # Create attribute hash from params
       r_hash = create_attribute_hash
 
-      work_id, errors = Work.update_from_hash(r_hash, @work)
+      work_id, errors = @work.update_from_hash(r_hash)
 
       # current user automatically gets 'admin' permissions on work
       # (only if he/she doesn't already have that permission)

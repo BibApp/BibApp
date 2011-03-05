@@ -352,4 +352,11 @@ describe Work do
     end
   end
 
+  it "can convert a string as found in its types array to a work subclass" do
+    type_1 = "Conference Proceeding (Whole)"
+    type_2 = "Dissertation / Thesis"
+    [type_1, type_2].each {|type| Work.types.include?(type)}
+    Work.type_to_class(type_1).should == ConferenceProceedingWhole
+    Work.type_to_class(type_2).should == DissertationThesis
+  end
 end

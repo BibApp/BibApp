@@ -181,30 +181,28 @@ class Work < ActiveRecord::Base
     # "Conference Proceeding", 
     # "Book"
     # more...   	    			  
-    types = [
-        "Artwork",
-        "Book (Section)",
-        "Book (Whole)",
-        "Book Review",
-        "Composition",
-        "Conference Paper",
-        "Conference Poster",
-        "Conference Proceeding (Whole)",
-        "Dissertation / Thesis",
-        "Exhibition",
-        "Grant",
-        "Journal (Whole)",
-        "Journal Article",
-        "Monograph",
-        "Patent",
-        "Performance",
-        "Presentation / Lecture",
-        "Recording (Moving Image)",
-        "Recording (Sound)",
-        "Report",
-        "Web Page",
-        "Generic"
-    ]
+    ["Artwork",
+     "Book (Section)",
+     "Book (Whole)",
+     "Book Review",
+     "Composition",
+     "Conference Paper",
+     "Conference Poster",
+     "Conference Proceeding (Whole)",
+     "Dissertation / Thesis",
+     "Exhibition",
+     "Grant",
+     "Journal (Whole)",
+     "Journal Article",
+     "Monograph",
+     "Patent",
+     "Performance",
+     "Presentation / Lecture",
+     "Recording (Moving Image)",
+     "Recording (Sound)",
+     "Report",
+     "Web Page",
+     "Generic"]
   end
 
   def self.type_to_class(type)
@@ -216,61 +214,60 @@ class Work < ActiveRecord::Base
 
   # Creates a new work from an attribute hash
   def self.create_from_hash(h)
-    logger.debug("\n\n===CREATE NEW WORK FROM HASH===\n\n")
-
-    # Initialize the Work
     klass = h[:klass]
 
     # Are we working with a legit SubKlass?
     klass = klass.constantize
     if klass.superclass != Work
-      raise NameError.new("#{klass_type} is not a subclass of Work") and return
+      raise NameError.new("#{klass_type} is not a subclass of Work")
     end
 
     work = klass.new
-    update_from_hash(h, work)
+    work.update_from_hash(h)
+  end
+
+  def denormalize_role(role)
+    case role
+      when 'Author'
+        self.creator_role
+      when 'Editor'
+        self.contributor_role
+      else
+        role
+    end
+  end
+
+  def delete_non_work_data(h)
+    h.delete(:klass)
+    h.delete(:work_name_strings)
+    h.delete(:publisher)
+    h.delete(:publication)
+    h.delete(:issn_isbn)
+    h.delete(:keywords)
+    h.delete(:source)
+    # @TODO add external_systems to work import
+    h.delete(:external_id)
   end
 
   # Updates an existing work from an attribute hash
-  def self.update_from_hash(h, work)
-    logger.debug("\n\n===UPDATING WORK PROPERTIES FROM HASH===\n\n")
-
+  def update_from_hash(h)
     begin
-
-      ###
-      # Setting WorkNameStrings
-      # We need to get creator and contributor roles
-      # from the subklasses
-      # (e.g., for Artwork creator=>Artist, contributor=>Curator)
-      ###
-      klass = h[:klass]
-      klass = klass.constantize
-
       work_name_strings = h[:work_name_strings].collect do |wns|
-        logger.debug("Work name string: #{wns[:name]}")
-        role = wns[:role]
-        if role == 'Author'
-          role = klass.creator_role
-        elsif role == 'Editor'
-          role = klass.contributor_role
-        end
-        {:name => wns[:name], :role => role}
+        {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
       end
-
-      work.set_work_name_strings(work_name_strings)
+      self.set_work_name_strings(work_name_strings)
 
       #If we are adding to a person, pre-verify that person's contributorship
       person = Person.find(h[:person_id]) if h[:person_id]
-      work.preverified_person = person if person
+      self.preverified_person = person if person
 
       ###
       # Setting Publication Info, including Publisher
       ###
-      issn_isbn = h[:issn_isbn]
-      publisher = h[:publisher]
+
 
       publication =
-          case klass.to_s
+          case self.class.to_s
             when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
               h[:title_primary] ? h[:title_primary] : 'Unknown'
             when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
@@ -281,45 +278,37 @@ class Work < ActiveRecord::Base
               nil
           end
 
+      issn_isbn = h[:issn_isbn]
       if publication == 'Unknown' and issn_isbn.present?
         publication = "Unknown (#{issn_isbn})"
       end
 
-      work.set_publication_info(:name => publication,
+      self.set_publication_info(:name => publication,
                                 :issn_isbn => issn_isbn,
-                                :publisher_name => publisher)
+                                :publisher_name => h[:publisher])
 
       ###
       # Setting Keywords
       ###
-      work.set_keyword_strings(h[:keywords])
+      self.set_keyword_strings(h[:keywords])
 
       # Clean the hash of non-Work table data
       # Cleaning will prepare the hash for ActiveRecord insert
-      h.delete(:klass)
-      h.delete(:work_name_strings)
-      h.delete(:publisher)
-      h.delete(:publication)
-      h.delete(:issn_isbn)
-      h.delete(:keywords)
-      h.delete(:source)
-      # @TODO add external_systems to work import
-      h.delete(:external_id)
+      self.delete_non_work_data(h)
 
       # When adding a work to a person, person_id causes work.save to fail
       h.delete(:person_id) if h[:person_id]
 
       #save remaining hash attributes
-      work.attributes = h
-      saved = work.save
+      self.attributes = h
+      saved = self.save
 
     rescue Exception => e
       return nil, e
     end
 
     if saved
-      logger.debug("\nWork #{work.id} has been saved!")
-      return work.id, nil
+      return self.id, nil
     else
       return nil, "Validation Error: Primary Title is missing."
     end
