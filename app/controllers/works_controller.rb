@@ -877,7 +877,7 @@ class WorksController < ApplicationController
 
           #save remaining hash attributes
           work.attributes=h
-          work.save_and_set_for_index
+          work.set_for_index_and_save
 
           # current user automatically gets 'admin' permissions on work
           # (only if he/she doesn't already have that role on the work)

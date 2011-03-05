@@ -15,7 +15,7 @@ describe PenName do
     person = Factory.create(:person)
     work = Factory.create(:work)
     Contributorship.create(:person => person, :work => work, :pen_name => pen_name)
-    pen_name.works(true).each {|w| w.should_receive(:save_and_set_for_index)}
+    pen_name.works(true).each {|w| w.should_receive(:set_for_index_and_save)}
     Index.should_receive(:batch_index)
     pen_name.index_works
   end

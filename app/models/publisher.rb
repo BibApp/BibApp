@@ -88,7 +88,7 @@ class Publisher < ActiveRecord::Base
       self.publications.each do |publication|
         publication.works.each do |work|
           work.publisher_id = self.authority_id
-          work.save_and_set_for_index
+          work.set_for_index_and_save
         end
       end
 

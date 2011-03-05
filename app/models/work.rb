@@ -144,6 +144,10 @@ class Work < ActiveRecord::Base
     self.work_archive_state_id = ARCHIVE_STATE_INITIAL
   end
 
+  def has_init_archive_status?
+    self.work_archive_state_id == ARCHIVE_STATE_INITIAL
+  end
+
   def ready_to_archive?
     self.work_archive_state_id == ARCHIVE_STATE_READY_TO_ARCHIVE
   end
@@ -347,7 +351,7 @@ class Work < ActiveRecord::Base
     # dupes that have previously been determined to not be dupes by a human)
   end
 
-  def save_and_set_for_index
+  def set_for_index_and_save
     self.batch_index = 1
     self.save
   end

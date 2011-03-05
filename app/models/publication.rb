@@ -151,7 +151,7 @@ class Publication < ActiveRecord::Base
       self.works.each do |work|
         work.publication_id = self.authority_id
         work.publisher_id = self.authority.publisher.authority_id
-        work.save_and_set_for_index
+        work.set_for_index_and_save
       end
       self.do_reindex = true
     end

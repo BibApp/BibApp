@@ -230,4 +230,16 @@ describe Work do
       end
     end
   end
+
+  it "can create a unique solr id" do
+    work = Factory.create(:work)
+    work.solr_id.should == "Work-#{work.id}"
+  end
+
+  it 'has specified initial states' do
+    work = Factory.create(:work)
+    work.in_process?
+    work.has_init_archive_status?
+  end
+
 end

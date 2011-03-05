@@ -76,7 +76,7 @@ class Import < ActiveRecord::Base
 
       contributorships.each do |c|
         c.verify_contributorship
-        c.work.save_and_set_for_index
+        c.work.set_for_index_and_save
       end
 
       logger.debug("\n\n\n* Batch indexing import - #{self.person_id}\n\n")

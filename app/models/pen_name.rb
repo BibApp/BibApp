@@ -24,7 +24,7 @@ class PenName < ActiveRecord::Base
   end
 
   def index_works
-    self.works.each { |w| w.save_and_set_for_index }
+    self.works.each { |w| w.set_for_index_and_save }
     Index.batch_index
   end
 

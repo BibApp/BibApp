@@ -16,7 +16,7 @@ class AddAuthorityKeysToWorks < ActiveRecord::Migration
        if !work.publication.nil?
          work.authority_publication_id  = work.publication.authority.id
          work.authority_publisher_id    = work.publication.authority.publisher.id
-         work.save_and_set_for_index
+         work.set_for_index_and_save
        end
      end
      
