@@ -287,9 +287,9 @@ class Work < ActiveRecord::Base
         end
       end
 
-      work.publication_info = {:publication_name => publication,
+      work.set_publication_info(:publication_name => publication,
                                :issn_isbn => issn_isbn,
-                               :publisher_name => publisher}
+                               :publisher_name => publisher)
 
       ###
       # Setting Keywords
@@ -468,7 +468,7 @@ class Work < ActiveRecord::Base
   #          :issn_isbn => "Publication ISSN or ISBN",
   #          :publisher_name => "Publisher name" }
   #  (not all hash values need be set)
-  def publication_info=(publication_hash)
+  def set_publication_info(publication_hash)
     logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
 
     # Unknown publication names should be set to Unknown

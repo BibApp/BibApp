@@ -842,12 +842,11 @@ class WorksController < ApplicationController
         # Setting Publication Info, including Publisher
         ###
         issn_isbn = h[:issn_isbn]
-        publication_info = Hash.new
         publication_info = {:name => h[:publication],
                             :issn_isbn => issn_isbn,
                             :publisher_name => h[:publisher]}
 
-        work.publication_info = publication_info
+        work.set_publication_info(publication_info)
 
         # Very minimal validation -- just check that we have a title
         if h[:title_primary].nil? or h[:title_primary] == ""
