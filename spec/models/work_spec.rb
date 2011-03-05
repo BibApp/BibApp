@@ -308,4 +308,25 @@ describe Work do
       work.tags(true).size.should == 3
     end
   end
+
+  context "keywords" do
+    it "sets from a list of keywords for an existing work" do
+      work = Factory.create(:generic)
+      work.keywords << (old_keyword = Factory.create(:keyword))
+      new_keywords = 3.times.collect {Factory.create(:keyword)}
+      work.set_keywords(new_keywords)
+      work.keywords(true).should_not include(old_keyword)
+      work.keywords.to_set.should == new_keywords.to_set
+    end
+
+    it "sets from a list of keywords for a new work" do
+      work = Factory.build(:generic)
+      new_keywords = 3.times.collect {Factory.build(:keyword)}
+      work.set_keywords(new_keywords)
+      work.keywords(true).should be_empty
+      work.save
+      work.keywords(true).size.should == 3
+    end
+  end
+
 end
