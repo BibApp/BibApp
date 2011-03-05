@@ -154,6 +154,17 @@ describe Work do
 
     end
 
+    it "should be able to update its batch indexing status and save" do
+      work = Factory.create(:work)
+      work.batch_index.should == Work::NOT_TO_BE_BATCH_INDEXED
+      work.set_for_index_and_save
+      work.reload
+      work.batch_index.should == Work::TO_BE_BATCH_INDEXED
+      work.mark_indexed
+      work.reload
+      work.batch_index.should == Work::NOT_TO_BE_BATCH_INDEXED
+    end
+
     it "should update its scoring hash" do
       work = Factory.create(:work)
       publication = Factory.create(:publication)
@@ -307,6 +318,12 @@ describe Work do
       work.save
       work.tags(true).size.should == 3
     end
+
+    it "sets from a list of tag names" do
+      work = Factory.build(:generic)
+      work.set_tag_strings ['Pete', 'Joe', 'Ack']
+      work.tags(true).size.should == 3
+    end
   end
 
   context "keywords" do
@@ -325,6 +342,12 @@ describe Work do
       work.set_keywords(new_keywords)
       work.keywords(true).should be_empty
       work.save
+      work.keywords(true).size.should == 3
+    end
+
+    it "sets from a list of keyword strings" do
+      work = Factory.build(:generic)
+      work.set_keyword_strings ['Pete', 'Joe', 'Ack']
       work.keywords(true).size.should == 3
     end
   end

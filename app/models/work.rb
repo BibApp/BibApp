@@ -350,7 +350,7 @@ class Work < ActiveRecord::Base
   end
 
   def set_for_index_and_save
-    self.batch_index = 1
+    self.batch_index = TO_BE_BATCH_INDEXED
     self.save
   end
 
@@ -369,6 +369,7 @@ class Work < ActiveRecord::Base
       Keyword.find_or_initialize_by_name(add)
     end
     self.set_keywords(keywords)
+    self.save
   end
 
   # Initializes an array of Tags
@@ -381,6 +382,7 @@ class Work < ActiveRecord::Base
       Tag.find_or_initialize_by_name(add)
     end
     self.set_tags(tags)
+    self.save
   end
 
   # Updates keywords for the current Work
