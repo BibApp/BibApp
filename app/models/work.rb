@@ -288,8 +288,8 @@ class Work < ActiveRecord::Base
       end
 
       work.set_publication_info(:publication_name => publication,
-                               :issn_isbn => issn_isbn,
-                               :publisher_name => publisher)
+                                :issn_isbn => issn_isbn,
+                                :publisher_name => publisher)
 
       ###
       # Setting Keywords
@@ -461,6 +461,28 @@ class Work < ActiveRecord::Base
 
   end
 
+  def set_publisher_from_name(publisher_name = nil)
+    publisher_name = "Unknown" if publisher_name.blank?
+    set_publisher = Publisher.find_or_create_by_name(publisher_name)
+    self.publisher = set_publisher.authority
+    self.initial_publisher_id = set_publisher.id
+    return set_publisher
+  end
+
+  def set_publication_from_name(publication_name, issn_isbn, set_publisher)
+    if issn_isbn.present?
+      publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(publication_name,
+                                                                                              issn_isbn.to_s, set_publisher.id)
+    elsif set_publisher
+      publication = Publication.find_or_create_by_name_and_initial_publisher_id(publication_name, set_publisher.id)
+    else
+      publication = Publication.find_or_create_by_name(publication_name)
+    end
+    publication.save!
+    self.publication = publication.authority
+    self.initial_publication_id = publication.id
+  end
+
   # Initializes the Publication information
   # and saves it to the current Work
   # Arguments:
@@ -471,46 +493,11 @@ class Work < ActiveRecord::Base
   def set_publication_info(publication_hash)
     logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
 
-    # Unknown publication names should be set to Unknown
-    # already. Nil is accepted for some work types.
-    publication_name = publication_hash[:publication_name]
-
     # If there is no publisher name, set to Unknown
-    publisher_name = publication_hash[:publisher_name]
-    if publisher_name.nil? || publisher_name.empty?
-      publisher_name = "Unknown"
-    end
-
-    #Create and assign publisher
-    set_publisher = Publisher.find_or_create_by_name(publisher_name)
-    self.publisher = set_publisher.authority
-    self.initial_publisher_id = set_publisher.id
-
-    if publication_name
-      # We can have more than one Publisher name
-      # Ex: [Physics of Plasmas, Phys Plasmas]
-      publication_name.each do |pub_name|
-        # Initialize our publication, as best we can,
-        # based on the information provided
-
-        # English: If you have an issn or isbn and good publisher data
-        if publication_hash[:issn_isbn].present?
-          publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(
-              :name => pub_name.to_s,
-              :issn_isbn => publication_hash[:issn_isbn].to_s,
-              :initial_publisher_id => set_publisher.id)
-        elsif set_publisher
-          publication = Publication.find_or_create_by_name_and_initial_publisher_id(
-              :name => pub_name,
-              :initial_publisher_id => set_publisher.id)
-        else
-          publication = Publication.find_or_create_by_name(pub_name)
-        end
-
-        #save or update Work
-        publication.save!
-        self.publication = publication.authority
-        self.initial_publication_id = publication.id
+    set_publisher = set_publisher_from_name(publication_hash[:publisher_name])
+    if publication_hash[:publication_names]
+      publication_hash.each do |publication_name|
+        set_publication_from_name(publication_name, publication_hash[:issn_isbn], set_publisher)
       end
     end
   end
@@ -563,7 +550,7 @@ class Work < ActiveRecord::Base
   end
 
   # Return a hash comprising all the Contributorship scoring methods
-  def update_scoring_hash  
+  def update_scoring_hash
     self.scoring_hash = {:year => self.publication_date.try(:year),
                          :publication_id => self.publication_id,
                          :collaborator_ids => self.name_strings.collect { |ns| ns.id }, #there's an error if one tries to do this the natural way
