@@ -294,7 +294,7 @@ class Work < ActiveRecord::Base
       ###
       # Setting Keywords
       ###
-      work.keyword_strings = h[:keywords]
+      work.set_keyword_strings(h[:keywords])
 
       # Clean the hash of non-Work table data
       # Cleaning will prepare the hash for ActiveRecord insert
@@ -365,7 +365,7 @@ class Work < ActiveRecord::Base
   # and saves them to the current Work
   # Arguments:
   #  * array of keyword strings
-  def keyword_strings=(keyword_strings)
+  def set_keyword_strings(keyword_strings)
     keyword_strings ||= []
     keywords = keyword_strings.to_a.uniq.collect do |add|
       Keyword.find_or_initialize_by_name(add)

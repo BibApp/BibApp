@@ -858,7 +858,7 @@ class WorksController < ApplicationController
           ###
           # Setting Keywords
           ###
-          work.keyword_strings = h[:keywords]
+          work.set_keyword_strings(h[:keywords])
 
           # Clean the hash of non-Work table data
           # Cleaning will prepare the hash for ActiveRecord insert
