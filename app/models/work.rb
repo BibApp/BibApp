@@ -366,18 +366,11 @@ class Work < ActiveRecord::Base
   # Arguments:
   #  * array of keyword strings
   def keyword_strings=(keyword_strings)
-    #default to empty array of keywords
     keyword_strings ||= []
-
-    #Initialize keywords
-    keywords = Array.new
-    keyword_strings.to_a.uniq.each do |add|
-      keywords << Keyword.find_or_initialize_by_name(add)
+    keywords = keyword_strings.to_a.uniq.collect do |add|
+      Keyword.find_or_initialize_by_name(add)
     end
-
-    #save or update Work
-    self.keywords = keywords
-
+    self.set_keywords(keywords)
   end
 
   # Initializes an array of Tags
@@ -407,15 +400,11 @@ class Work < ActiveRecord::Base
   #
   # Arguments:
   #  * array of Keywords
-  def keywords=(keywords)
-    logger.debug("\n\n===SET KEYWORDS===\n\n")
-    logger.debug("Keywords= #{keywords.inspect}")
+  def set_keywords(keywords)
     if self.new_record?
-      #Defer saving keywords to Work object directly, until it is created
       @keywords_cache = keywords
     else
-      # Create keywords and save to database
-      Work.update_keywordings(self, keywords)
+      self.update_keywordings(keywords)
     end
   end
 
@@ -740,28 +729,21 @@ class Work < ActiveRecord::Base
   # Arguments:
   #   - Work object
   #   - collection of Keyword objects
-  def self.update_keywordings(work, keywords)
-    logger.debug("\n\n===UPDATE KEYWORDINGS===\n\n")
-
-    unless keywords.nil?
+  def update_keywordings(keywords)
+    if keywords
       #first, remove any keyword(s) that are no longer in list
-      work.keywordings.each do |kw|
+      self.keywordings.each do |kw|
         kw.destroy unless keywords.include?(kw.keyword)
         keywords.delete(kw.keyword)
       end
       #next, add any new keyword(s) to list
       keywords.each do |keyword|
         #if this is a brand new keyword, we must save it first
-        if keyword.new_record?
-          keyword.save
-        end
+        keyword.save if keyword.new_record?
         #add it to this Work
-        work.keywords << keyword
+        self.keywords << keyword
       end
-
-    end #end unless no keywords
-
-    logger.debug("Work Keywords Saved= #{work.keywords.inspect}")
+    end
   end
 
   def update_taggings(tags)
@@ -782,10 +764,8 @@ class Work < ActiveRecord::Base
   # Create keywords, after a Work is created successfully
   #  Called by 'after_create' callback
   def create_keywords
-    logger.debug("===CREATE KEYWORDS===")
-    logger.debug("Cached Keywords= #{@keywords_cache.inspect}")
     #Create any initialized keywords and save to Work
-    self.keywords = @keywords_cache if @keywords_cache
+    self.set_keywords(@keywords_cache) if @keywords_cache
   end
 
 

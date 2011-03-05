@@ -161,7 +161,7 @@ describe Work do
       name_strings = 4.times.collect { Factory.create(:name_string) }
       work.publication_date = Date.parse('2008-01-02')
       work.publication = publication
-      work.keywords = keywords
+      work.set_keywords(keywords)
       work.name_strings = name_strings
       work.save
       work.scoring_hash.should == {:year => 2008, :publication_id => publication.id,
