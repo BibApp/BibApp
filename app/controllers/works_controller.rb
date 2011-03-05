@@ -824,7 +824,7 @@ class WorksController < ApplicationController
         # Are we working with a legit SubKlass?
         klass = klass.constantize
         if klass.superclass != Work
-          raise NameError.new("#{klass_type} is not a subclass of Work") and return
+          raise NameError.new("#{klass_type} is not a subclass of Work")
         end
 
         work = klass.new

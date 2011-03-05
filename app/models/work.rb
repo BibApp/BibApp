@@ -9,7 +9,7 @@ class Work < ActiveRecord::Base
   # Information about a 'pre-verified' Contributorship
   # for a specific Person in the system
   # (This occurs when adding a Work directly to a Person).
-  cattr_accessor :preverified_person
+  attr_accessor :preverified_person
 
   serialize :scoring_hash
 
@@ -249,6 +249,19 @@ class Work < ActiveRecord::Base
     h.delete(:external_id)
   end
 
+  def publication_name_from_hash(h)
+    case self.class.to_s
+      when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
+        h[:title_primary] ? h[:title_primary] : 'Unknown'
+      when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
+        h[:title_secondary] ? h[:title_secondary] : 'Unknown'
+      when 'JournalArticle', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Generic'
+        h[:publication] ? h[:publication] : 'Unknown'
+      else
+        nil
+    end
+  end
+
   # Updates an existing work from an attribute hash
   def update_from_hash(h)
     begin
@@ -264,26 +277,14 @@ class Work < ActiveRecord::Base
       ###
       # Setting Publication Info, including Publisher
       ###
-
-
-      publication =
-          case self.class.to_s
-            when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
-              h[:title_primary] ? h[:title_primary] : 'Unknown'
-            when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
-              h[:title_secondary] ? h[:title_secondary] : 'Unknown'
-            when 'JournalArticle', 'BookReview', 'Performance', 'RecordingSound', 'RecordingMovingImage', 'Generic'
-              h[:publication] ? h[:publication] : 'Unknown'
-            else
-              nil
-          end
+      publication_name = publication_name_from_hash(h)
 
       issn_isbn = h[:issn_isbn]
-      if publication == 'Unknown' and issn_isbn.present?
-        publication = "Unknown (#{issn_isbn})"
+      if publication_name == 'Unknown' and issn_isbn.present?
+        publication_name = "Unknown (#{issn_isbn})"
       end
 
-      self.set_publication_info(:name => publication,
+      self.set_publication_info(:name => publication_name,
                                 :issn_isbn => issn_isbn,
                                 :publisher_name => h[:publisher])
 
