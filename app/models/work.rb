@@ -375,17 +375,11 @@ class Work < ActiveRecord::Base
   # and saves them to the current Work
   # Arguments:
   #  * array of tag strings
-  def tag_strings=(tag_strings)
-    #default to empty array of keywords
+  def set_tag_strings(tag_strings)
     tag_strings ||= []
-
-    #Initialize keywords
-    tags = Array.new
-    tag_strings.to_a.uniq.each do |add|
-      tags << Tag.find_or_initialize_by_name(add)
+    tags = tag_strings.to_a.uniq.collect do |add|
+      Tag.find_or_initialize_by_name(add)
     end
-
-    #save or update Work
     self.set_tags(tags)
   end
 

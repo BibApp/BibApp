@@ -352,7 +352,7 @@ class WorksController < ApplicationController
     # Save tags to instance variable @tags,
     # in case any errors should occur in saving work    
     #@tags = params[:tags]
-    #@work.tag_strings = @tags
+    #@work.set_tag_strings(@tags)
 
     ###
     # Setting Publication Info, including Publisher
@@ -722,7 +722,7 @@ class WorksController < ApplicationController
     # Save tags to instance variable @tags,
     # in case any errors should occur in saving work    
     @tags = params[:tags]
-    @work.tag_strings = @tags
+    @work.set_tag_strings(@tags)
 
     respond_to do |format|
       if @work.save and Index.update_solr(@work)
