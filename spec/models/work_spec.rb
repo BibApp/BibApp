@@ -359,4 +359,74 @@ describe Work do
     Work.type_to_class(type_1).should == ConferenceProceedingWhole
     Work.type_to_class(type_2).should == DissertationThesis
   end
+
+  context 'operations with hash data' do
+    context 'creation' do
+      it "can create a subclass instance from hash data" do
+        expect {Work.create_from_hash(:klass => 'Generic', :title_primary => 'Title')}.to change {Generic.count}.by(1)
+      end
+
+      it "raises an error if attempting to create an invalid subclass" do
+        expect {Work.create_from_hash(:klass => 'Object')}.to raise_error(NameError)
+      end
+    end
+
+    context 'role identification' do
+      before(:each) {@work = Factory.create(:performance)}
+      it "should be able to return a specific creator role in place of 'Author'" do
+        @work.denormalize_role('Author').should == 'Director'
+      end
+
+      it "should be able to return a specific contributor role in place of 'Editor'" do
+        @work.denormalize_role('Editor').should == 'Musician'
+      end
+
+      it "should return a role unchanged if it is neither Author or Editor" do
+        @work.denormalize_role('OtherRole').should == 'OtherRole'
+      end
+    end
+
+    it "should be able to clean the hash of non-work related keys" do
+      keys = [:klass, :work_name_strings, :publisher, :publication, :issn_isbn, :keywords, :source, :external_id]
+      hash = Hash.new.tap do |h|
+        keys.each do |key|
+          h[key] = key.to_s
+        end
+      end
+      work = Factory.create(:work)
+      work.delete_non_work_data(hash)
+      hash.size.should == 0
+    end
+
+    context 'publication name' do
+      before(:each) do
+        @hash = {:title_primary => "Title Primary", :title_secondary => "Title Secondary", :publication => 'Publication'}
+      end
+
+      it "uses title_primary for some classes" do
+        work = Factory.build(:book_whole)
+        work.publication_name_from_hash(@hash).should == 'Title Primary'
+      end
+
+      it "uses title_secondary for some classes" do
+        work = Factory.build(:report)
+        work.publication_name_from_hash(@hash).should == 'Title Secondary'
+      end
+
+      it "uses publication for some classes" do
+        work = Factory.build(:book_review)
+        work.publication_name_from_hash(@hash).should == 'Publication'
+      end
+
+      it "uses nil for some classes" do
+        work = Factory.build(:web_page)
+        work.publication_name_from_hash(@hash).should be_nil
+      end
+
+      it "uses 'Unknown' if the right hash key is not set" do
+        work = Factory.build(:monograph)
+        work.publication_name_from_hash({}).should == 'Unknown'
+      end
+    end
+  end
 end

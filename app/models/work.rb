@@ -238,15 +238,10 @@ class Work < ActiveRecord::Base
   end
 
   def delete_non_work_data(h)
-    h.delete(:klass)
-    h.delete(:work_name_strings)
-    h.delete(:publisher)
-    h.delete(:publication)
-    h.delete(:issn_isbn)
-    h.delete(:keywords)
-    h.delete(:source)
-    # @TODO add external_systems to work import
-    h.delete(:external_id)
+    [:klass, :work_name_strings, :publisher, :publication, :issn_isbn, :keywords, :source, :external_id].each do |key|
+      h.delete(key)
+    end
+    h
   end
 
   def publication_name_from_hash(h)
@@ -265,7 +260,7 @@ class Work < ActiveRecord::Base
   # Updates an existing work from an attribute hash
   def update_from_hash(h)
     begin
-      work_name_strings = h[:work_name_strings].collect do |wns|
+      work_name_strings = (h[:work_name_strings] || []).collect do |wns|
         {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
       end
       self.set_work_name_strings(work_name_strings)
