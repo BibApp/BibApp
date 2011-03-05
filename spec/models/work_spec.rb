@@ -242,13 +242,30 @@ describe Work do
     work.has_init_archive_status?
   end
 
-  it 'can set publication and publisher information from a hash' do
-    @work = Factory.create(:work)
-    @work.set_publication_info(:name => 'Publication Name', :publisher_name => 'Publisher Name', :issn_isbn => ISSN.random)
-    @work.publisher.should == Publisher.find_by_name('Publisher Name')
-    @work.initial_publisher_id.should == @work.publisher.id
-    @work.publication.should == Publication.find_by_name('Publication Name')
-    @work.initial_publication_id.should == @work.publication.id
-  end
+  context 'setting publication and publisher information' do
 
+    it 'works from a hash' do
+      @work = Factory.create(:work)
+      @work.set_publication_info(:name => 'Publication Name', :publisher_name => 'Publisher Name', :issn_isbn => ISSN.random)
+      @work.publisher.should == Publisher.find_by_name('Publisher Name')
+      @work.initial_publisher_id.should == @work.publisher.id
+      @work.publication.should == Publication.find_by_name('Publication Name')
+      @work.initial_publication_id.should == @work.publication.id
+    end
+
+    it 'works without an issn' do
+      @work = Factory.create(:work)
+      @publisher = Factory.create(:publisher, :name => 'Publisher')
+      @work.set_publication_from_name('Publication', nil, @publisher)
+      @work.publication.should == Publication.find_by_name_and_initial_publisher_id('Publication', @publisher.id)
+      @work.initial_publication_id.should == @work.publication.id
+    end
+
+    it 'works without an issn or publisher' do
+      @work = Factory.create(:work)
+      @work.set_publication_from_name('Publication', nil, nil)
+      @work.publication.should == Publication.find_by_name('Publication')
+      @work.initial_publication_id.should == @work.publication.id
+    end
+  end
 end

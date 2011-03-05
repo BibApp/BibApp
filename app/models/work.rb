@@ -257,7 +257,7 @@ class Work < ActiveRecord::Base
         {:name => wns[:name], :role => role}
       end
 
-      work.work_name_strings = work_name_strings
+      work.set_work_name_strings(work_name_strings)
 
       #If we are adding to a person, pre-verify that person's contributorship
       person = Person.find(h[:person_id]) if h[:person_id]
@@ -445,20 +445,12 @@ class Work < ActiveRecord::Base
   # and saves them to the current Work
   # Arguments:
   #  * hash {:name => "Donohue, T.", :role => "Author | Editor" }
-  def work_name_strings=(work_name_string_hash)
-    logger.debug("\n\n===SET WORK_NAME_STRINGS===\n\n")
-    logger.debug("WorkNameStrings: #{work_name_string_hash.inspect}")
-
-
+  def set_work_name_strings(work_name_string_hash)
     if self.new_record?
-      #Defer saving to Work object directly, until it is created
-      logger.debug("Will set name strings later, once the work has been saved...\n")
       @work_name_strings_cache = work_name_string_hash
     else
-      # Create name_strings and save to database
-      Work.update_work_name_strings(self, work_name_string_hash)
+      self.update_work_name_strings(work_name_string_hash)
     end
-
   end
 
   def set_publisher_from_name(publisher_name = nil)
@@ -824,46 +816,26 @@ class Work < ActiveRecord::Base
   # Arguments:
   #  * Work object
   #  * Array of hashes {:name => "Donohue, Tim", :role=> "Author | Editor" }
-  def self.update_work_name_strings(work, name_strings_hash)
-    logger.debug("\n\n===UPDATE WORK_NAME_STRINGS===\n\n")
-    unless name_strings_hash.nil?
-      #First, remove *ALL* existing name_string(s).  We want to add them
-      #all again from scratch, since the order of Authors/Editors *matters*
-      work.work_name_strings.each do |cns| # Current CNSs
-        cns.destroy
-      end
+  def update_work_name_strings(name_strings_hash)
+    return unless name_strings_hash
+    #Remove *ALL* existing name_string(s).  We want to add them
+    #all again from scratch, since the order of Authors/Editors *matters*
+    self.work_name_strings.clear
 
-      #next, re-add all name string(s) to list
-      name_strings_hash.flatten.each do |cns|
-        #Generate the "machine_name" for this namestring...this is our unique name with punctuation removed, etc.
-        machine_name = cns[:name].gsub(".", " ").gsub(",", " ").gsub(/ +/, " ").strip.downcase
-
-        # Create the hash for NameString.find_or_create_by_machine_name
-        ns_hash = {:name => cns[:name].strip, :machine_name => machine_name}
-
-        # TODO: it isn't obvious that this method takes a hash
-        name_string = NameString.find_or_create_by_machine_name(ns_hash)
-
-        logger.debug("\nCreating new namestring:")
-        logger.debug("Name = #{name_string.name}; Machine name= #{name_string.machine_name}\n\n")
-
-        #add it to this Work
-        logger.debug("Adding name string '#{name_string.name}' to work #{work.id}")
-        WorkNameString.create(:work_id => work.id,
-                              :name_string_id => name_string.id,
-                              :role => cns[:role])
-      end
+    #Re-add all name string(s) to list
+    name_strings_hash.flatten.each do |cns|
+      machine_name = make_machine_name(cns[:name])
+      name = cns[:name].strip
+      name_string = NameString.find_or_create_by_machine_name_and_name(machine_name, name)
+      self.work_name_strings.create(:name_string_id => name_string.id, :role => cns[:role])
     end
   end
 
-  # Create WorkNameStrings, after a Work is created successfully
-  #  Called by 'after_create' callback
+# Create WorkNameStrings, after a Work is created successfully
+#  Called by 'after_create' callback
   def create_work_name_strings
-    logger.debug("===CREATE WORK_NAME_STRINGS===")
-    logger.debug("Cached CNS= #{@work_name_strings_cache.inspect}")
-
     #Create any initialized name_strings and save to Work
-    self.work_name_strings = @work_name_strings_cache if @work_name_strings_cache
+    self.set_work_name_strings(@work_name_strings_cache) if @work_name_strings_cache
   end
 
 end

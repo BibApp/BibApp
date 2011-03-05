@@ -482,7 +482,7 @@ class WorksController < ApplicationController
       name_string = NameString.find_or_initialize_by_name(add)
       @author_name_strings << {:name => name_string, :role => "Author"}
     end
-    work.work_name_strings = @author_name_strings
+    work.set_work_name_strings(@author_name_strings)
 
   end
 
@@ -500,7 +500,7 @@ class WorksController < ApplicationController
       name_string = NameString.find_or_initialize_by_name(add)
       @editor_name_strings << {:name => name_string, :role => "Editor"}
     end
-    work.work_name_strings = @editor_name_strings
+    work.set_work_name_strings(@editor_name_strings)
 
   end
 
@@ -832,8 +832,7 @@ class WorksController < ApplicationController
         ###
         # Setting WorkNameStrings
         ###
-        work_name_strings = h[:work_name_strings]
-        work.work_name_strings = work_name_strings
+        work.set_work_name_strings(h[:work_name_strings])
 
         #If we are adding to a person, pre-verify that person's contributorship
         work.preverified_person = @person if @person
