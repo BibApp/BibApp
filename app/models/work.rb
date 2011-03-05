@@ -281,10 +281,8 @@ class Work < ActiveRecord::Base
               nil
           end
 
-      if publication == 'Unknown'
-        unless issn_isbn.blank?
-          publication = "Unknown (#{issn_isbn})"
-        end
+      if publication == 'Unknown' and issn_isbn.present?
+        publication = "Unknown (#{issn_isbn})"
       end
 
       work.set_publication_info(:name => publication,
