@@ -37,7 +37,7 @@
 
         %div.span-17.last
           - if @person
-            %h2="#{link_to @person.display_name, person_path(@person)}"
+            %h2 #{link_to(h(@person.display_name), person_path(@person))}
             = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
       / ### Group / Works ###
