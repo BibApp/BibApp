@@ -3,7 +3,9 @@ class WorksController < ApplicationController
   require 'cmess/guess_encoding'
 
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates]
+  before_filter :login_required,
+                :only => [:new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates,
+                          :orphans]
 
   before_filter :find_authorities, :only => [:new, :edit]
 
@@ -103,6 +105,24 @@ class WorksController < ApplicationController
       # Default BibApp search method - ApplicationController
       search(params)
     end
+  end
+
+  def orphans
+    permit "editor for Work"
+    @title = 'Orphaned works'
+    @orphans = Work.order('title_primary').includes(:contributorships).all.
+        select { |w| w.contributorships.size == 0 }.paginate(
+        :page => params[:page] || 1, :per_page => params[:per_page] || 20)
+  end
+
+  def orphans_delete
+    permit "editor for Work"
+    if params[:orphan_delete]
+      Work.find(params[:orphan_delete][:orphan_id]).each do |w|
+        w.destroy
+      end
+    end
+    redirect_to orphans_works_url
   end
 
   def change_type
@@ -526,7 +546,7 @@ class WorksController < ApplicationController
     word_search = "% " + name_string + "%"
 
     names = NameString.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8).collect {|ns| ns.name}
+                             beginning_search, word_search).order_by_name.limit(8).collect { |ns| ns.name }
 
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
   end
@@ -553,7 +573,7 @@ class WorksController < ApplicationController
                      beginning_search, word_search).order_by_name.limit(8)
 
     #Combine both lists
-    keywordsandtags = (keywords + tags).collect {|x| x.name}
+    keywordsandtags = (keywords + tags).collect { |x| x.name }
 
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
   end
@@ -578,7 +598,7 @@ class WorksController < ApplicationController
                      beginning_search, word_search).order_by_name.limit(8)
 
     #Combine both lists
-    keywordsandtags = (keywords + tags).collect {|x| x.name}
+    keywordsandtags = (keywords + tags).collect { |x| x.name }
 
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
   end
@@ -613,7 +633,7 @@ class WorksController < ApplicationController
 
     publishers = Publisher.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                                  beginning_search, word_search).order_by_name.limit(8)
-    
+
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
   end
 
@@ -818,7 +838,7 @@ class WorksController < ApplicationController
       # Now, actually *create* these works in database
       attr_hashes.map do |h|
 
-      # Initialize the Work
+        # Initialize the Work
         klass = h[:klass]
 
         # Are we working with a legit SubKlass?

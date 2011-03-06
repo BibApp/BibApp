@@ -9,6 +9,7 @@ Bibapp::Application.routes.draw do
       get :auto_complete_for_publisher_name
       get :auto_complete_for_tag_name
       get :review_batch
+      get :orphans
       delete :destroy_multiple
       #Following support legacy RJS stuff
       post :reorder_list
@@ -18,6 +19,7 @@ Bibapp::Application.routes.draw do
       post :remove_author_from_list
       post :add_contributor_to_list
       post :remove_contributor_from_list
+      post :orphans_delete
     end
     member do
       get :merge_duplicates

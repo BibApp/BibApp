@@ -460,3 +460,20 @@ function get_name_list_id(element)
 
   return nameListID;
 }
+
+/* functions for works views */
+function check_all_orphans() {
+  $$('.orphan_checkbox').each(
+          function (box) {
+            box.checked = 1
+          }
+          )
+}
+
+function uncheck_all_orphans () {
+  $$('.orphan_checkbox').each(
+          function(box) {
+              box.checked = 0
+          }
+          )
+}
