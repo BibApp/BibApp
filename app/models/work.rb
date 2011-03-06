@@ -70,6 +70,9 @@ class Work < ActiveRecord::Base
 
   scope :most_recent_first, order('updated_at DESC')
 
+  def self.orphans
+    self.order('title_primary').includes(:contributorships).all.select { |w| w.contributorships.size == 0}
+  end
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions

@@ -1,6 +1,6 @@
 %h3 Orphaned works:
 = will_paginate(@orphans)
-= form_for :orphan_delete, :url => orphans_delete_works_url do |f|
+= form_for :orphan_delete, :url => orphans_delete_works_url(:page => params[:page], :per_page => params[:per_page]) do |f|
   %fieldset
     %p
       = button_to_function('Check all', 'check_all_orphans()')

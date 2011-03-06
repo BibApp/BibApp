@@ -110,9 +110,7 @@ class WorksController < ApplicationController
   def orphans
     permit "editor for Work"
     @title = 'Orphaned works'
-    @orphans = Work.order('title_primary').includes(:contributorships).all.
-        select { |w| w.contributorships.size == 0 }.paginate(
-        :page => params[:page] || 1, :per_page => params[:per_page] || 20)
+    @orphans = Work.orphans.paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 20)
   end
 
   def orphans_delete
@@ -122,7 +120,7 @@ class WorksController < ApplicationController
         w.destroy
       end
     end
-    redirect_to orphans_works_url
+    redirect_to orphans_works_url(:page => params[:page], :per_page => params[:per_page])
   end
 
   def change_type
