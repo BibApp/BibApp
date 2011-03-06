@@ -1,5 +1,9 @@
 Bibapp::Application.routes.draw do
 
+  # for batch loading
+  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
+  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person', :via => 'post'
+
   resources :works do
     collection do
       get :auto_complete_for_author_string
@@ -90,7 +94,7 @@ Bibapp::Application.routes.draw do
       post :search_groups
     end
   end
-  
+
   #####
   # Contributorship routes
   #####
@@ -132,12 +136,6 @@ Bibapp::Application.routes.draw do
     end
   end
 
-
-    ###
-  # for batch loading
-  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
-  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person', :via => 'post'
-
   ####
   # User routes
   ####
@@ -168,10 +166,10 @@ Bibapp::Application.routes.draw do
   # Saved routes
   ####
   match 'saved', :to => 'user_sessions#saved', :as => 'saved'
-  match 'sessions/delete_saved', :to => 'user_sessions#delete_saved', 
-    :as => 'delete_saved'
+  match 'sessions/delete_saved', :to => 'user_sessions#delete_saved',
+        :as => 'delete_saved'
   match 'sessions/add_many_to_saved', :to => 'user_sessions#add_many_to_saved',
-    :as => 'add_many_to_saved'
+        :as => 'add_many_to_saved'
   ####
   # Authentication routes
   ####
@@ -215,7 +213,7 @@ Bibapp::Application.routes.draw do
   match 'admin/ready_to_archive'
   match 'admin/update_sherpa_data'
   match 'admin/deposit_via_sword'
-  
+
   match 'roles/index'
   match 'roles/destroy'
   match 'roles/create'
