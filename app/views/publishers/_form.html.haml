@@ -27,4 +27,5 @@
         %br/
         = form.collection_select :authority_id, @publishers, :id, :name, {}, {:class => "span-12"}
     %p.submit
-      = submit_tag :save
+      = submit_tag 'Save and show', :name => :save_and_show
+      = submit_tag 'Save and go to list', :name => :save_and_list

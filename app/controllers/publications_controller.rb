@@ -22,6 +22,17 @@ class PublicationsController < ApplicationController
       format.rss  #loads show.rss.rxml
     end
 
+    response_for :update do |format|
+      format.html do
+        if params[:save_and_list]
+          redirect_to publications_url(:page => @publication.name.first.upcase)
+        else
+          redirect_to publication_url(@publication)
+        end
+      end
+      format.rss
+    end
+
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters(true)
