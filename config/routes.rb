@@ -219,5 +219,6 @@ Bibapp::Application.routes.draw do
   match 'roles/index'
   match 'roles/destroy'
   match 'roles/create'
-  
+  match 'roles/new_admin'
+  match 'roles/new_editor'
 end
