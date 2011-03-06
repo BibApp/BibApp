@@ -71,8 +71,10 @@ class Work < ActiveRecord::Base
   scope :most_recent_first, order('updated_at DESC')
 
   def self.orphans
-    self.order('title_primary').includes(:contributorships).all.select { |w| w.contributorships.size == 0}
+    self.order('title_primary').joins('LEFT JOIN contributorships ON works.id = contributorships.work_id').
+        where(:contributorships => {:id => nil})
   end
+
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
