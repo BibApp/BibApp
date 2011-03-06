@@ -115,7 +115,8 @@ class Publisher < ActiveRecord::Base
   #Return the year of the most recent publication
   def most_recent_year
     max_year = self.publications.collect { |p| p.works }.flatten.collect { |w| w.year.to_i }.max
-    return max_year > 0 ? year.to_s : ""
+    return "" unless max_year
+    return max_year > 0 ? max_year.to_s : ""
   end
 
 

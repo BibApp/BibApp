@@ -192,6 +192,6 @@ class PublicationsController < ApplicationController
     # * ISBN
     # * Name (abbreviations)
     # * Publisher
-    @current_objects ||= current_model.find.where(:issn_isbn => params[:q])
+    @current_objects ||= current_model.where(:issn_isbn => params[:q])
   end
 end
