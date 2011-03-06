@@ -15,7 +15,7 @@ class Identifier < ActiveRecord::Base
 
     identifiers = Array.new
 
-    self.subclasses.each do |klass|
+    self.descendants.each do |klass|
       id = klass.parse_identifier(identifier)
       if id
         identifiers << [klass, id]
