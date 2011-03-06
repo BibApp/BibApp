@@ -1,9 +1,5 @@
 Bibapp::Application.routes.draw do
 
-  # for batch loading
-  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_processed', :via => 'get'
-  match 'people/batchcsv', :to => 'people#batchcsv', :as => 'batchcsv_person', :via => 'post'
-
   resources :works do
     collection do
       get :auto_complete_for_author_string
@@ -36,6 +32,10 @@ Bibapp::Application.routes.draw do
   # Person routes
   #####
   resources :people do
+    collection do
+      get :batch_csv_show
+      post :batch_csv_create
+    end
     resources :attachments
     resources :works
     resources :groups

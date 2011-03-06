@@ -1,23 +1,25 @@
+require 'author_batch_load'
+
 class PeopleController < ApplicationController
   require 'redcloth'
-  
+
   # Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [ :new, :create, :edit, :update, :destroy, :batchcsv ]
-  
-  make_resourceful do 
+  before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :batch_csv_show, :batch_csv_create]
+
+  make_resourceful do
     build :index, :new, :create, :show, :edit, :update, :destroy
 
     publish :xml, :json, :yaml, :attributes => [
-      :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus,
-       {:name_strings => [:id, :name]},
-       {:groups => [:id, :name]},
-       {:contributorships => [:work_id]}
+        :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus,
+        {:name_strings => [:id, :name]},
+        {:groups => [:id, :name]},
+        {:contributorships => [:work_id]}
     ]
 
     #Add a response for RSS
-    response_for :show do |format| 
-      format.html  #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
-      format.rss  #loads show.rss.rxml
+    response_for :show do |format|
+      format.html #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
+      format.rss #loads show.rss.rxml
       format.rdf
     end
 
@@ -25,9 +27,9 @@ class PeopleController < ApplicationController
       format.html
       format.rdf
     end
-      
+
     before :index do
-      
+
       # for groups/people
       if params[:group_id]
         @group = Group.find_by_id(params[:group_id].split("-")[0])
@@ -38,7 +40,7 @@ class PeopleController < ApplicationController
         else
           @a_to_z = Array.new
           @group.people.each do |person|
-            @a_to_z << person.last_name[0,1].upcase
+            @a_to_z << person.last_name[0, 1].upcase
           end
           @a_to_z = @a_to_z.uniq
           @page = params[:page] || @a_to_z[0]
@@ -47,7 +49,7 @@ class PeopleController < ApplicationController
 
         @title = "#{@group.name} - People"
       else
-      
+
         if params[:q]
           query = params[:q]
           @current_objects = current_objects
@@ -60,7 +62,7 @@ class PeopleController < ApplicationController
         @title = "People"
       end
     end
-    
+
     before :new do
       if params[:q]
         @ldap_results = ldap_search(params[:q])
@@ -72,7 +74,7 @@ class PeopleController < ApplicationController
       end
       @title = "Add a Person"
     end
-    
+
     before :show do
 
       search(params)
@@ -87,7 +89,7 @@ class PeopleController < ApplicationController
         chl = "chl="
         chdl = "chdl="
         chdlp = "chdlp=b|"
-        @facets[:types].each_with_index do |r,i|
+        @facets[:types].each_with_index do |r, i|
           perc = (r.value.to_f/work_count.to_f*100).round.to_s
           chd += "#{perc},"
           ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
@@ -118,7 +120,7 @@ class PeopleController < ApplicationController
 
       # Collect a list of the person's top-level groups for the tree view
       @top_level_groups = Array.new
-      @person.memberships.active.collect{|m| m unless m.group.hide?}.each do |m|
+      @person.memberships.active.collect { |m| m unless m.group.hide? }.each do |m|
         @top_level_groups << m.group.top_level_parent unless m.nil? or m.group.top_level_parent.hide?
       end
       @top_level_groups.uniq!
@@ -133,8 +135,8 @@ class PeopleController < ApplicationController
     if params['cancel']
       #just return back to 'new' page
       respond_to do |format|
-        format.html {redirect_to new_person_url}
-        format.xml  {head :ok}
+        format.html { redirect_to new_person_url }
+        format.xml { head :ok }
       end
 
     else #Only perform create if 'save' button was pressed
@@ -146,19 +148,19 @@ class PeopleController < ApplicationController
         respond_to do |format|
           if @person.save
             flash[:notice] = "Person was successfully created."
-            format.html {redirect_to new_person_pen_name_path(@person.id)}
+            format.html { redirect_to new_person_pen_name_path(@person.id) }
             #TODO: not sure this is right
-            format.xml  {head :created, :location => person_url(@person)}
+            format.xml { head :created, :location => person_url(@person) }
           else
             flash[:warning] = "One or more required fields are missing."
-            format.html {render :action => "new"}
-            format.xml  {render :xml => @person.errors.to_xml}
+            format.html { render :action => "new" }
+            format.xml { render :xml => @person.errors.to_xml }
           end
         end
       else
         respond_to do |format|
-          flash[:error] = "This person already exists in the BibApp system: <a href=""", person_path(@dupeperson.id), """>view their record.</a>"
-          format.html {render :action => "new"}
+          flash[:error] = "This person already exists in the BibApp system: <a href=" "", person_path(@dupeperson.id), "" ">view their record.</a>"
+          format.html { render :action => "new" }
           #TODO: what will the xml response be?
           #format.xml  {render :xml => "error"}
         end
@@ -174,8 +176,8 @@ class PeopleController < ApplicationController
     if params['cancel']
       #just return back to 'new' page
       respond_to do |format|
-        format.html {redirect_to person_url(@person)}
-        format.xml  {head :ok}
+        format.html { redirect_to person_url(@person) }
+        format.xml { head :ok }
       end
 
     else #Only perform create if 'save' button was pressed
@@ -185,13 +187,13 @@ class PeopleController < ApplicationController
       respond_to do |format|
         if @person.save
           flash[:notice] = "Personal info was successfully updated."
-          format.html {redirect_to new_person_pen_name_path(@person.id)}
+          format.html { redirect_to new_person_pen_name_path(@person.id) }
           #TODO: not sure this is right
-          format.xml  {head :created, :location => person_url(@person)}
+          format.xml { head :created, :location => person_url(@person) }
         else
           flash[:warning] = "One or more required fields are missing."
-          format.html {render :action => "new"}
-          format.xml  {render :xml => @person.errors.to_xml}
+          format.html { render :action => "new" }
+          format.xml { render :xml => @person.errors.to_xml }
         end
       end
     end
@@ -208,8 +210,8 @@ class PeopleController < ApplicationController
     respond_to do |format|
       flash[:notice] = "#{person.display_name} was successfully deleted."
       #forward back to path which was specified in params
-      format.html {redirect_to return_path }
-      format.xml  {head :ok}
+      format.html { redirect_to return_path }
+      format.xml { head :ok }
     end
   end
 
@@ -223,7 +225,7 @@ class PeopleController < ApplicationController
     chl = "chl="
     chdl = "chdl="
     chdlp = "chdlp=b|"
-    @person.publication_reftypes.each_with_index do |r,i|
+    @person.publication_reftypes.each_with_index do |r, i|
       perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
       chd += "#{perc},"
       ref = r[:type].to_s == 'BookWhole' ? 'Book' : r[:type].to_s
@@ -248,65 +250,57 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:person_id])
     @keywords = @person.keywords(10)
 
-     render :update do |page|
-          page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
-     end
+    render :update do |page|
+      page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
+    end
   end
 
-  # loading persons via csv
-  def batchcsv
-
+  def batch_csv_show
     permit "admin"
+  end
 
-    if request.post?
+  def batch_csv_create
+    permit "admin"
+    begin
+      msg = ''
+      data = params[:person][:import_file]
+      filename = params[:person][:import_file].original_filename
 
-        begin
-          msg = ''
-          data = params[:person][:import_file]
-          filename = params[:person][:import_file].original_filename
-
-          str = ''
-          if data.respond_to?(:read)
-            str = data.read
-          elsif File.readable?(data)
-            str = File.read(data)
+      str = ''
+      if data.respond_to?(:read)
+        str = data.read
+      elsif File.readable?(data)
+        str = File.read(data)
+      else
+        msg = 'The File you submitted could not be read.'
+      end
+      if msg.empty?
+        unless str.is_utf8?
+          encoding = CMess::GuessEncoding::Automatic.guess(str)
+          unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
+            str =Iconv.iconv('UTF-8', encoding, str).to_s
           else
-            msg = 'The File you submitted could not be read.'
+            logger.error("The character encoding could not be determined or could not be converted to UTF-8.\n")
+            flash[:notice] = "The character encoding could not be determined or could not be converted to UTF-8."
+            msg = 'The file could not be converted to UTF8.'
           end
-
-          if msg.empty?
-            unless str.is_utf8?
-              encoding = CMess::GuessEncoding::Automatic.guess(str)
-              unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
-                str =Iconv.iconv('UTF-8', encoding, str).to_s
-              else
-                logger.error("The character encoding could not be determined or could not be converted to UTF-8.\n")
-                flash[:notice] = "The character encoding could not be determined or could not be converted to UTF-8."
-                msg = 'The file could not be converted to UTF8.'
-              end
-            end
-
-            if msg.empty?
-              # is it better to pass the filename instead of storing the csv contents in the db
-              # even if the db row is temporary ?
-              Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
-              msg = "Your file was accepted for processing. An email will notify you when the job is completed."
-            end
-          end
-
-        rescue Exception => e
-          flash[:notice] = "Exception: #{e.to_s}"
-          msg = 'An error was generated processing your request.'
         end
-
-        redirect_to batchcsv_processed_path(:completed => msg)
+        if msg.empty?
+          # is it better to pass the filename instead of storing the csv contents in the db
+          # even if the db row is temporary ?
+          Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
+          msg = "Your file was accepted for processing. An email will notify you when the job is completed."
+        end
+      end
+    rescue Exception => e
+      flash[:notice] = "Exception: #{e.to_s}"
+      msg = 'An error was generated processing your request.'
     end
-
-    # render a get to action template
+    redirect_to batch_csv_show_people_url(:completed => msg)
   end
 
   private
-  
+
   def ldap_search(query)
     begin
       require 'rubygems'
@@ -322,7 +316,7 @@ class PeopleController < ApplicationController
       config.each do |key, val|
         logger.info "#{key}: #{val}"
       end
-    
+
       query
       if query and !query.empty?
         logger.info "Connecting to #{config['host']}:#{config['port']}"
@@ -331,21 +325,21 @@ class PeopleController < ApplicationController
 
         if config['username'].blank? or config['password'].blank?
           ldap = Net::LDAP.new(
-            :host => config['host'],
-            :port => config['port'].to_i,
-            :base => config['base']
+              :host => config['host'],
+              :port => config['port'].to_i,
+              :base => config['base']
           )
         else
           ldap = Net::LDAP.new(
-            :auth => {
-              :method => :simple,
-              :username => config['username'],
-              :password => config['password']
-            },
-            :host => config['host'],
-            :port => config['port'].to_i,
-            :base => config['base'],
-            :encryption => :simple_tls
+              :auth => {
+                  :method => :simple,
+                  :username => config['username'],
+                  :password => config['password']
+              },
+              :host => config['host'],
+              :port => config['port'].to_i,
+              :base => config['base'],
+              :encryption => :simple_tls
           )
           unless ldap.bind
             @fail_message = "Error authenticating LDAP user."
@@ -356,7 +350,7 @@ class PeopleController < ApplicationController
         cn_filt = Net::LDAP::Filter.eq("#{config['cn']}", "*#{query}*")
         uid_filt = Net::LDAP::Filter.eq("#{config['uid']}", "*#{query}*")
         mail_filt = Net::LDAP::Filter.eq("#{config['mail']}", "*#{query}*")
-        ldap_result = ldap.search( :filter => cn_filt | uid_filt | mail_filt ).map{|entry| clean_ldap(entry)}
+        ldap_result = ldap.search(:filter => cn_filt | uid_filt | mail_filt).map { |entry| clean_ldap(entry) }
 
         return ldap_result
       end
@@ -370,7 +364,7 @@ class PeopleController < ApplicationController
         end
         logger.debug("LDAP exception: #{ldap.get_operation_result.message}")
         logger.debug(e.backtrace.join("\n"))
-      else 
+      else
         @fail_message = e.message
         logger.debug("LDAP exception: #{e.message}")
         logger.debug(e.backtrace.join("\n"))
@@ -378,7 +372,7 @@ class PeopleController < ApplicationController
     end
     nil
   end
-  
+
   def clean_ldap(entry)
     res = Hash.new("")
 
