@@ -131,7 +131,7 @@ class Contributorship < ActiveRecord::Base
 
       logger.debug("Year: #{work_sh[:year]}")
 
-      unless person_sh[:years].empty?
+      unless person_sh[:years].compact!.empty?
         person_sh[:years].sort.first.upto(person_sh[:years].sort.last) { |y| years << y }
         logger.debug("Array: #{years.inspect}")
         year_score = 25 if years.include?(work_sh[:year])
