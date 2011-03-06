@@ -63,17 +63,12 @@ module ApplicationHelper
   def link_to_editors(work)
     if work['editors_data'] != nil
       # If no authors, editors go first
-      if work['authors_data'] == nil
-        str = ""
-      else
-        str = "In "
-      end
-
+      str = work['authors_data'] ? "In " : ''
       links = Array.new
 
       work['editors_data'].first(5).each do |ed|
         name, id = NameString.parse_solr_data(ed)
-        links << link_to("#{name.gsub(",", ", ")}", name_string_path(id), {:class => "name_string"})
+        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
       end
 
       if work['editors_data'].size > 5

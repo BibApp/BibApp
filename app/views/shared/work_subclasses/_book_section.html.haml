@@ -5,7 +5,7 @@
   %br/
   - if work['editors_data'] != nil
     - #Editors
-    = link_to_editors(work)
+    = link_to_editors(work).html_safe
 
   - #Publication
   = link_to_work_publication(work)
