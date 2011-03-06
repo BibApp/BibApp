@@ -19,7 +19,7 @@
             %div.person-image-metadata
               %strong= p.value
             %div.person-last-name.left
-              %strong=link_to truncate(last_name, 12), person_path(id)
+              %strong=link_to truncate(last_name, :length => 12), person_path(id)
   - else
     %ol#coauthors{:style => "span-6 append-1"}
       -@facets[:people_data].each do |p|
