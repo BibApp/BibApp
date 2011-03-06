@@ -55,4 +55,4 @@
             %span=link_to "Logout", logout_path
         - else
           %li
-            %span=link_to "Login | Sign Up", login_path
+            %span=link_to "Login | Sign Up", login_path(:return_to => request.fullpath)
