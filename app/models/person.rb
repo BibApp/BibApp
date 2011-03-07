@@ -27,6 +27,7 @@ class Person < ActiveRecord::Base
   after_create :set_pen_names
   after_update :set_pen_names
   before_save :update_machine_name
+  after_save :update_memberships_end_dates
 
   #### Methods ##
   def set_pen_names
@@ -199,9 +200,21 @@ class Person < ActiveRecord::Base
     self.group_ids.join(',')
   end
 
+  #Is the person active? Any blanks will be interpreted as false.
+  def person_active
+    self.active?.to_s
+  end
+
+  #A person's research focus.
+  #You get stack overflow without the dump method, I assume
+  #due to the new line or quote characters in the text
+  def person_research_focus
+    self.research_focus.dump
+  end
+
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{last_name}||#{id}||#{image_url}||#{comma_separated_group_ids}"
+    "#{last_name}||#{id}||#{image_url}||#{group_ids}||#{person_active}||#{person_research_focus}"
   end
 
   def solr_filter
@@ -236,20 +249,32 @@ class Person < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
-    select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}
+    select('DISTINCT SUBSTR(last_name, 1, 1) AS letter').order('letter').collect { |x| x.letter.upcase }
+  end
+
+  #called by after_save callback
+  # @TODO Find bad dates, e.g. 0001-01-01, and replace them.
+  def update_memberships_end_dates
+    #Update memberships when person becomes inactive
+    if self.active_change == [true, false]
+      self.logger.info("#{self.changes}")
+      self.memberships.update_all({:end_date => Time.now}, ['end_date IS NULL'])
+    end
   end
 
   #Parse Solr data (produced by to_solr_data)
-  # return Person last_name, ID, and Image URL
+  # return Person last_name, ID, Image URL, Active status, and research_focus
   def self.parse_solr_data(person_data)
-    last_name, id_as_string, image_url, unparsed_group_ids = person_data.split("||")
-    id = id_as_string.to_i
-    if unparsed_group_ids
-      group_ids = unparsed_group_ids.split(",").collect { |g| g.to_i }
-    else
+    last_name, id_string, image_url, group_ids_string, is_active, research_focus = person_data.split("||")
+    id = id_string.to_i
+
+    if group_ids_string.blank?
       group_ids = []
+    else
+      group_ids = group_ids_string.split(",").collect { |g| g.to_i }
     end
-    return last_name, id, image_url, group_ids
+    
+    return last_name, id, image_url, group_ids, is_active, research_focus
   end
 
   def self.sort_by_most_recent_work(array_of_people)

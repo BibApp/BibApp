@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
 
     # Default SolrRuby params
     @query = params[:q] || "*:*" # Lucene syntax for "find everything"
-    @filter = filter
+    @filter = params[:filter] || filter
     @sort = params[:sort] || "year"
     @order = params[:order] || "descending"
     @page = params[:page] || 0

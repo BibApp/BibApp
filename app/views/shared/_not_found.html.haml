@@ -5,7 +5,13 @@
 %div.span-24
   %div.span-22.prepend-1
     %h2 Error 404: The page cannot be found
-    %p Did you try searching? Enter a keyword(s) in the search field above. Or, try one of the links below.
+
+    - if controller.controller_name == "people" || controller.controller_name == "groups"
+      %h2
+        You may have followed a link to a #{controller.controller_name.singularize} no 
+        longer at #{$UNIVERSITY_SHORT_NAME}.
+        
+    %p Did you try searching? Enter a keyword(s) in the search field above.
     
 %div#facets.span-24{:style => "margin-top:2em;"}
   / People

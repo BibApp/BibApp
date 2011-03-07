@@ -36,15 +36,15 @@ class PublicationsController < ApplicationController
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters(true)
-      
+
       if params[:q]
-        query = params[:q]
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
         #I'm not sure if the first condition here is the same as the authorities scope, but it might be
         @current_objects = Publication.where("publications.id = authority_id").upper_name_like("#{@page}%").order_by_upper_name
       end
+      
     end
 
     before :show do

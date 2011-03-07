@@ -54,7 +54,7 @@ class IndexObserver < ActiveRecord::Observer
 
     #Person: only update index if name or machine_name changed
     when Person
-      return true if record.first_name_changed? or record.last_name_changed? or record.machine_name_changed?
+      return true if record.first_name_changed? or record.last_name_changed? or record.machine_name_changed? or record.active_changed? or record.research_focus_changed?
     
     #Group: only update index if name or machine_name changed
     when Group

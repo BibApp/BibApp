@@ -58,6 +58,9 @@ class Index
       :person_id => Proc.new { |record| record.people.collect { |p| p.id } },
       :people_data => Proc.new { |record| record.people.collect { |p| p.to_solr_data } },
 
+      #Person's active status in separate field for filtering
+      :person_active => Proc.new { |record| record.people.collect { |p| p.person_active } },
+
       # Groups
       :groups => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.name } }.uniq.flatten },
       :group_id => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.id } }.uniq.flatten },
@@ -111,7 +114,7 @@ class Index
     records.each do |r|
       r.mark_indexed
     end
-    
+
     #SOLRCONN.commit
     Index.optimize_index
   end

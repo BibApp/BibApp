@@ -22,6 +22,9 @@
 
     %div#image.span-4
       =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
+      / ### Hide email for inactive people ###
+      - if @person.active?
+        =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")      
 
     %div.span-10
       - if @person.groups.empty?
@@ -29,8 +32,8 @@
       - else
         %h3.heading Groups
         = render :partial => 'shared/group_list'
-
-    - if @person.research_focus.strip.length > 0
+      / ### Hide research focus for inactive people ###
+    - if @person.active? and @person.research_focus.strip.length > 0
       %div#research-focus.span-14
         %h3.heading Research Focus
         %p=@person.research_focus

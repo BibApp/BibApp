@@ -14,7 +14,7 @@
   %div.span-22.prepend-1
     %h2="Publications"
     
-    = render :partial => "shared/alpha_pagination"
+    = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}
 
     %table#publications
       %tr
@@ -34,4 +34,4 @@
 
     %br/
     %br/
-    = render :partial => "shared/alpha_pagination"
+    = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}

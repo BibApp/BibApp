@@ -12,7 +12,12 @@
     - counter = 0
 
     - people.each do |p|
-      - last_name, id, image_url, group_ids = Person.parse_solr_data(p.name)
+      - person = Person.parse_solr_data(p.name)
+      - last_name, id, image_url, group_ids, active, research_focus = Person.parse_solr_data(p.name)
+
+      - if active.empty? or active == "false"
+        - next
+
       - if controller.controller_name == "groups" and !group_ids.include?(@group.id)
         - next
       - if count and counter >= count
