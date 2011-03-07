@@ -215,7 +215,8 @@ Bibapp::Application.routes.draw do
   match 'admin/ready_to_archive'
   match 'admin/update_sherpa_data'
   match 'admin/deposit_via_sword'
-
+  match 'admin/update_publishers_from_sherpa'
+  
   match 'roles/index'
   match 'roles/destroy'
   match 'roles/create'
