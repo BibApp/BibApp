@@ -25,10 +25,10 @@ class Import < ActiveRecord::Base
   aasm_initial_state :recieved
 
   aasm_state :recieved
-  aasm_state :processing, :enter => :queue_import
-  aasm_state :reviewable, :enter => :notify_user
-  aasm_state :accepted, :enter => :accept_import
-  aasm_state :rejected, :enter => :reject_import
+  aasm_state :processing, :after_enter => :queue_import
+  aasm_state :reviewable, :after_enter => :notify_user
+  aasm_state :accepted, :after_enter => :accept_import
+  aasm_state :rejected, :after_enter => :reject_import
 
   aasm_event :process do
     transitions :to => :processing, :from => :recieved
