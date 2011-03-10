@@ -12,6 +12,8 @@ set :rails_env, ENV['RAILS_ENV'] || 'production'
 #To deploy from the GitHub project
 set :scm, :git
 set :repository, "git://github.com/BibApp/BibApp.git"
+#To deploy a particular branch or tag:
+#set :branch, "branch_or_tag_name"
 
 #directories on the server to deploy the application
 #the running instance gets links to [deploy_to]/current
