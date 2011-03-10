@@ -43,9 +43,6 @@ class WorkExport
     when "nlm"
       @csl = "#{$APPLICATION_URL}/csl_styles/nlm.csl"
     end
-    puts "*" * 80
-    puts @csl
-    puts "*" * 80
   end
 
   def load_citations
@@ -79,7 +76,6 @@ class WorkExport
 
 
   def do_format
-    nodes = []
     nodes = @processor.process_bibliography(@input_filter, @style, @locale)
     results = @formatter.format(nodes)
 
