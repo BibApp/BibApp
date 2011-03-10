@@ -48,6 +48,11 @@ namespace :deploy do
     end
   end
 
+  #TODO It would be more natural to link here, but I'm not sure
+  #exactly what happens if the application finds the link but
+  #there is no file behind it (in particular for an optional one -
+  #obviously it's okay if it just dies for database.yml!).
+  #If that works all right then change this.
   desc "copy shared configuration"
   task :copy_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml', 
@@ -60,7 +65,7 @@ namespace :deploy do
   desc "symlink shared subdirectories of public"
   task :symlink_shared_dirs do
     [:attachments, :groups, :people].each do |dir|
-      run "ln -fs #{public}/system/#{dir} #{public}/#{dir}"
+      run "ln -nfs #{public}/system/#{dir} #{public}/#{dir}"
     end
   end
 
