@@ -24,6 +24,7 @@ class Person < ActiveRecord::Base
   validates_presence_of :uid
 
   #### Callbacks ####
+  before_create :make_active
   after_create :set_pen_names
   after_update :set_pen_names
   before_save :update_machine_name
@@ -203,6 +204,10 @@ class Person < ActiveRecord::Base
   #Is the person active? Any blanks will be interpreted as false.
   def person_active
     self.active?.to_s
+  end
+
+  def make_active
+    self.active = true
   end
 
   #A person's research focus.
