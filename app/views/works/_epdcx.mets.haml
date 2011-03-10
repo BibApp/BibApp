@@ -25,11 +25,9 @@
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/abstract" }
             %epdcx:valueString=encode_for_xml(work.abstract)
         -# CREATOR (i.e. AUTHOR)
-        - if work.name_strings.author 
-          - work.name_strings.author.each do |ns|
-            %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/creator" }
-              %epdcx:valueString=encode_for_xml(ns.name)
-        -# Reference to Expression of item (see below)
+        - work.work_name_strings.where(:role => work.creator_role).includes(:name_string).each do |wns|
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/creator" }
+          %epdcx:valueString=encode_for_xml(wns.name_string.name)
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isExpressedAs", 'epdcx:valueRef'=>"sword-mets-expr-#{work.id}" }/
       
       -##### Description of an EXPRESSION of the item #####
@@ -65,12 +63,9 @@
         - if work.copyright_holder
           %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/copyrightHolder" }
             %epdcx:valueString=encode_for_xml(work.copyright_holder)
-        -# EDITORS
-        - if work.name_strings.editor 
-          - work.name_strings.editor.each do |ns|
-            %epdcx:statement{ 'epdcx:propertyURI'=>"http://www.loc.gov/loc.terms/relators/EDT" }
-              %epdcx:valueString=encode_for_xml(ns.name)
-        
+        - work.work_name_strings.where(:role => work.contributor_role).includes(:name_string).each do |wns|
+          %epdcx:statement{ 'epdcx:propertyURI'=>"http://www.loc.gov/loc.terms/relators/EDT" }
+          %epdcx:valueString=encode_for_xml(wns.name_string.name)
         -# BIBLIOGRAPHIC WORK
         %epdcx:statement{ 'epdcx:propertyURI'=>"http://purl.org/dc/terms/bibliographicCitation" }
           -# Plain-text Citation in APA Citation Format
