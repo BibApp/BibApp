@@ -8,10 +8,7 @@ class Image < Attachment
 
   #validates_as_attachment
   #Custom validation messages
-  validates_attachment :empty => "You forgot to select a file to upload, or the selected file had no contents.",
-                       :size  => "The file you uploaded was larger than the maximum size of 1MB.",
-                       :content_type => "Please upload an image file (JPEG, PNG or GIF)."
-  
+  validates_as_attachment 
 
   #By default, BibApp doesn't perform any image resizing or thumbnail creation.
   # For image resizing or thumbnail creation, you will have to do some modifications

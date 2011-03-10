@@ -43,6 +43,9 @@ class WorkExport
     when "nlm"
       @csl = "#{$APPLICATION_URL}/csl_styles/nlm.csl"
     end
+    puts "*" * 80
+    puts @csl
+    puts "*" * 80
   end
 
   def load_citations

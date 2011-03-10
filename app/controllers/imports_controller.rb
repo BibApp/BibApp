@@ -32,7 +32,7 @@ class ImportsController < ApplicationController
     
     # Init our Import
     @import = Import.new
-    @import.user_id = params[:user_id]
+    @import.user_id = params[:user_id] || current_user.id
     @import.person_id = params[:person_id]
     
     # Associate Attachment to Import

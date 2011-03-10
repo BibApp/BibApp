@@ -5,12 +5,11 @@ class Attachment < ActiveRecord::Base
   
   #### Default Attachment_fu settings ####
   has_attachment :storage => :file_system, 
-                 :size => 0.kilobyte...100.megabytes
+                 :size => 1.byte...100.megabytes
   
   #validates_as_attachment
   #Custom validation messages
-  validates_attachment :empty => "You forgot to select a file to upload, or the selected file had no contents.",
-                       :size  => "The file you uploaded was larger than the maximum size of 100MB." 
+  validates_as_attachment
   
   # List of all currently enabled Attachment types
   def self.types               

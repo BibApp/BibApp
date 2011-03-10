@@ -10,7 +10,7 @@
     %div#upload_files
       %label="Upload File(s):"
       -# Allow uploading multiple files
-      = link_to_remote "[Add More Files]", :url => add_upload_box_attachements_url(:form => form)
+      = link_to_remote "[Add More Files]", :url => add_upload_box_attachments_url(:form => form)
       %br/
       = render :partial => 'upload_file', :locals => { :form => form }
 
