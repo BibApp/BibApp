@@ -1,3 +1,31 @@
+1.1.0-rc1 - March 11, 2011
+--------------
+Runs on Rails 3 (3.0.4 specifically) instead of Rails 2 (works with Ruby Enterprise Edition 1.8.7)
+Use Bundler for gem management
+Many gems and plugins upgraded (primarily for Rails 3 compatibility)
+Some gems added (e.g. for testing)
+Rails and many plugins unvendored and now handled as gems
+Testing moved to Rspec
+Many tests added - some trivial, some not
+A lot of code cleanup. Refactoring of code to more idiomatic ruby/rails, removal of stale/trivial comments, breakup of large methods, removal of magic numbers etc. The usual sorts of stuff.
+Issue 148 fixed - person can now be both author and editor, for example
+Migrations returned to db/migrate from db/archive
+Capistrano gem included in the bundle and a deploy.rb.template file included for those wishing to use cap to deploy
+Some minor bugfixes
+A lot of deprecation fixes
+A lot of observers removed and their work done in model callbacks. Rails 3 does model callbacks prior to observer callbacks, so the workaround for Rails 2 is no longer needed.
+Moved Index.rb from app/models to lib as it seems to fit better there, although this could be reversed at some point, as there seem to be arguments either way.
+Authentication now uses Authlogic (in compatibility mode for restful_authentication). This should provide a smoother experience as we attempt to add other kinds of authentication as well.
+Added Eric Muzzy batch csv person import.
+Added Jason Stirnaman person is active patch (plus some extra changes to help migrate existing installations to use it).
+Added prototype_legacy_helper plugin to avoid having to deal with Rails 3 javascript conventions right away.
+Changed routes both to conform to Rails 3 conventions and to remove default routes. All needed routes should henceforth be explicitly specified.
+Use destroy instead of delete in association :dependent definitions. I couldn't find any compelling reason for delete, and lacking such destroy is better as it will run callbacks on the destroyed models.
+Add additional submit button to publisher/publication editing so that user can return directly to alphabetical list.
+Add view to show and facilitate deletion of orphaned works (i.e. no contributorships) by editor on Work.
+Removed attachment_fu_hacks plugin. Hopefully the newer attachment_fu fixes the problems here.
+Updated code for newer version of acts_as_state_machine - some callbacks needed to be changed here.
+
 1.0.1 - October 18, 2010
 --------------
 Adds json, yaml, xml/rdf output for search results
