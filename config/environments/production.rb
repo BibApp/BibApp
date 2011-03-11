@@ -2,7 +2,7 @@
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
-BibApp::Application.configure do
+Bibapp::Application.configure do
   config.cache_classes = true
 
 # Use a different logger for distributed setups
