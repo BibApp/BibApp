@@ -50,17 +50,11 @@ namespace :deploy do
     end
   end
 
-  #TODO It would be more natural to link here, but I'm not sure
-  #exactly what happens if the application finds the link but
-  #there is no file behind it (in particular for an optional one -
-  #obviously it's okay if it just dies for database.yml!).
-  #If that works all right then change this.
-  desc "copy shared configuration"
-  task :copy_config do
+  desc "link shared configuration"
+  task :link_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml', 
      'solr.yml', 'sword.yml'].each do |file|
-      f = "#{shared_config}/#{file}"
-      run "[ -e #{f} ] && (cp #{f} #{current}/config/#{file})"
+      run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
     end
   end
 
@@ -97,7 +91,7 @@ end
 
 after 'deploy:setup', 'deploy:create_shared_dirs'
 
-after 'deploy:update', 'deploy:copy_config'
+after 'deploy:update', 'deploy:link_config'
 after 'deploy:update', 'deploy:symlink_shared_dirs'
 before 'deploy:update', 'bibapp:stop'
 
