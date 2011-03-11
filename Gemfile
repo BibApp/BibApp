@@ -64,7 +64,7 @@ gem 'acts_as_tree', "~> 1.2.3", :git => 'https://github.com/parasew/acts_as_tree
 gem 'pg'
 
 #dump database in YAML form - honestly, I'm not sure why we need this, but
-#as I am porting to Rails 3 I'm not going to worry about it.
+#while I am porting to Rails 3 I'm not going to worry about it.
 gem 'yaml_db'
 
 #authorization, replacing plugin used previously
@@ -78,6 +78,9 @@ gem 'fastercsv'
 
 #Adds in some things removed from Rails 3 that are used, including error_messages_for
 gem 'dynamic_form'
+
+#For deployment, but can be ignored if not using capistrano
+gem 'capistrano'
 
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
