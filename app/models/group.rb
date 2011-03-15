@@ -72,6 +72,15 @@ class Group < ActiveRecord::Base
     end
   end
 
+  #Add an http:// if this (or https://) isn't found before the url
+  def canonicalize_url
+    if self.url.match(/^https?\:\/\//)
+      self.url
+    else
+      'http://' + self.url
+    end
+  end
+
   #Return the group's top-level parent (ancestor)
   def top_level_parent
     if self.parent.nil?

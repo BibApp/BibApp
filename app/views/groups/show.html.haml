@@ -29,7 +29,8 @@
       / Description
       %h3.heading Description
       %p= @group.description
-      %p= link_to @group.url, @group.url
+      - if @group.url.present?
+        %p= link_to h(@group.url), @group.canonicalize_url
 
       / Publications
       %div.span-6.append-2
