@@ -12,7 +12,7 @@
       %p
         = text_field_tag :q, params[:q]
         = submit_tag "Search"
-        ="&nbsp;Ex: Smith, John OR Smith, J"
+        = " Ex: Smith, John OR Smith, J"
 
     - if @ldap_results
       %fieldset
@@ -35,4 +35,4 @@
         %p{:style => "color:red;"}="Search failed: #{@fail_message}."
 
 
-    = render :partial => 'form'
+    = render :partial => 'form', :locals => {:object => "person", :state => "new"}
