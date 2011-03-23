@@ -82,6 +82,10 @@ gem 'dynamic_form'
 #For deployment, but can be ignored if not using capistrano
 gem 'capistrano'
 
+#For solr - possibly trying to move to this
+gem 'sunspot'
+gem 'sunspot_rails'
+
 #include thin webserver for development
 #to start it, do 'bundle exec thin start' - this is important, as
 #doing simply 'thin start' may pull in unbundled gems and cause
