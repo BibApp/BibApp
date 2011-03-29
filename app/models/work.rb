@@ -70,19 +70,103 @@ class Work < ActiveRecord::Base
 
   scope :most_recent_first, order('updated_at DESC')
 
+  #This is for Sunspot searching.
+  #As this is currently an adaption from the old solr stuff it is somewhat long and subject to future
+  #modification
+  searchable do
+    string :id, :stored => true, :using => :solr_id
+    integer :pk_i, :stored => true, :using => :id
+    text :title, :stored => true, :using => :title_primary
+    text :title_secondary, :stored => true
+    text :title_tertiary, :stored => true
+    text :issue, :stored => true
+    text :volume, :stored => true
+    text :start_page, :stored => true
+    text :abstract, :stored => true
+    integer :status, :stored => true, :using => :work_state_id
+    text :issn_isbn, :stored => true do |w|
+      w.publication ? w.publication.issn_isbn : nil
+    end
+    text :type, :stored => true do |w|
+      w[:type].underscore.humanize
+    end
+    string :name_strings, :stored => true, :multiple => true do |w|
+      w.name_strings.collect { |ns| ns.name }
+    end
+    string :name_string_id, :stored => true, :multiple => true, :using => :name_string_ids
+    string :name_strings_data, :stored => true, :multiple => true do |w|
+      w.name_strings.collect { |ns| ns.to_solr_data }
+    end
+    string :authors_data, :stored => true, :multiple => true do |w|
+      w.authors.collect { |au| "#{au[:name]}||#{au[:id]}" }
+    end
+    string :editors_data, :stored => true, :multiple => true do |w|
+      w.editors.collect { |ed| "#{ed[:name]}||#{ed[:id]}" }
+    end
+    text :people, :stored => true do |w|
+      w.people.collect {|p| p.first_last}
+    end
+    string :people_id, :stored => true, :multiple => true, :using => :person_ids
+    string :people_data, :stored => true, :multiple => true do |w|
+      w.people.collect {|p| p.to_solr_data}
+    end
+    boolean :person_active, :stored => true, :multiple => true do |w|
+      w.people.collect {|p| p.person_active}
+    end
+    text :groups, :stored => true do |w|
+      w.people.collect {|p| p.groups.collect {|g| g.name}}.flatten.uniq
+    end
+    string :group_id, :stored => true, :multiple => true do |w|
+      w.people.collect {|p| p.group_ids}.flatten.uniq
+    end
+    string :groups_data, :stored => true, :multiple => true do |w|
+      w.people.collect {|p| p.groups.collect {|g| g.to_solr_data}}.flatten.uniq
+    end
+    text :publication, :stored => true do |w|
+      w.publication ? w.publication.name : nil
+    end
+    string :publication_id, :stored => true, :multiple => true do |w|
+      w.publication ? w.publication.id : nil
+    end
+    string :publication_data, :stored => true, :multiple => true do |w|
+      w.publication ? w.publication.to_solr_data : nil
+    end
+    text :publisher, :stored => true do |w|
+      w.publisher ? w.publisher.name : nil
+    end
+    string :publisher_id, :stored => true, :multiple => true do |w|
+      w.publisher ? w.publisher.id : nil
+    end
+    string :publisher_data, :stored => true, :multiple => true do |w|
+      w.publisher ? w.publisher.to_solr_data : nil
+    end
+    text :keywords, :stored => true do |w|
+      w.keywords.collect {|k| k.name}
+    end
+    string :keywords_id, :stored => true, :multiple => true, :using => :keyword_ids
+    text :tags, :stored => true do |w|
+      w.tags.collect {|t| t.name}
+    end
+    string :tag_id, :stored => true, :multiple => true, :using => :tag_ids
+    string :title_dupe_key, :stored => true
+    string :name_string_dupe_key, :stored => true
+    date :updated_at, :stored => true
+    date :created_at, :stored => true
+  end
+
   def self.orphans
     self.order('title_primary').joins('LEFT JOIN contributorships ON works.id = contributorships.work_id').
         where(:contributorships => {:id => nil})
   end
 
-  #### Callbacks ####
+#### Callbacks ####
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_save :before_save_actions
 
-  # After Create only
-  # (Note: after create callbacks *must* be placed in Work model, 
-  #  for faux-accessors to work properly)
+# After Create only
+# (Note: after create callbacks *must* be placed in Work model,
+#  for faux-accessors to work properly)
   def after_create_actions
     create_work_name_strings
     create_keywords
@@ -98,10 +182,10 @@ class Work < ActiveRecord::Base
     create_contributorships
   end
 
-  #### Serialization ####
+#### Serialization ####
   serialize :serialized_data
 
-  ##### Work State Methods #####
+##### Work State Methods #####
   def in_process?
     self.work_state_id == STATE_IN_PROCESS
   end
@@ -126,25 +210,25 @@ class Work < ActiveRecord::Base
     self.work_state_id = STATE_ACCEPTED
   end
 
-  # The field for work status in BibApp's Solr Index
+# The field for work status in BibApp's Solr Index
   def self.solr_status_field
     return "status:"
   end
 
-  # The Solr filter for accepted works...this is used by default, as
-  # we don't want incomplete works to normally appear in BibApp
+# The Solr filter for accepted works...this is used by default, as
+# we don't want incomplete works to normally appear in BibApp
   def self.solr_accepted_filter
     return solr_status_field + STATE_ACCEPTED.to_s
   end
 
-  # The Solr filter for duplicate works...these works are normally
-  # hidden by BibApp, except to administrators
+# The Solr filter for duplicate works...these works are normally
+# hidden by BibApp, except to administrators
   def self.solr_duplicate_filter
     return solr_status_field + STATE_DUPLICATE.to_s
   end
 
 
-  ##### Work Archival State Methods #####
+##### Work Archival State Methods #####
   def init_archive_status
     self.work_archive_state_id = ARCHIVE_STATE_INITIAL
   end
@@ -169,23 +253,23 @@ class Work < ActiveRecord::Base
     self.work_archive_state_id = ARCHIVE_STATE_ARCHIVED
   end
 
-  #batch indexing related
+#batch indexing related
   def mark_indexed
     self.batch_index = NOT_TO_BE_BATCH_INDEXED
     self.save
   end
 
-  ########## Methods ##########
-  # Rule #1: Comment H-E-A-V-I-L-Y
-  # Rule #2: Include @TODOs
+########## Methods ##########
+# Rule #1: Comment H-E-A-V-I-L-Y
+# Rule #2: Include @TODOs
 
-  # List of all currently enabled Work Types
+# List of all currently enabled Work Types
   def self.types
     # @TODO: Add each work subklass to this array
-    # "Journal Article", 
-    # "Conference Proceeding", 
+    # "Journal Article",
+    # "Conference Proceeding",
     # "Book"
-    # more...   	    			  
+    # more...
     ["Artwork",
      "Book (Section)",
      "Book (Whole)",
@@ -217,7 +301,7 @@ class Work < ActiveRecord::Base
     t.constantize #change into a class
   end
 
-  # Creates a new work from an attribute hash
+# Creates a new work from an attribute hash
   def self.create_from_hash(h)
     klass = h[:klass]
 
@@ -262,7 +346,7 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Updates an existing work from an attribute hash
+# Updates an existing work from an attribute hash
   def update_from_hash(h)
     begin
       work_name_strings = (h[:work_name_strings] || []).collect do |wns|
@@ -316,7 +400,7 @@ class Work < ActiveRecord::Base
   end
 
 
-  # Deduplication: deduplicate Work records on save
+# Deduplication: deduplicate Work records on save
   def deduplicate
     logger.debug("\n\n===DEDUPLICATE===\n\n")
 
@@ -334,7 +418,7 @@ class Work < ActiveRecord::Base
     end
 
     #@TODO: Is there a way that we can calculate the *canonical best*
-    # version of a work? We've tried this in the past, but we need to do 
+    # version of a work? We've tried this in the past, but we need to do
     # it in a better way (e.g.  we don't end up accidently re-marking things as
     # dupes that have previously been determined to not be dupes by a human)
   end
@@ -344,15 +428,15 @@ class Work < ActiveRecord::Base
     self.save
   end
 
-  # Finds year of publication for this work
+# Finds year of publication for this work
   def year
     publication_date ? publication_date.year : nil
   end
 
-  # Initializes an array of Keywords
-  # and saves them to the current Work
-  # Arguments:
-  #  * array of keyword strings
+# Initializes an array of Keywords
+# and saves them to the current Work
+# Arguments:
+#  * array of keyword strings
   def set_keyword_strings(keyword_strings)
     keyword_strings ||= []
     keywords = keyword_strings.to_a.uniq.collect do |add|
@@ -362,10 +446,10 @@ class Work < ActiveRecord::Base
     self.save
   end
 
-  # Initializes an array of Tags
-  # and saves them to the current Work
-  # Arguments:
-  #  * array of tag strings
+# Initializes an array of Tags
+# and saves them to the current Work
+# Arguments:
+#  * array of tag strings
   def set_tag_strings(tag_strings)
     tag_strings ||= []
     tags = tag_strings.to_a.uniq.collect do |add|
@@ -375,15 +459,15 @@ class Work < ActiveRecord::Base
     self.save
   end
 
-  # Updates keywords for the current Work
-  # If this Work is still a *new* record (i.e. it hasn't been created
-  # in the database), then the keywords are just cached until the 
-  # Work is created.
-  # Based on ideas at:
-  #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
-  #
-  # Arguments:
-  #  * array of Keywords
+# Updates keywords for the current Work
+# If this Work is still a *new* record (i.e. it hasn't been created
+# in the database), then the keywords are just cached until the
+# Work is created.
+# Based on ideas at:
+#   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+#
+# Arguments:
+#  * array of Keywords
   def set_keywords(keywords)
     if self.new_record?
       @keywords_cache = keywords
@@ -392,15 +476,15 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Updates tags for the current Work
-  # If this Work is still a *new* record (i.e. it hasn't been created
-  # in the database), then the tags are just cached until the 
-  # Work is created.
-  # Based on ideas at:
-  #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
-  #
-  # Arguments:
-  #  * array of Tags
+# Updates tags for the current Work
+# If this Work is still a *new* record (i.e. it hasn't been created
+# in the database), then the tags are just cached until the
+# Work is created.
+# Based on ideas at:
+#   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
+#
+# Arguments:
+#  * array of Tags
   def set_tags(tags)
     if self.new_record?
       @tags_cache = tags
@@ -409,11 +493,11 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Updates Work name strings
-  # (from a hash of "name" and "role" values)
-  # and saves them to the current Work
-  # Arguments:
-  #  * hash {:name => "Donohue, T.", :role => "Author | Editor" }
+# Updates Work name strings
+# (from a hash of "name" and "role" values)
+# and saves them to the current Work
+# Arguments:
+#  * hash {:name => "Donohue, T.", :role => "Author | Editor" }
   def set_work_name_strings(work_name_string_hash)
     if self.new_record?
       @work_name_strings_cache = work_name_string_hash
@@ -445,13 +529,13 @@ class Work < ActiveRecord::Base
     self.initial_publication_id = publication.id
   end
 
-  # Initializes the Publication information
-  # and saves it to the current Work
-  # Arguments:
-  #  * hash {:name => "Publication name", 
-  #          :issn_isbn => "Publication ISSN or ISBN",
-  #          :publisher_name => "Publisher name" }
-  #  (not all hash values need be set)
+# Initializes the Publication information
+# and saves it to the current Work
+# Arguments:
+#  * hash {:name => "Publication name",
+#          :issn_isbn => "Publication ISSN or ISBN",
+#          :publisher_name => "Publisher name" }
+#  (not all hash values need be set)
   def set_publication_info(publication_hash)
     logger.debug("\n\n===SET PUBLICATION INFO===\n\n")
 
@@ -461,19 +545,19 @@ class Work < ActiveRecord::Base
     self.save
   end
 
-  # All Works begin unverified
+# All Works begin unverified
   def set_initial_states
     self.is_in_process
     self.init_archive_status
   end
 
-  #Build a unique ID for this Work in Solr
+#Build a unique ID for this Work in Solr
   def solr_id
     "Work-#{id}"
   end
 
-  # Generate a key based on title information
-  # which can be used to determine if a Work is a duplicate
+# Generate a key based on title information
+# which can be used to determine if a Work is a duplicate
   def title_dupe_key
     # Title Dupe Key Format:
     # [Work.machine_name]||[Work.year]||[Publication.machine_name]
@@ -482,8 +566,8 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Generate a key based on Author/Editor information
-  # which can be used to determine if a Work is a duplicate
+# Generate a key based on Author/Editor information
+# which can be used to determine if a Work is a duplicate
   def name_string_dupe_key
     # NameString Dupe Key Format:
     # [First NameString.machine_name]||[Work.year]||[Work.type]||[Work.machine_name]
@@ -492,8 +576,8 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # If the Work is accepted ensures Contributorships are set for each WorkNameString claim
-  # associated with the Work.
+# If the Work is accepted ensures Contributorships are set for each WorkNameString claim
+# associated with the Work.
   def create_contributorships
     if self.accepted?
       self.work_name_strings.each do |cns|
@@ -508,7 +592,7 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Return a hash comprising all the Contributorship scoring methods
+# Return a hash comprising all the Contributorship scoring methods
   def update_scoring_hash
     self.scoring_hash = {:year => self.publication_date.try(:year),
                          :publication_id => self.publication_id,
@@ -527,7 +611,7 @@ class Work < ActiveRecord::Base
     end
   end
 
-  #base machine name of work on title_primary
+#base machine name of work on title_primary
   def update_machine_name
     if self.title_primary_changed? or self.machine_name.blank?
       self.machine_name = make_machine_name(self.title_primary)
@@ -541,45 +625,45 @@ class Work < ActiveRecord::Base
     end
   end
 
-  # Returns to Work Type URI based on the EPrints Application Profile's
-  # Type vocabulary.  If the type is not available in the EPrints App Profile,
-  # then the URI of the appropriate DCMI Type is returned.
-  #
-  # This is used for generating a SWORD package
-  # which contains a METS file conforming to the EPrints DC XML Schema. 
-  #
-  # For more info on EPrints App. Profile, and it's Type vocabulary, see:
-  # http://www.ukoln.ac.uk/repositories/digirep/index/EPrints_Application_Profile
-  #
-  #Maps our Work Types to EPrints Application Profile Type URIs,
-  # or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile
-  # Override in a subclass to assign a specific type_uri to that subclass
-  # By default return nil
-  #To get the full map used before breaking out into subclasses, which includes some types for
-  #which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
+# Returns to Work Type URI based on the EPrints Application Profile's
+# Type vocabulary.  If the type is not available in the EPrints App Profile,
+# then the URI of the appropriate DCMI Type is returned.
+#
+# This is used for generating a SWORD package
+# which contains a METS file conforming to the EPrints DC XML Schema.
+#
+# For more info on EPrints App. Profile, and it's Type vocabulary, see:
+# http://www.ukoln.ac.uk/repositories/digirep/index/EPrints_Application_Profile
+#
+#Maps our Work Types to EPrints Application Profile Type URIs,
+# or to the DCMI Type Vocabulary URI (if not in EPrints App. Profile
+# Override in a subclass to assign a specific type_uri to that subclass
+# By default return nil
+#To get the full map used before breaking out into subclasses, which includes some types for
+#which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
   def type_uri
     return nil
   end
 
-  # TODO As far as I can tell, to_s is only used in name and to_apa is only used in to_s
-  # to_apa claims in a comment to have a real use, but I haven't checked it. So these methods
-  # may be removable
+# TODO As far as I can tell, to_s is only used in name and to_apa is only used in to_s
+# to_apa claims in a comment to have a real use, but I haven't checked it. So these methods
+# may be removable
   def name
     return self.to_s
   end
 
-  #Convert Work into a String
+#Convert Work into a String
   def to_s
     # Default to displaying Work in APA citation format
     to_apa
   end
 
-  #Convert Work into a String in the APA Citation Format
-  # This is currently used during generation of METS file
-  # conforming to EPrints DC XML Schema for use with SWORD.
-  # @TODO: There is likely a better way to do this more generically.
-  # TODO: it may also not be doing what it should - what if there are both authors and editors
-  # - it's not clear how they are distinguished.
+#Convert Work into a String in the APA Citation Format
+# This is currently used during generation of METS file
+# conforming to EPrints DC XML Schema for use with SWORD.
+# @TODO: There is likely a better way to do this more generically.
+# TODO: it may also not be doing what it should - what if there are both authors and editors
+# - it's not clear how they are distinguished.
   def to_apa
     citation_string = ""
 
@@ -650,7 +734,7 @@ class Work < ActiveRecord::Base
     citation_string
   end
 
-  #Get all Author names on a Work, return as an array of hashes
+#Get all Author names on a Work, return as an array of hashes
   def authors
     self.work_name_strings.with_role(self.creator_role).includes(:name_string).collect do |wns|
       ns = wns.name_string
@@ -658,7 +742,7 @@ class Work < ActiveRecord::Base
     end
   end
 
-  #Get all Editor Strings of a Work, return as an array of hashes
+#Get all Editor Strings of a Work, return as an array of hashes
   def editors
     return [] if self.contributor_role == self.creator_role
     self.work_name_strings.with_role(self.contributor_role).includes(:name_string).collect do |wns|
@@ -683,7 +767,7 @@ class Work < ActiveRecord::Base
     self.class.contributor_role
   end
 
-  # In case there isn't a subklass open_url_kevs method
+# In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new
     open_url_kevs[:format] = "&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal"
@@ -709,10 +793,10 @@ class Work < ActiveRecord::Base
 
   protected
 
-  # Update Keywordings - updates list of keywords for Work
-  # Arguments:
-  #   - Work object
-  #   - collection of Keyword objects
+# Update Keywordings - updates list of keywords for Work
+# Arguments:
+#   - Work object
+#   - collection of Keyword objects
   def update_keywordings(keywords)
     self.keywords = keywords || []
   end
@@ -721,8 +805,8 @@ class Work < ActiveRecord::Base
     self.tags = tags || []
   end
 
-  # Create keywords, after a Work is created successfully
-  #  Called by 'after_create' callback
+# Create keywords, after a Work is created successfully
+#  Called by 'after_create' callback
   def create_keywords
     #Create any initialized keywords and save to Work
     self.set_keywords(@keywords_cache) if @keywords_cache
@@ -734,12 +818,12 @@ class Work < ActiveRecord::Base
     self.set_tags(@tags_cache) if @tags_cache
   end
 
-  # Updates WorkNameStrings
-  # (from a hash of "name" and "role" values)
-  # and saves them to the given Work object
-  # Arguments:
-  #  * Work object
-  #  * Array of hashes {:name => "Donohue, Tim", :role=> "Author | Editor" }
+# Updates WorkNameStrings
+# (from a hash of "name" and "role" values)
+# and saves them to the given Work object
+# Arguments:
+#  * Work object
+#  * Array of hashes {:name => "Donohue, Tim", :role=> "Author | Editor" }
   def update_work_name_strings(name_strings_hash)
     return unless name_strings_hash
     #Remove *ALL* existing name_string(s).  We want to add them
