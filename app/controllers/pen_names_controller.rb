@@ -12,7 +12,7 @@ class PenNamesController < ApplicationController
 
     before :new do
       #only 'editor' of person can assign a pen name
-      permit "editor of person"
+      permit "editor of Person"
 
       @suggestions = NameString.name_like(@person.last_name).order_by_name
 
@@ -20,14 +20,14 @@ class PenNamesController < ApplicationController
 
     before :update do
       #only 'editor' of person can assign a pen name
-      permit "editor of person"
+      permit "editor of Person"
     end
   end
 
 
   def create
     #only 'editor' of person can assign a pen name
-    permit "editor of person"
+    permit "editor of Person"
 
 
     logger.debug("\n\n\n\n\n\n\n\n\n\n==== Params: #{params.inspect}")
@@ -47,7 +47,7 @@ class PenNamesController < ApplicationController
 
   def create_name_string
     #only 'editor' of person can assign a pen name
-    permit "editor of person"
+    permit "editor of Person"
 
     name = params[:name_string][:name]
     machine_name = name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
