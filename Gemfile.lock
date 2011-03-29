@@ -45,8 +45,6 @@ GEM
     builder (2.1.2)
     capistrano (2.5.20)
       highline
-      highline
-      net-scp
       net-scp (>= 1.0.0)
       net-sftp
       net-sftp (>= 2.0.0)
@@ -97,6 +95,7 @@ GEM
     polyglot (0.3.1)
     rack (1.2.2)
     rack-mount (0.6.14)
+    pr_geohash (1.0.0)
       rack (>= 1.0.0)
     rack-test (0.5.7)
       rack (>= 1.0)
