@@ -365,8 +365,6 @@ class Index
   #  Returns a list of Work objects
   #  Note: if the work itself has not been accepted, it will appear in this list
   def self.possible_unaccepted_duplicate_works(work)
-    dupes = Array.new
-
     record = Hash.new
     record['title_dupe_key'] = work.title_dupe_key
     record['name_string_dupe_key'] = work.name_string_dupe_key
@@ -384,10 +382,7 @@ class Index
     docs = r.data["response"]["docs"]
 
     #Get the Work corresponding to each doc returned by Solr
-    docs.each do |doc|
-      dupes << Work.find(doc["pk_i"])
-    end
-    return dupes
+    return docs.collect {|doc| Work.find(doc["pk_i"])}
   end
 
   # Output a Work as if it came directly from Solr index
