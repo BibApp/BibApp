@@ -152,6 +152,9 @@ class Work < ActiveRecord::Base
     string :name_string_dupe_key, :stored => true
     date :updated_at, :stored => true
     date :created_at, :stored => true
+    text :year, :stored => true do |w|
+      w.publication_date ? w.publication_date.year : nil
+    end
   end
 
   def self.orphans
