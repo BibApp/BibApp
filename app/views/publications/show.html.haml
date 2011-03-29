@@ -25,7 +25,8 @@
       - if @authority_for.size == 0
         %div.notice
           %h3 Authorized Title
-          %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
+          - if @publication.authority
+            %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
         
       -else
 
