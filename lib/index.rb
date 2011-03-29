@@ -62,9 +62,9 @@ class Index
       :person_active => Proc.new { |record| record.people.collect { |p| p.person_active } },
 
       # Groups
-      :groups => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.name } }.uniq.flatten },
-      :group_id => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.id } }.uniq.flatten },
-      :groups_data => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.to_solr_data } }.uniq.flatten },
+      :groups => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.name } }.flatten.uniq },
+      :group_id => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.id } }.flatten.uniq },
+      :groups_data => Proc.new { |record| record.people.collect { |p| p.groups.collect { |g| g.to_solr_data } }.flatten.uniq },
 
       # Publication
       :publication => Proc.new { |record| record.publication.nil? ? nil : record.publication.name },
