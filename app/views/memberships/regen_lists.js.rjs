@@ -1,4 +1,6 @@
-page.replace_html 'current', :partial => "group", :collection => @person.groups, :locals => {:selected => true}
+if @person
+  page.replace_html 'current', :partial => "group", :collection => @person.groups, :locals => {:selected => true}
+end
 #page.replace_html 'inactive', :partial => "group", :collection => @person.groups_not, :locals => {:selected => false}
 #page.visual_effect :highlight, "group_#{@group.id}"
 #page['group_name'].value = ""
