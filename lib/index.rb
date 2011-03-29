@@ -365,13 +365,10 @@ class Index
   #  Returns a list of Work objects
   #  Note: if the work itself has not been accepted, it will appear in this list
   def self.possible_unaccepted_duplicate_works(work)
-    record = Hash.new
-    record['title_dupe_key'] = work.title_dupe_key
-    record['name_string_dupe_key'] = work.name_string_dupe_key
 
     # Find all works with a matching Title Dupe Key or matching NameString Dupe Key
     query_params = {
-        :query => "(title_dupe_key:\"#{record['title_dupe_key']}\" OR name_string_dupe_key:\"#{record['name_string_dupe_key']}\") AND (#{Work.solr_duplicate_filter})",
+        :query => "(title_dupe_key:\"#{work.title_dupe_key}\" OR name_string_dupe_key:\"#{work.name_string_dupe_key}\") AND (#{Work.solr_duplicate_filter})",
         :rows => 3
     }
 
