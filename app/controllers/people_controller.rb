@@ -13,7 +13,7 @@ class PeopleController < ApplicationController
         :id, :name, :first_name, :middle_name, :last_name, :prefix, :suffix, :phone, :email, :im, :office_address_line_one, :office_address_line_two, :office_city, :office_state, :office_zip, :research_focus, :active,
         {:name_strings => [:id, :name]},
         {:groups => [:id, :name]},
-        {:contributorships => [:work_id]} ]
+        {:contributorships => [:work_id]}]
 
     #Add a response for RSS
     response_for :show do |format|
@@ -25,6 +25,12 @@ class PeopleController < ApplicationController
     response_for :index do |format|
       format.html
       format.rdf
+    end
+
+    response_for :destroy do |format|
+      flash[:notice] = "#{person.display_name} was successfully deleted."
+      format.html { redirect_to return_path }
+      format.xml { head :ok }
     end
 
     before :index do
@@ -126,6 +132,13 @@ class PeopleController < ApplicationController
 
     end
 
+    before :destroy do
+      permit "admin"
+      person = Person.find(params[:id])
+      return_path = params[:return_path] || people_url
+      person.destroy if person
+    end
+
   end
 
   def create
@@ -195,22 +208,6 @@ class PeopleController < ApplicationController
           format.xml { render :xml => @person.errors.to_xml }
         end
       end
-    end
-  end
-
-  def destroy
-    permit "admin"
-
-    person = Person.find(params[:id])
-    return_path = params[:return_path] || people_url
-
-    person.destroy if person
-
-    respond_to do |format|
-      flash[:notice] = "#{person.display_name} was successfully deleted."
-      #forward back to path which was specified in params
-      format.html { redirect_to return_path }
-      format.xml { head :ok }
     end
   end
 
