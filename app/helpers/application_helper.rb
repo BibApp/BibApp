@@ -147,15 +147,19 @@ module ApplicationHelper
     # @TODO - improve - probably have subklass.to_coin methods for each.
     # Genre differences: journal/article = atitle ; book/proceeding = title
 
+    coin = "ctx_ver=Z39.88-2004" # OpenURL 1.0
+
     # We want AR objects!
     if work.class == Hash
-      work = Work.find(work["pk_i"])
+      begin
+        work = Work.find(work["pk_i"])
+      rescue
+        return coin
+      end
     end
 
-    coin = String.new
-    coin += "ctx_ver=Z39.88-2004" # OpenURL 1.0
 
-    if !work.open_url_kevs.empty?
+    if work.open_url_kevs.present?
       work.open_url_kevs.each do |kev, value| # Work Subklass Kevs
         coin += value
       end
