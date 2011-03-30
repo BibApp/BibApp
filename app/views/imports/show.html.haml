@@ -45,7 +45,7 @@
             %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
             -if @works.blank?
               %div.clear
-                %p This import is reviewable, but contians no works. They may have been deleted.
+                %p This import is reviewable, but contains no works. They may have been deleted.
             -else
               %div.clear
                 %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
@@ -126,7 +126,8 @@
               - if !@errors.empty?
                 - @errors.each do |key, value|
                   %tr
-                    %td="<strong>#{key.to_s.humanize}:</strong> #{value}"
+                    %td
+                      %strong="#{key.to_s.humanize}:#{value}"
               - else
                 %tr
                   %td{:colspan => "2"}
