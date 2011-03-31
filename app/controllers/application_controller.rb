@@ -64,9 +64,9 @@ class ApplicationController < ActionController::Base
     # * If we have a nested object, filter for object's works
 
     filter = Array.new
-
-    filter = params[:fq].collect
-
+    if params[:fq]
+      filter = params[:fq].collect
+    end
 
     # Are we showing an object's works?
     if !@current_object.nil?

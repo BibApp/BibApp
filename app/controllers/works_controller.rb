@@ -105,7 +105,7 @@ class WorksController < ApplicationController
       # Default BibApp search method - ApplicationController
 
       #Solr filter query for active people
-      params[:fq] = params[:fq] || []
+      params[:fq] ||= []
       params[:fq] << "person_active:true"
       search(params)
     end
