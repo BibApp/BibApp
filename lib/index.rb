@@ -296,9 +296,7 @@ class Index
                           :query => "id:#{work.solr_id}",
                           :mlt => {
                               :count => 5,
-                              :field_list => ["abstract", "title"]
-                          })
-    )
+                              :field_list => ["abstract", "title"]}))
 
     docs = Array.new
 
@@ -379,7 +377,7 @@ class Index
     docs = r.hits
 
     #Get the Work corresponding to each doc returned by Solr
-    return docs.collect {|doc| Work.find(doc["pk_i"])}
+    return docs.collect { |doc| Work.find(doc["pk_i"]) }
   end
 
   # Output a Work as if it came directly from Solr index
