@@ -93,7 +93,9 @@ class Work < ActiveRecord::Base
     string :name_strings, :stored => true, :multiple => true do |w|
       w.name_strings.collect { |ns| ns.name }
     end
-    string :name_string_id, :stored => true, :multiple => true, :using => :name_string_ids
+    string :name_string_id, :stored => true, :multiple => true do |w|
+      w.name_strings.collect {|ns| ns.id}
+    end
     string :name_strings_data, :stored => true, :multiple => true do |w|
       w.name_strings.collect { |ns| ns.to_solr_data }
     end
