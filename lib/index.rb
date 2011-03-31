@@ -100,6 +100,7 @@ class Index
       :year => Proc.new { |record| record.publication_date.year }
   }
 
+  DATE_AUGMENTED_SOLR_MAPPING = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
 
   # Index all Works which have been flagged for batch indexing
   def self.batch_index
@@ -169,13 +170,8 @@ class Index
   #Batch update several records with a single request to Solr
   def self.batch_update_solr(records, commit_records=true)
     docs = records.collect do |record|
-      if record.publication_date != nil
-        #add dates to our mapping
-        mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-        Solr::Importer::Mapper.new(mapping).map(record)
-      else
-        Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-      end
+      mapping = record.publication_date ? DATE_AUGMENTED_SOLR_MAPPING : SOLR_MAPPING
+      Solr::Importer::Mapper.new(mapping).map(record)
     end
 
     #Send one update request for all docs!
