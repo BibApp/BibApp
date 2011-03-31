@@ -253,7 +253,7 @@ class Index
       q = SOLRCONN.send(Solr::Request::Standard.new(query_params))
 
       # Rerun our search if the StandardRequestHandler came up empty...
-      if q.data["response"]["docs"].size < 1
+      if q.hits.size < 1
         # Try it instead with DismaxRequestHandler, which is more forgiving
         q = SOLRCONN.send(Solr::Request::Dismax.new(query_params))
       end
@@ -285,7 +285,7 @@ class Index
   end
 
   def self.fetch_by_solr_id(solr_id)
-    docs = SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).data["response"]["docs"]
+    docs = SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).hits
   end
 
   # Retrieve recommendations from Solr, based on current Work
@@ -338,7 +338,7 @@ class Index
     r = SOLRCONN.send(Solr::Request::Standard.new(query_params))
 
     #get the documents returned by Solr query
-    docs = r.data["response"]["docs"]
+    docs = r.hits
 
     return docs
   end
@@ -376,7 +376,7 @@ class Index
     r = SOLRCONN.send(Solr::Request::Standard.new(query_params))
 
     #get the documents returned by Solr query
-    docs = r.data["response"]["docs"]
+    docs = r.hits
 
     #Get the Work corresponding to each doc returned by Solr
     return docs.collect {|doc| Work.find(doc["pk_i"])}
@@ -413,7 +413,7 @@ class Index
   def self.process_response(query_response)
 
     #get the documents returned by Solr query
-    docs = query_response.data["response"]["docs"]
+    docs = query_response.hits
 
     # Extract our facets from the query response.
     #  These come back as arrays of Solr::Response::Standard::FacetValue
