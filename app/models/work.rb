@@ -93,8 +93,8 @@ class Work < ActiveRecord::Base
     string :name_strings, :stored => true, :multiple => true do |w|
       w.name_strings.collect { |ns| ns.name }
     end
-    string :name_string_id, :stored => true, :multiple => true do |w|
-      w.name_strings.collect {|ns| ns.id}
+    integer :name_string_id, :stored => true, :multiple => true, :references => NameString do |w|
+      w.name_strings.collect { |ns| ns.id }
     end
     string :name_strings_data, :stored => true, :multiple => true do |w|
       w.name_strings.collect { |ns| ns.to_solr_data }
@@ -106,28 +106,28 @@ class Work < ActiveRecord::Base
       w.editors.collect { |ed| "#{ed[:name]}||#{ed[:id]}" }
     end
     text :people, :stored => true do |w|
-      w.people.collect {|p| p.first_last}
+      w.people.collect { |p| p.first_last }
     end
-    string :people_id, :stored => true, :multiple => true, :using => :person_ids
+    integer :people_id, :stored => true, :multiple => true, :using => :person_ids, :references => Person
     string :people_data, :stored => true, :multiple => true do |w|
-      w.people.collect {|p| p.to_solr_data}
+      w.people.collect { |p| p.to_solr_data }
     end
     boolean :person_active, :stored => true, :multiple => true do |w|
-      w.people.collect {|p| p.person_active}
+      w.people.collect { |p| p.person_active }
     end
     text :groups, :stored => true do |w|
-      w.people.collect {|p| p.groups.collect {|g| g.name}}.flatten.uniq
+      w.people.collect { |p| p.groups.collect { |g| g.name } }.flatten.uniq
     end
-    string :group_id, :stored => true, :multiple => true do |w|
-      w.people.collect {|p| p.group_ids}.flatten.uniq
+    integer :group_id, :stored => true, :multiple => true, :references => Group do |w|
+      w.people.collect { |p| p.group_ids }.flatten.uniq
     end
     string :groups_data, :stored => true, :multiple => true do |w|
-      w.people.collect {|p| p.groups.collect {|g| g.to_solr_data}}.flatten.uniq
+      w.people.collect { |p| p.groups.collect { |g| g.to_solr_data } }.flatten.uniq
     end
     text :publication, :stored => true do |w|
       w.publication ? w.publication.name : nil
     end
-    string :publication_id, :stored => true, :multiple => true do |w|
+    integer :publication_id, :stored => true, :multiple => true, :references => Publication do |w|
       w.publication ? w.publication.id : nil
     end
     string :publication_data, :stored => true, :multiple => true do |w|
@@ -136,20 +136,20 @@ class Work < ActiveRecord::Base
     text :publisher, :stored => true do |w|
       w.publisher ? w.publisher.name : nil
     end
-    string :publisher_id, :stored => true, :multiple => true do |w|
+    integer :publisher_id, :stored => true, :multiple => true, :references => Publisher do |w|
       w.publisher ? w.publisher.id : nil
     end
     string :publisher_data, :stored => true, :multiple => true do |w|
       w.publisher ? w.publisher.to_solr_data : nil
     end
     text :keywords, :stored => true do |w|
-      w.keywords.collect {|k| k.name}
+      w.keywords.collect { |k| k.name }
     end
-    string :keywords_id, :stored => true, :multiple => true, :using => :keyword_ids
+    integer :keywords_id, :stored => true, :multiple => true, :using => :keyword_ids, :references => Keyword
     text :tags, :stored => true do |w|
-      w.tags.collect {|t| t.name}
+      w.tags.collect { |t| t.name }
     end
-    string :tag_id, :stored => true, :multiple => true, :using => :tag_ids
+    integer :tag_id, :stored => true, :multiple => true, :using => :tag_ids, :references => Tag
     string :title_dupe_key, :stored => true
     string :name_string_dupe_key, :stored => true
     date :updated_at, :stored => true
