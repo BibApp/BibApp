@@ -4,13 +4,6 @@ GIT
   specs:
     acts_as_tree (1.2.3)
 
-GIT
-  remote: https://github.com/silasb/authlogic_shibboleth.git
-  revision: c7a5cd069e5fe867dc5af23ad621f3f8b2083360
-  specs:
-    authlogic_shibboleth (0.0.1)
-      authlogic (>= 2.1.6)
-
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -160,7 +153,6 @@ DEPENDENCIES
   acts_as_list
   acts_as_tree (~> 1.2.3)!
   authlogic
-  authlogic_shibboleth!
   authorization
   capistrano
   cmess (~> 0.1.2)
