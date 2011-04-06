@@ -72,6 +72,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
+gem 'authlogic_shibboleth', :git => 'https://github.com/silasb/authlogic_shibboleth.git'
 
 #batch loading of authors
 gem 'fastercsv'
