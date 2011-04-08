@@ -5,7 +5,7 @@
     - if m.title
       %span
         &ndash; 
-        %em=m.title
+        %em #{m.title.html_safe}
 
     - unless m.group.children.empty?
       %ul.children
