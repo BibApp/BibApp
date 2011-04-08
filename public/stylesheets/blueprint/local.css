@@ -1,39 +1,226 @@
 @import "bibapp.css";
-/*
- * Choose two colors for your institution:
- * 1. A border color: #CC9933 (UW-Madison Gold)
- * 2. A heading color: #990000 (UW-Madison Red)
- * Add your colors below where necessary.
-*/
 
-.container {
- border-left:1px dotted #000;
- border-right:1px dotted #000;
+body
+{
+	background:url(../../images/background.png) no-repeat top center fixed #fff;
+	color:#222;
+	font-family:"Helvetica Neue",Helvetica,sans-serif;
+	font-size:75%;
 }
 
-#header {
- color: #990000; /* Red */
- border-bottom: 3px double #990000; /* Gold */
- background-image:url('../../images/header.png');
+.container
+{
+	border-left:1px solid #002d5e;
+	border-right:1px solid #002d5e;
 }
 
-#header a{color:#990000;} /* Red */
-#filter {color:#CC9933;} /* Gold */
-
-#footer {
-	color:#A2A2A2;
-	border-top: 1px solid #990000;
-	border-bottom: 3px solid #000; /* Gold */
-	background-image:url('../../images/header.png');
+h1,h2,h3,h4,h5
+{
+	color:#002d5e;
+	font-weight:bold;
 }
 
-#footer a {
-	color:#990000;
+h1
+{
+	font-size:1.9em;
+	line-height:25px;
+	margin:0 0 .5em;
 }
 
-/* Style for displaying Deposit License Agreement, etc. in nice scrollable div */
-.scrollarea {
-    width: 550px;
-    height: 250px;
-    overflow: scroll;
+h2
+{
+	font-size:1.6em;
+	line-height:18px;
+	padding:0 0 .5em;
+}
+
+h3
+{
+	font-size:1.3em;
+	line-height:16px;
+	padding:0 0 .8em;
+}
+
+h4
+{
+	color:#194D98;
+	font-size:1.1em;
+	padding:0 0 .5em;
+}
+
+h5
+{
+	color:#24539E;
+	line-height:1.4em;
+	margin:0 0 .3em;
+}
+
+#header
+{
+	background:url(../../images/uiuc_header.png);
+	border-bottom:3px solid #001c4d;
+	color:#001c4d;
+}
+
+#header a
+{
+	color:#001c4d;
+}
+
+#header a:hover
+{
+	text-decoration:underline;
+}
+
+ul#global-nav a:hover
+{
+	background:inherit;
+	text-decoration:underline;
+}
+
+#navigation li
+{
+	float:left;
+	/*height:31px;*/
+	margin:0 0 0 3px;
+	padding:0;
+  background: #f48a12;
+}
+
+#navigation a
+{
+	background:url(../../images/layout/prim-nav-left-bg.png) no-repeat #f48a12;
+	color:#001c4d;
+	cursor:pointer;
+	float:left;
+	font-size:12px;
+	line-height:normal;
+	padding:0 0 0 4px;
+	text-decoration:none;
+}
+
+#navigation a span
+{
+	background:url(../../images/layout/prim-nav-right-bg.png) no-repeat 100% 0;
+	display:block;
+	float:left;
+	padding:8px 15px 6px 11px;
+}
+
+#navigation li:hover
+{
+  background: #001c4d;
+}
+
+#navigation a:hover
+{
+	background:url(../../images/layout/prim-nav-left-bg.png) no-repeat #001c4d;
+	color:#fcc53f;
+	text-decoration:none;
+}
+
+
+#navigation li#current
+{
+	background:#001c4d;
+}
+
+#navigation #current a
+{
+	background:url(../../images/layout/prim-nav-left-bg.png) no-repeat #001c4d !important;
+	color:#fcc53f;
+}
+
+#navigation #current a span
+{
+	background:url(../../images/layout/prim-nav-right-bg.png) no-repeat 100% 0;
+	display:block;
+	float:left;
+	padding:8px 15px 6px 11px;
+}
+
+#local-nav, #admin-nav
+{
+  background:url(../../images/layout/tabbed-right-edge.png) #eee;
+}
+
+#local-nav a:hover,#admin-nav a:hover
+{
+	background:inherit;
+}
+
+#local-nav li.current,#admin-nav li.current,
+#local-nav li:hover ,#admin-nav li:hover
+{
+	background:url(../../images/layout/tabbed-right-edge.png) #222;
+	padding-bottom:1px;
+}
+
+#local-nav li.current a, #admin-nav li.current a,
+#local-nav li a:hover ,#admin-nav li a:hover
+{
+	color:#001c4d;
+  color:#fff;
+}
+
+div.box_heading,
+div.right_box_no_border h3
+{
+	background:url(../../images/layout/tabbed-right-edge.png) #eee;
+	color:#001c4d;
+}
+
+div.right_box_no_border h3 a
+{
+  color:#001c4d;
+}
+
+#logo
+{
+	margin-left:0;
+}
+
+span#branding a
+{
+	vertical-align:super;
+}
+
+#filter
+{
+	color:#C93;
+}
+
+#admin-actions
+{
+	background:url(../../images/layout/tabbed-right-edge.png) #eee;
+	border-bottom:1px outset #001c4d;
+	color:#001c4d;
+	height:30px;
+	margin-bottom:1em;
+	width:100%;
+}
+
+#edit-actions li,#edit-actions li a
+{
+	color:#001c4d;
+}
+
+#footer
+{
+	background:url(../../images/uiuc_header.png);
+	border-bottom:3px solid #000;
+	border-top:3px solid #001c4d;
+	color:#001c4d;
+}
+
+#footer a
+{
+	color:#001c4d;
+}
+
+.scrollarea
+{
+	height:250px;
+	overflow:scroll;
+	width:550px;
 }

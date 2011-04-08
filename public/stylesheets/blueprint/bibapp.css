@@ -1,8 +1,8 @@
-/* -------------------------------------------------------------- 
-  
+/* --------------------------------------------------------------
+
    bibapp.css
    * Style specific to BibApp (http://bibapp.googlecode.com/)
-   
+
    See the Readme file in this folder for additional instructions.
 
 -------------------------------------------------------------- */
@@ -69,13 +69,11 @@ ul#global-nav a:hover {
   padding: 0;
   list-style: none;
 }
-  
 #navigation a {
   display: block;
   padding: 5px 5px 7px 5px;
   text-decoration: none;
 }
-  
 #navigation a:hover {
   background-color:#E6E6E6;
 }
@@ -154,38 +152,38 @@ ul#global-nav a:hover {
 
 /*Box to right of main content (e.g. related works)*/
 div.right_box {
-    clear:both; 
-    width: 100%; 
+    clear:both;
+    width: 100%;
     border-left:1px solid #CCC;
     border-right:1px solid #CCC;
-    border-bottom:1px solid #CCC;        
+    border-bottom:1px solid #CCC;
     margin:0.5em;
 }
 div.right_box_no_border {
-    clear:both; 
-    width: 100%; 
+    clear:both;
+    width: 100%;
     margin:0.5em 0 1em;
 }
 /*Box to left of main content (e.g. facet filters) */
 div.left_box {
     border-left:1px solid #CCC;
     border-right:1px solid #CCC;
-    border-bottom:1px solid #CCC;        
+    border-bottom:1px solid #CCC;
     margin:0 0.5em 0.5em 0;
 }
-div.left_box_no_border {        
+div.left_box_no_border {
     margin:0.5em;
 }
 
 /* Heading for the box of content */
 div.box_heading {
-    text-align:center; 
-    background-color: #EEEEEE; 
-    padding:0.5em; 
+    text-align:center;
+    background-color: #EEEEEE;
+    padding:0.5em;
     margin-top: 0;
-    margin-bottom: 1em; 
-    border-top:1px solid #CCC; 
-    border-bottom:1px solid #CCC; 
+    margin-bottom: 1em;
+    border-top:1px solid #CCC;
+    border-bottom:1px solid #CCC;
     height: 1.25em;
     line-height: 1.25;
     color: #111111;
@@ -345,13 +343,13 @@ p#list_hint {
   margin: 0 0 1em 16em;
   font-size: 80%;
   color: #666;
-  width: 25em;            
+  width: 25em;
 }
 /*Unordered list of field values - used for tags/keywords */
 form.work_form fieldset ul.form_item_list {
   list-style-type:none;
   margin-left: 13em;
-}        
+}
 
 /*Ordered list of field values - used for Authors/Editors */
 ol.form_item_list {
@@ -364,21 +362,21 @@ ol.form_item_list li.list_item {
 
 li.list_item {
   margin: 0 0 0.75em 0;
-  color: #666;        
+  color: #666;
 }
 
 /* list item value (within an <li>) */
-li.list_item div.list_item_value { 
+li.list_item div.list_item_value {
   display: inline;
   padding: 0.25em;
-  border: 1px dotted #CCC; 
+  border: 1px dotted #CCC;
   width: 20em;
-  margin-right: 0.5em;        
+  margin-right: 0.5em;
 }
 
 /* Style of an item which can be moved using 'sortable_element' */
 .movable {
-  cursor: move;  
+  cursor: move;
   position:relative;
 }
 
@@ -413,11 +411,11 @@ div.auto_complete ul li {
 }
 div.auto_complete ul li.selected {
   background-color: #ffb;
-  cursor: default; 
+  cursor: default;
 }
 
 div.auto_complete ul strong.highlight {
-  color: #800; 
+  color: #800;
   margin:0;
   padding:0;
 }
@@ -460,7 +458,7 @@ div.auto_complete ul strong.highlight {
 /* ========================================= */
 /* (e.g. bulk selectboxes) */
 
-.select_multiple 
+.select_multiple
 {
   float:left;
 }
@@ -485,8 +483,8 @@ ol.works {
 	padding:0;
 }
 .work {
-	list-style: none; 
-	padding:0 0 0.75em 0; 
+	list-style: none;
+	padding:0 0 0.75em 0;
 	margin-bottom:0.5em;
 }
 
@@ -599,8 +597,8 @@ p.metadata {
 }
 
 span.gbs-link {
-	float:right; 
-	padding:3px; 
+	float:right;
+	padding:3px;
 	margin:0.5em
 }
 
@@ -720,7 +718,7 @@ ul#edit-actions {
 }
 
 #edit-actions li {
-	display:inline; 
+	display:inline;
 	padding-right:1em;
 	padding-left:1em;
   color:#900;
