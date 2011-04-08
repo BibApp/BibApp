@@ -219,7 +219,7 @@ class Person < ActiveRecord::Base
 
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{last_name}||#{id}||#{image_url}||#{group_ids}||#{person_active}||#{person_research_focus}"
+    "#{last_name}||#{id}||#{image_url}||#{comma_separated_group_ids}||#{person_active}||#{person_research_focus}"
   end
 
   def solr_filter

@@ -17,7 +17,6 @@
 
       - if active.blank? or active == "false"
         - next
-
       - if controller.controller_name == "groups" and !group_ids.include?(@group.id)
         - next
       - if count and counter >= count
