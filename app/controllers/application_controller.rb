@@ -75,7 +75,7 @@ class ApplicationController < ActionController::Base
       params[:view] = "all"
 
       # Append @current_object to filters
-      filter = filter << "#{facet_field}_id:\"#{@current_object.id}\""
+      filter << "#{facet_field}_id:\"#{@current_object.id}\""
       @title = @current_object.name
 
     elsif !params[:view].blank? && params[:sort].blank?
@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
 
     # Default SolrRuby params
     @query = params[:q] || "*:*" # Lucene syntax for "find everything"
-    @filter = params[:filter] || filter
+    @filter = filter
     @sort = params[:sort] || "year"
     @order = params[:order] || "descending"
     @page = params[:page] || 0

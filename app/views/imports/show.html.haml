@@ -14,14 +14,14 @@
 
     %h2
       ="Review Batch - "
-      %span{:style => "font-size:0.75em;"}="Imported For #{imported_for(@import)}"
+      %span{:style => "font-size:0.75em;"} Imported For #{imported_for(@import)}
 
     / Right - Admin div
     %div{:style => "padding-bottom:2em;"}
       - case @import.state
         - when "rejected"
           %div.error
-            %h3="Batch-#{@import.id}"
+            %h3 Batch-#{@import.id}
             %p
               This import was
               %strong rejected
@@ -29,7 +29,7 @@
 
         - when "processing"
           %div.warning
-            %h3="Batch-#{@import.id}"
+            %h3 Batch-#{@import.id}
             %p
               This import is in processing.  You'll receive an
               %strong email
@@ -45,21 +45,21 @@
             %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
             -if @works.blank?
               %div.clear
-                %p This import is reviewable, but contians no works. They may have been deleted.
+                %p This import is reviewable, but contains no works. They may have been deleted.
             -else
               %div.clear
                 %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
         - when "accepted"
           %div.notice
-            %h3="Batch-#{@import.id}"
+            %h3 Batch-#{@import.id}
             %p
               This import was
               %strong accepted.
           - if @works.blank?
             %div.warning
               %p
-                This import has been accepted, but contians no works. They may have been deleted.
+                This import has been accepted, but contains no works. They may have been deleted.
 
         - else
           %div.warning
@@ -126,7 +126,8 @@
               - if !@errors.empty?
                 - @errors.each do |key, value|
                   %tr
-                    %td="<strong>#{key.to_s.humanize}:</strong> #{value}"
+                    %td
+                      %strong "#{key.to_s.humanize}:#{value}"
               - else
                 %tr
                   %td{:colspan => "2"}
@@ -136,9 +137,8 @@
           - if @person
             %p
               Matched
-              %strong#matched_total="#{@match_count} works"
-              = "to #{imported_for(@import)}."
-              %strong#remaining_total="#{@work_batch.size - @match_count} remain to match."
+              %strong#matched_total "#{@match_count} work to #{imported_for(@import)}."
+              %strong#remaining_total "#{@work_batch.size - @match_count} remain to match."
 
         %hr/
       - if @person
