@@ -17,16 +17,18 @@ task :staging do
   role :web, test_server
   role :app, test_server
   role :db,  test_server, :primary => true
+  set :branch, 'uiuc-connections-shib'
 end
 
 set :application, "Bibapp"
-#set :repository,  "http://bibapp.googlecode.com/svn/trunk"
-set :repository,  "https://track.library.uiuc.edu/svn/bibapp/trunk"
-#temporary change to test out shibboleth stuff
-#set :repository,  "https://track.library.uiuc.edu/svn/bibapp/branches/shibboleth"
+
 set :rails_env, ENV['RAILS_ENV'] || 'production'
 
-set :scm, :subversion
+set :scm, :git
+set :repository, 'git://github.com/BibApp/BibApp.git'
+set :branch, 'uiuc-connections' unless fetch(:branch, nil)
+set :deploy_via, :remote_cache
+
 
 #directories on the server to deploy the application
 #the running instance gets links to [deploy_to]/current
