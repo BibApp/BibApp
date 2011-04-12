@@ -2,7 +2,8 @@ class UserSessionsController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:destroy, :saved]
-
+  helper UserSessionsHelper
+  
   def new
     @user_session = UserSession.new
   end
@@ -26,4 +27,19 @@ class UserSessionsController < ApplicationController
   def saved
     @works = session[:saved].all_works
   end
+
+  def login_shibboleth
+    if current_user
+      redirect_back_or_default(root_url)
+    else
+      redirect_to(shibboleth_login_url)
+    end
+  end
+
+  protected
+  
+  def shibboleth_login_url
+    root_url(:protocol => 'https') + "Shibboleth.sso/Login"
+  end
+
 end
