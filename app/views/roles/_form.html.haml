@@ -14,7 +14,7 @@
   %ol.users
     -@current_objects.each do |user|
       %li.user
-        ="#{user.login} (#{user.email}) - "
+        ="#{user.email} "
         - if user.has_role? @role_name.downcase, @authorizable
           %strong
             ="Already has #{@role_name} permissions"

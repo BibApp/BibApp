@@ -1,10 +1,9 @@
 
 puts "\nCreating admin user...\n"
 # create an 'admin' user, and assign as System Administrator
-dupe = User.find_by_login('admin')
+dupe = User.find_by_login('admin@example.com')
 if dupe.nil?
-  admin = User.create(:login => 'admin',
-              :email => 'admin@myu.edu',
+  admin = User.create(:email => 'admin@example.com',
               :password => 'bibapp',
               :password_confirmation => 'bibapp')
   admin.activate
@@ -18,4 +17,4 @@ puts "\nUpdating all SHERPA/RoMEO data in BibApp...\n"
 #Call update_sherpa_data, which re-indexes *everything* in BibApp
 Publisher.update_sherpa_data
 
-puts "\nFinished! Log in with user 'admin' and password 'bibapp'."
+puts "\nFinished! Log in with email 'admin@example.com' and password 'bibapp'."

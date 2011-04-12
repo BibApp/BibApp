@@ -9,13 +9,11 @@
 
     %table#users.prepend-1
       %tr
-        %th.span-6="Username"
         %th.span-6="Email"
         %th.span-8.last="Roles"
       -@current_objects.each do |user|
         %tr{:class => cycle("odd", "even")}
-          %td=link_to user.login, user_path(user)
-          %td=user.email
+          %td=link_to user.email, user_path(user)
           %td
             %ul
               - user.roles.each do |role|

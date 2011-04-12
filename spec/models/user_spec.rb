@@ -34,17 +34,14 @@ describe User do
       @user = Factory.create(:unactivated_user)
     end
 
-    it { should validate_presence_of(:login) }
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
     it { should validate_presence_of(:password_confirmation) }
 
-    it { should ensure_length_of(:login).is_at_least(3).is_at_most(40) }
     it { should ensure_length_of(:email).is_at_least(3).is_at_most(100) }
     it { should ensure_length_of(:password).is_at_least(4).is_at_most(40) }
-    it { should validate_uniqueness_of(:login) }
     it { should validate_uniqueness_of(:email) }
-    [:login, :email, :password, :password_confirmation].each do |field|
+    [:email, :password, :password_confirmation].each do |field|
       it { should allow_mass_assignment_of(field) }
     end
     [:crypted_password, :remember_token, :persistence_token, :activation_code, :activated_at].each do |field|
@@ -63,7 +60,7 @@ describe User do
     end
 
     it 'does not rehash password' do
-      @user.update_attributes(:login => 'quentin2')
+      @user.update_attributes(:email => 'quentin2@example.com')
       @user.valid_password?('password')
     end
 
@@ -73,10 +70,10 @@ describe User do
 
   end
 
-  it "can return a list of first letters of users' logins" do
-    logins = ['Aaron', 'Fred', 'Joe', 'John', 'Pete']
-    logins.each do |login|
-      Factory.create(:user, :login => login)
+  it "can return a list of first letters of users' emails" do
+    emails = ['aaron@example.com', 'fred@example.com', 'joe@example.com', 'John@example.com', 'pete@example.com']
+    emails.each do |email|
+      Factory.create(:user, :email => email)
     end
     User.letters.should == ['A', 'F', 'J', 'P']
   end

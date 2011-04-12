@@ -148,6 +148,9 @@ Bibapp::Application.routes.draw do
     collection do
       match 'activate(/:activation_code)', :to => 'users#activate', :as => 'activate'
     end
+    member do
+      get :update_email
+    end
   end
 
   ####

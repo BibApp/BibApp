@@ -7,10 +7,6 @@
       %legend="Request New Password"
       = form_for :password, :url => passwords_path do |form|
         %p
-          %label="Username"
-          %br/
-          = text_field_tag 'login'
-        %p
           %label="Email"
           %br/
           = text_field_tag 'email'

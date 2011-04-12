@@ -22,6 +22,13 @@ class UserMailer < ActionMailer::Base
     end
   end
 
+  def update_email(user, url)
+    with_setup_and_mailing(user) do
+      @subject += 'Email address update confirmation'
+      @url = url
+    end
+  end
+
   protected
 
   #do the common setup and common mailing while yielding to a block
