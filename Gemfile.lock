@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/hading/authlogic_shibboleth.git
-  revision: c7a5cd069e5fe867dc5af23ad621f3f8b2083360
+  revision: 792d8f88c00a109515fffe502a2b96fb252dc1d9
   specs:
-    authlogic_shibboleth (0.0.1)
+    authlogic_shibboleth (0.0.2)
       authlogic (>= 2.1.6)
 
 GIT
