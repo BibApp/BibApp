@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/hading/authlogic_shibboleth.git
+  revision: c7a5cd069e5fe867dc5af23ad621f3f8b2083360
+  specs:
+    authlogic_shibboleth (0.0.1)
+      authlogic (>= 2.1.6)
+
+GIT
   remote: https://github.com/parasew/acts_as_tree.git
   revision: ed52495d1671c99e1add582628403bf8104e9077
   specs:
@@ -153,6 +160,7 @@ DEPENDENCIES
   acts_as_list
   acts_as_tree (~> 1.2.3)!
   authlogic
+  authlogic_shibboleth!
   authorization
   capistrano
   cmess (~> 0.1.2)

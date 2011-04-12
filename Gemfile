@@ -72,6 +72,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
+gem 'authlogic_shibboleth', :git => 'git://github.com/hading/authlogic_shibboleth.git'
 
 #batch loading of authors
 gem 'fastercsv'
