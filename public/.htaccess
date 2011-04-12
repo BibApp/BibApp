@@ -1,5 +1,5 @@
 AuthType shibboleth
-ShibRequireSession On
+#ShibRequireSession On
 ShibApplicationId default
 ShibExportAssertion On
 require Shibboleth
