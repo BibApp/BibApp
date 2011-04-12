@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       @page = params[:page] || @a_to_z[0]
       
       #get all objects for that current page
-      @current_objects = User.where("upper(login) like ?", "#{@page}%").order("upper(login)")
+      @current_objects = User.where("upper(email) like ?", "#{@page}%").order("upper(email)")
     end
   end
 
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
     if user and !user.active?
       user.activate
-      flash[:notice] = "Signup is complete!  You may now login using your username and password."
+      flash[:notice] = "Signup is complete!  You may now login using your email and password."
     end
     redirect_back_or_default(root_url)
   end

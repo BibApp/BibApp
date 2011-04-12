@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110223231449) do
+ActiveRecord::Schema.define(:version => 20110411215827) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -293,7 +293,6 @@ ActiveRecord::Schema.define(:version => 20110223231449) do
   add_index "tags", ["name"], :name => "tag_name", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "login"
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40

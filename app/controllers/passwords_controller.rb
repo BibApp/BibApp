@@ -10,7 +10,7 @@ class PasswordsController < ApplicationController
   def create
     respond_to do |format|
 
-      if user = User.find_by_email_and_login(params[:email], params[:login])
+      if user = User.find_by_email(params[:email])
         @new_password = random_password
         user.password = user.password_confirmation = @new_password
         user.save_without_validation

@@ -9,18 +9,17 @@ class User < ActiveRecord::Base
   acts_as_authorized_user
   acts_as_authorizable
 
-  validates_presence_of :login, :email
+  validates_presence_of :email
   validates_presence_of :password, :if => :require_password?
   validates_presence_of :password_confirmation, :if => :require_password?
   validates_length_of :password, :within => 4..40, :if => :require_password?
   validates_confirmation_of :password, :if => :require_password?
-  validates_length_of :login, :within => 3..40
   validates_length_of :email, :within => 3..100
-  validates_uniqueness_of :login, :email, :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation
 
   #### Associations ####
   has_and_belongs_to_many :roles
@@ -187,9 +186,9 @@ class User < ActiveRecord::Base
     self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
   end
 
-  # return the first letter of each login (i.e. username), ordered alphabetically
+  # return the first letter of each email, ordered alphabetically
   def self.letters
-    self.select('DISTINCT SUBSTR(login, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}
+    self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}.uniq
   end
 
 end

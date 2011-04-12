@@ -47,7 +47,7 @@ class CSVAuthorController < ApplicationController
             
             if msg.empty?
               Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
-              msg = "#{current_user.login}, Your file was accepted for processing. An email will notify you when the job is completed."
+              msg = "#{current_user.email}, Your file was accepted for processing. An email will notify you when the job is completed."
             end
           end
           

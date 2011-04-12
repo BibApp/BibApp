@@ -28,7 +28,7 @@ class RolesController < ApplicationController
       @page = params[:page] || @a_to_z[0]
       
       #get all objects for that current page
-      @current_objects = User.where("upper(login) like ?", "#{@page}%").order('upper(login)')
+      @current_objects = User.where("upper(email) like ?", "#{@page}%").order('upper(email)')
     end
    
   end #end make_resourceful

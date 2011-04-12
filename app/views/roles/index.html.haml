@@ -24,8 +24,8 @@
         %ol.users
           - @authorizable.has_admins.each do |user|
             %li.user
-              ="#{user.login} (#{user.email}) "
-              - if user.login != "admin"
+              ="#{user.email}"
+              - if user.login != "admin@example.com"
                 = form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
                   - if @authorizable.is_a? Class
                     =hidden_field_tag :authorizable_type, @authorizable.name
@@ -44,8 +44,8 @@
         %ol.users
           - @authorizable.has_editors.each do |user|
             %li.user
-              ="#{user.login} (#{user.email})"
-              - if user.login != "admin"
+              ="#{user.email}"
+              - if user.login != "admin@example.com"
                 = form_tag ({:action => "destroy", :method => :delete}, :class=>"inline-form") do
                   - if @authorizable.is_a? Class
                     =hidden_field_tag :authorizable_type, @authorizable.name

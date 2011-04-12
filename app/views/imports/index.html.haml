@@ -11,7 +11,7 @@
         
 %div.span-24
   %div.span-22.prepend-1
-    %h2="Imports for #{User.find(params[:user_id]).login}"
+    %h2="Imports for #{User.find(params[:user_id]).email}"
     
     = will_paginate @imports
     

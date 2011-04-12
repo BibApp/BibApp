@@ -33,13 +33,13 @@ describe UserSessionsController do
     end
 
     it 'logs in with correct password' do
-      get :create, :user_session => {:login => @a_user.login, :password => 'password'}
+      get :create, :user_session => {:email => @a_user.email, :password => 'password'}
       flash[:notice].should == "Login successful!"
       response.should redirect_to(root_url)      
     end
 
     it 'renders new with incorrect password' do
-      get :create, :user_session => {:login => @a_user.login, :password => 'not_the_password'}
+      get :create, :user_session => {:email => @a_user.email, :password => 'not_the_password'}
       response.should render_template('new')
     end
 
