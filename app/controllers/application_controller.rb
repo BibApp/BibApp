@@ -150,7 +150,8 @@ class ApplicationController < ActionController::Base
     @current_user_session = UserSession.find
     if remote_user = request.env['REMOTE_USER']
       user = ensure_remote_user(remote_user)
-      @current_user_session = UserSession.new(user).save
+      UserSession.new(user).save
+      @current_user_session = UserSession.find
     end
   end
 
