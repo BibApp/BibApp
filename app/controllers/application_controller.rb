@@ -214,6 +214,8 @@ class ApplicationController < ActionController::Base
 
   def ensure_remote_user(email)
     user = User.find_by_email(email)
+    Rails.logger.error "Looking for email #{email}"
+    Rails.logger.error "Found id #{id}" if user
     return user if user
     #Here we make a new user from the email
   end
