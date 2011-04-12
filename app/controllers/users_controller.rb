@@ -40,15 +40,48 @@ class UsersController < ApplicationController
   
   # Update - update user email
   def update
-    @user = User.find(params[:id])    
-    @user.email = params[:user][:email] if params[:user][:email]
-    @user.save
+    @user = User.find(params[:id])
+    new_email = params[:user][:email]
+    code = @user.email_update_code(new_email)
 
-    if @user.errors.empty?
-      flash[:notice] = "Your account was updated successfully."
-      redirect_back_or_default($APPLICATION_URL)
-    else
+    if new_email == @user.email
+      flash[:notice] = "You entered your current email"
+      redirect_to(edit_user_url(@user)) and return
+    end
+
+    #We set the email but don't save so that we can use validations
+    old_email = @user.email
+    @user.email = new_email
+    if !@user.valid?
+      @user.email = old_email
       render :action => 'edit'
+    else
+      url = update_email_user_url(@user, :new_email => new_email, :code => code)
+      UserMailer.update_email(@user, url).deliver
+      flash[:notice] = %Q(NOTICE An email has been sent to #{new_email} with a confirmation link.
+ Your email address will be updated after you follow the link in that email.)
+      redirect_back_or_default(root_url)
+    end
+
+  end
+
+  def update_email
+    user = User.find(params[:id])
+    #retrieve code and new email from url
+    code = params[:code]
+    new_email = params[:new_email]
+    if code == user.email_update_code(new_email)
+      user.email = new_email
+      if user.save
+        flash[:notice] = "Email updated"
+        redirect_back_or_default(root_url)
+      else
+        flash[:notice] = "Problem updating email - this email may be in use already. Try again."
+        redirect_to(edit_user_url(user))
+      end
+    else
+      flash[:notice] = "Problem updating email - your code or new email is incorrect. Try again."
+      redirect_to(edit_user_url(user))
     end
   end
 

@@ -176,6 +176,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def email_update_code(new_email)
+    Digest::SHA1.digest(self.salt + ':' + new_email)
+  end
+
   protected
 
   def require_password?
@@ -188,7 +192,7 @@ class User < ActiveRecord::Base
 
   # return the first letter of each email, ordered alphabetically
   def self.letters
-    self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect {|x| x.letter.upcase}.uniq
+    self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect { |x| x.letter.upcase }.uniq
   end
 
 end
