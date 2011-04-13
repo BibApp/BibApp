@@ -25,7 +25,7 @@
           - @authorizable.has_admins.each do |user|
             %li.user
               ="#{user.email}"
-              - if user.login != "admin@example.com"
+              - if user.email != "admin@example.com"
                 = form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
                   - if @authorizable.is_a? Class
                     =hidden_field_tag :authorizable_type, @authorizable.name
@@ -45,7 +45,7 @@
           - @authorizable.has_editors.each do |user|
             %li.user
               ="#{user.email}"
-              - if user.login != "admin@example.com"
+              - if user.email != "admin@example.com"
                 = form_tag ({:action => "destroy", :method => :delete}, :class=>"inline-form") do
                   - if @authorizable.is_a? Class
                     =hidden_field_tag :authorizable_type, @authorizable.name
