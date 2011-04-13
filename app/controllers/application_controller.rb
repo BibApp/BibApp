@@ -148,6 +148,7 @@ class ApplicationController < ActionController::Base
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
+    return @current_user_session if @current_user_session
     if remote_user = request.env['REMOTE_USER']
       user = ensure_remote_user(remote_user)
       UserSession.new(user).save
