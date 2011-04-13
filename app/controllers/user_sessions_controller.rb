@@ -12,7 +12,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Login successful!"
-      redirect_to params[:return_to] || root_url
+      redirect_to params[:return_to] || session[:return_to] || root_url
     else
       render :action => :new
     end
@@ -30,7 +30,7 @@ class UserSessionsController < ApplicationController
 
   def login_shibboleth
     if current_user
-      redirect_back_or_default(root_url)
+      redirect_to session[:return_to] || root_url
     else
       redirect_to(shibboleth_login_url)
     end
