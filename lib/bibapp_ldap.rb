@@ -38,13 +38,13 @@ class BibappLdap
     end
   end
 
-  def ldap_search(query)
+  def search(query)
     ldap = self.get_connection
     cn_filt = Net::LDAP::Filter.eq("#{self.config['cn']}", "*#{query}*")
     uid_filt = Net::LDAP::Filter.eq("#{self.config['uid']}", "*#{query}*")
     mail_filt = Net::LDAP::Filter.eq("#{self.config['mail']}", "*#{query}*")
-    ldap.search(:filter => cn_filt | uid_filt | mail_filt).map do |entry|
-      clean_ldap(entry)
+    ldap.search(:filter => cn_filt | uid_filt | mail_filt).collect do |entry|
+      clean(entry)
     end
   rescue BibappLdapError => e
     raise e
@@ -58,7 +58,7 @@ class BibappLdap
     end
   end
 
-  def clean_ldap(entry)
+  def clean(entry)
     Hash.new.tap do |res|
       entry.each do |key, val|
         #res[key] = val[0]
