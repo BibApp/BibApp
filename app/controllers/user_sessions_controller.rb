@@ -40,13 +40,9 @@ class UserSessionsController < ApplicationController
   
   def shibboleth_login_url
     url = root_url(:protocol => 'https') + "Shibboleth.sso/Login"
-    Rails.logger.error("SHIB: base url: #{url}")
-    return_to = session[:return_to] || params[:return_to]
-    if return_to
+    if return_to = session[:return_to] || params[:return_to]
       target = root_url(:protocol => 'https') + return_to
       url = "#{url}?target=#{CGI.escape(target)}"
-      Rails.logger.error("SHIB: target set: #{target}")
-      Rails.logger.error("SHIB: full url: #{url}")
     end
     return url
   end
