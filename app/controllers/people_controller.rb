@@ -1,4 +1,5 @@
 require 'author_batch_load'
+require 'bibapp_ldap'
 
 class PeopleController < ApplicationController
   require 'redcloth'
@@ -69,11 +70,21 @@ class PeopleController < ApplicationController
 
     before :new do
       if params[:q]
-        @ldap_results = ldap_search(params[:q])
+        begin
+          @ldap_results = BibappLdap.instance.search(params[:q])
+        rescue  BibappLdapConfigError
+          @fail_message = "LDAP is not properly configured"
+        rescue BibappLdapConnectionError
+          @fail_message = "Error authenticating LDAP user."
+        rescue BibappLdapTooManyResultsError
+          @fail_message = "Too many LDAP results"
+        rescue BibappLdapError => e
+          @fail_message = e.message
+        end
         if @ldap_results.nil?
           @fail = true
         else
-          @ldap_results = @ldap_results.compact
+          @ldap_results.compact!
         end
       end
       @title = "Add a Person"
@@ -293,100 +304,6 @@ class PeopleController < ApplicationController
       msg = 'An error was generated processing your request.'
     end
     redirect_to batch_csv_show_people_url(:completed => msg)
-  end
-
-  private
-
-  def ldap_search(query)
-    begin
-      require 'rubygems'
-      require 'net/ldap'
-      config = YAML::load(File.read("#{Rails.root}/config/ldap.yml"))[Rails.env]
-
-      if config.blank?
-        @fail_message = "LDAP is not properly configured"
-        return nil
-      end
-
-      logger.info "Read LDAP config:"
-      config.each do |key, val|
-        logger.info "#{key}: #{val}"
-      end
-
-      query
-      if query and !query.empty?
-        logger.info "Connecting to #{config['host']}:#{config['port']}"
-        logger.info "Base DN: #{config['base']}"
-        logger.info "Search query: #{query}"
-
-        if config['username'].blank? or config['password'].blank?
-          ldap = Net::LDAP.new(
-              :host => config['host'],
-              :port => config['port'].to_i,
-              :base => config['base']
-          )
-        else
-          ldap = Net::LDAP.new(
-              :auth => {
-                  :method => :simple,
-                  :username => config['username'],
-                  :password => config['password']
-              },
-              :host => config['host'],
-              :port => config['port'].to_i,
-              :base => config['base'],
-              :encryption => :simple_tls
-          )
-          unless ldap.bind
-            @fail_message = "Error authenticating LDAP user."
-            return nil
-          end
-        end
-
-        cn_filt = Net::LDAP::Filter.eq("#{config['cn']}", "*#{query}*")
-        uid_filt = Net::LDAP::Filter.eq("#{config['uid']}", "*#{query}*")
-        mail_filt = Net::LDAP::Filter.eq("#{config['mail']}", "*#{query}*")
-        ldap_result = ldap.search(:filter => cn_filt | uid_filt | mail_filt).map { |entry| clean_ldap(entry) }
-
-        return ldap_result
-      end
-
-    rescue Exception => e
-      if ldap.get_operation_result.code != 0
-        if ldap.get_operation_result.code == 4
-          @fail_message = "too many results"
-        else
-          @fail_message = ldap.get_operation_result.message
-        end
-        logger.debug("LDAP exception: #{ldap.get_operation_result.message}")
-        logger.debug(e.backtrace.join("\n"))
-      else
-        @fail_message = e.message
-        logger.debug("LDAP exception: #{e.message}")
-        logger.debug(e.backtrace.join("\n"))
-      end
-    end
-    nil
-  end
-
-  def clean_ldap(entry)
-    res = Hash.new("")
-
-    config = YAML::load(File.read("#{Rails.root}/config/ldap.yml"))[Rails.env]
-
-    entry.each do |key, val|
-      #res[key] = val[0]
-
-      # map university-specific values
-      if config.has_value? key.to_s
-        k = config.index(key.to_s).to_sym
-        res[k] = val[0]
-        res[k] = NameCase.new(val[0]).nc! if [:sn, :givenname, :middlename, :generationqualifier, :displayname].include?(k)
-        res[k] = val[0].titleize if [:title, :ou, :postaladdress].include?(k)
-      end
-
-    end
-    return res
   end
 
 end
