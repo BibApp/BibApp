@@ -1,3 +1,17 @@
+1.1.0-rc3 - April 13, 2011
+--------------
+Many minor bugfixes
+Merged some of jstirnaman's changes
+Fixed import bug (caused by overaggressive uniqueness introduced in refactoring)
+Remove all usage of login (or username) in favor of email
+Index email field in database
+Make change of email go through a confirmation process
+
+1.1.0-rc2 - March 11, 2011
+--------------
+Fixed typo preventing 1.1.0-rc1 fropm working
+Made sherpa directory shared for capistrano deployments
+
 1.1.0-rc1 - March 11, 2011
 --------------
 Runs on Rails 3 (3.0.4 specifically) instead of Rails 2 (works with Ruby Enterprise Edition 1.8.7)
