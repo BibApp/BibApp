@@ -32,7 +32,7 @@ class UserSessionsController < ApplicationController
     if current_user
       redirect_to session[:return_to] || root_url
     else
-      redirect_to(shibboleth_login_url)
+      redirect_to(shibboleth_login_url, :return_to => params[:return_to])
     end
   end
 
@@ -40,9 +40,13 @@ class UserSessionsController < ApplicationController
   
   def shibboleth_login_url
     url = root_url(:protocol => 'https') + "Shibboleth.sso/Login"
-    if session[:return_to]
-      url = "#{url}?target=#{CGI.escape(session[:return_to])}"
-      Rails.logger.error("SHIB: target set: #{url}")
+    Rails.logger.error("SHIB: base url: #{url}")
+    return_to = session[:return_to] || params[:return_to]
+    if return_to
+      target = root_url + return_to
+      url = "#{url}?target=#{CGI.escape(target)}"
+      Rails.logger.error("SHIB: target set: #{target}")
+      Rails.logger.error("SHIB: full url: #{url}")
     end
     return url
   end
