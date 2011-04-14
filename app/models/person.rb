@@ -292,6 +292,10 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def self.ensure_person_for_user(user)
+    raise RuntimeError, "Not yet implemented"
+  end
+
   protected
 
   def clean_name(name)

@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
     if !@current_user_session and (remote_user = request.env['REMOTE_USER'])
-      user = ensure_remote_user(remote_user)
+      user = User.ensure_remote_user(remote_user)
       UserSession.new(user).save
       @current_user_session = UserSession.find
     end
@@ -214,11 +214,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def ensure_remote_user(email)
-    user = User.find_by_email(email)
-    Rails.logger.error "Looking for email #{email}"
-    Rails.logger.error "Found id #{user.id}" if user
-    return user if user
-    #Here we make a new user from the email
-  end
 end
