@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
   end
 
   def self.create_from_email(email)
-    raise RuntimeError, "Not yet implemented"
+    #raise RuntimeError, "Not yet implemented"
   end
 
 end

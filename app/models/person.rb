@@ -294,7 +294,7 @@ class Person < ActiveRecord::Base
   end
 
   def self.ensure_person_for_user(user)
-    raise RuntimeError, "Not yet implemented"
+    #raise RuntimeError, "Not yet implemented"
   end
 
   protected
