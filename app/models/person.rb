@@ -155,11 +155,10 @@ class Person < ActiveRecord::Base
     vps = self.verified_publications
 
     known_years = vps.collect do |vp|
-      if !vp.work.publication_date.nil?
+      if vp.work.publication_date
         vp.work.publication_date.year
       end
-    end.uniq
-    known_years.compact
+    end.uniq.compact
 
     known_publication_ids = vps.collect { |vp| vp.work.publication.id if vp.work.publication }.uniq.compact
     known_collaborator_ids = vps.collect { |vp| vp.work.name_strings.collect { |ns| ns.id } }.flatten.uniq
