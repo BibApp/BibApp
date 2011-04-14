@@ -210,7 +210,7 @@ class PeopleController < ApplicationController
       respond_to do |format|
         if @person.save
           flash[:notice] = "Personal info was successfully updated."
-          format.html { redirect_to new_person_pen_name_path(@person.id) }
+          format.html { redirect_to person_url(@person) }
           #TODO: not sure this is right
           format.xml { head :created, :location => person_url(@person) }
         else
