@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   has_one :person
 
   before_create :make_activation_code
-
+  after_destroy :dissociate_person
 
   # Activates the user in the database.
   def activate
@@ -223,6 +223,13 @@ class User < ActiveRecord::Base
   RANDOM_PASSWORD_CHARS = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
   def self.random_password(len = 20)
     len.times.collect {RANDOM_PASSWORD_CHARS.choice}.join
+  end
+
+  def dissociate_person
+    if person = self.person
+      person.user = nil
+      person.save
+    end
   end
 
 end
