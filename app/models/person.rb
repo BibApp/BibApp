@@ -308,20 +308,21 @@ class Person < ActiveRecord::Base
     return person
   end
 
-  protected
-
   def self.lookup_person_for_user(user, user_ldap)
     #look for person with the same email or UID
     Person.find_by_email(user.email) || Person.find_by_uid(user_ldap[:uid])
   end
 
   def self.new_person_for_user(user, user_ldap)
-    person = Person.new(:email => user.email, :uid => user_ldap[:uid], :first_name => user_ldap[:givenname],
-                        :middle_name => user_ldap[:middlename], :last_name => user_ldap[:sn],
-                        :postal_address => user_ldap[:postaladdress],
-                        :display_name => user_ldap[:displayname], :phone => user_ldap[:telephone],
-                        :im => '', :prefix => '', :suffix => '', :research_focus => '')
+    Person.new(:email => user.email, :uid => user_ldap[:uid], :first_name => user_ldap[:givenname],
+               :middle_name => user_ldap[:middlename], :last_name => user_ldap[:sn],
+               :postal_address => user_ldap[:postaladdress],
+               :display_name => user_ldap[:displayname], :phone => user_ldap[:telephone],
+               :im => '', :prefix => '', :suffix => '', :research_focus => '')
   end
+
+
+  protected
 
   def clean_name(name)
     name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
