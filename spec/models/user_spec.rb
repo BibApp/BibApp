@@ -27,6 +27,7 @@ describe User do
     it { should have_many(:taggings).dependent(:destroy) }
     it { should have_many(:tags).through(:taggings) }
     it { should have_many(:users).through(:taggings) }
+    it { should have_one(:person)}
   end
 
   context 'validations' do
