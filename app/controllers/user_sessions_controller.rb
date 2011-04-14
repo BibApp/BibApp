@@ -30,7 +30,7 @@ class UserSessionsController < ApplicationController
 
   def login_shibboleth
     if current_user
-      redirect_to session[:return_to] || root_url
+      redirect_to params[:return_to] || session[:return_to] || root_url
     else
       redirect_to(shibboleth_login_url, :return_to => params[:return_to])
     end
