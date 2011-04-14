@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
 
+  attr_accessor :skip_signup_email
+
   acts_as_authentic do |c|
     c.act_like_restful_authentication = true
   end
@@ -212,6 +214,7 @@ class User < ActiveRecord::Base
     User.new(:email => email).tap do |user|
       user.password = self.random_password
       user.password_confirmation = user.password
+      user.skip_signup_email = true
       user.save!
       user.activate
     end
