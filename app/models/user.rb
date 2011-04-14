@@ -200,15 +200,27 @@ class User < ActiveRecord::Base
   #find or create a person from the given email
   #hook up the user to the person if appropriate
   def self.ensure_remote_user(email)
-    user = self.find_by_email(email) || self.create_from_email(email)
-    #if appropriate, attach person to user or create person for user
-    #unless user.person look for person with email. If exists, attach. If not, create
-    Person.ensure_person_for_user(user)
-    return user
+    self.transaction do
+      user = self.find_by_email(email) || self.create_from_email(email)
+      #if appropriate, attach person to user or create person for user
+      #unless user.person look for person with email. If exists, attach. If not, create
+      return user
+    end
   end
 
   def self.create_from_email(email)
-    #raise RuntimeError, "Not yet implemented"
+    User.new(:email => email).tap do |user|
+      user.password = self.random_password
+      user.password_confirmation = user.password
+      user.make_activation_code
+      user.save!
+      user.activate
+    end
+  end
+
+  RANDOM_PASSWORD_CHARS = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
+  def self.random_password(len = 20)
+    len.times.collect {RANDOM_PASSWORD_CHARS.choice}.join
   end
 
 end

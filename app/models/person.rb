@@ -1,3 +1,5 @@
+require 'bibapp_ldap'
+
 class Person < ActiveRecord::Base
 
   acts_as_authorizable #some actions on people require authorization
@@ -279,7 +281,7 @@ class Person < ActiveRecord::Base
     else
       group_ids = group_ids_string.split(",").collect { |g| g.to_i }
     end
-    
+
     return last_name, id, image_url, group_ids, is_active, research_focus
   end
 
@@ -294,10 +296,31 @@ class Person < ActiveRecord::Base
   end
 
   def self.ensure_person_for_user(user)
-    #raise RuntimeError, "Not yet implemented"
+    return user.person if user.person
+    #if a person can be looked up in a reasonable way from the user then associate and return that
+    #otherwise create a new person, associate, and return
+    user_ldap = BibappLdap.instance.search(user.email).detect { |x| x[:mail] == user.email } || {}
+    person = self.lookup_person_for_user(user, user_ldap) || self.new_person_for_user(user, user_ldap)
+    if person
+      person.user = user
+      person.save!
+    end
+    return person
   end
 
   protected
+
+  def self.lookup_person_for_user(user, user_ldap)
+    #look for person with the same email or UID
+    Person.find_by_email(user.email) || Person.find_by_uid(user_ldap[:uid])
+  end
+
+  def self.new_person_for_user(user, user_ldap)
+    person = Person.new(:email => user.email, :uid => user_ldap[:uid], :first_name => user_ldap[:givenname],
+                        :middle_name => user_ldap[:middlename], :last_name => user_ldap[:sn],
+                        :postal_address => user_ldap[:postal_address],
+                        :display_name => user_ldap[:display_name], :phone => user_ldap[:telephone])
+  end
 
   def clean_name(name)
     name.gsub(/[.,]/, "").gsub(/ +/, " ").strip
