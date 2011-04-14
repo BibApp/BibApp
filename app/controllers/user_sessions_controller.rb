@@ -40,7 +40,7 @@ class UserSessionsController < ApplicationController
   
   def shibboleth_login_url
     url = root_url(:protocol => 'https') + "Shibboleth.sso/Login"
-    if return_to = session[:return_to] || params[:return_to]
+    if return_to =  params[:return_to] || session[:return_to]
       target = root_url(:protocol => 'https') + return_to
       url = "#{url}?target=#{CGI.escape(target)}"
     end
