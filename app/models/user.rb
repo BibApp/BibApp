@@ -117,6 +117,8 @@ class User < ActiveRecord::Base
           authorizable_obj.groups.each do |group|
             return true if has_role?(role_name, group)
           end
+          #give person editor on themselves
+          return true if self.person == authorizable_obj and role_name == 'editor'
         when 'Work'
           #Get all People associated with this Work, and look for role on each person
           authorizable_obj.people.each do |person|
@@ -221,8 +223,9 @@ class User < ActiveRecord::Base
   end
 
   RANDOM_PASSWORD_CHARS = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
+
   def self.random_password(len = 20)
-    len.times.collect {RANDOM_PASSWORD_CHARS.choice}.join
+    len.times.collect { RANDOM_PASSWORD_CHARS.choice }.join
   end
 
   def dissociate_person
