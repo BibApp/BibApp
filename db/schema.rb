@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110412180423) do
+ActiveRecord::Schema.define(:version => 20110414150835) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -203,9 +203,11 @@ ActiveRecord::Schema.define(:version => 20110412180423) do
     t.string   "uid"
     t.string   "display_name"
     t.text     "postal_address"
+    t.integer  "user_id"
   end
 
   add_index "people", ["machine_name"], :name => "person_machine_name"
+  add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "publications", :force => true do |t|
     t.integer  "sherpa_id"
