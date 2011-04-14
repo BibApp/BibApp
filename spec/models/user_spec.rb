@@ -69,6 +69,12 @@ describe User do
       @user.valid_password?('password')
     end
 
+    it 'can return a code for validating a new email' do
+      code = @user.email_update_code('new_mail@example.com')
+      code.should be_a(String)
+      code.length.should == 20
+    end
+
   end
 
   it "can return a list of first letters of users' emails" do
