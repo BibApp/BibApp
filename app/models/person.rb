@@ -318,8 +318,9 @@ class Person < ActiveRecord::Base
   def self.new_person_for_user(user, user_ldap)
     person = Person.new(:email => user.email, :uid => user_ldap[:uid], :first_name => user_ldap[:givenname],
                         :middle_name => user_ldap[:middlename], :last_name => user_ldap[:sn],
-                        :postal_address => user_ldap[:postal_address],
-                        :display_name => user_ldap[:display_name], :phone => user_ldap[:telephone])
+                        :postal_address => user_ldap[:postaladdress],
+                        :display_name => user_ldap[:displayname], :phone => user_ldap[:telephone],
+                        :im => '', :prefix => '', :suffix => '', :research_focus => '')
   end
 
   def clean_name(name)
