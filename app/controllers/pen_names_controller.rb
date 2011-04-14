@@ -12,7 +12,7 @@ class PenNamesController < ApplicationController
 
     before :new do
       #only 'editor' of person can assign a pen name
-      permit "editor of Person"
+      permit "editor of Person", :permission_denied_redirection => edit_person_url(@person)
 
       @suggestions = NameString.name_like(@person.last_name).order_by_name
 
