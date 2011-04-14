@@ -224,7 +224,7 @@ class Person < ActiveRecord::Base
   end
 
   def publication_reftypes
-    Work.select('type, count(type)').
+    Work.select('type, count(type) AS count').
         joins(:contributorships).
         where(:contributorships => {:person_id => self.id, :contributorship_state_id => Contributorship::STATE_VERIFIED}).
         group('type').order('count desc')
