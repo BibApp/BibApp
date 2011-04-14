@@ -212,7 +212,6 @@ class User < ActiveRecord::Base
     User.new(:email => email).tap do |user|
       user.password = self.random_password
       user.password_confirmation = user.password
-      user.make_activation_code
       user.save!
       user.activate
     end
