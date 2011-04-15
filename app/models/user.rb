@@ -1,6 +1,8 @@
 require 'digest/sha1'
 class User < ActiveRecord::Base
 
+  attr_accessor :skip_signup_email
+
   acts_as_authentic do |c|
     c.act_like_restful_authentication = true
   end
@@ -30,7 +32,7 @@ class User < ActiveRecord::Base
   has_one :person
 
   before_create :make_activation_code
-
+  after_destroy :dissociate_person
 
   # Activates the user in the database.
   def activate
@@ -115,6 +117,8 @@ class User < ActiveRecord::Base
           authorizable_obj.groups.each do |group|
             return true if has_role?(role_name, group)
           end
+          #give person editor on themselves
+          return true if self.person == authorizable_obj and role_name == 'editor'
         when 'Work'
           #Get all People associated with this Work, and look for role on each person
           authorizable_obj.people.each do |person|
@@ -181,6 +185,11 @@ class User < ActiveRecord::Base
     Digest::SHA1.digest(self.salt + ':' + new_email)
   end
 
+  #this is for Authorization gem
+  def uri
+    PERMISSION_DENIED_REDIRECTION
+  end
+
   protected
 
   def require_password?
@@ -194,6 +203,41 @@ class User < ActiveRecord::Base
   # return the first letter of each email, ordered alphabetically
   def self.letters
     self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect { |x| x.letter.upcase }.uniq
+  end
+
+  #find or create a user from the given email
+  #find or create a person from the given email
+  #hook up the user to the person if appropriate
+  def self.ensure_remote_user(email)
+    self.transaction do
+      user = self.find_by_email(email) || self.create_from_email(email)
+      #if appropriate, attach person to user or create person for user
+      #unless user.person look for person with email. If exists, attach. If not, create
+      return user
+    end
+  end
+
+  def self.create_from_email(email)
+    User.new(:email => email).tap do |user|
+      user.password = self.random_password
+      user.password_confirmation = user.password
+      user.skip_signup_email = true
+      user.save!
+      user.activate
+    end
+  end
+
+  RANDOM_PASSWORD_CHARS = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
+
+  def self.random_password(len = 20)
+    len.times.collect { RANDOM_PASSWORD_CHARS.choice }.join
+  end
+
+  def dissociate_person
+    if person = self.person
+      person.user = nil
+      person.save
+    end
   end
 
 end

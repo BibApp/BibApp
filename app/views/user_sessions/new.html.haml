@@ -1,7 +1,7 @@
 / === Sessions === New ===
 / Main
 .span-24
-  .span-22.prepend-1
+  .span-11.prepend-1
     %h2 Login
     %fieldset
       = form_for @user_session, :url => user_session_url(:return_to => params[:return_to]) do |f|
@@ -23,3 +23,9 @@
           =link_to "Sign Up", signup_path  
         %p.submit
           = submit_tag 'Log in'
+  .span-10.prepend-1
+    %h2 U of I NetID and password Login
+    %p
+      <strong>#{link_to 'Click here', login_shibboleth_url(:return_to => params[:return_to])}</strong>
+      to login with your University of Illinois NetID and password via our Shibboleth server. If you
+      do not already have a Connections account one will be created for you automatically!

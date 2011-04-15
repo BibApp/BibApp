@@ -1,4 +1,6 @@
 #Abstraction of LDAP functionality used by BibApp
+#TODO? the ruby-net-ldap gem is currently used for this. It works, but it is also quite old
+#and doesn't seem to be maintained. Consider whether a more active gem would serve here.
 require 'singleton'
 require 'net/ldap'
 

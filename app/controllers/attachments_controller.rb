@@ -19,7 +19,11 @@ class AttachmentsController < ApplicationController
       end
       
       #only editors of this asset can attach files to it
-      permit "editor of asset"
+      permit_hash = Hash.new
+      if @person
+        permit_hash[:permission_denied_redirection] = edit_person_url(@person)
+      end
+      permit "editor of asset", permit_hash
       
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]

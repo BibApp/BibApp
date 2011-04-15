@@ -148,6 +148,13 @@ class ApplicationController < ActionController::Base
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
+    if !@current_user_session and (remote_user = request.env['REMOTE_USER']) and !session[:no_shibboleth]
+      user = User.ensure_remote_user(remote_user)
+      Person.ensure_person_for_user(user)
+      UserSession.new(user).save
+      @current_user_session = UserSession.find
+    end
+    return @current_user_session
   end
 
   def current_user
@@ -178,7 +185,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)

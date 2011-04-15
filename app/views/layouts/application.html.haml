@@ -17,6 +17,18 @@
         
     %title=$APPLICATION_NAME + " - " + (@title || "Find an Expert")
   %body
+    -#= link_to_function('Toggle env', '$("env").toggle();')
+    -#%div.container#env{:style => 'display: none;'}
+    -#  %ul
+    -#    %li ENV
+    -#    - ENV.keys.sort.each do |key|
+    -#      %li
+    -#        #{key}: #{ENV[key]}
+    -#  %ul
+    -#    %li request.env
+    -#    - controller.request.env.keys.sort.each do |key|
+    -#      %li
+    -#        #{key}: #{controller.request.env[key]}
     %div.container
       = render :partial => "shared/header"
       = yield :admin_bar

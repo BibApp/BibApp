@@ -1,3 +1,5 @@
+require 'bibapp_ldap'
+
 class Person < ActiveRecord::Base
 
   acts_as_authorizable #some actions on people require authorization
@@ -288,7 +290,49 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def self.ensure_person_for_user(user)
+    return user.person if user.person
+    #if a person can be looked up in a reasonable way from the user then associate and return that
+    #otherwise create a new person, associate, and return
+    user_ldap = BibappLdap.instance.search(user.email).detect { |x| x[:mail] == user.email } || {}
+    person = self.lookup_person_for_user(user, user_ldap) || self.new_person_for_user(user, user_ldap)
+    if person
+      person.user = user
+      person.save!
+    end
+    return person
+  end
+
   protected
+
+  def self.lookup_person_for_user(user, user_ldap)
+    #look for person with the same email or UID
+    Person.find_by_email(user.email) || Person.find_by_uid(user_ldap[:uid])
+  end
+
+  #specifies how we're going to map an ldap field
+  #if the value is nil, use the same symbol to lookup in ldap
+  #if the value is a string, ignore ldap and use that string
+  #if the value is a symbol, use that symbol to lookup in ldap
+  LDAP_PERSON_MAPPING = {
+      :uid => nil, :first_name => :givenname, :middle_name => :middlename, :last_name => :sn,
+      :postal_address => :postaladdress, :display_name => :displayname,
+      :phone => :telephone, :im => '', :prefix => '', :suffix => '', :research_focus => ''}
+
+  def self.new_person_for_user(user, user_ldap)
+    Person.new(:email => user.email).tap do |p|
+      LDAP_PERSON_MAPPING.each do |p_key, ldap_key|
+        ldap_key ||= p_key
+        p[p_key] = case ldap_key
+                     when String
+                       ldap_key
+                     when Symbol
+                       user_ldap[ldap_key] || ''
+                   end
+      end
+    end
+    
+  end
 
   def clean_name(name)
     name.gsub(/[.,]/, "").gsub(/ +/, " ").strip

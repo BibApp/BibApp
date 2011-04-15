@@ -17,7 +17,7 @@
       %p#tagline
         ="#{$APPLICATION_TAGLINE}"
     
-    .span-16
+    .span-14
       - controller_name = params[:controller]
       %ul#navigation
         - if logged_in?
@@ -51,7 +51,7 @@
             %a{:href => saved_path}
               %span Saved
 
-    .span-6.last
+    .span-8.last
       %ul#global-nav
         %li
           %a{:href => "/about"} About
@@ -60,8 +60,13 @@
         - if logged_in?
           %li
             %span=link_to "Account", edit_user_path(current_user)
+          -if current_user.person
+            %li
+              %span #{link_to "Profile", edit_person_path(current_user.person)}
           %li
             %span=link_to "Logout", logout_path
         - else
+          %li
+            %span #{link_to "NetID Login", login_shibboleth_url(:return_to => request.fullpath)}
           %li
             %span=link_to "Login | Sign Up", login_path(:return_to => request.fullpath)

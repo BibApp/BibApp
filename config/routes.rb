@@ -182,6 +182,7 @@ Bibapp::Application.routes.draw do
   match 'signup', :to => 'users#new', :as => 'signup'
   match 'login', :to => 'user_sessions#new', :as => 'login'
   match 'logout', :to => 'user_sessions#destroy', :as => 'logout'
+  match 'login_shibboleth', :to => 'user_sessions#login_shibboleth', :as => 'login_shibboleth'
   match 'activate/:activation_code', :to => 'users#activate', :as => 'activate'
 
   ####

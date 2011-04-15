@@ -150,6 +150,9 @@ class PeopleController < ApplicationController
       #flash[:notice] = "#{person.display_name} was successfully deleted."
     end
 
+    before :edit do
+      permit 'editor on Person or editor on :person'
+    end
   end
 
   def create
@@ -195,6 +198,7 @@ class PeopleController < ApplicationController
 
     @person = Person.find(params[:id])
 
+    permit 'editor on Person or editor on :person'
     #Check if user hit cancel button
     if params['cancel']
       #just return back to 'new' page
@@ -210,7 +214,7 @@ class PeopleController < ApplicationController
       respond_to do |format|
         if @person.save
           flash[:notice] = "Personal info was successfully updated."
-          format.html { redirect_to new_person_pen_name_path(@person.id) }
+          format.html { redirect_to person_url(@person) }
           #TODO: not sure this is right
           format.xml { head :created, :location => person_url(@person) }
         else
