@@ -37,11 +37,11 @@ class RisImporter < BaseImporter
       :ep => :end_page,
       :id => :identifier,
       :is => :issue,
-      :j1 => :publication,
-      :j2 => :publication,
-      :ja => :publication,
-      :jf => :publication,
-      :jo => :publication,
+      :j1 => :publication_j1,
+      :j2 => :publication_j2,
+      :ja => :publication_ja,
+      :jf => :publication_jf,
+      :jo => :publication_jo,
       :kw => :keywords,
       :l1 => :links,
       :l2 => :links,
@@ -72,7 +72,11 @@ class RisImporter < BaseImporter
       :y1 => :publication_date,
       :y2 => :publication_date
     }
-  
+
+    #the first of these that matches will eventually become the publication field and
+    #the rest will be discarded
+    @publication_priority = [:jf, :jo, :ja, :j1, :j2].collect {|suffix| :"publication_#{suffix}"}
+
     #Initialize our Value Translators (which will translate values from normal Medline files)
     @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
@@ -134,7 +138,21 @@ class RisImporter < BaseImporter
   
   
   def import_callbacks?
-    false
+    true
   end
-  
+
+  def callbacks(hash)
+    prioritize_publication(hash)
+    hash
+  end
+
+  #pick a single publication field out of all possibilities using priority
+  #set up in @publication_priority. Remove all candidate keys as only
+  #the resulting publication field will be used.
+  def prioritize_publication(hash)
+    publication_field = @publication_priority.detect {|field| hash[field]}
+    hash[:publication] = hash[publication_field] if publication_field
+    @publication_priority.each {|field| hash.delete(field)}
+  end
+
 end
