@@ -17,7 +17,7 @@
       %p#tagline
         ="#{$APPLICATION_TAGLINE}"
     
-    .span-15
+    .span-14
       - controller_name = params[:controller]
       %ul#navigation
         - if logged_in?
@@ -51,7 +51,7 @@
             %a{:href => saved_path}
               %span Saved
 
-    .span-7.last
+    .span-8.last
       %ul#global-nav
         %li
           %a{:href => "/about"} About
