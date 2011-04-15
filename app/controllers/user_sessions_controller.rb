@@ -21,6 +21,7 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
+    session[:no_shibboleth] = true
     redirect_back_or_default new_user_session_url
   end
 
@@ -29,6 +30,7 @@ class UserSessionsController < ApplicationController
   end
 
   def login_shibboleth
+    session[:no_shibboleth] = false
     if current_user
       redirect_to params[:return_to] || session[:return_to] || root_url
     else
