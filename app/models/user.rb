@@ -185,6 +185,11 @@ class User < ActiveRecord::Base
     Digest::SHA1.digest(self.salt + ':' + new_email)
   end
 
+  #this is for Authorization gem
+  def uri
+    PERMISSION_DENIED_REDIRECTION
+  end
+
   protected
 
   def require_password?
