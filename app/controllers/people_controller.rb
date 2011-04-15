@@ -150,6 +150,9 @@ class PeopleController < ApplicationController
       #flash[:notice] = "#{person.display_name} was successfully deleted."
     end
 
+    before :edit do
+      permit 'editor on Person or editor on :person'
+    end
   end
 
   def create
@@ -195,6 +198,7 @@ class PeopleController < ApplicationController
 
     @person = Person.find(params[:id])
 
+    permit 'editor on Person or editor on :person'
     #Check if user hit cancel button
     if params['cancel']
       #just return back to 'new' page
