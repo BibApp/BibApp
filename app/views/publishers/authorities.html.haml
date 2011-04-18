@@ -28,7 +28,7 @@
           %tr.publisher{:id => "publisher_#{publisher.id}", :class => cycle("odd", "even")}
             %td=link_to 'add', add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)
             %td=link_to "#{publisher.name}", publisher_path(publisher)
-            %td=publisher.publisher_source.name unless publisher.publisher_source.nil?
+            %td=publisher.publisher_source.name if publisher.publisher_source
             %td=publisher.publications.length
 
     %br/

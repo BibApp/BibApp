@@ -7,7 +7,7 @@ class Publisher < ActiveRecord::Base
   has_many :publications
   belongs_to :authority, :class_name => "Publisher", :foreign_key => :authority_id
 
-  belongs_to :publisher_source, :class_name => "PublisherSource", :foreign_key => :source_id
+  belongs_to :publisher_source
 
   has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
@@ -38,8 +38,10 @@ class Publisher < ActiveRecord::Base
 
   #### Methods ####
 
+  SHERPA_SOURCE = 1
+  IMPORT_SOURCE = 2
   def set_initial_states
-    self.source_id = 2 # Import Data
+    self.source_id = IMPORT_SOURCE # Import Data
   end
 
   def to_param
@@ -184,7 +186,7 @@ class Publisher < ActiveRecord::Base
                                    :url => url,
                                    :romeo_color => romeo_color,
                                    :sherpa_id => sherpa_id,
-                                   :source_id => 1
+                                   :source_id => SHERPA_SOURCE
                                })
         t = true
       end
