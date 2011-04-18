@@ -44,7 +44,7 @@ class PublishersController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        @current_objects = Publisher.authorities.upper_name_like("#{@page}%").order_by_upper_name
+        @current_objects = Publisher.includes(:publications => :works).authorities.upper_name_like("#{@page}%").order_by_upper_name
       end
     end
 
