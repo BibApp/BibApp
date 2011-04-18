@@ -7,7 +7,7 @@
 
   %fieldset
     %legend="Content Files"
-    %div#upload_files
+    #upload_files
       %label="Upload File(s):"
       -# Allow uploading multiple files
       = link_to_remote "[Add More Files]", :url => add_upload_box_attachments_url(:form => form)
@@ -31,9 +31,9 @@
           =@repository_name
         - else
           my local repository
-      %div#license_warning{:style => "display: none;", :class => "warning"}
+      #license_warning.warning{:style => "display: none;"}
         You must agree to the license terms before you can upload files.  
-      %div#license{:style => "display: none;", :class => "scrollarea span-12"}
+      #license.scrollarea.span-12{:style => "display: none;"}
         = @license
 
   %p.submit

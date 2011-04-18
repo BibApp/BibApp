@@ -2,18 +2,18 @@
 / Main
 
 
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    %h2= "Admin: Unverified Contributorships"
+.span-24
+  .span-22.prepend-1
+    %h2 Admin: Unverified Contributorships
     - if @people.length == 0
       %p Congratulations! Nothing to do here.
     - else
       %table
         %tr
           %th Person
-          %th{:style=>"text-align:center"} Potential Matches
+          %th.centered-text Potential Matches
         - @people.each do |p|
           - person = Person.find(p[0])
           %tr
             %td=link_to person.name, contributorships_path(:person_id=>p[0])
-            %td{:style=>"text-align:center"}=p[1].length
+            %td.centered-text=p[1].length

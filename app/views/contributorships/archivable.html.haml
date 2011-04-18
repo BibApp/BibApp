@@ -1,9 +1,9 @@
 -@title = "Archival Analysis: #{@person.display_name}"
 / === Contributorships === Archivable ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1", :style => "padding-bottom:3em;"}
-    %h2="Archival Analysis: #{link_to @person.display_name, person_path(@person)}"
+.span-24
+  .span-22.prepend-1.archival-analysis-header
+    %h2 Archival Analysis: #{link_to @person.display_name, person_path(@person)}
     
     %table
       %thead

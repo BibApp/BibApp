@@ -1,26 +1,26 @@
 / === Works === Review-Batch ===
 / Main
-%div.span-24
+.span-24
 
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    .span-24#admin-actions
       %ul#edit-actions
         %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
         %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
 
 
-  %div.span-22.prepend-1
+  .span-22.prepend-1
 
     %h2
       ="Review Batch - "
-      %span{:style => "font-size:0.75em;"} Imported For #{imported_for(@import)}
+      %span.import-review-batch-header Imported For #{imported_for(@import)}
 
     / Right - Admin div
-    %div{:style => "padding-bottom:2em;"}
+    .import-admin-div
       - case @import.state
         - when "rejected"
-          %div.error
+          .error
             %h3 Batch-#{@import.id}
             %p
               This import was
@@ -28,7 +28,7 @@
               and all works associated with the import were destroyed.
 
         - when "processing"
-          %div.warning
+          .warning
             %h3 Batch-#{@import.id}
             %p
               This import is in processing.  You'll receive an
@@ -36,40 +36,40 @@
               when the batch is complete.
 
         - when "reviewable"
-          %div.warning
+          .warning
             %h3 Actions
-            %div.left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
-            %div.span-1.text-center
+            .left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
+            .span-1.text-center
               %p
                 %strong or
-            %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
+            .left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
             -if @works.blank?
-              %div.clear
+              .clear
                 %p This import is reviewable, but contains no works. They may have been deleted.
             -else
-              %div.clear
+              .clear
                 %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
         - when "accepted"
-          %div.notice
+          .notice
             %h3 Batch-#{@import.id}
             %p
               This import was
               %strong accepted.
           - if @works.blank?
-            %div.warning
+            .warning
               %p
                 This import has been accepted, but contains no works. They may have been deleted.
 
         - else
-          %div.warning
+          .warning
             %h3 Actions
-            %div.left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
-            %div.span-1.text-center
+            .left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
+            .span-1.text-center
               %p
                 %strong or
-            %div.left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
-            %div.clear
+            .left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
+            .clear
               %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
     -unless @import.state == "processing"
@@ -78,27 +78,27 @@
         %h3 Batch report
 
         - if @person
-          %div.left.span-8.append-1
-            %table#pen_names
+          .left.span-8.append-1
+            %table#pen_names.import-review-table
               %thead
                 %tr
-                  %th{:style => "border-bottom:1px solid #000"} My Names
-                  %th{:style => "border-bottom:1px solid #000"} Works Matched
+                  %th My Names
+                  %th Works Matched
               %tbody#current
                 = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
 
               %tfoot
                 %tr
-                  %td{:style => "border-top:1px dotted #CCC"} Total
-                  %td{:id => "pen_names_count_total", :style => "border-top:1px dotted #CCC"} 0
+                  %td Total
+                  %td{:id => "pen_names_count_total"} 0
 
-        %div.left.span-6.append-1
+        .left.span-6.append-1
           / Works added
-          %table
+          %table.import-review-table
             %thead
               %tr
-                %th{:style => "border-bottom:1px solid #000"} Works
-                %th{:style => "border-bottom:1px solid #000"} Count
+                %th Works
+                %th Count
             %tbody
               %tr
                 %td New works
@@ -112,16 +112,16 @@
                 %td= err_ct
             %tfoot
               %tr
-                %td{:style => "border-top:1px dotted #CCC"} Total
-                %td#works_imported_total{:style => "border-top:1px dotted #CCC"}= @work_batch.size
+                %td Total
+                %td#works_imported_total= @work_batch.size
 
 
-        %div.left.span-14.last
+        .left.span-14.last
           / Errors
-          %table
+          %table.import-review-table
             %thead
               %tr
-                %th{:style => "border-bottom:1px solid #000"} Errors
+                %th Errors
             %tbody
               - if !@errors.empty?
                 - @errors.each do |key, value|
@@ -133,7 +133,7 @@
                   %td{:colspan => "2"}
                     %p No errors encountered during import.
 
-        %div.clear
+        .clear
           - if @person
             %p
               Matched
@@ -142,17 +142,17 @@
 
         %hr/
       - if @person
-        %div.left.span-7
+        .left.span-7
           %h3 Import Names
           %p Select missing variations of your name.
           / PenName matches
-          %div.left.append-1
-            %ul#import_names{:style => "padding:0; margin:0;"}
+          .left.append-1
+            %ul#import_names.no-padding-or-margin
               -@import.name_string_work_count.sort.inspect
               - @import.name_string_work_count.sort.each do |ns|
                 = import_name_string_line(ns, @person)
 
-      %div.left.prepend-1
+      .left.prepend-1
         - ct = @work_batch.size - err_ct
         - ct = ct < 0 ? 0 : ct
         %h3#works="Works Imported (#{ct})"

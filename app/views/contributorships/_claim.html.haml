@@ -1,26 +1,26 @@
-%div{:id => "contributorship_id-#{claim.id}", :class => "span-20 #{cycle("even","odd")}", :style => "border-top: 1px dotted #CCC; margin-top:1em; padding-top:2em"}
-  %div{:class => "span-3"}
-    %div{:style => "text-align: center;"}
-      = image_tag(claim.person.image_url, {:height => "100px", :width => "75px", :style => "border: 2px dashed rgb(204, 204, 204); margin: 1em 0pt; padding: 0.5em;"})
-  %div{:class => "span-10"}
+.span-20.contributorship-claim{:id => "contributorship_id-#{claim.id}", :class => "#{cycle("even","odd")}"}
+  .span-3
+    %div.centered-text
+      = image_tag(claim.person.image_url, {:height => "100px", :width => "75px"})
+  .span-10
     %h2=claim.person.display_name
 
-    %div{:class => "span-5"}
+    .span-5
       %strong Groups:
-      %ul{:id => "groups"}
+      %ul#groups
         - claim.person.groups.each do |g|
           %li=g.name
 
-  %div{:class => "prepend-1 span-3 last"}
-    %div{:id => "contributorship_admin-#{claim.id}", :class => "span-3"}
+  .prepend-1.span-3.last
+    .span-3{:id => "contributorship_admin-#{claim.id}"}
       - if claim.verified?
         %p
           %strong Verified!
       - else
-        %div{:class => "span-3 big-number contributorship_score", :id => "contributorship_score-#{claim.id}"}
-          %strong= "#{claim.score}% sure"
-        %div{:class => "span-3"}
-          %ul{:id => "contributorship_actions-#{claim.id}", :class => "contributorship_actions_list"}
-            %li{:class => "inline"}=link_to("Verify", verify_contributorship_path(claim.id), :method => :put)
+        .span-3.big-number.contributorship_score{:id => "contributorship_score-#{claim.id}"}
+          %strong #{claim.score}% sure
+        .span-3
+          %ul.contributorship_actions_list{:id => "contributorship_actions-#{claim.id}"}
+            %li.inline=link_to("Verify", verify_contributorship_path(claim.id), :method => :put)
             |
-            %li{:class => "inline"}=link_to("Deny", deny_contributorship_path(claim.id), :method => :put)
+            %li.inline=link_to("Deny", deny_contributorship_path(claim.id), :method => :put)

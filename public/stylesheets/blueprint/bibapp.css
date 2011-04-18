@@ -7,145 +7,181 @@
 
 -------------------------------------------------------------- */
 
-
 /* ============================================= */
 /* ==== BibApp Header / Footer / Navigation ==== */
 /* ============================================= */
 /* Primary container for all content */
 .container {
-	background-color:#FFF;
+    background-color: #FFF;
 }
-
 
 #header {
-	margin-bottom:0;
-	padding-top:2em;
+    margin-bottom: 0;
+    padding-top: 2em;
 }
 
-#footer {margin-top:2em; padding:2em 0em 1em 0em;}
+#footer {
+    margin-top: 2em;
+    padding: 2em 0em 1em 0em;
+}
 
 #header a {
-	text-decoration:none;
+    text-decoration: none;
 }
 
-#tagline {color:#000;}
+#tagline {
+    color: #000;
+}
 
 /* Global Search Styles */
-.header-search-form {display:inline;}
-#search-box { float:right; }
+.header-search-form {
+    display: inline;
+}
+
+#search-box {
+    float: right;
+}
 
 /* Global Navigation (e.g. FAQ, Login, etc.) */
 ul#global-nav {
-	padding:0;
-	margin:0;
-  float: right;
-	text-align:right;
+    padding: 0;
+    margin: 0;
+    float: right;
+    text-align: right;
 }
 
 ul#global-nav li {
-	display:inline;
-	padding:0.5em;
+    display: inline;
+    padding: 0.5em;
 }
 
 ul#global-nav a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 ul#global-nav a:hover {
-	  background-color:#E6E6E6;
+    background-color: #E6E6E6;
 }
 
 /* Primary Navigation (e.g. Works | Groups | People | etc.) */
 #navigation {
-  margin: 0;
-  padding: 0;
-  float: left;
-  line-height: normal;
+    margin: 0;
+    padding: 0;
+    float: left;
+    line-height: normal;
 }
 
 #navigation li {
-  float: left;
-  margin-right: 5px;
-  padding: 0;
-  list-style: none;
+    float: left;
+    margin-right: 5px;
+    padding: 0;
+    list-style: none;
 }
-  
+
 #navigation a {
-  display: block;
-  padding: 5px 5px 7px 5px;
-  text-decoration: none;
+    display: block;
+    padding: 5px 5px 7px 5px;
+    text-decoration: none;
 }
-  
+
 #navigation a:hover {
-  background-color:#E6E6E6;
+    background-color: #E6E6E6;
 }
 
 #navigation li#current {
-	background-color:#CCC;
+    background-color: #CCC;
 }
 
 #navigation #current a {
-  color: #990000;
-  font-weight: bold;
+    color: #990000;
+    font-weight: bold;
 }
 
 #local-nav, #admin-nav {
-	margin:0.5em 0em;
-	padding-bottom:1em;
-	background-color:#EEEEEE;
-	margin-bottom:1.5em;
-	border-bottom:1px solid #CCC;
-	border-top:1px solid #CCC
+    margin: 0.5em 0em;
+    padding-bottom: 1em;
+    background-color: #EEEEEE;
+    margin-bottom: 1.5em;
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid #CCC
 }
 
 #local-nav li, #admin-nav li {
-	list-style:none;
-	float:left;
-	padding:0;
-	text-decoration:none;
+    list-style: none;
+    float: left;
+    padding: 0;
+    text-decoration: none;
 }
 
 #local-nav li.current, #admin-nav li.current {
-	background-color: #000000;
+    background-color: #000000;
 }
 
 #local-nav li.current a, #admin-nav li.current a {
-	color:#FFF;
-	font-weight:bold;
+    color: #FFF;
+    font-weight: bold;
 }
 
 #local-nav a, #admin-nav a {
-	font-size:110%;
-	color:#000000;
-	display:block;
-	padding:5px 10px;
-	text-decoration:none;
+    font-size: 110%;
+    color: #000000;
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
 }
 
 #local-nav a:hover, #admin-nav a:hover {
-	color:#000000;
-	background:#CCC;
+    color: #000000;
+    background: #CCC;
 }
 
 #local-nav a.current, #admin-nav a.current {
-	background:#000;
-	color:#990000;
+    background: #000;
+    color: #990000;
 }
-
 
 /* ======================================= */
 /* =========== Flash Messages ============ */
 /* ======================================= */
-#flash-messages {margin-bottom:1em;}
-.error, .notice, .warning {padding:.8em;border:2px solid #ddd;margin:1em 0;}
-.error {background:#FBE3E4;color:#8a1f11;border-color:#FBC2C4;}
-.warning {background:#FFF6BF;color:#514721;border-color:#FFD324;}
-.notice {background:#E6EFC2;color:#264409;border-color:#C6D880;}
-.error a {text-decoration:underline;}
-.warning a {color:#514721;}
-.notice a {color:#264409;}
+#flash-messages {
+    margin-bottom: 1em;
+}
 
+.error, .notice, .warning {
+    padding: .8em;
+    border: 2px solid #ddd;
+    margin: 1em 0;
+}
 
+.error {
+    background: #FBE3E4;
+    color: #8a1f11;
+    border-color: #FBC2C4;
+}
+
+.warning {
+    background: #FFF6BF;
+    color: #514721;
+    border-color: #FFD324;
+}
+
+.notice {
+    background: #E6EFC2;
+    color: #264409;
+    border-color: #C6D880;
+}
+
+.error a {
+    text-decoration: underline;
+}
+
+.warning a {
+    color: #514721;
+}
+
+.notice a {
+    color: #264409;
+}
 
 /* ============================================= */
 /* ============ Left/Right Side Menus ========== */
@@ -154,90 +190,100 @@ ul#global-nav a:hover {
 
 /*Box to right of main content (e.g. related works)*/
 div.right_box {
-    clear:both; 
-    width: 100%; 
-    border-left:1px solid #CCC;
-    border-right:1px solid #CCC;
-    border-bottom:1px solid #CCC;        
-    margin:0.5em;
+    clear: both;
+    width: 100%;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin: 0.5em;
 }
+
 div.right_box_no_border {
-    clear:both; 
-    width: 100%; 
-    margin:0.5em 0 1em;
+    clear: both;
+    width: 100%;
+    margin: 0.5em 0 1em;
 }
+
 /*Box to left of main content (e.g. facet filters) */
 div.left_box {
-    border-left:1px solid #CCC;
-    border-right:1px solid #CCC;
-    border-bottom:1px solid #CCC;        
-    margin:0 0.5em 0.5em 0;
+    border-left: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    margin: 0 0.5em 0.5em 0;
 }
-div.left_box_no_border {        
-    margin:0.5em;
+
+div.left_box_no_border {
+    margin: 0.5em;
 }
 
 /* Heading for the box of content */
 div.box_heading {
-    text-align:center; 
-    background-color: #EEEEEE; 
-    padding:0.5em; 
+    text-align: center;
+    background-color: #EEEEEE;
+    padding: 0.5em;
     margin-top: 0;
-    margin-bottom: 1em; 
-    border-top:1px solid #CCC; 
-    border-bottom:1px solid #CCC; 
+    margin-bottom: 1em;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
     height: 1.25em;
     line-height: 1.25;
     color: #111111;
     font-size: 1.2em;
-    font-weight:normal;
+    font-weight: normal;
 }
 
 div.right_box_no_border h3 {
-    text-align:center;
+    text-align: center;
     background-color: #EEEEEE;
-    padding:0.5em;
+    padding: 0.5em;
     margin-top: 0;
     margin-bottom: 1em;
-    border-top:1px solid #CCC;
-    border-bottom:1px solid #CCC;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
     height: 1.25em;
     line-height: 1.25;
     color: #111111;
     font-size: 1.2em;
-    font-weight:normal;
+    font-weight: normal;
 }
 
 /* ===================================================== */
 /* ========== Facet / Refine Results Styles ============ */
 /* ===================================================== */
 /*Division around entire "Refine Results" box*/
-#results {clear:both; padding-top:0.5em;}
+#results {
+    clear: both;
+    padding-top: 0.5em;
+}
 
 /*Division for individual facet*/
 div.facet {
-    padding:0em 1em;
+    padding: 0em 1em;
 }
+
 /*heading for individual facet*/
 div.facet_heading {
-    padding-top:0.5em;
-    margin-bottom:0em;
-    color:#000;
+    padding-top: 0.5em;
+    margin-bottom: 0em;
+    color: #000;
     border-bottom: 1px dotted black;
     font-size: 1.2em;
     height: 1.25em;
     line-height: 1.25em;
 }
+
 /* Filter value listing*/
 ol.facet_filters {
-    list-style:none;
-    padding:1em 0em;
-    margin:0em;
+    list-style: none;
+    padding: 1em 0em;
+    margin: 0em;
 }
-ol.facet_filters li{
+
+ol.facet_filters li {
     font-size: 0.9em;
     line-height: 1.5em;
 }
+
 /* Active filter (which can be removed) */
 li.active-filter {
     list-style: none;
@@ -246,43 +292,46 @@ li.active-filter {
 }
 
 /* Link to display more filters */
-.more_filters {font-size:0.9em;}
-
+.more_filters {
+    font-size: 0.9em;
+}
 
 /* =============================== */
 /* ========= Form Styles ========= */
 /* =============================== */
 form.edit_person label, form.new_person label {
-  width: 120px;
-  float: left;
-  text-align: right;
-  margin-right: 5px;
+    width: 120px;
+    float: left;
+    text-align: right;
+    margin-right: 5px;
 }
 
 form.edit_person label.lar, form.new_person label.lar {
-  width: 120px;
-  margin-right: 5px;
-  float: none;
+    width: 120px;
+    margin-right: 5px;
+    float: none;
 }
 
 form.edit_person div, form.new_person div {
-  margin: 0 0 1.5em;
+    margin: 0 0 1.5em;
 }
 
 textarea.smallbox {
-  width: 195px;
-  height: 100px;
-  padding: 5px;
+    width: 195px;
+    height: 100px;
+    padding: 5px;
 }
 
 form.work_form fieldset {
-   margin-bottom: 10px;
+    margin-bottom: 10px;
 }
+
 form.work_form legend {
     padding: 0 2px;
     font-weight: bold;
     font-size: 1.6em;
 }
+
 form.work_form fieldset ul {
     padding: 0;
     margin: 0;
@@ -311,163 +360,182 @@ form.work_form label.inline_label {
     float: none;
     display: inline;
     font-weight: bold;
-    text-align:right;
+    text-align: right;
 }
 
 form.work_form .author_block {
-  margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 /* styles for Form field Errors*/
-div.fieldWithErrors{
-  display:inline;
-  color: red;
-}
-/* style for input field with error */
-div.fieldWithErrors input {
-  border:1px solid red;
-}
-/* style for actual error message */
-p.fieldWithErrors{
-  color: red;
-  margin-left: 10em;
-  font-weight: bold;
-}
-.submit{
-	margin-top:2em;
+div.fieldWithErrors {
+    display: inline;
+    color: red;
 }
 
-.inline-form {display:inline;}
-.inline-form div {display:inline;}
+/* style for input field with error */
+div.fieldWithErrors input {
+    border: 1px solid red;
+}
+
+/* style for actual error message */
+p.fieldWithErrors {
+    color: red;
+    margin-left: 10em;
+    font-weight: bold;
+}
+
+.submit {
+    margin-top: 2em;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.inline-form div {
+    display: inline;
+}
 
 /* hint before a list of items */
 p#list_hint {
-  margin: 0 0 1em 16em;
-  font-size: 80%;
-  color: #666;
-  width: 25em;            
+    margin: 0 0 1em 16em;
+    font-size: 80%;
+    color: #666;
+    width: 25em;
 }
+
 /*Unordered list of field values - used for tags/keywords */
 form.work_form fieldset ul.form_item_list {
-  list-style-type:none;
-  margin-left: 13em;
-}        
+    list-style-type: none;
+    margin-left: 13em;
+}
 
 /*Ordered list of field values - used for Authors/Editors */
 ol.form_item_list {
-  margin-left: 13em;
+    margin-left: 13em;
 }
+
 ol.form_item_list li.list_item {
-  list-style-position: inside;
-  list-style-type:decimal;
+    list-style-position: inside;
+    list-style-type: decimal;
 }
 
 li.list_item {
-  margin: 0 0 0.75em 0;
-  color: #666;        
+    margin: 0 0 0.75em 0;
+    color: #666;
 }
 
 /* list item value (within an <li>) */
-li.list_item div.list_item_value { 
-  display: inline;
-  padding: 0.25em;
-  border: 1px dotted #CCC; 
-  width: 20em;
-  margin-right: 0.5em;        
+li.list_item div.list_item_value {
+    display: inline;
+    padding: 0.25em;
+    border: 1px dotted #CCC;
+    width: 20em;
+    margin-right: 0.5em;
 }
 
 /* Style of an item which can be moved using 'sortable_element' */
 .movable {
-  cursor: move;  
-  position:relative;
+    cursor: move;
+    position: relative;
 }
 
 /* Small input box */
-input.smallbox {width:40px;}
+input.smallbox {
+    width: 40px;
+}
+
 /* Medium input box */
-input.mediumbox {width:100px;}
+input.mediumbox {
+    width: 100px;
+}
 
 /* Submit buttons */
 .buttons {
 }
 
-
 /* =============================== */
 /* ==== Auto-Complete Styles ===== */
 /* =============================== */
 div.auto_complete {
-  width: 350px;
-  background: #fff;
+    width: 350px;
+    background: #fff;
 }
+
 div.auto_complete ul {
-  border:1px solid #888;
-  margin:0;
-  padding:0;
-  width:100%;
-  list-style-type:none;
+    border: 1px solid #888;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style-type: none;
 }
 
 div.auto_complete ul li {
-  margin:0;
-  padding:3px;
+    margin: 0;
+    padding: 3px;
 }
+
 div.auto_complete ul li.selected {
-  background-color: #ffb;
-  cursor: default; 
+    background-color: #ffb;
+    cursor: default;
 }
 
 div.auto_complete ul strong.highlight {
-  color: #800; 
-  margin:0;
-  padding:0;
+    color: #800;
+    margin: 0;
+    padding: 0;
 }
 
 /* ================================ */
 /* ====== Pagination Styles ======= */
 /* ================================ */
 #alpha-nav li {
-	display:inline;
+    display: inline;
 }
+
 #alpha-nav.pagination {
-	margin-bottom:3em;
+    margin-bottom: 3em;
 }
 
 .pagination {
-	padding:1em 0em;
-	border-top:1px dotted black;
-	border-bottom:1px dotted black;
-	text-align:center;
+    padding: 1em 0em;
+    border-top: 1px dotted black;
+    border-bottom: 1px dotted black;
+    text-align: center;
 }
+
 .pagination a {
-  padding: 2px 5px 2px 5px;
-  border: 1px solid #aaaadd;
-  text-decoration: none;
-  color: #000099;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #aaaadd;
+    text-decoration: none;
+    color: #000099;
 }
 
 .pagination a.none {
-	border:none;
+    border: none;
 }
 
 .pagination li.current a {
-  background: #c3d9ff;
+    background: #c3d9ff;
 }
 
-#sort-by { text-align:right; }
+#sort-by {
+    text-align: right;
+}
 
 /* ========================================= */
 /* ====== Styles for bulk activities  ====== */
 /* ========================================= */
 /* (e.g. bulk selectboxes) */
 
-.select_multiple 
-{
-  float:left;
+.select_multiple {
+    float: left;
 }
-#bulk_links
-{
-  float:left;
-  padding:2px;
+
+#bulk_links {
+    float: left;
+    padding: 2px;
 }
 
 /* ======================================= */
@@ -475,46 +543,58 @@ div.auto_complete ul strong.highlight {
 /* ======================================= */
 /* Used by shared/works.html.haml and shared/work.html.haml */
 
-
-#work-details	{ min-height:600px; }
-p#work-publication-details {margin-top:-1em;}
-p#work-authors {font-size:1.25em;}
-#work-abstract	{ padding-top:1em; }
-ol.works {
-	margin:0;
-	padding:0;
+#work-details {
+    min-height: 600px;
 }
+
+p#work-publication-details {
+    margin-top: -1em;
+}
+
+p#work-authors {
+    font-size: 1.25em;
+}
+
+#work-abstract {
+    padding-top: 1em;
+}
+
+ol.works {
+    margin: 0;
+    padding: 0;
+}
+
 .work {
-	list-style: none; 
-	padding:0 0 0.75em 0; 
-	margin-bottom:0.5em;
+    list-style: none;
+    padding: 0 0 0.75em 0;
+    margin-bottom: 0.5em;
 }
 
 div.screen-format {
-	padding: 0 2em;
+    padding: 0 2em;
 }
 
 div.screen-format-dupes {
-	padding: 0 2em;
-  width:45%;
+    padding: 0 2em;
+    width: 45%;
 }
 
 a.name_string {
-	text-decoration:none;
+    text-decoration: none;
 }
 
 a.name_string:hover {
-	text-decoration:underline;
+    text-decoration: underline;
 }
 
 a.source {
-	font-style:italic;
-	margin-top:2em;
+    font-style: italic;
+    margin-top: 2em;
 }
 
 /* Style for related work recommendations */
 ul.recommendations {
-    list-style: none; 
+    list-style: none;
 }
 
 /* Style for duplicates box (displayed only for Duplicate Works) */
@@ -529,253 +609,428 @@ div.duplicate_box_heading {
     border-top: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
     font-size: 0.9em;
-    text-align:center;
+    text-align: center;
 }
 
 td.duplicate {
-  vertical-align:top;
-  border-left:1px dotted #aaa;
-  background-color:#eee;
-  color:inherit;
+    vertical-align: top;
+    border-left: 1px dotted #aaa;
+    background-color: #eee;
+    color: inherit;
 }
 
 td.duplicate * {
-  background-color:transparent;
-  border-color:transparent;
+    background-color: transparent;
+    border-color: transparent;
 }
 
 table#metadata {
-  font-size: 1.1em;
-  border-collapse: collapse;
-  border: 1px solid #ccc;
+    font-size: 1.1em;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
 }
 
 table#metadata td.label {
-  vertical-align:top;
-  text-align:right;
-  font-weight:bold;
-  background-color: #eee;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  width: 10em;
+    vertical-align: top;
+    text-align: right;
+    font-weight: bold;
+    background-color: #eee;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    width: 10em;
 }
 
 table#metadata td {
-  vertical-align:top;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+    vertical-align: top;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 /* ===================================== */
 /* ======== Person View Styles ========= */
 /* ===================================== */
-#coauthors {padding:0;margin:0;width:100%;}
-#coauthors li {padding:0;margin:0;}
+#coauthors {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
 
-#contact-info {font-size:0.5em; padding-left:1em;}
+#coauthors li {
+    padding: 0;
+    margin: 0;
+}
 
-#person-image {padding:1em; text-align:center;}
+#contact-info {
+    font-size: 0.5em;
+    padding-left: 1em;
+}
 
+#person-image {
+    padding: 1em;
+    text-align: center;
+}
 
 /* ================================================ */
 /* ==== Shared Styles (i.e. partial templates) ==== */
 /* ================================================ */
 
 /* Basic floaters */
-.left { float:left; }
-.right { float:right; }
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
 
 /* Basic text-aligns */
-.text-center { text-align: center;}
-.text-left { text-align: left;}
-.text-right { text-align: right;}
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
 
 /*Work metadata*/
 p.metadata {
-	color:#737373;
-	font-size:0.95em;
-	padding:0;
-	margin:0.5em 0 0 0;
+    color: #737373;
+    font-size: 0.95em;
+    padding: 0;
+    margin: 0.5em 0 0 0;
 }
 
 span.gbs-link {
-	float:right; 
-	padding:3px; 
-	margin:0.5em
+    float: right;
+    padding: 3px;
+    margin: 0.5em
 }
 
 /*Links under a listed work*/
 .links {
-	font-size:0.95em;
-	margin-top:0.5em;
+    font-size: 0.95em;
+    margin-top: 0.5em;
 }
 
 .even {
-	background-color: #F8F8F8;
-	border-top:1px solid #CCC;
-	border-bottom:1px solid #CCC;
+    background-color: #F8F8F8;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
 }
 
 /*lists of people */
-#people { padding:0em; margin:0em; }
-.people { padding:0em; margin:0em; }
-div.person { padding:0em; margin:0em; height:157px; }
-.person-coauthor { float:left ;padding:0em; margin:0em; height:128px; }
-.person-image { border:2px dashed #CCC; padding:3px; }
-.person-image-metadata { width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
-.person-last-name {width:75px; padding-left:0.5em; position:relative; bottom:2em;}
-.person-coauthor-tiny { float:left ;padding:0em; margin:0em; height:96px; }
-.person-image-metadata-tiny { font-size:x-small; width:3em; padding:0.25em; margin:0em; background-color:#fff; position:relative; right:0em; bottom:2em; text-align:center }
-.person-last-name-tiny { font-size:x-small; width:42px; padding-left:0.25em; position:relative; bottom:2em;}
+#people {
+    padding: 0em;
+    margin: 0em;
+}
+
+.people {
+    padding: 0em;
+    margin: 0em;
+}
+
+div.person {
+    padding: 0em;
+    margin: 0em;
+    height: 157px;
+}
+
+.person-coauthor {
+    float: left;
+    padding: 0em;
+    margin: 0em;
+    height: 128px;
+}
+
+.person-image {
+    border: 2px dashed #CCC;
+    padding: 3px;
+}
+
+.person-image-metadata {
+    width: 3em;
+    padding: 0.25em;
+    margin: 0em;
+    background-color: #fff;
+    position: relative;
+    right: 0em;
+    bottom: 2em;
+    text-align: center
+}
+
+.person-last-name {
+    width: 75px;
+    padding-left: 0.5em;
+    position: relative;
+    bottom: 2em;
+}
+
+.person-coauthor-tiny {
+    float: left;
+    padding: 0em;
+    margin: 0em;
+    height: 96px;
+}
+
+.person-image-metadata-tiny {
+    font-size: x-small;
+    width: 3em;
+    padding: 0.25em;
+    margin: 0em;
+    background-color: #fff;
+    position: relative;
+    right: 0em;
+    bottom: 2em;
+    text-align: center
+}
+
+.person-last-name-tiny {
+    font-size: x-small;
+    width: 42px;
+    padding-left: 0.25em;
+    position: relative;
+    bottom: 2em;
+}
 
 /* lists of groups/publications/publishers*/
-#groups{padding:0.5em 0; margin:0; }
-#publications {padding:0.5em 0; margin:0; }
-#publishers {padding:0.5em 0; margin:0; }
+#groups {
+    padding: 0.5em 0;
+    margin: 0;
+}
+
+#publications {
+    padding: 0.5em 0;
+    margin: 0;
+}
+
+#publishers {
+    padding: 0.5em 0;
+    margin: 0;
+}
 
 .heading a {
-	text-decoration:none;
-	color:#000;
+    text-decoration: none;
+    color: #000;
 }
 
 /*list of actions on a specific page*/
 ul.actions li {
-	display:inline;
+    display: inline;
 }
 
 ul#tasks {
-  list-style: square;
-  line-height: 2.0em;
+    list-style: square;
+    line-height: 2.0em;
 }
 
 ul#groups {
-  list-style: none;
+    list-style: none;
 }
 
 ol#groups {
-	list-style:none;
-	line-height:1.75em;
+    list-style: none;
+    line-height: 1.75em;
 }
 
 ol#publications {
-	list-style:none;
-	line-height:1.75em;
+    list-style: none;
+    line-height: 1.75em;
 }
 
 ol#publishers {
-	list-style:none;
-	line-height:1.75em;
+    list-style: none;
+    line-height: 1.75em;
 }
 
 ol#people {
-	list-style:none;
+    list-style: none;
 }
 
 /* =============================== */
 /* ==== BibApp General Styles ==== */
 /* =============================== */
 a {
-	color:#163F68;
-	text-decoration:none;
+    color: #163F68;
+    text-decoration: none;
 }
 
 a:hover {
-	text-decoration:underline;
+    text-decoration: underline;
 }
 
-h2 {border-bottom: 1px dotted #000;}
-h3 {color:#000; margin-top: .5em;}
+h2 {
+    border-bottom: 1px dotted #000;
+}
 
-thead td {font-weight:bold;}
+h3 {
+    color: #000;
+    margin-top: .5em;
+}
 
-.clear-both {clear:both;}
+thead td {
+    font-weight: bold;
+}
+
+.clear-both {
+    clear: both;
+}
 
 /* Authorities for Publications/Publishers */
-#authority {padding:2em 1em 1em 1em}
+#authority {
+    padding: 2em 1em 1em 1em
+}
 
 /* Selected candidates */
 #publishers .selected {
-	background-color:#FFFF99;
+    background-color: #FFFF99;
 }
 
 /* Selected candidates */
 #publications .selected {
-	background-color:#FFFF99;
+    background-color: #FFFF99;
 }
 
 /* Any editing actions for views */
-#admin-actions{
-  width:100%;
-  margin-bottom:1em;
-  border-bottom:1px solid #900;
-  background-color:#fee;
-  height:30px;
+#admin-actions {
+    width: 100%;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #900;
+    background-color: #fee;
+    height: 30px;
 }
 
 ul#edit-actions {
-  margin-left:10px;
-  padding-left:2em;
-  list-style:none;
-  line-height:30px;
+    margin-left: 10px;
+    padding-left: 2em;
+    list-style: none;
+    line-height: 30px;
 }
 
 #edit-actions li {
-	display:inline; 
-	padding-right:1em;
-	padding-left:1em;
-  color:#900;
+    display: inline;
+    padding-right: 1em;
+    padding-left: 1em;
+    color: #900;
 }
 
 #edit-actions li a {
-  color:#900;
+    color: #900;
 }
 
 /* display a list inline */
 .inline {
-	display:inline;
-	list-style:none;
-	margin:0; padding:0;
+    display: inline;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
-
 
 /* Editing Membership */
 #add_group {
-	float:right;
+    float: right;
 }
 
 #edit_membership_active {
-	float:left;
-	overflow:hidden;
-	margin:5px;
-	padding:5px;
+    float: left;
+    overflow: hidden;
+    margin: 5px;
+    padding: 5px;
 }
 
 /* SHERPA Colors */
-.green {background-color:#80FF00;}
-.blue {background-color:#0080FF;}
-.yellow {background-color:#FFFF00;}
-.white {background-color:#FFFFFF;}
-.unknown {background-color:#E6E6E6;}
+.green {
+    background-color: #80FF00;
+}
 
+.blue {
+    background-color: #0080FF;
+}
+
+.yellow {
+    background-color: #FFFF00;
+}
+
+.white {
+    background-color: #FFFFFF;
+}
+
+.unknown {
+    background-color: #E6E6E6;
+}
 
 /* Tag clouds */
-#tagcloud li { margin: .25em .25em .25em 0; list-style: none; line-height: 1.1em; display: inline; }
-#tagcloud li a {margin: .25em .25em .25em 0; line-height: 1.1em; }
-#tagcloud ul { margin: 0; }
+#tagcloud li {
+    margin: .25em .25em .25em 0;
+    list-style: none;
+    line-height: 1.1em;
+    display: inline;
+}
+
+#tagcloud li a {
+    margin: .25em .25em .25em 0;
+    line-height: 1.1em;
+}
+
+#tagcloud ul {
+    margin: 0;
+}
 
 /* timeline tagcloud */
-#timeline-tagcloud li { margin: .25em .25em .25em 0; list-style: none; line-height: 1.1em; display: inline; }
-#timeline-tagcloud li a {margin: .25em .25em .25em 0; line-height: 1.1em; }
-#timeline-tagcloud ul { display: none; margin-left: 0; height: 250px; }
-#yearnav { margin-bottom: 2em; position: relative; }
-/*#yearnav .handle { font-size: 75%; display: inline; background-color:#911; color:#fafaf0; cursor: move; top: -8px; }*/
-#yearnav .track {  }
+#timeline-tagcloud li {
+    margin: .25em .25em .25em 0;
+    list-style: none;
+    line-height: 1.1em;
+    display: inline;
+}
 
-.tag1 a {font-size: 1em; color: #acc1f3; }
-.tag2 a {font-size: 1.25em; color: #86a0dc; }
-.tag3 a {font-size: 1.5em; color: #607ec5; }
-.tag4 a {font-size: 1.75em; color: #264ca2; }
-.tag5 a {font-size: 2em; color: #133b97; }
+#timeline-tagcloud li a {
+    margin: .25em .25em .25em 0;
+    line-height: 1.1em;
+}
+
+#timeline-tagcloud ul {
+    display: none;
+    margin-left: 0;
+    height: 250px;
+}
+
+#yearnav {
+    margin-bottom: 2em;
+    position: relative;
+}
+
+/*#yearnav .handle { font-size: 75%; display: inline; background-color:#911; color:#fafaf0; cursor: move; top: -8px; }*/
+#yearnav .track {
+}
+
+.tag1 a {
+    font-size: 1em;
+    color: #acc1f3;
+}
+
+.tag2 a {
+    font-size: 1.25em;
+    color: #86a0dc;
+}
+
+.tag3 a {
+    font-size: 1.5em;
+    color: #607ec5;
+}
+
+.tag4 a {
+    font-size: 1.75em;
+    color: #264ca2;
+}
+
+.tag5 a {
+    font-size: 2em;
+    color: #133b97;
+}
 
 /*.tag1 {font-size: 10px; color: #acc1f3; }
 .tag2 {font-size: 14px; color: #86a0dc; }
@@ -788,29 +1043,99 @@ ul#edit-actions {
 .tag9 {font-size: 44px; color: #000000; }*/
 
 /* timeline chart */
-#timeline-chart div#chart-img {text-align:center;margin-left:-20px;}
+#timeline-chart div#chart-img {
+    text-align: center;
+    margin-left: -20px;
+}
 
 .darkenBackground {
-  background-color: rgb(0, 0, 1);
-  opacity: 0.2; /* Safari, Opera */
-  -moz-opacity:0.20; /* FireFox */
-  filter: alpha(opacity=20); /* IE */
-  z-index: 20;
-  height: 100%;
-  width: 100%;
-  background-repeat:repeat;
-  position:fixed;
-  top: 0px;
-  left: 0px;
+    background-color: rgb(0, 0, 1);
+    opacity: 0.2; /* Safari, Opera */
+    -moz-opacity: 0.20; /* FireFox */
+    filter: alpha(opacity = 20); /* IE */
+    z-index: 20;
+    height: 100%;
+    width: 100%;
+    background-repeat: repeat;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 }
 
 .highZ {
-  z-index:50;
-  position:fixed;
-  left:50%;
-  top:50%;
-  margin-top:-16px;
-  margin-left:-16px;
-  width:32px;
-  height:32px;
+    z-index: 50;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-top: -16px;
+    margin-left: -16px;
+    width: 32px;
+    height: 32px;
+}
+
+/* Styles used to replace inline styles in views -
+   We're working to remove inline styles from the views as possible.
+   The next 'General' and 'Specific' sections are for css that has come
+   about as a result of that, depending on whether it seems widely applicable
+   or unique to a given situation.
+*/
+
+/* General */
+.no-padding-or-margin {
+    padding: 0;
+    margin: 0;
+}
+
+.centered-text {
+    text-align: center;
+}
+
+/* Specific */
+.contributorship {
+    border-top: 1px dotted #CCC;
+    margin-top: 1em;
+    padding-top: 2em;
+}
+
+.contributorship-claim {
+    border-top: 1px dotted #CCC;
+    margin-top: 1em;
+    padding-top: 2em
+}
+
+.contributorship-claim img {
+    border: 2px dashed rgb(204, 204, 204);
+    margin: 1em 0pt;
+    padding: 0.5em;
+}
+
+.archival-analysis-header {
+    padding-bottom: 3em;
+}
+
+.group-index-person-image {
+    border: 2px dashed #CCC;
+    padding: 0.5em;
+    margin: 1em 0;
+}
+
+.group-show-chart-image {
+    margin-left: -50px;
+    margin-bottom: 20px;
+}
+
+.import-review-batch-header {
+    font-size: 0.75em;
+}
+
+.import-admin-div {
+    padding-bottom: 2em;
+}
+
+.import-review-table th {
+    border-bottom: 1px solid #000;
+}
+
+.import-review-table td {
+    border-top: 1px dotted #CCC;
 }
