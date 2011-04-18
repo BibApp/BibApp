@@ -41,7 +41,7 @@ class Publisher < ActiveRecord::Base
   SHERPA_SOURCE = 1
   IMPORT_SOURCE = 2
   def set_initial_states
-    self.source_id = IMPORT_SOURCE # Import Data
+    self.publisher_source_id = IMPORT_SOURCE # Import Data
   end
 
   def to_param
@@ -186,7 +186,7 @@ class Publisher < ActiveRecord::Base
                                    :url => url,
                                    :romeo_color => romeo_color,
                                    :sherpa_id => sherpa_id,
-                                   :source_id => SHERPA_SOURCE
+                                   :publisher_source_id => SHERPA_SOURCE
                                })
         t = true
       end

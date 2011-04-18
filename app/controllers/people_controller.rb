@@ -61,7 +61,8 @@ class PeopleController < ApplicationController
         else
           @a_to_z = Person.letters
           @page = params[:page] || @a_to_z[0]
-          @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
+          @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").
+              order("upper(last_name), upper(first_name)").includes(:contributorships => :work)
         end
 
         @title = "People"
@@ -72,7 +73,7 @@ class PeopleController < ApplicationController
       if params[:q]
         begin
           @ldap_results = BibappLdap.instance.search(params[:q])
-        rescue  BibappLdapConfigError
+        rescue BibappLdapConfigError
           @fail_message = "LDAP is not properly configured"
         rescue BibappLdapConnectionError
           @fail_message = "Error authenticating LDAP user."
