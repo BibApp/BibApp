@@ -29,8 +29,8 @@ class RefworksXmlImporter < BaseImporter
       :title_tertiary => :publication, # RefWorks loads Conference Proceeding publication data here
       :keyword => :keywords,
       :pub_year => :publication_date,
-      :periodical_full => :publication,
-      :periodical_abbrev => :publication,
+      :periodical_full => :periodical_full,
+      :periodical_abbrev => :periodical_abbrev,
       :volume => :volume,
       :issue => :issue,
       :start_page => :start_page,
@@ -49,7 +49,9 @@ class RefworksXmlImporter < BaseImporter
       :identifying_phrase => :external_id,
       :url => :links
     }
-  
+
+    @publication_priority = [:full, :abbrev].collect {|suffix| :"periodical_#{suffix}"}
+
     #Initialize our Value Translators (which will translate values from normal RefWorks XML)
     @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
 
@@ -102,6 +104,21 @@ class RefworksXmlImporter < BaseImporter
   end
   
   def import_callbacks?
-    false
+    true
   end
+
+  def callbacks(hash)
+    prioritize_publication(hash)
+    hash
+  end
+
+  #pick a single publication field out of all possibilities using priority
+  #set up in @publication_priority. Remove all candidate keys as only
+  #the resulting publication field will be used.
+  def prioritize_publication(hash)
+    publication_field = @publication_priority.detect {|field| hash[field]}
+    hash[:publication] = hash[publication_field] if publication_field
+    @publication_priority.each {|field| hash.delete(field)}
+  end
+
 end
