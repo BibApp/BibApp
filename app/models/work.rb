@@ -301,9 +301,8 @@ class Work < ActiveRecord::Base
       h.delete(:person_id) if h[:person_id]
 
       #save remaining hash attributes
-      self.attributes.merge!(h)
-      saved = self.save
-
+      saved = self.update_attributes(h)
+      
     rescue Exception => e
       return nil, e
     end
