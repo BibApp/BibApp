@@ -32,7 +32,7 @@
             %td=publication.issn_isbn
             %td=link_to "#{publication.authority.name}", publication_path(publication)
             %td=link_to "#{publication.publisher.authority.name}", publisher_path(publication.publisher)
-            %td=publication.works.count
+            %td=publication.works.size
 
     %br/
     %br/
