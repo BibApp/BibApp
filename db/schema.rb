@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414150835) do
+ActiveRecord::Schema.define(:version => 20110418180227) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(:version => 20110414150835) do
 
   create_table "publishers", :force => true do |t|
     t.integer  "sherpa_id"
-    t.integer  "source_id"
+    t.integer  "publisher_source_id"
     t.integer  "authority_id"
     t.boolean  "publisher_copy"
     t.string   "name"
