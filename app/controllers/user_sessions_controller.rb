@@ -32,7 +32,7 @@ class UserSessionsController < ApplicationController
   def login_shibboleth
     session[:no_shibboleth] = false
     if current_user
-      redirect_to params[:return_to] || session[:return_to] || root_url
+      redirect_to after_login_destination
     else
       redirect_to(shibboleth_login_url, :return_to => params[:return_to])
     end
@@ -53,7 +53,7 @@ class UserSessionsController < ApplicationController
     #avoid login -> login infinite redirect
     return_to = params[:return_to] || session[:return_to]
     if return_to and (return_to.match(/\/login/) || return_to.match(/\/user_sessions\/new/))
-      if user = @user_session.record and user.person
+      if user = (current_user or @user_session.record) and user.person
         return person_url(user.person)
       else
         return root_url
