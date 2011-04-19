@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Login successful!"
-      redirect_to params[:return_to] || root_url
+      redirect_to after_login_destination
     else
       render :action => :new
     end
@@ -20,10 +20,24 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
-    redirect_back_or_default new_user_session_url
+    redirect_back_or_default root_url
   end
 
   def saved
     @works = session[:saved].all_works
+  end
+
+  protected
+
+  def after_login_destination
+    #avoid login -> login infinite redirect
+    if params[:return_to] and params[:return_to].match(/\/login/)
+      if user = @user_session.record and user.person
+        return person_url(user.person)
+      else
+        return root_url
+      end
+    end
+    params[:return_to] || root_url
   end
 end

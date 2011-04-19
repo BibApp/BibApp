@@ -9,10 +9,6 @@
       %legend="User Account"
       = form_for :user, :url => users_path do |form|
         %p
-          %label="Username"
-          %br/
-          = form.text_field :login       
-        %p
           %label="Email"
           %br/
           = form.text_field :email

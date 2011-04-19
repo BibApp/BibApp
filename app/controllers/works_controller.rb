@@ -105,8 +105,8 @@ class WorksController < ApplicationController
       # Default BibApp search method - ApplicationController
 
       #Solr filter query for active people
-      params[:filter] = []
-      params[:filter] << "person_active:true"
+      params[:fq] ||= []
+      params[:fq] << "person_active:true"
       search(params)
     end
   end
@@ -136,7 +136,7 @@ class WorksController < ApplicationController
     authors = work.work_name_strings.collect { |wns| [:name=>wns.name_string.name, :role=>t.constantize.creator_role] }
 
     work.update_type_and_save(t) if t
-    work.work_name_strings=(authors)
+    work.set_work_name_strings authors
 
     Index.update_solr(work)
 

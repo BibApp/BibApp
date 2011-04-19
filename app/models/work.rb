@@ -390,9 +390,8 @@ class Work < ActiveRecord::Base
       h.delete(:person_id) if h[:person_id]
 
       #save remaining hash attributes
-      self.attributes = h
-      saved = self.save
-
+      saved = self.update_attributes(h)
+      
     rescue Exception => e
       return nil, e
     end
@@ -839,7 +838,7 @@ class Work < ActiveRecord::Base
     name_strings_hash.flatten.each do |cns|
       machine_name = make_machine_name(cns[:name])
       name = cns[:name].strip
-      name_string = NameString.find_or_create_by_machine_name_and_name(machine_name, name)
+      name_string = NameString.find_or_create_by_machine_name(:machine_name => machine_name, :name => name)
       self.work_name_strings.create(:name_string_id => name_string.id, :role => cns[:role])
     end
   end

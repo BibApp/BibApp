@@ -12,7 +12,7 @@
       %p
         = text_field_tag :q, params[:q]
         = submit_tag "Search"
-        ="&nbsp;Ex: Smith, John OR Smith, J"
+        &nbsp; Ex: Smith, John OR Smith, J
 
     - if @ldap_results
       %fieldset
@@ -25,7 +25,7 @@
                 = render :partial => "ldap_result", :object => l, :locals => {:i => i}
           %script{ :type => "text/javascript" }
             = update_page do |p|
-              = p.assign "ldap_results", @ldap_results
+              - p.assign "ldap_results", @ldap_results
         - else
           %p="No results for #{params[:q]}"
 

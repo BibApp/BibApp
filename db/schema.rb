@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110310210451) do
+ActiveRecord::Schema.define(:version => 20110418180227) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -203,9 +203,11 @@ ActiveRecord::Schema.define(:version => 20110310210451) do
     t.string   "uid"
     t.string   "display_name"
     t.text     "postal_address"
+    t.integer  "user_id"
   end
 
   add_index "people", ["machine_name"], :name => "person_machine_name"
+  add_index "people", ["user_id"], :name => "index_people_on_user_id"
 
   create_table "publications", :force => true do |t|
     t.integer  "sherpa_id"
@@ -237,7 +239,7 @@ ActiveRecord::Schema.define(:version => 20110310210451) do
 
   create_table "publishers", :force => true do |t|
     t.integer  "sherpa_id"
-    t.integer  "source_id"
+    t.integer  "publisher_source_id"
     t.integer  "authority_id"
     t.boolean  "publisher_copy"
     t.string   "name"
@@ -293,7 +295,6 @@ ActiveRecord::Schema.define(:version => 20110310210451) do
   add_index "tags", ["name"], :name => "tag_name", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "login"
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
     t.string   "salt",                      :limit => 40
@@ -305,6 +306,8 @@ ActiveRecord::Schema.define(:version => 20110310210451) do
     t.datetime "activated_at"
     t.string   "persistence_token",                       :default => "", :null => false
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
   create_table "work_name_strings", :force => true do |t|
     t.integer  "name_string_id"

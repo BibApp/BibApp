@@ -14,14 +14,6 @@ describe UsersController do
     assigns(:user).reload
     assigns(:user).activation_code.should_not be_nil
   end
-
-  it 'requires login on signup' do
-    lambda do
-      create_user(:login => nil)
-      assigns[:user].errors.on(:login).should_not be_nil
-      response.should be_success
-    end.should_not change(User, :count)
-  end
   
   it 'requires password on signup' do
     lambda do
@@ -69,7 +61,7 @@ describe UsersController do
   end
   
   def create_user(options = {})
-    post :create, :user => { :login => 'quire', :email => 'quire@example.com',
+    post :create, :user => { :email => 'quire@example.com',
       :password => 'quire', :password_confirmation => 'quire' }.merge(options)
   end
 end

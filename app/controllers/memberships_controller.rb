@@ -103,7 +103,7 @@ class MembershipsController < ApplicationController
 
     full_success = true
 
-    unless group_ids.nil? or group_ids.empty?
+    unless group_ids.blank?
       #Create each membership one by one, so we can be sure user has 'edit' rights on all
       group_ids.each do |group_id|
         group = Group.find(group_id)

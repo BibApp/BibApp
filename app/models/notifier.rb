@@ -12,7 +12,7 @@ class Notifier < ActionMailer::Base
     @user = User.find(user_id)
     with_setup_and_mailing(@user) do
       @subject = "BibApp Synapse - batch upload of persons has completed"
-      @login = user.login
+      @email = @user.email
       @results = results
       @filename = filename
     end

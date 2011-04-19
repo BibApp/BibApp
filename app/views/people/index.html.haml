@@ -35,7 +35,7 @@
           %td=link_to image_tag(person.image_url, :class => "person-image", :size => "50x66"), person_path(person)
           %td=link_to "#{person.display_name}", person_path(person)
           - if person.works.length > 0
-            %td=link_to person.works.first, work_path(person.works.first)
+            %td=link_to person.works.first.to_s, work_path(person.works.first)
           - else
             %td
           %td{:style => "text-align:right;"}=person.works.verified.length

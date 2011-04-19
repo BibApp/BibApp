@@ -18,6 +18,7 @@ class Person < ActiveRecord::Base
   has_many :contributorships, :dependent => :destroy
 
   has_one :image, :as => :asset, :dependent => :destroy
+  belongs_to :user
 
   #### Validators ####
 
@@ -99,19 +100,20 @@ class Person < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name} #{middle_name} #{last_name}"
+    self.join_names(' ', first_name, middle_name, last_name)
   end
 
   def first_last
-    "#{first_name} #{last_name}"
+    self.join_names(' ', first_name, last_name)
   end
 
   def last_first
-    "#{last_name}, #{first_name}"
+    self.join_names(', ', last_name, first_name)
   end
 
   def last_first_middle
-    "#{last_name}, #{first_name} #{middle_name}"
+    given_name = self.join_names(' ', first_name, middle_name)
+    self.join_names(', ', last_name, given_name)
   end
 
   def most_recent_work
@@ -125,15 +127,11 @@ class Person < ActiveRecord::Base
   end
 
   def groups_not
-    all_groups = Group.order_by_name.all
-    # TODO: do this right. The vector subtraction is dumb.
-    return all_groups - groups
+    Group.where("id NOT in (?)", self.group_ids).order_by_name.all
   end
 
   def name_strings_not
-    suggestions = NameString.name_like(self.last_name).order_by_name.all
-    # TODO: do this right. The vector subtraction is dumb.
-    return suggestions - name_strings
+    NameString.name_like(self.last_name).where("id NOT in (?)", self.name_string_ids).order_by_name.all
   end
 
   # Person Contributorship Calculation Fields
@@ -157,11 +155,10 @@ class Person < ActiveRecord::Base
     vps = self.verified_publications
 
     known_years = vps.collect do |vp|
-      if !vp.work.publication_date.nil?
+      if vp.work.publication_date
         vp.work.publication_date.year
       end
-    end.uniq
-    known_years.compact
+    end.uniq.compact
 
     known_publication_ids = vps.collect { |vp| vp.work.publication.id if vp.work.publication }.uniq.compact
     known_collaborator_ids = vps.collect { |vp| vp.work.name_strings.collect { |ns| ns.id } }.flatten.uniq
@@ -219,7 +216,7 @@ class Person < ActiveRecord::Base
 
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
-    "#{last_name}||#{id}||#{image_url}||#{group_ids}||#{person_active}||#{person_research_focus}"
+    "#{last_name}||#{id}||#{image_url}||#{comma_separated_group_ids}||#{person_active}||#{person_research_focus}"
   end
 
   def solr_filter
@@ -227,8 +224,7 @@ class Person < ActiveRecord::Base
   end
 
   def publication_reftypes
-    Work.select('type, count(type)').
-        joins(:contributorships).
+    Work.select('type, count(type)').joins(:contributorships).
         where(:contributorships => {:person_id => self.id, :contributorship_state_id => Contributorship::STATE_VERIFIED}).
         group('type').order('count desc')
   end
@@ -278,7 +274,7 @@ class Person < ActiveRecord::Base
     else
       group_ids = group_ids_string.split(",").collect { |g| g.to_i }
     end
-    
+
     return last_name, id, image_url, group_ids, is_active, research_focus
   end
 
@@ -302,6 +298,11 @@ class Person < ActiveRecord::Base
     return "" if name.blank?
     suffix = for_machine_name ? '' : '.'
     name.first + suffix
+  end
+
+  #join the given strings together with the given separator, ignoring any blanks.
+  def join_names(separator, *names)
+    names.select { |x| x.present? }.join(separator)
   end
 
 end

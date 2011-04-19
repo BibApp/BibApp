@@ -56,4 +56,12 @@ describe KeywordsController do
     end
   end
 
+  describe "timeline" do
+    it "has a gettable timeline action" do
+      get :timeline, :person_id => Factory.create(:person)
+      response.should be_success
+      response.should render_template(:timeline)
+    end
+  end
+
 end
