@@ -52,7 +52,7 @@ class UserSessionsController < ApplicationController
   def after_login_destination
     #avoid login -> login infinite redirect
     return_to = params[:return_to] || session[:return_to]
-    if return_to and return_to.match(/\/login/)
+    if return_to and (return_to.match(/\/login/) || return_to.match(/\/user_sessions\/new/)
       if user = @user_session.record and user.person
         return person_url(user.person)
       else
