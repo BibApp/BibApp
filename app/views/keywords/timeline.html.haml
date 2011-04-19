@@ -5,25 +5,25 @@
   :plain
     html {overflow-y: scroll;}
 
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     %h2
       = link_to "#{@current_object.name}", url_for(@current_object)
       = " - Timeline"
 
-    %div#yearnav
+    #yearnav
       %h3#curyear
-      %div.track#track1{:style=>"width:300px;height:4px;border-bottom:5px solid #aaa;"}
-        %div.handle#handle1{:style=>"width:19px;height:20px;left:6px;position:relative;"}
-          %img{:style=>"float:left;", :alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
+      .track#track1
+        .handle#handle1
+          %img{:alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
       
-    %div#timeline-tagcloud.span-12
+    #timeline-tagcloud.span-12
       %h3 Popular Research Topics by Year
       = render :partial => "timeline_list", :collection => @year_keywords
 
-    %div#timeline-chart.span-7.prepend-1.last-1
+    #timeline-chart.span-7.prepend-1.last-1
       %h3 Work Types by Year
-      %div#chart-img
+      #chart-img
         %img{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
 
     %script{:type=>"text/javascript"}

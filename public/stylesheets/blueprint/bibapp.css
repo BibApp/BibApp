@@ -1139,3 +1139,22 @@ ul#edit-actions {
 .import-review-table td {
     border-top: 1px dotted #CCC;
 }
+
+/* The next few are from keywords/timeline.html.haml */
+
+#track1 {
+    width: 300px;
+    height: 4px;
+    border-bottom: 5px solid #aaa;
+}
+
+#handle {
+    width: 19px;
+    height: 20px;
+    left: 6px;
+    position: relative;
+}
+
+#handle img {
+    float: left;
+}
