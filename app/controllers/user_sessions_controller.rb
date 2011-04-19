@@ -3,7 +3,7 @@ class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
   before_filter :require_user, :only => [:destroy, :saved]
   helper UserSessionsHelper
-  
+
   def new
     @user_session = UserSession.new
   end
@@ -39,10 +39,10 @@ class UserSessionsController < ApplicationController
   end
 
   protected
-  
+
   def shibboleth_login_url
     url = root_url(:protocol => 'https') + "Shibboleth.sso/Login"
-    if return_to =  params[:return_to] || session[:return_to]
+    if return_to = params[:return_to] || session[:return_to]
       target = root_url(:protocol => 'https') + return_to
       url = "#{url}?target=#{CGI.escape(target)}"
     end
@@ -52,7 +52,7 @@ class UserSessionsController < ApplicationController
   def after_login_destination
     #avoid login -> login infinite redirect
     return_to = params[:return_to] || session[:return_to]
-    if return_to and (return_to.match(/\/login/) || return_to.match(/\/user_sessions\/new/)
+    if return_to and (return_to.match(/\/login/) || return_to.match(/\/user_sessions\/new/))
       if user = @user_session.record and user.person
         return person_url(user.person)
       else
