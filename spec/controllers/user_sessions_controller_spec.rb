@@ -15,7 +15,7 @@ describe UserSessionsController do
     it 'destroys logged in session' do
       get :destroy
       flash[:notice].should == "Logout successful!"
-      response.should redirect_to(new_user_session_url)
+      response.should redirect_to(root_url)
     end
 
   end
