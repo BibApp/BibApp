@@ -224,3 +224,8 @@ span#branding a
 	overflow:scroll;
 	width:550px;
 }
+
+.inline-shib-login-link {
+  font-size: 175%;
+  font-weight: bold;
+}
