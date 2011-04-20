@@ -45,7 +45,7 @@
           = render :partial => "name_string", :collection => @suggestions - @person.name_strings, :locals => { :person => @person, :selected => false }
 
 
-      - form_remote_tag :url => live_search_for_name_strings_pen_names_url do
+      = form_remote_tag :url => live_search_for_name_strings_pen_names_url do
         Search other last names to add suggestions (ex. "Smith")
         %br/
         = text_field_tag(:q, value = nil, options = {})

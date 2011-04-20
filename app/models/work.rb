@@ -79,7 +79,8 @@ class Work < ActiveRecord::Base
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_save :before_save_actions
-
+  after_save :after_save_actions
+  
   # After Create only
   # (Note: after create callbacks *must* be placed in Work model, 
   #  for faux-accessors to work properly)
@@ -89,13 +90,16 @@ class Work < ActiveRecord::Base
     create_tags
   end
 
+  def after_save_actions
+    create_contributorships
+  end
+
   def before_save_actions
     update_authorities
     update_scoring_hash
     update_archive_state
     update_machine_name
     deduplicate
-    create_contributorships
   end
 
   #### Serialization ####
