@@ -1,3 +1,4 @@
+- include_stylesheet('specific/works/fields/common')
 -# Add an contributors field, with Auto-Complete.
 -# Also adds a list of existing contributors
 
@@ -17,9 +18,9 @@
 - contributors = @editor_name_strings if @editor_name_strings
 
 - count = 0
-%div.author_block
+.author_block
   = label :author, :string, "Contributor(s):"
-  %span{:style=>"color:grey"} Format: LastName, FirstName Middle (e.g., Smith, John L.)
+  %span.instructions Format: LastName, FirstName Middle (e.g., Smith, John L.)
 
   %ol#contributor_name_strings_list
     -# Build list of contributors
@@ -33,7 +34,6 @@
             - else
               %option{:value => r}
                 = r
-        -#= text_field_with_auto_complete :contributor, :string, {:class=>'text',:value =>"#{@person.last_first if @person}"}, {:method => :get, :skip_style => true, :on_show => "function(element, update) {show_autocomplete_names(element, update);}", :on_hide => "function(element, update) {hide_autocomplete_names(element, update);}"}
         = text_field_tag "contributors[]", nil, {:class=>'text'}
         = link_to_remote "[remove]", :url => remove_contributor_from_list_works_url(:ns_id => count)
     -else

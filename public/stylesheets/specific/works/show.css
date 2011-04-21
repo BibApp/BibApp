@@ -1,0 +1,9 @@
+.work-type {
+  font-size: small;
+  color: gray;
+  display: block;
+}
+
+#work-details {
+  min-height: 600px;
+}

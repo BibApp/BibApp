@@ -1,3 +1,4 @@
+- include_stylesheet('specific/works/_metadata')
 %table#metadata.span-15
   -#%tr
   -#%td.label Type:
@@ -214,7 +215,7 @@
       - label = "Location"
     %tr
       %td.label
-        = "#{label}:"
+        #{label}:
       %td
         = @work.publication_place
 
@@ -233,7 +234,7 @@
       - label = "Date Issued"
     %tr
       %td.label
-        = "#{label}:"
+        #{label}:
       %td
         = @work.publication_date
 
@@ -250,7 +251,7 @@
       - label = "Total Pages"
     %tr
       %td.label
-        = "#{label}:"
+        #{label}:
       %td
         = @work.end_page
 
@@ -277,9 +278,9 @@
       %td.label DOI/URL:
       %td
         -#to keep long, unbroken URLS from expanding the table
-        %div.span-11{:style => "overflow:auto"}
+        .span-11.work-link
           - @work.links.split(";").each do |link|
-            %p=link
+            %p #{link}
 
   - unless @work.identifier.blank?
     %tr

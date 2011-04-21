@@ -1,30 +1,30 @@
 / Render a 404 page
 - @title = "?"
-
+- include_stylesheet('specific/shared/_application_error')
 / ### Header ###
 
 #header-white.span-24
-  %div.span-22.prepend-1{:style => "margin-top:4em;"}
-    =link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)
+  .span-22.prepend-1.header-white
+    #{link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)}
 
 
 / ### Main ###
-%div.span-24
-  %div.span-22.prepend-1{:style => "margin-top:2em;"}
+.span-24
+  .span-22.prepend-1.main
     %h2 Error 500: Something is *very* wrong!
-    %div.span-12
-      %ol{:style => "font-size: 1.25em;line-height:2em;"}
+    .span-12
+      %ol
         %li
           Don't worry, but 
-          =link_to $APPLICATION_NAME, works_path
+          #{link_to $APPLICATION_NAME, works_path}
           is unexpectedly broken.
         %li
           It's ok, because 
-          =link_to $APPLICATION_NAME, works_path
+          #{link_to $APPLICATION_NAME, works_path}
           has emailed us to say so.
         %li
           Need to contact someone? Email:
-          %a{:href=> "mailto:#{$SYSADMIN_EMAIL}?subject=#{$APPLICATION_NAME} Support"}=$SYSADMIN_EMAIL
+          %a{:href=> "mailto:#{$SYSADMIN_EMAIL}?subject=#{$APPLICATION_NAME} Support"} #{$SYSADMIN_EMAIL}
           
-    %div.span-8.prepend-2.last
-      =image_tag("chucks.jpg")
+    .span-8.prepend-2.last
+      #{image_tag("chucks.jpg")}

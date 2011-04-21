@@ -1,0 +1,7 @@
+#alpha-nav li {
+  display: inline;
+}
+
+#alpha-nav.pagination {
+  margin-bottom: 3em;
+}

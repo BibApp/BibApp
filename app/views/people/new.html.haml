@@ -1,7 +1,8 @@
 / === People === New ===
 / Main
-%div.span-24
-  %div.span-22.prepend-1
+- include_stylesheets('specific/people/_ldap_result', 'specific/people/new')
+.span-24
+  .span-22.prepend-1
     %h2 New Person
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "new"}
@@ -16,9 +17,9 @@
 
     - if @ldap_results
       %fieldset
-        %legend="Search results"
+        %legend Search results
         - if @ldap_results.length > 0
-          %div{:style => "max-height:10em; overflow-x:hidden;overflow-y:auto;"}
+          %div.ldap-results
             %ul#ldap_query_results
               - @ldap_results.each_with_index do |l, i|
                 - # I don't know why :collection doesn't work here
@@ -27,12 +28,12 @@
             = update_page do |p|
               - p.assign "ldap_results", @ldap_results
         - else
-          %p="No results for #{params[:q]}"
+          %p No results for #{params[:q]}
 
     - if @fail
       %fieldset
-        %legend="Search results"
-        %p{:style => "color:red;"}="Search failed: #{@fail_message}."
+        %legend Search results
+        %p.ldap-fail="Search failed: #{@fail_message}."
 
 
     = render :partial => 'form'

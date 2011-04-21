@@ -1,0 +1,15 @@
+.person-photo {
+  border: 2px dashed #CCC;
+  padding:3px;
+}
+
+.person-info {
+  width: 3em;
+  padding: 0.25em;
+  margin: 0em;
+  background-color: #fff;
+  position: relative;
+  right: 0em;
+  bottom: 2em;
+  text-align: center;
+}
