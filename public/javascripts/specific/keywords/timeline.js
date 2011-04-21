@@ -1,3 +1,8 @@
+var year_index = 0;
+var year_tags = decode_div_data('year-tags')
+var charts = decode_div_data('chart-urls')
+var work_counts = decode_div_data('work-counts')
+
 function show_list(year) {
   var items = $('timeline-tagcloud').getElementsByTagName('ul');
   for (var i = 0; i < items.length; i++) {

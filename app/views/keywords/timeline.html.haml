@@ -24,9 +24,9 @@
       #chart-img
         %img.left{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
 
-    %script{:type=>"text/javascript"}
-      - update_page do |page|
-        - page.assign 'year_index', 0
-        - page.assign 'year_tags', @years
-        - page.assign 'charts', @chart_urls
-        - page.assign 'work_counts', @work_counts
+    #year-tags.hidden
+      #{h(@years.to_json)}
+    #chart-urls.hidden
+      #{h(@chart_urls.to_json)}
+    #work-counts.hidden
+      #{h(@work_counts.to_json)}
