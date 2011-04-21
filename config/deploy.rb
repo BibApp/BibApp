@@ -67,7 +67,7 @@ namespace :deploy do
 
   desc "symlink shared subdirectories of public"
   task :symlink_shared_dirs do
-    [:attachments, :groups, :people, :sherpa].each do |dir|
+    [:attachments, :sherpa].each do |dir|
       run "ln -fs #{public}/system/#{dir} #{public}/#{dir}"
     end
   end
