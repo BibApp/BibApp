@@ -13,6 +13,7 @@
 -#                                    :none     (trumps all)}
                                  
 
+- include_stylesheet('specific/shared/_work')
 -# Initialize optional input variables
 - allow_select ||= false
 - show_status ||= false
@@ -22,7 +23,7 @@
 %li.work{:class => "#{cycle('odd','even')}"}
   -#If work can be selected (and user is logged in), add a checkbox
   - if allow_select && logged_in?
-    %div.select_multiple
+    .select_multiple
       = check_box_tag "work_id[]", "#{work['pk_i']}"
 
   -if show_dupes
@@ -38,9 +39,9 @@
   -#Display the work
   %div{:class => the_class}
     - if work['issn_isbn'] != nil && work['issn_isbn'].length > 9
-      %span{:title => "ISBN:#{work['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
-    %strong=link_to "#{work['title']}", work_path(work['pk_i'])
-    %h5{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=work['type']
+      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN:#{work['issn_isbn'].gsub(" ", "")}"}
+    %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
+    %h5.work-type #{work['type']}
     -#display status of a work, if specified
     = render :partial => "shared/work_status", :locals => {:work => work} if show_status
     
@@ -73,4 +74,4 @@
           -#As long as not last link, add a vertical pipe between links
           -unless link==links_array.last
             ="|"
-  %div{:style=>"clear:both;"}
+  .clear-both

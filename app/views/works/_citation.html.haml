@@ -1,7 +1,7 @@
--if (File.exist?("#{Rail.root}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{Rails.root}/app/views/works/apa/_#{@work.class.name.to_s.underscore}.html"))
-  %h4{:style => "margin-bottom:0.5em;"}="APA Format: #{@work.class.name.to_s.underscore.humanize}"
-  %p.apa_citation= render :partial => "works/apa/#{@work.class.name.to_s.underscore}", :locals => { :c => @work }
+- include_stylesheet('specific/works/_citation')
+- work_class = @work.class.name.to_s
+- normalized_work_class = File.exist?("#{Rail.root}/app/views/works/apa/_#{work_class.underscore}.html.haml") || File.exist?("#{Rails.root}/app/views/works/apa/_#{work_class.underscore}.html") ? work_class : 'generic'
+%h4.citation-header APA Format: #{normalized_work_class.underscore.humanize}
+%p.apa_citation
+  = render :partial => "works/apa/#{normalized_work_class.underscore}", :locals => { :c => @work }
   
--else
-  %h4="APA Format: Generic"
-  %p.apa_citation= render :partial => "works/apa/generic", :locals => { :c => @work }

@@ -1,16 +1,17 @@
 / === People === Show ===
 / Main
+- include_stylesheet('specific/people/show')
 - @title = @person.display_name # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @person)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    #admin-actions.span-24
       = render :partial => "admin_actions"
 
 / ### Main ###
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     %h2
       #{link_to(h(@person.display_name), person_path(@person)).html_safe}
       =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
@@ -18,15 +19,15 @@
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
   / ## Content ###
-  %div.span-15.prepend-1
+  .span-15.prepend-1
 
-    %div#image.span-4
+    #image.span-4
       =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
       / ### Hide email for inactive people ###
       - if @person.active?
         =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")      
 
-    %div.span-10
+    .span-10
       - if @person.groups.empty?
         &nbsp;
       - else
@@ -34,34 +35,34 @@
         = render :partial => 'shared/group_list'
       / ### Hide research focus for inactive people ###
     - if @person.active? and @person.research_focus.strip.length > 0
-      %div#research-focus.span-14
+      #research-focus.span-14
         %h3.heading Research Focus
-        %p=@person.research_focus
+        %p #{@person.research_focus}
 
 
     - if @works.size > 0
-      %div#works.span-14
+      #works.span-14
         %h3.heading
-          =link_to "Works", person_works_path(@person)
+          = link_to "Works", person_works_path(@person)
           &ndash; recent additions
         %ol.works
           - @works.first(3).each do |work|
             = render :partial => "shared/work", :locals => {:work => work}
 
   / ### Sidebar ###
-  %div.span-7.last
+  .span-7.last
     - if @facets[:people_data].size > 1
-      %div.span-7.right_box_no_border
+      .span-7.right_box_no_border
         = render :partial => "shared/coauthors"
 
-    %div.span-7.right_box_no_border
+    .span-7.right_box_no_border
       %h3 Types of Work
-      %div{:style => "text-align:center;"}
-        %img{:src => "#{@chart_url}", :style=>"margin-left: -50px;margin-bottom:20px;"}
+      %div.text-center
+        %img.chart-image{:src => @chart_url}
 
     %div#tagcloud.right_box_no_border.span-7
       %h3 Popular research topics
-      %div{:style => "text-align:center;"}
+      %div.text-center
         = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
 
     / Publications

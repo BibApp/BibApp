@@ -1,0 +1,9 @@
+.ldap-results {
+  max-height: 10em;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.ldap-fail {
+  color: red;
+}

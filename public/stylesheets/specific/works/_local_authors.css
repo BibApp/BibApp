@@ -1,0 +1,18 @@
+.h7 {
+  padding-right: 0.5em;
+}
+
+span.person-image img {
+ border: 2px dashed #CCC;
+ padding: 3px;
+}
+
+span.person-image div {
+  width: 3em;
+  padding: 0.25em;
+  margin: 0em;
+  background-color: #fff;
+  position: relative;
+  right: 0em;
+  bottom: 2em;
+}

@@ -1,6 +1,6 @@
 / === Groups === Show ===
 / Main
-
+- include_stylesheet('specific/groups/show')
 - @title = @group.name  # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @group)
@@ -59,12 +59,12 @@
 
     .span-7.right_box_no_border
       %h3 Types of Work
-      .centered-text
+      .text-center
         %img{:src => "#{@chart_url}", :class => 'group-show-chart-image'}
 
     #tagcloud.right_box_no_border.span-7
       %h3 Popular research topics
-      .centered-text
+      .text-center
         = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
 
     .span-7.last.right_box_no_border

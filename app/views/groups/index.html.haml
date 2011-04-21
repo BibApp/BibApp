@@ -1,5 +1,6 @@
 / === Groups === Index ===
 / Main
+- include_stylesheet('specific/groups/index')
 - @title="Groups" # Specify text at end of HTML <title> tag
 
 
@@ -25,7 +26,7 @@
     / ### Person / Groups ###
     - if params[:person_id]
       .span-5
-        .centered-text
+        .text-center
           =image_tag(@person.image_url, :class => 'group-index-person-image', :size => "75x100")
 
       %div.span-17.last

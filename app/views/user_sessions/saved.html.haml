@@ -1,7 +1,7 @@
 / === Sessions === Saved ===
 / Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+.span-24
+  .span-22.prepend-1
     - if @works.nil? || @works.empty?
       %h2 Saved
       %p Nothing added yet.
@@ -12,14 +12,14 @@
 
     - else
       - content_for :admin_bar do
-        %div.span-24#admin-actions
+        #admin-actions.span-24
           %ul#edit-actions
-            %li= link_to "Empty saved items?", delete_saved_url
+            %li #{ link_to "Empty saved items?", delete_saved_url}
       
-      %h2="Saved (#{@saved.items.size})"
+      %h2 Saved #{@saved.items.size}
 
       / Sort Form
-      %div{:class => "span-13 append-1 last"}
+      .span-13.append-1.last
         = form_tag "#works", :method => :get do
           #sort-by
             %label Show:
@@ -40,10 +40,10 @@
 
             = submit_tag 'Go'
       
-        %div{:class => "span-14"}= will_paginate @works.paginate
+        .span-14 #{ will_paginate @works.paginate}
 
-        %ol{:class => "span-14 works", :style => "clear:both;"}
+        %ol.span-14.works.clear-both
           - @works.each do |work|
             = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
 
-        %div{:class => "span-14"}= will_paginate @works.paginate
+        .span-14 #{ will_paginate @works.paginate}

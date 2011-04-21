@@ -1,0 +1,16 @@
+#track1 {
+  width: 300px;
+  height: 4px;
+  border-bottom: 5px solid #aaa;
+}
+
+#handle1 {
+  width: 19px;
+  height: 20px;
+  left: 6px;
+  position: relative;
+}
+
+html {
+  overflow-y: scroll;
+}

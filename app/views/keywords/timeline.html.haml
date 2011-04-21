@@ -1,9 +1,6 @@
 / === Timeline ===
 / Main
-
-%style
-  :plain
-    html {overflow-y: scroll;}
+- include_stylesheet('specific/keywords/timeline')
 
 .span-24
   .span-22.prepend-1
@@ -24,7 +21,7 @@
     #timeline-chart.span-7.prepend-1.last-1
       %h3 Work Types by Year
       #chart-img
-        %img{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
+        %img.left{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
 
     %script{:type=>"text/javascript"}
       - update_page do |page|

@@ -29,7 +29,7 @@
       %div{:class => "column span-16 last"}
         - if @status == "non_member"
           /Search Form
-          %div{:class => "span-8 append-1 last", :style => "float:right;"}
+          .span-8.attend-1.last.right
             = form_tag :action => "search_groups", :method => :get, :class => "memberships_search_form" do
 
               %div#search-box

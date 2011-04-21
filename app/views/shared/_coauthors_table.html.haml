@@ -4,7 +4,7 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 
-%h4="#{$UNIVERSITY_SHORT_NAME} Co-Authors"
+%h4 #{$UNIVERSITY_SHORT_NAME} Co-Authors
 %table
   %thead
     %tr
@@ -16,5 +16,5 @@
     - #Skip over the current person in the co-author listing
     - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
       %tr
-        %td=link_to(image_tag(image_url, :size => "32x45", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
-        %td{:style=>"text-align:center;"}=p.value
+        %td.person-image #{link_to(image_tag(image_url, :size => "32x45", :alt => last_name, :title => last_name), person_path(id))}
+        %td.text-center #{p.value}

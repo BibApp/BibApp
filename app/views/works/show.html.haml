@@ -3,13 +3,14 @@
 
 -#Require personalize.rb for Abstracts and Keywords
 -require 'config/personalize.rb'
+-include_stylesheet('specific/works/show')
 
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @work)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    #admin-actions.span-24
       %ul#edit-actions
         %li= link_to "Edit this work", edit_work_path
         - if !@work.archived?
@@ -18,16 +19,16 @@
         -if SwordClient.configured? and @work.ready_to_archive?
           %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
 
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     / Work Title
     %h2
       = @work.title_primary
-      %span{:style => "font-size:small;color:grey;display:block;"}
+      %span.work-type
         = @work.type.underscore.humanize
     
     / Work Details
-    %div#work-details.span-14
+    #work-details.span-14
 
       / COinS
       %span.Z3988{:title => "#{coin(@work)}"}
@@ -42,7 +43,7 @@
       / Metadata
       = render :partial => "metadata"
 
-    %div#local-relations.span-7.prepend-1.last
+    #local-relations.span-7.prepend-1.last
       / Local Authors
       = render :partial => "local_authors"
 
