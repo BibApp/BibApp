@@ -1,3 +1,24 @@
 .archival-analysis-header {
   padding-bottom: 3em;
 }
+
+/* SHERPA Colors - note in view the class is dynamically generated */
+.green {
+  background-color: #80FF00;
+}
+
+.blue {
+  background-color: #0080FF;
+}
+
+.yellow {
+  background-color: #FFFF00;
+}
+
+.white {
+  background-color: #FFFFFF;
+}
+
+.unknown {
+  background-color: #E6E6E6;
+}

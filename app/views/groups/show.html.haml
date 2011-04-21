@@ -62,10 +62,7 @@
       .text-center
         %img{:src => "#{@chart_url}", :class => 'group-show-chart-image'}
 
-    #tagcloud.right_box_no_border.span-7
-      %h3 Popular research topics
-      .text-center
-        = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
+    = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
 
     .span-7.last.right_box_no_border
       %h3.heading

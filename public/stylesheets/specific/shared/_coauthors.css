@@ -1,0 +1,17 @@
+#coauthors {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#coauthors li {
+  padding: 0;
+  margin: 0;
+}
+
+.person-coauthor {
+  float: left;
+  padding: 0em;
+  margin: 0em;
+  height: 128px;
+}

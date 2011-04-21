@@ -14,3 +14,32 @@
 html {
   overflow-y: scroll;
 }
+
+#timeline-tagcloud li {
+  margin: .25em .25em .25em 0;
+  list-style: none;
+  line-height: 1.1em;
+  display: inline;
+}
+
+#timeline-tagcloud li a {
+  margin: .25em .25em .25em 0;
+  line-height: 1.1em;
+}
+
+#timeline-tagcloud ul {
+  display: none;
+  margin-left: 0;
+  height: 250px;
+}
+
+#yearnav {
+  margin-bottom: 2em;
+  position: relative;
+}
+
+#timeline-chart div#chart-img {
+  text-align: center;
+  margin-left: -20px;
+}
+
