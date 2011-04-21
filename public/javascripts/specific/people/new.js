@@ -1,0 +1,1 @@
+var ldap_results = decode_div_data('ldap_results')

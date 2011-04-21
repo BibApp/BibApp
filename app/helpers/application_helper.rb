@@ -345,5 +345,11 @@ module ApplicationHelper
     end
   end
   alias include_javascript include_javascripts
+
+  #make a hidden div with the given id containing the given data, converted to json and html
+  #encoded. We have a corresponding javascript function to take this back apart.
+  def js_data_div(id, data)
+    content_tag(:div, h(data.to_json), :id => id, :class => 'hidden')
+  end
   
 end
