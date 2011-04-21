@@ -30,3 +30,5 @@
     -if $DISPLAY_GOOGLE_ANALYTICS == true
       %div
         = render :partial => "shared/google_analytics"
+
+    = yield :javascripts 

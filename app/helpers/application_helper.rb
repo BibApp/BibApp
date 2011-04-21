@@ -324,7 +324,8 @@ module ApplicationHelper
   end
 
   #mark stylesheets for inclusion in layout via yield :stylesheets
-  #prevent including the same one more than once
+  #prevent including the same one more than once - note we could do
+  #this more efficiently if need be
   def include_stylesheets(*paths)
     paths.each do |path|
       new_link = stylesheet_link_tag(path)
@@ -335,4 +336,14 @@ module ApplicationHelper
   end
   alias include_stylesheet include_stylesheets
 
+  def include_javascripts(*paths)
+    paths.each do |path|
+      new_link = javascript_include_tag(path)
+      unless content_for(:javascripts).include?(new_link)
+        content_for(:javascripts, new_link + "\n")
+      end
+    end
+  end
+  alias include_javascript include_javascripts
+  
 end
