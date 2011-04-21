@@ -27,11 +27,11 @@
         %img{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
 
     %script{:type=>"text/javascript"}
-      = update_page do |page|
-        = page.assign 'year_index', 0
-        = page.assign 'year_tags', @years
-        = page.assign 'charts', @chart_urls
-        = page.assign 'work_counts', @work_counts
+      - update_page do |page|
+        - page.assign 'year_index', 0
+        - page.assign 'year_tags', @years
+        - page.assign 'charts', @chart_urls
+        - page.assign 'work_counts', @work_counts
 
       :plain
         <!--
