@@ -1,3 +1,4 @@
+-include_stylesheets('specific/memberships/_group', 'specific/memberships/_group_list_item')
 -membership = Membership.find_by_person_id_and_group_id(@person.id, group.id)
 %li{ :id => "group_#{group.id}"}
   %strong
@@ -6,7 +7,7 @@
     %font{:size => '1'}
       = link_to "Leave group", membership_url(membership), :confirm => "Are you sure you want to leave this group?", :method => :delete
 
-  %div{:style => "margin-bottom:10px;"}
+  %div.membership-group-form
     = remote_form_for :membership,  membership,  :url => membership_url(membership),
        :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put} do |form|
       Title

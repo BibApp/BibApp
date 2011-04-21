@@ -1,5 +1,5 @@
 / Sort Form
-%div.span-13.append-1.last
+.span-13.append-1.last
   = form_tag "#works", :method => :get, :name => "works_form" do
     #bulk_links
       = check_box_tag "select_works", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
@@ -23,10 +23,10 @@
 
       = submit_tag 'Go'
 
-    %div.span-14= will_paginate @works
+    .span-14= will_paginate @works
 
-    %ol.span-14.works{:style => "clear:both;"}
+    %ol.span-14.works.clear-both
       - @works.each do |work|
         = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work), :allow_select => true, :show_status=>true, :links_array=>[:edit]}
 
-    %div.span-14= will_paginate @works
+    .span-14= will_paginate @works

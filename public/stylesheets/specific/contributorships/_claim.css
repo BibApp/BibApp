@@ -1,0 +1,11 @@
+.contributorship-claim {
+  border-top: 1px dotted #CCC;
+  margin-top: 1em;
+  padding-top: 2em
+}
+
+.contributorship-claim img {
+  border: 2px dashed rgb(204, 204, 204);
+  margin: 1em 0pt;
+  padding: 0.5em;
+}

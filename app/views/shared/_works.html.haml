@@ -2,6 +2,7 @@
 -# Render List of Works with paging & sorting options
 -#
 
+- include_stylesheet('specific/shared/_works')
 -# Initialize optional input variables
 - allow_select ||= false
 - show_status ||= false
@@ -61,14 +62,14 @@
 
           = submit_tag 'Go'
 
-    .span-17{:style => "margin-bottom:1em;"}= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
+    .span-17.pagination #{ will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)}
 
     - if @export.blank?
-      .span-17{:style => "padding:0; margin:0; clear:both;"}
+      .span-17.clear-both.no-padding-or-margin
         - @works.each do |work|
           = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :show_dupes => show_dupes, :links_array => links_array}
     - else
-      .span-17{:style => "padding:0; margin:0; clear:both;"}
+      .span-17.clear-both.no-padding-or-margin
         = @works
         
     .span-17= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

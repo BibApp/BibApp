@@ -2,8 +2,8 @@
 - @title = "Error 404: Page not found"
 
 / ### Main ###
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     %h2 Error 404: The page cannot be found
 
     - if controller.controller_name == "people" || controller.controller_name == "groups"
@@ -13,19 +13,19 @@
         
     %p Did you try searching? Enter a keyword(s) in the search field above.
     
-%div#facets.span-24{:style => "margin-top:2em;"}
+#facets.span-24
   / People
-  %div.span-5.prepend-1
+  .span-5.prepend-1
     = render :partial => "shared/people_list", :locals => {:count => 5}
 
   / Groups
-  %div.span-5.prepend-1
+  .span-5.prepend-1
     = render :partial => "shared/groups", :locals => {:count => 5}
 
   / Publications
-  %div.span-5.prepend-1
+  .span-5.prepend-1
     = render :partial => "shared/publications", :locals => {:count => 5}
 
   / Publishers
-  %div.span-4.prepend-1.last
+  .span-4.prepend-1.last
     = render :partial => "shared/publishers", :locals => {:count => 5}

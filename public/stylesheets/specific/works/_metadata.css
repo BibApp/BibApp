@@ -1,0 +1,25 @@
+table#metadata {
+  font-size: 1.1em;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+table#metadata td.label {
+  vertical-align: top;
+  text-align: right;
+  font-weight: bold;
+  background-color: #eee;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 10em;
+}
+
+table#metadata td {
+  vertical-align: top;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+div.work-link {
+  overflow: auto;
+}

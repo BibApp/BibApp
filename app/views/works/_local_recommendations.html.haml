@@ -1,12 +1,13 @@
+- include_stylesheet('specific/works/_local_recommendations')
 - if @recommendations.size > 0
-  %div.right_box
-    %div.box_heading="Related #{$UNIVERSITY_SHORT_NAME} Work"
+  .right_box
+    .box_heading Related #{$UNIVERSITY_SHORT_NAME} Work
     %ul.recommendations
       - @recommendations.each do |rec, score|
-        %li{:style => "padding:0.5em"}
-          %p.metadata=link_to rec.title_primary.titleize, work_path(rec)
+        %li
+          %p.metadata #{link_to rec.title_primary.titleize, work_path(rec)}
           %p.metadata
             - if !rec.publication.blank?
-              ="#{rec.publication.authority.name} |" 
-            -if rec.publication_date
-              ="#{rec.publication_date.year}"
+              #{rec.publication.authority.name} |
+            - if rec.publication_date
+              #{rec.publication_date.year}

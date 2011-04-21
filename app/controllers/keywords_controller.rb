@@ -7,8 +7,6 @@ class KeywordsController < ApplicationController
     build :all
   end
 
-  caches_page :timeline
-
   def timeline
 
     @current_object = Group.find(params[:group_id]) if params[:group_id]

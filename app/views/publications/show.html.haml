@@ -1,8 +1,9 @@
 / === Publications === Show ===
 / Main
+- include_stylesheet('specific/publications/show')
 - if !@export.empty?
-  %div.span-24
-    %div.span-22.prepend-1
+  .span-24
+    .span-22.prepend-1
       %h2 Works
       = @works
 
@@ -10,20 +11,20 @@
   - if logged_in? && current_user.has_any_role?("editor", Group)
     - content_for :admin_bar do
       / #### Admin Actions ###
-      %div.span-24#admin-actions
+      #admin-actions.span-24
         %ul#edit-actions
-          %li=link_to "Edit this publication", edit_publication_path(@publication)
+          %li #{link_to "Edit this publication", edit_publication_path(@publication)}
+          
+  .span-24
 
-  %div.span-24
-
-    %div.span-22.prepend-1
-      %h2= @publication.name
+    .span-22.prepend-1
+      %h2 #{ @publication.name}
       -if @publication.publisher
         %h4 Published by: #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
       
       / Authority check
       - if @authority_for.size == 0
-        %div.notice
+        .notice
           %h3 Authorized Title
           - if @publication.authority
             %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
@@ -36,13 +37,13 @@
         / Groups
         = render :partial => "shared/groups", :locals => {:count => 10}
 
-        %div#results.span-22
+        #results.span-22
         
           / Search Within
-          %div.span-5
-            %div.left_box{:style => "padding-bottom:1.25em"}
-              %div.box_heading Search Within
-              = form_tag publication_path, :method => :get, :style => "padding-left:0.5em" do
+          .span-5
+            .left_box
+              .box_heading Search Within
+              = form_tag publication_path, :method => :get do
                 = text_field_tag(:q, value = params[:q], {:size => 15})
                 = submit_tag 'Go'
         
@@ -53,10 +54,10 @@
           = render :partial => "shared/works"
 
         / Authority
-        %div#authority.span-22
+        #authority.span-22
           - unless @authority_for.empty?
             %h4
-              =@publication.name
+              #{@publication.name}
               &ndash; authorized name for:
             %table#authority-children
               %thead

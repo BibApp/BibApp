@@ -1,3 +1,4 @@
+- include_stylesheet('specific/works/fields/common')
 -#Add Keywords field, with Auto-Complete
 -# Also adds a list of existing Keywords
 
@@ -15,5 +16,7 @@
     - kw_s << kw.name
 
 = label_tag "keywords", "Keyword(s):"
-%span{:style=>"color:grey"} When adding multiple keywords, separate them with semicolons (;)<br />
+%span.instructions
+  When adding multiple keywords, separate them with semicolons (;)
+  %br
 = text_area_tag "keywords", kw_s, :size => "25x10"

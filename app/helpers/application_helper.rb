@@ -322,4 +322,17 @@ module ApplicationHelper
 =end
     return link_text, base_url, suffix
   end
+
+  #mark stylesheets for inclusion in layout via yield :stylesheets
+  #prevent including the same one more than once
+  def include_stylesheets(*paths)
+    paths.each do |path|
+      new_link = stylesheet_link_tag(path)
+      unless content_for(:stylesheets).include?(new_link)
+        content_for(:stylesheets, new_link + "\n")
+      end
+    end
+  end
+  alias include_stylesheet include_stylesheets
+
 end

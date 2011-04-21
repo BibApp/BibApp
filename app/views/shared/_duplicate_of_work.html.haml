@@ -5,15 +5,16 @@
 -# 
   
 -# Get listing of all possible duplicates from Solr
+- include_stylesheet('specific/shared/_duplicate_of_work')
 - dupes = Index.possible_accepted_duplicates(work)
 
 / Duplicate candidates
 .duplicate_box
   - dupes.each do |dupe|
-    - if dupe['issn_isbn'] != nil
-      %span{:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview", :style=>"float:right;padding:3px;"}
-    %strong=link_to "#{dupe['title']}", work_path(dupe['pk_i'])
-    %h5{:style=>"font-size:0.75em;padding:0;margin:0;color:#999"}=dupe['type']
+    - if dupe['issn_isbn']
+      %span.gbs-thumbnail.gbs-link-to-preview.right.padded {:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}"}
+    %strong #{link_to "#{dupe['title']}", work_path(dupe['pk_i'])}
+    %h5 #{dupe['type']}
     -#display status of a work, if specified
     = render :partial => "shared/work_status", :locals => {:work => dupe}
 
@@ -21,6 +22,6 @@
 
     .links
       -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
-        =link_to "Edit", edit_work_path(dupe['pk_i'], :return_path=>@return_path)
+        #{link_to "Edit", edit_work_path(dupe['pk_i'], :return_path=>@return_path)}
       -if @return_path.nil?
-        =link_to "Edit", edit_work_path(dupe['pk_i'])
+        #{link_to "Edit", edit_work_path(dupe['pk_i'])}

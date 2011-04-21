@@ -1,0 +1,15 @@
+.import-review-batch-header {
+  font-size: 0.75em;
+}
+
+.import-admin-div {
+  padding-bottom: 2em;
+}
+
+.import-review-table th {
+  border-bottom: 1px solid #000;
+}
+
+.import-review-table td {
+  border-top: 1px dotted #CCC;
+}

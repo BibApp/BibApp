@@ -5,19 +5,19 @@
 - if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    #admin-actions.span-24
       %ul#edit-actions
-        %li=link_to "Add a Person", new_person_path
+        %li #{link_to "Add a Person", new_person_path}
 
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     / ### Group / People ###
     - if params[:group_id]
       %h2= @group.name
       = render :partial => "shared/local_nav", :locals => {:object => "group"}
 
     - else
-      %h2="People"
+      %h2 People
 
     - if params[:group_id]
       = render :partial => "shared/alpha_pagination", :locals => {:path => group_people_path(@group.id)}
@@ -27,18 +27,18 @@
     %table#people
       %tr
         %th.span-1
-        %th.span-6="Name"
-        %th.span-12="Recent Publication"
-        %th.span-1.last="Works"
+        %th.span-6 Name
+        %th.span-12 Recent Publication
+        %th.span-1.last Works
       -@current_objects.each do |person|
         %tr{:class => cycle("odd", "even")}
-          %td=link_to image_tag(person.image_url, :class => "person-image", :size => "50x66"), person_path(person)
-          %td=link_to "#{person.display_name}", person_path(person)
+          %td.person-image #{link_to image_tag(person.image_url, :size => "50x66"), person_path(person)}
+          %td #{link_to "#{person.display_name}", person_path(person)}
           - if person.works.length > 0
-            %td=link_to person.works.first.to_s, work_path(person.works.first)
+            %td #{link_to person.works.first.to_s, work_path(person.works.first)}
           - else
             %td
-          %td{:style => "text-align:right;"}=person.works.verified.length
+          %td.text-right #{person.works.verified.length}
 
     %br/
     %br/

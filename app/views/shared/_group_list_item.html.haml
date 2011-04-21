@@ -1,6 +1,6 @@
 - m = Membership.find_by_person_id_and_group_id(@person.id, group_list_item.id)
 - if m and !group_list_item.hide?
-  %li.parent{:style=>"list-style:none;"}
+  %li.parent
     %strong=link_to m.group.name, group_path(m.group)
     - if m.title
       %span

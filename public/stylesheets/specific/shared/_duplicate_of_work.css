@@ -1,0 +1,17 @@
+div.duplicate_box {
+  padding: 0 2em 0 0;
+  width: 40%;
+  float: right;
+}
+
+
+.duplicate_box h5 {
+  font-size: 0.75em;
+  padding: 0;
+  margin: 0;
+  color: #999;
+}
+
+.duplicate_box .padded {
+  padding: 3px;
+}
