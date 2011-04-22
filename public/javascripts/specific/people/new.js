@@ -1,41 +1,34 @@
 var ldap_results = decode_js_data_div('ldap_results')
 
 function populate_person_form(ldap_result_index) {
-  var f = $('new_person');
   var res = ldap_results[ldap_result_index];
 
-  f['person_uid'].value = res.uid;
-  f['person_first_name'].value = res.givenname;
-  f['person_last_name'].value = res.sn;
+  $jq('#person_uid').val(res.uid);
+  $jq('#person_first_name').val(res.givenname);
+  $jq('#person_last_name').val(res.sn);
   if (res.middlename) {
-    f['person_middle_name'].value = res.middlename
+    $jq('#person_middle_name').val(res.middlename)
   }
   if (res.generationqualifier) {
-    f['person_suffix'].value = res.generationqualifier
+    $jq('#person_suffix').val(res.generationqualifier)
   }
   if (res.displayname) {
-    f['person_display_name'].value = res.displayname
+    $jq('#person_display_name').val(res.displayname)
   }
   if (res.postaladdress) {
     var pa = res.postaladdress.replace(/\$/g, "\n")
     pa = pa.replace(/\\N/g, "\n")
-    f['person_postal_address'].value = pa
+    $jq('#person_postal_address').val(pa)
   }
-  //if (res.postaladdress) {
-  //  var aparts = res.postaladdress.split('$');
-  //  f['person_office_address_line_one'].value = aparts[0];
-  //  if (aparts[1]) { f['person_office_address_line_two'].value = aparts[1]; }
-  //}
-
   if (res.mail) {
-    f['person_email'].value = res.mail
+    $jq('#person_email').val(res.mail)
   }
-  if (res.telephonenumber) {
-    f['person_phone'].value = res.telephonenumber
+  if (res.telephone) {
+    $jq('#person_phone').val(res.telephone)
   }
 
   // Jump down to the form
-  Element.scrollTo('personal_info')
+  $jq('html').scrollTop($jq('#' + 'personal_info').position().top)
 }
 
 $jq(function () {
