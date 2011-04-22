@@ -27,8 +27,8 @@
       = yield
       = render :partial => "shared/footer"
 
-    -if $DISPLAY_GOOGLE_ANALYTICS == true
-      %div
-        = render :partial => "shared/google_analytics"
-
+  -if $DISPLAY_GOOGLE_ANALYTICS == true
+    = js_data_div('google-analytics-id', $GOOGLE_ANALYTICS_ID)
+    = javascript_include_tag 'specific/shared/google_analytics'
+     
   = yield :javascripts
