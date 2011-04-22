@@ -1,6 +1,7 @@
 / === Memberships === New ===
 / Main
 - include_stylesheet('specific/memberships/new')
+- include_javascript('specific/memberships/new')
 - @title = "#{@person.display_name}: Group Memberships"
 - if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
@@ -60,7 +61,6 @@
               = form_tag "javascript:void(0)", :method => :get, :name => "memberships_form" do
                 %div
                   #bulk_links
-                    /= check_box_tag "select_contributorships", "yes", false, :onclick=>"select_all(this, 'contrib_id[]');"
                     =button_to_function "Join selected groups", "submit_memberships_form(document.memberships_form, 'group_id[]', '#{create_multiple_memberships_path}')"
 
                     = hidden_field_tag "person_id", @person.id

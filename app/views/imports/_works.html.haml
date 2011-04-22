@@ -1,8 +1,9 @@
 / Sort Form
+- include_javascript('specific/imports/_works')
 .span-13.append-1.last
   = form_tag "#works", :method => :get, :name => "works_form" do
     #bulk_links
-      = check_box_tag "select_works", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
+      = check_box_tag "select_works", "yes", false, :id => 'global-checkbox'
       %strong="Select All"
       |
       =button_to_function "Delete selected works", "submit_delete_form(document.works_form, 'work_id[]', '#{destroy_multiple_works_path}');"
@@ -25,7 +26,7 @@
 
     .span-14= will_paginate @works
 
-    %ol.span-14.works.clear-both
+    %ol#work-list.span-14.works.clear-both
       - @works.each do |work|
         = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work), :allow_select => true, :show_status=>true, :links_array=>[:edit]}
 

@@ -1,42 +1,16 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-/* select_all method
- *
- * Selects/Unselects all checkboxes in a given form on a page.
- * Requires passing in the checkbox field(s).
- *
- * HTML example:
- * <input type="checkbox" name="select_all" value="yes"
- *   onclick="selectAll(this, 'work_id[]');"/>
- *
- * HAML example:
- * = check_box_tag "select_all", "yes", false,
- *        :onclick=>"selectAll(this, 'work_id[]');"
+/*
+  set the checked attribute of anything selected by the dependentCheckboxSelector
+  to be the same as that of the element globalCheckbox
+  Intended to be used to set up callbacks on globalCheckbox
  */
-function select_all(globalField, checkboxName) {
-  /*if global checkbox is selected, then select all checkboxes (and visa versa)*/
-  if (globalField.checked == true) {
-    selected = true;
-  }
-  else {
-    selected = false;
-  }
-
-  var fieldsToSelect = document.getElementsByName(checkboxName);
-
-  /*actually select/unselect all checkboxes */
-  if (fieldsToSelect.length > 0) {
-    for (var i = 0; i < fieldsToSelect.length; i++) {
-      fieldsToSelect[i].checked = selected;
-    }//end for
-  }
-  else {
-    fieldsToSelect.checked = selected;
-  }
-
-}//end select_all
-
+function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
+  $jq(dependentCheckboxSelector).each(function(i, e) {
+    $jq(e).attr('checked', $jq(globalCheckbox).attr('checked'))
+  })
+}
 
 /* submit_delete_form method
  *

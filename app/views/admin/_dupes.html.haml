@@ -1,18 +1,18 @@
 -#
 -# Render List of Duplicate Works with paging & sorting options
 -#
-
-%div#works{:class => "span-17 last"}
+- include_javascript('specific/admin/_dupes')
+#works.span-17.last
   - if @q
     %div
-      %h3="Results (#{@q.total_hits})"
+      %h3 Results (#{@q.total_hits})
 
     / Sort Form
-    %div{:class => "span-15 append-1 last"}
+    .span-15.append-1.last
       = form_tag "#works", :name => "dupes_form", :method => :get do
         #bulk_links
-          = check_box_tag "select_dupes", "yes", false, :onclick=>"select_all(this, 'work_id[]');"
-          %strong="Select All"
+          = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
+          %strong Select All
           |
           %select{:name => "do_to_all"}
             %option{:selected => "selected", :value => "null", :id => "null"} Action
@@ -41,7 +41,7 @@
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
 
-        %ol.span-17.clear-both.no-padding-or-margin
+        %ol#work-list.span-17.clear-both.no-padding-or-margin
           - @works.each do |work|
             = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => [:edit]}
 
