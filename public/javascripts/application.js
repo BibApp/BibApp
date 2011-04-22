@@ -350,17 +350,11 @@ function hide_autocomplete_names(element, update) {
  * list of names associated with a given text element.
  */
 function get_name_list_id(element) {
-  var nameListID = "";
-
   //Check if we are working with authors or editors listing
-  if (element.id == "author_string") {
-    nameListID = "author_name_strings_list";
+  var map = {"author_string" : "author_name_strings_list",
+  "editor_string" : "editor_name_strings_list"
   }
-  else if (element.id == "editor_string") {
-    nameListID = "editor_name_strings_list";
-  }
-
-  return nameListID;
+  return map[element.id]
 }
 
 function decode_js_data_div(div_id) {
