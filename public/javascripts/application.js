@@ -1,77 +1,16 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
-function populate_person_form(ldap_result_index, form) {
-  var f = $(form);
-  var res = ldap_results[ldap_result_index];
-
-  f['person_uid'].value = res.uid;
-  f['person_first_name'].value = res.givenname;
-  f['person_last_name'].value = res.sn;
-  if (res.middlename) { f['person_middle_name'].value = res.middlename }
-  if (res.generationqualifier) { f['person_suffix'].value = res.generationqualifier }
-  if (res.displayname) { f['person_display_name'].value = res.displayname }
-  if (res.postaladdress) {
-    var pa = res.postaladdress.replace(/\$/g, "\n")
-    pa = pa.replace(/\\N/g, "\n")
-    f['person_postal_address'].value = pa
-  }
-  //if (res.postaladdress) {
-  //  var aparts = res.postaladdress.split('$');
-  //  f['person_office_address_line_one'].value = aparts[0];
-  //  if (aparts[1]) { f['person_office_address_line_two'].value = aparts[1]; }
-  //}
-
-  if (res.mail) { f['person_email'].value = res.mail }
-  if (res.telephonenumber) { f['person_phone'].value = res.telephonenumber  }
-
-  // Jump down to the form
-  Element.scrollTo('personal_info')
-}
-
-
-/* select_all method
- *
- * Selects/Unselects all checkboxes in a given form on a page.
- * Requires passing in the checkbox field(s).
- *
- * HTML example:
- * <input type="checkbox" name="select_all" value="yes"
- *   onclick="selectAll(this, 'work_id[]');"/>
- *
- * HAML example:
- * = check_box_tag "select_all", "yes", false,
- *        :onclick=>"selectAll(this, 'work_id[]');"
+/*
+  set the checked attribute of anything selected by the dependentCheckboxSelector
+  to be the same as that of the element globalCheckbox
+  Intended to be used to set up callbacks on globalCheckbox
  */
-function select_all(globalField, checkboxName)
-{
-  /*if global checkbox is selected, then select all checkboxes (and visa versa)*/
-  if(globalField.checked==true)
-  {
-      selected=true;
-  }
-  else
-  {
-      selected=false;
-  }
-
-  var fieldsToSelect = document.getElementsByName(checkboxName);
-
-  /*actually select/unselect all checkboxes */
-  if(fieldsToSelect.length>0)
-  {
-    for(var i=0; i<fieldsToSelect.length; i++)
-    {
-      fieldsToSelect[i].checked=selected;
-    }//end for
-  }
-  else
-  {
-    fieldsToSelect.checked=selected;
-  }
-
-}//end select_all
-
+function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
+  $jq(dependentCheckboxSelector).each(function(i, e) {
+    $jq(e).attr('checked', $jq(globalCheckbox).attr('checked'))
+  })
+}
 
 /* submit_delete_form method
  *
@@ -94,50 +33,40 @@ function select_all(globalField, checkboxName)
  *
  * = hidden_field_tag "authenticity_token", form_authenticity_token
  */
-function submit_delete_form(form, checkboxName, action)
-{
+function submit_delete_form(form, checkboxName, action) {
   var msg = "";
   /*Count the number of selected fields for our confirmation message */
   var count = 0;
   var fields = document.getElementsByName(checkboxName);
 
-  if(fields.length>0)
-  {
-    for(var i=0; i<fields.length; i++)
-    {
-      if(fields[i].checked==true)
-      {
+  if (fields.length > 0) {
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].checked == true) {
         count++;
       }
     }//end for
   }
-  else
-  {
-    if(fields.checked==true)
-    {
+  else {
+    if (fields.checked == true) {
       count++;
     }
   }
 
 
   /* Only continue if we have an item seleted */
-  if(count==0)
-  {
+  if (count == 0) {
     alert("Please select an item to delete.");
     return false;
   }
-  else if(count==1)
-  {
-     msg = "Are you sure you want to permanently delete this item?"
+  else if (count == 1) {
+    msg = "Are you sure you want to permanently delete this item?"
   }
-  else if(count>1)
-  {
+  else if (count > 1) {
     msg = "Are you sure you want to permanently delete the " + count + " selected items?"
   }
 
   /*Confirm before deleting anything*/
-  if(confirm(msg))
-  {
+  if (confirm(msg)) {
     /* Change form's method & action to delete these items */
     form.method = 'POST';
     form.action = action;
@@ -194,43 +123,34 @@ function submit_contributorships_form(form, checkboxName, action, actionName) {
   var count = 0;
   var fields = document.getElementsByName(checkboxName);
 
-  if(fields.length>0)
-  {
-    for(var i=0; i<fields.length; i++)
-    {
-      if(fields[i].checked==true)
-      {
+  if (fields.length > 0) {
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].checked == true) {
         count++;
       }
     }//end for
   }
-  else
-  {
-    if(fields.checked==true)
-    {
+  else {
+    if (fields.checked == true) {
       count++;
     }
   }
 
 
   /* Only continue if we have an item seleted */
-  if(count==0)
-  {
+  if (count == 0) {
     alert("Please select an item to " + actionName + ".");
     return false;
   }
-  else if(count==1)
-  {
-     msg = "Are you sure you want to " + actionName + " this item?"
+  else if (count == 1) {
+    msg = "Are you sure you want to " + actionName + " this item?"
   }
-  else if(count>1)
-  {
+  else if (count > 1) {
     msg = "Are you sure you want to " + actionName + " the " + count + " selected items?"
   }
 
   /*Confirm before processing anything*/
-  if(confirm(msg))
-  {
+  if (confirm(msg)) {
     /* Change form's method & action to process these items */
     form.method = 'POST';
     form.action = action;
@@ -288,42 +208,33 @@ function submit_memberships_form(form, checkboxName, action) {
   var count = 0;
   var fields = document.getElementsByName(checkboxName);
 
-  if(fields.length>0)
-  {
-    for(var i=0; i<fields.length; i++)
-    {
-      if(fields[i].checked==true)
-      {
+  if (fields.length > 0) {
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].checked == true) {
         count++;
       }
     }//end for
   }
-  else
-  {
-    if(fields.checked==true)
-    {
+  else {
+    if (fields.checked == true) {
       count++;
     }
   }
 
   /* Only continue if we have an item seleted */
-  if(count==0)
-  {
+  if (count == 0) {
     alert("Please select a group to join.");
     return false;
   }
-  else if(count==1)
-  {
-     msg = "Are you sure you want to join this group?"
+  else if (count == 1) {
+    msg = "Are you sure you want to join this group?"
   }
-  else if(count>1)
-  {
+  else if (count > 1) {
     msg = "Are you sure you want to join these " + count + " groups?"
   }
 
   /*Confirm before processing anything*/
-  if(confirm(msg))
-  {
+  if (confirm(msg)) {
     /* Change form's method & action to process these items */
     form.method = 'POST';
     form.action = action;
@@ -366,22 +277,20 @@ function submit_memberships_form(form, checkboxName, action) {
  *
  * Customized from Autocompleter.Base code in /javascripts/control.js
  */
-function show_autocomplete_names(element, update)
-{
-  if(!update.style.position || update.style.position=='absolute') {
-          update.style.position = 'absolute';
-          Position.clone(element, update, {
-            setHeight: false,
-            offsetTop: element.offsetHeight
-          });
+function show_autocomplete_names(element, update) {
+  if (!update.style.position || update.style.position == 'absolute') {
+    update.style.position = 'absolute';
+    Position.clone(element, update, {
+      setHeight: false,
+      offsetTop: element.offsetHeight
+    });
   }
-  Effect.Appear(update,{duration:0.15});
+  Effect.Appear(update, {duration:0.15});
 
   /* Start custom BibApp code */
   nameListID = get_name_list_id(element);
 
-  if(nameListID.length>0)
-  {
+  if (nameListID.length > 0) {
     //Get our list our names
     nameList = Element.childElements(nameListID);
 
@@ -389,8 +298,7 @@ function show_autocomplete_names(element, update)
     Sortable.destroy(nameListID);
 
     //Temporarily remove 'movable' class from all list items
-    for(var i=0; i<nameList.length; i++)
-    {
+    for (var i = 0; i < nameList.length; i++) {
       nameList[i].removeClassName('movable');
     }
   }//end if nameListID
@@ -417,21 +325,18 @@ function show_autocomplete_names(element, update)
  *
  * Customized from Autocompleter.Base code in /javascripts/control.js
  */
-function hide_autocomplete_names(element, update)
-{
-  new Effect.Fade(update,{duration:0.15})
+function hide_autocomplete_names(element, update) {
+  new Effect.Fade(update, {duration:0.15})
 
   /* Start custom BibApp code */
   nameListID = get_name_list_id(element);
 
-  if(nameListID.length>0)
-  {
+  if (nameListID.length > 0) {
     //Get our list our names
     nameList = Element.childElements(nameListID);
 
     //re-Add 'movable' class to all list items
-    for(var i=0; i<nameList.length; i++)
-    {
+    for (var i = 0; i < nameList.length; i++) {
       nameList[i].addClassName('movable');
     }
     //Make name list sortable again
@@ -444,36 +349,15 @@ function hide_autocomplete_names(element, update)
  * and hide_autocomplete_names() to get the ID of the
  * list of names associated with a given text element.
  */
-function get_name_list_id(element)
-{
-  var nameListID = "";
-
+function get_name_list_id(element) {
   //Check if we are working with authors or editors listing
-  if(element.id=="author_string")
-  {
-    nameListID = "author_name_strings_list";
-  }
-  else if(element.id=="editor_string")
-  {
-    nameListID = "editor_name_strings_list";
-  }
-
-  return nameListID;
+  return element.id.replace('string', 'name_strings_list')
 }
 
-/* functions for works views */
-function check_all_orphans() {
-  $$('.orphan_checkbox').each(
-          function (box) {
-            box.checked = 1
-          }
-          )
-}
-
-function uncheck_all_orphans () {
-  $$('.orphan_checkbox').each(
-          function(box) {
-              box.checked = 0
-          }
-          )
+function decode_js_data_div(div_id) {
+  div = $jq('#' + div_id)
+  if(div)
+    return $jq.parseJSON(div.text());
+  else
+    return null;
 }

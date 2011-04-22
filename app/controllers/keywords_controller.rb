@@ -97,13 +97,6 @@ class KeywordsController < ApplicationController
       @year_keywords << ydata unless ydata.tags.blank?
     end
 
-
-
-#    @all_tags = @year_tags.collect do |yeardata|
-#      yeardata.tags.collect {|t|
-#        t.name
-#      }
-#    end.flatten.uniq.sort
   end
   
 end

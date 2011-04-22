@@ -1,4 +1,5 @@
 - include_stylesheet('specific/shared/_keyword_cloud')
+- include_javascript('specific/shared/_keyword_cloud')
 
 #tagcloud.right_box_no_border.span-7
   %h3 Popular research topics
@@ -23,15 +24,3 @@
 
     #darkBackgroundLayer.darkenBackground{:name=>"darkBackgroundLayer", :style=>"display:none;"}
     %img#spinner.highZ{:src=>"/images/ajax-loader.gif", :style=>"display:none;"}
-
-    %script{:type=>"text/javascript"}
-      :plain
-        <!--
-        document.getElementsByName("darkBackgroundLayer")[0].style.display = "none";
-        document.getElementById("spinner").style.display = "none";
-        function go_dim () {
-          document.getElementsByName("darkBackgroundLayer")[0].style.display = "";
-          document.getElementById("spinner").style.display = "";
-          return;
-        }
-        // -->

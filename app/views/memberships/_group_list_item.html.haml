@@ -6,15 +6,12 @@
         - if group_list_item.children.empty?
           &nbsp;&nbsp;
         - else
-          - if @query.blank?
-            = link_to "+", "javascript:void(0)", {:onclick => "toggle_folder(#{group_list_item.id});", :id => "toggle_switch_#{group_list_item.id}"}
-          - else
-            = link_to "&ndash;", "javascript:void(0)", {:onclick => "toggle_folder(#{group_list_item.id});", :id => "toggle_switch_#{group_list_item.id}"}
+          %a.toggle-switch{:'data-item-id' => group_list_item.id, :href => 'javascript:void(0)'} #{@query.blank? ? '+' : '-'}
         - parent_id = group_list_item.parent.nil? ? nil : group_list_item.parent.id
         - if @person.groups.include?(group_list_item)
           = check_box_tag "group_id[].ignore", "#{group_list_item.id}", true, {:disabled => true}
         - else
-          = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:onclick => "if (this.checked == true) check_parent(#{parent_id});"}
+          = check_box_tag "group_id[]", "#{group_list_item.id}", false, {:'data-parent-id' => parent_id, :class => 'group-checkbox'}
         = group_list_item.name
 
       - unless group_list_item.children.empty?

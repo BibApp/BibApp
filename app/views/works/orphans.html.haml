@@ -1,10 +1,11 @@
+-include_javascript('specific/works/orphans')
 %h3 Orphaned works:
 = will_paginate(@orphans)
 = form_for :orphan_delete, :url => orphans_delete_works_url(:page => params[:page], :per_page => params[:per_page]) do |f|
   %fieldset
     %p
-      = button_to_function('Check all', 'check_all_orphans()')
-      = button_to_function('Uncheck all', 'uncheck_all_orphans()')
+      %input#check-all{:type => 'button', :value => 'Check all'}
+      %input#uncheck-all{:type => 'button', :value => 'Uncheck all'}
     %ol#orphan-list.works
     - @orphans.each do |orphan|
       %li.work

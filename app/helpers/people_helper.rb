@@ -16,7 +16,4 @@ module PeopleHelper
     ar.size > 0 ? "(#{ar.join(', ')})" : ""
   end
   
-  def populate_form_link(index, form_name)
-    button_to_function "Select", "populate_person_form(#{index}, '#{form_name}')"
-  end
 end
