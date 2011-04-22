@@ -351,10 +351,7 @@ function hide_autocomplete_names(element, update) {
  */
 function get_name_list_id(element) {
   //Check if we are working with authors or editors listing
-  var map = {"author_string" : "author_name_strings_list",
-  "editor_string" : "editor_name_strings_list"
-  }
-  return map[element.id]
+  return element.id.replace('string', 'name_strings_list')
 }
 
 function decode_js_data_div(div_id) {
