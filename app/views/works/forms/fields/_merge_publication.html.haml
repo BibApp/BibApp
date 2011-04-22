@@ -1,3 +1,4 @@
+- include_javascript('specific/works/forms/fields/_merge_publication')
 %td.duplicate
   = label_tag 'dupe_publication', "Periodical Title:"
   %br/
@@ -5,19 +6,7 @@
   = text_field_tag 'dupe_publication', publication.name, {:class => 'text', :readonly => 'readonly'}
 %td
   -# Publication field with Auto-Complete.
-  -# Also includes some special Javascript
-  -# to parse Publisher Name and ISSN/ISBN out
-  -# of the 'id', where they are separated by '~~'
-  -# (See publication_autocomplete_list partial template)
-  %script{ 'type' => "text/javascript" }
-    function populatePubFields(textbox, listitem) {
-    var my_array = listitem.id.split('~~');
-    var publisher = my_array[0];
-    var issn_isbn = my_array[1];
-    document.getElementById('publisher_name').value = publisher;
-    document.getElementById('issn_isbn').value = issn_isbn;
-    }
-
+  -# Also includes some special Javascript - c.f. included javascript file
   = label :publication, :name, "Periodical Title:"
   %br/
   - @publication = @work.publication unless @work.publication.nil?
