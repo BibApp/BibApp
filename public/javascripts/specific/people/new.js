@@ -1,6 +1,5 @@
-var ldap_results = decode_js_data_div('ldap_results')
-
 function populate_person_form(ldap_result_index) {
+  var ldap_results = decode_js_data_div('ldap_results')
   var res = ldap_results[ldap_result_index];
 
   $jq('#person_uid').val(res.uid);
