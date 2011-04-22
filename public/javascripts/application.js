@@ -428,23 +428,6 @@ function get_name_list_id(element) {
   return nameListID;
 }
 
-/* functions for works views */
-function check_all_orphans() {
-  $$('.orphan_checkbox').each(
-      function (box) {
-        box.checked = 1
-      }
-      )
-}
-
-function uncheck_all_orphans() {
-  $$('.orphan_checkbox').each(
-      function(box) {
-        box.checked = 0
-      }
-      )
-}
-
 function decode_js_data_div(div_id) {
   if ($(div_id))
     return $(div_id).innerHTML.unescapeHTML().evalJSON(true);
