@@ -1,4 +1,4 @@
-
+- include_javascript('specific/publications/authorities')
 - if logged_in? && current_user.has_any_role?("editor", "Group")
   - content_for :admin_bar do
     / #### Admin Actions ###
@@ -38,26 +38,3 @@
     %br/
     = render :partial => "shared/alpha_pagination"
     
-:javascript
-  // Highlight selected authority candidates 
-  function highlight_candidates() {
-  
-    // Find all authority candidates 
-    auth_opts = $$('tr.authority_option');
-    auth_opts.each(function(tr){
-      select = new String();
-      select = "publication_" + tr.id;
-      
-      // If candidate row is listed on current page, "highlight" the row
-      if ($(select)) {
-        $(select).removeClassName("even");
-        $(select).removeClassName("odd");
-        $(select).addClassName("selected");
-      }
-    })
-  }
-  
-  // On Document load
-  document.observe("dom:loaded", function() {
-    highlight_candidates();
-  });
