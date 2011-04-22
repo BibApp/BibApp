@@ -1,7 +1,6 @@
 / === Memberships === New ===
 / Main
 - include_stylesheet('specific/memberships/new')
-- include_javascript('specific/memberships/new')
 - @title = "#{@person.display_name}: Group Memberships"
 - if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
