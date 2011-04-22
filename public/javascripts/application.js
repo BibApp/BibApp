@@ -445,7 +445,7 @@ function uncheck_all_orphans() {
       )
 }
 
-function decode_div_data(div_id) {
+function decode_js_data_div(div_id) {
   if ($(div_id))
     return $(div_id).innerHTML.unescapeHTML().evalJSON(true);
   else

@@ -1,7 +1,7 @@
 var year_index = 0;
-var year_tags = decode_div_data('year-tags')
-var charts = decode_div_data('chart-urls')
-var work_counts = decode_div_data('work-counts')
+var year_tags = decode_js_data_div('year-tags')
+var charts = decode_js_data_div('chart-urls')
+var work_counts = decode_js_data_div('work-counts')
 
 function show_list(year) {
   var items = $('timeline-tagcloud').getElementsByTagName('ul');

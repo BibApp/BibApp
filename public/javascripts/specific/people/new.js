@@ -1,1 +1,1 @@
-var ldap_results = decode_div_data('ldap_results')
+var ldap_results = decode_js_data_div('ldap_results')
