@@ -2,17 +2,17 @@
 - if logged_in? && current_user.has_any_role?("editor", "Group")
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    #admin-actions.span-24
       %ul#edit-actions
-        %li=link_to "Add a Publication", new_publication_path
+        %li #{link_to "Add a Publication", new_publication_path}
 
-%div{:class => "column span-24"}
-  %div{:class => "column span-22 prepend-1"}
-    %h2="Admin Publication Authorities"
+.span-24.column
+  .span-22.prepend-1.column
+    %h2 Admin Publication Authorities
 
-    %div#authority_form
+    #authority_form
       %p To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.
-      =render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
+      = render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
 
     = render :partial => "shared/alpha_pagination"
           
@@ -26,13 +26,12 @@
           %td Works
       %tbody
         -@current_objects.each do |publication|
-          %tr.publication{:id => "publication_#{publication.id}", :class => cycle("odd", "even")}
-            %td=link_to 'add', add_to_box_publications_url(:new_pa => publication.id, :page => @page)
-            -#link_to 'add', authorities_publications_path(:new_pa => publication.id)
-            %td=publication.issn_isbn
-            %td=link_to "#{publication.authority.name}", publication_path(publication)
-            %td=link_to "#{publication.publisher.authority.name}", publisher_path(publication.publisher)
-            %td=publication.works.size
+          %tr#publication.publication{:id => publication.id, :class => cycle("odd", "even")}
+            %td #{link_to 'add', add_to_box_publications_url(:new_pa => publication.id, :page => @page)}
+            %td #{publication.issn_isbn}
+            %td #{link_to publication.authority.name, publication_path(publication)}
+            %td #{link_to publication.publisher.authority.name, publisher_path(publication.publisher)}
+            %td #{publication.works.size}
 
     %br/
     %br/
