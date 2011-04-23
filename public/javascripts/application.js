@@ -12,6 +12,7 @@ function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
   })
 }
 
+/* Used in admin/_dupes, import/works, works/review_batch */
 /* submit_delete_form method
  *
  * First, verifies that a given checkbox field (specified
@@ -86,7 +87,9 @@ function submit_delete_form(form, checkboxName, action) {
 
 
 
-
+/* Used only in memberships/new */
+/* Again, would make more sense to just have the form set up to submit where it should go rather than fool with
+this javascript stuff - just use that for preverification */
 /**
  * submit_memberships_form
  *
