@@ -28,7 +28,7 @@
           = check_box_tag "select_contributorships", "yes", false, :id => 'global-checkbox'
           %strong Select All
           |
-          %select{:name => "do_to_all"}
+          %select#action-select{:name => "do_to_all"}
             %option{:selected => "selected", :value => "null", :id => "null"} Action
             - if @status != "verified"
               %option{:value => "verify", :id => "verify"} Verify
