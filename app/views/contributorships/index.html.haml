@@ -23,25 +23,22 @@
 
     / Sort Form
     .span-13.append-1.last
-      = form_tag "#", :method => :get, :name => "contributorships_form" do
+      = form_tag act_on_multiple_contributorships_url, :method => :put, :name => "contributorships_form", :id => "contributorships_form" do
         #bulk_links
           = check_box_tag "select_contributorships", "yes", false, :id => 'global-checkbox'
           %strong Select All
           |
           %select{:name => "do_to_all"}
             %option{:selected => "selected", :value => "null", :id => "null"} Action
-            - if @status == "verified"
-              %option{:value => "#{unverify_multiple_contributorships_path}", :id => "unverify"} Unverify
-              %option{:value => "#{deny_multiple_contributorships_path}", :id => "deny"} Deny
-            - if @status == "unverified"
-              %option{:value => "#{verify_multiple_contributorships_path}", :id => "verify"} Verify
-              %option{:value => "#{deny_multiple_contributorships_path}", :id => "deny"} Deny
-            - if @status == "denied"
-              %option{:value => "#{unverify_multiple_contributorships_path}", :id => "unverify"} Undeny
-              %option{:value => "#{verify_multiple_contributorships_path}", :id => "verify"} Verify
+            - if @status != "verified"
+              %option{:value => "verify", :id => "verify"} Verify
+            - if @status != 'unverified'
+              %option{:value => "unverify", :id => "unverify"} Unverify
+            - if @status != 'denied'
+              %option{:value => "deny", :id => "deny"} Deny
           |
-          =button_to_function "Apply to selection", "sel=document.contributorships_form.do_to_all;submit_contributorships_form(document.contributorships_form, 'contrib_id[]', sel.options[sel.options.selectedIndex].value, sel.options[sel.options.selectedIndex].id)"
-
+          =submit_tag "Apply to selection", :id => 'contributorships-submit'
+          
         #sort-by
           %label Show:
           %select{:name => "rows"}

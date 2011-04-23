@@ -85,6 +85,13 @@ function submit_delete_form(form, checkboxName, action) {
 }//end submit_delete_form
 
 
+/*
+TODO: IMHO a very odd way to do this.
+Simpler to have a single action act_on_multiple that gets the action as an additional parameter
+which the controller action then uses to dispatch some of the work as appropriate.
+Especially true since the three controller actions are already quite similar.
+Then there's also no need to fool around with the form's information.
+*/
 /**
  * submit_contributorships_form
  *
