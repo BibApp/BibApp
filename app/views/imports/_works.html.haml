@@ -23,7 +23,7 @@
       = check_box_tag "select_works", "yes", false, :id => 'global-checkbox'
       %strong="Select All"
       |
-      =submit "Delete selected works"
+      =submit_tag "Delete selected works"
       
     .span-14= will_paginate @works
 
