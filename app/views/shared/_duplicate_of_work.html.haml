@@ -12,7 +12,7 @@
 .duplicate_box
   - dupes.each do |dupe|
     - if dupe['issn_isbn']
-      %span.gbs-thumbnail.gbs-link-to-preview.right.padded {:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}"}
+      %span.gbs-thumbnail.gbs-link-to-preview.right.padded{:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}"}
     %strong #{link_to "#{dupe['title']}", work_path(dupe['pk_i'])}
     %h5 #{dupe['type']}
     -#display status of a work, if specified
