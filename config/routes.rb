@@ -104,9 +104,7 @@ Bibapp::Application.routes.draw do
     collection do
       get :admin
       get :archivable
-      put :verify_multiple
-      put :unverify_multiple
-      put :deny_multiple
+      put :act_on_multiple
     end
 
     member do
