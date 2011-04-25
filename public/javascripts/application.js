@@ -12,6 +12,26 @@ function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
   })
 }
 
+/* this is for attaching to a form before submission. It figures out how many of the
+  checkboxes selected by the selector are checked and displays a
+  confirmation message and affects form submission depending on that.
+ */
+function confirm_delete_for_items_selected_by(checkbox_selector) {
+  var selected = $jq(checkbox_selector);
+  var count = selected.length;
+  if (count == 0) {
+    alert('Please select an item to delete.');
+    return false;
+  }
+  var msg = "Are you sure you want to permanently delete ";
+  if (count == 1) {
+    msg = msg + "this item?";
+  } else {
+    msg = msg + "these " + count + " items?";
+  }
+  return confirm(msg);
+}
+
 /* Used in admin/_dupes, import/works, works/review_batch */
 /* submit_delete_form method
  *
@@ -34,6 +54,8 @@ function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
  *
  * = hidden_field_tag "authenticity_token", form_authenticity_token
  */
+
+
 function submit_delete_form(form, checkboxName, action) {
   var msg = "";
   /*Count the number of selected fields for our confirmation message */
