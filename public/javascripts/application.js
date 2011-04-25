@@ -182,7 +182,6 @@ function hide_autocomplete_names(element, update) {
  * list of names associated with a given text element.
  */
 function get_name_list_id(element) {
-  //Check if we are working with authors or editors listing
   return element.id.replace('string', 'name_strings_list')
 }
 
