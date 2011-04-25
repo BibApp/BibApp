@@ -14,13 +14,7 @@
 
       / Sort Form
       .span-13.append-1.last
-        = form_tag "#works", :method => :get, :name => "works_form" do
-          #bulk_links
-            = check_box_tag "select_works", "yes", false, :id => 'global-checkbox'
-            %strong="Select All"
-            |
-            =button_to_function "Delete selected works", "submit_delete_form(document.works_form, 'work_id[]', '#{destroy_multiple_works_path}');"
-            
+        = form_tag "#works", :method => :get, :name => "works_form_show_rows" do
           #sort-by
             %label Show:
             %select{:name => "rows"}
@@ -29,14 +23,21 @@
                   %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
                 - else
                   %option{:value => "#{opt}"}= opt.titleize
-            
+
             - @page = 1 if @page == 0
             = hidden_field_tag "return_path", @return_path
             -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
             = hidden_field_tag "authenticity_token", form_authenticity_token
 
             = submit_tag 'Go'
-      
+
+        = form_tag destroy_multiple_works_url, :method => :delete, :name => "works_form", :id => 'works_form' do
+          #bulk_links
+            = check_box_tag "select_works", "yes", false, :id => 'global-checkbox'
+            %strong="Select All"
+            |
+            = submit_tag "Delete selected works"
+
           %div.span-14= will_paginate @works
 
           %ol#work-list.span-14.works.clear-both
