@@ -3,7 +3,7 @@ $jq(function () {
     jq_select_all(this, '#work-list input');
   });
   $jq('#works_form').submit(function () {
-    confirm_delete_for_items_selected_by('#work-list input')
+    return confirm_delete_for_items_selected_by('#work-list input');
   })
 }
     )
