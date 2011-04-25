@@ -39,7 +39,7 @@
   -#Display the work
   %div{:class => the_class}
     - if work['issn_isbn'] != nil && work['issn_isbn'].length > 9
-      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN:#{work['issn_isbn'].gsub(" ", "")}"}
+      %span.gbs-thumbnail.gbs-link-to-preview.work-preview(title="ISBN:#{work['issn_isbn'].gsub(" ", "")}")
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
     %h5.work-type #{work['type']}
     -#display status of a work, if specified
