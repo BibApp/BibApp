@@ -85,11 +85,14 @@ function submit_delete_form(form, checkboxName, action) {
   return false;
 }//end submit_delete_form
 
-
-
 /* Used only in memberships/new */
 /* Again, would make more sense to just have the form set up to submit where it should go rather than fool with
 this javascript stuff - just use that for preverification */
+/*
+TODO kill this off like the one for contributorships. Make a simple form that puts/posts
+where it really wants to and add some client side js to verify before submitting. No
+reason to do all the fancy stuff with javascript.
+ */
 /**
  * submit_memberships_form
  *
