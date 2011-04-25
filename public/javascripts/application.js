@@ -32,7 +32,7 @@ function confirm_delete_for_items_selected_by(checkbox_selector) {
   return confirm(msg);
 }
 
-/* Used in admin/_dupes, import/_works, works/review_batch */
+/* Used in admin/_dupes,  */
 /* submit_delete_form method
  *
  * First, verifies that a given checkbox field (specified
