@@ -29,7 +29,7 @@
 
           = submit_tag 'Go'
 
-      = form_tag destroy_mulitple_works_url, :name => "dupes_form", :method => :delete, :id => "dupes_form" do
+      = form_tag destroy_multiple_works_url, :name => "dupes_form", :method => :delete, :id => "dupes_form" do
         #bulk_links
           = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
           %strong Select All
