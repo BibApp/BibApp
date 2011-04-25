@@ -166,12 +166,18 @@ class MembershipsController < ApplicationController
 
   def destroy
     #'editor' of person or group can destroy a membership
-    permit "editor of person or group"
-
+    permit "editor of Person or editor of Group"
+    @membership = Membership.find(params[:id])
     @membership.destroy if @membership
     respond_to do |format|
       format.js { render :action => :regen_lists }
-      format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
+      format.html do
+        if @membership
+          redirect_to new_person_membership_path(:person_id => @membership.person.id)
+        else
+          redirect_to root_url
+        end
+      end
     end
 
   end

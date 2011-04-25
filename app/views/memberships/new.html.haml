@@ -48,7 +48,6 @@
               new_membership_url(:person_id => @person.id, :status => 'non_member'))
 
         - if @status == "non_member"
-          / Sort Form
           .span-15.append-1.last
             - if defined?(@query)
               %h3
@@ -58,10 +57,10 @@
             - if @groups.length < 1
               %p No groups found
             - else
-              = form_tag "javascript:void(0)", :method => :get, :name => "memberships_form" do
+              = form_tag create_multiple_memberships_url, :method => :put, :name => "memberships_form", :id => "memberships_form" do
                 %div
                   #bulk_links
-                    =button_to_function "Join selected groups", "submit_memberships_form(document.memberships_form, 'group_id[]', '#{create_multiple_memberships_path}')"
+                    = submit_tag "Join selected groups"
 
                     = hidden_field_tag "person_id", @person.id
                     = hidden_field_tag "status", @status
