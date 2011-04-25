@@ -34,7 +34,7 @@
           = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
           %strong Select All
 
-          = button_to_function "Delete selected"
+          = submit_tag "Delete selected"
           = hidden_field_tag "q", @query
           = hidden_field_tag "fq", @filter_no_strip
           = hidden_field_tag "view", "all"
