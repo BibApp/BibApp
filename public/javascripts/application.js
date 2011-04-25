@@ -12,6 +12,7 @@ function jq_select_all(globalCheckbox, dependentCheckboxSelector) {
   })
 }
 
+/* Used in admin/_dupes, import/works, works/review_batch */
 /* submit_delete_form method
  *
  * First, verifies that a given checkbox field (specified
@@ -84,92 +85,14 @@ function submit_delete_form(form, checkboxName, action) {
   return false;
 }//end submit_delete_form
 
-
-/**
- * submit_contributorships_form
- *
- * Calls either:
- *    /contributorships/verify_multiple,
- *    /contributorships/unverify_multiple, or
- *    /contributorships/deny_multiple
- * depending on the value of the 'action' parameter.
- *
- *  @form         = the form
- *  @checkboxName = name of the checkbox
- *  @action       = form action (e.g., '/contributorships/verify_multiple')
- *  @actionName   = name of the action (e.g., 'verify')
- *
- * HAML example:
- * = link_to_function "Verify everything selected",
- *        "submit_contributorship_form(document.works_form,
- *                            'contrib_id[]',
- *                            '#{verify_multiple_contributorships_path}',
- *                            'verify')"
- *
- * NOTE: Your form *MUST* also include the following hidden input,
- * or else RAILS will think this is a fraudelent request!
- *
- * = hidden_field_tag "authenticity_token", form_authenticity_token
+/* Used only in memberships/new */
+/* Again, would make more sense to just have the form set up to submit where it should go rather than fool with
+this javascript stuff - just use that for preverification */
+/*
+TODO kill this off like the one for contributorships. Make a simple form that puts/posts
+where it really wants to and add some client side js to verify before submitting. No
+reason to do all the fancy stuff with javascript.
  */
-function submit_contributorships_form(form, checkboxName, action, actionName) {
-
-  if (action == "null") {
-    alert("No action selected");
-    return false;
-  }
-
-  var msg = "";
-  /*Count the number of selected fields for our confirmation message */
-  var count = 0;
-  var fields = document.getElementsByName(checkboxName);
-
-  if (fields.length > 0) {
-    for (var i = 0; i < fields.length; i++) {
-      if (fields[i].checked == true) {
-        count++;
-      }
-    }//end for
-  }
-  else {
-    if (fields.checked == true) {
-      count++;
-    }
-  }
-
-
-  /* Only continue if we have an item seleted */
-  if (count == 0) {
-    alert("Please select an item to " + actionName + ".");
-    return false;
-  }
-  else if (count == 1) {
-    msg = "Are you sure you want to " + actionName + " this item?"
-  }
-  else if (count > 1) {
-    msg = "Are you sure you want to " + actionName + " the " + count + " selected items?"
-  }
-
-  /*Confirm before processing anything*/
-  if (confirm(msg)) {
-    /* Change form's method & action to process these items */
-    form.method = 'POST';
-    form.action = action;
-
-    /* In Rails, the PUT method is specified via a hidden input named "_method" */
-    var hiddenMethod = document.createElement('input');
-    hiddenMethod.setAttribute('type', 'hidden');
-    hiddenMethod.setAttribute('name', '_method');
-    hiddenMethod.setAttribute('value', 'put');
-    form.appendChild(hiddenMethod);
-
-    /* Finally, submit our form to process the items! */
-    form.submit();
-
-  }
-  return false;
-}//end submit_contributorships_form
-
-
 /**
  * submit_memberships_form
  *

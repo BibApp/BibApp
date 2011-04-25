@@ -16,7 +16,7 @@ class ContributorshipsController < ApplicationController
         @status = 'unverified' unless ['unverified', 'verified', 'denied'].member?(@status.to_s)
 
         @contributorships = @person.contributorships.send(@status).includes(:work).
-            order('works.publication_date desc').paginate(:page => @page,:per_page => @rows)
+            order('works.publication_date desc').paginate(:page => @page, :per_page => @rows)
       else
         render :status => 404
       end
@@ -28,127 +28,12 @@ class ContributorshipsController < ApplicationController
     true
   end
 
-  def verify_multiple
-    # Anyone who is minimally an admin (on anything in system) can verify
-    # contributorships
-    #permit "admin"
-
-    contrib_ids = params[:contrib_id]
-    full_success = true
-
-    unless contrib_ids.blank?
-      #Destroy each work one by one, so we can be sure user has 'admin' rights on all
-      contrib_ids.each do |contrib_id|
-        contributorship = Contributorship.find(contrib_id)
-
-        #One final check...only an admin on this contributorship can verify it
-#        if logged_in? && current_user.has_role?("admin", contributorship)
-#          contributorship.verify_contributorship
-#        else
-#          full_success = false
-#        end
-        contributorship.verify_contributorship
-      end
+  def act_on_multiple
+    action = params[:do_to_all]
+    if ['verify', 'unverify', 'deny'].include?(action)
+      self.send(:"#{action}_multiple") and return
     end
-
-    #Return path for any actions that take place on the contributorships page
-    return_path = contributorships_path(:person_id=>params[:person_id],
-        :status=>params[:status])
-
-    respond_to do |format|
-      if full_success
-        flash[:notice] = "Contributorships were successfully verified."
-      else
-        flash[:warning] = "One or more contributorships could not be verified; you have insufficient privileges"
-      end
-      #forward back to path which was specified in params
-      format.html { redirect_to return_path }
-      format.xml { head :ok }
-    end
-  end
-
-  def unverify_multiple
-    #Anyone who is minimally an admin (on anything in system) can unverify
-    #       contributorships
-    #permit "admin"
-
-    contrib_ids = params[:contrib_id]
-
-    full_success = true
-
-    unless contrib_ids.blank?
-      #Destroy each work one by one, so we can be sure user has 'admin' rights on all
-      contrib_ids.each do |contrib_id|
-        contributorship = Contributorship.find(contrib_id)
-
-        #One final check...only an admin on this contributorship can verify it
-#        if logged_in? && current_user.has_role?("admin", contributorship)
-#          contributorship.unverify_contributorship
-#          contributorship.save
-#        else
-#          full_success = false
-#        end
-        contributorship.unverify_contributorship
-        contributorship.save
-      end
-    end
-
-    #Return path for any actions that take place on the contributorships page
-    return_path = contributorships_path(:person_id=>params[:person_id],
-        :status=>params[:status])
-
-    respond_to do |format|
-      if full_success
-        flash[:notice] = "Contributorships were successfully unverified."
-      else
-        flash[:warning] = "One or more contributorships could not be unverified; you have insufficient privileges"
-      end
-      #forward back to path which was specified in params
-      format.html { redirect_to return_path }
-      format.xml { head :ok }
-    end
-  end
-
-  def deny_multiple
-    #Anyone who is minimally an admin (on anything in system) can verify
-    #       contributorships
-    #permit "admin"
-
-    contrib_ids = params[:contrib_id]
-
-    full_success = true
-
-    unless contrib_ids.blank?
-      #Destroy each work one by one, so we can be sure user has 'admin' rights on all
-      contrib_ids.each do |contrib_id|
-        contributorship = Contributorship.find(contrib_id)
-
-        #One final check...only an admin on this contributorship can verify it
-#        if logged_in? && current_user.has_role?("admin", contributorship)
-#          contributorship.deny_contributorship
-#          contributorship.save
-#        else
-#          full_success = false
-#        end
-        contributorship.deny_contributorship
-        contributorship.save
-      end
-    end
-
-    #Return path for any actions that take place on the contributorships page
-    return_path = contributorships_path(:person_id=>params[:person_id],
-        :status=>params[:status])
-
-    respond_to do |format|
-      if full_success
-        flash[:notice] = "Contributorships were successfully denied."
-      else
-        flash[:warning] = "One or more contributorships could not be denied; you have insufficient privileges"
-      end
-      #forward back to path which was specified in params
-      format.html { redirect_to return_path }
-      format.xml { head :ok }
-    end
+    redirect_to contributorships_path(:person_id=>params[:person_id], :status=>params[:status]) 
   end
 
   def verify
@@ -228,6 +113,33 @@ class ContributorshipsController < ApplicationController
         joins({:work => [:publisher, :publication]}, :person).
         group("publications.name, publishers.name, publishers.romeo_color, publishers.publisher_copy").
         order("count(contributorships.id) desc")
+  end
+
+  protected
+
+  def act_on_many(action, flash_action)
+    Contributorship.find(params[:contrib_id]).each do |contributorship|
+      contributorship.send(action)
+      contributorship.save
+    end
+    respond_to do |format|
+      flash[:notice] = "Contributorships were successfully #{flash_action}."
+      #forward back to path which was specified in params
+      format.html { redirect_to contributorships_path(:person_id=>params[:person_id], :status=>params[:status]) }
+      format.xml { head :ok }
+    end
+  end
+
+  def verify_multiple
+    act_on_many(:verify_contributorship, 'verified')
+  end
+
+  def unverify_multiple
+    act_on_many(:unverify_contributorship, 'unverified')
+  end
+
+  def deny_multiple
+    act_on_many(:deny_contributorship, 'denied')
   end
 
 end
