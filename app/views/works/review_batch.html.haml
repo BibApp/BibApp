@@ -37,6 +37,7 @@
             %strong="Select All"
             |
             = submit_tag "Delete selected works"
+            = hidden_field_tag "return_path", @return_path
 
           %div.span-14= will_paginate @works
 
