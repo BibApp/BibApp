@@ -61,9 +61,6 @@ class WorksController < ApplicationController
       #initialize work subclass with any passed in work info
       @work = subklass_init(params[:klass], params[:work])
 
-      #check if there was a batch created previously
-      # (if so, we'll provide a link to review that batch)
-      #@last_batch = find_last_batch
     end
 
     before :show do
@@ -216,36 +213,6 @@ class WorksController < ApplicationController
     permit "editor on work"
     @dupe = Work.find(params[:dupe_id])
   end
-
-  # Generates a form which allows individuals to review the citations
-  # that were just bulk loaded *before* they make it into the system.
-  def review_batch
-    @page = params[:page] || 1
-    @rows = params[:rows] || 10
-
-    #load last batch from session
-    @work_batch = find_last_batch
-
-    @dupe_count = 0
-
-    #As long as we have a batch of works to review, paginate them
-    if !@work_batch.nil? and !@work_batch.empty?
-
-      #determine number of duplicates in batch
-      @work_batch.each do |work_id|
-        work = Work.find(work_id)
-        @dupe_count+=1 if !work.nil? and work.duplicate?
-      end
-
-      @works = Work.where("id in (?)", @work_batch).paginate(:page => @page, :per_page => @rows)
-
-    end
-
-    #Return path for any actions that take place on 'Review Batch' page
-    @return_path = review_batch_works_path(:page=>@page, :rows=>@rows)
-
-  end
-
 
   def update
 
