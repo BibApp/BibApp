@@ -32,10 +32,6 @@
       %fieldset.span-15
         %legend Batch Import (RIS | Medline | Refworks XML)
 
-        - if @last_batch.present?
-          %p
-            %strong=link_to "Review your previously added Batch", review_batch_works_path
-
         %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
 
         %ul
