@@ -32,7 +32,7 @@
       %fieldset.span-15
         %legend Batch Import (RIS | Medline | Refworks XML)
 
-        - unless @last_batch.nil? or @last_batch.empty?
+        - if @last_batch.present?
           %p
             %strong=link_to "Review your previously added Batch", review_batch_works_path
 
