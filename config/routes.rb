@@ -8,7 +8,6 @@ Bibapp::Application.routes.draw do
       get :auto_complete_for_publication_name
       get :auto_complete_for_publisher_name
       get :auto_complete_for_tag_name
-      get :review_batch
       get :orphans
       delete :destroy_multiple
       #Following support legacy RJS stuff
