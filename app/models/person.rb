@@ -37,9 +37,7 @@ class Person < ActiveRecord::Base
     # Find or create
     names = make_variant_names.uniq
     names.each do |v|
-      unless ns = NameString.find_by_machine_name(v[:machine_name])
-        ns = NameString.create(v)
-      end
+      ns = NameString.find_or_create_by_machine_name(v)
       self.name_strings << ns unless self.name_strings.include?(ns)
     end
   end
