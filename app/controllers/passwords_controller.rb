@@ -13,12 +13,12 @@ class PasswordsController < ApplicationController
       if user = User.find_by_email(params[:email])
         @new_password = random_password
         user.password = user.password_confirmation = @new_password
-        user.save_without_validation
+        user.save
         UserMailer.new_password(user, @new_password).deliver
 
         format.html do
           flash[:notice] = "We sent a new password to #{params[:email]}"
-          redirect_to login_path
+          redirect_to logged_in? ? root_url : login_url
         end
       else
         flash[:notice] = "Sorry, we cannot find that account.  Try again."
