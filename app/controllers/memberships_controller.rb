@@ -198,9 +198,9 @@ class MembershipsController < ApplicationController
 
   def update
     membership = Membership.find(params[:id])
+    fix_date_parameters
     membership.update_attributes(params[:membership])
     @person = membership.person
-
     render :partial => 'group', :collection => @person.groups(true)
 
   end
@@ -231,4 +231,21 @@ class MembershipsController < ApplicationController
   def find_membership
     @membership = Membership.find_by_person_id_and_group_id(params[:person_id],params[:group_id])
   end
+
+  #for the membership update we're having problems when a non-nil date is updated to be
+  #blank, which appears to be caused by how Rails handles date through the date-select
+  #helper and subsequent model side processing. This is to fix that. If a year field
+  #is blank, we delete all of the partial fields and replace with a whole field set
+  #to nil
+  def fix_date_parameters
+    ['start_date', 'end_date'].each do |date_field|
+      if params[:membership]["#{date_field}(1i)"].blank?
+        params[:membership].keys.select {|k| k.match(/^#{date_field}/)}.each do |key|
+          params[:membership].delete(key)
+        end
+        params[:membership][date_field] = nil
+      end
+    end
+  end
+
 end
