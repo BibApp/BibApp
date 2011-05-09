@@ -1,7 +1,7 @@
 
 puts "\nCreating admin user...\n"
 # create an 'admin' user, and assign as System Administrator
-dupe = User.find_by_login('admin@example.com')
+dupe = User.find_by_email('admin@example.com')
 if dupe.nil?
   admin = User.create(:email => 'admin@example.com',
               :password => 'bibapp',
