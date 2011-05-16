@@ -29,7 +29,7 @@ class PeopleController < ApplicationController
     end
 
     response_for :destroy do |format|
-      format.html { redirect_to return_path }
+      format.html { redirect_to @return_path }
       format.xml { head :ok }
     end
 
@@ -146,7 +146,7 @@ class PeopleController < ApplicationController
     before :destroy do
       permit "admin"
       person = Person.find(params[:id])
-      return_path = params[:return_path] || people_url
+      @return_path = params[:return_path] || people_url
       person.destroy if person
       #flash[:notice] = "#{person.display_name} was successfully deleted."
     end
