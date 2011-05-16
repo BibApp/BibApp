@@ -17,7 +17,7 @@ class PenName < ActiveRecord::Base
   def set_contributorships
     self.name_string.work_name_strings.each do |wns|
       #only create Contributorship for "accepted" works
-      if wns.work.accepted?
+      if wns.work and wns.work.accepted?
         self.contributorships.find_or_create_by_work_id_and_person_id_and_role(wns.work.id, self.person_id, wns.role)
       end
     end
