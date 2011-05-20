@@ -7,22 +7,20 @@ class AuthenticationsController < ApplicationController
       # User is already registered with application
       flash[:info] = 'Signed in successfully.'
       sign_in_and_redirect(authentication.user)
-    elsif current_user
+    elsif user = current_user || User.find_by_email(omniauth['user_info']['email'])
       # User is signed in but has not already authenticated with this social network
-      current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      current_user.apply_omniauth(omniauth)
-      current_user.save
-
+      # OR
+      #user already has a local account - connect it properly to an authentication
+      user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
+      user.apply_omniauth(omniauth)
+      user.save
       flash[:info] = 'Authentication successful.'
       redirect_to home_url
-    #TODO - use email to see if user exists via local login but hasn't authenticated this way
-    #elsif user = User.find_by_email(omni_auth['user']['email'])
     else
       # User is new to this application
       user = User.new
       user.authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
       user.apply_omniauth(omniauth)
-
       if user.save
         flash[:info] = 'User created and signed in successfully.'
         sign_in_and_redirect(user)
