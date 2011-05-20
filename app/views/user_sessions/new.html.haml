@@ -20,6 +20,8 @@
         %p
           =link_to "Forgot Password", new_password_path
           |
-          =link_to "Sign Up", signup_path  
+          =link_to "Sign Up", signup_path
         %p.submit
           = submit_tag 'Log in'
+    %p
+      = button_to "Sign in With OpenID", '/auth/open_id'
