@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   has_many :tags, :through => :taggings
   has_many :users, :through => :taggings
   has_one :person
-  has_many :authentications
+  has_many :authentications, :dependent => :destroy
 
   before_create :make_activation_code
 
