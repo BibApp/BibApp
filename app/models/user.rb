@@ -181,6 +181,20 @@ class User < ActiveRecord::Base
     Digest::SHA1.digest(self.salt + ':' + new_email)
   end
 
+  def apply_omniauth(omniauth)
+  self.email = omniauth['user_info']['email']
+  #other stuff to make a legal user
+
+
+  # Update user info fetching from omniauth provider
+  case omniauth['provider']
+  when 'open_id'
+    #do any extra work needed for openid
+  end
+end
+
+
+
   protected
 
   def require_password?
