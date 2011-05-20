@@ -15,6 +15,8 @@ class AuthenticationsController < ApplicationController
 
       flash[:info] = 'Authentication successful.'
       redirect_to home_url
+    #TODO - use email to see if user exists via local login but hasn't authenticated this way
+    #elsif user = User.find_by_email(omni_auth['user']['email'])
     else
       # User is new to this application
       user = User.new
