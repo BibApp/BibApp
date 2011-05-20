@@ -183,20 +183,24 @@ class User < ActiveRecord::Base
   end
 
   def apply_omniauth(omniauth)
-  self.email = omniauth['user_info']['email']
-  #other stuff to make a legal user
-  if self.new_record?
-    self.password = self.password_confirmation = 'fred'
+    self.email = omniauth['user_info']['email']
+    #other stuff to make a legal user
+    if self.new_record?
+      self.password = self.password_confirmation = User.random_password
+    end
+
+    # Update user info fetching from omniauth provider
+    case omniauth['provider']
+      when 'open_id'
+        #do any extra work needed for openid
+    end
   end
 
-  # Update user info fetching from omniauth provider
-  case omniauth['provider']
-  when 'open_id'
-    #do any extra work needed for openid
+
+  def self.random_password(len = 20)
+    chars = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
+    Array.new(len, '').collect { chars[rand(chars.size)] }.join
   end
-end
-
-
 
   protected
 
