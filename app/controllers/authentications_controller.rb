@@ -19,10 +19,11 @@ class AuthenticationsController < ApplicationController
     else
       # User is new to this application
       user = User.new
-      user.authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
       user.apply_omniauth(omniauth)
       if user.save
         flash[:info] = 'User created and signed in successfully.'
+        user.authentications.create(:provider => omniauth['provider'], :uid => omniauth['uid'])
+        user.activate
         sign_in_and_redirect(user)
       else
         session[:omniauth] = omniauth.except('extra')

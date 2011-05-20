@@ -185,7 +185,9 @@ class User < ActiveRecord::Base
   def apply_omniauth(omniauth)
   self.email = omniauth['user_info']['email']
   #other stuff to make a legal user
-
+  if self.new_record?
+    self.password = self.password_confirmation = 'fred'
+  end
 
   # Update user info fetching from omniauth provider
   case omniauth['provider']
