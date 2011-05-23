@@ -27,7 +27,10 @@
     %p
       %h3 Login using external credentials:
       - if Bibapp::Application.config.allow_open_id
-        = button_to "Sign in With OpenID", '/auth/open_id'
+        - Bibapp::Application.config.open_id_presets.each do |preset|
+          = button_to "Sign in With #{preset['name'].titleize} OpenID", "/auth/open_id?openid_url=#{CGI.escape(preset['id'])}"
+          %br/
+        = button_to "Sign in With Generic OpenID", '/auth/open_id'
         %br/
       - if Bibapp::Application.config.oauth_config
         - Bibapp::Application.config.oauth_config.each do |k,v|
