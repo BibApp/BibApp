@@ -1,0 +1,4 @@
+#example of an oauth provider to be integrated with omniauth
+#google:
+#  key: 'oauth-consumer-key'
+#  secret: 'oauth-consumer-secret'

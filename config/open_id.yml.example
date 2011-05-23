@@ -1,0 +1,5 @@
+presets:
+  - name: yahoo
+    id: yahoo.com
+  - name: google
+    id: "https://www.google.com/accounts/o8/id"
