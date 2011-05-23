@@ -17,7 +17,7 @@ task :staging do
   role :web, test_server
   role :app, test_server
   role :db,  test_server, :primary => true
-#  set :branch, 'uiuc-connections-other-branch'
+  set :branch, 'uiuc-connections-open-id'
 end
 
 set :application, "Bibapp"
@@ -60,7 +60,7 @@ namespace :deploy do
   desc "link shared configuration"
   task :link_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml', 
-     'solr.yml', 'sword.yml'].each do |file|
+     'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml'].each do |file|
       run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
     end
   end
