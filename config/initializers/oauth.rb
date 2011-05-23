@@ -1,7 +1,7 @@
 
 Bibapp::Application.config.oauth_config =
-    if File.exists?(File.join(Rails.root, 'config', 'omniauth.yml'))
-      YAML.load_file(File.join(Rails.root, 'config', 'omniauth.yml'))
+    if File.exists?(File.join(Rails.root, 'config', 'oauth.yml'))
+      YAML.load_file(File.join(Rails.root, 'config', 'oauth.yml'))
     else
       nil
     end
