@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   has_many :tags, :through => :taggings
   has_many :users, :through => :taggings
   has_one :person
+  has_many :authentications, :dependent => :destroy
 
   before_create :make_activation_code
   after_destroy :dissociate_person
@@ -188,6 +189,26 @@ class User < ActiveRecord::Base
   #this is for Authorization gem
   def uri
     PERMISSION_DENIED_REDIRECTION
+  end
+
+  def apply_omniauth(omniauth)
+    self.email = omniauth['user_info']['email']
+    #other stuff to make a legal user
+    if self.new_record?
+      self.password = self.password_confirmation = User.random_password
+    end
+
+    # Update user info fetching from omniauth provider
+    case omniauth['provider']
+      when 'open_id'
+        #do any extra work needed for openid
+    end
+  end
+
+
+  def self.random_password(len = 20)
+    chars = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
+    Array.new(len, '').collect { chars[rand(chars.size)] }.join
   end
 
   protected

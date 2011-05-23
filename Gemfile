@@ -4,6 +4,9 @@ source "http://gems.github.com"
 #Rails itself
 gem "rails", "3.0.4"
 
+#Avoid some issues with rake 0.9 (as of 2011-05-23)
+gem 'rake', '~> 0.8.7'
+
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
 gem "haml"
 
@@ -72,6 +75,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
+gem 'omniauth'
 
 #batch loading of authors
 gem 'fastercsv'
