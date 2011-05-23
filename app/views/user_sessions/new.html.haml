@@ -4,6 +4,7 @@
   .span-22.prepend-1
     %h2 Login
     %fieldset
+      %legend Login using local (#{$APPLICATION_NAME}) credentials
       = form_for @user_session, :url => user_session_url(:return_to => params[:return_to]) do |f|
         %p
           %label="Email"
@@ -24,4 +25,11 @@
         %p.submit
           = submit_tag 'Log in'
     %p
-      = button_to "Sign in With OpenID", '/auth/open_id'
+      %h3 Login using external credentials:
+      - if Bibapp::Application.allow_open_id
+        = button_to "Sign in With OpenID", '/auth/open_id'
+        %br/
+      - if Bibapp::Application.oauth_config
+        - Bibapp::Application.oauth_config.each do |k,v|
+          = button_to "Sign in With #{k.capitalize}", "/auth/#{k}"
+          %br/

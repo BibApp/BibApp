@@ -13,6 +13,7 @@ STORE_LOCATION_METHOD = :store_location
 
 module Bibapp
   class Application < Rails::Application
+    cattr_accessor :allow_open_id, :oauth_config
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
