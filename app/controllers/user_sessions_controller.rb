@@ -9,11 +9,13 @@ class UserSessionsController < ApplicationController
 
   def create
     @user_session = UserSession.new(params[:user_session])
-    if @user_session.save
-      flash[:notice] = "Login successful!"
-      redirect_to after_login_destination
-    else
-      render :action => :new
+    @user_session.save do |result|
+      if result
+        flash[:notice] = "Login successful!"
+        redirect_to after_login_destination
+      else
+        render :action => :new
+      end
     end
   end
 

@@ -210,6 +210,9 @@ Bibapp::Application.routes.draw do
 
   resource :user_session
 
+  resources :authentications
+  match '/auth/:provider/callback' => 'authentications#create'
+
   match 'admin/index'
   match 'admin/duplicates'
   match 'admin/ready_to_archive'
