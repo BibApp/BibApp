@@ -1,7 +1,9 @@
 require 'omniauth/openid'
 require 'openid/store/filesystem'
 
-Bibapp::Application.config.allow_open_id = true
+#If you want to use open id then set this to true and define
+#any applicable open id providers in config/open_id.yml
+Bibapp::Application.config.allow_open_id = false
 
 if Bibapp::Application.config.allow_open_id
   Rails.application.config.middleware.use OmniAuth::Builder do
