@@ -332,7 +332,7 @@ class WorksController < ApplicationController
     ###
     # Save keywords to instance variable @keywords,
     # in case any errors should occur in saving work
-    @keywords = params[:keywords].split('; ') unless params[:keywords].blank?
+    @keywords = params[:keywords].split(';').collect {|kw| kw.squish} unless params[:keywords].blank?
     attr_hash[:keywords] = @keywords
 
     ###
