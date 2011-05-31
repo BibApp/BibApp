@@ -1,6 +1,6 @@
 class WorkExport
   require 'citeproc'
-  attr_accessor :csl, :input, :input_filter, :input_content_type, :output, :formatter_type, :format_type
+  attr_accessor :csl_file, :input, :input_filter, :input_content_type, :output, :formatter_type, :format_type
   attr_accessor :documents, :style, :formatter
 
   def initialize
@@ -26,23 +26,9 @@ class WorkExport
     return @citations
   end
 
+  #if needed in the future we can do something more complex than this
   def csl_style(format)
-    case format.downcase
-    when "apa"
-      @csl = "#{$APPLICATION_URL}/csl_styles/apa.csl"
-    when "chicago"
-      @csl = "#{$APPLICATION_URL}/csl_styles/chicago.csl"
-    when "harvard"      
-      @csl = "#{$APPLICATION_URL}/csl_styles/harvard.csl"
-    when "ieee"
-      @csl = "#{$APPLICATION_URL}/csl_styles/ieee.csl"
-    when "mla"
-      @csl = "#{$APPLICATION_URL}/csl_styles/mla.csl"
-    when "nature"
-      @csl = "#{$APPLICATION_URL}/csl_styles/nature.csl"
-    when "nlm"
-      @csl = "#{$APPLICATION_URL}/csl_styles/nlm.csl"
-    end
+    @csl_file = format.downcase + '.csl'
   end
 
   def load_citations
@@ -52,10 +38,18 @@ class WorkExport
 
 
   def load_csl
-    parser = Citeproc::CslParser.new(@csl)
-    @style = parser.style
+    @style = parser_from_csl_file(@csl_file).style
   end
 
+  def parser_from_csl_file(csl)
+    File.open(full_csl_file_path(csl)) do |f|
+      Citeproc::CslParser.new(f)
+    end
+  end
+
+  def full_csl_file_path(csl_file)
+    File.join(Rails.root, 'public', 'csl_styles', 'apa.csl')
+  end
 
   def load_locale
     if @locale_input
