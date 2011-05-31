@@ -56,6 +56,9 @@
             - if @status != 'denied'
               %option{:value => "deny", :id => "deny"} Deny
           |
+          - if @person
+            = hidden_field_tag :person_id, @person.id
+          = hidden_field_tag :status, @status
           =submit_tag "Apply to selection", :id => 'contributorships-submit'
           
         %div= will_paginate @contributorships
