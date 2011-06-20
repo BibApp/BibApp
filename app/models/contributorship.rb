@@ -30,7 +30,7 @@ class Contributorship < ActiveRecord::Base
 
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
-  before_create :calculate_score
+  after_create :calculate_initial_score
   after_save :after_save_actions
 
   def after_save_actions
@@ -178,6 +178,11 @@ class Contributorship < ActiveRecord::Base
     else
       self.score = 0
     end
+  end
+
+  def calculate_initial_score
+    calculate_score
+    save
   end
 
   # Get a count of other unverified contributorships for current Work
