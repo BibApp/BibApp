@@ -428,8 +428,7 @@ class Work < ActiveRecord::Base
   def set_publisher_from_name(publisher_name = nil)
     publisher_name = "Unknown" if publisher_name.blank?
     set_publisher = Publisher.find_or_create_by_name(:name => publisher_name)
-    self.publisher = set_publisher.authority
-    self.initial_publisher_id = set_publisher.id
+    self.set_initial_publisher(set_publisher)
     return set_publisher
   end
 
@@ -439,14 +438,25 @@ class Work < ActiveRecord::Base
       publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(:name => name,
                                                                                               :issn_isbn => issn_isbn.to_s, :initial_publisher_id => set_publisher.id)
     elsif set_publisher
-      publication = Publication.find_or_create_by_name_and_initial_publisher_id(:name => name, :initial_publisher_id => set_publisher.id)
+      if set_publisher.name == 'Unknown'
+        #try to look up a publisher from the publication name - if that doesn't work go ahead
+        #and use the set_publisher
+        publication = Publication.find_or_create_by_name(:name => name)
+        if publisher = publication.publisher
+          self.set_initial_publisher(publisher)
+        else
+          publication.publisher = set_publisher
+        end
+      else
+        publication = Publication.find_or_create_by_name_and_initial_publisher_id(:name => name, :initial_publisher_id => set_publisher.id)
+      end
     else
       publication = Publication.find_or_create_by_name(:name => name)
     end
     publication.save!
-    self.publication = publication.authority
-    self.initial_publication_id = publication.id
+    set_initial_publication(publication)
   end
+
 
   # Initializes the Publication information
   # and saves it to the current Work
@@ -765,4 +775,14 @@ class Work < ActiveRecord::Base
     self.set_work_name_strings(@work_name_strings_cache) if @work_name_strings_cache
   end
 
+  def set_initial_publisher(publisher)
+    self.publisher = publisher.authority
+    self.initial_publisher_id = publisher.id
+  end
+
+  def set_initial_publication(publication)
+    self.publication = publication.authority
+    self.initial_publication_id = publication.id
+  end
+  
 end
