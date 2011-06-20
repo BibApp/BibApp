@@ -427,26 +427,36 @@ class Work < ActiveRecord::Base
 
   def set_publisher_from_name(publisher_name = nil)
     publisher_name = "Unknown" if publisher_name.blank?
-    set_publisher = Publisher.find_or_create_by_name(publisher_name)
-    self.publisher = set_publisher.authority
-    self.initial_publisher_id = set_publisher.id
+    set_publisher = Publisher.find_or_create_by_name(:name => publisher_name)
+    self.set_initial_publisher(set_publisher)
     return set_publisher
   end
 
   def set_publication_from_name(name, issn_isbn, set_publisher)
     return unless name
     if issn_isbn.present?
-      publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(name,
-                                                                                              issn_isbn.to_s, set_publisher.id)
+      publication = Publication.find_or_create_by_name_and_issn_isbn_and_initial_publisher_id(:name => name,
+                                                                                              :issn_isbn => issn_isbn.to_s, :initial_publisher_id => set_publisher.id)
     elsif set_publisher
-      publication = Publication.find_or_create_by_name_and_initial_publisher_id(name, set_publisher.id)
+      if set_publisher.name == 'Unknown'
+        #try to look up a publisher from the publication name - if that doesn't work go ahead
+        #and use the set_publisher
+        publication = Publication.find_or_create_by_name(:name => name)
+        if publisher = publication.publisher
+          self.set_initial_publisher(publisher)
+        else
+          publication.publisher = set_publisher
+        end
+      else
+        publication = Publication.find_or_create_by_name_and_initial_publisher_id(:name => name, :initial_publisher_id => set_publisher.id)
+      end
     else
-      publication = Publication.find_or_create_by_name(name)
+      publication = Publication.find_or_create_by_name(:name => name)
     end
     publication.save!
-    self.publication = publication.authority
-    self.initial_publication_id = publication.id
+    set_initial_publication(publication)
   end
+
 
   # Initializes the Publication information
   # and saves it to the current Work
@@ -505,7 +515,7 @@ class Work < ActiveRecord::Base
         # Find or create a Contributorship for each claim
         claims.each do |claim|
           Contributorship.find_or_create_by_work_id_and_person_id_and_pen_name_id_and_role(
-              self.id, claim.person.id, claim.id, cns.role)
+              :work_id => self.id, :person_id => claim.person.id, :pen_name_id => claim.id, :role => cns.role)
         end
       end
     end
@@ -765,4 +775,14 @@ class Work < ActiveRecord::Base
     self.set_work_name_strings(@work_name_strings_cache) if @work_name_strings_cache
   end
 
+  def set_initial_publisher(publisher)
+    self.publisher = publisher.authority
+    self.initial_publisher_id = publisher.id
+  end
+
+  def set_initial_publication(publication)
+    self.publication = publication.authority
+    self.initial_publication_id = publication.id
+  end
+  
 end
