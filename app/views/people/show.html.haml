@@ -34,7 +34,7 @@
         %h3.heading Groups
         = render :partial => 'shared/group_list'
       / ### Hide research focus for inactive people ###
-    - if @person.active? && @person.research_focus.nil? == false  and @person.research_focus.strip.length > 0 
+    - if @person.active? and @person.research_focus.present? and @person.research_focus.strip.length > 0
       #research-focus.span-14
         %h3.heading Research Focus
         %p #{@person.research_focus}
