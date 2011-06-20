@@ -192,6 +192,13 @@ class WorksController < ApplicationController
         @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
       end
 
+      #If this was submitted as an individual work for a specific person then
+      #automatically verify the contributorship
+      if @work and @person
+        c = Contributorship.for_person(@person.id).for_work(@work.id).first
+        c.verify_contributorship if c
+      end
+
       respond_to do |format|
         if work_id
           flash[:notice] = "Work was successfully created."
