@@ -75,8 +75,8 @@ $WORK_SUFFIX             = "ctx_enc=info%3Aofi%2Fenc%3AUTF-8&amp;ctx_id=10_1&amp
 # the SHERPA RoMEO "color" rankings for publishers/publications.
 $SHERPA_COLORS = {
   :green    => "Can archive pre-print and post-print",
-  :blue     => "Can archive post-print (ie final draft post-refereeing)",
-  :yellow   => "Can archive pre-print (ie pre-refereeing)",
+  :blue     => "Can archive post-print (i.e. final draft post-refereeing)",
+  :yellow   => "Can archive pre-print (i.e. pre-refereeing)",
   :white    => "Archiving not formally supported",
   :unknown  => "Could not determine from data"
 }
