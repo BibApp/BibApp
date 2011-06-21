@@ -31,9 +31,7 @@
             %td #{link_to publication.issn_isbn, publication}
           %td #{link_to publication.name, publication}
           %td
-            - color = publication.publisher.romeo_color.present? ? publication.publisher.romeo_color.to_sym : :unknown
-            %span{:class => ['sherpa-icon', "romeo-#{color}"], :title => "SHERPA: #{$SHERPA_COLORS[color]}"}
-              &nbsp;
+            = render :partial => 'shared/sherpa_icon', :locals => {:publisher => publication.publisher}
             #{link_to publication.publisher.name, publisher_path(publication.publisher)}
           %td #{publication.works.length}
 
