@@ -1,36 +1,41 @@
 / === Publications === Index ===
 / Main
-- @title="Publications" # Specify text at end of HTML <title> tag
+- include_stylesheet('common/sherpa')
+- @title = "Publications" # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_any_role?("editor", Group)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    .span-24#admin-actions
       %ul#edit-actions
-        %li=link_to "Add a Publication", new_publication_path
-        %li=link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])
+        %li #{link_to "Add a Publication", new_publication_path}
+        %li #{link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])}
 
-%div.span-24
-  %div.span-22.prepend-1
-    %h2="Publications"
+.span-24
+  .span-22.prepend-1
+    %h2 Publications
     
     = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}
 
     %table#publications
       %tr
-        %th="ISSN / ISBN"
-        %th="Publication Name"
-        %th="Publisher"
-        %th="Works"
+        %th ISSN / ISBN
+        %th Publication Name
+        %th Publisher
+        %th Works
       -@current_objects.each do |publication|
         %tr{:class => cycle("odd", "even")}
           - if publication.issn_isbn.nil?
             %td
           - else
-            %td=link_to publication.issn_isbn, publication
-          %td=link_to publication.name, publication
-          %td=link_to publication.publisher.name, publisher_path(publication.publisher)
-          %td=publication.works.length
+            %td #{link_to publication.issn_isbn, publication}
+          %td #{link_to publication.name, publication}
+          %td
+            - color = publication.publisher.romeo_color.present? ? publication.publisher.romeo_color.to_sym : :unknown
+            %span{:class => ['sherpa-icon', "romeo-#{color}"], :title => "SHERPA: #{$SHERPA_COLORS[color]}"}
+              &nbsp;
+            #{link_to publication.publisher.name, publisher_path(publication.publisher)}
+          %td #{publication.works.length}
 
     %br/
     %br/

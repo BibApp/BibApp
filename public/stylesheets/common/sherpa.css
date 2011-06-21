@@ -1,0 +1,27 @@
+.sherpa-icon {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  vertical-align: middle;
+  border: 1px solid black;
+}
+
+.romeo-green {
+  background-color: #9acd32;
+}
+
+.romeo-blue {
+  background-color: #4682b4;
+}
+
+.romeo-yellow {
+  background-color: #ffd700;
+}
+
+.romeo-white {
+  background-color: #fffafa;
+}
+
+.romeo-unknown {
+  background-color: black;
+}
