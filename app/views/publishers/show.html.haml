@@ -1,6 +1,7 @@
 / === Publishers === Show ===
 / Main
 - include_stylesheet('specific/publishers/show')
+- include_stylesheet('common/sherpa')
 - if !@export.empty?
   .span-24
     .span-22.prepend-1
@@ -18,8 +19,11 @@
   .span-24
 
     .span-22.prepend-1
-      %h2 #{ @publisher.name}
+      %h2.span-18.left #{ @publisher.name}
+      %span.span-4.right
+        = render :partial => 'shared/sherpa_status', :locals => {:publisher => @publisher}
 
+      %div.clear-both
       / People
       = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
 
