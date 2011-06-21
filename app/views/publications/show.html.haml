@@ -1,6 +1,8 @@
 / === Publications === Show ===
 / Main
 - include_stylesheet('specific/publications/show')
+- include_stylesheet('common/sherpa')
+
 - if !@export.empty?
   .span-24
     .span-22.prepend-1
@@ -20,7 +22,10 @@
     .span-22.prepend-1
       %h2 #{ @publication.name}
       -if @publication.publisher
-        %h4 Published by: #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
+        %h4
+          Published by:
+          #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
+          = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @publication.publisher}
       
       / Authority check
       - if @authority_for.size == 0
