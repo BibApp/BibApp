@@ -61,7 +61,7 @@
           = hidden_field_tag :status, @status
           =submit_tag "Apply to selection", :id => 'contributorships-submit'
           
-        %div= will_paginate @contributorships
+        .clear-both= will_paginate @contributorships
       
         = render :partial => 'contributorships'
 
