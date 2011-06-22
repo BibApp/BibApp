@@ -36,9 +36,13 @@ class Person < ActiveRecord::Base
     # Accept Person.new form name field params and autogenerate pen_name associations
     # Find or create
     names = make_variant_names.uniq
-    names.each do |v|
-      ns = NameString.find_or_create_by_machine_name(v)
-      self.name_strings << ns unless self.name_strings.include?(ns)
+    existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
+    existing_names = existing_name_strings.collect{|n| n.machine_name}
+    new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
+      NameString.find_or_create_by_machine_name(v)
+    end
+    ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
+      self.name_strings << ns
     end
   end
 
