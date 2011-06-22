@@ -62,6 +62,7 @@ class Contributorship < ActiveRecord::Base
     # if the contributorship is going from denied -> unverified
     # we need it to be unhidden
     self.hide = false
+    self.save
   end
 
   def verified?
@@ -88,6 +89,7 @@ class Contributorship < ActiveRecord::Base
     self.contributorship_state_id = STATE_DENIED
     self.hide = true
     self.score = 0
+    self.save
   end
 
   def visible?
@@ -192,6 +194,7 @@ class Contributorship < ActiveRecord::Base
 
   # Get a count of possible Person matches to contributorships for current Work
   def possibilities
+    logger.debug("\n=== Possibilities ===\n")
     Contributorship.for_work(self.work_id).inject(0) do |acc, c|
       acc + self.work.name_strings.where(:name => c.pen_name.name_string.name).count
     end
@@ -204,6 +207,7 @@ class Contributorship < ActiveRecord::Base
     # - Set Contributorship.hide = true
 
     if Contributorship.verified.for_work(self.work_id).size == self.possibilities
+      logger.debug("\n=== Refresh contributorships ===\n")
       refresh = Contributorship.for_work(self.work).unverified.where('id <> ?', self.id)
       #This previously used save_without_callbacks
       #In this case there is a possibility that removing it will cause an infinite recursion - I'm not sure
@@ -219,9 +223,11 @@ class Contributorship < ActiveRecord::Base
     end
 
     # Update Person's scoring hash
+    logger.debug("\n=== Updating scoring hash ===\n")
     self.person.update_scoring_hash
 
     # Update Solr!
+    logger.debug("\n=== Reindexing solr for work ===\n")
     Index.update_solr(self.work)
 
   end
