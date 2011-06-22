@@ -24,7 +24,7 @@
 
     .span-13.append-1.last
       #sort-by.right
-        - form_tag "#", :method => :get, :name => "contributorships_form_show_rows" do
+        = form_tag "#", :method => :get, :name => "contributorships_form_show_rows" do
           %label Show:
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
