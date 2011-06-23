@@ -228,7 +228,8 @@ class Contributorship < ActiveRecord::Base
 
     # Update Solr!
     logger.debug("\n=== Reindexing solr for work ===\n")
-    Index.update_solr(self.work)
+    self.work.delay.update_solr
+    #Index.update_solr(self.work)
 
   end
 end
