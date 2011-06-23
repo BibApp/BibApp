@@ -720,6 +720,14 @@ class Work < ActiveRecord::Base
     self.save
   end
 
+  def update_solr
+    Index.update_solr(self)
+  end
+
+  def update_solr_no_autocommit
+    Index.update_solr(self, false)
+  end
+
   protected
 
   # Update Keywordings - updates list of keywords for Work
