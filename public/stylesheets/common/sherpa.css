@@ -52,3 +52,7 @@
 .romeo-unknown-border {
   border-color: black;
 }
+
+#sherpa-explanation {
+  padding-left: 20px;
+}
