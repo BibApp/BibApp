@@ -95,6 +95,7 @@ GEM
     net-ssh (2.1.4)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
+    newrelic_rpm (3.1.0)
     nokogiri (1.4.4)
     oa-basic (0.2.6)
       oa-core (= 0.2.6)
@@ -224,6 +225,7 @@ DEPENDENCIES
   isbn-tools (~> 0.1.0)
   libxml-ruby (~> 0.8.3)
   namecase (~> 1.1.0)
+  newrelic_rpm
   omniauth
   pg
   rails (= 3.0.4)
