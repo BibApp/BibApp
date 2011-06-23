@@ -138,7 +138,7 @@ class Person < ActiveRecord::Base
 
   # Person Contributorship Calculation Fields
   def verified_publications
-    Contributorship.verified.find_all_by_person_id(self.id, :include=>[:work])
+    Contributorship.verified.where(:person_id => self.id).includes(:work => [:publication, :name_strings, :keywords]).all
   end
 
   def queue_update_scoring_hash
