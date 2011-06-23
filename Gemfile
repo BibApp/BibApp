@@ -96,6 +96,9 @@ gem 'sunspot_rails'
 #dependency conflicts
 group :development do
   gem 'thin'
+  if File.exist?(File.join(File.dirname(__FILE__), 'config', 'newrelic.yml'))
+    gem 'newrelic_rpm'
+  end
 end
 
 group :test, :development do
