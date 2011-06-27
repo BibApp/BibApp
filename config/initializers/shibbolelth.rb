@@ -9,5 +9,5 @@ end
 #change to the appropriate location for the shibboleth provider
 shib_base = $APPLICATION_URL.sub(/^http/, 'https')
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :shibboleth, "#{shib_base}/Shibboleth.sso/Login"
+  provider :shibboleth, "https://shibboleth.illinois.edu/idp/Authn/UserPassword"
 end
