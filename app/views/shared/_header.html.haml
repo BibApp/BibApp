@@ -67,6 +67,6 @@
             %span #{link_to "Logout", logout_path}
         - else
           %li
-            %span #{link_to "NetID Login", login_shibboleth_url(:return_to => request.fullpath)}
+            %span #{link_to "NetID Login", '/auth/shibboleth'}
           %li
             %span=link_to "Login | Sign Up", login_path(:return_to => request.fullpath)
