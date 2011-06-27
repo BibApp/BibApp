@@ -13,3 +13,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :shibboleth, "http://connectionstest.ideals.illinois.edu/Shibboleth.sso/Login"
 
 end
+
