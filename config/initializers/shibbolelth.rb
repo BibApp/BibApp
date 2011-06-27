@@ -1,3 +1,5 @@
+require 'config/personalize.rb'
+
 module OmniAuth
   module Strategies
     autoload :Shibboleth, 'lib/shibboleth_omniauth'
