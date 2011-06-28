@@ -11,6 +11,5 @@ shib_base = $APPLICATION_URL.sub(/^http/, 'https')
 Rails.application.config.middleware.use OmniAuth::Builder do
 #  provider :shibboleth, "https://shibboleth.illinois.edu/idp/Authn/UserPassword"
   provider :shibboleth, "http://connectionstest.ideals.illinois.edu/Shibboleth.sso/Login"
-
 end
 
