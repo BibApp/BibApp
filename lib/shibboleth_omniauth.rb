@@ -33,7 +33,8 @@ module OmniAuth
 
       def shibboleth_login_url
         url = self.base_url
-        target = @request.env['HTTP_REFERER']
+        #target = @request.env['HTTP_REFERER']
+        target = 'https://connectionstest.ideals.illinois.edu'
         url = "#{url}?target=#{CGI.escape(target)}"
         return url
       end
