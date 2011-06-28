@@ -33,6 +33,7 @@ class Publication < ActiveRecord::Base
   after_create :after_create_actions
   before_create :before_create_actions
   before_save :before_save_actions
+  after_save :update_authorities
   after_save :reindex, :if => :do_reindex
 
   #Called after create only
@@ -49,7 +50,6 @@ class Publication < ActiveRecord::Base
   end
 
   def before_save_actions
-    self.update_authorities
     self.update_machine_name
     self.parse_identifiers
   end
@@ -136,7 +136,7 @@ class Publication < ActiveRecord::Base
     # If Publication authority changed, we need to echo new authority key
     # to each related model.
     logger.debug("\n\nPub: #{self.id} | Auth: #{self.authority_id}\n\n")
-    if self.authority_id_changed? and self.authority_id != self.id or self.publisher_id_changed?
+    if (self.authority_id_changed? and self.authority_id != self.id) or self.publisher_id_changed?
 
       # Update publications
       logger.debug("\n\n===Updating Publications===\n\n")
@@ -183,8 +183,10 @@ class Publication < ActiveRecord::Base
     pub_ids.each do |pub|
       update = Publication.find_by_id(pub)
       update.authority_id = auth_id
+      update.do_reindex = false
       update.save
     end
+    Index.batch_index
   end
 
   #Parse Solr data (produced by to_solr_data)
