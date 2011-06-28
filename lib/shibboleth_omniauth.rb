@@ -33,10 +33,16 @@ module OmniAuth
 
       def shibboleth_login_url
         url = self.base_url
-        #target = @request.env['HTTP_REFERER']
-        target = 'https://connectionstest.ideals.illinois.edu'
+        target = make_https(@request.env['HTTP_REFERER'] || 'https://connectionstest.ideals.illinois.edu')
         url = "#{url}?target=#{CGI.escape(target)}"
         return url
+      end
+
+      def make_https(url)
+        if url.match(/^http:/)
+          url.gsub!(/^http:/, 'https:')
+        end
+        url
       end
 
     end
