@@ -92,6 +92,10 @@ gem 'capistrano'
 #dependency conflicts
 group :development do
   gem 'thin'
+  #If you want to use newrelic for profiling you can uncomment the following.
+  #HOWEVER - generating Gemfile.lock with it uncommented can mess up deployment,
+  #so whenever adding new Gems or otherwise generating a new Gemfile.lock to check in
+  #please recomment it out!
 #  if File.exist?(File.join(File.dirname(__FILE__), 'config', 'newrelic.yml'))
 #    gem 'newrelic_rpm'
 #  end
