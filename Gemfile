@@ -110,4 +110,6 @@ group :test, :development do
   gem 'shoulda'
   gem 'factory_girl'
   gem 'rcov'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
 end
