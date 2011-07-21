@@ -6,4 +6,9 @@ module MachineName
   def make_machine_name(string)
     string.mb_chars.gsub!(/[\W]+/, " ").strip.downcase
   end
+
+  def make_machine_name_from_array(array_of_strings)
+    make_machine_name(array_of_strings.join(" "))
+  end
+
 end

@@ -1,4 +1,5 @@
 class Person < ActiveRecord::Base
+  include MachineName
 
   acts_as_authorizable #some actions on people require authorization
 
@@ -39,19 +40,7 @@ class Person < ActiveRecord::Base
       existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
       existing_names = existing_name_strings.collect{|n| n.machine_name}
       new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
-        #The following unnatural procedure is needed (for now) because NameString, before saving,
-        #has a callback that updates the machine name, and apparently it's possible for that callback
-        #to produce a different machine name than this method gets from make_variant_names
-        #Thus, in the previous implementation we could fail to find a NameString with our value for machine name,
-        #but then there could be one for the one that NameString substituted, which would then cause an
-        #error against the unique constraint on machine_name in the name_strings table.
-        #TODO Hopefully this can be a temporary fix. I don't know why make_variant_names generates a different
-        #machine name - I don't think it should, and if there is no reason to then perhaps we can just fix it
-        #up and go back to the simpler implementation here.
-        ns = NameString.new(v)
-        ns.update_machine_name
-        ns.save unless old_ns = NameString.find_by_machine_name(ns.machine_name)
-        old_ns || ns
+        NameString.find_or_create_by_machine_name(v)
       end
       ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
         self.name_strings << ns
@@ -80,8 +69,8 @@ class Person < ActiveRecord::Base
       last_name = names.shift
       "#{last_name}, #{names.join(" ")}".strip
     end
-    make_machine_name = lambda do |names|
-      names.join(" ").downcase.strip
+    my_make_machine_name = lambda do |names|
+      make_machine_name_from_array(names)
     end
     make_name = lambda do |first_status, middle_status, for_machine|
       names = []
@@ -89,7 +78,7 @@ class Person < ActiveRecord::Base
         names << name if status == :full
         names << abbreviate_name(name, for_machine) if status == :initial
       end
-      name_function = for_machine ? make_machine_name : make_print_name
+      name_function = for_machine ? my_make_machine_name : make_print_name
       name_function.call(names)
     end
     #Call with each argument as :full to use the full name, :initial to use the first character, and :omit
@@ -198,7 +187,7 @@ class Person < ActiveRecord::Base
       #Machine name is Full Name with:
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.full_name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = make_machine_name(self.full_name)
     end
   end
 
