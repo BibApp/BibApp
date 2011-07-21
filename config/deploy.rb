@@ -17,7 +17,8 @@ task :staging do
   role :web, test_server
   role :app, test_server
   role :db,  test_server, :primary => true
-#  set :branch, 'uiuc-connections-open-id'
+#  set :branch, 'uiuc-connections-omni-shib'
+  set :branch, 'uiuc-connections'
 end
 
 set :application, "Bibapp"
