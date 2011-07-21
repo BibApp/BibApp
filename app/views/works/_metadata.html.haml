@@ -1,4 +1,6 @@
 - include_stylesheet('specific/works/_metadata')
+- include_stylesheet('common/sherpa')
+
 %table#metadata.span-15
   -#%tr
   -#%td.label Type:
@@ -195,6 +197,7 @@
         = "#{label}:"
       %td
         = link_to @work.publisher.name, publisher_path(@work.publisher.id)
+        = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @work.publisher}
 
   - unless @work.degree_level.blank?
     %tr

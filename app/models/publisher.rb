@@ -23,6 +23,7 @@ class Publisher < ActiveRecord::Base
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_create :before_create_actions
+  after_save :update_authorities
   after_save :reindex, :if => :do_reindex
 
   def after_create_actions
@@ -133,8 +134,10 @@ class Publisher < ActiveRecord::Base
     pub_ids.each do |pub|
       update = Publisher.find_by_id(pub)
       update.authority_id = auth_id
+      update.do_reindex = false
       update.save
     end
+    Index.batch_index
   end
 
   def self.update_sherpa_data

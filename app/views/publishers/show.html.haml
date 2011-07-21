@@ -18,8 +18,11 @@
   .span-24
 
     .span-22.prepend-1
-      %h2 #{ @publisher.name}
+      %h2.span-18.left #{ @publisher.name}
+      %span.span-4.right
+        = render :partial => 'shared/sherpa_status', :locals => {:publisher => @publisher, :show_explanation => false}
 
+      %div.clear-both
       / People
       = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
 
