@@ -1,4 +1,5 @@
 require 'bibapp_ldap'
+require 'lib/machine_name'
 
 class Person < ActiveRecord::Base
   include MachineName
