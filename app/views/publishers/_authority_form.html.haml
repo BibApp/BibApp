@@ -11,7 +11,5 @@
           %th
         =render :partial => "authority_form_item", :collection => authority_form, :locals => {:page => page}
       = hidden_field_tag :page, page, :id => 'page'
-    -if authority_form.length > 1
-      = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => false
-    -else
-      = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => true
+    = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => authority_form.length <= 1
+    = submit_tag "Cancel", :name => 'cancel', :id => 'cancel_button', :disabled => authority_form.length <= 1

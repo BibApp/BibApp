@@ -1,4 +1,8 @@
+require 'bibapp_ldap'
+require 'lib/machine_name'
+
 class Person < ActiveRecord::Base
+  include MachineName
 
   acts_as_authorizable #some actions on people require authorization
 
@@ -33,18 +37,18 @@ class Person < ActiveRecord::Base
 
   #### Methods ##
   def set_pen_names
-    # Accept Person.new form name field params and autogenerate pen_name associations
-    # Find or create
-    names = make_variant_names.uniq
-    existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
-    existing_names = existing_name_strings.collect{|n| n.machine_name}
-    new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
-      NameString.find_or_create_by_machine_name(v)
+      # Accept Person.new form name field params and autogenerate pen_name associations
+      # Find or create
+      names = make_variant_names.uniq
+      existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
+      existing_names = existing_name_strings.collect{|n| n.machine_name}
+      new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
+        NameString.find_or_create_by_machine_name(v)
+      end
+      ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
+        self.name_strings << ns
+      end
     end
-    ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
-      self.name_strings << ns
-    end
-  end
 
   def make_variant_names
     # Example is me...
@@ -68,8 +72,8 @@ class Person < ActiveRecord::Base
       last_name = names.shift
       "#{last_name}, #{names.join(" ")}".strip
     end
-    make_machine_name = lambda do |names|
-      names.join(" ").downcase.strip
+    my_make_machine_name = lambda do |names|
+      make_machine_name_from_array(names)
     end
     make_name = lambda do |first_status, middle_status, for_machine|
       names = []
@@ -77,7 +81,7 @@ class Person < ActiveRecord::Base
         names << name if status == :full
         names << abbreviate_name(name, for_machine) if status == :initial
       end
-      name_function = for_machine ? make_machine_name : make_print_name
+      name_function = for_machine ? my_make_machine_name : make_print_name
       name_function.call(names)
     end
     #Call with each argument as :full to use the full name, :initial to use the first character, and :omit
@@ -186,7 +190,7 @@ class Person < ActiveRecord::Base
       #Machine name is Full Name with:
       #  1. all punctuation/spaces converted to single space
       #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.full_name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
+      self.machine_name = make_machine_name(self.full_name)
     end
   end
 

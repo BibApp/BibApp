@@ -7,13 +7,13 @@ class PublishersController < ApplicationController
     build :index, :show, :new, :edit, :create, :update
 
     publish :yaml, :xml, :json, :attributes => [
-        :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
-            :publications => [:id, :name]
-        }, {
-            :authority => [:id, :name]
-        }, {
-            :works => [:id]
-        }
+            :id, :name, :url, :sherpa_id, :romeo_color, :copyright_notice, :publisher_copy, {
+                    :publications => [:id, :name]
+            }, {
+                    :authority => [:id, :name]
+            }, {
+                    :works => [:id]
+            }
     ]
 
     #Add a response for RSS
@@ -94,7 +94,7 @@ class PublishersController < ApplicationController
     else
       @page = params[:page] || @a_to_z[0]
       @current_objects = Publisher.authorities.name_like("#{@page}%").order_by_name.
-          includes(:publications, :publisher_source)
+              includes(:publications, :publisher_source)
     end
 
     #Keep a list of publications in process in session[:publication_auths]
@@ -147,13 +147,17 @@ class PublishersController < ApplicationController
     @a_to_z = Publication.letters
     @page = params[:page] || @a_to_z[0]
 
-    if auth_id
-      update = Publisher.update_multiple(pub_ids, auth_id)
+    if params[:cancel]
       session[:publisher_auths] = nil
+      flash[:notice] = "Cancelled authority selection."
     else
-      flash[:warning] = "You must select one record as the authority."
+      if auth_id
+        update = Publisher.update_multiple(pub_ids, auth_id)
+        session[:publisher_auths] = nil
+      else
+        flash[:warning] = "You must select one record as the authority."
+      end
     end
-
     respond_to do |wants|
       wants.html do
         redirect_to authorities_publishers_path(:page => @page)

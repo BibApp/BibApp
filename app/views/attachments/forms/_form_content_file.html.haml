@@ -4,7 +4,10 @@
     -# %span.asset= render :partial => "works/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }
     - ce = WorkExport.new
     %span.asset= ce.drive_csl("apa", @asset).html_safe
-
+    %div
+      = render :partial => "shared/sherpa_status", :locals => {:publisher => @asset.publisher, :show_explanation => true}
+    %br/
+      
   %fieldset
     %legend="Content Files"
     #upload_files

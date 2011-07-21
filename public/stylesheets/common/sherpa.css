@@ -1,0 +1,58 @@
+.sherpa-icon {
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  vertical-align: middle;
+  border: 1px solid black;
+}
+
+.romeo-green {
+  background-color: #9acd32;
+}
+
+.romeo-blue {
+  background-color: #4682b4;
+}
+
+.romeo-yellow {
+  background-color: #ffd700;
+}
+
+.romeo-white {
+  background-color: #fffafa;
+}
+
+.romeo-unknown {
+  background-color: black;
+}
+
+.sherpa-status {
+  border-style: solid;
+  border-width: 1px;
+  text-align: center;
+  padding: 3px;
+}
+
+.romeo-green-border {
+  border-color: #9acd32;
+}
+
+.romeo-blue-border {
+  border-color: #4682b4;
+}
+
+.romeo-yellow-border {
+  border-color: #ffd700;
+}
+
+.romeo-white-border {
+  border-color: #d3d3d3;
+}
+
+.romeo-unknown-border {
+  border-color: black;
+}
+
+#sherpa-explanation {
+  padding-left: 20px;
+}
