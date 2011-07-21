@@ -33,18 +33,30 @@ class Person < ActiveRecord::Base
 
   #### Methods ##
   def set_pen_names
-    # Accept Person.new form name field params and autogenerate pen_name associations
-    # Find or create
-    names = make_variant_names.uniq
-    existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
-    existing_names = existing_name_strings.collect{|n| n.machine_name}
-    new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
-      NameString.find_or_create_by_machine_name(v)
+      # Accept Person.new form name field params and autogenerate pen_name associations
+      # Find or create
+      names = make_variant_names.uniq
+      existing_name_strings = NameString.where(:machine_name => names.collect {|n| n[:machine_name]}).all
+      existing_names = existing_name_strings.collect{|n| n.machine_name}
+      new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
+        #The following unnatural procedure is needed (for now) because NameString, before saving,
+        #has a callback that updates the machine name, and apparently it's possible for that callback
+        #to produce a different machine name than this method gets from make_variant_names
+        #Thus, in the previous implementation we could fail to find a NameString with our value for machine name,
+        #but then there could be one for the one that NameString substituted, which would then cause an
+        #error against the unique constraint on machine_name in the name_strings table.
+        #TODO Hopefully this can be a temporary fix. I don't know why make_variant_names generates a different
+        #machine name - I don't think it should, and if there is no reason to then perhaps we can just fix it
+        #up and go back to the simpler implementation here.
+        ns = NameString.new(v)
+        ns.update_machine_name
+        ns.save unless old_ns = NameString.find_by_machine_name(ns.machine_name)
+        old_ns || ns
+      end
+      ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
+        self.name_strings << ns
+      end
     end
-    ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
-      self.name_strings << ns
-    end
-  end
 
   def make_variant_names
     # Example is me...
