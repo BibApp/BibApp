@@ -34,18 +34,13 @@ module OmniAuth
             'user_info' => {'email' => remote_user},
             'uid' => remote_user
         })
-        logger.error ("*" * 80)
-        logger.error request.env["REMOTE_USER"]
-        logger.error ("*" * 80)
       end
 
       protected
 
       def shibboleth_login_url
         url = self.base_url
-        target = make_https(@request.env['HTTP_REFERER'] || 'https://connectionstest.ideals.illinois.edu')
-        url = "#{url}?target=#{CGI.escape(target)}"
-        return url
+        return "#{url}?target=#{CGI.escape('https://connectionstest.ideals.illinois.edu/auth/shibboleth/callback')}"
       end
 
       def make_https(url)
