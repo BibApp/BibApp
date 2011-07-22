@@ -23,7 +23,6 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
-    session[:no_shibboleth] = true
     redirect_back_or_default root_url
   end
 
@@ -31,25 +30,7 @@ class UserSessionsController < ApplicationController
     @works = session[:saved].all_works
   end
 
-  def login_shibboleth
-    session[:no_shibboleth] = false
-    if current_user
-      redirect_to after_login_destination
-    else
-      redirect_to(shibboleth_login_url, :return_to => params[:return_to])
-    end
-  end
-
   protected
-
-  def shibboleth_login_url
-    url = root_url(:protocol => 'https') + "Shibboleth.sso/Login"
-    if return_to = params[:return_to] || session[:return_to]
-      target = root_url(:protocol => 'https') + return_to
-      url = "#{url}?target=#{CGI.escape(target)}"
-    end
-    return url
-  end
 
   def after_login_destination
     #avoid login -> login infinite redirect
