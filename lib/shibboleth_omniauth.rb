@@ -40,14 +40,14 @@ module OmniAuth
 
       def shibboleth_login_url
         url = self.base_url
-        return "#{url}?target=#{CGI.escape('https://connectionstest.ideals.illinois.edu/auth/shibboleth/callback')}"
+        return "#{url}?target=#{shibboleth_target()}"
       end
 
-      def make_https(url)
-        if url.match(/^http:/)
-          url.gsub!(/^http:/, 'https:')
-        end
-        url
+      def shibboleth_target
+        root = URI.parse(root_url)
+        root.scheme = 'https'
+        root.merge!('/auth/shibboleth/callback')
+        CGI.escape(root.to_s)
       end
 
     end
