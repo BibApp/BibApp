@@ -18,16 +18,14 @@ class AuthenticationsController < ApplicationController
       redirect_to root_url
     else
       # User is new to this application
-      user = User.new
-      user.apply_omniauth(omniauth)
-      if user.save
+      begin
+        user = User.new_from_omniauth!(omniauth)
         flash[:info] = 'User created and signed in successfully.'
         user.authentications.create(:provider => omniauth['provider'], :uid => omniauth['uid'])
-        user.activate
         sign_in_and_redirect(user)
-      else
+      rescue
         session[:omniauth] = omniauth.except('extra')
-        redirect_to signup_path
+        redirect_to signup_path and return
       end
     end
   end

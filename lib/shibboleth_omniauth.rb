@@ -21,12 +21,22 @@ module OmniAuth
 
       #check to see if we have a successful authentication
       def callback_phase
-        puts "Hi callback"
+        if request.env["REMOTE_USER"]
+          super
+        else
+          fail!('No REMOTE_USER from shibboleth authentication')
+        end
       end
 
-      #normalize use
       def auth_hash
-
+        remote_user = request.env["REMOTE_USER"]
+        OmniAuth::Utils.deep_merge(super, {
+            'user_info' => {'email' => remote_user},
+            'uid' => remote_user
+        })
+        logger.error ("*" * 80)
+        logger.error request.env["REMOTE_USER"]
+        logger.error ("*" * 80)
       end
 
       protected

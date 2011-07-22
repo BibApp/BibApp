@@ -191,15 +191,18 @@ class User < ActiveRecord::Base
     #other stuff to make a legal user
     if self.new_record?
       self.password = self.password_confirmation = User.random_password
+      self.skip_signup_email = true
     end
 
     # Update user info fetching from omniauth provider
     case omniauth['provider']
       when 'open_id'
         #do any extra work needed for openid
+      when 'shibboleth'
+        #do extra work needed for shibboleth
     end
   end
-  
+
   #this is for Authorization gem
   def uri
     Authorization::Base::PERMISSION_DENIED_REDIRECTION
@@ -245,6 +248,18 @@ class User < ActiveRecord::Base
       user.skip_signup_email = true
       user.save!
       user.activate
+    end
+  end
+
+  def self.new_from_omniauth!(omniauth)
+    User.new.tap do |user|
+      user.apply_omniauth(omniauth)
+      user.save!
+      user.activate
+      case omniauth['provider']
+        when 'shibboleth'
+          Person.ensure_person_for_user(user)
+      end
     end
   end
 
