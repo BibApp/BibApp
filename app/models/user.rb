@@ -186,11 +186,6 @@ class User < ActiveRecord::Base
     Digest::SHA1.digest(self.salt + ':' + new_email)
   end
 
-  #this is for Authorization gem
-  def uri
-    PERMISSION_DENIED_REDIRECTION
-  end
-
   def apply_omniauth(omniauth)
     self.email = omniauth['user_info']['email']
     #other stuff to make a legal user
