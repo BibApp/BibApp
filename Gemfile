@@ -110,6 +110,7 @@ group :test, :development do
   gem 'shoulda'
   gem 'factory_girl'
   gem 'rcov'
-  gem 'cucumber-rails'
+  #This is temporarily out - it's causing a nokogiri conflict with omniauth (1.5.0 for this vs. ~>1.4.2 for omniauth)
+  #gem 'cucumber-rails'
   gem 'database_cleaner'
 end
