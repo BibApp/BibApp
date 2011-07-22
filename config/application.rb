@@ -7,9 +7,9 @@ require 'rails/all'
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 #AUTHORIZATION_MIXIN = "object roles"
-LOGIN_REQUIRED_REDIRECTION = {:controller => 'user_sessions', :action => 'new'}
-PERMISSION_DENIED_REDIRECTION = {:controller => 'works', :action => 'index'}
-STORE_LOCATION_METHOD = :store_location
+Authorization::Base::LOGIN_REQUIRED_REDIRECTION = {:controller => '/user_sessions', :action => 'new'}
+Authorization::Base::PERMISSION_DENIED_REDIRECTION = {:controller => 'works', :action => 'index'}
+Authorization::Base::STORE_LOCATION_METHOD = :store_location
 
 module Bibapp
   class Application < Rails::Application

@@ -198,7 +198,7 @@ class User < ActiveRecord::Base
   
   #this is for Authorization gem
   def uri
-    PERMISSION_DENIED_REDIRECTION
+    Authorization::Base::PERMISSION_DENIED_REDIRECTION
   end
 
 
