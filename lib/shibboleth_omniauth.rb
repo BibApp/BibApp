@@ -44,7 +44,7 @@ module OmniAuth
       end
 
       def shibboleth_target
-        root = URI.parse(root_url)
+        root = URI.parse($APPLICATION_URL)
         root.scheme = 'https'
         root.merge!('/auth/shibboleth/callback')
         CGI.escape(root.to_s)
