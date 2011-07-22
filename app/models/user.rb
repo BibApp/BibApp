@@ -229,28 +229,6 @@ class User < ActiveRecord::Base
     self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect { |x| x.letter.upcase }.uniq
   end
 
-  #find or create a user from the given email
-  #find or create a person from the given email
-  #hook up the user to the person if appropriate
-  def self.ensure_remote_user(email)
-    self.transaction do
-      user = self.find_by_email(email) || self.create_from_email(email)
-      #if appropriate, attach person to user or create person for user
-      #unless user.person look for person with email. If exists, attach. If not, create
-      return user
-    end
-  end
-
-  def self.create_from_email(email)
-    User.new(:email => email).tap do |user|
-      user.password = self.random_password
-      user.password_confirmation = user.password
-      user.skip_signup_email = true
-      user.save!
-      user.activate
-    end
-  end
-
   def self.new_from_omniauth!(omniauth)
     User.new.tap do |user|
       user.apply_omniauth(omniauth)
