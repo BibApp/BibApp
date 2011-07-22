@@ -195,6 +195,11 @@ class User < ActiveRecord::Base
         #do any extra work needed for openid
     end
   end
+  
+  #this is for Authorization gem
+  def uri
+    PERMISSION_DENIED_REDIRECTION
+  end
 
 
   def self.random_password(len = 20)
