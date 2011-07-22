@@ -282,8 +282,8 @@
       %td
         -#to keep long, unbroken URLS from expanding the table
         .span-11.work-link
-          - @work.links.split(";").each do |link|
-            %p #{link}
+          - split_potential_links(@work).each do |link|
+            %p #{link_potential_link(link)}
 
   - unless @work.identifier.blank?
     %tr
