@@ -94,7 +94,6 @@ class PeopleController < ApplicationController
     end
 
     before :show do
-
       search(params)
       @person = @current_object
       work_count = @q.data['response']['numFound']
@@ -110,7 +109,6 @@ class PeopleController < ApplicationController
         @top_level_groups << m.group.top_level_parent unless m.nil? or m.group.top_level_parent.hide?
       end
       @top_level_groups.uniq!
-
     end
 
     before :destroy do
