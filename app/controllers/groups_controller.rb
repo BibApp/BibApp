@@ -117,12 +117,7 @@ class GroupsController < ApplicationController
       end
     else
       respond_to do |format|
-        ul = "<ul>"
-        children.each do |c|
-          ul += "<li>#{c.name}</li>"
-        end
-        ul += "</ul>"
-        flash[:error] = "Group cannot be hidden. It has visible child groups: #{ul}"
+        flash[:error] = "Group cannot be hidden. It has visible child groups: #{child_list(children)}"
         format.html { redirect_to :action => "edit" }
       end
     end
@@ -172,16 +167,19 @@ class GroupsController < ApplicationController
         flash[:error] = "Group cannot be deleted. Memberships exist."
         format.html { redirect_to :action => "edit" }
       end
-    elsif !children.blank?
+    elsif children.present?
       respond_to do |format|
-        ul = "<ul>"
-        children.each do |c|
-          ul += "<li>#{c.name}</li>"
-        end
-        ul += "</ul>"
-        flash[:error] = "Group cannot be deleted. It has visible child groups: #{ul}"
+        flash[:error] = "Group cannot be deleted. It has visible child groups: #{child_list(children)}"
         format.html { redirect_to :action => "edit" }
       end
     end
   end
+
+  protected
+
+  def child_list(children)
+    items = children.collect {|c| "<li>#{c.name}</li>"}
+    "<ul>#{items.join('')}</ul>"
+  end
+
 end
