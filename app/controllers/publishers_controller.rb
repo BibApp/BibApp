@@ -1,4 +1,6 @@
+require 'lib/controller_box_operations'
 class PublishersController < ApplicationController
+  include ControllerBoxOperations
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -102,39 +104,11 @@ class PublishersController < ApplicationController
   end
 
   def add_to_box
-    @a_to_z = Publisher.letters
-    @page = params[:page] || @a_to_z[0]
-    #Add new pubs to the list, and to the session var
-    @pas = session[:publisher_auths] || Array.new
-    if params[:new_pa]
-      begin
-        pa = Publisher.find(params[:new_pa])
-        @pas << pa.id unless @pas.include?(pa.id)
-      rescue ActiveRecord::RecordNotFound
-        flash[:warning] = "One or more publications could not be found."
-        redirect_to authorities_publishers_path
-      end
-    end
-    session[:publisher_auths] = @pas
-    redirect_to authorities_publishers_path(:page => @page) unless request.xhr?
+    add_to_box_generic(Publisher)
   end
 
   def remove_from_box
-    @a_to_z = Publisher.letters
-    @page = params[:page] || @a_to_z[0]
-    #Remove pubs from the list
-    @pas = session[:publisher_auths] || Array.new
-    if params[:rem_pa]
-      begin
-        pa = Publisher.find(params[:rem_pa])
-        @pas.delete(pa.id) if @pas.include?(pa.id)
-      rescue ActiveRecord::RecordNotFound
-        flash[:warning] = "One or more publications could not be found."
-        redirect_to authorities_publishers_path
-      end
-    end
-    session[:publisher_auths] = @pas
-    redirect_to authorities_publishers_path(:page => @page) unless request.xhr?
+    remove_from_box_generic(Publisher)
   end
 
   def update_multiple
