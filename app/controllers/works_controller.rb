@@ -184,10 +184,7 @@ class WorksController < ApplicationController
 
       # current user automatically gets 'admin' permissions on work
       # (only if he/she doesn't already have that permission)
-      if work_id
-        @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
-      end
+      work_from_work_id(work_id)
 
       #If this was submitted as an individual work for a specific person then
       #automatically verify the contributorship
@@ -253,13 +250,7 @@ class WorksController < ApplicationController
 
       work_id, errors = @work.update_from_hash(r_hash)
 
-      # current user automatically gets 'admin' permissions on work
-      # (only if he/she doesn't already have that permission)
-      if work_id
-        @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
-      end
-
+      work_from_work_id(work_id)
 
       respond_to do |format|
         if work_id
@@ -924,5 +915,13 @@ class WorksController < ApplicationController
       @person = Person.find(params[:person_id].split("-")[0])
     end
   end
+
+  def work_from_work_id(work_id)
+    if work_id
+      @work = Work.find(work_id)
+      @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
+    end
+  end
+
 
 end
