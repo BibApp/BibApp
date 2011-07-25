@@ -1,6 +1,5 @@
-require 'lib/controller_box_operations'
 class PublicationsController < ApplicationController
-  include ControllerBoxOperations
+  include PubPubHelper
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -9,13 +8,13 @@ class PublicationsController < ApplicationController
     build :index, :show, :new, :edit, :create, :update
 
     publish :yaml, :xml, :json, :attributes => [
-            :id, :name, :url, :issn_isbn, :publisher_id, {
-                    :publisher => [:id, :name]
-            }, {
-                    :authority => [:id, :name]
-            }, {
-                    :works => [:id]
-            }
+        :id, :name, :url, :issn_isbn, :publisher_id, {
+            :publisher => [:id, :name]
+        }, {
+            :authority => [:id, :name]
+        }, {
+            :works => [:id]
+        }
     ]
 
     #Add a response for RSS
@@ -45,7 +44,7 @@ class PublicationsController < ApplicationController
         @page = params[:page] || @a_to_z[0]
         #I'm not sure if the first condition here is the same as the authorities scope, but it might be
         @current_objects = Publication.includes(:publisher, :works).where("publications.id = authority_id").
-                upper_name_like("#{@page}%").order_by_upper_name
+            upper_name_like("#{@page}%").order_by_upper_name
       end
 
     end
@@ -97,7 +96,7 @@ class PublicationsController < ApplicationController
       @current_objects = current_objects
     else
       @current_objects = Publication.authorities.upper_name_like("#{@page}%").order_by_upper_name.
-              includes(:authority, {:publisher => :authority}, :works)
+          includes(:authority, {:publisher => :authority}, :works)
     end
 
     #Keep a list of publications in process in session[:publication_auths]
@@ -114,32 +113,7 @@ class PublicationsController < ApplicationController
   end
 
   def update_multiple
-    #Only system-wide editors can assign authorities
-    permit "editor of Group"
-
-    pub_ids = params[:pub_ids]
-    auth_id = params[:auth_id]
-
-    @a_to_z = Publication.letters
-    @page = params[:page] || @a_to_z[0]
-
-    if params[:cancel]
-      session[:publication_auths] = nil
-      flash[:notice] = "Cancelled authority selection"
-    else
-      if auth_id
-        update = Publication.update_multiple(pub_ids, auth_id)
-        session[:publication_auths] = nil
-      else
-        flash[:warning] = "You must select one record as the authority."
-      end
-    end
-
-    respond_to do |wants|
-      wants.html do
-        redirect_to authorities_publications_path(:page => @page)
-      end
-    end
+    update_multiple_generic(Publication)
   end
 
   def destroy

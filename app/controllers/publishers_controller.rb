@@ -1,6 +1,5 @@
-require 'lib/controller_box_operations'
 class PublishersController < ApplicationController
-  include ControllerBoxOperations
+  include PubPubHelper
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -112,31 +111,8 @@ class PublishersController < ApplicationController
   end
 
   def update_multiple
-    #Only system-wide editors can assign authorities
-    permit "editor of Group"
+    update_multiple_generic(Publisher)
 
-    pub_ids = params[:pub_ids]
-    auth_id = params[:auth_id]
-
-    @a_to_z = Publication.letters
-    @page = params[:page] || @a_to_z[0]
-
-    if params[:cancel]
-      session[:publisher_auths] = nil
-      flash[:notice] = "Cancelled authority selection."
-    else
-      if auth_id
-        update = Publisher.update_multiple(pub_ids, auth_id)
-        session[:publisher_auths] = nil
-      else
-        flash[:warning] = "You must select one record as the authority."
-      end
-    end
-    respond_to do |wants|
-      wants.html do
-        redirect_to authorities_publishers_path(:page => @page)
-      end
-    end
   end
 
   private
