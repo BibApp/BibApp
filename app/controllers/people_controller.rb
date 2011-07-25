@@ -101,7 +101,6 @@ class PeopleController < ApplicationController
 
       if work_count > 0
         @chart_url = google_chart_url(@facets, work_count)
-
         @keywords = set_keywords(@facets)
       end
 
