@@ -18,19 +18,9 @@ module ApplicationHelper
   end
 
   def letter_link_for(letters, letter, current, path)
-    if path.nil?
-      if current == true
-        content_tag(:li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
-      else
-        content_tag :li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none'))
-      end
-    else
-      if current == true
-        content_tag(:li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
-      else
-        content_tag :li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none'))
-      end
-    end
+    li_opts = (current == true) ? {:class => "current"} : {}
+    link = path ? "#{path[:path]}?page=#{letter}" : {:page=> letter}
+    content_tag(:li, (letters.index(letter) ? link_to(letter, link, :class => "some") : content_tag(:a, letter, :class => 'none')), li_opts)
   end
 
   def link_to_related_works(work)
@@ -334,6 +324,7 @@ module ApplicationHelper
       end
     end
   end
+
   alias include_stylesheet include_stylesheets
 
   def include_javascripts(*paths)
@@ -344,6 +335,7 @@ module ApplicationHelper
       end
     end
   end
+
   alias include_javascript include_javascripts
 
   #make a hidden div with the given id containing the given data, converted to json and html
@@ -351,5 +343,5 @@ module ApplicationHelper
   def js_data_div(id, data)
     content_tag(:div, h(data.to_json), :id => id, :class => 'hidden')
   end
-  
+
 end
