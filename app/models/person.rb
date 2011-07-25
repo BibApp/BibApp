@@ -1,8 +1,10 @@
 require 'bibapp_ldap'
 require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 
 class Person < ActiveRecord::Base
   include MachineName
+  include SolrHelperMethods
 
   acts_as_authorizable #some actions on people require authorization
 
@@ -124,12 +126,6 @@ class Person < ActiveRecord::Base
 
   def most_recent_work
     self.works.most_recent_first.first
-  end
-
-  def to_param
-    param_name = first_last.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
   end
 
   def groups_not

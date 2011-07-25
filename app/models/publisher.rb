@@ -1,6 +1,8 @@
 require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 class Publisher < ActiveRecord::Base
   include MachineNameUpdater
+  include SolrHelperMethods
 
   attr_accessor :do_reindex
 
@@ -41,12 +43,6 @@ class Publisher < ActiveRecord::Base
   IMPORT_SOURCE = 2
   def set_initial_states
     self.publisher_source_id = IMPORT_SOURCE # Import Data
-  end
-
-  def to_param
-    param_name = name.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
   end
 
   # Convert object into semi-structured data to be stored in Solr

@@ -1,5 +1,7 @@
 require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 class Publication < ActiveRecord::Base
+  include SolrHelperMethods
   include MachineNameUpdater
 
   attr_accessor :do_reindex
@@ -103,12 +105,6 @@ class Publication < ActiveRecord::Base
 
       end
     end
-  end
-
-  def to_param
-    param_name = name.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
   end
 
   # Convert object into semi-structured data to be stored in Solr

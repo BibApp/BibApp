@@ -1,6 +1,8 @@
 require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 class Group < ActiveRecord::Base
   include MachineNameUpdater
+  include SolrHelperMethods
 
   acts_as_tree :order => "name"
   acts_as_authorizable #some actions on groups require authorization
@@ -42,12 +44,6 @@ class Group < ActiveRecord::Base
   def works
     # @TODO: Do this the Rails way.
     self.people.collect { |p| p.works.verified }.uniq.flatten
-  end
-
-  def to_param
-    param_name = name.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
   end
 
   # Convert object into semi-structured data to be stored in Solr
