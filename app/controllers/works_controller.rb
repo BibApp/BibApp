@@ -242,7 +242,7 @@ class WorksController < ApplicationController
       end
 
     else #Only perform update if 'save' button was pressed
-      #Anyone with 'editor' role on this work can edit it
+         #Anyone with 'editor' role on this work can edit it
       permit "editor on work"
 
       #First, update work attributes (ensures deduplication keys are updated)
@@ -339,7 +339,7 @@ class WorksController < ApplicationController
     ###
     # Save keywords to instance variable @keywords,
     # in case any errors should occur in saving work
-    @keywords = params[:keywords].split(';').collect {|kw| kw.squish} unless params[:keywords].blank?
+    @keywords = params[:keywords].split(';').collect { |kw| kw.squish } unless params[:keywords].blank?
     attr_hash[:keywords] = @keywords
 
     ###
@@ -527,46 +527,24 @@ class WorksController < ApplicationController
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
   end
 
-
-  #Auto-Complete for entering Keywords in Web-based Work entry
-  #  This method provides users with a list of matching Keywords
-  #  already in BibApp.  This also include Tags.
   def auto_complete_for_keyword_name
-    keyword = params[:keyword][:name].downcase
-
-    #search at beginning of word
-    beginning_search = keyword + "%"
-    #search at beginning of any other words
-    word_search = "% " + keyword + "%"
-
-    #Search both keyworks and tags
-
-    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8)
-
-
-    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                     beginning_search, word_search).order_by_name.limit(8)
-
-    #Combine both lists
-    keywordsandtags = (keywords + tags).collect { |x| x.name }
-
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+    auto_complete_for_name(params[:keyword][:name])
   end
 
-
-  #This is the same as for keywords, except this is used with tags
   def auto_complete_for_tag_name
-    tag = params[:tag][:name].downcase
+    auto_complete_for_name(params[:tag][:name])
+  end
 
+  #provide matching keywords or tags for autocomplete based off of the supplied name
+  def auto_complete_for_name(name)
+    name = name.downcase
 
     #search at beginning of word
-    beginning_search = tag + "%"
+    beginning_search = name + "%"
     #search at beginning of any other words
-    word_search = "% " + tag + "%"
+    word_search = "% " + name + "%"
 
-    #Search both keyworks and tags
-
+    #Search both keywords and tags
     keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                              beginning_search, word_search).order_by_name.limit(8)
 
@@ -574,9 +552,9 @@ class WorksController < ApplicationController
                      beginning_search, word_search).order_by_name.limit(8)
 
     #Combine both lists
-    keywordsandtags = (keywords + tags).collect { |x| x.name }
+    keywords_and_tags = (keywords + tags).collect { |x| x.name }
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywords_and_tags.uniq.sort.first(8)}
   end
 
   #Auto-Complete for entering Publication Titles in Web-based Work entry
