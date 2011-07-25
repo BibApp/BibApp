@@ -42,10 +42,9 @@ class WorksController < ApplicationController
 
     #initialize variables used by 'new.html.haml'
     before :new do
+
       #check if we are adding new works directly to a person
-      if params[:person_id]
-        @person = Person.find(params[:person_id].split("-")[0])
-      end
+      person_from_person_id
 
       if @person
         #If adding to a person, must be an 'editor' of that person
@@ -152,9 +151,7 @@ class WorksController < ApplicationController
   #Create a new Work or many new Works
   def create
     #check if we are adding new works directly to a person
-    if params[:person_id]
-      @person = Person.find(params[:person_id].split("-")[0])
-    end
+    person_from_person_id
 
     if @person
       #If adding to a person, must be an 'editor' of that person
@@ -920,6 +917,12 @@ class WorksController < ApplicationController
 
     # Quick cleanup of batch...remove any items which have been deleted
     session[:works_batch].delete_if { |work_id| !Work.exists?(work_id) }
+  end
+
+  def self.person_from_person_id
+    if params[:person_id]
+      @person = Person.find(params[:person_id].split("-")[0])
+    end
   end
 
 end
