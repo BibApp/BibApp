@@ -12,3 +12,12 @@ module MachineName
   end
 
 end
+
+module MachineNameUpdater
+  include MachineName
+  def update_machine_name
+    if self.name_changed?
+      self.machine_name = self.make_machine_name(self.name)
+    end
+  end
+end

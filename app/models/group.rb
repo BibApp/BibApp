@@ -1,4 +1,7 @@
+require 'lib/machine_name'
 class Group < ActiveRecord::Base
+  include MachineNameUpdater
+
   acts_as_tree :order => "name"
   acts_as_authorizable #some actions on groups require authorization
 
@@ -17,7 +20,7 @@ class Group < ActiveRecord::Base
   scope :order_by_name, order('name')
   #### Callbacks ####
 
-  before_save :before_save_actions
+  before_save :update_machine_name
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
@@ -33,11 +36,6 @@ class Group < ActiveRecord::Base
 
     return name, id
   end
-
-  def before_save_actions
-    self.update_machine_name
-  end
-
 
   #### Methods ####
 
@@ -59,17 +57,6 @@ class Group < ActiveRecord::Base
 
   def solr_filter
     %Q(group_id:"#{self.id}")
-  end
-
-  #Update Machine Name of Group (called by after_save callback)
-  def update_machine_name
-    #Machine name only needs updating if there was a name change
-    if self.name_changed?
-      #Machine name is Group Name with:
-      #  1. all punctuation/spaces converted to single space
-      #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-    end
   end
 
   #Add an http:// if this (or https://) isn't found before the url

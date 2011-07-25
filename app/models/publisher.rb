@@ -1,4 +1,6 @@
+require 'lib/machine_name'
 class Publisher < ActiveRecord::Base
+  include MachineNameUpdater
 
   attr_accessor :do_reindex
 
@@ -22,7 +24,8 @@ class Publisher < ActiveRecord::Base
 
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
-  before_create :before_create_actions
+  before_create :update_authorities
+  before_save  :update_machine_name
   after_save :update_authorities
   after_save :reindex, :if => :do_reindex
 
@@ -30,11 +33,6 @@ class Publisher < ActiveRecord::Base
     #Authority defaults to self
     self.authority_id = self.id
     self.save
-  end
-
-  def before_create_actions
-    self.update_authorities
-    self.update_machine_name
   end
 
   #### Methods ####
@@ -102,17 +100,6 @@ class Publisher < ActiveRecord::Base
   def reindex
     logger.debug("\n\n===Reindexing Works===\n\n")
     Index.batch_index
-  end
-
-  #Update Machine Name of Publisher (called by after_save callback)
-  def update_machine_name
-    #Machine name only needs updating if there was a name change
-    if self.name_changed?
-      #Machine name is Name with:
-      #  1. all punctuation/spaces converted to single space
-      #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-    end
   end
 
   #Return the year of the most recent publication
