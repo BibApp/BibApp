@@ -29,10 +29,8 @@ class KeywordsController < ApplicationController
     @years = Array.new
 
     year_arr.each do |y|
-      year_data = KeywordsHelper::YearTag.new
-      year_data.year = y
-      year_data.tags = Array.new
-
+      year_data = KeywordsHelper::YearTag.new(:year => y, :tags => Array.new)
+      
       params[:fq] = "year_facet:\"#{y}\""
       search(params)
 
@@ -64,7 +62,7 @@ class KeywordsController < ApplicationController
     else
       max_kw_freq = [used_keywords[0].value.to_i, bin_count].max
 
-      used_keywords.sort { |a, b| a.name <=> b.name }.collect do |kw|
+      used_keywords.sort { |a, b| a.name <=> b.name }.each do |kw|
         tag = KeywordsHelper::TagDatum.new(:name => kw.name, :count => kw.value, :year => year)
         tag.bin = ((tag.count.to_f * bin_count.to_f) / max_kw_freq).ceil
         year_data.tags << tag
