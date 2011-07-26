@@ -707,17 +707,8 @@ class WorksController < ApplicationController
     # sometimes it will have a value. If it's nil or blank we still want
     # to have the @publication[:name] hash in case we're sent back to
     # the 'new' page due to a save error.
-    if params[:publication].blank?
-      @publication.name = nil
-    else
-      @publication.name = params[:publication][:name].blank? ? nil : params[:publication][:name]
-    end
-    if params[:publisher].blank?
-      @publisher.name = nil
-    else
-      @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
-    end
-
+    @publication.name = params[:publication][:name] rescue nil
+    @publisher.name = params[:publisher][:name] rescue nil
 
     attr_hash[:issn_isbn] = @publication.issn_isbn
     attr_hash[:publication] = @publication.name
@@ -727,7 +718,7 @@ class WorksController < ApplicationController
       attr_hash[key.to_sym] = val
     end
 
-    attr_hash.delete_if { |key, val| val.blank? }
+    return attr_hash.delete_if { |key, val| val.blank? }
 
   end
 
