@@ -355,17 +355,8 @@ class WorksController < ApplicationController
   # Also sets the instance variable @author_name_strings,
   # in case any errors should occur in saving work
   def set_author_name_strings(work)
-    #default to empty array of author strings
-    params[:author_name_strings] ||= []
-
-    #Set NameStrings for this Work
     @author_name_strings = Array.new
-    params[:author_name_strings].each do |add|
-      name_string = NameString.find_or_initialize_by_name(add)
-      @author_name_strings << {:name => name_string, :role => "Author"}
-    end
-    work.set_work_name_strings(@author_name_strings)
-
+    set_contributor_name_strings(work, @author_name_strings, :author_name_strings, 'Author')
   end
 
   # Load name strings list from Request params
@@ -373,17 +364,17 @@ class WorksController < ApplicationController
   # Also sets the instance variable @editor_name_strings,
   # in case any errors should occur in saving work
   def set_editor_name_strings(work)
-    #default to empty array of author strings
-    params[:editor_name_strings] ||= []
-
-    #Set NameStrings for this Work
     @editor_name_strings = Array.new
-    params[:editor_name_strings].each do |add|
-      name_string = NameString.find_or_initialize_by_name(add)
-      @editor_name_strings << {:name => name_string, :role => "Editor"}
-    end
-    work.set_work_name_strings(@editor_name_strings)
+    set_contributor_name_strings(work, @editor_name_strings, :editor_name_strings, 'Editor')
+  end
 
+  def set_contributor_name_strings(work, accumulator, parameter_key, role)
+    params[parameter_key] ||= []
+    params[parameter_key].each do |name|
+      name_string = NameString.find_or_initialize_by_name(name)
+      accumulator << {:name => name_string, :role => role}
+    end
+    work.set_work_name_strings(accumulator)
   end
 
   #Auto-Complete for entering Author NameStrings in Web-based Work entry
