@@ -1,8 +1,5 @@
+require 'solr'
 class Index
-  #Require Solr, if it's defined.  
-  # This allows us to make solr-ruby a Gem Dependency, as suggested in this blog:
-  # http://www.webficient.com/2008/7/11/rails-gem-dependencies-and-plugin-errors
-  require 'solr' if defined? Solr
 
   #### Solr ####
 
@@ -20,13 +17,13 @@ class Index
 
   # DELETE INDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
-  ## works.each{|c| Index.remove_from_solr(c)} 
+  ## works.each{|c| Index.remove_from_solr(c)}
 
   # REINDEX - Very long process
   # @TODO: Learn how to use Solr "replication"
   ## works.each{|c| Index.update_solr(c)}
 
-  # Default Solr Mapping 
+  # Default Solr Mapping
   SOLR_MAPPING = {
       # Work
       :pk_i => :id, #store Work ID as pk_i in Solr
