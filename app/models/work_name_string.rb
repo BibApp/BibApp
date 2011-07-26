@@ -15,17 +15,4 @@ class WorkNameString < ActiveRecord::Base
     "#{self.name_string.name}||#{self.name_string.id}||#{position}||#{role}"
   end
 
-  def self.create_batch!(name_string, work_data)
-    cites = Work.import_batch!(work_data)
-    create_batch_from_works!(name_string, cites)
-    return cites
-  end
-
-  def self.create_batch_from_works!(name_string, works)
-    return unless works.respond_to?(:each)
-    works.each do |c|
-      WorkNameString.create(:name_string_id => name_string.id, :work_id => c.id)
-    end
-  end
-
 end

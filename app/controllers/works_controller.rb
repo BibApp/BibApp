@@ -161,7 +161,7 @@ class WorksController < ApplicationController
       permit "editor"
     end
 
-    #Check if user hit cancel button    
+    #Check if user hit cancel button
     if params['cancel']
       #just return back to 'new' page
       respond_to do |format|
@@ -222,7 +222,7 @@ class WorksController < ApplicationController
     #Check if there was a path and page passed along to return to
     return_path = params[:return_path]
 
-    #Check if user hit cancel button    
+    #Check if user hit cancel button
     if params['cancel']
       # just return back from where we came
       respond_to do |format|
@@ -334,7 +334,7 @@ class WorksController < ApplicationController
     # Setting Tags
     ###
     # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work    
+    # in case any errors should occur in saving work
     #@tags = params[:tags]
     #@work.set_tag_strings(@tags)
 
@@ -416,7 +416,7 @@ class WorksController < ApplicationController
 
   def destroy_multiple
     #Anyone who is minimally an admin (on anything in system) can delete works
-    #(NOTE: User will actually have to be an 'admin' on all works in this batch, 
+    #(NOTE: User will actually have to be an 'admin' on all works in this batch,
     #       otherwise he/she will not be able to destroy *all* the works)
     permit "admin"
 
@@ -590,7 +590,7 @@ class WorksController < ApplicationController
   #
   # (E.g.) item_name=>"author_name_strings", item_value=>"Donohue, Tim", clear_field=>"author_string"
   #	  Above example will add value "Donohue, Tim" to list of author values in form.
-  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_name_strings_list". 
+  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_name_strings_list".
   #   It then clears the "author_string" field (which is the textbox where the value was entered).
   #
   # See 'item_list.js.rjs' for much more information, as this file includes the
@@ -636,11 +636,11 @@ class WorksController < ApplicationController
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
   # Expects two parameters:
   #   list_type -  Type of list (e.g. "author_name_strings", "keywords")
-  #   item_id   -  ID of item to remove 
+  #   item_id   -  ID of item to remove
   #
   # Essentially this does the opposite of 'add_item_to_list', and removes
   # an existing item.
-  # 
+  #
   # See 'item_list.js.rjs' for much more information, as this file includes the
   # Javascript to add and remove items.
   def remove_item_from_list
@@ -682,7 +682,7 @@ class WorksController < ApplicationController
     # Setting Tags
     ###
     # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work    
+    # in case any errors should occur in saving work
     @tags = params[:tags]
     @work.set_tag_strings(@tags)
 
@@ -699,178 +699,6 @@ class WorksController < ApplicationController
   end
 
   private
-
-  # Batch import Works
-  def import_batch!(data)
-
-    #default errors to none
-    errors = Array.new
-
-    # (1) Read the data
-    begin
-      str = data
-      if data.respond_to? :read
-        str = data.read
-      elsif File.readable?(data)
-        str = File.read(data)
-      end
-
-      #Convert string to Unicode, if it's not already Unicode
-      unless str.is_utf8?
-        #guess the character encoding
-        encoding = CMess::GuessEncoding::Automatic.guess(str)
-
-        logger.debug("Guessed Encoding: #{encoding}")
-
-        #as long as encoding could be guessed, try to convert to UTF-8
-        unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
-          #convert to one big UTF-8 string
-          str =Iconv.iconv('UTF-8', encoding, str).to_s
-        else
-          #log an error...this file has a character encoding we cannot handle!
-          logger.error("Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
-          #return nothing, which will inform user that file format was invalid
-          return nil
-        end
-      end
-
-    rescue Exception =>e
-      #re-raise this exception to create()...it will handle logging the error
-      raise
-    end
-
-    # Init: Parser and Importer
-    p = CitationParser.new
-    i = CitationImporter.new
-
-    # (2) Parse the data using CitationParser plugin
-    begin
-      #Attempt to parse the data
-      pcites = p.parse(str)
-
-      #Rescue any errors in parsing
-    rescue Exception => e
-      #re-raise this exception to create()...it will handle logging the error
-      raise
-    end
-
-
-    #Check to make sure there were not errors while parsing the data.
-
-    #No citations were parsed
-    if pcites.nil? || pcites.empty?
-      return nil
-    end
-
-    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-
-    # (3) Import the data using CitationImporter Plugin
-    begin
-      # Map Import hashes
-      attr_hashes = i.citation_attribute_hashes(pcites)
-      #logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
-
-      #Make sure there is data in the Attribute Hash
-      return nil if attr_hashes.nil?
-
-
-      #initialize an array of all the works we create in this batch
-      works_added = init_last_batch
-
-      # Now, actually *create* these works in database
-      attr_hashes.map do |h|
-
-        # Initialize the Work
-        klass = h[:klass]
-
-        # Are we working with a legit SubKlass?
-        klass = klass.constantize
-        if klass.superclass != Work
-          raise NameError.new("#{klass_type} is not a subclass of Work")
-        end
-
-        work = klass.new
-
-        ###
-        # Setting WorkNameStrings
-        ###
-        work.set_work_name_strings(h[:work_name_strings])
-
-        #If we are adding to a person, pre-verify that person's contributorship
-        work.preverified_person = @person if @person
-
-        ###
-        # Setting Publication Info, including Publisher
-        ###
-        issn_isbn = h[:issn_isbn]
-        publication_info = {:name => h[:publication],
-                            :issn_isbn => issn_isbn,
-                            :publisher_name => h[:publisher]}
-
-        work.set_publication_info(publication_info)
-
-        # Very minimal validation -- just check that we have a title
-        if h[:title_primary].nil? or h[:title_primary] == ""
-          errors << "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
-
-          logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
-          logger.warn("End Work \n\n")
-        else
-
-          ###
-          # Setting Keywords
-          ###
-          work.set_keyword_strings(h[:keywords])
-
-          # Clean the hash of non-Work table data
-          # Cleaning will prepare the hash for ActiveRecord insert
-          h.delete(:klass)
-          h.delete(:work_name_strings)
-          h.delete(:publisher)
-          h.delete(:publication)
-          h.delete(:publication_place)
-          h.delete(:issn_isbn)
-          h.delete(:keywords)
-          h.delete(:source)
-          # @TODO add external_systems to work import
-          h.delete(:external_id)
-
-          #save remaining hash attributes
-          work.attributes=h
-          work.set_for_index_and_save
-
-          # current user automatically gets 'admin' permissions on work
-          # (only if he/she doesn't already have that role on the work)
-          work.accepts_role 'admin', current_user if !current_user.has_role?('admin', work)
-
-          #add to batch of works created
-          works_added << work.id
-        end #end if no title
-      end
-      #index everything in Solr
-      Index.batch_index
-
-      #This error occurs if the works were parsed, but some bad data
-      #was entered which caused an error to occur when saving the data
-      #to the database.
-    rescue Exception => e
-      #remove anything already added to the database (i.e. rollback ALL changes)
-      unless works_added.nil?
-        works_added.each do |work_id|
-          work = Work.find(work_id)
-          work.destroy unless work.nil?
-        end
-        #re-initialize batch in order to clear it from session
-        works_added = init_last_batch
-      end
-      #reraise the error to create(), which will make sure it is logged
-      raise
-    end
-
-    #At this point, some or all of the works were saved to the database successfully.
-    return works_added, errors
-  end
-
 
   # Initializes a new work subclass, but doesn't create it in the database
   def subklass_init(klass_type, work)
