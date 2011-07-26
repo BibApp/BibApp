@@ -44,7 +44,7 @@ class KeywordsController < ApplicationController
 
       @chart_urls << google_chart_url(work_count, @facets[:types])
 
-      add_tags(year_data, @facets[:keywords])
+      add_tags(year_data, @facets[:keywords], y)
       @year_keywords << year_data unless year_data.tags.blank?
     end
 
@@ -52,36 +52,28 @@ class KeywordsController < ApplicationController
 
   protected
 
-  def add_tags(year_data, all_keywords)
+  def add_tags(year_data, all_keywords, year)
     #generate normalized keyword list
     max = 25
     bin_count = 5
     used_keywords = all_keywords.first(max)
 
     if used_keywords.blank?
-      yt = KeywordsHelper::TagDatum.new(Struct.new(:name, :count, :year).new(nil, nil, y))
-      yt.bin = 3
-      yt.year = y
+      yt = KeywordsHelper::TagDatum.new(:name => nil, :count => nil, :bin => 3, :year => year)
       year_data.tags << yt
     else
-      max_kw_freq = used_keywords[0].value.to_i > bin_count ? used_keywords[0].value.to_i : bin_count
+      max_kw_freq = [used_keywords[0].value.to_i, bin_count].max
 
-      keyword_array = used_keywords.map { |kw|
-        s = Struct.new(:name, :count, :year)
-        s.new(kw.name, kw.value, y)
-      }.sort { |a, b| a.name <=> b.name }
-
-      keyword_array.each do |kw|
-        yt = KeywordsHelper::TagDatum.new(kw)
-        yt.bin = ((kw.count.to_f * bin_count.to_f)/max_kw_freq).ceil
-        yt.year = y
-        year_data.tags << yt
+      used_keywords.sort { |a, b| a.name <=> b.name }.collect do |kw|
+        tag = KeywordsHelper::TagDatum.new(:name => kw.name, :count => kw.value, :year => year)
+        tag.bin = ((tag.count.to_f * bin_count.to_f) / max_kw_freq).ceil
+        year_data.tags << tag
       end
     end
   end
 
-  #generate the google chart URI
-  #see http://code.google.com/apis/chart/docs/making_charts.html
+#generate the google chart URI
+#see http://code.google.com/apis/chart/docs/making_charts.html
   def google_chart_url(work_count, types)
     chd = "chd=t:"
     chl = "chl="

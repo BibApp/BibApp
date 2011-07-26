@@ -9,10 +9,11 @@ module KeywordsHelper
   class TagDatum
     attr_accessor :id, :name, :bin, :count, :year
 
-    def initialize(tag)
-      self.name = tag.name
-      self.count = tag.count
-      self.year = tag.year
+    def initialize(args = {})
+      args.each do |k, v|
+        self.send(:"#{k}=", v)
+      end
     end
   end
+
 end
