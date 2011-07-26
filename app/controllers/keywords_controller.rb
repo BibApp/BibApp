@@ -14,24 +14,18 @@ class KeywordsController < ApplicationController
 
     search(params)
 
-    facet_years = @facets[:years].compact
-    if facet_years.empty?
-      year_arr = []
-    else
-      first_year = facet_years.first.name
-      last_year = facet_years.last.name
-      year_arr = Range.new(first_year, last_year).to_a
-    end
-
     @year_keywords = Array.new
     @chart_urls = Array.new
     @work_counts = Array.new
     @years = Array.new
 
-    year_arr.each do |y|
+    facet_years = @facets[:years].compact
+    year_array = facet_years.empty? ? [] : Range.new(facet_years.first.name, facet_years.last.name).to_a
+
+    year_array.each do |y|
       year_data = KeywordsHelper::YearTag.new(:year => y, :tags => Array.new)
-      
-      params[:fq] = "year_facet:\"#{y}\""
+
+      params[:fq] = %Q(year_facet:"#{y}")
       search(params)
 
       work_count = @q.data['response']['numFound']
@@ -76,7 +70,7 @@ class KeywordsController < ApplicationController
     chd = "chd=t:"
     chl = "chl="
     types.each_with_index do |r, i|
-      perc = (r.value.to_f/work_count.to_f*100).round.to_s
+      perc = (r.value.to_f / work_count.to_f * 100).round.to_s
       chd += "#{perc},"
       ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
       chl += "#{ref.titleize.pluralize}(#{r.value})|"
