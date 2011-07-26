@@ -146,9 +146,9 @@ class Person < ActiveRecord::Base
   end
 
   def recalculate_unverified_contributorship_score
-    #re-calculate scores for all unverified contributorships of this Person        
+    #re-calculate scores for all unverified contributorships of this Person
     self.contributorships.unverified.each do |c|
-      c.calculate_score
+      c.calculate_score(self.scoring_hash)
       Index.update_solr(c.work)
     end
   end
