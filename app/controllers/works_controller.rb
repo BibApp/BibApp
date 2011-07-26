@@ -323,7 +323,7 @@ class WorksController < ApplicationController
 
     full_success = true
 
-    unless work_ids.nil? or work_ids.empty?
+    if work_ids.present?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       work_ids.each do |work_id|
         work = Work.find_by_id(work_id)
@@ -496,30 +496,22 @@ class WorksController < ApplicationController
     render :template => 'works/forms/fields/update_item_list'
   end
 
-  # see above
   def add_contributor_to_list
-    @list_type = "contributor_name_strings"
-    @sortable = true
-    @ns_id = params[:ns_id]
-    @update_action = 'add_contributor'
-
-    @work = subklass_init(params[:work_type], nil)
-
-    #Add item value to list dynamically using Javascript
-    render :template => 'works/forms/fields/update_item_list'
+    add_collaborator_to_list("contributor_name_strings", 'add_contributor')
   end
 
   def add_author_to_list
-    @ns_id = params[:ns_id]
-    @list_type = "author_name_strings"
-    @sortable = true
-    @update_action = "add_author"
-
-    @work = subklass_init(params[:work_type], nil)
-
-    render :template => 'works/forms/fields/update_item_list'
+    add_collaborator_to_list("author_name_strings", "add_author")
   end
 
+  def add_collaborator_to_list(list_type, update_action)
+    @ns_id = params[:ns_id]
+    @sortable = true
+    @list_type = list_type
+    @update_action = update_action
+    @work = subklass_init(params[:work_type], nil)
+    render :template => 'works/forms/fields/update_item_list'
+  end
 
   #Removes a single item value from list of items in Web-based Work entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
@@ -542,18 +534,17 @@ class WorksController < ApplicationController
   end
 
   def remove_contributor_from_list
-    @ns_id = params[:ns_id]
-    @update_action = 'remove_contributor'
-
-    #remove item value from list dynamically using Javascript
-    render :template => 'works/forms/fields/update_item_list'
+    remove_collaborator_from_list('remove_contributor')
   end
 
   def remove_author_from_list
-    @ns_id = params[:ns_id]
-    @update_action = 'remove_author'
+    remove_collaborator_from_list('remove_author')
+  end
 
-    #remove item value from list dynamically using Javascript
+  def remove_collaborator_from_list(update_action)
+    @ns_id = params[:ns_id]
+    @update_action = update_action
+    #remove item value from list using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end
 
