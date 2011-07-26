@@ -113,125 +113,86 @@ class Import < ActiveRecord::Base
   def batch_import
     logger.debug("\n\n==== Staring Batch Import ==== \n\n")
 
-    # Initialize an array of all the works we create in the batch
+    # Initialize an array of all the works added and hash of errors encounterd in the batch
     self.works_added = Array.new
-
-    # Initialize a Hash of all the errors encountered in the batch
     self.import_errors = Hash.new
 
-    # Are we importing for a person?
-    if self.person_id
-      person = Person.find_by_id(self.person_id)
-      logger.debug("* Person - #{person.display_name} \n\n")
-    end
+    # Init: Parser and Importer
+    citation_parser = CitationParser.new
+    citation_importer = CitationImporter.new
 
     # Step: 1 -- Read the data
     begin
-      str = "#{Rails.root}/public#{self.import_file.public_filename}"
-      if str.respond_to? :read
-        str = str.read
-      elsif File.readable?(str)
-        str = File.read(str)
-      end
-
-      #Convert string to Unicode, if it's not already Unicode
       begin
-        str = StringMethods.ensure_utf8(str)
+        str = StringMethods.ensure_utf8(self.read_import_file)
       rescue EncodingException => e
-        # Log an error...this file has a character encoding we cannot handle!
-        logger.error("\nCitations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
-
-        #return nothing, which will inform user that file format was invalid
         self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
         raise e
       end
 
-      # Init: Parser and Importer
-      p = CitationParser.new
-      i = CitationImporter.new
-
-      # (2) Parse the data using CitationParser plugin
-      #Attempt to parse the data
-      pcites = p.parse(str)
-      #Rescue any errors in parsing
+      parsed_citations = citation_parser.parse(str)
     rescue Exception => e
-      #re-raise this exception to create()...it will handle logging the error
       self.import_errors[:exception] = e
-      self.save
-      self.review!
+      self.save_and_review!
       return
     end
 
-    # @TODO: Check to make sure there were not errors while parsing the data.
-    #No citations were parsed
-    if pcites.blank?
-      logger.debug("\n* Unsupported file format!\n\n")
-      self.import_errors[:no_parsed_citations] = "The format of the input was unrecognized or unsupported.<br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>In addition, if you are uploading a text file, it should use UTF-8 character encoding."
-      logger.debug("\n* Before save: #{self.inspect}\n\n")
-      self.save
-      logger.debug("\n* After save: #{self.inspect}\n\n")
-      self.review!
-      logger.debug("\n* After review: #{self.inspect}\n\n")
+    if parsed_citations.blank?
+      self.import_errors[:no_parsed_citations] = <<-MESSAGE
+        The format of the input was unrecognized or unsupported.
+        <br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>
+        In addition, if you are uploading a text file, it should use UTF-8 character encoding.
+      MESSAGE
+      self.save_and_review!
       return
     end
 
-    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-
-    # (3) Import the data using CitationImporter Plugin
     begin
-      # Map Import hashes
-      attr_hashes = i.citation_attribute_hashes(pcites)
-      logger.debug "\n#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
+      #import citations
+      attr_hashes = citation_importer.citation_attribute_hashes(parsed_citations)
 
       # Make sure there is data in the Attribute Hash
       return nil if attr_hashes.nil?
 
-      # Now, actually *create* these works in database
+      #create works and reindex
+      create_works_from_attribute_hashes(attr_hashes)
+      Index.batch_index
+
+    rescue Exception => e
+      self.import_errors[:exception] = e.message
+    end
+
+    # At this point, some or all of the works were saved to the database successfully.
+    self.save_and_review!
+  end
+
+  def save_and_review!
+    self.save
+    self.review!
+  end
+
+  def read_import_file
+    File.read("#{Rails.root}/public#{self.import_file.public_filename}")
+  end
+
+  # Create works in database. Use a transaction to rollback if there is an error, allowing error to propagate
+  def create_works_from_attribute_hashes(attr_hashes)
+    self.transaction do
       attr_hashes.each do |h|
-
         work, error = Work.create_from_hash(h)
-
         if error.nil?
           #add to batch of works created
           self.works_added << work
         else
           #error = truncate(error) if error
-          self.import_errors[:import_error] = Array.new unless self.import_errors[:import_error]
+          self.import_errors[:import_error] ||= Array.new
           self.import_errors[:import_error] << "<em>#{h[:title_primary]}</em> could not be imported. #{error}<br/>"
         end
-
       end
-
-      #index everything in Solr
-      Index.batch_index
-
-      # This error occurs if the works were parsed, but some bad data
-      # was entered which caused an error to occur when saving the data
-      # to the database.
-    rescue Exception => e
-      # remove anything already added to the database (i.e. rollback ALL changes)
-      unless self.works_added.blank?
-        self.works_added.each do |work_id|
-          work = Work.find(work_id)
-          work.destroy unless work.nil?
-        end
-      end
-
-      #re-raise this exception to create()...it will handle logging the error
-      self.import_errors[:exception] = e.message
     end
-
-    # At this point, some or all of the works were saved to the database successfully.
-    # return works_added, errors
-    self.save
-
-    # Trigger AASM reviewable event
-    # Email will be sent to User
-    self.review!
   end
 
   def name_string_work_count
-
     works = self.works_added.collect { |work_id| Work.find_by_id(work_id) }.compact
 
     # Initialize hash of name_strings
