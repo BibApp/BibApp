@@ -1,3 +1,4 @@
+require 'set'
 class Contributorship < ActiveRecord::Base
 
   STATE_UNVERIFIED = 1
@@ -124,48 +125,45 @@ class Contributorship < ActiveRecord::Base
     work_scoring_hash = self.work.scoring_hash
 
     if person_scoring_hash and work_scoring_hash
-      # Years
-      year_score = 0
-      years = Array.new
-
-      # Build full array of publishing years
-
-      years_array = person_scoring_hash[:years].compact.sort
-      unless years_array.empty?
-        years_array.first.upto(years_array.last) { |y| years << y }
-        year_score = 25 if years.include?(work_scoring_hash[:year])
-      end
-
-      # Publications
-      publication_score = 0
-      publication_score = 25 if person_scoring_hash[:publication_ids].include?(work_scoring_hash[:publication_id])
-
-      # Collaborators
-      col_poss = work_scoring_hash[:collaborator_ids].size
-      col_matches = 0
-
-      work_scoring_hash[:collaborator_ids].each do |ns|
-        col_matches = (col_matches + 1) if person_scoring_hash[:collaborator_ids].include?(ns)
-      end
-
-      collaborator_score = 0
-      collaborator_score = ((25/col_poss)*col_matches) if col_poss != 0
-
-      # Keywords
-      key_poss = work_scoring_hash[:keyword_ids].size
-      key_matches = 0
-
-      work_scoring_hash[:keyword_ids].each do |k|
-        key_matches = (key_matches + 1) if person_scoring_hash[:keyword_ids].include?(k)
-      end
-
-      keyword_score = 0
-      keyword_score = ((25/key_poss)*key_matches) if key_poss != 0
-
+      year_score = calculate_year_score(person_scoring_hash, work_scoring_hash)
+      publication_score = calculate_publication_score(person_scoring_hash, work_scoring_hash)
+      collaborator_score = calculate_collaborator_score(person_scoring_hash, work_scoring_hash)
+      keyword_score = calculate_keyword_score(person_scoring_hash, work_scoring_hash)
       self.score = (year_score + publication_score + collaborator_score + keyword_score)
     else
       self.score = 0
     end
+  end
+
+  def calculate_keyword_score(person_scoring_hash, work_scoring_hash)
+    calculate_inclusion_score(person_scoring_hash[:keyword_ids], work_scoring_hash[:keyword_ids], 25)
+  end
+
+  def calculate_collaborator_score(person_scoring_hash, work_scoring_hash)
+    calculate_inclusion_score(person_scoring_hash[:collaborator_ids], work_scoring_hash[:collaborator_ids], 25)
+  end
+
+  #return 0 if the possible ids are empty, otherwise max_score * the fraction of possible_ids in known_ids
+  def calculate_inclusion_score(known_ids, possible_ids, max_score)
+    return 0 if possible_ids.empty?
+    known_ids = known_ids.to_set
+    matches = possible_ids.detect do |id|
+      known_ids.include?(id)
+    end
+    return ((max_score / possible_ids.size) * matches.size)
+  end
+
+  def calculate_publication_score(person_scoring_hash, work_scoring_hash)
+    return 25 if person_scoring_hash[:publication_ids].include?(work_scoring_hash[:publication_id])
+    return 0
+  end
+
+  def calculate_year_score(person_scoring_hash, work_scoring_hash)
+    work_year = work_scoring_hash[:year]
+    years_array = person_scoring_hash[:years].compact.sort
+    return 0 if years_array.empty?
+    year_range = Range.new(years_array.first, years_array.last)
+    return (year_range.include?(work_year) ? 25 : 0)
   end
 
   def calculate_initial_score
