@@ -30,4 +30,10 @@ class BookWhole < Work
 
     return open_url_kevs
   end
+
+  def append_apa_work_type_specific_text!(citation_string)
+    citation_string << self.publisher.authority.name if self.publisher
+    #Only add a period if the string doesn't currently end in a period.
+    citation_string << ". " if !citation_string.match("\.\s*\Z")
+  end
 end

@@ -80,9 +80,9 @@ class Work < ActiveRecord::Base
   after_create :after_create_actions
   before_save :before_save_actions
   after_save :after_save_actions
-  
+
   # After Create only
-  # (Note: after create callbacks *must* be placed in Work model, 
+  # (Note: after create callbacks *must* be placed in Work model,
   #  for faux-accessors to work properly)
   def after_create_actions
     create_work_name_strings
@@ -186,10 +186,10 @@ class Work < ActiveRecord::Base
   # List of all currently enabled Work Types
   def self.types
     # @TODO: Add each work subklass to this array
-    # "Journal Article", 
-    # "Conference Proceeding", 
+    # "Journal Article",
+    # "Conference Proceeding",
     # "Book"
-    # more...   	    			  
+    # more...
     ["Artwork",
      "Book (Section)",
      "Book (Whole)",
@@ -306,7 +306,7 @@ class Work < ActiveRecord::Base
 
       #save remaining hash attributes
       saved = self.update_attributes(h)
-      
+
     rescue Exception => e
       return nil, e
     end
@@ -337,7 +337,7 @@ class Work < ActiveRecord::Base
     end
 
     #@TODO: Is there a way that we can calculate the *canonical best*
-    # version of a work? We've tried this in the past, but we need to do 
+    # version of a work? We've tried this in the past, but we need to do
     # it in a better way (e.g.  we don't end up accidently re-marking things as
     # dupes that have previously been determined to not be dupes by a human)
   end
@@ -380,7 +380,7 @@ class Work < ActiveRecord::Base
 
   # Updates keywords for the current Work
   # If this Work is still a *new* record (i.e. it hasn't been created
-  # in the database), then the keywords are just cached until the 
+  # in the database), then the keywords are just cached until the
   # Work is created.
   # Based on ideas at:
   #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
@@ -397,7 +397,7 @@ class Work < ActiveRecord::Base
 
   # Updates tags for the current Work
   # If this Work is still a *new* record (i.e. it hasn't been created
-  # in the database), then the tags are just cached until the 
+  # in the database), then the tags are just cached until the
   # Work is created.
   # Based on ideas at:
   #   http://blog.hasmanythrough.com/2007/1/22/using-faux-accessors-to-initialize-values
@@ -461,7 +461,7 @@ class Work < ActiveRecord::Base
   # Initializes the Publication information
   # and saves it to the current Work
   # Arguments:
-  #  * hash {:name => "Publication name", 
+  #  * hash {:name => "Publication name",
   #          :issn_isbn => "Publication ISSN or ISBN",
   #          :publisher_name => "Publisher name" }
   #  (not all hash values need be set)
@@ -559,7 +559,7 @@ class Work < ActiveRecord::Base
   # then the URI of the appropriate DCMI Type is returned.
   #
   # This is used for generating a SWORD package
-  # which contains a METS file conforming to the EPrints DC XML Schema. 
+  # which contains a METS file conforming to the EPrints DC XML Schema.
   #
   # For more info on EPrints App. Profile, and it's Type vocabulary, see:
   # http://www.ukoln.ac.uk/repositories/digirep/index/EPrints_Application_Profile
@@ -587,80 +587,65 @@ class Work < ActiveRecord::Base
     to_apa
   end
 
-  #Convert Work into a String in the APA Citation Format
-  # This is currently used during generation of METS file
-  # conforming to EPrints DC XML Schema for use with SWORD.
-  # @TODO: There is likely a better way to do this more generically.
-  # TODO: it may also not be doing what it should - what if there are both authors and editors
-  # - it's not clear how they are distinguished.
+#Convert Work into a String in the APA Citation Format
+# This is currently used during generation of METS file
+# conforming to EPrints DC XML Schema for use with SWORD.
+# @TODO: There is likely a better way to do this more generically.
+# TODO: it may also not be doing what it should - what if there are both authors and editors
+# - it's not clear how they are distinguished.
   def to_apa
-    citation_string = ""
+    String.new.tap do |citation_string|
+      #---------------------------------------------
+      # All APA Citation formats start out the same:
+      #---------------------------------------------
+      #Add authors
+      append_apa_author_text(citation_string)
 
-    #---------------------------------------------
-    # All APA Citation formats start out the same:
-    #---------------------------------------------
-    #Add authors
-    self.work_name_strings.author.includes(:name_string).first(5).each do |wns|
-      ns = wns.name_string
-      if citation_string == ""
-        citation_string << ns.name
-      else
-        citation_string << ", #{ns.name}"
-      end
-    end
+      #Add editors
+      append_apa_editor_text(citation_string)
 
-    #Add editors
-    self.work_name_strings.editor.includes(:name_string).first(5).each do |wns|
-      ns = wns.name_string
-      if citation_string == ""
-        citation_string << ns.name
-      else
-        citation_string << ", #{ns.name}"
-      end
+      #Publication year
+      citation_string << " (#{self.publication_date.year})" if self.publication_date
+
+      #Only add a period if the string doesn't currently end in a period.
+      citation_string << ". " if !citation_string.match("\.\s*\Z")
+
+      #Title
+      citation_string << "#{self.title_primary}. " if self.title_primary
+
+      #Now add in anything specific to the type of work, using a generic one defined in this model if
+      #thee work type does not override.
+      append_apa_work_type_specific_text!(citation_string)
     end
+  end
+
+  def append_apa_author_text(citation_string)
+    append_apa_contributors_text(citation_string, self.work_name_strings.author.includes(:name_string))
+  end
+
+  def append_apa_editor_text(citation_string)
+    append_apa_contributors_text(citation_string, self.work_name_strings.editor.includes(:name_string))
     citation_string << " (Ed.)." if self.work_name_strings.editor.count == 1
     citation_string << " (Eds.)." if self.work_name_strings.editor.count > 1
+  end
 
-    #Publication year
-    citation_string << " (#{self.publication_date.year})" if self.publication_date
-
-    #Only add a period if the string doesn't currently end in a period.
-    citation_string << ". " if !citation_string.match("\.\s*\Z")
-
-    #Title
-    citation_string << "#{self.title_primary}. " if self.title_primary
-
-    #---------------------------------------
-    #Formatting specific to type of Work
-    #---------------------------------------
-    case self.class
-      when BookWhole
-        citation_string << self.publisher.authority.name if self.publisher
-        #Only add a period if the string doesn't currently end in a period.
-        citation_string << ". " if !citation_string.match("\.\s*\Z")
-      when ConferencePaper #Conference Proceeding in APA Format
-        citation_string << "In #{self.title_secondary}" if self.title.secondary
-        citation_string << ": Vol. #{self.volume}" if self.volume
-        #Only add a period if the string doesn't currently end in a period.
-        citation_string << ". " if !citation_string.match("\.\s*\Z")
-        citation_string << "#{self.publication.authority.name}" if self.publication
-        citation_string << ", (" if self.start_page or self.end_page
-        citation_string << self.start_page if self.start_page
-        citation_string << "-#{self.end_page}" if self.end_page
-        citation_string << ")" if self.start_page or self.end_page
-        citation_string << "." if !citation_string.match("\.\s*\Z")
-        citation_string << self.publisher.authority.name if self.publisher
-        citation_string << "."
-      else #default to JournalArticle in APA format
-        citation_string << "#{self.publication.authority.name}, " if self.publication
-        citation_string << self.volume if self.volume
-        citation_string << "(#{self.issue})" if self.issue
-        citation_string << ", " if self.start_page or self.end_page
-        citation_string << self.start_page if self.start_page
-        citation_string << "-#{self.end_page}" if self.end_page
-        citation_string << "."
+  def append_apa_contributors_text(citation_string, collection)
+    collection.first(5).each do |wns|
+      name = wns.name_string.name
+      name = ", #{name}" unless citation_string.blank?
+      citation_string << name
     end
-    citation_string
+  end
+
+  #defines a default behavior - override in subclass to specialize
+  def append_apa_work_type_specific_text!(citation_string)
+    citation_string << "#{self.publication.authority.name}, " if self.publication
+    citation_string << self.volume if self.volume
+    citation_string << "(#{self.issue})" if self.issue
+    citation_string << ", " if self.start_page or self.end_page
+    citation_string << self.start_page if self.start_page
+    citation_string << "-#{self.end_page}" if self.end_page
+    citation_string << "."
   end
 
   #Get all Author names on a Work, return as an array of hashes
@@ -792,5 +777,5 @@ class Work < ActiveRecord::Base
     self.publication = publication.authority
     self.initial_publication_id = publication.id
   end
-  
+
 end
