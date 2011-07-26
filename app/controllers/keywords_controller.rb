@@ -1,5 +1,5 @@
 class KeywordsController < ApplicationController
-
+  include GoogleChartsHelper
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
 
@@ -34,7 +34,7 @@ class KeywordsController < ApplicationController
       @work_counts << work_count
       @years << y
 
-      @chart_urls << google_chart_url(work_count, @facets[:types])
+      @chart_urls << google_chart_url(@facets, work_count)
 
       add_tags(year_data, @facets[:keywords], y)
       @year_keywords << year_data unless year_data.tags.blank?
@@ -61,27 +61,6 @@ class KeywordsController < ApplicationController
         tag.bin = ((tag.count.to_f * bin_count.to_f) / max_kw_freq).ceil
         year_data.tags << tag
       end
-    end
-  end
-
-#generate the google chart URI
-#see http://code.google.com/apis/chart/docs/making_charts.html
-  def google_chart_url(work_count, types)
-    chd = "chd=t:"
-    chl = "chl="
-    types.each_with_index do |r, i|
-      perc = (r.value.to_f / work_count.to_f * 100).round.to_s
-      chd += "#{perc},"
-      ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
-      chl += "#{ref.titleize.pluralize}(#{r.value})|"
-    end
-    chd = chd[0...(chd.length-1)]
-    chl = chl[0...(chl.length-1)]
-
-    if chd and chl
-      "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
-    else
-      "#"
     end
   end
 
