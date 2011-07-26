@@ -271,108 +271,6 @@ class WorksController < ApplicationController
     end
   end
 
-
-  # Create a hash of Work attributes
-  # This is called by both create() and update()
-  def create_attribute_hash
-
-    #initialize our final attribute hash
-    attr_hash = Hash.new
-    attr_hash[:klass] = params[:klass]
-
-    ###
-    # Person
-    ###
-    attr_hash[:person_id] = params[:person_id]
-
-    ###
-    # Setting WorkNameStrings
-    ###
-
-    #default to empty array of author strings
-    params[:authors] ||= []
-    params[:contributors] ||= []
-
-    #roles
-    params[:author_roles] ||= []
-    params[:contributor_roles] ||= []
-
-    #Set Author & Editor NameStrings for this Work
-    @work_name_strings = Array.new
-    @author_name_strings = Array.new
-    @editor_name_strings = Array.new
-
-    ans = params[:authors]
-    ans.each_with_index do |name, i|
-      name.strip!
-      unless name.empty?
-        @author_name_strings << {:name => name, :role => params[:author_roles][i]}
-        @work_name_strings << {:name => name, :role => params[:author_roles][i]}
-      end
-    end
-
-    @ens = params[:contributors]
-    @ens.each_with_index do |name, i|
-      name.strip!
-      unless name.empty?
-        @editor_name_strings << {:name => name, :role => params[:contributor_roles][i]}
-        @work_name_strings << {:name => name, :role => params[:contributor_roles][i]}
-      end
-    end
-
-    attr_hash[:work_name_strings] = @work_name_strings
-
-    ###
-    # Setting Keywords
-    ###
-    # Save keywords to instance variable @keywords,
-    # in case any errors should occur in saving work
-    @keywords = params[:keywords].split(';').collect { |kw| kw.squish } unless params[:keywords].blank?
-    attr_hash[:keywords] = @keywords
-
-    ###
-    # Setting Tags
-    ###
-    # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work
-    #@tags = params[:tags]
-    #@work.set_tag_strings(@tags)
-
-    ###
-    # Setting Publication Info, including Publisher
-    ###
-    @publication = Publication.new
-    @publisher = Publisher.new
-    @publication.issn_isbn = params[:issn_isbn]
-
-    # Sometimes there will be no publication, sometimes it will be blank,
-    # sometimes it will have a value. If it's nil or blank we still want
-    # to have the @publication[:name] hash in case we're sent back to
-    # the 'new' page due to a save error.
-    if params[:publication].blank?
-      @publication.name = nil
-    else
-      @publication.name = params[:publication][:name].blank? ? nil : params[:publication][:name]
-    end
-    if params[:publisher].blank?
-      @publisher.name = nil
-    else
-      @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
-    end
-
-
-    attr_hash[:issn_isbn] = @publication.issn_isbn
-    attr_hash[:publication] = @publication.name
-    attr_hash[:publisher] = @publisher.name
-
-    params[:work].each do |key, val|
-      attr_hash[key.to_sym] = val
-    end
-
-    attr_hash.delete_if { |key, val| val.blank? }
-
-  end
-
   def destroy
     permit "admin"
 
@@ -751,5 +649,101 @@ class WorksController < ApplicationController
     end
   end
 
+  # Create a hash of Work attributes
+  # This is called by both create() and update()
+  def create_attribute_hash
+
+    attr_hash = Hash.new
+    attr_hash[:klass] = params[:klass]
+
+    attr_hash[:person_id] = params[:person_id]
+
+    ###
+    # Setting WorkNameStrings
+    ###
+
+    #default to empty array
+    params[:authors] ||= []
+    params[:contributors] ||= []
+    params[:author_roles] ||= []
+    params[:contributor_roles] ||= []
+
+    #Set Author & Editor NameStrings for this Work
+    @work_name_strings = Array.new
+    @author_name_strings = Array.new
+    @editor_name_strings = Array.new
+
+    accumulate_names_and_roles(params[:authors], params[:author_roles],
+                               [@author_name_strings, @work_name_strings])
+    accumulate_names_and_roles(params[:contributors], params[:contributor_roles],
+                               [@editor_name_strings, @work_name_strings])
+
+    attr_hash[:work_name_strings] = @work_name_strings
+
+    ###
+    # Setting Keywords
+    ###
+    # Save keywords to instance variable @keywords,
+    # in case any errors should occur in saving work
+    @keywords = params[:keywords].split(';').collect { |kw| kw.squish } if params[:keywords].present?
+    attr_hash[:keywords] = @keywords
+
+    ###
+    # Setting Tags
+    ###
+    # Save tags to instance variable @tags,
+    # in case any errors should occur in saving work
+    #@tags = params[:tags]
+    #@work.set_tag_strings(@tags)
+
+    ###
+    # Setting Publication Info, including Publisher
+    ###
+    @publication = Publication.new
+    @publisher = Publisher.new
+    @publication.issn_isbn = params[:issn_isbn]
+
+    # Sometimes there will be no publication, sometimes it will be blank,
+    # sometimes it will have a value. If it's nil or blank we still want
+    # to have the @publication[:name] hash in case we're sent back to
+    # the 'new' page due to a save error.
+    if params[:publication].blank?
+      @publication.name = nil
+    else
+      @publication.name = params[:publication][:name].blank? ? nil : params[:publication][:name]
+    end
+    if params[:publisher].blank?
+      @publisher.name = nil
+    else
+      @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
+    end
+
+
+    attr_hash[:issn_isbn] = @publication.issn_isbn
+    attr_hash[:publication] = @publication.name
+    attr_hash[:publisher] = @publisher.name
+
+    params[:work].each do |key, val|
+      attr_hash[key.to_sym] = val
+    end
+
+    attr_hash.delete_if { |key, val| val.blank? }
+
+  end
+
+  #name_array and role_array are parallel arrays
+  #whenever the stripped name is not blank add a hash to each accumulator
+  #of the form :name => name, :role => role
+  def accumulate_names_and_roles(name_array, role_array, accumulators)
+    name_array.zip(role_array).each do |row|
+      name, role = row
+      name.strip!
+      unless name.blank?
+        accumulators.each do |acc|
+          acc << {:name => name, :role => role}
+        end
+      end
+    end
+  end
 
 end
