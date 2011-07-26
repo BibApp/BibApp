@@ -102,7 +102,7 @@ class Import < ActiveRecord::Base
 
   ###
   # ===== Import Object Methods =====
-  ### 
+  ###
 
   # Add Import to Delayed Job queue
   def queue_import
@@ -111,9 +111,6 @@ class Import < ActiveRecord::Base
 
   # Process Batch Import
   def batch_import
-    # CMess helps guess encoding of uploaded text files
-    require 'cmess/guess_encoding'
-
     logger.debug("\n\n==== Staring Batch Import ==== \n\n")
 
     # Initialize an array of all the works we create in the batch
@@ -138,46 +135,26 @@ class Import < ActiveRecord::Base
       end
 
       #Convert string to Unicode, if it's not already Unicode
-      unless str.is_utf8?
+      begin
+        str = StringMethods.ensure_utf8(str)
+      rescue EncodingException => e
+        # Log an error...this file has a character encoding we cannot handle!
+        logger.error("\nCitations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
 
-        # Guess the character encoding
-        encoding = CMess::GuessEncoding::Automatic.guess(str)
-        logger.debug("\n* Guessed Encoding: #{encoding}")
-
-        # As long as encoding could be guessed, try to convert to UTF-8
-        unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
-          # Convert to one big UTF-8 string
-          str =Iconv.iconv('UTF-8', encoding, str).to_s
-        else
-          # Log an error...this file has a character encoding we cannot handle!
-          logger.error("\nCitations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
-
-          #return nothing, which will inform user that file format was invalid
-          self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
-          self.save
-          self.review!
-          return
-        end
+        #return nothing, which will inform user that file format was invalid
+        self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
+        raise e
       end
 
-    rescue Exception => e
-      #re-raise this exception to create()...it will handle logging the error
-      self.import_errors[:exception] = e
-      self.save
-      self.review!
-      return
-    end
+      # Init: Parser and Importer
+      p = CitationParser.new
+      i = CitationImporter.new
 
-    # Init: Parser and Importer
-    p = CitationParser.new
-    i = CitationImporter.new
-
-    # (2) Parse the data using CitationParser plugin
-    begin
+      # (2) Parse the data using CitationParser plugin
       #Attempt to parse the data
       pcites = p.parse(str)
       #Rescue any errors in parsing
-    rescue Exception =>e
+    rescue Exception => e
       #re-raise this exception to create()...it will handle logging the error
       self.import_errors[:exception] = e
       self.save
