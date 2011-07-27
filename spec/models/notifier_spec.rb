@@ -6,10 +6,15 @@ describe Notifier do
   include ActionController::UrlWriter
 
   describe "import review notification" do
-    before(:each) do
+    before(:all) do
       @user = Factory.create(:user)
       @import = Factory.create(:import, :user => @user)
       @email = Notifier.create_import_review_notification(@user, @import)
+    end
+
+    after(:all) do
+      @user.destroy
+      @import.destroy
     end
 
     it "should be delivered to the user's email address" do
