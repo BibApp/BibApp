@@ -59,69 +59,22 @@ class User < ActiveRecord::Base
   def has_role?(role_name, authorizable_obj = nil)
 
     ##################################################
-    # Cacade System Roles to everything!
+    # Cascade System Roles to everything!
     ##################################################
-    unless authorizable_obj == System
-      #If user is a System Admin,
-      #then user has permissions to do ANYTHING 
-      return true if has_role?("admin", System)
-
-      #If user has this role System-Wide,
-      #then this role should cascade to everything else!
-      return true if has_role?(role_name, System)
-    end
+    return true if cascade_system_role?(role_name, authorizable_obj)
 
     ##################################
     # Setup Role Hierarchy for BibApp
-    ##################################    
-    #Cascade based on role hierarchy, so following is true:
-    #  - All Admins are also Editors
-    #  (@TODO: more roles may be added later)
-    case role_name
-      when "editor"
-        # Users with 'admin' role are also 'editors'
-        return true if has_role?("admin", authorizable_obj)
-    end
+    ##################################
+    return true if cascade_role_name?(role_name, authorizable_obj)
 
     ##################################
     # Setup Class Hierarchy for BibApp
-    ##################################    
-    #Cascade based on Class hierarchy, so following is true:
-    #  (1) All Roles on a Group cascade to the People in that group (and their Works)
-    #  (2) All Roles on a Person cascade to their Works
-
-    # If this is a Class object, then cascade based on class types
-    if authorizable_obj.is_a? Class
-      case authorizable_obj.to_s
-        when 'Group'
-          #If user has this role on any group in system, return true
-          return true if has_any_role?(role_name, Group)
-        when 'Person'
-          #Group class role cascades to Person class
-          return true if has_role?(role_name, Group)
-
-          #If user has this role on any group in system, also return true
-          return true if has_any_role?(role_name, Group)
-        when 'Work'
-          #Person class role cascades to Work class
-          return true if has_role?(role_name, Person)
-
-          #If user has this role on any person in system, also return true
-          return true if has_any_role?(role_name, Person)
-      end
-    elsif authorizable_obj #else if instance of a Class
-      case authorizable_obj.class.base_class.to_s
-        when 'Person'
-          #Get groups of this person, and look for role on each group
-          authorizable_obj.groups.each do |group|
-            return true if has_role?(role_name, group)
-          end
-        when 'Work'
-          #Get all People associated with this Work, and look for role on each person
-          authorizable_obj.people.each do |person|
-            return true if has_role?(role_name, person)
-          end
-      end
+    ##################################
+    if authorizable_obj.is_a?(Class)
+      return true if cascade_role_class?(role_name, authorizable_obj)
+    else
+      return true if cascade_role_object?(role_name, authorizable_obj)
     end
 
     #call overridden has_role? method for default settings
@@ -129,42 +82,77 @@ class User < ActiveRecord::Base
   end
 
 
+  #If user is a System Admin, then user has permissions to do ANYTHING
+  #If user has this role System-Wide, then this role should cascade to everything else!
+  def cascade_system_role?(role_name, authorizable_object)
+    return false if authorizable_object == System
+    return has_role?('admin', System) || has_role?(role_name, System)
+  end
+
+  def cascade_role_name?(role_name, authorizable_object)
+    case role_name
+      #  - All Admins are also Editors
+      when 'editor'
+        return has_role?('admin', authorizable_object)
+      else
+        return false
+    end
+  end
+
+  #Cascade based on Class hierarchy, so following is true:
+  #  (1) All Roles on a Group cascade to the People in that group (and their Works)
+  #  (2) All Roles on a Person cascade to their Works
+  # If this is a Class object, then cascade based on class types
+  def cascade_role_class?(role_name, authorizable_object)
+    case authorizable_object.to_s
+      when 'Group'
+        return has_any_role?(role_name, Group)
+      when 'Person'
+        return has_role?(role_name, Group) || has_any_role?(role_name, Group)
+      when 'Work'
+        return has_role?(role_name, Person) || has_any_role?(role_name, Person)
+      else
+        return false
+    end
+  end
+
+  def cascade_role_object?(role_name, authorizable_object)
+    case authorizable_object.class.base_class.to_s
+      when 'Person'
+        #Look for role on each group associated with the person
+        return authorizable_object.groups.detect {|group| has_role?(role_name, group)}
+      when 'Work'
+        #Look for role on each person associated with the work
+        return authorizable_object.people.detect {|person| has_role?(role_name, person)}
+      else
+        return false
+    end
+  end
+
   #Checks to see if user has a specified role on ANY instance
   #of the passed in Class.
   #
-  # (e.g.) has_any_role?('editor', Group) 
+  # (e.g.) has_any_role?('editor', Group)
   #
   # The above would check if the user has the 'editor' role
   # on ANY group within the system.
   def has_any_role?(role_name, authorizable_class)
 
     ##################################################
-    # Cacade System Roles to everything!
+    # Cascade System Roles to everything!
     ##################################################
-    unless authorizable_class.to_s == 'System'
-      #If user is a System Admin,
-      #then user has permissions to do ANYTHING
-      return true if has_role?("admin", System)
+    return true if cascade_system_role?(role_name, authorizable_class)
 
-      #If user has this role System-Wide,
-      #then this role should cascade to everything else!
-      return true if has_role?(role_name, System)
-    end
+    #See if user has a role with the specified role_name and authorizable type
+    return self.roles.where(:name => role_name, :authorizable_type => authorizable_class.to_s).exists?
 
-    #loop through user's roles, to look for any that match
-    self.roles.each do |role|
-      if (role.name == role_name) and (role.authorizable_type == authorizable_class.to_s)
-        return true
-      end
-    end
-    return false
   end
 
-  # Checks to see if user explicitly has the specified role 
+  # Checks to see if user explicitly has the specified role
   # In other words, it doesn't check parent objects or take
   # into account any cascading of roles
   #
-  # (e.g.) has_explicit_role?('editor', group) 
+  # (e.g.) has_explicit_role?('editor', group)
   #
   # The above would check if the user has the 'editor' role
   # specified explicitly for the group (and not at a system-wide level)
@@ -195,7 +183,7 @@ class User < ActiveRecord::Base
         #do any extra work needed for openid
     end
   end
-  
+
   #this is for Authorization gem
   def uri
     Authorization::Base::PERMISSION_DENIED_REDIRECTION

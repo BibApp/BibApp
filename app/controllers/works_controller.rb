@@ -42,10 +42,9 @@ class WorksController < ApplicationController
 
     #initialize variables used by 'new.html.haml'
     before :new do
+
       #check if we are adding new works directly to a person
-      if params[:person_id]
-        @person = Person.find(params[:person_id].split("-")[0])
-      end
+      person_from_person_id
 
       if @person
         #If adding to a person, must be an 'editor' of that person
@@ -152,9 +151,7 @@ class WorksController < ApplicationController
   #Create a new Work or many new Works
   def create
     #check if we are adding new works directly to a person
-    if params[:person_id]
-      @person = Person.find(params[:person_id].split("-")[0])
-    end
+    person_from_person_id
 
     if @person
       #If adding to a person, must be an 'editor' of that person
@@ -164,7 +161,7 @@ class WorksController < ApplicationController
       permit "editor"
     end
 
-    #Check if user hit cancel button    
+    #Check if user hit cancel button
     if params['cancel']
       #just return back to 'new' page
       respond_to do |format|
@@ -187,10 +184,7 @@ class WorksController < ApplicationController
 
       # current user automatically gets 'admin' permissions on work
       # (only if he/she doesn't already have that permission)
-      if work_id
-        @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
-      end
+      work_from_work_id(work_id)
 
       #If this was submitted as an individual work for a specific person then
       #automatically verify the contributorship
@@ -228,7 +222,7 @@ class WorksController < ApplicationController
     #Check if there was a path and page passed along to return to
     return_path = params[:return_path]
 
-    #Check if user hit cancel button    
+    #Check if user hit cancel button
     if params['cancel']
       # just return back from where we came
       respond_to do |format|
@@ -242,7 +236,7 @@ class WorksController < ApplicationController
       end
 
     else #Only perform update if 'save' button was pressed
-      #Anyone with 'editor' role on this work can edit it
+         #Anyone with 'editor' role on this work can edit it
       permit "editor on work"
 
       #First, update work attributes (ensures deduplication keys are updated)
@@ -256,13 +250,7 @@ class WorksController < ApplicationController
 
       work_id, errors = @work.update_from_hash(r_hash)
 
-      # current user automatically gets 'admin' permissions on work
-      # (only if he/she doesn't already have that permission)
-      if work_id
-        @work = Work.find(work_id)
-        @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
-      end
-
+      work_from_work_id(work_id)
 
       respond_to do |format|
         if work_id
@@ -281,108 +269,6 @@ class WorksController < ApplicationController
         end
       end #end respond to
     end
-  end
-
-
-  # Create a hash of Work attributes
-  # This is called by both create() and update()
-  def create_attribute_hash
-
-    #initialize our final attribute hash
-    attr_hash = Hash.new
-    attr_hash[:klass] = params[:klass]
-
-    ###
-    # Person
-    ###
-    attr_hash[:person_id] = params[:person_id]
-
-    ###
-    # Setting WorkNameStrings
-    ###
-
-    #default to empty array of author strings
-    params[:authors] ||= []
-    params[:contributors] ||= []
-
-    #roles
-    params[:author_roles] ||= []
-    params[:contributor_roles] ||= []
-
-    #Set Author & Editor NameStrings for this Work
-    @work_name_strings = Array.new
-    @author_name_strings = Array.new
-    @editor_name_strings = Array.new
-
-    ans = params[:authors]
-    ans.each_with_index do |name, i|
-      name.strip!
-      unless name.empty?
-        @author_name_strings << {:name => name, :role => params[:author_roles][i]}
-        @work_name_strings << {:name => name, :role => params[:author_roles][i]}
-      end
-    end
-
-    @ens = params[:contributors]
-    @ens.each_with_index do |name, i|
-      name.strip!
-      unless name.empty?
-        @editor_name_strings << {:name => name, :role => params[:contributor_roles][i]}
-        @work_name_strings << {:name => name, :role => params[:contributor_roles][i]}
-      end
-    end
-
-    attr_hash[:work_name_strings] = @work_name_strings
-
-    ###
-    # Setting Keywords
-    ###
-    # Save keywords to instance variable @keywords,
-    # in case any errors should occur in saving work
-    @keywords = params[:keywords].split(';').collect {|kw| kw.squish} unless params[:keywords].blank?
-    attr_hash[:keywords] = @keywords
-
-    ###
-    # Setting Tags
-    ###
-    # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work    
-    #@tags = params[:tags]
-    #@work.set_tag_strings(@tags)
-
-    ###
-    # Setting Publication Info, including Publisher
-    ###
-    @publication = Publication.new
-    @publisher = Publisher.new
-    @publication.issn_isbn = params[:issn_isbn]
-
-    # Sometimes there will be no publication, sometimes it will be blank,
-    # sometimes it will have a value. If it's nil or blank we still want
-    # to have the @publication[:name] hash in case we're sent back to
-    # the 'new' page due to a save error.
-    if params[:publication].blank?
-      @publication.name = nil
-    else
-      @publication.name = params[:publication][:name].blank? ? nil : params[:publication][:name]
-    end
-    if params[:publisher].blank?
-      @publisher.name = nil
-    else
-      @publisher.name = params[:publisher][:name].blank? ? nil : params[:publisher][:name]
-    end
-
-
-    attr_hash[:issn_isbn] = @publication.issn_isbn
-    attr_hash[:publication] = @publication.name
-    attr_hash[:publisher] = @publisher.name
-
-    params[:work].each do |key, val|
-      attr_hash[key.to_sym] = val
-    end
-
-    attr_hash.delete_if { |key, val| val.blank? }
-
   end
 
   def destroy
@@ -428,7 +314,7 @@ class WorksController < ApplicationController
 
   def destroy_multiple
     #Anyone who is minimally an admin (on anything in system) can delete works
-    #(NOTE: User will actually have to be an 'admin' on all works in this batch, 
+    #(NOTE: User will actually have to be an 'admin' on all works in this batch,
     #       otherwise he/she will not be able to destroy *all* the works)
     permit "admin"
 
@@ -437,7 +323,7 @@ class WorksController < ApplicationController
 
     full_success = true
 
-    unless work_ids.nil? or work_ids.empty?
+    if work_ids.present?
       #Destroy each work one by one, so we can be sure user has 'admin' rights on all
       work_ids.each do |work_id|
         work = Work.find_by_id(work_id)
@@ -469,17 +355,8 @@ class WorksController < ApplicationController
   # Also sets the instance variable @author_name_strings,
   # in case any errors should occur in saving work
   def set_author_name_strings(work)
-    #default to empty array of author strings
-    params[:author_name_strings] ||= []
-
-    #Set NameStrings for this Work
     @author_name_strings = Array.new
-    params[:author_name_strings].each do |add|
-      name_string = NameString.find_or_initialize_by_name(add)
-      @author_name_strings << {:name => name_string, :role => "Author"}
-    end
-    work.set_work_name_strings(@author_name_strings)
-
+    set_contributor_name_strings(work, @author_name_strings, :author_name_strings, 'Author')
   end
 
   # Load name strings list from Request params
@@ -487,17 +364,17 @@ class WorksController < ApplicationController
   # Also sets the instance variable @editor_name_strings,
   # in case any errors should occur in saving work
   def set_editor_name_strings(work)
-    #default to empty array of author strings
-    params[:editor_name_strings] ||= []
-
-    #Set NameStrings for this Work
     @editor_name_strings = Array.new
-    params[:editor_name_strings].each do |add|
-      name_string = NameString.find_or_initialize_by_name(add)
-      @editor_name_strings << {:name => name_string, :role => "Editor"}
-    end
-    work.set_work_name_strings(@editor_name_strings)
+    set_contributor_name_strings(work, @editor_name_strings, :editor_name_strings, 'Editor')
+  end
 
+  def set_contributor_name_strings(work, accumulator, parameter_key, role)
+    params[parameter_key] ||= []
+    params[parameter_key].each do |name|
+      name_string = NameString.find_or_initialize_by_name(name)
+      accumulator << {:name => name_string, :role => role}
+    end
+    work.set_work_name_strings(accumulator)
   end
 
   #Auto-Complete for entering Author NameStrings in Web-based Work entry
@@ -527,46 +404,24 @@ class WorksController < ApplicationController
     render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
   end
 
-
-  #Auto-Complete for entering Keywords in Web-based Work entry
-  #  This method provides users with a list of matching Keywords
-  #  already in BibApp.  This also include Tags.
   def auto_complete_for_keyword_name
-    keyword = params[:keyword][:name].downcase
-
-    #search at beginning of word
-    beginning_search = keyword + "%"
-    #search at beginning of any other words
-    word_search = "% " + keyword + "%"
-
-    #Search both keyworks and tags
-
-    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8)
-
-
-    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                     beginning_search, word_search).order_by_name.limit(8)
-
-    #Combine both lists
-    keywordsandtags = (keywords + tags).collect { |x| x.name }
-
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+    auto_complete_for_name(params[:keyword][:name])
   end
 
-
-  #This is the same as for keywords, except this is used with tags
   def auto_complete_for_tag_name
-    tag = params[:tag][:name].downcase
+    auto_complete_for_name(params[:tag][:name])
+  end
 
+  #provide matching keywords or tags for autocomplete based off of the supplied name
+  def auto_complete_for_name(name)
+    name = name.downcase
 
     #search at beginning of word
-    beginning_search = tag + "%"
+    beginning_search = name + "%"
     #search at beginning of any other words
-    word_search = "% " + tag + "%"
+    word_search = "% " + name + "%"
 
-    #Search both keyworks and tags
-
+    #Search both keywords and tags
     keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                              beginning_search, word_search).order_by_name.limit(8)
 
@@ -574,9 +429,9 @@ class WorksController < ApplicationController
                      beginning_search, word_search).order_by_name.limit(8)
 
     #Combine both lists
-    keywordsandtags = (keywords + tags).collect { |x| x.name }
+    keywords_and_tags = (keywords + tags).collect { |x| x.name }
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywordsandtags.uniq.sort.first(8)}
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywords_and_tags.uniq.sort.first(8)}
   end
 
   #Auto-Complete for entering Publication Titles in Web-based Work entry
@@ -624,7 +479,7 @@ class WorksController < ApplicationController
   #
   # (E.g.) item_name=>"author_name_strings", item_value=>"Donohue, Tim", clear_field=>"author_string"
   #	  Above example will add value "Donohue, Tim" to list of author values in form.
-  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_name_strings_list". 
+  #   Specifically, it would add a new <li> to the <ul> or <ol> with an ID of "author_name_strings_list".
   #   It then clears the "author_string" field (which is the textbox where the value was entered).
   #
   # See 'item_list.js.rjs' for much more information, as this file includes the
@@ -641,40 +496,32 @@ class WorksController < ApplicationController
     render :template => 'works/forms/fields/update_item_list'
   end
 
-  # see above
   def add_contributor_to_list
-    @list_type = "contributor_name_strings"
-    @sortable = true
-    @ns_id = params[:ns_id]
-    @update_action = 'add_contributor'
-
-    @work = subklass_init(params[:work_type], nil)
-
-    #Add item value to list dynamically using Javascript
-    render :template => 'works/forms/fields/update_item_list'
+    add_collaborator_to_list("contributor_name_strings", 'add_contributor')
   end
 
   def add_author_to_list
-    @ns_id = params[:ns_id]
-    @list_type = "author_name_strings"
-    @sortable = true
-    @update_action = "add_author"
-
-    @work = subklass_init(params[:work_type], nil)
-
-    render :template => 'works/forms/fields/update_item_list'
+    add_collaborator_to_list("author_name_strings", "add_author")
   end
 
+  def add_collaborator_to_list(list_type, update_action)
+    @ns_id = params[:ns_id]
+    @sortable = true
+    @list_type = list_type
+    @update_action = update_action
+    @work = subklass_init(params[:work_type], nil)
+    render :template => 'works/forms/fields/update_item_list'
+  end
 
   #Removes a single item value from list of items in Web-based Work entry
   # This is used to remove from multiple values in form (e.g. multiple authors, keywords, etc)
   # Expects two parameters:
   #   list_type -  Type of list (e.g. "author_name_strings", "keywords")
-  #   item_id   -  ID of item to remove 
+  #   item_id   -  ID of item to remove
   #
   # Essentially this does the opposite of 'add_item_to_list', and removes
   # an existing item.
-  # 
+  #
   # See 'item_list.js.rjs' for much more information, as this file includes the
   # Javascript to add and remove items.
   def remove_item_from_list
@@ -687,18 +534,17 @@ class WorksController < ApplicationController
   end
 
   def remove_contributor_from_list
-    @ns_id = params[:ns_id]
-    @update_action = 'remove_contributor'
-
-    #remove item value from list dynamically using Javascript
-    render :template => 'works/forms/fields/update_item_list'
+    remove_collaborator_from_list('remove_contributor')
   end
 
   def remove_author_from_list
-    @ns_id = params[:ns_id]
-    @update_action = 'remove_author'
+    remove_collaborator_from_list('remove_author')
+  end
 
-    #remove item value from list dynamically using Javascript
+  def remove_collaborator_from_list(update_action)
+    @ns_id = params[:ns_id]
+    @update_action = update_action
+    #remove item value from list using Javascript
     render :template => 'works/forms/fields/update_item_list'
   end
 
@@ -716,7 +562,7 @@ class WorksController < ApplicationController
     # Setting Tags
     ###
     # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work    
+    # in case any errors should occur in saving work
     @tags = params[:tags]
     @work.set_tag_strings(@tags)
 
@@ -733,178 +579,6 @@ class WorksController < ApplicationController
   end
 
   private
-
-  # Batch import Works
-  def import_batch!(data)
-
-    #default errors to none
-    errors = Array.new
-
-    # (1) Read the data
-    begin
-      str = data
-      if data.respond_to? :read
-        str = data.read
-      elsif File.readable?(data)
-        str = File.read(data)
-      end
-
-      #Convert string to Unicode, if it's not already Unicode
-      unless str.is_utf8?
-        #guess the character encoding
-        encoding = CMess::GuessEncoding::Automatic.guess(str)
-
-        logger.debug("Guessed Encoding: #{encoding}")
-
-        #as long as encoding could be guessed, try to convert to UTF-8
-        unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
-          #convert to one big UTF-8 string
-          str =Iconv.iconv('UTF-8', encoding, str).to_s
-        else
-          #log an error...this file has a character encoding we cannot handle!
-          logger.error("Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8.\n")
-          #return nothing, which will inform user that file format was invalid
-          return nil
-        end
-      end
-
-    rescue Exception =>e
-      #re-raise this exception to create()...it will handle logging the error
-      raise
-    end
-
-    # Init: Parser and Importer
-    p = CitationParser.new
-    i = CitationImporter.new
-
-    # (2) Parse the data using CitationParser plugin
-    begin
-      #Attempt to parse the data
-      pcites = p.parse(str)
-
-      #Rescue any errors in parsing
-    rescue Exception => e
-      #re-raise this exception to create()...it will handle logging the error
-      raise
-    end
-
-
-    #Check to make sure there were not errors while parsing the data.
-
-    #No citations were parsed
-    if pcites.nil? || pcites.empty?
-      return nil
-    end
-
-    logger.debug("\n\nParsed Citations: #{pcites.size}\n\n")
-
-    # (3) Import the data using CitationImporter Plugin
-    begin
-      # Map Import hashes
-      attr_hashes = i.citation_attribute_hashes(pcites)
-      #logger.debug "#{attr_hashes.size} Attr Hashes: #{attr_hashes.inspect}\n\n\n"
-
-      #Make sure there is data in the Attribute Hash
-      return nil if attr_hashes.nil?
-
-
-      #initialize an array of all the works we create in this batch
-      works_added = init_last_batch
-
-      # Now, actually *create* these works in database
-      attr_hashes.map do |h|
-
-        # Initialize the Work
-        klass = h[:klass]
-
-        # Are we working with a legit SubKlass?
-        klass = klass.constantize
-        if klass.superclass != Work
-          raise NameError.new("#{klass_type} is not a subclass of Work")
-        end
-
-        work = klass.new
-
-        ###
-        # Setting WorkNameStrings
-        ###
-        work.set_work_name_strings(h[:work_name_strings])
-
-        #If we are adding to a person, pre-verify that person's contributorship
-        work.preverified_person = @person if @person
-
-        ###
-        # Setting Publication Info, including Publisher
-        ###
-        issn_isbn = h[:issn_isbn]
-        publication_info = {:name => h[:publication],
-                            :issn_isbn => issn_isbn,
-                            :publisher_name => h[:publisher]}
-
-        work.set_publication_info(publication_info)
-
-        # Very minimal validation -- just check that we have a title
-        if h[:title_primary].nil? or h[:title_primary] == ""
-          errors << "We couldn't find a title for at least one work...you may want to verify everything imported properly!"
-
-          logger.warn("The following work did not have a title and could not be imported!\n #{h}\n\n")
-          logger.warn("End Work \n\n")
-        else
-
-          ###
-          # Setting Keywords
-          ###
-          work.set_keyword_strings(h[:keywords])
-
-          # Clean the hash of non-Work table data
-          # Cleaning will prepare the hash for ActiveRecord insert
-          h.delete(:klass)
-          h.delete(:work_name_strings)
-          h.delete(:publisher)
-          h.delete(:publication)
-          h.delete(:publication_place)
-          h.delete(:issn_isbn)
-          h.delete(:keywords)
-          h.delete(:source)
-          # @TODO add external_systems to work import
-          h.delete(:external_id)
-
-          #save remaining hash attributes
-          work.attributes=h
-          work.set_for_index_and_save
-
-          # current user automatically gets 'admin' permissions on work
-          # (only if he/she doesn't already have that role on the work)
-          work.accepts_role 'admin', current_user if !current_user.has_role?('admin', work)
-
-          #add to batch of works created
-          works_added << work.id
-        end #end if no title
-      end
-      #index everything in Solr
-      Index.batch_index
-
-      #This error occurs if the works were parsed, but some bad data
-      #was entered which caused an error to occur when saving the data
-      #to the database.
-    rescue Exception => e
-      #remove anything already added to the database (i.e. rollback ALL changes)
-      unless works_added.nil?
-        works_added.each do |work_id|
-          work = Work.find(work_id)
-          work.destroy unless work.nil?
-        end
-        #re-initialize batch in order to clear it from session
-        works_added = init_last_batch
-      end
-      #reraise the error to create(), which will make sure it is logged
-      raise
-    end
-
-    #At this point, some or all of the works were saved to the database successfully.
-    return works_added, errors
-  end
-
 
   # Initializes a new work subclass, but doesn't create it in the database
   def subklass_init(klass_type, work)
@@ -942,6 +616,107 @@ class WorksController < ApplicationController
 
     # Quick cleanup of batch...remove any items which have been deleted
     session[:works_batch].delete_if { |work_id| !Work.exists?(work_id) }
+  end
+
+  def self.person_from_person_id
+    if params[:person_id]
+      @person = Person.find(params[:person_id].split("-")[0])
+    end
+  end
+
+  def work_from_work_id(work_id)
+    if work_id
+      @work = Work.find(work_id)
+      @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
+    end
+  end
+
+  # Create a hash of Work attributes
+  # This is called by both create() and update()
+  def create_attribute_hash
+
+    attr_hash = Hash.new
+    attr_hash[:klass] = params[:klass]
+
+    attr_hash[:person_id] = params[:person_id]
+
+    ###
+    # Setting WorkNameStrings
+    ###
+
+    #default to empty array
+    params[:authors] ||= []
+    params[:contributors] ||= []
+    params[:author_roles] ||= []
+    params[:contributor_roles] ||= []
+
+    #Set Author & Editor NameStrings for this Work
+    @work_name_strings = Array.new
+    @author_name_strings = Array.new
+    @editor_name_strings = Array.new
+
+    accumulate_names_and_roles(params[:authors], params[:author_roles],
+                               [@author_name_strings, @work_name_strings])
+    accumulate_names_and_roles(params[:contributors], params[:contributor_roles],
+                               [@editor_name_strings, @work_name_strings])
+
+    attr_hash[:work_name_strings] = @work_name_strings
+
+    ###
+    # Setting Keywords
+    ###
+    # Save keywords to instance variable @keywords,
+    # in case any errors should occur in saving work
+    @keywords = params[:keywords].split(';').collect { |kw| kw.squish } if params[:keywords].present?
+    attr_hash[:keywords] = @keywords
+
+    ###
+    # Setting Tags
+    ###
+    # Save tags to instance variable @tags,
+    # in case any errors should occur in saving work
+    #@tags = params[:tags]
+    #@work.set_tag_strings(@tags)
+
+    ###
+    # Setting Publication Info, including Publisher
+    ###
+    @publication = Publication.new
+    @publisher = Publisher.new
+    @publication.issn_isbn = params[:issn_isbn]
+
+    # Sometimes there will be no publication, sometimes it will be blank,
+    # sometimes it will have a value. If it's nil or blank we still want
+    # to have the @publication[:name] hash in case we're sent back to
+    # the 'new' page due to a save error.
+    @publication.name = params[:publication][:name] rescue nil
+    @publisher.name = params[:publisher][:name] rescue nil
+
+    attr_hash[:issn_isbn] = @publication.issn_isbn
+    attr_hash[:publication] = @publication.name
+    attr_hash[:publisher] = @publisher.name
+
+    params[:work].each do |key, val|
+      attr_hash[key.to_sym] = val
+    end
+
+    return attr_hash.delete_if { |key, val| val.blank? }
+
+  end
+
+  #name_array and role_array are parallel arrays
+  #whenever the stripped name is not blank add a hash to each accumulator
+  #of the form :name => name, :role => role
+  def accumulate_names_and_roles(name_array, role_array, accumulators)
+    name_array.zip(role_array).each do |row|
+      name, role = row
+      name.strip!
+      unless name.blank?
+        accumulators.each do |acc|
+          acc << {:name => name, :role => role}
+        end
+      end
+    end
   end
 
 end

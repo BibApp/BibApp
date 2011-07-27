@@ -1,18 +1,14 @@
+require 'lib/trivial_initializer'
 module KeywordsHelper
-  def style_for_bin(bin)
-  end
 
   class YearTag
+    include TrivialInitializer
     attr_accessor :year, :tags
   end
 
   class TagDatum
+    include TrivialInitializer
     attr_accessor :id, :name, :bin, :count, :year
-
-    def initialize(tag)
-      self.name = tag.name
-      self.count = tag.count
-      self.year = tag.year
-    end
   end
+
 end

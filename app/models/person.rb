@@ -1,8 +1,10 @@
 require 'bibapp_ldap'
 require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 
 class Person < ActiveRecord::Base
   include MachineName
+  include SolrHelperMethods
 
   acts_as_authorizable #some actions on people require authorization
 
@@ -126,12 +128,6 @@ class Person < ActiveRecord::Base
     self.works.most_recent_first.first
   end
 
-  def to_param
-    param_name = first_last.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
-  end
-
   def groups_not
     Group.where("id NOT in (?)", self.group_ids).order_by_name.all
   end
@@ -150,9 +146,9 @@ class Person < ActiveRecord::Base
   end
 
   def recalculate_unverified_contributorship_score
-    #re-calculate scores for all unverified contributorships of this Person        
+    #re-calculate scores for all unverified contributorships of this Person
     self.contributorships.unverified.each do |c|
-      c.calculate_score
+      c.calculate_score(self.scoring_hash)
       Index.update_solr(c.work)
     end
   end

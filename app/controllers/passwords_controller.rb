@@ -11,7 +11,7 @@ class PasswordsController < ApplicationController
     respond_to do |format|
 
       if user = User.find_by_email(params[:email])
-        @new_password = random_password
+        @new_password = User.random_password
         user.password = user.password_confirmation = @new_password
         user.save
         UserMailer.new_password(user, @new_password).deliver
@@ -55,13 +55,6 @@ class PasswordsController < ApplicationController
         format.html { render :action => 'edit' }
       end
     end
-  end
-
-  protected
-
-  def random_password(len = 20)
-    chars = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
-    Array.new(len, '').collect { chars[rand(chars.size)] }.join
   end
 
 end
