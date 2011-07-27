@@ -36,4 +36,19 @@ class ConferencePaper < Work
     return open_url_kevs
   end
 
+  def append_apa_work_type_specific_text!(citation_string)
+    citation_string << "In #{self.title_secondary}" if self.title_secondary
+    citation_string << ": Vol. #{self.volume}" if self.volume
+    #Only add a period if the string doesn't currently end in a period.
+    citation_string << ". " if !citation_string.match("\.\s*\Z")
+    citation_string << "#{self.publication.authority.name}" if self.publication
+    citation_string << ", (" if self.start_page or self.end_page
+    citation_string << self.start_page if self.start_page
+    citation_string << "-#{self.end_page}" if self.end_page
+    citation_string << ")" if self.start_page or self.end_page
+    citation_string << "." if !citation_string.match("\.\s*\Z")
+    citation_string << self.publisher.authority.name if self.publisher
+    citation_string << "."
+  end
+
 end

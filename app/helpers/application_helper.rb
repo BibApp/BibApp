@@ -18,19 +18,9 @@ module ApplicationHelper
   end
 
   def letter_link_for(letters, letter, current, path)
-    if path.nil?
-      if current == true
-        content_tag(:li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
-      else
-        content_tag :li, (letters.index(letter) ? link_to(letter, {:page=> letter}, :class => "some") : content_tag(:a, letter, :class => 'none'))
-      end
-    else
-      if current == true
-        content_tag(:li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none')), :class => "current")
-      else
-        content_tag :li, (letters.index(letter) ? link_to(letter, "#{path[:path]}?page=#{letter}", :class => "some") : content_tag(:a, letter, :class => 'none'))
-      end
-    end
+    li_opts = (current == true) ? {:class => "current"} : {}
+    link = path ? "#{path[:path]}?page=#{letter}" : {:page=> letter}
+    content_tag(:li, (letters.index(letter) ? link_to(letter, link, :class => "some") : content_tag(:a, letter, :class => 'none')), li_opts)
   end
 
   def link_to_related_works(work)
@@ -114,8 +104,10 @@ module ApplicationHelper
 
   def work_details(work)
     str = ""
-    str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id) if work.publication.authority != nil && work.publication.authority.name != "Unknown"
-    str += " &#149; " if work.publication.authority != nil && work.publication.authority.name != "Unknown"
+    if work.publication.authority.present? and work.publication.authority.name != "Unknown"
+      str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id)
+      str += " &#149; "
+    end
     str += "#{work.publication_date.year} " if work.publication_date != nil
     str += " #{work.volume}" if work.volume != nil
     str += "(#{work.issue}), " if work.issue != nil && !work.issue.empty?
@@ -257,69 +249,67 @@ module ApplicationHelper
     link_text = $WORK_LINK_TEXT
     base_url = $WORK_BASE_URL
     suffix = $WORK_SUFFIX
-=begin
-    #If we've already found this info for
-    # the current session, return it immediately
-    if session[:openurl_info]
-      link_text = session[:openurl_link_text] if session[:openurl_link_text]
-      base_url = session[:openurl_base_url] if session[:openurl_base_url]
-    else 
-      # Obtain the client IP Addess
-      ip = request.env["HTTP_X_FORWARDED_FOR"]
-      logger.debug("Client IP: #{ip}")
+    # #If we've already found this info for
+    # # the current session, return it immediately
+    # if session[:openurl_info]
+    #   link_text = session[:openurl_link_text] if session[:openurl_link_text]
+    #   base_url = session[:openurl_base_url] if session[:openurl_base_url]
+    # else 
+    #   # Obtain the client IP Addess
+    #   ip = request.env["HTTP_X_FORWARDED_FOR"]
+    #   logger.debug("Client IP: #{ip}")
   
-      # Test UW-Madison 
-      #ip = "128.104.198.84"
+    #   # Test UW-Madison 
+    #   #ip = "128.104.198.84"
       
-      # Test UIUC 
-      #ip = "128.174.36.29"
+    #   # Test UIUC 
+    #   #ip = "128.174.36.29"
       
-      # Test Iowa
-      #ip = "128.255.56.180"
+    #   # Test Iowa
+    #   #ip = "128.255.56.180"
   
-      # Initialize ResolverRegistry
-      client = ResolverRegistry::Client.new
+    #   # Initialize ResolverRegistry
+    #   client = ResolverRegistry::Client.new
       
-      # @TODO: Can this be improved?
-      #
-      # Steps for ResolverRegistry results
-      # 1) Look up *all* the resolvers held for a university 
-      # * Some universities have more than one resolver (Iowa has 4!)
-      # * Some resolvers look specific to ILL
-      # * Some resolvers are for "Ask a Librarian" type services
-      #
-      # 2) If there are no results use the personalize.rb defaults
-      #
-      # 3) Loop through results
-      #
-      # 4) Choose best resolver option
-      # * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
-      begin
-        institution = client.lookup_all(ip)
+    #   # @TODO: Can this be improved?
+    #   #
+    #   # Steps for ResolverRegistry results
+    #   # 1) Look up *all* the resolvers held for a university 
+    #   # * Some universities have more than one resolver (Iowa has 4!)
+    #   # * Some resolvers look specific to ILL
+    #   # * Some resolvers are for "Ask a Librarian" type services
+    #   #
+    #   # 2) If there are no results use the personalize.rb defaults
+    #   #
+    #   # 3) Loop through results
+    #   #
+    #   # 4) Choose best resolver option
+    #   # * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
+    #   begin
+    #     institution = client.lookup_all(ip)
         
-        # Test the ResolverRegistry results...
-        # If the ResolverRegistry returns nil
-        if institution.nil?
-          # Use the default variables
-        # Else loop and choose the "best option" 
-        else
-          institution.each do |i|
-            if i.resolver.metadata_formats.empty?
-              base_url = i.resolver.base_url
-              link_text = i.resolver.link_text
-              session[:openurl_link_text] = link_text
-              session[:openurl_base_url] = base_url
-            end
-          end
-        end
-      rescue
-        #If errors, do nothing - just use the defaults from personalize.rb
-      end #end begin
+    #     # Test the ResolverRegistry results...
+    #     # If the ResolverRegistry returns nil
+    #     if institution.nil?
+    #       # Use the default variables
+    #     # Else loop and choose the "best option" 
+    #     else
+    #       institution.each do |i|
+    #         if i.resolver.metadata_formats.empty?
+    #           base_url = i.resolver.base_url
+    #           link_text = i.resolver.link_text
+    #           session[:openurl_link_text] = link_text
+    #           session[:openurl_base_url] = base_url
+    #         end
+    #       end
+    #     end
+    #   rescue
+    #     #If errors, do nothing - just use the defaults from personalize.rb
+    #   end #end begin
       
-      # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
-      session[:openurl_info] = true
-    end #end if session[:openurl_info]
-=end
+    #   # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
+    #   session[:openurl_info] = true
+    # end #end if session[:openurl_info]
     return link_text, base_url, suffix
   end
 
@@ -334,6 +324,7 @@ module ApplicationHelper
       end
     end
   end
+
   alias include_stylesheet include_stylesheets
 
   def include_javascripts(*paths)
@@ -344,6 +335,7 @@ module ApplicationHelper
       end
     end
   end
+
   alias include_javascript include_javascripts
 
   #make a hidden div with the given id containing the given data, converted to json and html
@@ -351,5 +343,5 @@ module ApplicationHelper
   def js_data_div(id, data)
     content_tag(:div, h(data.to_json), :id => id, :class => 'hidden')
   end
-  
+
 end

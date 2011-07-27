@@ -1,4 +1,8 @@
+require 'lib/machine_name'
+require 'lib/solr_helper_methods'
 class Publication < ActiveRecord::Base
+  include SolrHelperMethods
+  include MachineNameUpdater
 
   attr_accessor :do_reindex
   #### Validations ####
@@ -103,12 +107,6 @@ class Publication < ActiveRecord::Base
     end
   end
 
-  def to_param
-    param_name = name.gsub(" ", "_")
-    param_name = param_name.gsub(/[^A-Za-z0-9_]/, "")
-    "#{id}-#{param_name}"
-  end
-
   # Convert object into semi-structured data to be stored in Solr
   def to_solr_data
     "#{name}||#{id}" unless self.nil?
@@ -159,17 +157,6 @@ class Publication < ActiveRecord::Base
   def reindex
     logger.debug("\n\n===Reindexing Works===\n\n")
     Index.batch_index
-  end
-
-  #Update Machine Name of Publication (called by after_save callback)
-  def update_machine_name
-    #Machine name only needs updating if there was a name change
-    if self.name_changed?
-      #Machine name is Name with:
-      #  1. all punctuation/spaces converted to single space
-      #  2. stripped of leading/trailing spaces and downcased
-      self.machine_name = self.name.mb_chars.gsub(/[\W]+/, " ").strip.downcase
-    end
   end
 
   # return the first letter of each name, ordered alphabetically

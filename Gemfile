@@ -4,8 +4,7 @@ source "http://gems.github.com"
 #Rails itself
 gem "rails", "3.0.4"
 
-#Avoid some issues with rake 0.9 (as of 2011-05-23)
-gem 'rake', '~> 0.8.7'
+gem 'rake'
 
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
 gem "haml"
@@ -115,4 +114,9 @@ group :test, :development do
   #version it should be fine to reinstate this.)
   #gem 'cucumber-rails'
   gem 'database_cleaner'
+  #I'd prefer to add metric_fu directly here, but something it pulls
+  #in pulls in something else that conflicts with the Keyword class.
+  #So instead I've installed the metrical gem separately to see
+  #if I can get it to work that way.
+  #gem 'metric_fu
 end
