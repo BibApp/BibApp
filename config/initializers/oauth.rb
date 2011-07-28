@@ -1,4 +1,10 @@
-
+#To use OAuth you need to copy config/oauth.yml.example to 
+#config/oauth.yml and fill in sections for each oauth provider
+#that you want to use. Consule the Omniauth documentation for
+#more details.
+#Note that as Bibapp currently works the OAuth provider must
+#return an email address for the user as one of the attributes
+#for OAuth to be useable.
 Bibapp::Application.config.oauth_config =
     if File.exists?(File.join(Rails.root, 'config', 'oauth.yml'))
       YAML.load_file(File.join(Rails.root, 'config', 'oauth.yml'))
