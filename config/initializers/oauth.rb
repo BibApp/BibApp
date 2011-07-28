@@ -5,6 +5,9 @@
 #Note that as Bibapp currently works the OAuth provider must
 #return an email address for the user as one of the attributes
 #for OAuth to be useable.
+#Note that the view code does not currently provide anything
+#to send you to your oauth provider - that would need to 
+#be customized as well.
 Bibapp::Application.config.oauth_config =
     if File.exists?(File.join(Rails.root, 'config', 'oauth.yml'))
       YAML.load_file(File.join(Rails.root, 'config', 'oauth.yml'))
