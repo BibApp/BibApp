@@ -89,7 +89,7 @@ module ApplicationHelper
     end
   end
 
-  #Generate a "Find It!" OpenURL link, 
+  #Generate a "Find It!" OpenURL link,
   # based on Work information as received from Solr
   def link_to_findit(work)
 
@@ -144,7 +144,7 @@ module ApplicationHelper
     # We want AR objects!
     if work.class == Hash
       begin
-        work = Work.find(work["pk_i"]).include(:authors)
+        work = Work.find(work["pk_i"])
       rescue
         return coin
       end
@@ -254,27 +254,27 @@ module ApplicationHelper
     # if session[:openurl_info]
     #   link_text = session[:openurl_link_text] if session[:openurl_link_text]
     #   base_url = session[:openurl_base_url] if session[:openurl_base_url]
-    # else 
+    # else
     #   # Obtain the client IP Addess
     #   ip = request.env["HTTP_X_FORWARDED_FOR"]
     #   logger.debug("Client IP: #{ip}")
-  
-    #   # Test UW-Madison 
+
+    #   # Test UW-Madison
     #   #ip = "128.104.198.84"
-      
-    #   # Test UIUC 
+
+    #   # Test UIUC
     #   #ip = "128.174.36.29"
-      
+
     #   # Test Iowa
     #   #ip = "128.255.56.180"
-  
+
     #   # Initialize ResolverRegistry
     #   client = ResolverRegistry::Client.new
-      
+
     #   # @TODO: Can this be improved?
     #   #
     #   # Steps for ResolverRegistry results
-    #   # 1) Look up *all* the resolvers held for a university 
+    #   # 1) Look up *all* the resolvers held for a university
     #   # * Some universities have more than one resolver (Iowa has 4!)
     #   # * Some resolvers look specific to ILL
     #   # * Some resolvers are for "Ask a Librarian" type services
@@ -287,12 +287,12 @@ module ApplicationHelper
     #   # * Best option (at least at UW, UIUC, Iowa) seems to be the resolver without specific metadata_formats
     #   begin
     #     institution = client.lookup_all(ip)
-        
+
     #     # Test the ResolverRegistry results...
     #     # If the ResolverRegistry returns nil
     #     if institution.nil?
     #       # Use the default variables
-    #     # Else loop and choose the "best option" 
+    #     # Else loop and choose the "best option"
     #     else
     #       institution.each do |i|
     #         if i.resolver.metadata_formats.empty?
@@ -306,7 +306,7 @@ module ApplicationHelper
     #   rescue
     #     #If errors, do nothing - just use the defaults from personalize.rb
     #   end #end begin
-      
+
     #   # whether we got results or not, flag that we already tried using OpenURL ResolverRegistry
     #   session[:openurl_info] = true
     # end #end if session[:openurl_info]
