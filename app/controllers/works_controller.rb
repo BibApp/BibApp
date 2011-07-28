@@ -64,7 +64,7 @@ class WorksController < ApplicationController
 
     before :show do
       @recommendations = Index.recommendations(@current_object)
-      # Specify text at end of HTML <title> tag
+      # Specify text at end of HTML title tag
       @title = @current_object.title_primary
       true
     end

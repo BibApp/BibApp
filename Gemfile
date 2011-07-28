@@ -103,6 +103,7 @@ end
 group :test, :development do
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'email_spec'
   gem 'ruby-debug-base'
   gem 'ruby-debug'
   gem 'ruby-debug-ide'
