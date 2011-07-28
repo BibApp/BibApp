@@ -9,6 +9,7 @@ class Import < ActiveRecord::Base
 
   # ActiveRecord Associations
   belongs_to :user
+  belongs_to :person
 
   has_one :import_file, :as => :asset, :dependent => :destroy
 

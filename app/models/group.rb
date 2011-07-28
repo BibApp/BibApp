@@ -1,5 +1,6 @@
 require 'lib/machine_name'
 require 'lib/solr_helper_methods'
+
 class Group < ActiveRecord::Base
   include MachineNameUpdater
   include SolrHelperMethods
@@ -56,21 +57,24 @@ class Group < ActiveRecord::Base
   end
 
   #Add an http:// if this (or https://) isn't found before the url
+  #hoped to be able to use URI to do this more nicely, but haven't figured it out yet
   def canonicalize_url
-    if self.url.match(/^https?\:\/\//)
-      self.url
-    else
-      'http://' + self.url
-    end
+    uri = URI.parse(self.url)
+    return self.url if ['http', 'https'].include?(uri.scheme)
+    return 'http://' + self.url
+  rescue URI::InvalidURIError
+    return "#"
   end
+
+  #TODO acts_as_tree isn't really all that great, and we may want to replace it sometime
+  #Note that it provides methods: parent, children, siblings, self_and_siblings,
+  #ancestors, and root. As an example, we might use a nested_set gem (maybe better_nested_set)). It should
+  #almost drop in - create the columns lft/rgt in a migration, put acts_as_nested_set
+  #in the class definition, and run renumber_full_tree to generate the left/right indexes.
 
   #Return the group's top-level parent (ancestor)
   def top_level_parent
-    if self.parent.nil?
-      return self
-    else
-      return self.parent.top_level_parent
-    end
+    self.root
   end
 
   def ancestors_and_descendants
