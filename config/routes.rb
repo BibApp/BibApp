@@ -57,7 +57,7 @@ Bibapp::Application.routes.draw do
 
   #####
   # Group routes
-  ##### 
+  #####
   # Add Auto-Complete routes for adding new groups
   resources :groups do
     collection do
@@ -113,7 +113,7 @@ Bibapp::Application.routes.draw do
   end
   #####
   # Publisher routes
-  #####   
+  #####
   resources :publishers do
     collection do
       get :authorities
@@ -182,7 +182,7 @@ Bibapp::Application.routes.draw do
   match 'activate/:activation_code', :to => 'users#activate', :as => 'activate'
 
   ####
-  # DEFAULT ROUTES 
+  # DEFAULT ROUTES
   ####
   # Install the default routes as the lowest priority.
   resources :name_strings
@@ -208,7 +208,9 @@ Bibapp::Application.routes.draw do
 
   match 'citations', :to => 'works#index'
 
-  resource :user_session
+  resource :user_session do
+    get :new_ldap
+  end
 
   resources :authentications
   match '/auth/:provider/callback' => 'authentications#create'
@@ -219,7 +221,7 @@ Bibapp::Application.routes.draw do
   match 'admin/update_sherpa_data'
   match 'admin/deposit_via_sword'
   match 'admin/update_publishers_from_sherpa'
-  
+
   match 'roles/index'
   match 'roles/destroy'
   match 'roles/create'

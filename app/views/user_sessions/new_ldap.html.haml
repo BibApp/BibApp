@@ -1,0 +1,4 @@
+= form_tag('/auth/ldap', :method => :post) do
+  Login: #{text_field_tag(:username)}
+  Password: #{password_field_tag(:password)}
+  = submit_tag('Sign in')

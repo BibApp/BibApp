@@ -29,6 +29,10 @@ class UserSessionsController < ApplicationController
     @works = session[:saved].all_works
   end
 
+  def new_ldap
+
+  end
+
   protected
 
   def after_login_destination
