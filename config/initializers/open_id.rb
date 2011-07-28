@@ -3,6 +3,9 @@ require 'openid/store/filesystem'
 
 #If you want to use open id then set this to true and define
 #any applicable open id providers in config/open_id.yml
+#The login view will provide a button to each specified 
+#OpenID provider and one for generic OpenID - you may 
+#want to customize this as it's crude at the moment.
 Bibapp::Application.config.allow_open_id = false
 
 if Bibapp::Application.config.allow_open_id
