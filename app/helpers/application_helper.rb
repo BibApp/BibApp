@@ -144,7 +144,7 @@ module ApplicationHelper
     # We want AR objects!
     if work.class == Hash
       begin
-        work = Work.include(:authors).find(work["pk_i"])
+        work = Work.find(work["pk_i"])
       rescue
         return coin
       end
