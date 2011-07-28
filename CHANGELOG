@@ -1,3 +1,32 @@
+1.1.0 - July 29, 2011
+--------------
+-THERE ARE SOME NEW MIGRATIONS - don't forget to migrate your database
+-Abstract LDAP pieces into their own module
+-Fix some importing problems
+-Some fixes around authentication and log in procedure, etc.
+-Remove most inline styles and use CSS instead
+-General cleanup of view code
+-Remove most inline javascript - move to separate files and include as needed
+-Introduce jQuery for javascript (note - some old Prototype stuff is still 
+there)
+-Redid some views that were doing some tricky stuff to get the same form to do
+more than one thing.
+-By default prevent bots from hitting search urls.
+-Add omniauth capabilities - there is sample code for openID and OAuth. At
+UIUC we do shibboleth (uiuc-connections branch) and I have simple start 
+(working) for LDAP (omniauth-ldap branch). Should make it very easy to 
+customize for various remote authentications.
+-Load CSL files locally instead of over the web
+-Display Sherpa data in more places
+-Set up for cucumber (awaiting dependancy conflict with omniauth before
+turning on in the Gemfile
+-Set up for newrelic profiling (instructions of a sort in Gemfile)
+-Set up for metrical (stand alone metric_fu - having metric_fu as part
+of the project causes class collision) code analysis
+-Much code refactoring and cleanup
+-More tests
+-Many minor bugfixes
+
 1.1.0-rc3 - April 13, 2011
 --------------
 Many minor bugfixes
@@ -57,7 +86,7 @@ Fixes LDAP error
 1.0 - June 30, 2010
 --------------
 
-* 1.0 release (final) 
+* 1.0 release (final)
 
 1.0RC3 - June 29, 2010
 --------------
