@@ -90,7 +90,7 @@ namespace :bibapp do
     desc "#{action} Bibapp services" 
     task action do
       begin
-        run "cd #{current}; RAILS_ENV=#{rails_env} rake bibapp:#{action}"
+        run "cd #{current}; RAILS_ENV=#{rails_env} bundle exec rake bibapp:#{action}"
       rescue
         puts "Current directory doesn't exist yet"
       end
@@ -103,7 +103,7 @@ end
 namespace :solr do
   desc "Reindex solr"
   task :refresh_index do
-    run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} rake solr:refresh_index"
+    run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} bundle exec rake solr:refresh_index"
   end
 end
 
