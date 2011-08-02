@@ -40,7 +40,7 @@ module OmniAuth
 
       def shibboleth_login_url
         url = self.base_url
-        return "#{url}?target=#{shibboleth_target()}"
+        return "#{url}?target=#{shibboleth_target()}&entityID=#{shibboleth_entity_id}"
       end
 
       def shibboleth_target
@@ -48,6 +48,10 @@ module OmniAuth
         root.scheme = 'https'
         root.merge!('/auth/shibboleth/callback')
         CGI.escape(root.to_s)
+      end
+
+      def shibboleth_entity_id
+        return CGI.escape('urn:mace:incommon:uiuc:edu')
       end
 
     end
