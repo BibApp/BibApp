@@ -4,11 +4,12 @@ module OmniAuth
     class Shibboleth
       include OmniAuth::Strategy
 
-      attr_accessor :base_url
+      attr_accessor :base_url, :entity_id
 
       #receive and save any needed parameters for the strategy
-      def initialize(app, base_url, options = {})
+      def initialize(app, base_url, entity_id,  options = {})
         self.base_url = base_url
+        self.entity_id = entity_id
         super(app, :shibboleth, options)
       end
 
@@ -51,7 +52,7 @@ module OmniAuth
       end
 
       def shibboleth_entity_id
-        return CGI.escape('urn:mace:incommon:uiuc.edu')
+        return CGI.escape(self.entity_id)
       end
 
     end
