@@ -51,7 +51,7 @@ module OmniAuth
       end
 
       def shibboleth_entity_id
-        return CGI.escape('urn:mace:incommon:uiuc:edu')
+        return CGI.escape('urn:mace:incommon:uiuc.edu')
       end
 
     end
