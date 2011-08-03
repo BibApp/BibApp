@@ -1,3 +1,4 @@
+require 'lib/string_methods'
 class Import < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 10
@@ -112,7 +113,7 @@ class Import < ActiveRecord::Base
 
   # Process Batch Import
   def batch_import
-    logger.debug("\n\n==== Staring Batch Import ==== \n\n")
+    logger.debug("\n\n==== Starting Batch Import ==== \n\n")
 
     # Initialize an array of all the works added and hash of errors encounterd in the batch
     self.works_added = Array.new
