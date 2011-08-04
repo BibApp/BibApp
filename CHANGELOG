@@ -1,3 +1,8 @@
+1.1.2 - ???
+--------------
+Fix bug in Person#set_pen_names.
+Add spec test to cover bug.
+
 1.1.1 - August 3, 2011
 --------------
 Fix bug for importing - missing require
