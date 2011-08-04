@@ -1,3 +1,4 @@
+require 'set'
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Person do
@@ -172,6 +173,13 @@ describe Person do
     reftypes.first.count.should == '3'
     reftypes.third.type.should == 'BookReview'
     reftypes.third.count.should == '1'
+  end
+
+  it "correctly creates pen names when not all names are given" do
+    person = Factory.build(:person,  :first_name => 'First', :last_name => 'Last', :middle_name => '')
+    person.save.should be_true
+    person.name_strings.length.should == 2
+    person.name_strings.collect {|ns| ns.name}.to_set.should == ['Last, First', 'Last, F.'].to_set
   end
 
   def add_contributorship(person, work, verified = true)
