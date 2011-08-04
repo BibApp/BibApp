@@ -47,7 +47,7 @@ class Person < ActiveRecord::Base
       new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
         NameString.find_or_create_by_machine_name(v)
       end
-      ((existing_name_strings + new_name_strings) - self.name_strings).uniq.each do |ns|
+      ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
         self.name_strings << ns
       end
     end
