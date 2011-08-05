@@ -227,12 +227,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  RANDOM_PASSWORD_CHARS = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
-
-  def self.random_password(len = 20)
-    len.times.collect { RANDOM_PASSWORD_CHARS.choice }.join
-  end
-
   def dissociate_person
     if person = self.person
       person.user = nil
