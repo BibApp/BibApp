@@ -1,4 +1,6 @@
+require 'lib/open_url_conference_context'
 class ConferencePaper < Work
+  include OpenUrlConferenceContext
   validates_presence_of :title_primary
 
   def self.roles
