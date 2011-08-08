@@ -2,6 +2,8 @@
 --------------
 Fix bug in Person#set_pen_names.
 Add spec test to cover bug.
+Make method instance instead of class to fix bug
+
 
 1.1.1 - August 3, 2011
 --------------
@@ -16,14 +18,14 @@ Fix bug for importing - missing require
 -Remove most inline styles and use CSS instead
 -General cleanup of view code
 -Remove most inline javascript - move to separate files and include as needed
--Introduce jQuery for javascript (note - some old Prototype stuff is still 
+-Introduce jQuery for javascript (note - some old Prototype stuff is still
 there)
 -Redid some views that were doing some tricky stuff to get the same form to do
 more than one thing.
 -By default prevent bots from hitting search urls.
 -Add omniauth capabilities - there is sample code for openID and OAuth. At
-UIUC we do shibboleth (uiuc-connections branch) and I have simple start 
-(working) for LDAP (omniauth-ldap branch). Should make it very easy to 
+UIUC we do shibboleth (uiuc-connections branch) and I have simple start
+(working) for LDAP (omniauth-ldap branch). Should make it very easy to
 customize for various remote authentications.
 -Load CSL files locally instead of over the web
 -Display Sherpa data in more places
