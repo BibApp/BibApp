@@ -618,7 +618,7 @@ class WorksController < ApplicationController
     session[:works_batch].delete_if { |work_id| !Work.exists?(work_id) }
   end
 
-  def self.person_from_person_id
+  def person_from_person_id
     if params[:person_id]
       @person = Person.find(params[:person_id].split("-")[0])
     end

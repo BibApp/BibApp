@@ -5,11 +5,9 @@ class SearchController < ApplicationController
     search(params)
 
     respond_to do |format|
-      format.html # Do HTML      
+      format.html # Do HTML
       format.json
       format.yaml
-      format.xml
-      format.rdf
       format.xml
       format.rdf
     end
