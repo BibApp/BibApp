@@ -1,4 +1,6 @@
+require 'lib/open_url_book_context'
 class BookSection < Work
+  include OpenUrlBookContext
   validates_presence_of :title_primary
 
   def self.roles
