@@ -3,7 +3,7 @@ xml.rdf(:RDF, 'xmlns:rdf'=>"http://www.w3.org/1999/02/22-rdf-syntax-ns#", 'xmlns
   @works.each do |w|
     work = Work.find_by_id(w['pk_i'])
     if work
-      xml << render(:partial => 'package', :locals => {:work => work})
+      xml << render(:partial => 'shared/package', :locals => {:work => work})
     end
   end
   if @has_next_page
