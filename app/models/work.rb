@@ -700,6 +700,25 @@ class Work < ActiveRecord::Base
     return open_url_kevs
   end
 
+  #return OpenURL context string for this hash, e.g. for mets export of work
+  #ignore any key that has a nil value
+  def open_url_context_string
+    self.open_url_context_hash.collect do |k,v|
+      v ? URI.escape("&#{k}=#{v}") : nil
+    end.compact.join('')
+  end
+
+  #return components to be incorporated into open_url_context_string
+  #override in subclasses to add additional elements or change what happens
+  #here
+  def open_url_context_hash
+    self.open_url_base_context_hash
+  end
+
+  def open_url_base_context_hash
+    {'ctx_ver' => 'Z39.88-2004'}
+  end
+
   def update_type_and_save(new_type)
     self[:type] = new_type
     self.save
