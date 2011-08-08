@@ -94,7 +94,7 @@ xml.mdWrap(:LABEL=>"SWORD Metadata - EPrints DC XML schema", :MDTYPE=>"OTHER", :
               xml.epdcx(:valueString, encode_for_xml(work.publisher.authority.name))
             end
           end
-          xml.epdcx(:statement, 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> filepath })
+          xml.epdcx(:statement, 'epdcx:propertyURI'=>"http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI'=> filepath)
         end
         xml.epdcx(:description, 'epdcx:resourceURI'=>filepath ) do
           xml.epdcx(:statement, 'epdcx:propertyURI'=>"http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI'=>"http://purl.org/eprint/entityType/Copy")
