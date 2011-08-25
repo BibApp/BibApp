@@ -36,14 +36,14 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   end
 
-  # Removes a work.id to the session[:saved] array  
+  # Removes a work.id to the session[:saved] array
   def remove_from_saved
     @saved = find_saved
     @saved.remove_work(params[:id].to_i)
     redirect_to :back
   end
 
-  # Sets the session[:saved] array to nil    
+  # Sets the session[:saved] array to nil
   def delete_saved
     session[:saved] = nil
     redirect_to saved_path
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # Loads the current session saved, or starts a new saved  
+  # Loads the current session saved, or starts a new saved
   def find_saved
     @saved = session[:saved] ||= Saved.new
   end
@@ -123,7 +123,7 @@ class ApplicationController < ActionController::Base
 
     # Enable Citeproc
     if @export && !@export.empty?
-      works = Work.find(@works.collect { |c| c['pk_i'] }, :order => "publication_date desc")
+      works = Work.order("publication_date desc").find(@works.collect { |c| c['pk_i'] })
       ce = WorkExport.new
       @works = ce.drive_csl(@export, works)
     end
