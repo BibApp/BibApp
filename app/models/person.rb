@@ -47,8 +47,8 @@ class Person < ActiveRecord::Base
       new_name_strings = (names.reject {|n| existing_names.include?(n[:machine_name])}).collect do |v|
         NameString.find_or_create_by_machine_name(v)
       end
-      ((existing_name_strings + new_name_strings) - self.name_strings).each do |ns|
-        self.name_strings << ns
+      (existing_name_strings + new_name_strings).each do |ns|
+        PenName.find_or_create_by_person_id_and_name_string_id(:person_id => self.id, :name_string_id => ns.id)
       end
     end
 
