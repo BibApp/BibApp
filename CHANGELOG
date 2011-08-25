@@ -1,9 +1,10 @@
 1.1.2 - ???
 --------------
-Fix bug in Person#set_pen_names.
-Add spec test to cover bug.
+Fix bug in Person#set_pen_names
+Add spec test to cover bug
 Make method instance instead of class to fix bug
 Convert XML generating views to Builder from Haml
+Fix bug and speed up finding works from a group
 
 1.1.1 - August 3, 2011
 --------------
