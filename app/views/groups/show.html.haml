@@ -55,7 +55,7 @@
             - unless g.hide?
               %li
                 =link_to g.name, group_path(g)
-                ="(#{g.works.size})"
+                ="(#{g.works.count})"
 
     .span-7.right_box_no_border
       %h3 Types of Work

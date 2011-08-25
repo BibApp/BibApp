@@ -147,7 +147,7 @@ class Contributorship < ActiveRecord::Base
   def calculate_inclusion_score(known_ids, possible_ids, max_score)
     return 0 if possible_ids.empty?
     known_ids = known_ids.to_set
-    matches = possible_ids.detect do |id|
+    matches = possible_ids.select do |id|
       known_ids.include?(id)
     end
     return ((max_score / possible_ids.size) * matches.size)

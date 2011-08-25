@@ -43,8 +43,8 @@ class Group < ActiveRecord::Base
   #### Methods ####
 
   def works
-    # @TODO: Do this the Rails way.
-    self.people.collect { |p| p.works.verified }.uniq.flatten
+    Work.verified.includes(:contributorships => {:person => :memberships}).
+        where(:contributorships => {:person => {:memberships => {:group_id => self.id}}})
   end
 
   # Convert object into semi-structured data to be stored in Solr
