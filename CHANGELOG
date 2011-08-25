@@ -5,6 +5,7 @@ Add spec test to cover bug
 Make method instance instead of class to fix bug
 Convert XML generating views to Builder from Haml
 Fix bug and speed up finding works from a group
+Fix HTML escaping problem for viewing lists of works in alternate bibliographic formats
 
 1.1.1 - August 3, 2011
 --------------
