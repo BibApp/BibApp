@@ -1,4 +1,6 @@
 - include_javascript('specific/publications/authorities')
+- include_data_tables
+
 - if logged_in? && current_user.has_any_role?("editor", "Group")
   - content_for :admin_bar do
     / #### Admin Actions ###
@@ -15,7 +17,7 @@
       = render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
 
     = render :partial => "shared/alpha_pagination"
-          
+
     %table#publications
       %thead
         %tr
@@ -36,4 +38,3 @@
     %br/
     %br/
     = render :partial => "shared/alpha_pagination"
-    
