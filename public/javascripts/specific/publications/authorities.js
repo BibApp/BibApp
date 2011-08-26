@@ -24,9 +24,10 @@ document.observe("dom:loaded", function() {
 // Make table into javascript widget
 $jq(document).ready(function() {
 	$jq('#publications').dataTable( {
-    "aaSorting": [[1, "desc"]],
+    "aaSorting": [[2, "asc"]],
     "aLengthMenu": [10, 25, 50, 100],
     "iDisplayLength": 25,
-    "sPaginationType": "full_numbers"
+    "sPaginationType": "full_numbers",
+    "bStateSave": true
   });
 } );
