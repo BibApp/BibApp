@@ -47,10 +47,22 @@
   text-decoration: underline;
 }
 
+.dataTables_paginate .paginate_button:hover {
+  cursor: pointer;
+}
+
 .dataTables_paginate .paginate_button_disabled {
   text-decoration: none;
 }
 
+.dataTables_paginate .paginate_button_disabled:hover {
+  cursor: default;
+}
+
 .dataTables_paginate .paginate_active {
   text-decoration: none;
+}
+
+.dataTables_paginate .paginate_active:hover {
+  cursor: default;
 }
