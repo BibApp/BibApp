@@ -22,7 +22,7 @@ class WorkExport
     load_formatter
 
     @citations = do_format
-    
+
     return @citations
   end
 
@@ -48,7 +48,7 @@ class WorkExport
   end
 
   def full_csl_file_path(csl_file)
-    File.join(Rails.root, 'public', 'csl_styles', 'apa.csl')
+    File.join(Rails.root, 'public', 'csl_styles', csl_file)
   end
 
   def load_locale

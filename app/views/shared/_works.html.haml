@@ -55,10 +55,10 @@
 
           - for filter in @filter
             = hidden_field_tag "fq[]", filter
-            
+
           = hidden_field_tag "view", "all"
           - @page = 1 if @page == 0
-          = hidden_field_tag "page", @page              
+          = hidden_field_tag "page", @page
 
           = submit_tag 'Go'
 
@@ -70,6 +70,6 @@
           = render :partial => "shared/work", :locals => {:work => work, :allow_select => allow_select, :show_status => show_status, :show_dupes => show_dupes, :links_array => links_array}
     - else
       .span-17.clear-both.no-padding-or-margin
-        = @works
-        
+        = @works.html_safe
+
     .span-17= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

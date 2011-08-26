@@ -1,19 +1,22 @@
 / === Contributorships === Admin ===
 / Main
-
-
+- include_javascript('datatables/jquery.dataTables')
+- include_stylesheet('common/datatables')
+- include_javascript('specific/contributorships/admin')
 .span-24
   .span-22.prepend-1
     %h2 Admin: Unverified Contributorships
     - if @people.length == 0
       %p Congratulations! Nothing to do here.
     - else
-      %table
-        %tr
-          %th Person
-          %th.text-center Potential Matches
-        - @people.each do |p|
-          - person = Person.find(p[0])
+      %table#people
+        %thead
           %tr
-            %td=link_to person.name, contributorships_path(:person_id=>p[0])
-            %td.text-center=p[1].length
+            %th Person
+            %th.text-center Potential Matches
+        %tbody
+          - @people.each do |p|
+            - person = Person.find(p[0])
+            %tr
+              %td=link_to person.name, contributorships_path(:person_id=>p[0])
+              %td.text-center=p[1].length
