@@ -3,6 +3,13 @@
   clear: both;
 }
 
+/* This is a kludge to make sure that the icon for sorting appears beside the column name.
+  It's be slightly less kludgy to do this on a view by view basis, or in some cases to supress
+  sorting on certain columns */
+.dataTables_wrapper th {
+  min-width: 75px;
+}
+
 /* sorting icons */
 .dataTables_wrapper .sorting:after {
   content: url(/icons/sort.png);
@@ -47,10 +54,22 @@
   text-decoration: underline;
 }
 
+.dataTables_paginate .paginate_button:hover {
+  cursor: pointer;
+}
+
 .dataTables_paginate .paginate_button_disabled {
   text-decoration: none;
 }
 
+.dataTables_paginate .paginate_button_disabled:hover {
+  cursor: default;
+}
+
 .dataTables_paginate .paginate_active {
   text-decoration: none;
+}
+
+.dataTables_paginate .paginate_active:hover {
+  cursor: default;
 }
