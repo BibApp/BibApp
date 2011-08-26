@@ -1,0 +1,56 @@
+/* general table stuff */
+.dataTables_wrapper table {
+  clear: both;
+}
+
+/* sorting icons */
+.dataTables_wrapper .sorting:after {
+  content: url(/icons/sort.png);
+  padding-left: 10px;
+}
+
+.dataTables_wrapper .sorting_asc:after {
+  content: url(/icons/sort--plus.png);
+  padding-left: 10px;
+}
+
+.dataTables_wrapper .sorting_desc:after {
+  content: url(/icons/sort--minus.png);
+  padding-left: 10px;
+}
+
+/* number of records box */
+.dataTables_wrapper .dataTables_length {
+  float: left;
+}
+
+/* search (filter) box */
+.dataTables_wrapper .dataTables_filter {
+  float:right
+}
+
+/* info */
+.dataTables_info {
+  float: left;
+}
+
+/* pagination */
+.dataTables_paginate {
+  float: right;
+}
+
+.dataTables_paginate span {
+  padding: 0px 5px;
+}
+
+.dataTables_paginate .paginate_button {
+  text-decoration: underline;
+}
+
+.dataTables_paginate .paginate_button_disabled {
+  text-decoration: none;
+}
+
+.dataTables_paginate .paginate_active {
+  text-decoration: none;
+}
