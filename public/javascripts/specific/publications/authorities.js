@@ -28,6 +28,7 @@ $jq(document).ready(function() {
     "aLengthMenu": [10, 25, 50, 100],
     "iDisplayLength": 25,
     "sPaginationType": "full_numbers",
-    "bStateSave": true
+    "bStateSave": true,
+    "iCookieDuration": 600
   });
 } );

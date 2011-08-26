@@ -21,11 +21,11 @@
     %table#publications
       %thead
         %tr
-          %td Select
-          %td ISSN / ISBN
-          %td Publication Name
-          %td Publisher
-          %td Works
+          %th Select
+          %th ISSN / ISBN
+          %th Publication Name
+          %th Publisher
+          %th Works
       %tbody
         -@current_objects.each do |publication|
           %tr#publication.publication{:id => publication.id, :class => cycle("odd", "even")}
