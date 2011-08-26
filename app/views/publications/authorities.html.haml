@@ -1,4 +1,6 @@
+- include_data_tables
 - include_javascript('specific/publications/authorities')
+
 - if logged_in? && current_user.has_any_role?("editor", "Group")
   - content_for :admin_bar do
     / #### Admin Actions ###
@@ -15,15 +17,15 @@
       = render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
 
     = render :partial => "shared/alpha_pagination"
-          
+
     %table#publications
       %thead
         %tr
-          %td Select
-          %td ISSN / ISBN
-          %td Publication Name
-          %td Publisher
-          %td Works
+          %th Select
+          %th ISSN / ISBN
+          %th Publication Name
+          %th Publisher
+          %th Works
       %tbody
         -@current_objects.each do |publication|
           %tr#publication.publication{:id => publication.id, :class => cycle("odd", "even")}
@@ -36,4 +38,3 @@
     %br/
     %br/
     = render :partial => "shared/alpha_pagination"
-    
