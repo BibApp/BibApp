@@ -20,3 +20,13 @@ function highlight_candidates() {
 document.observe("dom:loaded", function() {
   highlight_candidates();
 });
+
+// Make table into javascript widget
+$jq(document).ready(function() {
+	$jq('#publications').dataTable( {
+    "aaSorting": [[1, "desc"]],
+    "aLengthMenu": [10, 25, 50, 100],
+    "iDisplayLength": 25,
+    "sPaginationType": "full_numbers"
+  });
+} );

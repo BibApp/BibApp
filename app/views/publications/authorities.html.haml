@@ -1,5 +1,5 @@
-- include_javascript('specific/publications/authorities')
 - include_data_tables
+- include_javascript('specific/publications/authorities')
 
 - if logged_in? && current_user.has_any_role?("editor", "Group")
   - content_for :admin_bar do
