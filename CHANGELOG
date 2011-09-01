@@ -7,6 +7,7 @@ Convert XML generating views to Builder from Haml
 Fix bug and speed up finding works from a group
 Fix HTML escaping problem for viewing lists of works in alternate bibliographic formats
 Some tables are now javascript enabled
+Fix security issue around password reset.
 
 1.1.1 - August 3, 2011
 --------------
