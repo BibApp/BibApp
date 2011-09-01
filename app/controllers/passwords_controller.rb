@@ -3,7 +3,7 @@
 class PasswordsController < ApplicationController
 
   # require user is logged in, except for "forgot password" page
-  before_filter :login_required, :except => [:create, :new]
+  before_filter :login_required, :only => [:edit, :update]
 
   # POST /passwords
   # Forgot password
@@ -13,12 +13,12 @@ class PasswordsController < ApplicationController
       if user = User.find_by_email(params[:email])
         @new_password = User.random_password
         user.password = user.password_confirmation = @new_password
-        user.save
+        user.save_without_session_maintenance
         UserMailer.new_password(user, @new_password).deliver
 
         format.html do
           flash[:notice] = "We sent a new password to #{params[:email]}"
-          redirect_to logged_in? ? root_url : login_url
+          redirect_to login_url
         end
       else
         flash[:notice] = "Sorry, we cannot find that account.  Try again."
