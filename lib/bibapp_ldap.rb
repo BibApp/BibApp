@@ -49,9 +49,9 @@ class BibappLdap
   rescue BibappLdapError => e
     raise e
   rescue Exception => e
-    if ldap.get_operation_result_code == 4
+    if ldap.get_operation_result.code == 4
       raise BibappLdapTooManyResultsError
-    elsif ldap.get_operation_result_code != 0
+    elsif ldap.get_operation_result.code != 0
       raise BibappLdapError(ldap.get_operation_result.message)
     else
       raise BibappLdapError(e.message)
