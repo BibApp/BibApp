@@ -71,8 +71,24 @@ class Work < ActiveRecord::Base
   scope :most_recent_first, order('updated_at DESC')
 
   def self.orphans
+    (self.orphans_no_contributorships + self.orphans_denied_contributorships).sort {|a, b| a.title_primary <=> b.title_primary}
+  end
+
+  def self.orphans_no_contributorships
     self.order('title_primary').joins('LEFT JOIN contributorships ON works.id = contributorships.work_id').
         where(:contributorships => {:id => nil})
+  end
+
+  #The implementation may be improvable, but this only does 3 SQL calls. It could be done in one, but I'm not
+  #sure how to accomplish that in the Rails query language.
+  #We first find all works that have at least one denied contributorship. Then we load those works eager loading
+  #all their contributorships and find the ones with all denied contributorships in code
+  def self.orphans_denied_contributorships
+    contributorships = Contributorship.denied.select("DISTINCT work_id")
+    works = self.includes(:contributorships).where(:id => contributorships.collect {|c| c.work_id})
+    works.select do |work|
+      !work.contributorships.detect {|c| !c.denied?}
+    end
   end
 
   #### Callbacks ####
@@ -703,7 +719,7 @@ class Work < ActiveRecord::Base
   #return OpenURL context string for this hash, e.g. for mets export of work
   #ignore any key that has a nil value
   def open_url_context_string
-    self.open_url_context_hash.collect do |k,v|
+    self.open_url_context_hash.collect do |k, v|
       v ? URI.escape("&#{k}=#{v}") : nil
     end.compact.join('')
   end

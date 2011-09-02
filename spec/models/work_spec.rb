@@ -304,7 +304,7 @@ describe Work do
     it "sets from a list of tags for an existing work" do
       work = Factory.create(:generic)
       work.tags << (old_tag = Factory.create(:tag))
-      new_tags = 3.times.collect {Factory.create(:tag)}
+      new_tags = 3.times.collect { Factory.create(:tag) }
       work.set_tags(new_tags)
       work.tags(true).should_not include(old_tag)
       work.tags.to_set.should == new_tags.to_set
@@ -312,7 +312,7 @@ describe Work do
 
     it "sets from a list of tags for a new work" do
       work = Factory.build(:generic)
-      new_tags = 3.times.collect {Factory.build(:tag)}
+      new_tags = 3.times.collect { Factory.build(:tag) }
       work.set_tags(new_tags)
       work.tags(true).should be_empty
       work.save
@@ -330,7 +330,7 @@ describe Work do
     it "sets from a list of keywords for an existing work" do
       work = Factory.create(:generic)
       work.keywords << (old_keyword = Factory.create(:keyword))
-      new_keywords = 3.times.collect {Factory.create(:keyword)}
+      new_keywords = 3.times.collect { Factory.create(:keyword) }
       work.set_keywords(new_keywords)
       work.keywords(true).should_not include(old_keyword)
       work.keywords.to_set.should == new_keywords.to_set
@@ -338,7 +338,7 @@ describe Work do
 
     it "sets from a list of keywords for a new work" do
       work = Factory.build(:generic)
-      new_keywords = 3.times.collect {Factory.build(:keyword)}
+      new_keywords = 3.times.collect { Factory.build(:keyword) }
       work.set_keywords(new_keywords)
       work.keywords(true).should be_empty
       work.save
@@ -355,7 +355,7 @@ describe Work do
   it "can convert a string as found in its types array to a work subclass" do
     type_1 = "Conference Proceeding (Whole)"
     type_2 = "Dissertation / Thesis"
-    [type_1, type_2].each {|type| Work.types.include?(type)}
+    [type_1, type_2].each { |type| Work.types.include?(type) }
     Work.type_to_class(type_1).should == ConferenceProceedingWhole
     Work.type_to_class(type_2).should == DissertationThesis
   end
@@ -363,16 +363,16 @@ describe Work do
   context 'operations with hash data' do
     context 'creation' do
       it "can create a subclass instance from hash data" do
-        expect {Work.create_from_hash(:klass => 'Generic', :title_primary => 'Title')}.to change {Generic.count}.by(1)
+        expect { Work.create_from_hash(:klass => 'Generic', :title_primary => 'Title') }.to change { Generic.count }.by(1)
       end
 
       it "raises an error if attempting to create an invalid subclass" do
-        expect {Work.create_from_hash(:klass => 'Object')}.to raise_error(NameError)
+        expect { Work.create_from_hash(:klass => 'Object') }.to raise_error(NameError)
       end
     end
 
     context 'role identification' do
-      before(:each) {@work = Factory.create(:performance)}
+      before(:each) { @work = Factory.create(:performance) }
       it "should be able to return a specific creator role in place of 'Author'" do
         @work.denormalize_role('Author').should == 'Director'
       end
@@ -428,5 +428,37 @@ describe Work do
         work.publication_name_from_hash({}).should == 'Unknown'
       end
     end
+  end
+
+  describe 'orphan detection' do
+    def work_with_contributorships(*states)
+      title = states.blank? ? 'None' : states.join(' ')
+      Factory.create(:work, :title_primary => title ).tap do |work|
+        states.each do |state|
+          Factory.create(:contributorship, :work => work).send("#{state}_contributorship")
+        end
+      end
+    end
+
+    before(:each) do
+      @works = [work_with_contributorships(), work_with_contributorships(:verify), work_with_contributorships(:deny),
+                work_with_contributorships(:verify, :verify), work_with_contributorships(:deny, :deny),
+                work_with_contributorships(:verify, :deny)]
+      @work_no_contribs, @work_verified_contrib, @work_denied_contrib, @work_verified_contribs,
+          @work_denied_contribs, @work_mixed_contribs = @works
+    end
+
+    it 'should be able to identify works without contributorships as orphans' do
+      Work.orphans_no_contributorships.should == [@work_no_contribs]
+    end
+
+    it 'should be able to identity work with exclusively denied contributorships as orphans' do
+      Work.orphans_denied_contributorships.to_set.should == [@work_denied_contrib, @work_denied_contribs].to_set
+    end
+
+    it 'should be able to aggregate all orphans' do
+      Work.orphans.to_set.should == [@work_no_contribs, @work_denied_contrib, @work_denied_contribs].to_set
+    end
+
   end
 end
