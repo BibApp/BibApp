@@ -71,7 +71,7 @@ class Work < ActiveRecord::Base
   scope :most_recent_first, order('updated_at DESC')
 
   def self.orphans
-    (self.orphans_no_contributorships + self.orphans_denied_contributorships).sort {|a, b| a.title_primary <=> b.title_primary}
+    (self.orphans_no_contributorships + self.orphans_denied_contributorships).uniq.sort {|a, b| a.title_primary <=> b.title_primary}
   end
 
   def self.orphans_no_contributorships
