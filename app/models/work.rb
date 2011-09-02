@@ -79,12 +79,15 @@ class Work < ActiveRecord::Base
         where(:contributorships => {:id => nil})
   end
 
-  #It's probably possible to do this more elegantly, but this should be functional
-  #first grab all works with a denied contributorship, then loop to find those will _all_ denied contributorships
+  #The implementation may be improvable, but this only does 3 SQL calls. It could be done in one, but I'm not
+  #sure how to accomplish that in the Rails query language.
+  #We first find all works that have at least one denied contributorship. Then we load those works eager loading
+  #all their contributorships and find the ones with all denied contributorships in code
   def self.orphans_denied_contributorships
-    works = self.includes(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_DENIED})
+    contributorships = Contributorship.denied.select("DISTINCT work_id")
+    works = self.includes(:contributorships).where(:id => contributorships.collect {|c| c.work_id})
     works.select do |work|
-      !work.contributorships(true).detect {|c| !c.denied?}
+      !work.contributorships.detect {|c| !c.denied?}
     end
   end
 
