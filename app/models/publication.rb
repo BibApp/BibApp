@@ -1,15 +1,4 @@
-require 'machine_name'
-require 'solr_helper_methods'
-require 'solr_updater'
-
-class Publication < ActiveRecord::Base
-  include SolrHelperMethods
-  include MachineNameUpdater
-  include SolrUpdater
-
-  attr_accessor :do_reindex
-  #### Validations ####
-
+class Publication < PubCommon
   #### Associations ####
 
   belongs_to :publisher
@@ -18,12 +7,6 @@ class Publication < ActiveRecord::Base
 
   has_many :identifyings, :as => :identifiable
   has_many :identifiers, :through => :identifyings
-
-  scope :authorities, where("id = authority_id")
-  scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
-  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
-  scope :order_by_upper_name, order('upper(name)')
-  scope :order_by_name, order('name')
 
   # This is necessary due to very long titles for conference
   # proceedings. For example:
@@ -37,18 +20,19 @@ class Publication < ActiveRecord::Base
                       :too_long => "is too long (maximum is 255 characters): {{value}}"
 
   #### Callbacks ####
-  after_create :after_create_actions
+  after_create :initialize_authority_id
   before_create :before_create_actions
   before_save :before_save_actions
   after_save :update_authorities
   after_save :reindex_callback, :if => :do_reindex
 
-  #Called after create only
-  def after_create_actions
-    #Authority defaults to self
-    self.authority_id = self.id
-    self.save
-  end
+  #### Scopes ####
+  scope :authorities, where("id = authority_id")
+  scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
+  scope :order_by_name, order('name')
+  scope :order_by_upper_name, order('upper(name)')
+  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
+  scope :name_like, lambda { |name| where('name like ?', name) }
 
   def before_create_actions
     unless self.initial_publisher_id.nil?
@@ -110,21 +94,8 @@ class Publication < ActiveRecord::Base
     end
   end
 
-  # Convert object into semi-structured data to be stored in Solr
-  def to_solr_data
-    "#{name}||#{id}" unless self.nil?
-  end
-
-  def solr_filter
-    %Q(publication_id:"#{self.id}")
-  end
-
   def form_select
     "#{name.first(100)}... - #{issn_isbn}"
-  end
-
-  def authority_for
-    Publication.for_authority(self.id)
   end
 
   def authority_for_work_count
@@ -157,28 +128,6 @@ class Publication < ActiveRecord::Base
     end
   end
 
-  def reindex_callback
-    logger.debug("\n\n===Reindexing Works===\n\n")
-    Index.batch_index
-  end
-
-  # return the first letter of each name, ordered alphabetically
-  def self.letters(upcase = nil)
-    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect { |x| x.letter } - [' ']
-    letters = letters.collect { |x| x.upcase } if upcase
-    return letters
-  end
-
-  def self.update_multiple(pub_ids, auth_id)
-    pub_ids.each do |pub|
-      update = Publication.find_by_id(pub)
-      update.authority_id = auth_id
-      update.do_reindex = false
-      update.save
-    end
-    Index.batch_index
-  end
-
   #Parse Solr data (produced by to_solr_data)
   # return Publication name and ID
   def self.parse_solr_data(publication_data)
@@ -188,14 +137,6 @@ class Publication < ActiveRecord::Base
       name, id = publication_data.split("||")
       return name, id
     end
-  end
-
-  def get_associated_works
-    self.works
-  end
-
-  def require_reindex?
-    self.authority_id_changed? or self.name_changed? or self.machine_name_changed?
   end
 
 end
