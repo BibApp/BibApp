@@ -1,3 +1,7 @@
+1.1.3 - ???
+--------------
+Bumped Rails version up to 3.0.10, updated gems accordingly.
+
 1.1.2 - September 1, 2011
 --------------
 Fix bug in Person#set_pen_names
