@@ -1,6 +1,5 @@
 # Index Observer:
 #   Performs all Solr re-indexing for BibApp using Index model
-#   @TODO: pen_name_observer still has its own Indexing code that should be refactored
 class IndexObserver < ActiveRecord::Observer
   require 'index.rb'
 
