@@ -138,7 +138,6 @@ class BaseImporter < CitationImporter
         value = value.collect {|v| chars_to_string(v) }
       end
 
-
       #save cleaned value
       hash[key] = value
     end
