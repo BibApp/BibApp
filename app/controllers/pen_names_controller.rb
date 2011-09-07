@@ -1,3 +1,5 @@
+require 'database_methods'
+
 class PenNamesController < ApplicationController
 
   #Require a user be logged in to create / update / destroy
@@ -94,20 +96,8 @@ class PenNamesController < ApplicationController
   def live_search_for_name_strings
     @phrase = params[:q]
     @person = Person.find(params[:person_id])
-    a1 = "%"
-    a2 = "%"
-    @searchphrase = a1 + @phrase + a2
 
-    #Hack for postgresql, for which LIKE is case-sensitive
-    #Alternately, one might view this as a hack for dbs where LIKE is _not_ case sensitive
-    #It's not clear to me that the SQL standard is definitive on this - for more evidence,
-    #Oracle also seems to be case sensitive, and DB2 seems to depend on individual database settings
-    #TODO: is there a better way?
-    if @person.configurations[Rails.env]['adapter'] == "postgresql"
-      @results = NameString.where("name ILIKE ? OR name ILIKE ?", @searchphrase, "%" + @person.last_name + "%").order_by_name
-    else
-      @results = NameString.where("name LIKE ? OR name LIKE ?", @searchphrase, "%" + @person.last_name + "%").order_by_name
-    end
+    @results = like_search(@phrase, @person.last_name).order_by_name
 
     @number_match = @results.length
     @results = @results - @person.name_strings
@@ -134,6 +124,17 @@ class PenNamesController < ApplicationController
       @pen_name = PenName.find_by_id(params[:id])
       @pen_name ||= PenName.find_by_id(params[:pen_name_id])
     end
+  end
+
+  def wildcard_search(string)
+    "%#{string}%"
+  end
+
+  def like_search(*strings)
+    like = DatabaseMethods.case_insensitive_like_operator
+    query = (["name #{like} ?"] * strings.count).join(' OR ')
+    params = strings.collect { |string| wildcard_search(string)}
+    NameString.where(query, *params)
   end
 
 end
