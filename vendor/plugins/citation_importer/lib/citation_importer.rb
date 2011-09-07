@@ -34,13 +34,9 @@ class CitationImporter
   end
 
   def citation_attribute_hashes(parsed_citations)
-    hashes = Array.new
-    CitationImporter.logger.debug("\nAttempting to import #{parsed_citations.length} citations...\n")
-    parsed_citations.each do |c|
-      hashes << citation_attribute_hash(c)
+    parsed_citations.collect do |c|
+      citation_attribute_hash(c)
     end
-    CitationImporter.logger.debug("\nSuccessfully imported #{hashes.length} citations!\n")
-    return hashes
   end
 
   # Generate a valid BibApp attribute Hash from a parsed citation
