@@ -1,4 +1,4 @@
-require 'lib/string_methods'
+require 'string_methods'
 class Import < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 10
