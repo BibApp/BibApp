@@ -93,8 +93,8 @@ class Publication < ActiveRecord::Base
       # Field might be separated
       issn_isbn.split("; ").each do |identifier|
 
-        # No spaces, no hyphens, no quotes -- @TODO: Do this better!
-        identifier = identifier.strip.gsub(" ", "").gsub("-", "").gsub('"', "")
+        # No spaces, no hyphens, no quotes
+        identifier = identifier.strip.gsub(/[-" ]/, "")
 
         # Init new Identifier
         parsed_identifiers = Identifier.parse(identifier)
