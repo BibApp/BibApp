@@ -16,6 +16,7 @@ class AttachmentsController < ApplicationController
 
       if @asset.kind_of?(Person)
         @person = @asset
+        params[:type] = "Image"
       end
 
       #only editors of this asset can attach files to it
@@ -23,11 +24,6 @@ class AttachmentsController < ApplicationController
 
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]
-
-      # Default to Image for Person asset
-      # @TODO: Is there a better way to default this?
-      params[:type] = "Image" if @asset.kind_of?(Person)
-
 
       #initialize attachment subclass with any passed in attachment info
       @attachment = subklass_init(params[:type], params[:attachment])
