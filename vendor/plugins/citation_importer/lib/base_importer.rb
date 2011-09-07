@@ -176,9 +176,9 @@ class BaseImporter < CitationImporter
         # Create date with parsed Year, Month, & Day if none are nil
         date = Date.new(parsed_date[0],parsed_date[1], parsed_date[2]) rescue nil unless parsed_date[1].nil? or parsed_date[2].nil?
         # Create date with parsed Year & Month if none are nil
-        date = Date.new(parsed_date[0],parsed_date[1]) rescue nil unless parsed_date[1].nil?
+        date = Date.new(parsed_date[0],parsed_date[1]) rescue nil unless parsed_date[1].nil? or date
         # Create date with just Year
-        date = Date.new(parsed_date[0]) rescue nil
+        date = Date.new(parsed_date[0]) rescue nil unless date
       end
     end
 
