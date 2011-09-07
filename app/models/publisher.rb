@@ -1,8 +1,11 @@
-require 'lib/machine_name'
-require 'lib/solr_helper_methods'
+require 'machine_name'
+require 'solr_helper_methods'
+require 'solr_updater'
+
 class Publisher < ActiveRecord::Base
   include MachineNameUpdater
   include SolrHelperMethods
+  include SolrUpdater
 
   attr_accessor :do_reindex
 
@@ -27,9 +30,9 @@ class Publisher < ActiveRecord::Base
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_create :update_authorities
-  before_save  :update_machine_name
+  before_save :update_machine_name
   after_save :update_authorities
-  after_save :reindex, :if => :do_reindex
+  after_save :reindex_callback, :if => :do_reindex
 
   def after_create_actions
     #Authority defaults to self
@@ -41,6 +44,7 @@ class Publisher < ActiveRecord::Base
 
   SHERPA_SOURCE = 1
   IMPORT_SOURCE = 2
+
   def set_initial_states
     self.publisher_source_id = IMPORT_SOURCE # Import Data
   end
@@ -93,7 +97,7 @@ class Publisher < ActiveRecord::Base
     end
   end
 
-  def reindex
+  def reindex_callback
     logger.debug("\n\n===Reindexing Works===\n\n")
     Index.batch_index
   end
@@ -108,8 +112,8 @@ class Publisher < ActiveRecord::Base
 
   # return the first letter of each name, ordered alphabetically
   def self.letters(upcase = nil)
-    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter}
-    letters = letters.collect {|x| x.upcase} if upcase
+    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect { |x| x.letter }
+    letters = letters.collect { |x| x.upcase } if upcase
     return letters
   end
 
@@ -194,6 +198,14 @@ class Publisher < ActiveRecord::Base
       id = nil
     end
     return name, id
+  end
+
+  def get_associated_works
+    self.works
+  end
+
+  def require_reindex?
+    self.authority_id_changed? or self.name_changed? or self.machine_name_changed?
   end
 
 end

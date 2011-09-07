@@ -1,9 +1,11 @@
-require 'lib/machine_name'
-require 'lib/solr_helper_methods'
+require 'machine_name'
+require 'solr_helper_methods'
+require 'solr_updater'
 
 class Group < ActiveRecord::Base
   include MachineNameUpdater
   include SolrHelperMethods
+  include SolrUpdater
 
   acts_as_tree :order => "name"
   acts_as_authorizable #some actions on groups require authorization
@@ -45,6 +47,14 @@ class Group < ActiveRecord::Base
   def works
     Work.verified.includes(:contributorships => {:person => :memberships}).
         where(:contributorships => {:person => {:memberships => {:group_id => self.id}}})
+  end
+
+  def get_associated_works
+    self.works
+  end
+
+  def require_reindex?
+    self.name_changed? or self.machine_name_changed? or self.hide_changed?
   end
 
   # Convert object into semi-structured data to be stored in Solr

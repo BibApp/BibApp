@@ -1,8 +1,11 @@
-require 'lib/machine_name'
-require 'lib/solr_helper_methods'
+require 'machine_name'
+require 'solr_helper_methods'
+require 'solr_updater'
+
 class Publication < ActiveRecord::Base
   include SolrHelperMethods
   include MachineNameUpdater
+  include SolrUpdater
 
   attr_accessor :do_reindex
   #### Validations ####
@@ -38,7 +41,7 @@ class Publication < ActiveRecord::Base
   before_create :before_create_actions
   before_save :before_save_actions
   after_save :update_authorities
-  after_save :reindex, :if => :do_reindex
+  after_save :reindex_callback, :if => :do_reindex
 
   #Called after create only
   def after_create_actions
@@ -154,7 +157,7 @@ class Publication < ActiveRecord::Base
     end
   end
 
-  def reindex
+  def reindex_callback
     logger.debug("\n\n===Reindexing Works===\n\n")
     Index.batch_index
   end
@@ -185,6 +188,14 @@ class Publication < ActiveRecord::Base
       name, id = publication_data.split("||")
       return name, id
     end
+  end
+
+  def get_associated_works
+    self.works
+  end
+
+  def require_reindex?
+    self.authority_id_changed? or self.name_changed? or self.machine_name_changed?
   end
 
 end
