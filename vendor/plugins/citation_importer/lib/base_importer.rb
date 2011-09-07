@@ -133,6 +133,7 @@ class BaseImporter < CitationImporter
       # Finally, for Arrays/Hashes, make sure we don't have any
       # "ActiveSupport::Multibyte::Chars" as values
       # (this makes sure we are always saving strings to the database)
+      #TODO I'm not sure this is doing what the original author intended when value is a Hash!
       if value.is_a?(Array) or value.is_a?(Hash)
         value = value.collect {|v| chars_to_string(v) }
       end
