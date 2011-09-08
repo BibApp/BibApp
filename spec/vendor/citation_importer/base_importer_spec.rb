@@ -1,7 +1,7 @@
 #This tests the citation importer plugin. It has it's own tests, but I've been doing some refactoring and
 #it's not so easy to hook into its testing framework.
 #Ultimately I'd prefer to either have it in the main project or as a gem.
-require File.join(Rails.root, 'spec', 'spec_helper')
+require File.join(File.dirname(__FILE__), '..', '..', '..', 'spec', 'spec_helper')
 
 describe BaseImporter do
 
