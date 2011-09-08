@@ -8,7 +8,7 @@ desc 'Set prerequisites for deployment to production server.'
 task :production do
   role :web, production_server
   role :app, production_server
-  role :db,  production_server, :primary => true
+  role :db, production_server, :primary => true
   before 'deploy:update_code', 'deploy:rsync_ruby'
 end
 
@@ -16,9 +16,13 @@ desc 'Set prerequisites for deployment to test(staging) server.'
 task :staging do
   role :web, test_server
   role :app, test_server
-  role :db,  test_server, :primary => true
+  role :db, test_server, :primary => true
 #  set :branch, 'uiuc-connections-omni-shib'
   set :branch, 'uiuc-connections'
+end
+
+task :reindex do
+  set :reindex, true
 end
 
 set :application, "Bibapp"
@@ -29,7 +33,6 @@ set :scm, :git
 set :repository, 'git://github.com/BibApp/BibApp.git'
 set :branch, 'uiuc-connections' unless fetch(:branch, nil)
 set :deploy_via, :remote_cache
-
 
 #directories on the server to deploy the application
 #the running instance gets links to [deploy_to]/current
@@ -44,23 +47,27 @@ set :user, 'ideals-bibapp'
 set :use_sudo, false
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
+  task :start do
+    ;
+  end
+  task :stop do
+    ;
+  end
+  task :restart, :roles => :app, :except => {:no_release => true} do
     run "touch #{current}/tmp/restart.txt"
   end
 
   desc "create a config directory under shared"
   task :create_shared_dirs do
     run "mkdir #{shared}/config"
-    [:attachments, :groups, :people].each do | dir|
+    [:attachments, :groups, :people].each do |dir|
       run "mkdir #{shared}/system/#{dir}"
     end
   end
 
   desc "link shared configuration"
   task :link_config do
-    ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml', 
+    ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml',
      'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml'].each do |file|
       run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
     end
@@ -87,7 +94,7 @@ end
 
 namespace :bibapp do
   [:stop, :start, :restart].each do |action|
-    desc "#{action} Bibapp services" 
+    desc "#{action} Bibapp services"
     task action do
       begin
         run "cd #{current}; RAILS_ENV=#{rails_env} bundle exec rake bibapp:#{action}"
@@ -117,5 +124,18 @@ after 'deploy:start', 'bibapp:start'
 after 'deploy:stop', 'bibapp:stop'
 after 'deploy:restart', 'bibapp:restart'
 
-after 'bibapp:start', 'solr:refresh_index'
-after 'bibapp:restart', 'solr:refresh_index'
+after 'bibapp:start' do
+    if exists?(:reindex)
+      find_and_execute_task('solr:refresh_index')
+    end
+end
+after 'bibapp:restart' do
+    if exists?(:reindex)
+      find_and_execute_task('solr:refresh_index')
+    end
+end
+
+#if exists?(:reindex)
+#  after 'bibapp:start', 'solr:refresh_index'
+#  after 'bibapp:restart', 'solr:refresh_index'
+#end
