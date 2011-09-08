@@ -13,7 +13,7 @@ Authorization::Base::STORE_LOCATION_METHOD = :store_location
 
 module Bibapp
   class Application < Rails::Application
-    
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -50,10 +50,11 @@ module Bibapp
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_confirmation, :old_password]
-    
+
     #log deprecations
     config.active_support.deprecation = :log
   end
 end
 
-require 'lib/error_handler'
+require 'error_handler'
+require 'index'

@@ -748,6 +748,19 @@ class Work < ActiveRecord::Base
     Index.update_solr(self, false)
   end
 
+  #The following methods are used by the IndexObserver, distinct from the other reindexing that happens.
+  def require_reindex?
+    !self.batch_index? and self.changed?
+  end
+
+  def reindex_after_save
+    Index.update_solr(self)
+  end
+
+  def reindex_before_destroy
+    Index.remove_from_solr(self)
+  end
+
   protected
 
   # Update Keywordings - updates list of keywords for Work

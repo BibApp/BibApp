@@ -1,11 +1,4 @@
-require 'lib/machine_name'
-require 'lib/solr_helper_methods'
-class Publisher < ActiveRecord::Base
-  include MachineNameUpdater
-  include SolrHelperMethods
-
-  attr_accessor :do_reindex
-
+class Publisher < PubCommon
   #### Associations ####
 
   has_many :publications
@@ -16,7 +9,14 @@ class Publisher < ActiveRecord::Base
   has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
   #### Callbacks ####
+  before_validation :set_initial_states, :on => :create
+  after_create :initialize_authority_id
+  before_create :update_authorities
+  before_save :update_machine_name
+  after_save :update_authorities
+  after_save :reindex_callback, :if => :do_reindex
 
+  #### Scopes ####
   scope :authorities, where("id = authority_id")
   scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
@@ -24,38 +24,13 @@ class Publisher < ActiveRecord::Base
   scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
   scope :name_like, lambda { |name| where('name like ?', name) }
 
-  before_validation :set_initial_states, :on => :create
-  after_create :after_create_actions
-  before_create :update_authorities
-  before_save  :update_machine_name
-  after_save :update_authorities
-  after_save :reindex, :if => :do_reindex
-
-  def after_create_actions
-    #Authority defaults to self
-    self.authority_id = self.id
-    self.save
-  end
-
   #### Methods ####
 
   SHERPA_SOURCE = 1
   IMPORT_SOURCE = 2
+
   def set_initial_states
     self.publisher_source_id = IMPORT_SOURCE # Import Data
-  end
-
-  # Convert object into semi-structured data to be stored in Solr
-  def to_solr_data
-    "#{name}||#{id}"
-  end
-
-  def solr_filter
-    %Q(publisher_id:"#{self.id}")
-  end
-
-  def authority_for
-    Publisher.where(:authority_id => self.id)
   end
 
   #Update authorities for related models, when Publisher Authority changes
@@ -93,34 +68,11 @@ class Publisher < ActiveRecord::Base
     end
   end
 
-  def reindex
-    logger.debug("\n\n===Reindexing Works===\n\n")
-    Index.batch_index
-  end
-
   #Return the year of the most recent publication
   def most_recent_year
     max_year = self.publications.collect { |p| p.works }.flatten.collect { |w| w.year.to_i }.max
     return "" unless max_year
     return max_year > 0 ? max_year.to_s : ""
-  end
-
-
-  # return the first letter of each name, ordered alphabetically
-  def self.letters(upcase = nil)
-    letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect {|x| x.letter}
-    letters = letters.collect {|x| x.upcase} if upcase
-    return letters
-  end
-
-  def self.update_multiple(pub_ids, auth_id)
-    pub_ids.each do |pub|
-      update = Publisher.find_by_id(pub)
-      update.authority_id = auth_id
-      update.do_reindex = false
-      update.save
-    end
-    Index.batch_index
   end
 
   def self.update_sherpa_data

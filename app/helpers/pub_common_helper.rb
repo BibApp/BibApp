@@ -1,7 +1,7 @@
 #This isn't a very good name, but I can't think of one.
 #This is for helping refactor out commonalities between
 #PublishersController and PublicationsController.
-module PubPubHelper
+module PubCommonHelper
   protected
   def update_multiple_generic(klass)
     with_key_and_path_setup(klass) do |key, path|
