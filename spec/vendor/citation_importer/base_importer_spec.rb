@@ -9,7 +9,7 @@ describe BaseImporter do
     importer = BaseImporter.new
     cases = {'2001-09-09' => '2001-09-09', 'pure_junk' => nil, '04-2001' => '2001-04-01',
              'something with 1 string "1988" of four digits' => '1988-01-01', 'Thursday, September 8, 2011' => '2011-09-08',
-              '18/02/1977' => '1977-02-18', '02-19-1977' => '1977-02-19'}
+              '18/02/1977' => '1977-02-18', '02-19-1977' => '1977-02-19', 'Mar 1999' => '1999-03-01'}
     cases.each do |k,v|
       importer.parse_date(k).should == v
       importer.parse_date(k + 'add some junk').should == v
