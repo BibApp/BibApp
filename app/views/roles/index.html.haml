@@ -8,7 +8,7 @@
       %ul#edit-actions
         %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
         %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
-      
+
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
     - if @authorizable.is_a? Class and @authorizable==System
@@ -17,7 +17,7 @@
       %h2 Roles for Group: #{link_to(h(@authorizable.name), group_path(@authorizable)).html_safe}
     - elsif @authorizable.kind_of?(Person)
       %h2 Roles for Person: #{link_to(h(@authorizable.name), person_path(@authorizable)).html_safe}
-      
+
     %div{:class => "span-22 prepend-1"}
       %h3="Administrators"
       - if @authorizable.has_admins?
@@ -33,12 +33,12 @@
                     =hidden_field_tag :authorizable_type, @authorizable.class
                     =hidden_field_tag :authorizable_id, @authorizable.id
                   =hidden_field_tag :user_id, user.user_id
-                  =hidden_field_tag :role_id, user.role_id
+                  =hidden_field_tag :name, 'admin'
                   =submit_tag "remove"
       - else
         %p
           No administrators currently assigned.
-            
+
       %h3="Editors"
       - if @authorizable.has_editors?
         %ol.users
@@ -53,9 +53,8 @@
                     =hidden_field_tag :authorizable_type, @authorizable.class
                     =hidden_field_tag :authorizable_id, @authorizable.id
                   =hidden_field_tag :user_id, user.user_id
-                  =hidden_field_tag :role_id, user.role_id
+                  =hidden_field_tag :name, 'editor'
                   =submit_tag "remove", :class=>"inline"
       - else
         %p
           No editors currently assigned.
-          
