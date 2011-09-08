@@ -1,6 +1,8 @@
 1.1.3 - ???
 --------------
 Bumped Rails version up to 3.0.10, updated gems accordingly.
+Fix a problem with assigning/deleting roles through the GUI.
+Make assignment/deletion of roles for explicit roles - don't consider (but do note) cascading for this.
 
 1.1.2 - September 1, 2011
 --------------
