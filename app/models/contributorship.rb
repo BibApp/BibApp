@@ -1,6 +1,8 @@
 require 'set'
 class Contributorship < ActiveRecord::Base
 
+  attr_accessor :skip_refresh_contributorships
+
   STATE_UNVERIFIED = 1
   STATE_VERIFIED = 2
   STATE_DENIED = 3
@@ -189,7 +191,7 @@ class Contributorship < ActiveRecord::Base
     # If verified.size == possibilities.size
     # - Loop through competing Contributorships
     # - Set Contributorship.hide = true
-
+    return if self.skip_refresh_contributorships
     if Contributorship.verified.for_work(self.work_id).size == self.possibilities
       logger.debug("\n=== Refresh contributorships ===\n")
       refresh = Contributorship.for_work(self.work).unverified.where('id <> ?', self.id)
@@ -202,6 +204,7 @@ class Contributorship < ActiveRecord::Base
       #If not, remove this comment and all's well.
       refresh.each do |r|
         r.hide = true
+        r.skip_refresh_contributorships = true
         r.save
       end
     end
