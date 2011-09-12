@@ -126,7 +126,7 @@ class Publisher < PubCommon
                                    :sherpa_id => sherpa_id,
                                    :publisher_source_id => SHERPA_SOURCE
                                })
-        t = true
+        return true
       end
 
     rescue
