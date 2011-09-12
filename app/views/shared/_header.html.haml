@@ -7,7 +7,7 @@
     .span-7.prepend-3.last
       = form_tag search_path, :method => :get, :class => "header-search-form" do
         #search-box
-          #{text_field_tag(:q, nil, options = {:size => 21})}
+          #{text_field_tag(:q, nil, :size => 21)}
           #{ submit_tag 'Search'}
         %span.advanced-search-link #{link_to "Advanced", advanced_search_path}
 
