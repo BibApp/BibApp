@@ -33,14 +33,14 @@ class ContributorshipsController < ApplicationController
     if ['verify', 'unverify', 'deny'].include?(action)
       self.send(:"#{action}_multiple") and return
     end
-    redirect_to contributorships_path(:person_id=>params[:person_id], :status=>params[:status]) 
+    redirect_to contributorships_path(:person_id=>params[:person_id], :status=>params[:status])
   end
 
   def verify
     @contributorship = Contributorship.find(params[:id])
     person = @contributorship.person
 
-    # only 'editor' of this person can verify contributorship   
+    # only 'editor' of this person can verify contributorship
     permit "editor of :person", :person => person
 
     #Verify & save contributorship
@@ -62,7 +62,7 @@ class ContributorshipsController < ApplicationController
     @contributorship = Contributorship.find(params[:id])
     @person = @contributorship.person
 
-    # only 'editor' of this person can deny contributorship   
+    # only 'editor' of this person can deny contributorship
     permit "editor of person"
 
     @contributorship.deny_contributorship
@@ -92,7 +92,7 @@ class ContributorshipsController < ApplicationController
   private
 
   def romeo_color_count
-    # Build query which groups all Works (of this person) 
+    # Build query which groups all Works (of this person)
     # under appropriate Romeo Colors (based on publisher)
     # and retrieves a total number of each Romeo Color.
     Contributorship.verified.for_person(@person).
@@ -104,7 +104,7 @@ class ContributorshipsController < ApplicationController
 
 
   def publication_count
-    # Build query which groups all works (of this person) 
+    # Build query which groups all works (of this person)
     # by the Journal/Publication and Publisher
     # and retrieves a total number of each Journal/Publication
     Contributorship.verified.for_person(@person).
@@ -120,7 +120,6 @@ class ContributorshipsController < ApplicationController
   def act_on_many(action, flash_action)
     Contributorship.find(params[:contrib_id]).each do |contributorship|
       contributorship.send(action)
-      contributorship.save
     end
     respond_to do |format|
       flash[:notice] = "Contributorships were successfully #{flash_action}."
