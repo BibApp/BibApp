@@ -558,28 +558,6 @@ class WorksController < ApplicationController
     render :partial => 'works/forms/fields/reorder_list', :locals => {:list_type=>list_type}
   end
 
-  def update_tags
-    @work = Work.find(params[:id])
-    ###
-    # Setting Tags
-    ###
-    # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work
-    @tags = params[:tags]
-    @work.set_tag_strings(@tags)
-
-    respond_to do |format|
-      if @work.save and Index.update_solr(@work)
-        flash[:notice] = "Work was successfully updated."
-        format.html { redirect_to work_url(@work) }
-        format.xml { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @work.errors.to_xml }
-      end
-    end
-  end
-
   private
 
   # Initializes a new work subclass, but doesn't create it in the database
