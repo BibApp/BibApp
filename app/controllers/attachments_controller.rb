@@ -122,7 +122,7 @@ class AttachmentsController < ApplicationController
 
     permit "editor of :asset", :asset => @attachment.asset
 
-    if params[:attachment].blank?
+    if params[:file].blank?
       respond_to do |format|
         flash[:warning] = 'No file was uploaded.'
         if @attachment.asset.kind_of?(Person)
@@ -136,8 +136,8 @@ class AttachmentsController < ApplicationController
       return
     end
 
-    @attachment.attributes = params[:attachment]
     respond_to do |format|
+      @attachment.uploaded_data = params[:file].first
       if @attachment.save
         flash[:notice] = 'Attachment was successfully uploaded'
         if @asset.kind_of?(Person)
