@@ -19,7 +19,7 @@
               %option{:selected => "selected", :value => "#{Work.type_to_class(t)}"}= t
             - else
               %option{:value => "#{Work.type_to_class(t)}"}= t
-        = submit_tag 'Go'
+        = form.submit 'Go'
 
     %h2 Edit a Work
 
@@ -30,7 +30,7 @@
           = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
         -else
           = render :partial => "works/forms/form_generic", :locals => { :form => form }
-    
+
         -#Add return path & page to form, if specified
         = hidden_field_tag "return_path", @return_path unless @return_path.nil?
         = hidden_field_tag "return_page", @return_page unless @return_page.nil?
