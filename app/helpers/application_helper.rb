@@ -23,16 +23,6 @@ module ApplicationHelper
     content_tag(:li, (letters.index(letter) ? link_to(letter, link, :class => "some") : content_tag(:a, letter, :class => 'none')), li_opts)
   end
 
-  def link_to_related_works(work)
-    #link_to "Related Works", search_url(:q => "id:#{work-solr_id}", :qt  => "mlt")
-    "Related Works"
-  end
-
-  def link_to_download_from_archive(work)
-    #link_to "Download from #{$REPOSITORY_NAME}"
-    "Download from #{$REPOSITORY_NAME}"
-  end
-
   def link_to_authors(work)
     links = Array.new
 
