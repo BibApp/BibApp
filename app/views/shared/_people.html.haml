@@ -12,7 +12,6 @@
     - counter = 0
 
     - people.each do |p|
-      - person = Person.parse_solr_data(p.name)
       - last_name, id, image_url, group_ids, active, research_focus = Person.parse_solr_data(p.name)
 
       - if active.blank? or active == "false"
