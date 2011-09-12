@@ -222,7 +222,7 @@ class AttachmentsController < ApplicationController
     klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Attachment
-      raise NameError.new("#{klass_type} is not a subclass of Attachment") and return
+      raise NameError.new("#{klass_type} is not a subclass of Attachment")
     end
     klass.new({:uploaded_data => file})
   end

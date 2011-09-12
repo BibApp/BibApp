@@ -46,7 +46,7 @@
             %li.user
               ="#{user.email}"
               - if user.email != "admin@example.com"
-                = form_tag ({:action => "destroy", :method => :delete}, :class=>"inline-form") do
+                = form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
                   - if @authorizable.is_a? Class
                     =hidden_field_tag :authorizable_type, @authorizable.name
                   - else

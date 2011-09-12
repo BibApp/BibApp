@@ -589,7 +589,7 @@ class WorksController < ApplicationController
     klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Work
-      raise NameError.new("#{klass_type} is not a subclass of Work") and return
+      raise NameError.new("#{klass_type} is not a subclass of Work")
     end
     klass.new(work)
   end
