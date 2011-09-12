@@ -142,7 +142,7 @@ module ApplicationHelper
 
 
     if work.open_url_kevs.present?
-      work.open_url_kevs.each do |kev, value| # Work Subklass Kevs
+      work.open_url_kevs.values.each do |value| # Work Subklass Kevs
         coin += value
       end
     end
