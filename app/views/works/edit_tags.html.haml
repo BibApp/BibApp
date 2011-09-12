@@ -1,9 +1,0 @@
-- @work = Work.find(params[:id])
-
-= form_for @work, :as => :work, :url => { :action => "update_tags", :id => @work.id }, :html => {:method => :put} do |form|
-  %p
-    = render :partial => 'tags'
-    
-  
-  %p.submit
-    = submit_tag :save
