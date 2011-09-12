@@ -118,9 +118,9 @@ class Index
 
   def self.start(page, rows)
     if page.to_i < 2
-      start = 0
+      0
     else
-      start = ((page.to_i-1)*(rows.to_i))
+      (page.to_i - 1) * (rows.to_i)
     end
   end
 
