@@ -52,7 +52,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def get_associated_works
-    if record.asset.kind_of?(Person) and record.kind_of?(Image)
+    if self.asset.kind_of?(Person) and self.kind_of?(Image)
       self.asset.works.verified
     else
       return []
