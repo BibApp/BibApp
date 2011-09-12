@@ -1,5 +1,6 @@
 require 'bundler/capistrano'
 require 'tmpdir'
+require 'fileutils'
 
 set :production_server, "sophia.cites.illinois.edu"
 set :test_server, "athena.cites.illinois.edu"
@@ -112,13 +113,40 @@ namespace :solr do
   task :refresh_index do
     run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} bundle exec rake solr:refresh_index"
   end
+
+  set :index_dir, "#{current}/vendor/bibapp-solr/"
+  set :backup_dir, "/tmp/bibapp-solr-backup/"
+
+  desc "Save the current solr index to a temporary location"
+  task :save_index do
+    run "rm -rf #{backup_dir}"
+    run "mv #{index_dir} #{backup_dir}"
+  end
+
+  desc "Restore the previous solr index from a temporary location"
+  task :restore_index do
+    run "rm -rf #{index_dir}"
+    run "mv #{backup_dir} #{index_dir}"
+  end
+  
 end
 
 after 'deploy:setup', 'deploy:create_shared_dirs'
 
+before 'deploy:update', 'bibapp:stop'
+before 'deploy:update' do
+  unless exists?(:reindex)
+    find_and_execute_task('solr:save_index')
+  end
+end
+
 after 'deploy:update', 'deploy:link_config'
 after 'deploy:update', 'deploy:symlink_shared_dirs'
-before 'deploy:update', 'bibapp:stop'
+after 'deploy:update' do
+  unless exists?(:reindex)
+    find_and_execute_task('solr:restore_index')
+  end
+end
 
 after 'deploy:start', 'bibapp:start'
 after 'deploy:stop', 'bibapp:stop'
