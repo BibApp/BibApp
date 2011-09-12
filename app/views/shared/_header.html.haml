@@ -1,20 +1,20 @@
 #header.span-24
   .span-23.prepend-1
-    
+
     .span-12
       #{link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)}
-    
+
     .span-7.prepend-3.last
       = form_tag search_path, :method => :get, :class => "header-search-form" do
         #search-box
-          #{text_field_tag(:q, value = nil, options = {:size => 21})}
+          #{text_field_tag(:q, nil, options = {:size => 21})}
           #{ submit_tag 'Search'}
         %span.advanced-search-link #{link_to "Advanced", advanced_search_path}
-    
+
     .span-22
       %p#tagline
         #{$APPLICATION_TAGLINE}
-    
+
     .span-16
       - controller_name = params[:controller]
       %ul#navigation
@@ -23,11 +23,11 @@
             %li{give_current_id_if_equal("admin", controller_name)}
               %a{:href => admin_index_url}
                 %span Admin
-            
+
         %li{give_current_id_if_equal("works", controller_name)}
           %a{:href => works_path(:view => 'all')}
             %span Works
-        
+
         %li{give_current_id_if_equal("groups", controller_name)}
           %a{:href => groups_path}
             %span Groups
