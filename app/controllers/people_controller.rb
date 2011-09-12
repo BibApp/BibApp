@@ -42,7 +42,6 @@ class PeopleController < ApplicationController
         @group = Group.find_by_id(params[:group_id].split("-")[0])
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Array.new
@@ -58,7 +57,6 @@ class PeopleController < ApplicationController
       else
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Person.letters
