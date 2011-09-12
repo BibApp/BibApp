@@ -30,21 +30,21 @@
       = render :partial => "shared/groups", :locals => {:count => 10}
 
       #results.span-22
-      
+
         / Search Within
         .span-5
           .left_box
             .box_heading Search Within
             = form_tag publisher_path, :method => :get do
-              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = text_field_tag(:q, params[:q], :size => 15)
               = submit_tag 'Go'
 
           / Facets
           = render :partial => "shared/facets"
 
-        / Works 
+        / Works
         = render :partial => "shared/works"
-  
+
       / Authority
       #authority.span-22
         - if @publisher.authority_for.size > 0
