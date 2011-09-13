@@ -5,7 +5,7 @@ module GoogleChartsHelper
   def google_chart_url(facets, work_count)
     chd = "chd=t:"
     chl = "chl="
-    facets[:types].each_with_index do |r, i|
+    facets[:types].each do |r|
       perc = (r.value.to_f / work_count.to_f * 100).round.to_s
       chd += "#{perc},"
       ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s

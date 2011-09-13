@@ -5,7 +5,7 @@ require 'redcloth'
 class PeopleController < ApplicationController
   include GoogleChartsHelper
   include KeywordCloudHelper
-  
+
   # Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :batch_csv_show, :batch_csv_create]
 
@@ -42,7 +42,6 @@ class PeopleController < ApplicationController
         @group = Group.find_by_id(params[:group_id].split("-")[0])
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Array.new
@@ -58,7 +57,6 @@ class PeopleController < ApplicationController
       else
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Person.letters
@@ -215,8 +213,6 @@ class PeopleController < ApplicationController
     end
     chd = chd[0...(chd.length-1)]
     chl = chl[0...(chl.length-1)]
-    chdl = chdl[0...(chdl.length-1)]
-    chdlp = chdlp[0...(chdlp.length-1)]
     @chart_url = "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
 
     render :update do |page|

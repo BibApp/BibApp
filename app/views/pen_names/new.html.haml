@@ -21,7 +21,7 @@
 
     %fieldset
       %legend="Pen Names"
-      %p Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it. 
+      %p Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it.
       %h3 Current pen names
       %ol#current
         = render :partial => "name_string", :collection => @person.name_strings(true), :locals => { :selected => true }
@@ -48,8 +48,8 @@
       = form_remote_tag :url => live_search_for_name_strings_pen_names_url do
         Search other last names to add suggestions (ex. "Smith")
         %br/
-        = text_field_tag(:q, value = nil, options = {})
-        = hidden_field_tag(:person_id, value = @person.id)
+        = text_field_tag(:q)
+        = hidden_field_tag(:person_id, @person.id)
         = submit_tag 'Search'
 
       =sortable_element 'current', :url => sort_pen_names_url(:person_id => @person.id)

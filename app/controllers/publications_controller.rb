@@ -92,7 +92,6 @@ class PublicationsController < ApplicationController
     @page = params[:page] || @a_to_z[0]
 
     if params[:q]
-      query = params[:q]
       @current_objects = current_objects
     else
       @current_objects = Publication.authorities.upper_name_like("#{@page}%").order_by_upper_name.

@@ -127,7 +127,6 @@ class WorksController < ApplicationController
 
   def change_type
     t = params[:type]
-    klass = t.constantize
     work = Work.find(params[:id])
 
     # lazy mapping of all creator/contributor roles to top creator role

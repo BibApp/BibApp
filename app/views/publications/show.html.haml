@@ -16,7 +16,7 @@
       #admin-actions.span-24
         %ul#edit-actions
           %li #{link_to "Edit this publication", edit_publication_path(@publication)}
-          
+
   .span-24
 
     .span-22.prepend-1
@@ -26,14 +26,14 @@
           Published by:
           #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
           = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @publication.publisher}
-      
+
       / Authority check
       - if @authority_for.size == 0
         .notice
           %h3 Authorized Title
           - if @publication.authority
             %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
-        
+
       -else
 
         / People
@@ -43,19 +43,19 @@
         = render :partial => "shared/groups", :locals => {:count => 10}
 
         #results.span-22
-        
+
           / Search Within
           .span-5
             .left_box
               .box_heading Search Within
               = form_tag publication_path, :method => :get do
-                = text_field_tag(:q, value = params[:q], {:size => 15})
+                = text_field_tag(:q, params[:q], :size => 15)
                 = submit_tag 'Go'
-        
+
             / Facets
             = render :partial => "shared/facets"
 
-          / Works 
+          / Works
           = render :partial => "shared/works"
 
         / Authority
