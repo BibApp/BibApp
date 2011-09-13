@@ -15,11 +15,9 @@ class Attachment < ActiveRecord::Base
 
   # List of all currently enabled Attachment types
   def self.types
-    types = [
-      "Content File",  #Default type of attachment
-      "Image",
-      "Import File"
-    ]
+    ["Content File", #Default type of attachment
+     "Image",
+     "Import File"]
   end
 
   # Provide a filesize method to specify
@@ -28,13 +26,13 @@ class Attachment < ActiveRecord::Base
     # if >= billion bytes, specify in GB
     if self.size >= 1000000000
       self.size.div(1000000000).round.to_s + "GB"
-    # if >= million bytes, specify in MB
+      # if >= million bytes, specify in MB
     elsif self.size >= 1000000
       self.size.div(1000000).round.to_s + "MB"
-    # if >= thousand bytes, specify in KB
+      # if >= thousand bytes, specify in KB
     elsif self.size >= 1000
       self.size.div(1000).round.to_s + "KB"
-    # if < thousand bytes, specify in bytes
+      # if < thousand bytes, specify in bytes
     elsif self.size < 1000
       self.size.to_s + "bytes"
     end
