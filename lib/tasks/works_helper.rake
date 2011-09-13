@@ -19,10 +19,10 @@ namespace :works_helper do
 
   desc "Deletes all works"
   task :batch_destroy_all => :environment do
-    @works = Work.find(:all)
+    @works = Work.all
     @works.each do |work|
       work.destroy
     end
   end
-  
+
 end
