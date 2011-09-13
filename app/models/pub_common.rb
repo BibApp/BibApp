@@ -40,7 +40,7 @@ class PubCommon < ActiveRecord::Base
 
   def self.update_multiple(pub_ids, auth_id)
     pub_ids.each do |pub|
-      update = self.class.find_by_id(pub)
+      update = self.find_by_id(pub)
       update.authority_id = auth_id
       update.do_reindex = false
       update.save
