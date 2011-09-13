@@ -34,6 +34,6 @@
           = button_to "Sign in With Generic OpenID", '/auth/open_id'
           %br/
         - if Bibapp::Application.config.oauth_config
-          - Bibapp::Application.config.oauth_config.each do |k,v|
+          - Bibapp::Application.config.oauth_config.keys.each do |k|
             = button_to "Sign in With #{k.capitalize}", "/auth/#{k}"
             %br/
