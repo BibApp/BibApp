@@ -1,6 +1,3 @@
-- dupes = Index.possible_accepted_duplicate_works(@work)
--dupe = dupes.first
-
 %table#accepted_work.span-22
   %tr
     %td.span-8.duplicate
@@ -31,6 +28,6 @@
       = render :partial => 'works/forms/fields/merge_keywords'
   %tr#abstract
     = render :partial => 'works/forms/fields/merge_abstract', :locals => {:form => form}
-    
+
 = hidden_field_tag :type, 'Generic'
 = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
