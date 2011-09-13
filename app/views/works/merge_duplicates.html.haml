@@ -9,14 +9,12 @@
     - if @work.work_state_id != 3
       - flash[:notice]  = "This is a <strong>#{$WORK_STATUS[@work.work_state_id]}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
     - else
-      -dupes = Index.possible_accepted_duplicate_works(@work)
-
       - possible_dupes = Index.possible_unaccepted_duplicate_works(@work)
       - if !possible_dupes.include?(@dupe)
         - flash[:notice] = "#{@dupe} is not a possible duplicate for this work."
       - else
         %p Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to "Save Changes".
-                
+
         = form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
           =hidden_field_tag "return_path" , admin_duplicates_url
           -if (File.exist?("#{Rails.root}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html.haml") || File.exist?("#{Rails.root}/app/views/works/forms/_form_merge_#{@work.class.name.to_s.underscore}.html"))
