@@ -45,7 +45,7 @@ namespace :solr do
           exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop #{SOLR_STARTUP_OPTS} -jar start.jar"
         end
         #parent
-	puts "probelm forking child" if pid < 0
+	puts "problem forking child" if pid < 0
         Process.detach(pid)
 #        sleep(5)
         File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
