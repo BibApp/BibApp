@@ -77,7 +77,7 @@ class Publisher < PubCommon
 
   def self.update_sherpa_data
 
-    # Hpricot chokes on UNICODE; use remxml instead
+    # Hpricot chokes on UNICODE; use rexml instead
     #require 'hpricot'
     require 'rexml/document'
 
