@@ -200,11 +200,11 @@ class PeopleController < ApplicationController
     chdl = "chdl="
     chdlp = "chdlp=b|"
     @person.publication_reftypes.each_with_index do |r, i|
-      perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
-      chd += "#{perc},"
+      percent = (r.count.to_f/@person.works.size.to_f*100).round.to_s
+      chd += "#{percent},"
       ref = r[:type].to_s == 'BookWhole' ? 'Book' : r[:type].to_s
       chl += "#{ref.titleize.pluralize}|"
-      chdl += "#{perc}% #{ref.titleize.pluralize}|"
+      chdl += "#{percent}% #{ref.titleize.pluralize}|"
       chdlp += "#{i.to_s},"
     end
     chd = chd[0...(chd.length-1)]
