@@ -9,12 +9,11 @@
   - if authors
     - authors.each do |author|
       - name = (author.kind_of?(String) ? author : author.name)
-      - id = (author.kind_of?(String) ? author : author.id)
       %br/
       = text_field_tag 'dupe_author_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of authors
-  -#  Default: use authors assigned to @work.  
+  -#  Default: use authors assigned to @work.
   -#  @author_name_strings should only exist if there were errors in saving work
   - authors = @work.name_strings.author if @work.name_strings.author
   - authors = @author_name_strings if @author_name_strings

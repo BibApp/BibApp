@@ -10,7 +10,7 @@
 
 -# Get the contributors associated with this work
 -# We won't take the first role, because it's the Author,
--# which is displayed seperately
+-# which is displayed separately
 - contributors = @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} unless wns.role == first_role} if @work.name_strings
 - contributors.compact!
 

@@ -20,14 +20,14 @@ namespace :solr do
       puts "Port #{SOLR_PORT} already in use" and return
 
     rescue NoMethodError, Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
-  
+
       SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
-      
+
       #If Windows
       if RUBY_PLATFORM.include?('mswin32')
         Dir.chdir(SOLR_PATH) do
           exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java #{SOLR_STARTUP_OPTS} -jar start.jar"
-          puts "#{ENV['RAILS_ENV']} Solr started sucessfully on #{SOLR_PORT}."
+          puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}."
         end
       else #Else if Linux, Mac OSX, etc.
         pid = fork
@@ -56,7 +56,7 @@ namespace :solr do
       raise
     end
   end
-  
+
   desc 'OBSOLETE task (used to be necessary for Solr on Windows'
   task :start_win do
     puts "The command 'rake solr:start_win' is now obsolete.  Instead, please use 'rake solr:start' and 'rake solr:stop' to start/stop Solr on Windows."
@@ -83,7 +83,7 @@ namespace :solr do
             #end
 
             #Stop Solr by sending Jetty the "stop" command on port 8079
-            exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop -jar start.jar --stop"  
+            exec "java -DSTOP.PORT=#{SOLR_STOP_PORT} -DSTOP.KEY=bibappsolrstop -jar start.jar --stop"
           end
 
           Process.wait #wait for forked process to complete
@@ -106,14 +106,14 @@ namespace :solr do
       puts "Index files removed under " + ENV['RAILS_ENV'] + " environment"
     end
   end
-  
+
   desc 'Optimize Solr index'
   task :optimize_index => :environment do
     puts "\nOptimizing Solr index...\n\n"
     Index.optimize_index
      puts "Finished optimization!"
   end
-  
+
   desc 'Refresh Solr index'
   task :refresh_index => :environment do
     puts "\nRe-indexing all BibApp Works in Solr...\n\n"
@@ -122,29 +122,29 @@ namespace :solr do
 
     start_time = Time.now
     puts "Start time: #{start_time.localtime}"
-    
+
     #Call index_all, which re-indexes *everything* in BibApp
     Index.index_all
-    
+
     end_time = Time.now
     puts "End time: #{end_time.localtime}"
-    
+
     #Caculate total indexing time
     total = end_time.to_i - start_time.to_i
     time = "#{total.div(60).to_s} minutes" if total >=120
     time = "#{total.div(60).to_s} minute, #{total.remainder(60).to_s} seconds" if total >= 60 and total < 120
     time = "#{(total).to_s} seconds" if total < 60
-    
-    puts "Finished indexing!  Total indexing time: #{time}" 
+
+    puts "Finished indexing!  Total indexing time: #{time}"
   end
-  
+
   desc 'Refresh Solr Spelling index'
   task :refresh_spelling_suggestions => :environment do
     puts "\nRefreshing BibApp spelling suggestions in Solr...\n"
 
     #Call build_spelling_suggestions
     Index.build_spelling_suggestions
-    
+
     puts "Finished!"
   end
 

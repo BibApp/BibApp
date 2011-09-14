@@ -11,5 +11,5 @@
       %li.work
         #{check_box_tag "orphan_delete[orphan_id][]",  orphan.id, false, :id => "orphan_delete_orphan_id_#{orphan.id}", :class => 'orphan_checkbox'}
         #{orphan.title_primary}
-    = submit_tag "Delete checked works", :confirm => 'Are you sure? This operation cannot be undone.'
+    = f.submit "Delete checked works", :confirm => 'Are you sure? This operation cannot be undone.'
 = will_paginate(@orphans)

@@ -115,7 +115,7 @@ class Import < ActiveRecord::Base
   def batch_import
     logger.debug("\n\n==== Starting Batch Import ==== \n\n")
 
-    # Initialize an array of all the works added and hash of errors encounterd in the batch
+    # Initialize an array of all the works added and hash of errors encountered in the batch
     self.works_added = Array.new
     self.import_errors = Hash.new
 

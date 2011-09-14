@@ -105,7 +105,7 @@ class Publisher < PubCommon
       #
       # UPDATE:
       # The SHERPA API has gotten better, and requests are no longer timing
-      # out. Unless those problems reëmerge, it's probably safe to download
+      # out. Unless those problems reemerge, it's probably safe to download
       # the SHERPA data via net/http.
 
       #data = Hpricot.XML(open("public/sherpa/publishers.xml"))

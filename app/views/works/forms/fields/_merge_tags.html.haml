@@ -8,7 +8,6 @@
   - if tags
     - tags.each do |tag|
       - name = (tag.kind_of?(String) ? tag : tag.name)
-      - id = (tag.kind_of?(String) ? tag : tag.id)
       %br/
       = text_field_tag 'dupe_tag_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
 %td

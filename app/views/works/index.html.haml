@@ -27,7 +27,7 @@
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
   - if @view == "all"
-  
+
     .span-22.prepend-1
 
       / ### Person / Works ###
@@ -36,7 +36,7 @@
           .left_box.search-within
             .box_heading Search Within
             = form_tag(person_works_path(@person), :method => :get) do
-              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = text_field_tag(:q, params[:q], :size => 15)
               = submit_tag 'Go'
 
         .span-17.last
@@ -50,29 +50,29 @@
           .left_box.search-within
             .box_heading Search Within
             = form_tag(group_works_path(@group), :method => :get) do
-              = text_field_tag(:q, value = params[:q], {:size => 15})
+              = text_field_tag(:q, params[:q], :size => 15)
               = submit_tag 'Go'
 
         .span-17.last
           %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
           = render :partial => "shared/local_nav", :locals => {:object => "group"}
-          
+
 
     / Render
     #results.span-22.prepend-1
       = render :partial => "shared/facets"
-        
+
       / Works
       = render :partial => "shared/works"
 
   - else
     .span-22.prepend-1
 
-      %h2 
+      %h2
         At the library, we
         %span.hearts &hearts;
         our researchers.
-      
+
       .span-15
         / People - Randomized
         = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
@@ -87,7 +87,7 @@
             = render :partial => "shared/work", :locals => {:work => work}
 
     #facets.span-24
-      
+
       / Groups
       .span-6.prepend-1
         = render :partial => "shared/groups", :locals => {:count => 10}

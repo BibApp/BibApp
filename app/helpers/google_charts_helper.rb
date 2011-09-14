@@ -6,8 +6,8 @@ module GoogleChartsHelper
     chd = "chd=t:"
     chl = "chl="
     facets[:types].each do |r|
-      perc = (r.value.to_f / work_count.to_f * 100).round.to_s
-      chd += "#{perc},"
+      percent = (r.value.to_f / work_count.to_f * 100).round.to_s
+      chd += "#{percent},"
       ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
       chl += "#{ref.titleize.pluralize}|"
     end

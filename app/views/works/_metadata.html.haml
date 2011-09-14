@@ -172,7 +172,7 @@
     - when 'RecordingSound', 'RecordingMovingImage'
       - label = "ISRC"
     %tr
-      %td.label 
+      %td.label
         = "#{label}:"
       %td
         = @work.publication.issn_isbn
@@ -214,7 +214,7 @@
   - unless @work.publication_place.blank?
     - label = "Publication Place"
     - case @work.class.to_s
-    - when 'ConferencePaper', 'ConferencePoster', 'ConferencePreceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
+    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
       - label = "Location"
     %tr
       %td.label

@@ -9,7 +9,6 @@
   - if editors
     - editors.each do |editor|
       - name = (editor.kind_of?(String) ? editor : editor.name)
-      - id = (editor.kind_of?(String) ? editor : editor.id)
       %br/
       = text_field_tag 'dupe_editor_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
 %td
