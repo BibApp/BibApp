@@ -1,0 +1,8 @@
+%h1 New keyword
+
+= error_messages_for :keyword
+= form_for(@keyword) do |f|
+  %p
+    = f.submit "Create"
+
+= link_to 'Back', keywords_path
