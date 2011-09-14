@@ -2,10 +2,10 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to diplay (default: Alternate Title)
+-#    :label    => Label to display (default: Alternate Title)
 
 -# Initialize optional input variables
 - label ||= "Alternate Title"
-  
+
 = form.label :title_secondary, "#{label}:"
 = form.text_field :title_secondary, :class=>'text'

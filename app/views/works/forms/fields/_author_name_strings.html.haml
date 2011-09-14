@@ -7,7 +7,7 @@
 
 -# Get the authors associated with this work
 -# We won't take the first role, because it's the Author,
--# which is displayed seperately
+-# which is displayed separately
 - authors = @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} if wns.role == role} if @work.name_strings
 - authors.compact!
 

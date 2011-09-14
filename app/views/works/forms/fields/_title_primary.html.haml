@@ -3,11 +3,11 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to diplay (default: Title)
+-#    :label    => Label to display (default: Title)
 
 -# Initialize optional input variables
 - label ||= "Title"
-  
+
 = form.label :title_primary, "#{label} <span class='instructions'>(required)</span>:".html_safe
 = form.text_field :title_primary, :class=>'text'
 = error_for 'work', 'title_primary'
