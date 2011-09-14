@@ -354,7 +354,7 @@ class Work < ActiveRecord::Base
 
     #@TODO: Is there a way that we can calculate the *canonical best*
     # version of a work? We've tried this in the past, but we need to do
-    # it in a better way (e.g.  we don't end up accidently re-marking things as
+    # it in a better way (e.g.  we don't end up accidentally re-marking things as
     # dupes that have previously been determined to not be dupes by a human)
   end
 
