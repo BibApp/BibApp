@@ -103,7 +103,7 @@ class PeopleImporter
     record.delete_if { |k,v| person_db_schema.include?(k.to_s) == false }
   end
 
-  # idiot check for the most obvious incompatability
+  # idiot check for the most obvious incompatibility
   def ensure_first_name_column_match(record)
     return record.has_key?(:first_name)
   end
