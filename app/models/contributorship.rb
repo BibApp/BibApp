@@ -19,7 +19,7 @@ class Contributorship < ActiveRecord::Base
   scope :denied, where(:contributorship_state_id => STATE_DENIED)
   # TODO: For now we don't want editors showing up as contributors
   #   although in the future we might want them to show up for whole
-  #   conference preceedings, entire books, et cetera
+  #   conference proceedings, entire books, et cetera
   scope :visible, where(:hide => false, :role => "Author")
   #By default, show all verified, visible contributorships
   scope :to_show, where(:hide => false, :contributorship_state_id => STATE_VERIFIED)
