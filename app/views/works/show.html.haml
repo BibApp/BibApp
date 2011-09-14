@@ -26,7 +26,7 @@
       = @work.title_primary
       %span.work-type
         = @work.type.underscore.humanize
-    
+
     / Work Details
     #work-details.span-14
 
@@ -37,7 +37,7 @@
       = link_to_google_book(@work)
 
       / Attachments
-      -# attachements include the Find It link
+      -# attachments include the Find It link
       = render :partial => 'attachments', :locals => { :files => @work.attachments }
 
       / Metadata
