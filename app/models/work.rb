@@ -585,7 +585,7 @@ class Work < ActiveRecord::Base
   # Override in a subclass to assign a specific type_uri to that subclass
   # By default return nil
   #To get the full map used before breaking out into subclasses, which includes some types for
-  #which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
+  #which there may not yet be subclasses, consult this method in version control history prior to 2011-02-28
   def type_uri
     return nil
   end
