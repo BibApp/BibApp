@@ -245,7 +245,7 @@ module ApplicationHelper
     #   link_text = session[:openurl_link_text] if session[:openurl_link_text]
     #   base_url = session[:openurl_base_url] if session[:openurl_base_url]
     # else
-    #   # Obtain the client IP Addess
+    #   # Obtain the client IP Address
     #   ip = request.env["HTTP_X_FORWARDED_FOR"]
     #   logger.debug("Client IP: #{ip}")
 
