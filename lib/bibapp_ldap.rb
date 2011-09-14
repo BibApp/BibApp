@@ -40,10 +40,10 @@ class BibappLdap
 
   def search(query)
     ldap = self.get_connection
-    cn_filt = Net::LDAP::Filter.eq("#{self.config['cn']}", "*#{query}*")
-    uid_filt = Net::LDAP::Filter.eq("#{self.config['uid']}", "*#{query}*")
-    mail_filt = Net::LDAP::Filter.eq("#{self.config['mail']}", "*#{query}*")
-    ldap.search(:filter => cn_filt | uid_filt | mail_filt).collect do |entry|
+    cn_filter = Net::LDAP::Filter.eq("#{self.config['cn']}", "*#{query}*")
+    uid_filter = Net::LDAP::Filter.eq("#{self.config['uid']}", "*#{query}*")
+    mail_filter = Net::LDAP::Filter.eq("#{self.config['mail']}", "*#{query}*")
+    ldap.search(:filter => cn_filter | uid_filter | mail_filter).collect do |entry|
       clean(entry)
     end
   rescue BibappLdapError => e
