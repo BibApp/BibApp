@@ -103,7 +103,7 @@ class Contributorship < ActiveRecord::Base
   ########## Methods ##########
   def calculate_score(person_scoring_hash = nil)
 
-    # Build the calcuated Contributorship.score attribute--a rough
+    # Build the calculated Contributorship.score attribute--a rough
     # guess whether we think the Person has written the Work
     #
     # Field           Value   Scoring Algorithm
