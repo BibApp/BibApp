@@ -48,7 +48,7 @@ class SearchController < ApplicationController
     end
 
     logger.debug(@q.inspect)
-    # Redirect to /search with properly formated solr standard request params
+    # Redirect to /search with properly formatted solr standard request params
     redirect_to search_path(:q => @q.join(", "))
   end
 
