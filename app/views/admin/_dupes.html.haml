@@ -30,7 +30,7 @@
           %strong Select All
 
           = submit_tag "Delete selected"
-          = render :partial => 'admin/dupes_hidden_tags' 
+          = render :partial => 'admin/dupes_hidden_tags'
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
