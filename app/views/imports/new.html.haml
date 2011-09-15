@@ -21,7 +21,7 @@
       %ul
         %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
         %li -----
-        - render :partial => 'shared/work_type_list'
+        = render :partial => 'shared/work_type_list'
 
     = form_for @import, :as => :import, :url => user_imports_url(:user_id => current_user.id), :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
       %fieldset.span-15

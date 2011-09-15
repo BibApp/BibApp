@@ -19,7 +19,7 @@
 
         %li -----
 
-        - render :partial => 'shared/work_type_list'
+        = render :partial => 'shared/work_type_list'
 
     %div.span-16
       = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
