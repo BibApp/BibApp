@@ -21,12 +21,7 @@
       %ul
         %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
         %li -----
-        - Work.types.each do |ct|
-          %li
-            -if @person
-              =link_to ct, new_person_work_path(@person, :klass => ct)
-            -else
-              =link_to ct, new_work_path(:klass => ct)
+        - render :partial => 'shared/work_type_list'
 
     = form_for @import, :as => :import, :url => user_imports_url(:user_id => current_user.id), :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
       %fieldset.span-15
@@ -43,12 +38,12 @@
 
           %li
             = #form.label :works, "Or, Paste Citations:"
-            = #form.text_area :works 
+            = #form.text_area :works
 
         %p.buttons
           = submit_tag "Add Batch", :disable_with => "Importing Batch..."
 
 
-      
+
       -#Save person id in form, if adding Work to a Person
       = hidden_field_tag :person_id, @person.id if @person

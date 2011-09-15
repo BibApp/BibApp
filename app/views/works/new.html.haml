@@ -15,16 +15,11 @@
           %li= link_to "Batch Import", new_user_import_path(current_user, :person_id => @person.id)
         - else
           %li= link_to "Batch Import", new_user_import_path(current_user)
-        
-        
+
+
         %li -----
-        
-        - Work.types.each do |ct|
-          %li
-            -if @person
-              =link_to ct, new_person_work_path(@person, :klass => ct)
-            -else
-              =link_to ct, new_work_path(:klass => ct)
+
+        - render :partial => 'shared/work_type_list'
 
     %div.span-16
       = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|

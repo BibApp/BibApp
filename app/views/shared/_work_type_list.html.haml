@@ -1,0 +1,6 @@
+- Work.types.each do |ct|
+  %li
+    -if @person
+      =link_to ct, new_person_work_path(@person, :klass => ct)
+    -else
+      =link_to ct, new_work_path(:klass => ct)
