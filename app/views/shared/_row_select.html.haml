@@ -1,0 +1,8 @@
+%select{:name => "rows"}
+  - ["10", "20", "50", "100", "250", "500"].each do |opt|
+    - if opt == @rows
+      %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
+    - else
+      %option{:value => "#{opt}"}= opt.titleize
+
+- @page = 1 if @page == 0
