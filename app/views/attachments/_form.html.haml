@@ -3,7 +3,7 @@
   - if logged_in? && current_user.has_role?("editor", @person)
     - content_for :admin_bar do
       / #### Admin Actions ###
-      %div.span-24#admin-actions
+      .span-24#admin-actions
         %ul#edit-actions
           %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
           %li= link_to "Add a new person", new_person_path
@@ -11,8 +11,8 @@
   - @title = "Upload #{@attachment.class.to_s.underscore.titleize}"
 
 
-%div{:class => "span-24"}
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
     = error_messages_for :attachment
 
     -if @asset.kind_of?(Person)
@@ -21,5 +21,5 @@
     -else
       %h2="Upload #{@attachment.class.to_s.underscore.titleize}"
 
-    %div{:class => "column span-14"}
+    .column.span-14
       = render :partial => "attachments/forms/form_#{@attachment.class.name.to_s.underscore}"
