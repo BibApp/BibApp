@@ -1,25 +1,2 @@
-xml.instruct!
-xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
-  xml.channel do
-    xml.title $UNIVERSITY_SHORT_NAME + ": " + @publisher.name
-    xml.link publisher_url(:only_path => false, :id => @publisher.id)
-    xml.description h("Latest #{$UNIVERSITY_SHORT_NAME} work appearing in #{@publisher.name} publications.")
-    @works.each do |work|
-      xml.item do
-        xml.title work['title']
-
-        xml.description {
-          xml.cdata!(work['type'])
-          xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
-          xml.cdata!(work['abstract'])
-        }
-
-        xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])
-
-        xml.guid work_url(:only_path => false, :id => work['id'].split("-")[1])
-
-        xml.author h(@publisher.name)
-      end
-    end
-  end
-end
+xml << render('shared/pub_common/show', :object => @publisher,
+              :link_url => publisher_url(:only_path => false, :id => @publisher.id))

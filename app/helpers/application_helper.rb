@@ -348,4 +348,12 @@ module ApplicationHelper
     end
   end
 
+  #Take xml builder and a block
+  #Generate boilerplate and yield to block
+  def rss_document_on(xml_builder)
+    xml_builder.instruct!
+    xml_builder.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
+      yield
+    end
+  end
 end
