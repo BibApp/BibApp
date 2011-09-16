@@ -246,5 +246,6 @@ class AttachmentsController < ApplicationController
       return person_url(asset)
     end
   end
+  helper_method :get_response_url
 
 end
