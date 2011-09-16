@@ -74,7 +74,7 @@
       %tr
         %td.label Keywords:
         %td
-          #{@work.keywords.collect {|k| kw.name}.join('; ')}
+          #{@work.keywords.collect {|kw| kw.name}.join('; ')}
 
   - unless @work.medium.blank?
     %tr

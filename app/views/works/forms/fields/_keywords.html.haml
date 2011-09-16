@@ -12,4 +12,4 @@
 %span.instructions
   When adding multiple keywords, separate them with semicolons (;)
   %br
-= text_area_tag "keywords", keywords.collect {|k| kw.name}.join('; '), :size => "25x10"
+= text_area_tag "keywords", keywords.collect {|kw| kw.name}.join('; '), :size => "25x10"
