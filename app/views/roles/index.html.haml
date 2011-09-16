@@ -4,13 +4,13 @@
 - if logged_in? && current_user.has_role?("admin", System)
   - content_for :admin_bar do
     / #### Admin Actions ###
-    %div.span-24#admin-actions
+    #admin-actions.span-24
       %ul#edit-actions
         %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
         %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
 
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+.span-24
+  .span-22.prepend-1
     - if @authorizable.is_a? Class and @authorizable==System
       %h2 System-wide Roles: #{$APPLICATION_NAME}
     - elsif @authorizable.kind_of?(Group)
@@ -18,43 +18,21 @@
     - elsif @authorizable.kind_of?(Person)
       %h2 Roles for Person: #{link_to(h(@authorizable.name), person_path(@authorizable)).html_safe}
 
-    %div{:class => "span-22 prepend-1"}
-      %h3="Administrators"
+    .span-22.prepend-1
+      %h3 Administrators
       - if @authorizable.has_admins?
         %ol.users
           - @authorizable.has_admins.each do |user|
-            %li.user
-              ="#{user.email}"
-              - if user.email != "admin@example.com"
-                = form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
-                  - if @authorizable.is_a? Class
-                    =hidden_field_tag :authorizable_type, @authorizable.name
-                  - else
-                    =hidden_field_tag :authorizable_type, @authorizable.class
-                    =hidden_field_tag :authorizable_id, @authorizable.id
-                  =hidden_field_tag :user_id, user.user_id
-                  =hidden_field_tag :name, 'admin'
-                  =submit_tag "remove"
+            = render 'destroy_user_role_form', :role_name => 'admin', :user => user
       - else
         %p
           No administrators currently assigned.
 
-      %h3="Editors"
+      %h3 Editors
       - if @authorizable.has_editors?
         %ol.users
           - @authorizable.has_editors.each do |user|
-            %li.user
-              ="#{user.email}"
-              - if user.email != "admin@example.com"
-                = form_tag({:action => "destroy", :method => :delete}, :class=>"inline-form") do
-                  - if @authorizable.is_a? Class
-                    =hidden_field_tag :authorizable_type, @authorizable.name
-                  - else
-                    =hidden_field_tag :authorizable_type, @authorizable.class
-                    =hidden_field_tag :authorizable_id, @authorizable.id
-                  =hidden_field_tag :user_id, user.user_id
-                  =hidden_field_tag :name, 'editor'
-                  =submit_tag "remove", :class=>"inline"
+            = render 'destroy_user_role_form', :role_name => 'editor', :user => user
       - else
         %p
           No editors currently assigned.
