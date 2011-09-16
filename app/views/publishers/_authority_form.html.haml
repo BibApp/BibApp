@@ -1,16 +1,3 @@
-= form_tag update_multiple_publishers_path, {:method => :put, :id => 'authority_box', :page => page} do
-  %fieldset
-    %legend="Add Records and Set Authority"
-    -unless authority_form.empty?
-      %table#pub-cart
-        %thead
-          %tr
-            %th
-            %th Title
-            %th Source
-            %th Publications
-            %th
-        =render :partial => "authority_form_item", :collection => authority_form, :locals => {:page => page}
-      = hidden_field_tag :page, page, :id => 'page'
-    = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => authority_form.length <= 1
-    = submit_tag "Cancel", :name => 'cancel', :id => 'cancel_button', :disabled => authority_form.length <= 1
+= render 'shared/pub_common/authority_form', :authority_form => authority_form,
+  :submit_url => update_multiple_publishers_path, :page => page,
+  :headers => ['Title', 'Source', 'Publications']
