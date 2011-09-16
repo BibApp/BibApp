@@ -3,7 +3,7 @@
 - include_stylesheet('specific/publications/show')
 - include_stylesheet('common/sherpa')
 
-- if !@export.empty?
+- if @export.present?
   .span-24
     .span-22.prepend-1
       %h2 Works
@@ -42,25 +42,11 @@
         / Groups
         = render :partial => "shared/groups", :locals => {:count => 10}
 
-        #results.span-22
-
-          / Search Within
-          .span-5
-            .left_box
-              .box_heading Search Within
-              = form_tag publication_path, :method => :get do
-                = text_field_tag(:q, params[:q], :size => 15)
-                = submit_tag 'Go'
-
-            / Facets
-            = render :partial => "shared/facets"
-
-          / Works
-          = render :partial => "shared/works"
+        = render 'shared/pub_common/search_within_div', :submit_url => publication_path
 
         / Authority
         #authority.span-22
-          - unless @authority_for.empty?
+          - if @authority_for.present?
             %h4
               #{@publication.name}
               &ndash; authorized name for:
