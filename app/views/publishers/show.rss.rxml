@@ -13,10 +13,10 @@ xml.rss "version" => 2.0, "xmlns:dc" => "http://purl.org/dc/elements/1.1" do
           xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
           xml.cdata!(work['abstract'])
         }
-        
+
         xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])
 
-        xml.guid work_for(:only_path => false, :id => work['id'].split("-")[1])
+        xml.guid work_url(:only_path => false, :id => work['id'].split("-")[1])
 
         xml.author h(@publisher.name)
       end
