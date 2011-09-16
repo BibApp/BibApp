@@ -71,17 +71,10 @@
         %td
           = @work.abstract
     - unless @work.keywords.blank?
-      - keywords = @work.keywords
-      - kw_s = ""
-      - keywords.each_with_index do |kw, i|
-        - if i < keywords.length-1
-          - kw_s << "#{kw.name}; "
-        - else
-          - kw_s << kw.name
       %tr
         %td.label Keywords:
         %td
-          = kw_s
+          #{@work.keywords.collect {|k| kw.name}.join('; ')}
 
   - unless @work.medium.blank?
     %tr

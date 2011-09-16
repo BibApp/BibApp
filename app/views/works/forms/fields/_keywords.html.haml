@@ -3,20 +3,13 @@
 -# Also adds a list of existing Keywords
 
 -# Initialize our list of keywords
--#  Default: use keywords assigned to @work.  
+-#  Default: use keywords assigned to @work.
 -#  @keywords should only exist if there were errors in saving work
 - keywords = @work.keywords if @work.keywords
 - keywords = @keywords if @keywords
-
-- kw_s = ""
-- keywords.each_with_index do |kw, i|
-  - if i < keywords.length-1
-    - kw_s << "#{kw.name}; "
-  - else
-    - kw_s << kw.name
 
 = label_tag "keywords", "Keyword(s):"
 %span.instructions
   When adding multiple keywords, separate them with semicolons (;)
   %br
-= text_area_tag "keywords", kw_s, :size => "25x10"
+= text_area_tag "keywords", keywords.collect {|k| kw.name}.join('; '), :size => "25x10"
