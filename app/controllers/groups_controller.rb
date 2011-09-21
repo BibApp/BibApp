@@ -1,6 +1,8 @@
+require 'autocomplete_controller_mixin'
 class GroupsController < ApplicationController
   include GoogleChartsHelper
   include KeywordCloudHelper
+  include AutocompleteControllerMixin
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :hide]
@@ -88,16 +90,7 @@ class GroupsController < ApplicationController
   end
 
   def auto_complete_for_group_name
-    group_name = params[:group][:name].downcase
-
-    #search at beginning of name
-    beginning_search = group_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + group_name + "%"
-
-    groups = Group.order_by_name.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).limit(8)
-
-    render :partial => 'autocomplete_list', :locals => {:objects => groups}
+    generic_autocomplete_for_group_name(true)
   end
 
   def hide

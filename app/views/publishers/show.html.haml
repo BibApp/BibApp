@@ -1,7 +1,7 @@
 / === Publishers === Show ===
 / Main
 - include_stylesheet('specific/publishers/show')
-- if !@export.empty?
+- if @export.present?
   .span-24
     .span-22.prepend-1
       %h2 Works
@@ -29,25 +29,11 @@
       / Groups
       = render :partial => "shared/groups", :locals => {:count => 10}
 
-      #results.span-22
-
-        / Search Within
-        .span-5
-          .left_box
-            .box_heading Search Within
-            = form_tag publisher_path, :method => :get do
-              = text_field_tag(:q, params[:q], :size => 15)
-              = submit_tag 'Go'
-
-          / Facets
-          = render :partial => "shared/facets"
-
-        / Works
-        = render :partial => "shared/works"
+      = render 'shared/pub_common/search_within_div', :submit_url => publisher_path
 
       / Authority
       #authority.span-22
-        - if @publisher.authority_for.size > 0
+        - if @publisher.present?
           %h4
             #{ @publisher.name }
             &ndash; authorized name for:

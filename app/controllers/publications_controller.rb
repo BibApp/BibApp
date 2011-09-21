@@ -42,7 +42,7 @@ class PublicationsController < ApplicationController
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        #I'm not sure if the first condition here is the same as the authorities scope, but it might be
+        # I'm not sure if the first condition here is the same as the authorities scope, but it might be
         @current_objects = Publication.includes(:publisher, :works).where("publications.id = authority_id").
             upper_name_like("#{@page}%").order_by_upper_name
       end

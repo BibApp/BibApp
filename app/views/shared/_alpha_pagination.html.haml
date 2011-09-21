@@ -1,23 +1,7 @@
 - include_stylesheet('specific/shared/_alpha_pagination')
 %ol#alpha-nav.pagination
   - path ||= nil
-  -# @TODO: make this DRY and move it into application_helper.rb
-  - numbers ||= nil
-  - if numbers
-    - ('0'..'9').each do |letter|
-      - current = false
-      - if letter == @page
-        - current = true
-        = letter_link_for(@a_to_z, letter, current, :path => path)
-      - else
-        = letter_link_for(@a_to_z, letter, current, :path => path)     
-      
-  - ('A'..'Z').each do |letter|
-    - current = false
-    - if letter == @page
-      - current = true
-      = letter_link_for(@a_to_z, letter, current, :path => path)
-    - else
-      = letter_link_for(@a_to_z, letter, current, :path => path)
-        
- 
+  - letters = ('A'..'Z').to_a
+  - (letters = ('0'..'9').to_a + letters) if defined?(numbers) and numbers
+  - letters.each do |letter|
+    = letter_link_for(@a_to_z, letter, letter == @page, :path => path)

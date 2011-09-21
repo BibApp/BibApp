@@ -5,14 +5,7 @@
   = form_tag "#works", :method => :get, :name => "works_form_show_rows" do
     #sort-by
       %label Show:
-      %select{:name => "rows"}
-        - ["10", "20", "50", "100", "250", "500"].each do |opt|
-          - if opt == @rows
-            %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-          - else
-            %option{:value => "#{opt}"}= opt.titleize
-
-      - @page = 1 if @page == 0
+      = render :partial => 'shared/row_select'
       = hidden_field_tag "return_path", @return_path
       -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
       = hidden_field_tag "authenticity_token", form_authenticity_token
@@ -26,7 +19,7 @@
       |
       =submit_tag "Delete selected works"
       = hidden_field_tag "return_path", @return_path
-      
+
     .span-14= will_paginate @works
 
     %ol#work-list.span-14.works.clear-both

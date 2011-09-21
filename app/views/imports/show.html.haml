@@ -37,21 +37,6 @@
               %strong email
               when the batch is complete.
 
-        - when "reviewable"
-          .warning
-            %h3 Actions
-            .left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
-            .span-1.text-center
-              %p
-                %strong or
-            .left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
-            -if @works.blank?
-              .clear
-                %p This import is reviewable, but contains no works. They may have been deleted.
-            -else
-              .clear
-                %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
-
         - when "accepted"
           .notice
             %h3 Batch-#{@import.id}
@@ -63,16 +48,20 @@
               %p
                 This import has been accepted, but contains no works. They may have been deleted.
 
-        - else
+        - else #includes 'reviewable' case
           .warning
             %h3 Actions
-            .left= button_to("Accept Batch", user_import_path(current_user, @import, {:decision => "accept"}), :method => "put")
+            .left= button_to("Accept Batch", user_import_path(current_user, @import, :decision => "accept"), :method => "put")
             .span-1.text-center
               %p
                 %strong or
-            .left= button_to("Reject Batch", user_import_path(current_user, @import, {:decision => "reject"}), :method => "put")
-            .clear
-              %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
+            .left= button_to("Reject Batch", user_import_path(current_user, @import, :decision => "reject"), :method => "put")
+            - if defined?(@works) and @works.blank?
+              .clear
+                %p This import is reviewable, but contains no works. They may have been deleted.
+            -else
+              .clear
+                %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
 
     -unless @import.state == "processing"
       - err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
@@ -159,4 +148,4 @@
         - ct = ct < 0 ? 0 : ct
         %h3#works Works Imported (#{ct})
         = render :partial => "works" if @works
-        
+

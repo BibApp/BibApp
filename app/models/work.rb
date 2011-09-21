@@ -354,7 +354,7 @@ class Work < ActiveRecord::Base
 
     #@TODO: Is there a way that we can calculate the *canonical best*
     # version of a work? We've tried this in the past, but we need to do
-    # it in a better way (e.g.  we don't end up accidently re-marking things as
+    # it in a better way (e.g.  we don't end up accidentally re-marking things as
     # dupes that have previously been determined to not be dupes by a human)
   end
 
@@ -585,7 +585,7 @@ class Work < ActiveRecord::Base
   # Override in a subclass to assign a specific type_uri to that subclass
   # By default return nil
   #To get the full map used before breaking out into subclasses, which includes some types for
-  #which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
+  #which there may not yet be subclasses, consult this method in version control history prior to 2011-02-28
   def type_uri
     return nil
   end

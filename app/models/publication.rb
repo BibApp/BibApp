@@ -71,7 +71,7 @@ class Publication < PubCommon
   def parse_identifiers
     return if self.issn_isbn.blank?
 
-    # Loop thru all publication issn_isbn values
+    # Loop through all publication issn_isbn values
     self.issn_isbn.each do |issn_isbn|
 
       # Field might be separated

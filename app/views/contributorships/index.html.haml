@@ -26,14 +26,7 @@
       #sort-by.right
         = form_tag "#", :method => :get, :name => "contributorships_form_show_rows" do
           %label Show:
-          %select{:name => "rows"}
-            - ["10", "20", "50", "100", "250", "500"].each do |opt|
-              - if opt == @rows
-                %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-              - else
-                %option{:value => "#{opt}"}= opt.titleize
-
-          - @page = 1 if @page == 0
+          = render :partial => 'shared/row_select'
           = hidden_field_tag "person_id", @person.id
           = hidden_field_tag "status", @status
           -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
@@ -60,9 +53,9 @@
             = hidden_field_tag :person_id, @person.id
           = hidden_field_tag :status, @status
           =submit_tag "Apply to selection", :id => 'contributorships-submit'
-          
+
         .clear-both= will_paginate @contributorships
-      
+
         = render :partial => 'contributorships'
 
     %div{:class => "span-7 prepend-1 last"}
