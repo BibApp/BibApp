@@ -8,16 +8,13 @@
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @work)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li= link_to "Edit this work", edit_work_path
-        - if !@work.archived?
-          %li= link_to "Archive Research", new_work_attachment_path(@work)
-        -#If SWORD is configured, and Work is "Ready for Archiving"
-        -if SwordClient.configured? and @work.ready_to_archive?
-          %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
+  = render :layout => '/layouts/admin_bar' do
+    %li= link_to "Edit this work", edit_work_path
+    - if !@work.archived?
+      %li= link_to "Archive Research", new_work_attachment_path(@work)
+    -#If SWORD is configured, and Work is "Ready for Archiving"
+    -if SwordClient.configured? and @work.ready_to_archive?
+      %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
 
 .span-24
   .span-22.prepend-1
