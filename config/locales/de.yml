@@ -140,7 +140,8 @@ de:
         odd: "muss ungerade sein"
         even: "muss gerade sein"
         record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: {{errors}}"
-        
+
+# Bibapp specific translations        
   app:
     about: "Über"
     faq: "FAQ"
@@ -162,13 +163,13 @@ de:
     years: "Jahre"
     more_years: "Weitere Jahre"
     more_people: "Weitere Personen"
-    more_groups: "Weitere Kliniken/Institute"
+    more_groups: "Weitere Einrichtungen/Institute"
     more_publications: "Weitere Bücher/Zeitschriften"
     more_publishers: "Weitere Verlage"
     bookmarks: "Social Bookmarking"
     results: "Ergebnisse"
     archive: "Datei für Archivierung vorbereiten"
-    import: "Datei-Importe verwalten"
+    imports: "Datei-Importe verwalten"
     unknown: "unbekannt"
     yes: "ja"
     percentage: "Anteil"
@@ -177,7 +178,7 @@ de:
 
   admin:
     tasks: "Administrative Aufgaben"
-    
+   
   contributorships:
     index: "Arbeiten der Person"
     matches: "Mögliche Treffer"
@@ -191,18 +192,18 @@ de:
     denied: "abgelehnt"
         
   groups:
-    index: "Kliniken/Institute"
-    new: "Klinik/Institut hinzufügen"
-    edit: "Klinik/Institut ändern"
-    destroy: "Klinik/Institut löschen"
-    confirm: "Klinik/Institut wirklich löschen?"
-    hide: "Klinik/Institut verstecken"
-    unhide: "Klinik/Institut anzeigen"
+    index: "Einrichtungen/Institute"
+    new: "Einrichtung/Institut hinzufügen"
+    edit: "Einrichtung/Institut ändern"
+    destroy: "Einrichtung/Institut löschen"
+    confirm: "Einrichtung/Institut wirklich löschen?"
+    hide: "Einrichtung/Institut verstecken"
+    unhide: "Einrichtung/Institut anzeigen"
     parent: "Übergeordnete Gruppe"
     children: "Untergruppen"
     members: "Mitglieder"
-    hidden: "Versteckte Kliniken/Institute anzeigen"
-    roles: "Rollen für Klinik/Institut ändern"
+    hidden: "Versteckte Einrichtungen/Institute anzeigen"
+    roles: "Rollen für Einrichtung/Institut ändern"
     
   imports:
     new: "Datei importieren"
@@ -226,6 +227,7 @@ de:
     contributorships: "Arbeiten verwalten"
     roles: "Rollen verwalten"
     personal: "Persönliche Informationen"
+    import_csv: "Import via CSV"    
     
   publications:
     show: "Zeitschrift/Buch"
@@ -235,7 +237,7 @@ de:
     delete: "Zeitschrift/Buch löschen"
     confirm: "Zeitschrift/Buch wirklich löschen?"
     publisher: "Herausgegeben von"
-    authority: "Publikationsautoritäten ändern"
+    authority: "Normdaten der Publikationen bearbeiten"
     
   publishers:
     index: "Verlage"
@@ -245,7 +247,7 @@ de:
     delete: "Verlag löschen"
     year: "Letztes Jahr"
     authorized: "Autorisierter Titel"
-    authority: "Verlagsautoritäten ändern"
+    authority: "Normdaten der Verlage bearbeiten"
     sherpa: "Daten von SHERPA/RoMEO importieren"
     
   roles:
@@ -263,7 +265,8 @@ de:
     
   users:
     index: "Benutzer"
-    show: "Benutzer"
+    show: "Anzeigen"
+    show_all: "Alle Anzeigen"
     new: "Benutzer hinzufügen"
     edit: "Benutzer löschen"
     delete: "Benutzer löschen"
