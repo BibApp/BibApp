@@ -6,13 +6,13 @@
 #works.span-17.last
   - if @q
     %div
-      %h3 Results (#{@q.total_hits})
+      %h3=t('admin.duplicates.results', :count => @q.total_hits)
 
     / Sort Form
     .span-15.append-1.last
       = form_tag "#works", :name => "dupes_form_show_rows", :method => :get do
         #sort-by
-          %label Show:
+          %label=t('app.show') + ":"
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
               - if opt == @rows
@@ -28,14 +28,14 @@
           = hidden_field_tag "authenticity_token", form_authenticity_token
           = hidden_field_tag "return_path" , admin_duplicates_url
 
-          = submit_tag 'Go'
+          = submit_tag t('app.go')
 
       = form_tag destroy_multiple_works_url, :name => "dupes_form", :method => :delete, :id => "dupes_form" do
         #bulk_links
           = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
-          %strong Select All
+          %strong=t('app.select_all')
 
-          = submit_tag "Delete selected"
+          = submit_tag t('app.delete_selected')
           = hidden_field_tag "q", @query
           = hidden_field_tag "fq", @filter_no_strip
           = hidden_field_tag "view", "all"

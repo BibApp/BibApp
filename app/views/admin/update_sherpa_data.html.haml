@@ -4,8 +4,8 @@
 %div{:class => "span-24"}
   %div{:class => "span-22 prepend-1"}
 
-    %h2="Update SHERPA Data"
-    %p Publisher records will be <strong>replaced</strong> with those retrieved from SHERPA/RoMEO; local changes may be lost.
-    %p SHERPA data may take several moments to load.
+    %h2=t('admin.sherpa.update')
+    %p=t('admin.sherpa.info1')
+    %p=t('admin.sherpa.info2')
 
-    = button_to "Update Publishers", :action => :update_publishers_from_sherpa
+    = button_to t('admin.sherpa.update'), :action => :update_publishers_from_sherpa

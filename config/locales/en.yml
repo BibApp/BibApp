@@ -12,8 +12,10 @@ en:
     archive: "Prepare for archiving full text"
     authorized: "Authority controlled names"
     bookmarks: "Social Bookmarking"
+    delete_selected: "Delete selected"
     description: "Description"
     faq: "FAQ"
+    go: "Go"
     formats: "Formats"
     imports: "Manage imports"
     keywords: "Keywords"
@@ -33,14 +35,39 @@ en:
     saved: "Saved"
     search: "Search"
     search_within: "Search Within"
+    select_all: "Select All"
     signup: "Signup"
+    source: "Source"
     unknown: "unknown"
+    year: "Year"
     years: "Years"
     yes: "yes"
 
   admin:
+    archive:
+      ready: "Ready to Archive: %{count} remain"
+      no_works: 'No works are marked "ready to archive"!'
+    deposit:
+      date: "Date Deposited"
+      information: "Deposit Information"
+      repository: "Repository"
+      return: "Return to work"   
+      success: "Deposit was successful!"
+      title: "Title"
+      treatment: "Treatment Deposited Item"
+      uri: "URI of Deposited Item"
+    duplicates:
+      results: 
+        zero: "No duplicates"
+        one: "1 possible duplicate"
+        other: "%{count} possible duplicates"
+      works: "Duplicate Works"
+    sherpa:
+      info1: "Publisher records will be replaced with those retrieved from SHERPA/RoMEO; local changes may be lost."
+      info2: "SHERPA data may take several moments to load."
+      update: "Update SHERPA Data"
     tasks: "Administrative Tasks"
-    
+
   contributorships:
     index: "Works of a person"
     matches: "Possible Matches"

@@ -5,24 +5,24 @@
     %h2= "SWORD Deposit results:"
 
     - if @deposit
-      %p.success Deposit was successful!    
+      %p.success=t('admin.deposit.success')
       %fieldset
-        %legend Deposit Information
+        %legend=t('admin.deposit.information')
         %div.field
-          %label Title:
+          %label=t('admin.deposit.title') + ":"
           %span.field_value=@deposit['title']
         %div.field
-          %label URI of Deposited Item:
+          %label=t('admin.deposit.uri') + ":"
           %span.field_value
             =link_to @deposit['id'], @deposit['id']
         %div.field
-          %label Treatment Deposited Item:
+          %label=t('admin.deposit.treatment') * ":"
           %span.field_value=@deposit['treatment']
         %div.field
-          %label Repository:
+          %label=t('admin.deposit.repository') + ":"
           %span.field_value
             =link_to "#{$REPOSITORY_NAME}", $REPOSITORY_BASE_URL
         %div.field
-          %label Date Deposited:
+          %label=t('admin.deposit.date') + ":"
           %span.field_value=@deposit['updated']
-    =link_to "Return to Work", work_path(@work)
+    =link_to t('admin.deposit.return'), work_path(@work)

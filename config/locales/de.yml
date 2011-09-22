@@ -144,7 +144,9 @@ de:
 # Bibapp specific translations        
   app:
     about: "Über"
+    delete_selected: "Ausgewählte löschen"
     faq: "FAQ"
+    go: "Los"
     login: "Anmelden"
     logout: "Abmelden"
     account: "Konto"
@@ -152,6 +154,7 @@ de:
     admin: "Administration"
     search: "Suche"
     search_within: "Suche in Ergebnissen"
+    select_all: "Alle auswählen"
     saved: "Gespeichert"
     advanced_search: "Fortgeschrittene Suche"
     name: "Name"
@@ -177,8 +180,30 @@ de:
     keywords: "Schlüsselwörter"
 
   admin:
+    archive:
+      ready: "Bereit zur Archivierung: %{count} verbleibend"
+      no_works: 'Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!'    
+    deposit:
+      date: "Einreichdatum"
+      information: "Informationen zur Volltextveröffentlichung im Repositorium"
+      repository: "Repositorium"
+      return: "Zurück zur Arbeit"    
+      success: "Veröffentlichung der Ressource im Repositorium war erfolgreich."
+      title: "Titel"
+      treatment: "Behandlung der veröffentlichten Ressource"
+      uri: "URI der veröffentlichten Ressource"
+    duplicates:
+      results: 
+        zero: "Keine möglichen Dubletten"
+        one: "Eine mögliche Dublette"
+        other: "%{count} mögliche Dubletten"
+      works: "Dublettenkontrolle"
+    sherpa:
+      info1: "Die Verlagseinträge werden auf Basis der Daten von SHERPA/ROMEO aktualisiert. Lokale Änderungen können dabei überschrieben werden."
+      info2: "Die Aktualisierung der SHERPA-Daten kann einige Zeit in Anspruch nehmen."
+      update: "SHERPA-Daten aktualisieren"      
     tasks: "Administrative Aufgaben"
-   
+
   contributorships:
     index: "Arbeiten der Person"
     matches: "Mögliche Treffer"
@@ -286,4 +311,4 @@ de:
     recent: "Aktuelle Arbeiten"
     recommendations: "Ähnliche Arbeiten an der {{institution}}"
     no_abstract: "Kein Abstract"
-    duplicate: "Duplikate anzeigen"
+    duplicate: "Dublettenkontrolle"

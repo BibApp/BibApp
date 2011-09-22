@@ -2,9 +2,8 @@
 / Main
 %div{:class => "span-24"}
   %div.span-22.prepend-1
-    %h2="Ready to Archive: #{@works.size} remain"
+    %h2=t('admin.archive.ready', :count => @works.size)
     - if @works.size > 0
       = render :partial => "works"
     - else
-      %p 
-        No works are marked "ready to archive"!
+      %p=t('admin.archive.no_works')
