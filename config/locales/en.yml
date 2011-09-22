@@ -1,5 +1,154 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
+# Based on the i18n work done by Martin Fenner see https://github.com/mfenner/BibApp
+
 en:
-  hello: "Hello world"
+  app:
+    about: "About"
+    faq: "FAQ"
+    login: "Login"
+    logout: "Logout"
+    account: "Account"
+    signup: "Signup"
+    admin: "Admin"
+    search: "Search"
+    search_within: "Search Within"
+    saved: "Saved"
+    advanced_search: "Advanced Search"
+    name: "Name"
+    description: "Description"
+    previous: "previous"
+    next: "next"
+    authorized: "Authority controlled names"
+    formats: "Formats"
+    years: "Years"
+    more_years: "More years"
+    more_people: "More people"
+    more_groups: "More groups"
+    more_publications: "More publications"
+    more_publishers: "More publishers"
+    bookmarks: "Social Bookmarking"
+    results: "Results"
+    archive: "Prepare for archiving full text"
+    import: "Manage imports"
+    unknown: "unknown"
+    yes: "yes"
+    percentage: "Percentage"
+    powered: "Powered by"
+    keywords: "Keywords"
+
+  admin:
+    tasks: "Administrative Tasks"
+    
+  contributorships:
+    index: "Works of a person"
+    matches: "Possible Matches"
+    analysis: "Archive Analysis"
+    verify: "Verify contributorship"
+    color: "RoMEO Color"
+    policy: "Policy"
+    allow_copy: "Publishers Copy"
+    unverified: "unverified"
+    verified: "verified"
+    denied: "denied"
+        
+  groups:
+    index: "Groups"
+    new: "Add group"
+    edit: "Edit group"
+    destroy: "Delete group"
+    confirm: "Really delete group?"
+    hide: "Hide group"
+    unhide: "Unhide group"
+    parent: "Parent group"
+    children: "Children"
+    members: "Members"
+    hidden: "Show hidden groups"
+    roles: "Change Roles"
+    
+  imports:
+    new: "Import File"
+
+  name_strings:
+    edit: "Edit name"
+    published: "Has published under this name"
+    unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
+    
+  pen_names:
+    index: "Pen Names"
+  
+  people:
+    index: "People"
+    new: "Add a person"
+    edit: "Edit person"
+    delete: "Delete person"
+    confirm: "Really delete this person?"
+    image: "Photo"
+    types: "Types of work"
+    contributorships: "Manage works"
+    roles: "Manage roles"
+    personal: "Personal Information"
+    
+  publications:
+    show: "Publicatioh"
+    index: "Publications"
+    new: "Add a publication"
+    edit: "Edit publication"
+    delete: "Delete publication"
+    confirm: "Really delete this publication?"
+    publisher: "Published by"
+    authority: "Admin publication authorities"
+    
+  publishers:
+    index: "Publishers"
+    show: "Publisher"
+    new: "Add a publisher"
+    edit: "Edit publisher"
+    delete: "Delete publisher"
+    confirm: "Really delete this publisher?"
+    year: "Year"
+    authorized: "Authorized names"
+    authority: "Admin Publisher Authorities"
+    sherpa: "Update publisher data from SHERPA/RoMEO"
+    
+  roles:
+    index: "Manage Roles"
+    new_admin: "Add administrator"
+    new_editor: "Add editor"
+    
+  search:
+    results:
+      one: "1 hit"
+      other: "{{count}} hits"
+    refine: "Refine Search"
+    within: "Search within the results"
+    query: "Search for: "
+    
+  users:
+    index: "User"
+    show: "User"
+    new: "Add a user"
+    edit: "Edit user"
+    delete: "Delete user"
+    confirm: "Really delete this user?"
+    role: "Update Roles"
+ 
+  works:
+    index: "Works"
+    show: "Work"
+    new: "Add a work"
+    edit: "Edit work"
+    delete: "Delete work"
+    confirm: "Really delete this work?"
+    new_attachment: "Add attachement"
+    authors: "Authors at {{institution}}"
+    coauthors: "Coauthors at {{institution}}"
+    contributors: "Contributor"
+    recent: "Recents works"
+    recommendations: "Similar works at {{institution}}"
+    no_abstract: "No abstract available"
+    duplicate: "Show duplicates"
+
+
+
