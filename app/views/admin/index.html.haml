@@ -1,46 +1,46 @@
 / === Admin === Index ===
 / Main
 
-- @title = "Administrative Tasks"  # Specify text at end of HTML <title> tag
+- @title = t('admin.tasks')  # Specify text at end of HTML <title> tag
 
 %div{:class => "span-24"}
   %div.span-22.prepend-1
-    %h2 Administrative Tasks:
+    %h2=t('admin.tasks') + ':'
     = render :partial => "admin_nav"
 
     - if @tab_name == "works"
       %ul#tasks
-        %li=link_to "Add works", new_user_import_path(current_user)
-        %li=link_to "Verify contributorships", admin_contributorships_path
+        %li=link_to t('works.new'), new_user_import_path(current_user)
+        %li=link_to t('contributorships.verify'), admin_contributorships_path
         //%li=link_to "Edit Works", edit_work_path
-        %li=link_to "View duplicate works", admin_duplicates_url
-        %li=link_to "Prepare files for archiving", admin_ready_to_archive_url
-        %li=link_to "Manage imports", user_imports_path(@current_user)
+        %li=link_to t('works.duplicate'), :controller=>"admin", :action =>"duplicates"
+        %li=link_to t('app.archive'), :action => "ready_to_archive"
+        %li=link_to t('app.imports'), user_imports_path(@current_user)
 
     - if @tab_name == "groups"
       %ul#tasks
-        %li=link_to "Add a group", new_group_path
-        %li=link_to "View hidden groups", hidden_groups_path
+        %li=link_to t('groups.new'), new_group_path
+        %li=link_to t('groups.hidden'), hidden_groups_path
 
     - if @tab_name == "people"
       %ul#tasks
-        %li=link_to "Add a person", new_person_path
-        %li=link_to "CSV load", batch_csv_show_people_url
+        %li=link_to t('people.new'), new_person_path
+        %li=link_to t('people.import_csv'), batch_csv_show_people_url
 
     - if @tab_name == "publications"
       %ul#tasks
-        %li=link_to "Add a publication", new_publication_path
-        %li=link_to "Update publication authorities", authorities_publications_path
+        %li=link_to t('publications.new'), new_publication_path
+        %li=link_to t('publications.authority'), authorities_publications_path
 
     - if @tab_name == "publishers"
       %ul#tasks
-        %li=link_to "Add a publisher", new_publication_path
-        %li=link_to "Update publisher authorities", authorities_publishers_path
-        %li=link_to "Update publisher data from SHERPA/RoMEO", admin_update_sherpa_data_url
+        %li=link_to t('publishers.new'), new_publication_path
+        %li=link_to t('publishers.authority'), authorities_publishers_path
+        %li=link_to t('publishers.sherpa'), admin_update_sherpa_data_url
 
     - if @tab_name == "users"
       %ul#tasks
-        %li=link_to "Add a user", new_user_url
-        %li=link_to "View all users", users_url
-        %li=link_to "Update system roles", roles_index_url
+        %li=link_to t('users.new'), new_user_url
+        %li=link_to t('users.show_all'), users_url
+        %li=link_to t('users.role'), roles_index_url
           

@@ -11,6 +11,18 @@ class ApplicationController < ActionController::Base
   # Find the @saved variable, used to display "add" or "remove" links for saved Works
   before_filter :find_saved
 
+  # i18n set the locale 
+  before_filter :set_locale
+  
+  # Adds the locale parameter
+  def set_locale
+    I18n.locale = params[:locale] || ((lang = request.env['HTTP_ACCEPT_LANGUAGE']) && lang[/^[a-z]{2}/]) || I18n.default_locale
+  end
+
+  def default_url_options(options = {})
+    {:locale => I18n.locale}
+  end  
+
   # Adds a work.id to the session[:saved] array
   def add_to_saved
     if request.env["HTTP_REFERER"].nil?

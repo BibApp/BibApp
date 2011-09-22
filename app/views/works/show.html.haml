@@ -12,12 +12,12 @@
     / #### Admin Actions ###
     #admin-actions.span-24
       %ul#edit-actions
-        %li= link_to "Edit this work", edit_work_path
+        %li= link_to t('.edit'), edit_work_path
         - if !@work.archived?
-          %li= link_to "Archive Research", new_work_attachment_path(@work)
+          %li= link_to t('.archive'), new_work_attachment_path(@work)
         -#If SWORD is configured, and Work is "Ready for Archiving"
         -if SwordClient.configured? and @work.ready_to_archive?
-          %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
+          %li= link_to t('.deposit'), admin_deposit_via_sword_url(:work_id => @work)
 
 .span-24
   .span-22.prepend-1

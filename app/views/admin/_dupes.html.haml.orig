@@ -29,8 +29,19 @@
           = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
           %strong=t('app.select_all')
 
-          = submit_tag t('app.delete_selected')
+<<<<<<< HEAD
+          = submit_tag "Delete selected"
           = render :partial => 'admin/dupes_hidden_tags'
+=======
+          = submit_tag t('app.delete_selected')
+          = hidden_field_tag "q", @query
+          = hidden_field_tag "fq", @filter_no_strip
+          = hidden_field_tag "view", "all"
+          - @page = 1 if @page == 0
+          = hidden_field_tag "page", @page
+          = hidden_field_tag "authenticity_token", form_authenticity_token
+          = hidden_field_tag "return_path" , admin_duplicates_url
+>>>>>>> cjurgen/i18n
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
