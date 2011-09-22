@@ -17,4 +17,6 @@ coverage/
 public/attachments/
 public/groups/
 public/people/
-*~
+*~config/solr.yml
+config/smtp.yml
+config/database.yml
