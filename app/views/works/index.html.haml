@@ -13,14 +13,11 @@
 
 - else
   - if logged_in? && (current_user.has_any_role?("editor", Group) or current_user.has_role?('admin', Work))
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        %ul#edit-actions
-          - if current_user.has_any_role?("editor", Group)
-            %li #{link_to "Add a Work", new_user_import_path(current_user)}
-          - if current_user.has_role?('admin', Work)
-            %li #{link_to("View orphaned works", orphans_works_url)}
+    = render :layout => 'layouts/admin_bar' do
+      - if current_user.has_any_role?("editor", Group)
+        %li #{link_to "Add a Work", new_user_import_path(current_user)}
+      - if current_user.has_role?('admin', Work)
+        %li #{link_to("View orphaned works", orphans_works_url)}
 
 / ### Main ###
 .span-24
