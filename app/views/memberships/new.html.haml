@@ -4,7 +4,7 @@
 - include_javascript('specific/memberships/new')
 - @title = "#{@person.display_name}: Group Memberships"
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  = render :layout => '/layouts/admin_layout' do
+  = render :layout => '/layouts/admin_bar' do
     %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
     %li= link_to "Add a new person", new_person_path
 
