@@ -1,0 +1,6 @@
+%ul.actions.clear-both
+  %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.count})",
+      new_membership_url(:person_id => @person.id, :status => 'member'))
+  |
+  %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.count})",
+      new_membership_url(:person_id => @person.id, :status => 'non_member'))

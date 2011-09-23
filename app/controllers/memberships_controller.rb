@@ -20,6 +20,7 @@ class MembershipsController < ApplicationController
 
     before :new do
       @person = Person.find(params[:person_id])
+      @title = "#{@person.display_name}: Group Memberships"
 
       member = @person.groups.empty? ? "non_member" : "member"
       @status = params[:status] || member

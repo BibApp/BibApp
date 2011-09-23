@@ -1,5 +1,5 @@
 if @person
-  page.replace_html 'current', :partial => "group", :collection => @person.groups, :locals => {:selected => true}
+  page.replace_html 'current', :partial => "group", :collection => @person.groups(true), :locals => {:selected => true}
 end
 #page.replace_html 'inactive', :partial => "group", :collection => @person.groups_not, :locals => {:selected => false}
 #page.visual_effect :highlight, "group_#{@group.id}"
