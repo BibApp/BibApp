@@ -12,7 +12,7 @@ module KeywordsHelper
   end
 
   def body_header(object)
-    link_to "#{@current_object.name}", url_for(@current_object) + ' - Timeline'
+    link_to "#{object.name}", url_for(object) + ' - Timeline'
   end
 
 end
