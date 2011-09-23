@@ -1,10 +1,10 @@
 / === Import === New ===
 / Main
+- if current_user_any_role?("editor", Group)
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to_unless_current "Show all Imports", user_imports_path
+    %li=link_to_unless_current "Add an Import!", new_user_import_path
 .span-24
-  - if current_user_any_role?("editor", Group)
-    = render :layout => 'layouts/admin_bar' do
-      %li=link_to_unless_current "Show all Imports", user_imports_path
-      %li=link_to_unless_current "Add an Import", new_user_import_path
 
   .span-22.prepend-1
 
