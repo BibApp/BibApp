@@ -11,4 +11,8 @@ module KeywordsHelper
     attr_accessor :id, :name, :bin, :count, :year
   end
 
+  def body_header(object)
+    link_to "#{@current_object.name}", url_for(@current_object) + ' - Timeline'
+  end
+
 end
