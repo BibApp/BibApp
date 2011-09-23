@@ -365,4 +365,12 @@ module ApplicationHelper
     logged_in? and current_user.has_any_role?(role, object)
   end
 
+  def authorizable_type(authorizable)
+    authorizable.is_a?(Class) ? authorizable.to_s : authorizable.class.to_s
+  end
+
+  def authorizable_id(authorizable)
+    authorizable.is_a?(Class) ? nil : authorizable.id
+  end
+
 end

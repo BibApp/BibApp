@@ -1,6 +1,6 @@
 module MembershipsHelper
 
-  def person_link(person)
+  def membership_person_link(person)
     link_to(h(person.display_name), person_path(person))
   end
 

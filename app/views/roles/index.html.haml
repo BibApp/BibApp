@@ -6,7 +6,7 @@
     %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
     %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
 
-= render :layout => '/layouts/main_body', :locals => {:header => index_header(@authorizable)} do
+= render :layout => '/layouts/main_body', :locals => {:header => roles_index_header(@authorizable)} do
   %h3 Administrators
   - if @authorizable.has_admins?
     %ol.users
