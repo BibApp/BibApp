@@ -4,10 +4,7 @@
 - @title = @person.display_name # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @person)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      = render :partial => "admin_actions"
+  = render :partial => "admin_actions", :layout => "layouts/admin_bar"
 
 / ### Main ###
 .span-24
@@ -15,7 +12,7 @@
     %h2
       #{link_to(h(@person.display_name), person_path(@person)).html_safe}
       =link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))
-    
+
     = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
   / ## Content ###
@@ -25,7 +22,7 @@
       =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
       / ### Hide email for inactive people ###
       - if @person.active?
-        =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")      
+        =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")
 
     .span-10
       - if @person.groups.empty?

@@ -5,11 +5,7 @@
 
 / ### Person / Works ###
 - if params[:person_id]
-  - if logged_in? && current_user.has_role?("editor", Person.find(params[:person_id]))
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        = render :partial => "people/admin_actions"
+  = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
 
 - else
   - if logged_in? && (current_user.has_any_role?("editor", Group) or current_user.has_role?('admin', Work))
