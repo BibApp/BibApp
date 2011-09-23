@@ -1,43 +1,39 @@
 / === Publishers === Show ===
 / Main
 - include_stylesheet('specific/publishers/show')
-- if @export.present?
-  .span-24
-    .span-22.prepend-1
-      %h2 Works
-      = @works
+- if current_user_any_role?("editor", Group) and @export.blank?
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Edit this publisher", edit_publisher_path(@publisher)}
 
-- else
-  - if current_user_any_role?("editor", Group)
-    = render :layout => 'layouts/admin_bar' do
-      %li #{link_to "Edit this publisher", edit_publisher_path(@publisher)}
+= render :layout => 'layouts/main_body_no_h2' do
+  - if @export.present?
+    %h2 Works
+    = @works
 
-  .span-24
+  - else
+    %h2.span-18.left #{ @publisher.name}
+    %span.span-4.right
+      = render :partial => 'shared/sherpa_status', :locals => {:publisher => @publisher, :show_explanation => false}
 
-    .span-22.prepend-1
-      %h2.span-18.left #{ @publisher.name}
-      %span.span-4.right
-        = render :partial => 'shared/sherpa_status', :locals => {:publisher => @publisher, :show_explanation => false}
+    %div.clear-both
+    / People
+    = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
 
-      %div.clear-both
-      / People
-      = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
+    / Groups
+    = render :partial => "shared/groups", :locals => {:count => 10}
 
-      / Groups
-      = render :partial => "shared/groups", :locals => {:count => 10}
+    = render 'shared/pub_common/search_within_div', :submit_url => publisher_path
 
-      = render 'shared/pub_common/search_within_div', :submit_url => publisher_path
-
-      / Authority
-      #authority.span-22
-        - if @publisher.present?
-          %h4
-            #{ @publisher.name }
-            &ndash; authorized name for:
-          %ul.authority-children
-            -# @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
-            - @publisher.authority_for.uniq.each do |auth|
-              %li= link_to auth.name, publisher_path(auth.id)
-        - else
-          %h3 Authorized Title
-          %p #{link_to @publisher.authority.name, publisher_path(@publisher.authority)}
+    / Authority
+    #authority.span-22
+      - if @publisher.present?
+        %h4
+          #{ @publisher.name }
+          &ndash; authorized name for:
+        %ul.authority-children
+          -# @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
+          - @publisher.authority_for.uniq.each do |auth|
+            %li= link_to auth.name, publisher_path(auth.id)
+      - else
+        %h3 Authorized Title
+        %p #{link_to @publisher.authority.name, publisher_path(@publisher.authority)}

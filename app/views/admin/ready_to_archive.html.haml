@@ -1,10 +1,9 @@
 / === Admin === Ready to Archive ===
 / Main
-%div{:class => "span-24"}
-  %div.span-22.prepend-1
-    %h2="Ready to Archive: #{@works.size} remain"
-    - if @works.size > 0
-      = render :partial => "works"
-    - else
-      %p 
-        No works are marked "ready to archive"!
+= render :layout => 'layouts/main_body',
+  :locals => {:header => "Ready to Archive: #{@works.size} remain"} do
+  - if @works.size > 0
+    = render :partial => "works"
+  - else
+    %p
+      No works are marked "ready to archive"!

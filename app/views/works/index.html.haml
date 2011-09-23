@@ -15,40 +15,37 @@
       - if current_user.has_role?('admin', Work)
         %li #{link_to("View orphaned works", orphans_works_url)}
 
-/ ### Main ###
-.span-24
+= render :layout => 'layouts/main_body_no_h2' do
   / If they want to see *everything*, let them see it!
   / params[:view] = "all"
   - if @view == "all"
 
-    .span-22.prepend-1
+    / ### Person / Works ###
+    - if params[:person_id]
+      .span-5
+        .left_box.search-within
+          .box_heading Search Within
+          = form_tag(person_works_path(@person), :method => :get) do
+            = text_field_tag(:q, params[:q], :size => 15)
+            = submit_tag 'Go'
 
-      / ### Person / Works ###
-      - if params[:person_id]
-        .span-5
-          .left_box.search-within
-            .box_heading Search Within
-            = form_tag(person_works_path(@person), :method => :get) do
-              = text_field_tag(:q, params[:q], :size => 15)
-              = submit_tag 'Go'
+      .span-17.last
+        - if @person
+          %h2 #{link_to(h(@person.display_name), person_path(@person))}
+          = render :partial => "shared/local_nav", :locals => {:object => "person"}
 
-        .span-17.last
-          - if @person
-            %h2 #{link_to(h(@person.display_name), person_path(@person))}
-            = render :partial => "shared/local_nav", :locals => {:object => "person"}
+    / ### Group / Works ###
+    - if params[:group_id]
+      .span-5
+        .left_box.search-within
+          .box_heading Search Within
+          = form_tag(group_works_path(@group), :method => :get) do
+            = text_field_tag(:q, params[:q], :size => 15)
+            = submit_tag 'Go'
 
-      / ### Group / Works ###
-      - if params[:group_id]
-        .span-5
-          .left_box.search-within
-            .box_heading Search Within
-            = form_tag(group_works_path(@group), :method => :get) do
-              = text_field_tag(:q, params[:q], :size => 15)
-              = submit_tag 'Go'
-
-        .span-17.last
-          %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
-          = render :partial => "shared/local_nav", :locals => {:object => "group"}
+      .span-17.last
+        %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
+        = render :partial => "shared/local_nav", :locals => {:object => "group"}
 
 
     / Render
@@ -59,25 +56,23 @@
       = render :partial => "shared/works"
 
   - else
-    .span-22.prepend-1
+    %h2
+      At the library, we
+      %span.hearts &hearts;
+      our researchers.
 
-      %h2
-        At the library, we
-        %span.hearts &hearts;
-        our researchers.
+    .span-15
+      / People - Randomized
+      = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
 
-      .span-15
-        / People - Randomized
-        = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
-
-      / Works
-      .span-7.last
-        %h3.heading
-          =link_to "Works", works_url(:view => "all")
-          &ndash; Recent additions
-        %ol#works.works
-          - @works.first(3).each do |work|
-            = render :partial => "shared/work", :locals => {:work => work}
+    / Works
+    .span-7.last
+      %h3.heading
+        =link_to "Works", works_url(:view => "all")
+        &ndash; Recent additions
+      %ol#works.works
+        - @works.first(3).each do |work|
+          = render :partial => "shared/work", :locals => {:work => work}
 
     #facets.span-24
 

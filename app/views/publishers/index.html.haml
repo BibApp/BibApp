@@ -8,25 +8,23 @@
     %li #{link_to "Add a Publisher", new_publisher_path}
     %li #{link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])}
 
-.span-24
-  .span-22.prepend-1
-    %h2 Publishers
-    = render :partial => "shared/alpha_pagination"
+= render :layout => '/layouts/main_body', :locals => {:header => 'Publishers'} do
+  = render :partial => "shared/alpha_pagination"
 
-    %table#publishers
-      %tr
-        %th.span-12 Publisher Name
-        %th.span-8 Recent Year
-        %th.span-1.last Publications
-      - @current_objects.each do |publisher|
-        %tr{:class => cycle("odd", "even")}
-          %td
-            = render :partial => 'shared/sherpa_icon', :locals => {:publisher => publisher}
-            #{link_to publisher.name, publisher_path(publisher)}
-          %td #{publisher.most_recent_year}
-          %td #{publisher.publications.length}
+  %table#publishers
+    %tr
+      %th.span-12 Publisher Name
+      %th.span-8 Recent Year
+      %th.span-1.last Publications
+    - @current_objects.each do |publisher|
+      %tr{:class => cycle("odd", "even")}
+        %td
+          = render :partial => 'shared/sherpa_icon', :locals => {:publisher => publisher}
+          #{link_to publisher.name, publisher_path(publisher)}
+        %td #{publisher.most_recent_year}
+        %td #{publisher.publications.length}
 
-    %br/
-    %br/
-    = render :partial => "shared/alpha_pagination"
+  %br/
+  %br/
+  = render :partial => "shared/alpha_pagination"
 

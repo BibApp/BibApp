@@ -1,27 +1,19 @@
-/ === Roles === Form ===
-- authorizable_type =  @authorizable.is_a?(Class) ? @authorizable.to_s : @authorizable.class.to_s
-- authorizable_id = @authorizable.is_a?(Class) ? nil : @authorizable.id
-%div{:class => "span-22 prepend-1"}
-  - if @authorizable.is_a? Class and @authorizable==System
-    %h2 Add System-wide #{@role_name}: #{$APPLICATION_NAME}
-  - elsif @authorizable.kind_of?(Group)
-    %h2 Add #{@role_name} on Group: #{link_to(h(@authorizable.name), group_path(@authorizable)).html_safe}
-  - elsif @authorizable.kind_of?(Person)
-    %h2 Add #{@role_name} on Person: #{link_to(h(@authorizable.name), person_path(@authorizable)).html_safe}
+%h2 #{form_header(@authorizable, @role_name)}
+= error_messages_for :role
 
-  %h3="Users (#{@page})"
+%h3 Users (#{@page})
 
-  = render :partial => "shared/alpha_pagination"
+= render :partial => "shared/alpha_pagination"
 
-  %ol.users
-    -@current_objects.each do |user|
-      %li.user
-        ="#{user.email} "
-        - if user.has_explicit_role? @role_name.downcase, @authorizable
-          %strong
-            ="Already has #{@role_name} permissions"
-          =link_to " [remove]", roles_destroy_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type, :authorizable_id => authorizable_id)
-        - else
-          =link_to "Add as #{@role_name}", roles_create_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type, :authorizable_id => authorizable_id)
-          - if user.has_role?(@role_name.downcase, @authorizable)
-            [Has role implicitly]
+%ol.users
+  -@current_objects.each do |user|
+    %li.user
+      ="#{user.email} "
+      - if user.has_explicit_role? @role_name.downcase, @authorizable
+        %strong
+          ="Already has #{@role_name} permissions"
+        =link_to " [remove]", roles_destroy_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type(@authorizable), :authorizable_id => authorizable_id(@authorizable))
+      - else
+        =link_to "Add as #{@role_name}", roles_create_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type(@authorizable), :authorizable_id => authorizable_id(@authorizable))
+        - if user.has_role?(@role_name.downcase, @authorizable)
+          [Has role implicitly]

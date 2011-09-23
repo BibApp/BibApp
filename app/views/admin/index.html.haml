@@ -1,46 +1,5 @@
-/ === Admin === Index ===
-/ Main
+= render :layout => '/layouts/main_body', :locals => {:header => "#{@title}:"} do
+  = render :partial => "admin_nav"
+  %ul#tasks
+    = render :partial => "#{@tab_name}_tasks"
 
-- @title = "Administrative Tasks"  # Specify text at end of HTML <title> tag
-
-%div{:class => "span-24"}
-  %div.span-22.prepend-1
-    %h2 Administrative Tasks:
-    = render :partial => "admin_nav"
-
-    - if @tab_name == "works"
-      %ul#tasks
-        %li=link_to "Add works", new_user_import_path(current_user)
-        %li=link_to "Verify contributorships", admin_contributorships_path
-        //%li=link_to "Edit Works", edit_work_path
-        %li=link_to "View duplicate works", admin_duplicates_url
-        %li=link_to "Prepare files for archiving", admin_ready_to_archive_url
-        %li=link_to "Manage imports", user_imports_path(@current_user)
-
-    - if @tab_name == "groups"
-      %ul#tasks
-        %li=link_to "Add a group", new_group_path
-        %li=link_to "View hidden groups", hidden_groups_path
-
-    - if @tab_name == "people"
-      %ul#tasks
-        %li=link_to "Add a person", new_person_path
-        %li=link_to "CSV load", batch_csv_show_people_url
-
-    - if @tab_name == "publications"
-      %ul#tasks
-        %li=link_to "Add a publication", new_publication_path
-        %li=link_to "Update publication authorities", authorities_publications_path
-
-    - if @tab_name == "publishers"
-      %ul#tasks
-        %li=link_to "Add a publisher", new_publication_path
-        %li=link_to "Update publisher authorities", authorities_publishers_path
-        %li=link_to "Update publisher data from SHERPA/RoMEO", admin_update_sherpa_data_url
-
-    - if @tab_name == "users"
-      %ul#tasks
-        %li=link_to "Add a user", new_user_url
-        %li=link_to "View all users", users_url
-        %li=link_to "Update system roles", roles_index_url
-          

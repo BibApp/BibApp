@@ -6,30 +6,20 @@
     %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
     %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
 
-.span-24
-  .span-22.prepend-1
-    - if @authorizable.is_a? Class and @authorizable==System
-      %h2 System-wide Roles: #{$APPLICATION_NAME}
-    - elsif @authorizable.kind_of?(Group)
-      %h2 Roles for Group: #{link_to(h(@authorizable.name), group_path(@authorizable)).html_safe}
-    - elsif @authorizable.kind_of?(Person)
-      %h2 Roles for Person: #{link_to(h(@authorizable.name), person_path(@authorizable)).html_safe}
-
-    .span-22.prepend-1
-      %h3 Administrators
-      - if @authorizable.has_admins?
-        %ol.users
-          - @authorizable.has_admins.each do |user|
-            = render 'destroy_user_role_form', :role_name => 'admin', :user => user
-      - else
-        %p
-          No administrators currently assigned.
-
-      %h3 Editors
-      - if @authorizable.has_editors?
-        %ol.users
-          - @authorizable.has_editors.each do |user|
-            = render 'destroy_user_role_form', :role_name => 'editor', :user => user
-      - else
-        %p
-          No editors currently assigned.
+= render :layout => '/layouts/main_body', :locals => {:header => index_header(@authorizable)} do
+  %h3 Administrators
+  - if @authorizable.has_admins?
+    %ol.users
+      - @authorizable.has_admins.each do |user|
+        = render 'destroy_user_role_form', :role_name => 'admin', :user => user
+  - else
+    %p
+      No administrators currently assigned.
+  %h3 Editors
+  - if @authorizable.has_editors?
+    %ol.users
+      - @authorizable.has_editors.each do |user|
+        = render 'destroy_user_role_form', :role_name => 'editor', :user => user
+  - else
+    %p
+      No editors currently assigned.

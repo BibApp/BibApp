@@ -16,33 +16,31 @@
     -if SwordClient.configured? and @work.ready_to_archive?
       %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
 
-.span-24
-  .span-22.prepend-1
-    / Work Title
-    %h2
-      = @work.title_primary
-      %span.work-type
-        = @work.type.underscore.humanize
+= render :layout => 'layouts/main_body_no_h2' do
+  %h2
+    = @work.title_primary
+    %span.work-type
+      = @work.type.underscore.humanize
 
-    / Work Details
-    #work-details.span-14
+  / Work Details
+  #work-details.span-14
 
-      / COinS
-      %span.Z3988{:title => "#{coin(@work)}"}
+    / COinS
+    %span.Z3988{:title => "#{coin(@work)}"}
 
-      / Google Book Link
-      = link_to_google_book(@work)
+    / Google Book Link
+    = link_to_google_book(@work)
 
-      / Attachments
-      -# attachments include the Find It link
-      = render :partial => 'attachments', :locals => { :files => @work.attachments }
+    / Attachments
+    -# attachments include the Find It link
+    = render :partial => 'attachments', :locals => { :files => @work.attachments }
 
-      / Metadata
-      = render :partial => "metadata"
+    / Metadata
+    = render :partial => "metadata"
 
-    #local-relations.span-7.prepend-1.last
-      / Local Authors
-      = render :partial => "local_authors"
+  #local-relations.span-7.prepend-1.last
+    / Local Authors
+    = render :partial => "local_authors"
 
-      / Local Recommendations
-      = render :partial => "local_recommendations"
+    / Local Recommendations
+    = render :partial => "local_recommendations"
