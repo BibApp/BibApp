@@ -8,12 +8,12 @@
 %ol.users
   -@current_objects.each do |user|
     %li.user
-      ="#{user.email} "
+      #{user.email}
       - if user.has_explicit_role? @role_name.downcase, @authorizable
         %strong
           ="Already has #{@role_name} permissions"
-        =link_to " [remove]", roles_destroy_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type(@authorizable), :authorizable_id => authorizable_id(@authorizable))
+        =link_to " [remove]", roles_destroy_url(url_opts(user, @role_name, @authorizable))
       - else
-        =link_to "Add as #{@role_name}", roles_create_url(:name => @role_name, :user_id => user.id, :authorizable_type => authorizable_type(@authorizable), :authorizable_id => authorizable_id(@authorizable))
+        =link_to "Add as #{@role_name}", roles_create_url(url_opts(user, @role_name, @authorizable))
         - if user.has_role?(@role_name.downcase, @authorizable)
           [Has role implicitly]

@@ -35,4 +35,10 @@ module RolesHelper
   def person_link(person)
     link_to h(person.name), person_path(person)
   end
+
+  def url_opts(user, role_name, authorizable)
+    {:name => role_name, :user_id => user.id, :authorizable_type => authorizable_type(authorizable),
+     :authorizable_id => authorizable_id(authorizable)}
+  end
+
 end
