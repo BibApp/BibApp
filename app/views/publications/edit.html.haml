@@ -1,6 +1,6 @@
 / === Publications === Edit ===
 
-- if logged_in? && current_user.has_any_role?("editor", Group)
+- if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li=link_to "Delete this publication", publication_url(@publication), :method => :delete, :confirm => 'Permanently delete this publication? This cannot be undone.'
 

@@ -1,6 +1,6 @@
 / === Imports === Index ===
 / Main
--if logged_in? and @current_user.has_any_role?("editor", Group)
+-if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
 

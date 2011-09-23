@@ -1,7 +1,7 @@
 / === NameString === Show ===
 / Main
 - include_stylesheet('specific/name_strings/show')
-- if logged_in? && current_user.has_any_role?("editor", Group)
+- if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Edit this name string", edit_name_string_path(@name_string)}
 

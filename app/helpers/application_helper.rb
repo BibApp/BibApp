@@ -356,4 +356,13 @@ module ApplicationHelper
       yield
     end
   end
+
+  def current_user_role?(role, object)
+    logged_in? and current_user.has_role?(role, object)
+  end
+
+  def current_user_any_role?(role, object)
+    logged_in? and current_user.has_any_role?(role, object)
+  end
+
 end

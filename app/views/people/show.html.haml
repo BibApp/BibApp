@@ -3,7 +3,7 @@
 - include_stylesheet('specific/people/show')
 - @title = @person.display_name # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @person)
+- if current_user_role?("editor", @person)
   = render :partial => "admin_actions", :layout => "layouts/admin_bar"
 
 / ### Main ###

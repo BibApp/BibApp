@@ -8,7 +8,7 @@
   = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
 
 - else
-  - if logged_in? && (current_user.has_any_role?("editor", Group) or current_user.has_role?('admin', Work))
+  - if current_user_any_role?("editor", Group) or current_user_role?('admin', Work)
     = render :layout => 'layouts/admin_bar' do
       - if current_user.has_any_role?("editor", Group)
         %li #{link_to "Add a Work", new_user_import_path(current_user)}

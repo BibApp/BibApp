@@ -1,7 +1,7 @@
 - include_data_tables
 - include_javascript('specific/publications/authorities')
 
-- if logged_in? && current_user.has_any_role?("editor", "Group")
+- if current_user_any_role?("editor", "Group")
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Add a Publication", new_publication_path}
 

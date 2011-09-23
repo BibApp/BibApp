@@ -7,7 +7,7 @@
 
 -# @title=@work.title_primary # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @work)
+- if current_user_role?("editor", @work)
   = render :layout => '/layouts/admin_bar' do
     %li= link_to "Edit this work", edit_work_path
     - if !@work.archived?

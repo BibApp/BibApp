@@ -9,7 +9,7 @@
     = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
 
 - else
-  - if logged_in? && current_user.has_any_role?("editor", Group)
+  - if current_user_any_role?("editor", Group)
     = render :layout => 'layouts/admin_bar' do
       %li=link_to "Add a Group", new_group_path
       - if logged_in? && current_user.has_role?("admin", System)

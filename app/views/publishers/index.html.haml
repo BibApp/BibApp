@@ -3,7 +3,7 @@
 - include_stylesheet('common/sherpa')
 - @title = "Publishers" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_any_role?("editor", Group)
+- if current_user_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Add a Publisher", new_publisher_path}
     %li #{link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])}

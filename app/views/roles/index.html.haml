@@ -1,7 +1,7 @@
 / === Roles === Index ===
 / Main
 
-- if logged_in? && current_user.has_role?("admin", System)
+- if current_user_role?("admin", System)
   = render :layout => 'layouts/admin_bar' do
     %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
     %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
