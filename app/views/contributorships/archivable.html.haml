@@ -1,11 +1,8 @@
 - include_stylesheet('specific/contributorships/archivable')
--@title = "Archival Analysis: #{@person.display_name}"
-/ === Contributorships === Archivable ===
-/ Main
 .span-24
   .span-22.prepend-1.archival-analysis-header
     %h2 Archival Analysis: #{link_to @person.display_name, person_path(@person)}
-    
+
     %table
       %thead
         %tr
@@ -40,7 +37,7 @@
           %td Name
           %td Publisher
           %td Works
-          
+
       %tbody
         - @publ_table.each do |row|
           -# Default colors to unknown

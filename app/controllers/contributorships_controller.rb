@@ -78,6 +78,7 @@ class ContributorshipsController < ApplicationController
   def archivable
     # Find Person for view
     @person = Person.find(params[:person_id])
+    @title = "Archival Analysis: #{@person.display_name}"
 
     # Collect data for Sherpa color table
     @pub_table = romeo_color_count
