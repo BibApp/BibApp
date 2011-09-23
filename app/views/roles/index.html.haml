@@ -2,12 +2,9 @@
 / Main
 
 - if logged_in? && current_user.has_role?("admin", System)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
-        %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
+  = render :layout => 'layouts/admin_bar' do
+    %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
+    %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
 
 .span-24
   .span-22.prepend-1

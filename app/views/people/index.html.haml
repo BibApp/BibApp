@@ -1,13 +1,10 @@
 / === People === Index ===
 / Main
-- @title="People" # Specify text at end of HTML <title> tag
+- @title = "People" # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li #{link_to "Add a Person", new_person_path}
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Add a Person", new_person_path}
 
 .span-24
   .span-22.prepend-1

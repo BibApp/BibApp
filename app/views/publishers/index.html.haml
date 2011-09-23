@@ -4,12 +4,9 @@
 - @title = "Publishers" # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li #{link_to "Add a Publisher", new_publisher_path}
-        %li #{link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])}
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Add a Publisher", new_publisher_path}
+    %li #{link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])}
 
 .span-24
   .span-22.prepend-1
@@ -32,5 +29,4 @@
     %br/
     %br/
     = render :partial => "shared/alpha_pagination"
-    
-  
+

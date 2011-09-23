@@ -2,11 +2,8 @@
 - include_javascript('specific/publications/authorities')
 
 - if logged_in? && current_user.has_any_role?("editor", "Group")
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li #{link_to "Add a Publication", new_publication_path}
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Add a Publication", new_publication_path}
 
 .span-24.column
   .span-22.prepend-1.column

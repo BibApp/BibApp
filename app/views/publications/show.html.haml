@@ -11,11 +11,8 @@
 
 - else
   - if logged_in? && current_user.has_any_role?("editor", Group)
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        %ul#edit-actions
-          %li #{link_to "Edit this publication", edit_publication_path(@publication)}
+    = render :layout => '/layouts/admin_bar' do
+      %li #{link_to "Edit this publication", edit_publication_path(@publication)}
 
   .span-24
 

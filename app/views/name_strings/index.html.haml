@@ -1,20 +1,16 @@
 / === NameStrings === Index ===
 / Main
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Add a NameString", new_name_string_path
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to "Add a NameString", new_name_string_path
 
-%div{:class => "span-24"}
-  %div{:class => "column span-22 prepend-1"}
-    %h2="NameStrings (#{@page})"
+.span-24
+  .span-22.prepend-1.column
+    %h2 NameStrings (#{@page})
 
     = render :partial => "shared/alpha_pagination"
-    
+
     %ol#name_strings
       -@current_objects.each do |name_string|
         %li.name_string
           =link_to "#{name_string.name}", name_string_path(name_string)
-  

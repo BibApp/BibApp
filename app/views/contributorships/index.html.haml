@@ -1,12 +1,9 @@
 - include_javascript('specific/contributorships/index')
 - @title = "#{@person.display_name}: #{@status.capitalize} Contributorships"
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-        %li= link_to "Add a new person", new_person_path
+  = render :layout => '/layouts/admin_bar' do
+    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Add a new person", new_person_path
 
 .span-24
   .span-22.prepend-1

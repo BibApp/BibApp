@@ -1,22 +1,19 @@
 / === Import === New ===
 / Main
-%div.span-24
+.span-24
   - if logged_in? and @current_user.has_any_role?("editor", Group)
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      %div.span-24#admin-actions
-        %ul#edit-actions
-          %li=link_to_unless_current "Show all Imports", user_imports_path
-          %li=link_to_unless_current "Add an Import", new_user_import_path
+    = render :layout => 'layouts/admin_bar' do
+      %li=link_to_unless_current "Show all Imports", user_imports_path
+      %li=link_to_unless_current "Add an Import", new_user_import_path
 
-  %div.span-22.prepend-1
+  .span-22.prepend-1
 
     -#Check if we are adding Works directly to a Person
     -if @person
       %h2 Add Works for #{link_to @person.display_name, person_path(@person)}
     -else
       %h2 Add Works
-    %div.right
+    .right
       %h3 Select a type:
       %ul
         %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
@@ -27,7 +24,7 @@
       %fieldset.span-15
         %legend Batch Import (RIS | Medline | Refworks XML)
 
-        %p="Either upload a file containing the citations, or cut and paste the citations into the box below."
+        %p Either upload a file containing the citations, or cut and paste the citations into the box below.
 
         %ul
           %li

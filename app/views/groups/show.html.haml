@@ -4,13 +4,10 @@
 - @title = @group.name  # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_role?("editor", @group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Add a Group", new_group_path
-        %li= link_to "Edit this group", edit_group_path
-        %li=link_to "Manage Roles", group_roles_path(@group)
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to "Add a Group", new_group_path
+    %li= link_to "Edit this group", edit_group_path
+    %li=link_to "Manage Roles", group_roles_path(@group)
 
 / ### Main ###
 .span-24

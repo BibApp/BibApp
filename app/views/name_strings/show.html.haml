@@ -2,11 +2,8 @@
 / Main
 - include_stylesheet('specific/name_strings/show')
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li #{link_to "Edit this name string", edit_name_string_path(@name_string)}
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Edit this name string", edit_name_string_path(@name_string)}
 
 .span-24
 
@@ -14,7 +11,7 @@
     %h2
       Name:
       %strong #{@name_string.name}
-      
+
     .span-23
       - if @name_string.people.size > 0
         %h4 I have published using this name:

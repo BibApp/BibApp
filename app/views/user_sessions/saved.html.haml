@@ -11,11 +11,9 @@
       = @works
 
     - else
-      - content_for :admin_bar do
-        #admin-actions.span-24
-          %ul#edit-actions
-            %li #{ link_to "Empty saved items?", delete_saved_url}
-      
+      = render :layout => 'layouts/admin_bar' do
+        %li #{ link_to "Empty saved items?", delete_saved_url}
+
       %h2 Saved #{@saved.items.size}
 
       / Sort Form
@@ -29,17 +27,17 @@
                   %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
                 - else
                   %option{:value => "#{opt}"}= opt.titleize
-            
+
             %label Send to:
             %select{:name => "export"}
               - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
                 %option{:value => "#{opt.downcase}"}=opt
 
             - @page = 1 if @page == 0
-            = hidden_field_tag "page", @page              
+            = hidden_field_tag "page", @page
 
             = submit_tag 'Go'
-      
+
         .span-14 #{ will_paginate @works.paginate}
 
         %ol.span-14.works.clear-both

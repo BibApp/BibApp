@@ -2,18 +2,15 @@
 / Main
 - @title = "#{@person.display_name}: Personal Info"
 - if logged_in? && current_user.has_role?("admin", @person)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-        %li= link_to "Add a new person", new_person_path
+  = render :layout => 'layouts/admin_bar'
+    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Add a new person", new_person_path
 
-%div.span-24
-  %div.span-22.prepend-1
+.span-24
+  .span-22.prepend-1
 
     %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Personal Info
 
     = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
-    
+
     = render :partial => 'form'

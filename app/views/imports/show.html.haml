@@ -4,13 +4,9 @@
 - include_javascript('specific/imports/show')
 
 .span-24
-
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
-        %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
+    %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
 
   .span-22.prepend-1
 

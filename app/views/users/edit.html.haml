@@ -1,24 +1,21 @@
 / === Users === Edit ===
 / Main
-%div.span-24
+.span-24
 
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to_unless_current "Show all Imports", user_imports_path(@user)
-        - if logged_in? and @current_user.has_any_role?("editor", Group)
-          %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to_unless_current "Show all Imports", user_imports_path(@user)
+    - if logged_in? and @current_user.has_any_role?("editor", Group)
+      %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
 
-  %div.span-22.prepend-1
+  .span-22.prepend-1
     = error_messages_for :user, :class => 'notice'
     %h2 Edit My Account
-  
+
     %fieldset
-      %legend="User Account"
+      %legend User Account
       = form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
         %p
-          %label="Email:"
+          %label Email:
           = form.text_field :email
         %p
           %strong
@@ -31,4 +28,3 @@
           =link_to "Change Password", edit_user_password_path(@user)
         %p.submit
           = submit_tag 'Update'
-  

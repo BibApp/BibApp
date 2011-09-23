@@ -4,17 +4,14 @@
 - @title = "Publications" # Specify text at end of HTML <title> tag
 
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li #{link_to "Add a Publication", new_publication_path}
-        %li #{link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])}
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Add a Publication", new_publication_path}
+    %li #{link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])}
 
 .span-24
   .span-22.prepend-1
     %h2 Publications
-    
+
     = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}
 
     %table#publications

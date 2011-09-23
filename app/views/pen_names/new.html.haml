@@ -2,12 +2,9 @@
 / Main
 - @title = "#{@person.display_name}: Pen Names"
 - if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-        %li= link_to "Add a new person", new_person_path
+  = render :layout => '/layouts/admin_bar' do
+    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Add a new person", new_person_path
 
 .span-24
   .span-22.prepend-1

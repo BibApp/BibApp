@@ -1,20 +1,15 @@
 / === Imports === Index ===
 / Main
 -if logged_in? and @current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        - if @current_user.has_any_role?("editor", Group)
-          %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
-        - # TODO: Add imports for User's Person
-        
-%div.span-24
-  %div.span-22.prepend-1
-    %h2="Imports for #{User.find(params[:user_id]).email}"
-    
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
+
+.span-24
+  .span-22.prepend-1
+    %h2 Imports for #{User.find(params[:user_id]).email}
+
     = will_paginate @imports
-    
+
     %table
       %thead
         %tr
