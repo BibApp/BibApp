@@ -8,7 +8,7 @@
     %li= link_to "Add a new person", new_person_path
 
 = render :layout => '/layouts/main_body',
-  :locals => {:header => "#{membership_person_link(@person)}: Group Memberships".html_safe} do
+  :locals => {:header => "#{person_link(@person)}: Group Memberships".html_safe} do
 
   = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
 
