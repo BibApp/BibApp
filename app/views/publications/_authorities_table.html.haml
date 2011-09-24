@@ -1,0 +1,16 @@
+%table#publications
+  %thead
+    %tr
+      %th Select
+      %th ISSN / ISBN
+      %th Publication Name
+      %th Publisher
+      %th Works
+  %tbody
+    -@current_objects.each do |publication|
+      %tr#publication.publication{:id => publication.id, :class => cycle("odd", "even")}
+        %td #{link_to 'add', add_to_box_publications_url(:new_pa => publication.id, :page => @page)}
+        %td #{publication.issn_isbn}
+        %td #{link_to publication.authority.name, publication_path(publication)}
+        %td #{link_to publication.publisher.authority.name, publisher_path(publication.publisher)}
+        %td #{publication.works.size}
