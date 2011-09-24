@@ -6,37 +6,18 @@
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Add a Person", new_person_path}
 
-.span-24
-  .span-22.prepend-1
-    / ### Group / People ###
-    - if params[:group_id]
-      %h2= @group.name
-      = render :partial => "shared/local_nav", :locals => {:object => "group"}
+= render :layout => 'layouts/main_body_no_h2' do
+  / ### Group / People ###
+  - if params[:group_id]
+    %h2= @group.name
+    = render "shared/local_nav", :object => "group"
+    = render "shared/alpha_pagination", :path => group_people_path(@group.id)
+  - else
+    %h2 People
+    = render "shared/alpha_pagination"
 
-    - else
-      %h2 People
+  = render 'people_table'
 
-    - if params[:group_id]
-      = render :partial => "shared/alpha_pagination", :locals => {:path => group_people_path(@group.id)}
-    - else
-      = render :partial => "shared/alpha_pagination"
-
-    %table#people
-      %tr
-        %th.span-1
-        %th.span-6 Name
-        %th.span-12 Recent Publication
-        %th.span-1.last Works
-      -@current_objects.each do |person|
-        %tr{:class => cycle("odd", "even")}
-          %td.person-image #{link_to image_tag(person.image_url, :size => "50x66"), person_path(person)}
-          %td #{link_to "#{person.display_name}", person_path(person)}
-          - if person.works.length > 0
-            %td #{link_to person.works.first.to_s, work_path(person.works.first)}
-          - else
-            %td
-          %td.text-right #{person.works.verified.length}
-
-    %br/
-    %br/
-    = render :partial => "shared/alpha_pagination"
+  %br/
+  %br/
+  = render "shared/alpha_pagination"

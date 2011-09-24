@@ -1,0 +1,15 @@
+%table#people
+  %tr
+    %th.span-1
+    %th.span-6 Name
+    %th.span-12 Recent Publication
+    %th.span-1.last Works
+  -@current_objects.each do |person|
+    %tr{:class => cycle("odd", "even")}
+      %td.person-image #{link_to image_tag(person.image_url, :size => "50x66"), person_path(person)}
+      %td #{link_to "#{person.display_name}", person_path(person)}
+      - if person.works.length > 0
+        %td #{link_to person.works.first.to_s, work_path(person.works.first)}
+      - else
+        %td
+      %td.text-right #{person.works.verified.length}

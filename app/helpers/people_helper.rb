@@ -13,4 +13,8 @@ module PeopleHelper
     ar.size > 0 ? "(#{ar.join(', ')})" : ""
   end
 
+  def edit_header(person)
+    "#{link_to(h(@person.display_name), person_path(@person))}: Personal Info".html_safe
+  end
+
 end
