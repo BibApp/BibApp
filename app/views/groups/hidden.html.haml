@@ -1,31 +1,22 @@
-/ === Hidden Groups ===
-/ Main
-- @title="Hidden Groups" # Specify text at end of HTML <title> tag
+- if current_user_role?("editor", System)
+  = render :layout => 'layouts/main_body', :locals => {:header => "Hidden Groups"} do
 
-- if logged_in? && current_user.has_role?("editor", System)
-  %div{:class => "span-24"}
-    %div{:class => "span-22 prepend-1"}
-      %h2="Hidden Groups"
+    - if @hidden_groups.empty?
+      %p No hidden groups
 
-      - if @hidden_groups.empty?
-        %p No hidden groups
+    %table#groups
+      %tr
+        %th.span-10 Group Name
+        %th.span-10 Parent Group
+        %th.span-2.last Members
+      -@hidden_groups.each do |group|
+        %tr{:class => cycle("even", "odd")}
+          %td=link_to group.name, group
+          - if !group.parent.nil?
+            %td=link_to group.parent.name, group.parent
+          - else
+            %td
+          %td=group.memberships.length
 
-      -#= render :partial => "shared/alpha_pagination"
-
-      %table#groups
-        %tr
-          %th.span-10="Group Name"
-          %th.span-10="Parent Group"
-          %th.span-2.last="Members"
-        -@hidden_groups.each do |group|
-          %tr{:class => cycle("even", "odd")}
-            %td=link_to group.name, group
-            - if !group.parent.nil?
-              %td=link_to group.parent.name, group.parent
-            - else
-              %td
-            %td=group.memberships.length
-
-      %br/
-      %br/
-      -#= render :partial => "shared/alpha_pagination"
+    %br/
+    %br/
