@@ -1,17 +1,13 @@
 / Render a 404 page
 - @title = "Error 404: Page not found"
 
-/ ### Main ###
-.span-24
-  .span-22.prepend-1
-    %h2 Error 404: The page cannot be found
+= render :layout => 'layouts/main_body', :locals => {:header => 'Error 404: The page cannot be found'}  do
+  - if controller.controller_name == "people" || controller.controller_name == "groups"
+    %h2
+      You may have followed a link to a #{controller.controller_name.singularize} no
+      longer at #{$UNIVERSITY_SHORT_NAME}.
 
-    - if controller.controller_name == "people" || controller.controller_name == "groups"
-      %h2
-        You may have followed a link to a #{controller.controller_name.singularize} no 
-        longer at #{$UNIVERSITY_SHORT_NAME}.
-        
-    %p Did you try searching? Enter a keyword(s) in the search field above.
+  %p Did you try searching? Enter a keyword(s) in the search field above.
     
 #facets.span-24
   / People
