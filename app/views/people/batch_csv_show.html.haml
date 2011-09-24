@@ -2,22 +2,18 @@
 / === batch_process ===
 
 - results = params[:completed]
-%div.span-24#admin-actions
-
-%div.span-24
-
-%div.span-22.prepend-1
-
+#admin-actions.span-24
+= render :layout => 'layouts/main_body_no_h2' do
   = form_for :person, 'whather', :url => batch_csv_create_people_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
     %fieldset.span-15
 
-      - unless results.nil? || results.empty?
+      - if results.present?
         %legend CSV Upload
-        %p="#{results}"
-        
+        %p #{results}
+
       - else
         %legend Select a comma delimited file
-        %p="Select a CSV Comma delimited file for batch processing."
+        %p Select a CSV Comma delimited file for batch processing.
 
         %ul
           %li
