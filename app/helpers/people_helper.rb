@@ -17,4 +17,7 @@ module PeopleHelper
     "#{link_to(h(@person.display_name), person_path(@person))}: Personal Info".html_safe
   end
 
+  def show_header(person)
+    "#{link_to(h(@person.display_name), person_path(@person))} #{link_to(image_tag("feed-icon-14x14.png"), person_path(@person, :format => "rss"))}".html_safe
+  end
 end
