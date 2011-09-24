@@ -4,43 +4,14 @@
   = render :layout => 'layouts/admin_bar' do
     %li=link_to_unless_current "Show all Imports", user_imports_path
     %li=link_to_unless_current "Add an Import!", new_user_import_path
-.span-24
 
-  .span-22.prepend-1
+= render :layout => 'layouts/main_body', :locals => {:header => body_header(@person)} do
 
-    -#Check if we are adding Works directly to a Person
-    -if @person
-      %h2 Add Works for #{link_to @person.display_name, person_path(@person)}
-    -else
-      %h2 Add Works
-    .right
-      %h3 Select a type:
-      %ul
-        %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
-        %li -----
-        = render :partial => 'shared/work_type_list'
+  .right
+    %h3 Select a type:
+    %ul
+      %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
+      %li -----
+      = render :partial => 'shared/work_type_list'
 
-    = form_for @import, :as => :import, :url => user_imports_url(:user_id => current_user.id), :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
-      %fieldset.span-15
-        %legend Batch Import (RIS | Medline | Refworks XML)
-
-        %p Either upload a file containing the citations, or cut and paste the citations into the box below.
-
-        %ul
-          %li
-            = form.label :import_file, "Upload File:"
-            = form.file_field :import_file, :class=>'text'
-            - if @person
-              = hidden_field_tag :person_id, @person.id
-
-          %li
-            = #form.label :works, "Or, Paste Citations:"
-            = #form.text_area :works
-
-        %p.buttons
-          = submit_tag "Add Batch", :disable_with => "Importing Batch..."
-
-
-
-      -#Save person id in form, if adding Work to a Person
-      = hidden_field_tag :person_id, @person.id if @person
+  = render :partial => 'batch_import_form'

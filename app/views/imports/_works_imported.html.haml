@@ -1,0 +1,5 @@
+.left.prepend-1
+  - ct = @work_batch.size - err_ct
+  - ct = ct < 0 ? 0 : ct
+  %h3#works Works Imported (#{ct})
+  = render :partial => "works" if @works

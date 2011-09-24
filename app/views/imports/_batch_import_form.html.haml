@@ -1,0 +1,15 @@
+= form_for @import, :as => :import, :url => user_imports_url(:user_id => current_user.id), :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+  %fieldset.span-15
+    %legend Batch Import (RIS | Medline | Refworks XML)
+
+    %p Upload a file containing the citations
+
+    %ul
+      %li
+        = form.label :import_file, "Upload File:"
+        = form.file_field :import_file, :class=>'text'
+        - if @person
+          = hidden_field_tag :person_id, @person.id
+
+    %p.buttons
+      = submit_tag "Add Batch", :disable_with => "Importing Batch..."

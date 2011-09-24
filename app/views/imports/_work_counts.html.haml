@@ -1,0 +1,22 @@
+.left.span-6.append-1
+  / Works added
+  %table.import-review-table
+    %thead
+      %tr
+        %th Works
+        %th Count
+    %tbody
+      %tr
+        %td New works
+        - ct = (@work_batch.size - @dupe_count - err_ct)
+        %td= ct < 0 ? 0 : ct
+      %tr
+        %td Duplicate works
+        %td= @dupe_count
+      %tr
+        %td Errors
+        %td= err_ct
+    %tfoot
+      %tr
+        %td Total
+        %td#works_imported_total= @work_batch.size

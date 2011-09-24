@@ -22,4 +22,9 @@ module ImportsHelper
       end
     end
   end
+
+  def body_header(person)
+    ('Add Works' + (person ? " for #{link_to person.display_name, person_path(person)}" : '')).html_safe
+  end
+
 end

@@ -1,0 +1,16 @@
+.left.span-14.last
+  / Errors
+  %table.import-review-table
+    %thead
+      %tr
+        %th Errors
+    %tbody
+      - if !@errors.empty?
+        - @errors.each do |key, value|
+          %tr
+            %td
+              %strong "#{key.to_s.humanize}:#{value}"
+      - else
+        %tr
+          %td{:colspan => "2"}
+            %p No errors encountered during import.
