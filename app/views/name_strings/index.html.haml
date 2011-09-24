@@ -4,13 +4,10 @@
   = render :layout => 'layouts/admin_bar' do
     %li=link_to "Add a NameString", new_name_string_path
 
-.span-24
-  .span-22.prepend-1.column
-    %h2 NameStrings (#{@page})
+= render :layout => 'layouts/main_body', :locals => {:header => "NameStrings (#{@page})"} do
+  = render :partial => "shared/alpha_pagination"
 
-    = render :partial => "shared/alpha_pagination"
-
-    %ol#name_strings
-      -@current_objects.each do |name_string|
-        %li.name_string
-          =link_to "#{name_string.name}", name_string_path(name_string)
+  %ol#name_strings
+    -@current_objects.each do |name_string|
+      %li.name_string
+        =link_to "#{name_string.name}", name_string_path(name_string)

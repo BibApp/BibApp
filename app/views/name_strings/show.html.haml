@@ -5,25 +5,23 @@
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Edit this name string", edit_name_string_path(@name_string)}
 
-.span-24
+= render :layout => 'layouts/main_body_no_h2' do
+  %h2
+    Name:
+    %strong #{@name_string.name}
 
-  .span-22.prepend-1
-    %h2
-      Name:
-      %strong #{@name_string.name}
-
-    .span-23
-      - if @name_string.people.size > 0
-        %h4 I have published using this name:
-        %ol.people
-          -@name_string.people.each do |person|
-            %li.inline.no-padding-or-margin
-              .span-3
-                = link_to(image_tag(person.image_url, :class => 'person-photo', :size => "75x100", :alt => person.display_name, :title => person.display_name), person_path(person))
-                .person-info
-                  %strong #{person.works.size}
-                  %h7 #{link_to person.last_name, person_path(person)}
-      - else
-        %p
-          Nobody at #{$UNIVERSITY_SHORT_NAME} has claimed this name.
-          This might be somebody from another campus.
+  .span-23
+    - if @name_string.people.size > 0
+      %h4 I have published using this name:
+      %ol.people
+        -@name_string.people.each do |person|
+          %li.inline.no-padding-or-margin
+            .span-3
+              = link_to(person_image(person), person_path(person))
+              .person-info
+                %strong #{person.works.size}
+                %h7 #{link_to person.last_name, person_path(person)}
+    - else
+      %p
+        Nobody at #{$UNIVERSITY_SHORT_NAME} has claimed this name.
+        This might be somebody from another campus.
