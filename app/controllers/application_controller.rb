@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   clear_helpers
   helper PrototypeHelper
+  helper AutoCompleteMacrosHelper
   helper_method :current_user_session, :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
