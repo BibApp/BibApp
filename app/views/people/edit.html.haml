@@ -6,11 +6,7 @@
     %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
     %li= link_to "Add a new person", new_person_path
 
-.span-24
-  .span-22.prepend-1
+= render :layout => 'layouts/main_body', :locals => {:header => edit_header(@person)} do
+  = render "shared/local_nav", :object => "person", :state => "edit"
 
-    %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Personal Info
-
-    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
-
-    = render :partial => 'form'
+  = render 'form'
