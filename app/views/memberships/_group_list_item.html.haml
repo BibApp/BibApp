@@ -15,9 +15,6 @@
         = group_list_item.name
 
       - unless group_list_item.children.empty?
-        - if @query.blank?
-          %ul#children_of.children.list-style-none{:id => group_list_item.id, :style => "display: none;"}
-            = render :partial => 'group_list_item', :collection => group_list_item.children
-        - else
-          %ul#children_of.children.list-style-none{:id => group_list_item.id}
-            = render :partial => 'group_list_item', :collection => group_list_item.children
+        %ul#children_of.children.list-style-none{:id => group_list_item.id, :style => @query.if_blank("display: none;")}
+          = render :partial => 'group_list_item', :collection => group_list_item.children
+        
