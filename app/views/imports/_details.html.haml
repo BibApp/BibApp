@@ -1,21 +1,4 @@
-- err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
-%div
-  %h3 Batch report
-
-  - if @person
-    = render 'pen_names'
-
-  = render 'work_counts', :err_ct => err_ct
-
-  = render 'errors'
-
-  .clear
-    - if @person
-      = render 'matched'
-
-  %hr/
 - if @person
-  = render 'import_names'
-
-= render 'works_imported', :err_ct => err_ct
-
+  = render 'details_person'
+- else
+  = render 'details_generic'
