@@ -4,31 +4,6 @@
 
   = render "shared/local_nav", :object => "person", :state => "new"
 
-  = form_tag( {:action => :new}, {:method => :get} ) do
-    %p
-      Search campus directory (to pre-populate person information):
-    %p
-      = text_field_tag :q, params[:q]
-      = submit_tag "Search"
-      &nbsp; Ex: Smith, John OR Smith, J
-
-  - if @ldap_results
-    = js_data_div('ldap_results', @ldap_results)
-    %fieldset
-      %legend Search results
-      - if @ldap_results.length > 0
-        %div.ldap-results
-          %ul#ldap_query_results
-            - @ldap_results.each_with_index do |l, i|
-              - # I don't know why :collection doesn't work here
-              = render :partial => "ldap_result", :object => l, :locals => {:i => i}
-      - else
-        %p No results for #{params[:q]}
-
-  - if @fail
-    %fieldset
-      %legend Search results
-      %p.ldap-fail="Search failed: #{@fail_message}."
-
+  = render 'ldap_search'
 
   = render 'form'

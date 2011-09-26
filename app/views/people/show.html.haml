@@ -15,46 +15,28 @@
 .span-15.prepend-1
 
   #image.span-4
-    =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
-    / ### Hide email for inactive people ###
-    - if @person.active?
-      =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")
+    = render 'show_image'
 
   .span-10
-    - if @person.groups.empty?
-      &nbsp;
-    - else
-      %h3.heading Groups
-      = render 'shared/group_list'
+    = render 'show_groups'
+
     / ### Hide research focus for inactive people ###
   - if @person.active? and @person.research_focus.present? and @person.research_focus.strip.length > 0
     #research-focus.span-14
-      %h3.heading Research Focus
-      %p #{@person.research_focus}
+      = render 'show_research_focus'
 
 
   - if @works.size > 0
     #works.span-14
-      %h3.heading
-        = link_to "Works", person_works_path(@person)
-        &ndash; recent additions
-      %ol.works
-        - @works.first(3).each do |work|
-          = render "shared/work", :work => work
+      = render 'show_works'
 
 / ### Sidebar ###
 .span-7.last
   - if @facets[:people_data].size > 1
-    .span-7.right_box_no_border
-      = render "shared/coauthors"
+    = render :partial => "shared/coauthors", :layout => 'layouts/right_box_no_border'
 
-  .span-7.right_box_no_border
-    %h3 Types of Work
-    %div.text-center
-      %img.chart-image{:src => @chart_url}
+  = render :partial => 'show_work_types', :layout => 'layouts/right_box_no_border'
 
   = render "shared/keyword_cloud", :keywords => @keywords
 
-  / Publications
-  %div.span-7.right_box_no_border
-    = render "shared/publications", :count => 10
+  = render :partial => "shared/publications", :layout=> 'layouts/right_box_no_border', :locals => {:count => 10}
