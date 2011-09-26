@@ -2,17 +2,17 @@
 
 - if current_user_role?("editor", @group)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to "Add a Group", new_group_path
+    %li= link_to "Add a Group", new_group_path
     %li= link_to "Edit this group", edit_group_path
-    %li=link_to "Manage Roles", group_roles_path(@group)
+    %li= link_to "Manage Roles", group_roles_path(@group)
 
 / ### Main ###
 = render :layout => 'layouts/main_body', :locals => {:header => body_header(@group)} do
-  = render :partial => "shared/local_nav", :locals => {:object => "group"}
+  = render "shared/local_nav", :object => "group"
 
 .span-15.prepend-1
   / People
-  = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
+  = render "shared/people", :count => 15, :randomize => true
 
   .span-14
     / Description
@@ -23,11 +23,11 @@
 
     / Publications
     .span-6.append-2
-      = render :partial => "shared/publications", :locals => {:count => 10}
+      = render "shared/publications", :count => 10
 
     / Publishers
     .span-6.last
-      = render :partial => "shared/publishers", :locals => {:count => 10}
+      = render "shared/publishers", :count => 10
 
 
 .span-7.last
@@ -51,11 +51,11 @@
     .text-center
       %img{:src => "#{@chart_url}", :class => 'group-show-chart-image'}
 
-  = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
+  = render "shared/keyword_cloud", :keywords => @keywords
 
   .span-7.last.right_box_no_border
     %h3.heading
       =link_to "Recent Works", group_works_path(@group)
     %ol#works.span-7.works
       - @works.first(3).each do |work|
-        = render :partial => "shared/work", :locals => {:work => work}
+        = render "shared/work", :work => work
