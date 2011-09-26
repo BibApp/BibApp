@@ -1,5 +1,3 @@
-/ === Sessions === Saved ===
-/ Main
 = render :layout => '/layouts/main_body_no_h2' do
   - if @works.blank?
     %h2 Saved
@@ -21,6 +19,6 @@
 
     %ol.span-14.works.clear-both
       - @works.each do |work|
-        = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
+        = render "shared/work", :work => Index.work_to_solr_hash(work)
 
     .span-14 #{ will_paginate @works.paginate}
