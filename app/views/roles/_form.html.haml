@@ -3,15 +3,14 @@
 
 %h3 Users (#{@page})
 
-= render :partial => "shared/alpha_pagination"
+= render "shared/alpha_pagination"
 
 %ol.users
   -@current_objects.each do |user|
     %li.user
       #{user.email}
       - if user.has_explicit_role? @role_name.downcase, @authorizable
-        %strong
-          ="Already has #{@role_name} permissions"
+        %strong Already has #{@role_name} permissions
         =link_to " [remove]", roles_destroy_url(url_opts(user, @role_name, @authorizable))
       - else
         =link_to "Add as #{@role_name}", roles_create_url(url_opts(user, @role_name, @authorizable))
