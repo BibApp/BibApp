@@ -1,28 +1,25 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to "Add a Group", new_group_path
+    %li= link_to "Add a Group", new_group_path
     - if logged_in? && current_user.has_role?("admin", System)
-      %li=link_to "Show Hidden Groups", hidden_groups_path
+      %li= link_to "Show Hidden Groups", hidden_groups_path
 
 = render :layout => 'layouts/main_body_no_h2'  do
   %h2 Groups
 
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
 
   %table#groups
     %tr
-      %th.span-10="Group Name"
-      %th.span-10="Parent Group"
-      %th.span-2.last="Members"
+      %th.span-10 Group Name
+      %th.span-10 Parent Group
+      %th.span-2.last Members
     -@current_objects.each do |group|
       %tr{:class => cycle("even", "odd")}
         %td=link_to group.name, group
-        - if !group.parent.nil?
-          %td=link_to group.parent.name, group.parent
-        - else
-          %td
-        %td=group.memberships.length
+        %td= parent_link(group)
+        %td= group.memberships.length
 
   %br/
   %br/
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
