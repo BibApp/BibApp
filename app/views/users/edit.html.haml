@@ -1,9 +1,7 @@
-/ === Users === Edit ===
-/ Main
 = render :layout => 'layouts/admin_bar' do
-  %li=link_to_unless_current "Show all Imports", user_imports_path(@user)
+  %li= link_to_unless_current "Show all Imports", user_imports_path(@user)
   - if logged_in? and @current_user.has_any_role?("editor", Group)
-    %li=link_to_unless_current "Add an Import", new_user_import_path(@user)
+    %li= link_to_unless_current "Add an Import", new_user_import_path(@user)
 
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :user, :class => 'notice'
@@ -16,13 +14,12 @@
         %label Email:
         = form.text_field :email
       %p
-        %strong
-          Important:
+        %strong Important:
         When you submit this form, you will receive a message with
         a confirmation link at the new email address above.
         Your email address will not be changed until <em>after</em> you
         visit this confirmation link.
       %p
-        =link_to "Change Password", edit_user_password_path(@user)
+        = link_to "Change Password", edit_user_password_path(@user)
       %p.submit
         = submit_tag 'Update'

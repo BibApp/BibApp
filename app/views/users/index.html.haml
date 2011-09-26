@@ -1,6 +1,6 @@
 = render :layout => '/layouts/main_body', :locals => {:header => 'Users'} do
 
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
 
   %table#users.prepend-1
     %tr
@@ -8,13 +8,13 @@
       %th.span-8.last Roles
     -@current_objects.each do |user|
       %tr{:class => cycle("odd", "even")}
-        %td=link_to user.email, user_path(user)
+        %td= link_to user.email, user_path(user)
         %td
           %ul
             - user.roles.each do |role|
               - if displayable_role(role)
-                %li=role.description
+                %li= role.description
 
   %br/
   %br/
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
