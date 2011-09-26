@@ -17,7 +17,7 @@
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
               %option{:value => "#{opt}", :selected => (opt == @rows ? 'selected' : nil)}= opt.titleize
 
-          = render :partial => 'admin/dupes_hidden_tags'
+          = render 'admin/dupes_hidden_tags'
 
           = submit_tag 'Go'
 
@@ -27,13 +27,14 @@
           %strong Select All
 
           = submit_tag "Delete selected"
-          = render :partial => 'admin/dupes_hidden_tags'
+          = render 'admin/dupes_hidden_tags'
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
 
         %ol#work-list.span-17.clear-both.no-padding-or-margin
           - @works.each do |work|
-            = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => [:edit]}
+            = render "shared/work", :work => work, :allow_select => true, :show_status => true,
+              :show_dupes => true, :links_array => [:edit]
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
