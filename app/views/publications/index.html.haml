@@ -1,7 +1,4 @@
-/ === Publications === Index ===
-/ Main
 - include_stylesheet('common/sherpa')
-- @title = "Publications" # Specify text at end of HTML <title> tag
 
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
