@@ -1,9 +1,9 @@
 = render :layout => '/layouts/main_body', :locals => {:header => 'Forgot Password'} do
   %fieldset
-    %legend="Request New Password"
+    %legend Request New Password
     = form_for :password, :url => passwords_path do |form|
       %p
-        %label="Email"
+        %label Email
         %br/
         = form.text_field 'email'
       %p.submit
