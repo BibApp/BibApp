@@ -12,6 +12,6 @@
         %td #{link_to publication.issn_isbn, publication}
       %td #{link_to publication.name, publication}
       %td
-        = render :partial => 'shared/sherpa_icon', :locals => {:publisher => publication.publisher}
+        = render 'shared/sherpa_icon', :publisher => publication.publisher
         #{link_to publication.publisher.name, publisher_path(publication.publisher)}
       %td #{publication.works.length}

@@ -8,7 +8,7 @@
 = render :layout => 'layouts/main_body', :locals => {:header => 'Admin Publication Authorities'} do
   #authority_form
     %p To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.
-    = render :partial => "authority_form", :object => @pas, :locals => {:page => @page}
+    = render "authority_form", :authorities => @pas, :page => @page
 
   = render "shared/alpha_pagination"
 
