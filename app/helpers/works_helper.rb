@@ -62,5 +62,8 @@ module WorksHelper
     end
   end
 
+  def tag_filter(tag)
+    %Q(tags: "#{tag.name}")
+  end
 
 end
