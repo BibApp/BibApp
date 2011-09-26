@@ -10,7 +10,7 @@
 = render :layout => '/layouts/main_body',
   :locals => {:header => "#{person_link(@person)}: Group Memberships".html_safe} do
 
-  = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
+  = render "shared/local_nav", :object => "person", :state => "edit"
 
   = render :partial => 'body_leftbar', :layout => 'layouts/main_body_left'
 
