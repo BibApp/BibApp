@@ -1,5 +1,5 @@
 = render :layout => '/layouts/main_body', :locals => {:header => @title} do
   #results.span-22
-    = render :partial => "shared/facets"
+    = render "shared/facets"
     / Works
-    = render :partial => "dupes"
+    = render "dupes"

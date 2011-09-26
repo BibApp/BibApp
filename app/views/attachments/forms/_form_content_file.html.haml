@@ -1,13 +1,12 @@
 = form_for :attachment, :url => attachments_url, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div
-    %h4="Attaching to #{@asset.class.to_s.underscore.humanize}:"
-    -# %span.asset= render :partial => "works/apa/#{@asset.class.name.to_s.underscore}", :locals => { :c => @asset }
+    %h4 Attaching to #{@asset.class.to_s.underscore.humanize}:
     - ce = WorkExport.new
     %span.asset= ce.drive_csl("apa", @asset).html_safe
     %div
-      = render :partial => "shared/sherpa_status", :locals => {:publisher => @asset.publisher, :show_explanation => true}
+      = render "shared/sherpa_status", :publisher => @asset.publisher, :show_explanation => true
     %br/
-      
+
   %fieldset
     %legend="Content Files"
     #upload_files
@@ -17,7 +16,7 @@
       %br/
       = render :partial => 'upload_file', :locals => { :form => form }
 
-    -# save asset id as work_id  
+    -# save asset id as work_id
     = hidden_field_tag :work_id, @asset.id
 
     -# Save type of attachment
@@ -26,8 +25,8 @@
     -# Display deposit license from SWORD, if possible
     - if @license
       %p
-        = check_box_tag 'license_agree', 'yes' 
-        I agree to the terms of the 
+        = check_box_tag 'license_agree', 'yes'
+        I agree to the terms of the
         = link_to_function "Deposit License", "$('license').toggle();"
         for
         - if @repository_name
@@ -35,7 +34,7 @@
         - else
           my local repository
       #license_warning.warning{:style => "display: none;"}
-        You must agree to the license terms before you can upload files.  
+        You must agree to the license terms before you can upload files.
       #license.scrollarea.span-12{:style => "display: none;"}
         = @license
 
@@ -43,4 +42,3 @@
     = submit_tag "Upload file(s)", :disable_with => "Uploading files..."
 
 
-  

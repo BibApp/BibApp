@@ -3,7 +3,7 @@
 = render :layout => 'layouts/main_body',
   :locals => {:header => "Ready to Archive: #{@works.size} remain"} do
   - if @works.size > 0
-    = render :partial => "works"
+    = render "works"
   - else
     %p
       No works are marked "ready to archive"!
