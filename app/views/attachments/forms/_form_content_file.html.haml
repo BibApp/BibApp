@@ -1,8 +1,7 @@
 = form_for :attachment, :url => attachments_url, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div
     %h4 Attaching to #{@asset.class.to_s.underscore.humanize}:
-    - ce = WorkExport.new
-    %span.asset= ce.drive_csl("apa", @asset).html_safe
+    %span.asset= WorkExport.new.drive_csl("apa", @asset).html_safe
     %div
       = render "shared/sherpa_status", :publisher => @asset.publisher, :show_explanation => true
     %br/
