@@ -9,16 +9,7 @@
 
   = render "shared/alpha_pagination"
 
-  %table#groups
-    %tr
-      %th.span-10 Group Name
-      %th.span-10 Parent Group
-      %th.span-2.last Members
-    -@current_objects.each do |group|
-      %tr{:class => cycle("even", "odd")}
-        %td=link_to group.name, group
-        %td= parent_link(group)
-        %td= group.memberships.length
+  = render 'group_table', :groups => @current_objects
 
   %br/
   %br/

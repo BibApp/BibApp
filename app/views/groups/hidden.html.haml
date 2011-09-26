@@ -4,19 +4,7 @@
     - if @hidden_groups.empty?
       %p No hidden groups
 
-    %table#groups
-      %tr
-        %th.span-10 Group Name
-        %th.span-10 Parent Group
-        %th.span-2.last Members
-      -@hidden_groups.each do |group|
-        %tr{:class => cycle("even", "odd")}
-          %td=link_to group.name, group
-          - if !group.parent.nil?
-            %td=link_to group.parent.name, group.parent
-          - else
-            %td
-          %td=group.memberships.length
+    = render 'group_table', :groups => @hidden_groups
 
     %br/
     %br/
