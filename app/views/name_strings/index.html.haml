@@ -1,13 +1,11 @@
-/ === NameStrings === Index ===
-/ Main
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to "Add a NameString", new_name_string_path
+    %li= link_to "Add a NameString", new_name_string_path
 
 = render :layout => 'layouts/main_body', :locals => {:header => "NameStrings (#{@page})"} do
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
 
   %ol#name_strings
     -@current_objects.each do |name_string|
       %li.name_string
-        =link_to "#{name_string.name}", name_string_path(name_string)
+        = link_to name_string.name, name_string_path(name_string)
