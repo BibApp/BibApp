@@ -4,8 +4,8 @@
 - include_javascript('specific/imports/show')
 
 = render :layout => 'layouts/admin_bar' do
-  %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
-  %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
+  %li= link_to_unless_current "Show my imports", user_imports_path(current_user)
+  %li= link_to_unless_current "Add an import", new_user_import_path(current_user)
 
 = render :layout => '/layouts/main_body_no_h2' do
 
@@ -16,13 +16,9 @@
   / Right - Admin div
   .import-admin-div
     - case @import.state
-      - when "rejected"
-        =render 'rejected'
-      - when "processing"
-        = render 'processing'
-      - when "accepted"
-        = render 'accepted'
-      - else #includes 'reviewable' case
+      - when 'rejected', 'processing', 'accepted'
+        = render @import.state
+      else
         = render 'default'
 
   -unless @import.state == "processing"

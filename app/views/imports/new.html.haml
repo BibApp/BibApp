@@ -7,11 +7,5 @@
 
 = render :layout => 'layouts/main_body', :locals => {:header => body_header(@person)} do
 
-  .right
-    %h3 Select a type:
-    %ul
-      %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
-      %li -----
-      = render :partial => 'shared/work_type_list'
-
-  = render :partial => 'batch_import_form'
+  = render 'work_type_list'
+  = render 'batch_import_form'
