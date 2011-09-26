@@ -8,13 +8,13 @@
     %br/
 
   %fieldset
-    %legend="Content Files"
+    %legend Content Files
     #upload_files
-      %label="Upload File(s):"
+      %label Upload File(s):
       -# Allow uploading multiple files
       = link_to_remote "[Add More Files]", :url => add_upload_box_attachments_url(:form => form)
       %br/
-      = render :partial => 'upload_file', :locals => { :form => form }
+      = render 'upload_file', :form => form
 
     -# save asset id as work_id
     = hidden_field_tag :work_id, @asset.id
@@ -29,10 +29,8 @@
         I agree to the terms of the
         = link_to_function "Deposit License", "$('license').toggle();"
         for
-        - if @repository_name
-          =@repository_name
-        - else
-          my local repository
+        = @repository_name || 'my local repository'
+
       #license_warning.warning{:style => "display: none;"}
         You must agree to the license terms before you can upload files.
       #license.scrollarea.span-12{:style => "display: none;"}
