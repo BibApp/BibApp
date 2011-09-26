@@ -3,7 +3,7 @@
 %li{ :id => "group_#{group.id}"}
   %strong
     %font{:size => '3'}
-      =group.name
+      = group.name
     %font{:size => '1'}
       = link_to "Leave group", membership_url(membership), :confirm => "Are you sure you want to leave this group?", :method => :delete
 
@@ -12,13 +12,10 @@
        :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put} do |form|
       Title
       = form.text_field :title
-
-      /%br/
-
       Year Joined:
       = form.date_select 'start_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
       Year Left:
       = form.date_select 'end_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
       %br/
       = submit_tag :save
-=sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)
+= sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)
