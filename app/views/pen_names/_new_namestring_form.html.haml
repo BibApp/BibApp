@@ -1,0 +1,6 @@
+= remote_form_for :name_string, NameString.new, :url => create_name_string_pen_names_url, :method => :post do |form|
+  Add a name string (ex. "Smith, J")
+  %br/
+  = form.text_field :name, :size => 20
+  = hidden_field_tag :person_id, @person.id
+  = submit_tag "Add"

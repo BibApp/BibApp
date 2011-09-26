@@ -1,46 +1,34 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => '/layouts/admin_bar' do
-    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
     %li= link_to "Add a new person", new_person_path
 
-= render :layout => '/layouts/main_body', :locals => {:header => "#{link_to(h(@person.display_name), person_path(@person))}: Pen Names".html_safe} do
-  = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
+= render :layout => '/layouts/main_body', :locals => {:header => body_header(@person)} do
+  = render "shared/local_nav", :object => "person", :state => "edit"
 
   .span-4.prepend-1
     #picture.span-3
-    %p= render :partial => "shared/person_image", :locals => {:o => @person}
+    %p= render "shared/person_image", :o => @person
 
   %fieldset
     %legend Pen Names
-    %p Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it.
+    %p
+      Pen names are used to match people with their publications. Your
+      %strong Current pen names
+      should include every variation of your name that may occur in a citation record.
+      To remove a pen name, simply uncheck the box next to it.
     %h3 Current pen names
-    %ol#current
-      = render :partial => "name_string", :collection => @person.name_strings(true), :locals => { :selected => true }
+    = render 'current_namestrings'
 
-    = remote_form_for :name_string, NameString.new, :url => create_name_string_pen_names_url, :method => :post do |form|
-      Add a name string (ex. "Smith, J")
-      %br/
-      = form.text_field :name, :size => 20
-      = hidden_field_tag :person_id, @person.id
-      = submit_tag "Add"
+    = render 'new_namestring_form'
 
     %br/
     %hr/
+
     %h3 Suggested pen names
     %p Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>.
-    %ol#inactive
-      - if (@suggestions - @person.name_strings).size < 1
-        There are no immediate suggestions for:
-        %strong= "#{@person.last_name}"
-      - else
-        = render :partial => "name_string", :collection => @suggestions - @person.name_strings, :locals => { :person => @person, :selected => false }
+    = render 'suggested_namestrings'
 
+    = render 'search_for_namestrings'
 
-    = form_remote_tag :url => live_search_for_name_strings_pen_names_url do
-      Search other last names to add suggestions (ex. "Smith")
-      %br/
-      = text_field_tag(:q)
-      = hidden_field_tag(:person_id, @person.id)
-      = submit_tag 'Search'
-
-    =sortable_element 'current', :url => sort_pen_names_url(:person_id => @person.id)
+    = sortable_element 'current', :url => sort_pen_names_url(:person_id => @person.id)
