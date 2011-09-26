@@ -9,6 +9,6 @@
   %div.span-17.last
     %h2
       #{link_to(h(@person.display_name), person_path(@person)).html_safe}
-    = render :partial => "shared/local_nav", :locals => {:object => "person"}
+    = render "shared/local_nav", :object => "person"
 
-    = render :partial => 'shared/group_list'
+    = render 'shared/group_list'
