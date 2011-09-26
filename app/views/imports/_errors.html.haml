@@ -1,5 +1,4 @@
 .left.span-14.last
-  / Errors
   %table.import-review-table
     %thead
       %tr
@@ -9,7 +8,7 @@
         - @errors.each do |key, value|
           %tr
             %td
-              %strong "#{key.to_s.humanize}:#{value}"
+              %strong #{key.to_s.humanize}:#{value}
       - else
         %tr
           %td{:colspan => "2"}
