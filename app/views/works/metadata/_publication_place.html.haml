@@ -1,0 +1,10 @@
+- unless @work.publication_place.blank?
+  - label = "Publication Place"
+  - case @work.class.to_s
+  - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
+    - label = "Location"
+  %tr
+    %td.label
+      #{label}:
+    %td
+      = @work.publication_place

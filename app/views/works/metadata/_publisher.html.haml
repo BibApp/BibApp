@@ -1,0 +1,21 @@
+- unless @work.publisher.blank?
+  - label = "Publisher"
+  - case @work.class.to_s
+  - when 'Artwork'
+    - label = "Institution or Collection Name"
+  - when 'DissertationThesis'
+    - label = "Degree Granting Institution"
+  - when 'Exhibition', 'Performance'
+    - label = "Venue"
+  - when 'RecordingSound'
+    - label = "Recording Label"
+  - when 'RecordingMovingImage'
+    - label = "Production Company"
+  - when 'Grant'
+    - label = "Institution"
+  %tr
+    %td.label
+      = "#{label}:"
+    %td
+      = link_to @work.publisher.name, publisher_path(@work.publisher.id)
+      = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @work.publisher}

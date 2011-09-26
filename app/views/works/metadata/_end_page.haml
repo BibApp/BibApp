@@ -1,0 +1,10 @@
+- unless @work.end_page.blank?
+  - label = "End Page"
+  - case @work.class.to_s
+  - when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
+    - label = "Total Pages"
+  %tr
+    %td.label
+      #{label}:
+    %td
+      = @work.end_page

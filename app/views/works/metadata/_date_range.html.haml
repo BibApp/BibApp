@@ -1,0 +1,20 @@
+- unless @work.date_range.blank?
+  - label = "Date Range"
+  - case @work.class.to_s
+  - when 'Patent'
+    - label = "Filing Date"
+  - when 'WebPage'
+    - label = "Date of Last Visit"
+  - when 'Exhibition'
+    - label = "Exhibition Dates"
+  - when 'Performance'
+    - label = "Performance Date"
+  - when 'JournalWhole'
+    - label = "Dates"
+  - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
+    - label = "Conference Dates"
+  %tr
+    %td.label
+      = "#{label}:"
+    %td
+      = @work.date_range

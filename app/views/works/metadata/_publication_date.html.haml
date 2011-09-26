@@ -1,0 +1,18 @@
+- unless @work.publication_date.blank?
+  - label = "Date Published"
+  - case @work.class.to_s
+  - when 'ConferencePoster'
+    - label = "Date Presented"
+  - when 'PresentationLecture'
+    - label = "Date Given"
+  - when 'Artwork'
+    - label = "Date of Composition"
+  - when 'DissertationThesis'
+    - label = "Degree Date"
+  - when 'Patent', 'RecordingMovingImage'
+    - label = "Date Issued"
+  %tr
+    %td.label
+      #{label}:
+    %td
+      = @work.publication_date

@@ -1,0 +1,8 @@
+- unless @work.issue.blank?
+  %tr
+    - if @work.class == Report
+      %td.label Series Number
+    - else
+      %td.label Issue
+    %td
+      = @work.issue

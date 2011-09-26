@@ -1,0 +1,10 @@
+- unless @work.location.nil? or @work.location.blank?
+  - if @work.class.to_s == "PresentationLecture"
+    - label = "Location Given"
+  - else
+    - label = "Conference Location"
+  %tr
+    %td.label
+      = "#{label}:"
+    %td
+      = @work.location

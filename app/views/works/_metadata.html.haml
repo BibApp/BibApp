@@ -11,8 +11,7 @@
 
   - unless creators.empty?
     %tr
-      %td.label
-        = "#{creator_role}(s):"
+      %td.label #{creator_role}(s):
       %td
         = creators.collect { |c| (link_to h(c[:ns].name.gsub(",", ", ")), name_string_path(c[:ns]))}.join(', ').html_safe
 
@@ -85,204 +84,23 @@
       %td
         = @work.instrumentation
 
-  - unless @work.publication.nil? or @work.publication.name.blank?
-    - label = "Publication Title"
-    - case @work.class.to_s
-    - when 'BookSection'
-      - label = "Book Title"
-    - when 'JournalArticle', 'BookReview'
-      - label = "Journal Title"
-    - when 'ConferencePaper', 'ConferencePoster'
-      - label = "Conference Title"
-    - when 'PresentationLecture'
-      - label = "Title of Conference or Occasion"
-    - when 'Performance', 'RecordingSound', 'RecordingMovingImage'
-      - label = "Title of Larger Work"
-    - when 'Report'
-      - label = "Series Title"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = link_to @work.publication.name, publication_path(@work.publication.id)
+  = render 'works/metadata/publication'
+  = render 'works/metadata/volume'
+  = render 'works/metadata/issue'
+  = render 'works/metadata/date_range'
+  = render 'works/metadata/location'
+  = render 'works/metadata/issn_isbn'
+  = render 'works/metadata/publisher'
+  = render 'works/metadata/degree_level'
+  = render 'works/metadata/discipline'
+  = render 'works/metadata/publication_place'
+  = render 'works/metadata/publication_date'
+  = render 'works/metadata/start_page'
+  = render 'works/metadata/end_page'
+  = render 'works/metadata/language'
+  = render 'works/metadata/copyright'
+  = render 'works/metadata/sponsor'
+  = render 'works/metadata/links'
+  = render 'works/metadata/identifier'
+  = render 'works/metadata/notes'
 
-  - unless @work.volume.blank?
-    %tr
-      %td.label Volume:
-      %td
-        = @work.volume
-
-  - unless @work.issue.blank?
-    %tr
-      - if @work.class == Report
-        %td.label Series Number
-      - else
-        %td.label Issue
-      %td
-        = @work.issue
-
-  - unless @work.date_range.blank?
-    - label = "Date Range"
-    - case @work.class.to_s
-    - when 'Patent'
-      - label = "Filing Date"
-    - when 'WebPage'
-      - label = "Date of Last Visit"
-    - when 'Exhibition'
-      - label = "Exhibition Dates"
-    - when 'Performance'
-      - label = "Performance Date"
-    - when 'JournalWhole'
-      - label = "Dates"
-    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
-      - label = "Conference Dates"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = @work.date_range
-
-  - unless @work.location.nil? or @work.location.blank?
-    - if @work.class.to_s == "PresentationLecture"
-      - label = "Location Given"
-    - else
-      - label = "Conference Location"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = @work.location
-
-
-  - unless @work.publication.nil? or @work.publication.issn_isbn.blank?
-    - label = "ISBN"
-    - case @work.class.to_s
-    - when 'JournalArticle', 'JournalWhole', 'BookReview'
-      - label = "ISSN"
-    - when 'RecordingSound', 'RecordingMovingImage'
-      - label = "ISRC"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = @work.publication.issn_isbn
-
-  - unless @work.publisher.blank?
-    - label = "Publisher"
-    - case @work.class.to_s
-    - when 'Artwork'
-      - label = "Institution or Collection Name"
-    - when 'DissertationThesis'
-      - label = "Degree Granting Institution"
-    - when 'Exhibition', 'Performance'
-      - label = "Venue"
-    - when 'RecordingSound'
-      - label = "Recording Label"
-    - when 'RecordingMovingImage'
-      - label = "Production Company"
-    - when 'Grant'
-      - label = "Institution"
-    %tr
-      %td.label
-        = "#{label}:"
-      %td
-        = link_to @work.publisher.name, publisher_path(@work.publisher.id)
-        = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @work.publisher}
-
-  - unless @work.degree_level.blank?
-    %tr
-      %td.label Degree:
-      %td
-        = @work.degree_level
-
-  - unless @work.discipline.blank?
-    %tr
-      %td.label Discipline:
-      %td
-        = @work.discipline
-
-  - unless @work.publication_place.blank?
-    - label = "Publication Place"
-    - case @work.class.to_s
-    - when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
-      - label = "Location"
-    %tr
-      %td.label
-        #{label}:
-      %td
-        = @work.publication_place
-
-  - unless @work.publication_date.blank?
-    - label = "Date Published"
-    - case @work.class.to_s
-    - when 'ConferencePoster'
-      - label = "Date Presented"
-    - when 'PresentationLecture'
-      - label = "Date Given"
-    - when 'Artwork'
-      - label = "Date of Composition"
-    - when 'DissertationThesis'
-      - label = "Degree Date"
-    - when 'Patent', 'RecordingMovingImage'
-      - label = "Date Issued"
-    %tr
-      %td.label
-        #{label}:
-      %td
-        = @work.publication_date
-
-  - unless @work.start_page.blank?
-    %tr
-      %td.label Start Page:
-      %td
-        = @work.start_page
-
-  - unless @work.end_page.blank?
-    - label = "End Page"
-    - case @work.class.to_s
-    - when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
-      - label = "Total Pages"
-    %tr
-      %td.label
-        #{label}:
-      %td
-        = @work.end_page
-
-  - unless @work.language.blank?
-    %tr
-      %td.label Language:
-      %td
-        = @work.language
-
-  - unless @work.copyright_holder.blank?
-    %tr
-      %td.label Copyright Statement:
-      %td
-        = @work.copyright_holder
-
-  - unless @work.sponsor.blank?
-    %tr
-      %td.label Sponsor:
-      %td
-        = @work.sponsor
-
-  - unless @work.links.blank?
-    %tr
-      %td.label DOI/URL:
-      %td
-        -#to keep long, unbroken URLS from expanding the table
-        .span-11.work-link
-          - split_potential_links(@work).each do |link|
-            %p #{link_potential_link(link)}
-
-  - unless @work.identifier.blank?
-    %tr
-      %td.label Identifier:
-      %td
-        = @work.identifier
-
-  - unless @work.notes.blank?
-    %tr
-      %td.label Notes:
-      %td
-        = @work.notes
