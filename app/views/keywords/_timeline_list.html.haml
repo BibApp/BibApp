@@ -4,10 +4,4 @@
       %li No data
     -else
       %li{:class=>"tag#{t.bin}"}
-        - filter = Array.new
-        - filter << "keyword_facet:" + '"' + t.name + '"'
-        - filter << "year_facet:" + '"' + t.year.to_s + '"'
-        - unless @current_object.nil?
-          - filter << "#{@current_object.class.to_s.downcase}_facet:" + '"' + @current_object.name + '"'
-        = link_to h(t.name), search_path(:fq => filter)
-      
+        = link_to h(t.name), search_path(:fq => timeline_list_filter(t, @current_object))

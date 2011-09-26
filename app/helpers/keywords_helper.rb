@@ -15,4 +15,14 @@ module KeywordsHelper
     link_to "#{object.name}", url_for(object) + ' - Timeline'
   end
 
+  def timeline_list_filter(tag, object)
+    Array.new.tap do |filter|
+      filter << %Q(keyword_facet: "#{tag.name}")
+      filter << %Q(year_facet: "#{t.year}")
+      if object
+        filter << %Q(#{object.class.to_s.downcase}_facet: "#{object.name}")
+      end
+    end
+  end
+
 end
