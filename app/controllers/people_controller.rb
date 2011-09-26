@@ -117,6 +117,10 @@ class PeopleController < ApplicationController
       #flash[:notice] = "#{person.display_name} was successfully deleted."
     end
 
+    before :edit do
+      @title = "#{@person.display_name}: Personal Info"
+    end
+
   end
 
   def create
