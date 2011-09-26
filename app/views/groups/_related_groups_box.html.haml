@@ -1,13 +1,12 @@
-.span-7.right_box_no_border
-  - unless @group.parent.nil? or @group.parent.hide?
-    %h3.heading Belongs to
-    %ul.parent-group
-      %li= link_to @group.parent.name, group_path(@group.parent)
-  - unless @group.children.empty?
-    %h3.heading Sub-Groups
-    %ul.sub-groups
-      -@group.children.each do |g|
-        - unless g.hide?
-          %li
-            =link_to g.name, group_path(g)
-            ="(#{g.works.count})"
+- unless @group.parent.nil? or @group.parent.hide?
+  %h3.heading Belongs to
+  %ul.parent-group
+    %li= link_to @group.parent.name, group_path(@group.parent)
+- unless @group.children.empty?
+  %h3.heading Sub-Groups
+  %ul.sub-groups
+    -@group.children.each do |g|
+      - unless g.hide?
+        %li
+          =link_to g.name, group_path(g)
+          ="(#{g.works.count})"

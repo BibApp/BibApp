@@ -1,6 +1,5 @@
-.span-7.last.right_box_no_border
-  %h3.heading
-    =link_to "Recent Works", group_works_path(@group)
-  %ol#works.span-7.works
-    - @works.first(3).each do |work|
-      = render "shared/work", :work => work
+%h3.heading
+  =link_to "Recent Works", group_works_path(@group)
+%ol#works.span-7.works
+  - @works.first(3).each do |work|
+    = render "shared/work", :work => work

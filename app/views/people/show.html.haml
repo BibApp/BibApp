@@ -34,9 +34,6 @@
 .span-7.last
   - if @facets[:people_data].size > 1
     = render :partial => "shared/coauthors", :layout => 'layouts/right_box_no_border'
-
   = render :partial => 'show_work_types', :layout => 'layouts/right_box_no_border'
-
-  = render "shared/keyword_cloud", :keywords => @keywords
-
+  = render :partial => "shared/keyword_cloud", :layout => 'layouts/right_box_no_border', :locals => {:keywords => @keywords, :id => 'tagcloud'}
   = render :partial => "shared/publications", :layout=> 'layouts/right_box_no_border', :locals => {:count => 10}

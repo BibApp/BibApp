@@ -26,7 +26,7 @@
 
 
 .span-7.last
-  = render 'related_groups_box'
-  = render 'work_types_box'
-  = render "shared/keyword_cloud", :keywords => @keywords
-  = render 'recent_works_box'
+  = render :partial => 'related_groups_box', :layout => 'layouts/right_box_no_border'
+  = render :partial => 'work_types_box', :layout => 'layouts/right_box_no_border'
+  = render :partial => "shared/keyword_cloud", :layout => 'layouts/right_box_no_border', :locals => {:keywords => @keywords, :id => 'tagcloud'}
+  = render :partial => 'recent_works_box', :layout => 'layouts/right_box_no_border'
