@@ -1,6 +1,6 @@
 = form_tag "#", :method => :get, :name => "contributorships_form_show_rows" do
   %label Show:
-  = render :partial => 'shared/row_select'
+  = render 'shared/row_select'
   = hidden_field_tag "person_id", @person.id
   = hidden_field_tag "status", @status
   -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)

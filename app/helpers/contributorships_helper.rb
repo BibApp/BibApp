@@ -9,4 +9,7 @@ module ContributorshipsHelper
                    contributorships_path(:person_id => person.id, :status => link_status, :page => 1))
   end
 
+  def romeo_color(row)
+    row.color.present? ? row.color.downcase : 'unknown'
+  end
 end
