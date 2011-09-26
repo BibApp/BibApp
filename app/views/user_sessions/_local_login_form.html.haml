@@ -1,0 +1,21 @@
+%fieldset
+  %legend Login using local (#{$APPLICATION_NAME}) credentials
+  = form_for @user_session, :url => user_session_url(:return_to => params[:return_to]) do |f|
+    %p
+      %label Email
+      %br/
+      = f.text_field 'email'
+    %p
+      %label Password
+      %br/
+      = f.password_field 'password'
+    %p
+      = f.check_box 'remember_me'
+      %label Remember Me
+      (requires browser cookies be enabled)
+    %p
+      =link_to "Forgot Password", new_password_path
+      |
+      =link_to "Sign Up", signup_path
+    %p.submit
+      = submit_tag 'Log in'
