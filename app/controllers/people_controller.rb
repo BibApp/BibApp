@@ -221,16 +221,6 @@ class PeopleController < ApplicationController
 
   end
 
-  def load_keyword_cloud
-    #get keywords for the tag cloud
-    @person = Person.find(params[:person_id])
-    @keywords = @person.keywords(10)
-
-    render :update do |page|
-      page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
-    end
-  end
-
   def batch_csv_show
     permit "admin"
   end
