@@ -49,4 +49,18 @@ module WorksHelper
     "http://dx.doi.org/#{CGI.escape(link)}"
   end
 
+  def work_class(work)
+    work.class.name.to_s
+  end
+
+  def normalized_work_class(work)
+    type = work_class(work)
+    if ['.haml', ''].detect {|ext| File.exist?("#{Rails.root}/app/views/works/apa/_#{type.underscore}.html#{ext}")}
+      type
+    else
+      'generic'
+    end
+  end
+
+
 end
