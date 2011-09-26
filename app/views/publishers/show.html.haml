@@ -1,5 +1,3 @@
-/ === Publishers === Show ===
-/ Main
 - include_stylesheet('specific/publishers/show')
 - if current_user_any_role?("editor", Group) and @export.blank?
   = render :layout => 'layouts/admin_bar' do
@@ -13,15 +11,11 @@
   - else
     %h2.span-18.left #{ @publisher.name}
     %span.span-4.right
-      = render :partial => 'shared/sherpa_status', :locals => {:publisher => @publisher, :show_explanation => false}
+      = render 'shared/sherpa_status', :publisher => @publisher, :show_explanation => false
 
     %div.clear-both
-    / People
-    = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
-
-    / Groups
-    = render :partial => "shared/groups", :locals => {:count => 10}
-
+    = render "shared/people", :count => 10, :randomize => false
+    = render "shared/groups", :count => 10
     = render 'shared/pub_common/search_within_div', :submit_url => publisher_path
 
     / Authority
