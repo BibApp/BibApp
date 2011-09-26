@@ -13,7 +13,8 @@
           %strong=" #{@query}"
 
       -if @spelling_suggestions.present? and !@q.total_hits == 0
-        = render 'spelling_suggestions'
+        %p.warning.span-22
+          = render 'spelling_suggestions'
 
       -if @q.total_hits == 0
         = render 'no_hits'
