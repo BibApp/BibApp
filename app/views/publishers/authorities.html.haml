@@ -6,27 +6,16 @@
 
 = render :layout => 'layouts/main_body', :locals => {:header => 'Admin Publisher Authoritites'} do
   #authority_form
-    %p To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.
+    %p
+      To set publisher authorities, add publication records to the box below,
+      select one record as the authority, and click the <em>Set Authority</em> button.
     = render "authority_form", :authorities => @pas, :page => @page
 
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
 
-  %table#publishers
-    %thead
-      %tr
-        %th Select
-        %th Title
-        %th Source
-        %th Publications
-    %tbody
-      -@current_objects.each do |publisher|
-        %tr#publisher.publisher{:id => publisher.id, :class => cycle("odd", "even")}
-          %td #{link_to 'add', add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)}
-          %td #{link_to "#{publisher.name}", publisher_path(publisher)}
-          %td=publisher.publisher_source.name if publisher.publisher_source
-          %td #{publisher.publications.length}
+  = render :partial => 'authorities_table'
 
   %br/
   %br/
-  = render :partial => "shared/alpha_pagination"
+  = render "shared/alpha_pagination"
 
