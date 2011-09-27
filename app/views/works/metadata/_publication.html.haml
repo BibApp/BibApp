@@ -1,20 +1,5 @@
 - unless @work.publication.nil? or @work.publication.name.blank?
-  - label = "Publication Title"
-  - case @work.class.to_s
-  - when 'BookSection'
-    - label = "Book Title"
-  - when 'JournalArticle', 'BookReview'
-    - label = "Journal Title"
-  - when 'ConferencePaper', 'ConferencePoster'
-    - label = "Conference Title"
-  - when 'PresentationLecture'
-    - label = "Title of Conference or Occasion"
-  - when 'Performance', 'RecordingSound', 'RecordingMovingImage'
-    - label = "Title of Larger Work"
-  - when 'Report'
-    - label = "Series Title"
   %tr
-    %td.label
-      = "#{label}:"
+    %td.label #{publication_label(@work)}:
     %td
       = link_to @work.publication.name, publication_path(@work.publication.id)

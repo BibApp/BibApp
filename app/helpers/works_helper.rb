@@ -148,4 +148,42 @@ module WorksHelper
         'ISBN'
     end
   end
+
+  def publication_label(work)
+    case work.class.to_s
+      when 'BookSection'
+        "Book Title"
+      when 'JournalArticle', 'BookReview'
+        "Journal Title"
+      when 'ConferencePaper', 'ConferencePoster'
+        "Conference Title"
+      when 'PresentationLecture'
+        "Title of Conference or Occasion"
+      when 'Performance', 'RecordingSound', 'RecordingMovingImage'
+        "Title of Larger Work"
+      when 'Report'
+        "Series Title"
+      else
+        'Publication Title'
+    end
+  end
+
+  def publisher_label(work)
+    case work.class.to_s
+      when 'Artwork'
+        "Institution or Collection Name"
+      when 'DissertationThesis'
+        "Degree Granting Institution"
+      when 'Exhibition', 'Performance'
+        "Venue"
+      when 'RecordingSound'
+        "Recording Label"
+      when 'RecordingMovingImage'
+        "Production Company"
+      when 'Grant'
+        "Institution"
+      else
+        'Publisher'
+    end
+  end
 end
