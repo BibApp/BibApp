@@ -5,8 +5,7 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 - if @facets[:people_data].size > 1
-  %h3.heading
-    ="Co-authors at #{$UNIVERSITY_SHORT_NAME}"
+  %h3.heading Co-authors at #{$UNIVERSITY_SHORT_NAME}
   - if @facets[:people_data].size <= 7
     %ol#coauthors.span-6.append-1
       -@facets[:people_data].each do |p|
