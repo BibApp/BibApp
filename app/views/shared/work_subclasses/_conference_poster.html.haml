@@ -1,16 +1,13 @@
 %p.metadata
-  - #Authors
   = link_to_authors(work)
 
   - #Conference
   %br/
   = work['title_secondary']
 
-  - #Publisher
   %br/
   = link_to_work_publisher(work)
 
-  - #Year
-  -if work['year'] != nil
+  -if work['year']
     ="(#{work['year']})"
 

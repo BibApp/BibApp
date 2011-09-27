@@ -1,10 +1,8 @@
-%p.metadata 
-  - #Authors
+%p.metadata
   = link_to_authors(work)
 
-  - #Publisher Name
   %br/
   = link_to_work_publisher(work)
 
-  -if work['year'] != nil
-    ="(#{work['year']})"  
+  -if work['year']
+    ="(#{work['year']})"
