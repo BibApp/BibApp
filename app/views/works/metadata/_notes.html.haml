@@ -1,5 +1,1 @@
-- unless @work.notes.blank?
-  %tr
-    %td.label Notes:
-    %td
-      = @work.notes
+= render 'works/metadata/generic_field', :field => :notes

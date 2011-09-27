@@ -1,5 +1,1 @@
-- unless @work.instrumentation.blank?
-  %tr
-    %td.label Instrumentation:
-    %td
-      = @work.instrumentation
+= render 'works/metadata/generic_field', :field => :instrumentation

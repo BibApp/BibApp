@@ -1,5 +1,1 @@
-- unless @work.language.blank?
-  %tr
-    %td.label Language:
-    %td
-      = @work.language
+= render 'works/metadata/generic_field', :field => :language

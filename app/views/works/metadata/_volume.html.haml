@@ -1,5 +1,1 @@
-- unless @work.volume.blank?
-  %tr
-    %td.label Volume:
-    %td
-      = @work.volume
+= render 'works/metadata/generic_field', :field => :volume

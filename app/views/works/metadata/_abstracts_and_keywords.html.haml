@@ -1,9 +1,5 @@
 - if $DISPLAY_ABSTRACTS_AND_KEYWORDS
-  - unless @work.abstract.blank?
-    %tr
-      %td.label Abstract:
-      %td
-        = @work.abstract
+  = render 'works/metadata/generic_field', :field => :abstract
   - unless @work.keywords.blank?
     %tr
       %td.label Keywords:

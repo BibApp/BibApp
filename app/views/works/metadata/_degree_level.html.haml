@@ -1,5 +1,1 @@
-- unless @work.degree_level.blank?
-  %tr
-    %td.label Degree:
-    %td
-      = @work.degree_level
+= render 'works/metadata/generic_field', :field => :degree_level, :label => 'Degree'

@@ -1,5 +1,1 @@
-- unless @work.sponsor.blank?
-  %tr
-    %td.label Sponsor:
-    %td
-      = @work.sponsor
+= render 'works/metadata/generic_field', :field => :sponsor

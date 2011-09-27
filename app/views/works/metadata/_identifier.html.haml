@@ -1,5 +1,1 @@
-- unless @work.identifier.blank?
-  %tr
-    %td.label Identifier:
-    %td
-      = @work.identifier
+= render 'works/metadata/generic_field', :field => :identifier

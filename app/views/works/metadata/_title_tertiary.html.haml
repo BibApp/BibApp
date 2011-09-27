@@ -1,5 +1,1 @@
-- unless @work.title_tertiary.blank?
-  %tr
-    %td.label Title Series:
-    %td
-      = @work.title_tertiary
+= render 'works/metadata/generic_field', :field => :title_tertiary, :label => 'Title Series'

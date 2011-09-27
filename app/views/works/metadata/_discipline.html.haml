@@ -1,5 +1,1 @@
-- unless @work.discipline.blank?
-  %tr
-    %td.label Discipline:
-    %td
-      = @work.discipline
+= render 'works/metadata/generic_field', :field => :discipline

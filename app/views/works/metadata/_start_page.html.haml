@@ -1,5 +1,1 @@
-- unless @work.start_page.blank?
-  %tr
-    %td.label Start Page:
-    %td
-      = @work.start_page
+= render 'works/metadata/generic_field', :field => :start_page

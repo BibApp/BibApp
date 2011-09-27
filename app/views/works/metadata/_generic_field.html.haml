@@ -1,0 +1,6 @@
+-# must pass field parameter. May pass label parameter, otherwise computed from field
+- label ||= field.to_s.titlecase
+- if @work.send(field).present?
+  %tr
+    %td.label #{label}:
+    %td #{@work.send(field)}

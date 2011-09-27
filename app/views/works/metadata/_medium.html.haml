@@ -1,5 +1,1 @@
-- unless @work.medium.blank?
-  %tr
-    %td.label Medium:
-    %td
-      = @work.medium
+= render 'works/metadata/generic_field', :field => :medium
