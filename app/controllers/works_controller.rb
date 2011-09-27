@@ -87,6 +87,7 @@ class WorksController < ApplicationController
   end # end make_resourceful
 
   def index
+    @title = "Works"
     if params[:person_id]
       @current_object = Person.find_by_id(params[:person_id].split("-")[0])
       @person = @current_object
