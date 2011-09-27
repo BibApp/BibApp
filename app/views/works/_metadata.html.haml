@@ -5,7 +5,8 @@
 
   = render 'works/metadata/creators'
   = render 'works/metadata/contributors'
-  = render 'works/metadata/title_primary_and_secondary'
+  = render 'works/metadata/generic_field', :field => :title_primary, :label => title_primary_label(@work)
+  = render 'works/metadata/title_secondary'
   = render 'works/metadata/generic_field', :field => :title_tertiary, :label => 'Title Series'
   = render 'works/metadata/abstracts_and_keywords'
   = render 'works/metadata/generic_field', :field => :medium

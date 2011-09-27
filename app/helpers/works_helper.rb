@@ -186,4 +186,20 @@ module WorksHelper
         'Publisher'
     end
   end
+
+  def title_primary_label(work)
+    case @work.class.to_s
+      when 'BookSection'
+        "Article/Chapter Title"
+      when 'JournalArticle'
+        "Article Title"
+      else
+        'Title'
+    end
+  end
+
+  def skip_title_secondary(work)
+    work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(work.class.to_s)
+  end
+
 end
