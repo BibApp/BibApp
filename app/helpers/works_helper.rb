@@ -221,14 +221,22 @@ module WorksHelper
     end.join(', ').html_safe
   end
 
-  def decide_partial(work)
+  def decide_edit_partial(work)
+    decide_partial(work, '')
+  end
+
+  def decide_merge_partial(work)
+    decide_partial(work, '_merge')
+  end
+
+  def decide_partial(work, prefix)
     name = work.class.name.to_s.underscore
-    partial = if ['.haml', ''].detect {|suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form_#{name}.html#{suffix}")}
+    partial = if ['.haml', ''].detect {|suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form#{prefix}_#{name}.html#{suffix}")}
       name
     else
       'generic'
     end
-    "works/forms/form_#{partial}"
+    "works/forms/form#{prefix}_#{partial}"
   end
 
 end

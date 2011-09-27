@@ -1,5 +1,5 @@
 = form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
-  = render decide_partial(@work), :form => form
+  = render decide_edit_partial(@work), :form => form
 
   -#Add return path & page to form, if specified
   = hidden_field_tag "return_path", @return_path unless @return_path.nil?
