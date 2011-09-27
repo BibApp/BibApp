@@ -1,4 +1,5 @@
 -# must pass field parameter. May pass label parameter, otherwise computed from field
+-# for i18n we'll want to take the field name from the model translations here instead
 - label ||= field.to_s.titlecase
 - if @work.send(field).present?
   %tr

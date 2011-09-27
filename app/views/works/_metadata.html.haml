@@ -6,27 +6,27 @@
   = render 'works/metadata/creators'
   = render 'works/metadata/contributors'
   = render 'works/metadata/title_primary_and_secondary'
-  = render 'works/metadata/title_tertiary'
+  = render 'works/metadata/generic_field', :field => :title_tertiary, :label => 'Title Series'
   = render 'works/metadata/abstracts_and_keywords'
-  = render 'works/metadata/medium'
-  = render 'works/metadata/instrumentation'
+  = render 'works/metadata/generic_field', :field => :medium
+  = render 'works/metadata/generic_field', :field => :instrumentation
   = render 'works/metadata/publication'
-  = render 'works/metadata/volume'
+  = render 'works/metadata/generic_field', :field => :volume
   = render 'works/metadata/issue'
   = render 'works/metadata/date_range'
   = render 'works/metadata/location'
   = render 'works/metadata/issn_isbn'
   = render 'works/metadata/publisher'
-  = render 'works/metadata/degree_level'
-  = render 'works/metadata/discipline'
+  = render 'works/metadata/generic_field', :field => :degree_level, :label => 'Degree'
+  = render 'works/metadata/generic_field', :field => :discipline
   = render 'works/metadata/publication_place'
   = render 'works/metadata/publication_date'
-  = render 'works/metadata/start_page'
+  = render 'works/metadata/generic_field', :field => :start_page
   = render 'works/metadata/end_page'
-  = render 'works/metadata/language'
-  = render 'works/metadata/copyright'
-  = render 'works/metadata/sponsor'
+  = render 'works/metadata/generic_field', :field => :language
+  = render 'works/metadata/generic_field', :field => :copyright_holder, :label => 'Copyright Statement'
+  = render 'works/metadata/generic_field', :field => :sponsor
   = render 'works/metadata/links'
-  = render 'works/metadata/identifier'
-  = render 'works/metadata/notes'
+  = render 'works/metadata/generic_field', :field => :identifier
+  = render 'works/metadata/generic_field', :field => :notes
 
