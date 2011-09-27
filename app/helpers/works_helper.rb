@@ -137,4 +137,15 @@ module WorksHelper
         'Date Published'
     end
   end
+
+  def issn_isbn_label(work)
+    case work.class.to_s
+      when 'JournalArticle', 'JournalWhole', 'BookReview'
+        "ISSN"
+      when 'RecordingSound', 'RecordingMovingImage'
+        "ISRC"
+      else
+        'ISBN'
+    end
+  end
 end

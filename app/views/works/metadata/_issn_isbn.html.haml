@@ -1,12 +1,4 @@
 - unless @work.publication.nil? or @work.publication.issn_isbn.blank?
-  - label = "ISBN"
-  - case @work.class.to_s
-  - when 'JournalArticle', 'JournalWhole', 'BookReview'
-    - label = "ISSN"
-  - when 'RecordingSound', 'RecordingMovingImage'
-    - label = "ISRC"
   %tr
-    %td.label
-      = "#{label}:"
-    %td
-      = @work.publication.issn_isbn
+    %td.label #{issn_isbn_label(@work)}:
+    %td #{@work.publication.issn_isbn}
