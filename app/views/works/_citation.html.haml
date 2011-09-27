@@ -1,5 +1,0 @@
-- include_stylesheet('specific/works/_citation')
-- work_class = normalized_work_class(@work)
-%h4.citation-header APA Format: #{work_class.underscore.humanize}
-%p.apa_citation
-  = render "works/apa/#{work_class.underscore}", :c => @work
