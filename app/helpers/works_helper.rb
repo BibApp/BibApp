@@ -221,4 +221,14 @@ module WorksHelper
     end.join(', ').html_safe
   end
 
+  def decide_partial(work)
+    name = work.class.name.to_s.underscore
+    partial = if ['.haml', ''].detect {|suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form_#{name}.html#{suffix}")}
+      name
+    else
+      'generic'
+    end
+    "works/forms/form_#{partial}"
+  end
+
 end
