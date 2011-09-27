@@ -1,25 +1,19 @@
-%fieldset
-  %legend Patent
-
-  = hidden_field_tag :klass, 'Patent'
-  = render 'works/forms/fields/form_buttons', :form => form
-
-  %ul
-    %li
-      = render 'works/forms/fields/author_name_strings'
-    %li
-      = render 'works/forms/fields/title_primary', :form => form
-    %li
-      = render 'works/forms/fields/date_range', :form => form, :label => "Filing Date"
-    %li
-      = render 'works/forms/fields/publication_date', :label => "Date Issued"
-    %li
-      = render 'works/forms/fields/keywords'
-    %li
-      = render 'works/forms/fields/abstract', :form => form
-    %li
-      = render 'works/forms/fields/links', :form => form
-    %li
-      = render 'works/forms/fields/identifier', :form => form, :label => "Patent Number"
-    %li
-      = render 'works/forms/fields/notes', :form => form
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Patent'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/date_range', :form => form, :label => "Filing Date"
+  %li
+    = render 'works/forms/fields/publication_date', :label => "Date Issued"
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/identifier', :form => form, :label => "Patent Number"
+  %li
+    = render 'works/forms/fields/notes', :form => form

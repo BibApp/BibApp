@@ -1,45 +1,39 @@
-%fieldset
-  %legend Conference Poster
-
-  = hidden_field_tag :klass, 'ConferencePoster'
-  = render 'works/forms/fields/form_buttons', :form => form
-
-  %ul
-    %li
-      = render 'works/forms/fields/author_name_strings'
-    %li
-      = render 'works/forms/fields/contributor_name_strings'
-    %li
-      = render 'works/forms/fields/title_primary', :form => form
-    %li
-      = render 'works/forms/fields/title_secondary', :form => form, :label => "Conference Title"
-    %li
-      = render 'works/forms/fields/title_tertiary', :form => form
-    %li
-      = render 'works/forms/fields/date_range', :form => form
-    %li
-      = render 'works/forms/fields/location', :form => form
-    %li
-      = render 'works/forms/fields/publisher'
-    %li
-      = render 'works/forms/fields/publication_place', :form => form
-    %li
-      = render 'works/forms/fields/publication_date', :label => "Date Presented"
-    %li
-      = render 'works/forms/fields/pages', :form => form
-    %li
-      = render 'works/forms/fields/language', :form => form
-    %li
-      = render 'works/forms/fields/keywords'
-    %li
-      = render 'works/forms/fields/abstract', :form => form
-    %li
-      = render 'works/forms/fields/copyright_holder', :form => form
-    %li
-      = render 'works/forms/fields/sponsor', :form => form
-    %li
-      = render 'works/forms/fields/links', :form => form
-    %li
-      = render 'works/forms/fields/identifier', :form => form
-    %li
-      = render 'works/forms/fields/notes', :form => form
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'ConferencePoster'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form, :label => "Conference Title"
+  %li
+    = render 'works/forms/fields/title_tertiary', :form => form
+  %li
+    = render 'works/forms/fields/date_range', :form => form
+  %li
+    = render 'works/forms/fields/location', :form => form
+  %li
+    = render 'works/forms/fields/publisher'
+  %li
+    = render 'works/forms/fields/publication_place', :form => form
+  %li
+    = render 'works/forms/fields/publication_date', :label => "Date Presented"
+  %li
+    = render 'works/forms/fields/pages', :form => form
+  %li
+    = render 'works/forms/fields/language', :form => form
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/copyright_holder', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/identifier', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form

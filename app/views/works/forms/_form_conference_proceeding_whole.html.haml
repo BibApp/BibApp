@@ -1,41 +1,36 @@
-%fieldset
-  %legend Conference Proceeding (Whole)
-
-  = hidden_field_tag :klass, 'ConferenceProceedingWhole'
-  = render 'works/forms/fields/form_buttons', :form => form
-
-  %ul
-    %li
-      = render 'works/forms/fields/author_name_strings'
-    %li
-      = render 'works/forms/fields/title_primary', :form => form
-    %li
-      = render 'works/forms/fields/title_secondary', :form => form
-    %li
-      = render 'works/forms/fields/title_tertiary', :form => form
-    %li
-      = render 'works/forms/fields/date_range', :form => form
-    %li
-      = render 'works/forms/fields/location', :form => form
-    %li
-      = render 'works/forms/fields/issn_isbn', :isbn => true
-    %li
-      = render 'works/forms/fields/publisher'
-    %li
-      = render 'works/forms/fields/publication_place', :form => form
-    %li
-      = render 'works/forms/fields/publication_date'
-    %li
-      = render 'works/forms/fields/pages', :form => form, :omit_start => true, :label => "Total Pages"
-    %li
-      = render 'works/forms/fields/keywords'
-    %li
-      = render 'works/forms/fields/abstract', :form => form
-    %li
-      = render 'works/forms/fields/copyright_holder', :form => form
-    %li
-      = render 'works/forms/fields/sponsor', :form => form
-    %li
-      = render 'works/forms/fields/links', :form => form
-    %li
-      = render 'works/forms/fields/notes', :form => form
+= render :layout => 'works/layouts/edit_form',
+  :locals => {:form => form, :klass => 'ConferenceProceedingWhole', :legend => 'Conference Proceeding (Whole)'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form
+  %li
+    = render 'works/forms/fields/title_tertiary', :form => form
+  %li
+    = render 'works/forms/fields/date_range', :form => form
+  %li
+    = render 'works/forms/fields/location', :form => form
+  %li
+    = render 'works/forms/fields/issn_isbn', :isbn => true
+  %li
+    = render 'works/forms/fields/publisher'
+  %li
+    = render 'works/forms/fields/publication_place', :form => form
+  %li
+    = render 'works/forms/fields/publication_date'
+  %li
+    = render 'works/forms/fields/pages', :form => form, :omit_start => true, :label => "Total Pages"
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/copyright_holder', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form

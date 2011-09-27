@@ -1,33 +1,27 @@
-%fieldset
-  %legend Exhibition
-
-  = hidden_field_tag :klass, 'Exhibition'
-  = render 'works/forms/fields/form_buttons', :form => form
-
-  %ul
-    %li
-      = render 'works/forms/fields/author_name_strings'
-    %li
-      = render 'works/forms/fields/contributor_name_strings'
-    %li
-      = render 'works/forms/fields/title_primary', :form => form
-    %li
-      = render 'works/forms/fields/title_secondary', :form => form
-    %li
-      = render 'works/forms/fields/title_tertiary', :form => form
-    %li
-      = render 'works/forms/fields/date_range', :form => form, :label => "Exhibition Dates"
-    %li
-      = render 'works/forms/fields/publisher', :label => "Venue"
-    %li
-      = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
-    %li
-      = render 'works/forms/fields/keywords'
-    %li
-      = render 'works/forms/fields/abstract', :form => form
-    %li
-      = render 'works/forms/fields/sponsor', :form => form
-    %li
-      = render 'works/forms/fields/links', :form => form
-    %li
-      = render 'works/forms/fields/notes', :form => form
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Exhibition'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form
+  %li
+    = render 'works/forms/fields/title_tertiary', :form => form
+  %li
+    = render 'works/forms/fields/date_range', :form => form, :label => "Exhibition Dates"
+  %li
+    = render 'works/forms/fields/publisher', :label => "Venue"
+  %li
+    = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form

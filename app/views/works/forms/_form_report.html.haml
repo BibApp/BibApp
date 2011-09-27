@@ -1,39 +1,33 @@
-%fieldset
-  %legend Report
-
-  = hidden_field_tag :klass, 'Report'
-  = render 'works/forms/fields/form_buttons', :form => form
-
-  %ul
-    %li
-      = render 'works/forms/fields/author_name_strings'
-    %li
-      = render 'works/forms/fields/contributor_name_strings'
-    %li
-      = render 'works/forms/fields/title_primary', :form => form
-    %li
-      = render 'works/forms/fields/title_secondary', :form => form, :label => "Series Title"
-    %li
-      = render 'works/forms/fields/volume_issue', :form => form, :omit_volume => true, :label => "Series Number"
-    %li
-      = render 'works/forms/fields/publisher'
-    %li
-      = render 'works/forms/fields/publication_place', :form => form
-    %li
-      = render 'works/forms/fields/publication_date'
-    %li
-      = render 'works/forms/fields/language', :form => form
-    %li
-      = render 'works/forms/fields/keywords'
-    %li
-      = render 'works/forms/fields/abstract', :form => form
-    %li
-      = render 'works/forms/fields/copyright_holder', :form => form
-    %li
-      = render 'works/forms/fields/sponsor', :form => form
-    %li
-      = render 'works/forms/fields/links', :form => form
-    %li
-      = render 'works/forms/fields/identifier', :form => form
-    %li
-      = render 'works/forms/fields/notes', :form => form
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Report'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form, :label => "Series Title"
+  %li
+    = render 'works/forms/fields/volume_issue', :form => form, :omit_volume => true, :label => "Series Number"
+  %li
+    = render 'works/forms/fields/publisher'
+  %li
+    = render 'works/forms/fields/publication_place', :form => form
+  %li
+    = render 'works/forms/fields/publication_date'
+  %li
+    = render 'works/forms/fields/language', :form => form
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/copyright_holder', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/identifier', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form
