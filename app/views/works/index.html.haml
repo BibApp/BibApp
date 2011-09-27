@@ -1,12 +1,10 @@
 - include_stylesheet('specific/works/index')
 
 / ### Person / Works ###
-- if params[:person_id]
-  - if current_user_role?("editor", Person.find(params[:person_id]))
-    = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
+- if params[:person_id] and current_user_role?("editor", Person.find(params[:person_id]))
+  = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
 
-- else
-  - if current_user_any_role?("editor", Group) or current_user_role?('admin', Work)
+- elsif current_user_any_role?("editor", Group) or current_user_role?('admin', Work)
     = render :layout => 'layouts/admin_bar' do
       - if current_user.has_any_role?("editor", Group)
         %li #{link_to "Add a Work", new_user_import_path(current_user)}
@@ -14,18 +12,13 @@
         %li #{link_to("View orphaned works", orphans_works_url)}
 
 = render :layout => 'layouts/main_body_no_h2' do
-  / If they want to see *everything*, let them see it!
-  / params[:view] = "all"
   - if @view == "all"
-    / ### Person / Works ###
+
     - if params[:person_id]
       = render 'person_index_search'
-
-    / ### Group / Works ###
     - if params[:group_id]
       = render 'group_index_search'
 
-    / Render
     #results.span-22
       = render "shared/facets"
       = render "shared/works"
