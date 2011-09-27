@@ -1,7 +1,7 @@
 -#requires authorities, submit_url, headers, page to be passed
 = form_tag submit_url, {:method => :put, :id => 'authority_box', :page => page} do
   %fieldset
-    %legend="Add Records and Set Authority"
+    %legend Add Records and Set Authority
     -unless authorities.empty?
       %table#pub-cart
         %thead
