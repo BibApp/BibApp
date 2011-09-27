@@ -239,4 +239,8 @@ module WorksHelper
     "works/forms/form#{prefix}_#{partial}"
   end
 
+  def new_work_header(person)
+    suffix = person ? " for #{link_to person.display_name, person_path(person)}" : ''
+    "Add Works#{suffix}"
+  end
 end

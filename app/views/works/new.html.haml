@@ -1,15 +1,13 @@
-- header = "Add Works" + (@person ? " for #{link_to @person.display_name, person_path(@person)}" : '')
-= render :layout => '/layouts/main_body', :locals => {:header => header} do
+= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person)} do
 
   .right
     %h3 Select a type:
     %ul
       %li #{link_to "Batch Import", new_user_import_path(current_user, :person_id => (@person and @person.id))}
       %li -----
-      = render :partial => 'shared/work_type_list'
+      = render 'shared/work_type_list'
 
   .span-16
     = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
-      = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
-      -#Save person id in form, if adding Work to a Person
+      = render "works/forms/form_#{@work.class.name.to_s.underscore}", :form => form 
       = hidden_field_tag :person_id, @person.id if @person
