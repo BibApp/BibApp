@@ -55,7 +55,7 @@ module WorksHelper
 
   def normalized_work_class(work)
     type = work_class(work)
-    if ['.haml', ''].detect {|ext| File.exist?("#{Rails.root}/app/views/works/apa/_#{type.underscore}.html#{ext}")}
+    if ['.haml', ''].detect { |ext| File.exist?("#{Rails.root}/app/views/works/apa/_#{type.underscore}.html#{ext}") }
       type
     else
       'generic'
@@ -66,4 +66,75 @@ module WorksHelper
     %Q(tags: "#{tag.name}")
   end
 
+  #helpers for metadata views
+  def location_label(work)
+    if work.class == PresentationLecture
+      "Location Given"
+    else
+      "Conference Location"
+    end
+  end
+
+  def publication_place_label(work)
+    case work.class.to_s
+      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
+        'Location'
+      else
+        "Publication Place"
+    end
+  end
+
+  def date_range_label(work)
+    case work.class.to_s
+      when 'Patent'
+        "Filing Date"
+      when 'WebPage'
+        "Date of Last Visit"
+      when 'Exhibition'
+        "Exhibition Dates"
+      when 'Performance'
+        "Performance Date"
+      when 'JournalWhole'
+        "Dates"
+      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
+        "Conference Dates"
+      else
+        'Date Range'
+    end
+  end
+
+  def end_page_label(work)
+    case work.class.to_s
+      when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
+        "Total Pages"
+      else
+        'End Page'
+    end
+  end
+
+  def issue_label(work)
+    case work.class.to_s
+      when 'Report'
+        'Series Number'
+      else
+        'Issue'
+    end
+  end
+
+  def publication_date_label(work)
+    case work.class.to_s
+      when 'ConferencePoster'
+        "Date Presented"
+      when 'PresentationLecture'
+        "Date Given"
+      when 'Artwork'
+        "Date of Composition"
+      when 'DissertationThesis'
+        "Degree Date"
+      when 'Patent', 'RecordingMovingImage'
+        "Date Issued"
+      else
+        'Date Published'
+    end
+  end
 end
