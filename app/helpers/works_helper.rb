@@ -204,11 +204,21 @@ module WorksHelper
 
   #return a string with links to all of the creators
   def creator_links(work)
-    @work.work_name_strings.select { |wns| wns.role == @work.creator_role }.collect do |wns|
-      wns.name_string
-    end.collect do |ns|
+    work_name_strings_to_links(work.work_name_strings.select { |wns| wns.role == @work.creator_role })
+  end
+
+  #return an array of arrays. Each array has as its first element a contributor role and
+  #as its second element an array of name strings for contributors with those roles.
+  def contributors_by_role(work)
+    #This gets us an ordered hash
+    work.work_name_strings.select {|wns| wns.role != work.creator_role}.group_by {|wns| wns.role}
+  end
+
+  #takes an array of work name strings and gives back the html for links to the names
+  def work_name_strings_to_links(work_name_strings)
+    work_name_strings.collect {|wns| wns.name_string}.collect do |ns|
       link_to(h(ns.name.gsub(',', ', ')), name_string_path(ns))
     end.join(', ').html_safe
   end
-  
+
 end

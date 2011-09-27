@@ -1,19 +1,4 @@
--# Get the contributors associated with this work
--# Omit the first role for this work subklass (usually Author)
-- contributors = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} unless wns.role == @work.creator_role} if @work.name_strings
-- contributors.compact!
-- contributors.sort!{ |x,y| x[:role] <=> y[:role]}
-
-- unless contributors.empty?
-  - i = 0
-  - while i < contributors.length
-    - label = contributors[i][:role]
-    %tr
-      %td.label
-        = "#{label}(s):"
-      %td
-        - out = Array.new
-        - while i < contributors.length and contributors[i][:role] == label
-          - out << link_to(h(contributors[i][:ns].name.gsub(",", ", ")), name_string_path(contributors[i][:ns]))
-          - i += 1
-        = out.join(', ').html_safe
+- contributors_by_role(@work).each do |role, work_name_strings|
+  %tr
+    %td.label #{role}(s):
+    %td #{work_name_strings_to_links(work_name_strings)}
