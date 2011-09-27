@@ -1,11 +1,6 @@
--# Get the creators associated with this work
--# Only get the first role for this work subklass (usually Author)
-- creator_role = @work.creator_role
-- creators = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} if wns.role == creator_role} if @work.name_strings
-- creators.compact!
-
-- unless creators.empty?
+- creators_text = creator_links(@work)
+- unless creators_text.blank?
   %tr
-    %td.label #{creator_role}(s):
-    %td
-      = creators.collect { |c| (link_to h(c[:ns].name.gsub(",", ", ")), name_string_path(c[:ns]))}.join(', ').html_safe
+    %td.label #{@work.creator_role}(s):
+    %td #{creators_text}
+

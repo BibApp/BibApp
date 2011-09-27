@@ -202,4 +202,13 @@ module WorksHelper
     work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(work.class.to_s)
   end
 
+  #return a string with links to all of the creators
+  def creator_links(work)
+    @work.work_name_strings.select { |wns| wns.role == @work.creator_role }.collect do |wns|
+      wns.name_string
+    end.collect do |ns|
+      link_to(h(ns.name.gsub(',', ', ')), name_string_path(ns))
+    end.join(', ').html_safe
+  end
+  
 end
