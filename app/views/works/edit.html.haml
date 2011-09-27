@@ -1,6 +1,3 @@
-/ === Works === Edit ===
-/ Main
-
 - if current_user_role?("editor", @work)
   = render :layout => 'layouts/admin_bar' do
     %li=link_to "Delete this work", work_url(@work), :method => :delete, :confirm => 'Permanently delete this work? This cannot be undone.'
