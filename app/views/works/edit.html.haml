@@ -6,16 +6,7 @@
     %li=link_to "Delete this work", work_url(@work), :method => :delete, :confirm => 'Permanently delete this work? This cannot be undone.'
 
 = render :layout => 'layouts/main_body_no_h2' do
-  #change_type.right
-    = form_for @work, :url => change_type_work_url(@work), :html => {:method => :put} do |form|
-      %label Change Type
-      %select{:name => 'type'}
-        - Work.types.each do |t|
-          - if Work.type_to_class(t) == @work.class
-            %option{:selected => "selected", :value => "#{Work.type_to_class(t)}"}= t
-          - else
-            %option{:value => "#{Work.type_to_class(t)}"}= t
-      = form.submit 'Go'
+  = render 'change_type_form'
 
   %h2 Edit a Work
 
