@@ -1,0 +1,20 @@
+-# note that these two potentially interact - I'm not sure if this is intentional or not,
+-# but while refactoring I'll preserve it
+- unless @work.title_primary.blank?
+  - label = "Title"
+  - case @work.class.to_s
+  - when 'BookSection'
+    - label = "Article/Chapter Title"
+  - when 'JournalArticle'
+    - label = "Article Title"
+  %tr
+    %td.label="#{label}:"
+    %td
+      = @work.title_primary
+
+- unless @work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(@work.class.to_s)
+  - label = "Alternate Title"
+  %tr
+    %td.label="#{label}:"
+    %td
+      = @work.title_secondary

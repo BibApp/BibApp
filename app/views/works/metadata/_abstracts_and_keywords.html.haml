@@ -1,0 +1,11 @@
+- if $DISPLAY_ABSTRACTS_AND_KEYWORDS
+  - unless @work.abstract.blank?
+    %tr
+      %td.label Abstract:
+      %td
+        = @work.abstract
+  - unless @work.keywords.blank?
+    %tr
+      %td.label Keywords:
+      %td
+        #{@work.keywords.collect {|kw| kw.name}.join('; ')}

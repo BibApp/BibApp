@@ -3,87 +3,13 @@
 
 %table#metadata.span-15
 
-  -# Get the creators associated with this work
-  -# Only get the first role for this work subklass (usually Author)
-  - creator_role = @work.creator_role
-  - creators = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} if wns.role == creator_role} if @work.name_strings
-  - creators.compact!
-
-  - unless creators.empty?
-    %tr
-      %td.label #{creator_role}(s):
-      %td
-        = creators.collect { |c| (link_to h(c[:ns].name.gsub(",", ", ")), name_string_path(c[:ns]))}.join(', ').html_safe
-
-  -# Get the contributors associated with this work
-  -# Omit the first role for this work subklass (usually Author)
-  - contributors = @work.work_name_strings.collect{ |wns| {:ns => wns.name_string, :role => wns.role} unless wns.role == creator_role} if @work.name_strings
-  - contributors.compact!
-  - contributors.sort!{ |x,y| x[:role] <=> y[:role]}
-
-  - unless contributors.empty?
-    - i = 0
-    - while i < contributors.length
-      - label = contributors[i][:role]
-      %tr
-        %td.label
-          = "#{label}(s):"
-        %td
-          - out = Array.new
-          - while i < contributors.length and contributors[i][:role] == label
-            - out << link_to(h(contributors[i][:ns].name.gsub(",", ", ")), name_string_path(contributors[i][:ns]))
-            - i += 1
-          = out.join(', ').html_safe
-
-  - unless @work.title_primary.blank?
-    - label = "Title"
-    - case @work.class.to_s
-    - when 'BookSection'
-      - label = "Article/Chapter Title"
-    - when 'JournalArticle'
-      - label = "Article Title"
-    %tr
-      %td.label="#{label}:"
-      %td
-        = @work.title_primary
-
-  - unless @work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(@work.class.to_s)
-    - label = "Alternate Title"
-    %tr
-      %td.label="#{label}:"
-      %td
-        = @work.title_secondary
-
-  - unless @work.title_tertiary.blank?
-    %tr
-      %td.label Title Series:
-      %td
-        = @work.title_tertiary
-
-  - if $DISPLAY_ABSTRACTS_AND_KEYWORDS
-    - unless @work.abstract.blank?
-      %tr
-        %td.label Abstract:
-        %td
-          = @work.abstract
-    - unless @work.keywords.blank?
-      %tr
-        %td.label Keywords:
-        %td
-          #{@work.keywords.collect {|kw| kw.name}.join('; ')}
-
-  - unless @work.medium.blank?
-    %tr
-      %td.label Medium:
-      %td
-        = @work.title_tertiary
-
-  - unless @work.instrumentation.blank?
-    %tr
-      %td.label Instrumentation:
-      %td
-        = @work.instrumentation
-
+  = render 'works/metadata/creators'
+  = render 'works/metadata/contributors'
+  = render 'works/metadata/title_primary_and_secondary'
+  = render 'works/metadata/title_tertiary'
+  = render 'works/metadata/abstracts_and_keywords'
+  = render 'works/metadata/medium'
+  = render 'works/metadata/instrumentation'
   = render 'works/metadata/publication'
   = render 'works/metadata/volume'
   = render 'works/metadata/issue'
