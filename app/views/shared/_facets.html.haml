@@ -1,131 +1,131 @@
 -#
 -# Build Refine Results sidebar, using facet information from Solr
--# 
-%div{:class => "span-5"}
-  %div.left_box
-    %div.box_heading Refine Results
+-#
+.span-5
+  .left_box
+    .box_heading Refine Results
 
     / Remove Filter(s)
     - remove_filter = @filter.clone
-    
+
     -# Delete any filters pertaining to current object from removal list
     - remove_filter.delete_if{ |f| !@current_object.nil? and f.include?(@current_object.solr_filter) }
-    
+
     -# Delete any filters pertaining to Work status (as different statuses are currently never show intermixed)
     - remove_filter.delete_if{ |f| f.include?(Work.solr_status_field)}
-    
+
     -# Delete any filters pertaining to Person's active status (since we only want to see active people)
     - remove_filter.delete_if{ |f| f.include?("person_active:")}
-    - if !remove_filter.empty?
-      %div.facet
+    - if remove_filter.present?
+      .facet
         %ol.facet_filters
           - remove_filter.each do |filter|
             %li.active-filter=remove_filter(params, filter)
 
 
     / WorkType Filter
-    -if !@facets[:types].empty?
-      %div.facet
-        %div.facet_heading Formats
+    -if @facets[:types].present?
+      .facet
+        .facet_heading Formats
         %ol.facet_filters
           - logger.debug("ViewFQ: #{params[:fq].inspect}")
-          -@facets[:types].each do |p|
+          - @facets[:types].each do |p|
             %li
-              =add_filter(params,"type_facet",p.name,p.value)
+              = add_filter(params,"type_facet",p.name,p.value)
 
     / Groups
     -#Remove group facet that represents the current group
     -@facets[:groups].delete_if{ |g| @current_object.kind_of?(Group) and @current_object.name==g.name }
-    -if !@facets[:groups].empty?
-      %div.facet
-        %div.facet_heading Groups
+    -if @facets[:groups].present?
+      .facet
+        .facet_heading Groups
         %ol#top-five-groups.facet_filters
-          -@facets[:groups].first(5).each do |g|
+          - @facets[:groups].first(5).each do |g|
             %li.show
               =add_filter(params,"group_facet",g.name,g.value)
 
         - if @facets[:groups].size > 5
           %ol#all-groups.facet_filters{:style => "display:none"}
-            -@facets[:groups].each do |g|
+            - @facets[:groups].each do |g|
               %li.show
-              =add_filter(params,"group_facet",g.name,g.value)
+              = add_filter(params,"group_facet",g.name,g.value)
 
-          %p.more_filters=link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+          %p.more_filters =link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
     / People
     -#Remove person facet that represents the current person
     -@facets[:people].delete_if{ |p| @current_object.kind_of?(Person) and @current_object.name==p.name }
-    -if !@facets[:people].empty?
-      %div.facet
-        %div.facet_heading People
+    -if @facets[:people].present?
+      .facet
+        .facet_heading People
         %ol#top-five-people.facet_filters
-          -@facets[:people].first(5).each do |p|
+          - @facets[:people].first(5).each do |p|
             %li.show
-              =add_filter(params,"person_facet",p.name,p.value)
+              = add_filter(params,"person_facet",p.name,p.value)
 
         - if @facets[:people].size > 5
           %ol#all-people.facet_filters{:style => "display:none"}
             -@facets[:people].each do |p|
               %li.show
-                =add_filter(params,"person_facet",p.name,p.value)
+                = add_filter(params,"person_facet",p.name,p.value)
 
-          %p.more_filters=link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
+          %p.more_filters= link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
     / Years
-    -if !@facets[:years].empty?
-      %div.facet
-        %div.facet_heading Years
+    -if @facets[:years].present?
+      .facet
+        .facet_heading Years
 
         - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
 
         %ol#top-five-years.facet_filters
           -sorted_hash.first(5).each do |key, value|
             %li.show
-              =add_filter(params,"year_facet",key,value)
+              = add_filter(params,"year_facet",key,value)
 
         - if sorted_hash.size > 5
           %ol#all-years.facet_filters{:style => "display:none"}
 
             -sorted_hash.each do |key, value|
               %li.show
-                =add_filter(params,"year_facet",key,value)
+                = add_filter(params,"year_facet",key,value)
 
-          %p.more_filters=link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
+          %p.more_filters= link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
 
     / Publications
     -#Remove Publication facets that represents the current publication or "Unknown"
     -@facets[:publications].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publication) and @current_object.name==p.name) }
-    -if !@facets[:publications].empty?
-      %div.facet
-        %div.facet_heading Publications
+    -if @facets[:publications].present?
+      .facet
+        .facet_heading Publications
         %ol#top-five-publications.facet_filters
           -@facets[:publications].first(5).each do |p|
             %li.show
-              =add_filter(params,"publication_facet",p.name,p.value)
+              = add_filter(params,"publication_facet",p.name,p.value)
 
         - if @facets[:publications].size > 5
           %ol#all-publications.facet_filters{:style => "display:none"}
             -@facets[:publications].each do |p|
               %li.show
-                =add_filter(params,"publication_facet",p.name,p.value)
+                = add_filter(params,"publication_facet",p.name,p.value)
 
-          %p.more_filters=link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+          %p.more_filters =link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
 
     / Publishers
     -#Remove Publisher facets that represents the current publisher or "Unknown"
     -@facets[:publishers].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publisher) and @current_object.name==p.name) }
-    -if !@facets[:publications].empty?
-      %div.facet
-        %div.facet_heading Publishers
+    -if @facets[:publications].present?
+      .facet
+        .facet_heading Publishers
         %ol#top-five-publishers.facet_filters
           -@facets[:publishers].first(5).each do |p|
             %li.show
-              =add_filter(params,"publisher_facet",p.name,p.value)
+              = add_filter(params,"publisher_facet",p.name,p.value)
 
         - if @facets[:publications].size > 5
           %ol#all-publishers.facet_filters{:style => "display:none"}
             -@facets[:publishers].each do |p|
               %li.show
-                =add_filter(params,"publisher_facet",p.name,p.value)
+                = add_filter(params,"publisher_facet",p.name,p.value)
 
-          %p.more_filters=link_to_function "More Publishers", "$('all-publishers').show(); $('top-five-publishers').hide(); this.hide();"
+          %p.more_filters= link_to_function "More Publishers", "$('all-publishers').show(); $('top-five-publishers').hide(); this.hide();"

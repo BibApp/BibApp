@@ -1,9 +1,2 @@
-
--#
--# Render Work State information in a pretty format
--#
--# This template only renders something if work["status"] is defined!
--# (It uses 'work_state_name' from application_helper.rb)
-
-- unless work['status'].nil?
-  %strong="[#{work_state_name(work['status'])}]"
+- if work['status']
+  %strong [#{work_state_name(work['status'])}]

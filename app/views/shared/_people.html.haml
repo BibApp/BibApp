@@ -1,7 +1,7 @@
 -#
 -# Render People facets from Solr data
 -#
-%div{:class => "span-15"}
+.span-15
   %h3 People
   %ol#people
     - people = @facets[:people_data]
@@ -22,10 +22,10 @@
         - break
       - counter += 1
       %li.inline
-        %div.person.span-3
-          %div.person-image-wrapper
+        .person.span-3
+          .person-image-wrapper
             = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => 'person-image'), person_path(id))
-          %div.person-image-metadata
+          .person-image-metadata
             %strong= p.value
-          %div.person-last-name.left
+          .person-last-name.left
             %strong=link_to last_name, person_path(id)

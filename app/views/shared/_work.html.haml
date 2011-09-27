@@ -11,7 +11,7 @@
 -#                                    :saved,   (adds/removes from saved)
 -#                                    :edit,    (edit work)
 -#                                    :none     (trumps all)}
-                                 
+
 
 - include_stylesheet('specific/shared/_work')
 -# Initialize optional input variables
@@ -28,8 +28,8 @@
 
   -if show_dupes
     -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
-    -if work['status']==2
-      = render :partial => "shared/duplicate_of_work", :locals => {:work => work}
+    -if work['status']== Work::STATE_DUPLICATE
+      = render "shared/duplicate_of_work", :work => work
 
   -# Change the class name depending on dupe or not
   -the_class = "screen-format"
@@ -43,33 +43,29 @@
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
     %h5.work-type #{work['type']}
     -#display status of a work, if specified
-    = render :partial => "shared/work_status", :locals => {:work => work} if show_status
-    
-    = render :partial => "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :locals => {:work => work}
+    = render("shared/work_status", :work => work) if show_status
+    = render "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :work => work
 
     .links
       - unless links_array.include? 'none'
         -links_array.each do |link|
 
           -#"Find It" Link
-          -if link==:find_it
+          -if link == :find_it
             =link_to_findit(work)
 
           -#"Add to Saved" and "Remove from Saved" links
-          -if link==:saved
-            - if !@saved.nil? && !@saved.items.nil?
+          -if link == :saved
+            - if @saved && @saved.items
               - if @saved.items.include?(work['pk_i'].to_i)
                 %strong Saved -
                 = link_to "Remove ", remove_from_saved_work_url(work['pk_i'])
-            - if @saved.nil? || !@saved.items.include?(work['pk_i'].to_i)
+            - if @saved.nil? || @saved.items.exclude?(work['pk_i'].to_i)
               = link_to "Save", add_to_saved_work_url(work['pk_i'])
 
           -#"Edit" link
           -if link==:edit
-            -if !@return_path.nil?  #if return path specified, add it to 'edit' path...
-              =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path)
-            -if @return_path.nil?
-              =link_to "Edit", edit_work_path(work['pk_i'])
+            =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path)
 
           -#As long as not last link, add a vertical pipe between links
           -unless link==links_array.last
