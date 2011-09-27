@@ -2,38 +2,38 @@
   %legend Dissertation / Thesis
 
   = hidden_field_tag :klass, 'DissertationThesis'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+  = render 'works/forms/fields/form_buttons', :form => form
 
   %ul
     %li
-      = render :partial => 'works/forms/fields/author_name_strings'
+      = render 'works/forms/fields/author_name_strings'
     %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
+      = render 'works/forms/fields/contributor_name_strings'
     %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+      = render 'works/forms/fields/title_primary', :form => form
     %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+      = render 'works/forms/fields/title_secondary', :form => form
     %li
-      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Degree Granting Institution"}
+      = render 'works/forms/fields/publisher', :label => "Degree Granting Institution"
     %li
-      = render :partial => 'works/forms/fields/degree_level', :locals => {:form => form}
+      = render 'works/forms/fields/degree_level', :form => form
     %li
-      = render :partial => 'works/forms/fields/discipline', :locals => {:form => form}
+      = render 'works/forms/fields/discipline', :form => form
     %li
-      = render :partial => 'works/forms/fields/publication_date', :locals => {:label => "Degree Date"}
+      = render 'works/forms/fields/publication_date', :label => "Degree Date"
     %li
-      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
+      = render 'works/forms/fields/pages', :form => form
     %li
-      = render :partial => 'works/forms/fields/language', :locals => {:form => form}
+      = render 'works/forms/fields/language', :form => form
     %li
-      = render :partial => 'works/forms/fields/keywords'
+      = render 'works/forms/fields/keywords'
     %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
+      = render 'works/forms/fields/abstract', :form => form
     %li
-      = render :partial => 'works/forms/fields/copyright_holder', :locals => {:form => form}
+      = render 'works/forms/fields/copyright_holder', :form => form
     %li
-      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
+      = render 'works/forms/fields/sponsor', :form => form
     %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+      = render 'works/forms/fields/links', :form => form
     %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
+      = render 'works/forms/fields/notes', :form => form

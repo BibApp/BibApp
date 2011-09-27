@@ -2,30 +2,30 @@
   %legend Grant
 
   = hidden_field_tag :klass, 'Grant'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+  = render 'works/forms/fields/form_buttons', :form => form
 
   %ul
     %li
-      = render :partial => 'works/forms/fields/author_name_strings'
+      = render 'works/forms/fields/author_name_strings'
     %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
+      = render 'works/forms/fields/contributor_name_strings'
     %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+      = render 'works/forms/fields/title_primary', :form => form
     %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
+      = render 'works/forms/fields/title_secondary', :form => form
     %li
-      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Dates Funded"}
+      = render 'works/forms/fields/date_range', :form => form, :label => "Dates Funded"
     %li
-      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Institution"}
+      = render 'works/forms/fields/publisher', :label => "Institution"
     %li
-      = render :partial => 'works/forms/fields/keywords'
+      = render 'works/forms/fields/keywords'
     %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
+      = render 'works/forms/fields/abstract', :form => form
     %li
-      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form, :label => "Funding Agency / Sponsor"}
+      = render 'works/forms/fields/sponsor', :form => form, :label => "Funding Agency / Sponsor"
     %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+      = render 'works/forms/fields/links', :form => form
     %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form, :label => "Grant Identifier"}
+      = render 'works/forms/fields/identifier', :form => form, :label => "Grant Identifier"
     %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
+      = render 'works/forms/fields/notes', :form => form

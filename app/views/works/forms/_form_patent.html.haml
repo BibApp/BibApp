@@ -2,24 +2,24 @@
   %legend Patent
 
   = hidden_field_tag :klass, 'Patent'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+  = render 'works/forms/fields/form_buttons', :form => form
 
   %ul
     %li
-      = render :partial => 'works/forms/fields/author_name_strings'
+      = render 'works/forms/fields/author_name_strings'
     %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
+      = render 'works/forms/fields/title_primary', :form => form
     %li
-      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Filing Date"}
+      = render 'works/forms/fields/date_range', :form => form, :label => "Filing Date"
     %li
-      = render :partial => 'works/forms/fields/publication_date', :locals => {:label => "Date Issued"}
+      = render 'works/forms/fields/publication_date', :label => "Date Issued"
     %li
-      = render :partial => 'works/forms/fields/keywords'
+      = render 'works/forms/fields/keywords'
     %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
+      = render 'works/forms/fields/abstract', :form => form
     %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+      = render 'works/forms/fields/links', :form => form
     %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form, :label => "Patent Number"}
+      = render 'works/forms/fields/identifier', :form => form, :label => "Patent Number"
     %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
+      = render 'works/forms/fields/notes', :form => form

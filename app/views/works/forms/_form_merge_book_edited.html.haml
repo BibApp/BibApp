@@ -5,24 +5,24 @@
     %td.span-12
       %h3 Accepted work
   %tr#title_primary
-    = render :partial => 'works/forms/fields/merge_title_primary', :locals => {:label => "Book Title", :form => form}
+    = render 'works/forms/fields/merge_title_primary', :label => "Book Title", :form => form
   %tr#authors
-    = render :partial => 'works/forms/fields/merge_author_name_strings'
+    = render 'works/forms/fields/merge_author_name_strings'
   %tr#publication_date
-    = render :partial => 'works/forms/fields/merge_publication_date'
+    = render 'works/forms/fields/merge_publication_date'
   %tr#isbn_issn
-    = render :partial => 'works/forms/fields/merge_issn_isbn', :locals => {:isbn => true}
+    = render 'works/forms/fields/merge_issn_isbn', :isbn => true
   %tr#editors
-    = render :partial => 'works/forms/fields/merge_editor_name_strings'
+    = render 'works/forms/fields/merge_editor_name_strings'
   %tr#pages
-    = render :partial => 'works/forms/fields/merge_pages', :locals => {:form => form}
+    = render 'works/forms/fields/merge_pages', :form => form
   %tr#publisher
-    = render :partial => 'works/forms/fields/merge_publisher'
+    = render 'works/forms/fields/merge_publisher'
   - if current_user.has_role?("admin", System)
     %tr#keywords
-      = render :partial => 'works/forms/fields/merge_keywords'
+      = render 'works/forms/fields/merge_keywords'
   %tr#abstract
-    = render :partial => 'works/forms/fields/merge_abstract', :locals => {:form => form}
+    = render 'works/forms/fields/merge_abstract', :form => form
 
 = hidden_field_tag :type, 'BookEdited'
-= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+= render 'works/forms/fields/form_buttons', :form => form
