@@ -58,12 +58,6 @@ module ApplicationHelper
     coin
   end
 
-  #Encodes UTF-8 data such that it is valid in HTML
-  def encode_for_html(data)
-    code = HTMLEntities.new
-    code.encode(data, :decimal)
-  end
-
   #Encodes UTF-8 data such that it is valid in XML
   def encode_for_xml(data)
     code = HTMLEntities.new
