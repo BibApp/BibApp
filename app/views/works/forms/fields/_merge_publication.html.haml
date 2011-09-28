@@ -2,8 +2,7 @@
 %td.duplicate
   = label_tag 'dupe_publication', "Periodical Title:"
   %br/
-  - publication = @dupe.publication unless @dupe.publication.nil?
-  = text_field_tag 'dupe_publication', publication.name, {:class => 'text', :readonly => 'readonly'}
+  = text_field_tag 'dupe_publication', @dupe.publication.try(:name), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Publication field with Auto-Complete.
   -# Also includes some special Javascript - c.f. included javascript file

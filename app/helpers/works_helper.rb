@@ -291,4 +291,15 @@ def link_to_google_book(work)
     string_or_object.kind_of?(String) ? string_or_object : string_or_object.send(field)
   end
 
+  def reorder_list_message(list_type)
+    case list_type
+      when "author_name_strings"
+        "Successfully updated order of authors!"
+      when "editor_name_strings"
+        "Successfully updated order of editors!"
+      else
+        "Successfully updated order of list!"
+    end
+  end
+
 end

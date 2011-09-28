@@ -1,7 +1,6 @@
 -# Specialized auto-complete list for Publications
--# Notice it adds an 'id' which contains Publisher Name & ISSN/ISBN 
+-# Notice it adds an 'id' which contains Publisher Name & ISSN/ISBN
 -# This allows it to populate 3 fields at once, when a publication is selected
 %ul.autocomplete_list
   - publications.each do |pub|
-    %li{ :id => "#{pub.publisher.name}~~#{pub.issn_isbn}", :class => "autocomplete_item"}=pub.name 
-      
+    %li{ :id => "#{pub.publisher.name}~~#{pub.issn_isbn}", :class => "autocomplete_item"}= pub.name
