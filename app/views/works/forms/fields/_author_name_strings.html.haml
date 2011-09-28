@@ -1,5 +1,4 @@
 - include_stylesheet('specific/works/fields/common')
--# TODO this view is still pretty complex - can it be made simpler?
 -# Add an Author field, with Auto-Complete.
 -# Also adds a list of existing Authors
 
@@ -10,7 +9,6 @@
 - authors ||= @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} if wns.role == role} if @work.name_strings
 - authors.compact!
 
-- count = 0
 .author_block
   = label :author, :string, "#{role}(s):"
   %span.instructions Format: LastName, FirstName Middle (e.g., Smith, John L.)
@@ -18,14 +16,13 @@
   %ol#author_name_strings_list
     -# Build list of authors
     - if authors.empty?
-      %li.list_item{:id => "author_#{count}", :class => "movable"}
+      %li.list_item{:id => "author_0", :class => "movable"}
         = hidden_field_tag "author_roles[]", "#{role}"
         = text_field_tag "authors[]", nil, {:class => 'text'}
-        = link_to_remote "[remove]",  :url => remove_author_from_list_works_url(:ns_id => count, :id => @work.id)
+        = link_to_remote "[remove]",  :url => remove_author_from_list_works_url(:ns_id => 0, :id => @work.id)
     -else
-      - authors.each do |author|
-        = render 'works/forms/fields/author_list_item', :ns_id=>count, :ns_name=>author[:name], :ns_role=>author[:role]
-        - count += 1
+      - authors.each_with_index do |author, i|
+        = render 'works/forms/fields/author_list_item', :ns_id=> i, :ns_name=> author[:name], :ns_role=> author[:role]
 
   -# Ajax-enabled link to add new items to below list
   = #link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
