@@ -64,8 +64,6 @@ module ApplicationHelper
     code.encode(data, :basic)
   end
 
-
-
   #Finds the Error message for a *specific field* in a Form
   # This is useful to display the error messages next to the
   # appropriate field in a form.
