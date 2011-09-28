@@ -29,21 +29,6 @@ module ApplicationHelper
     link_to link_text, "#{base_url}?#{suffix}"
   end
 
-  def work_details(work)
-    str = ""
-    if work.publication.authority.present? and work.publication.authority.name != "Unknown"
-      str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id)
-      str += " &#149; "
-    end
-    str += "#{work.publication_date.year} " if work.publication_date != nil
-    str += " #{work.volume}" if work.volume != nil
-    str += "(#{work.issue}), " if work.issue != nil && !work.issue.empty?
-    str += " pgs."
-    str += " #{work.start_page}-" if work.start_page != nil
-    str += "#{work.end_page}." if work.end_page != nil
-    str
-  end
-
   def link_to_google_book(work)
     if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
