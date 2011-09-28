@@ -1,4 +1,3 @@
--# TODO this view is complex - can it be simplified?
 -# Used by Auto-Complete functionality
 -# Add a single list item to a list, with a link to remove it
 -#
@@ -8,26 +7,19 @@
 -#    :ns_name    => name_string name
 -#    :ns_role    => Contributor role (e.g, Author, Editor, etc)
 
--# Get the roles for this work subklass
-- roles = @work.class.roles
--#Delete the first role; it's Author
-- roles.delete_at(0)
+-# Get the contributor roles for this work subklass
+- roles = @work.all_contributor_roles
 
 -# Initialize optional input variables
-- ns_name ||= ""
-- ns_role ||= roles[0] unless roles.empty?
-- if ns_role.nil? or ns_role.empty?
-  - ns_role = ""
+- ns_name ||= ''
+- ns_role ||= roles[0] if roles.present?
+- ns_role = '' if ns_role.blank?
 
 %li.list_item{:id => "contributor_#{ns_id}", :class => "movable"}
   %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
     - roles.each do |r|
-      - if r == ns_role
-        %option{:selected => "selected", :value => r}
-          = r
-      - else
-        %option{:value => r}
-          = r
+      %option{:value => r, :selected => (r == ns_role ? 'selected' : nil)}= r
+
   -#= select :roles, ns_id, roles, {:include_blank => false, :selected => ns_role.to_s }
   = text_field_tag "contributors[]", ns_name, {:class=>'text'}
   -# Ajax-enabled link to add new items to below list

@@ -697,6 +697,10 @@ class Work < ActiveRecord::Base
     self.class.contributor_role
   end
 
+  def all_contributor_roles
+    self.class.roles - [self.contributor_role]
+  end
+
   # In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new
