@@ -1,0 +1,6 @@
+- if editors
+  - editors.each do |editor|
+    - name = (editor.kind_of?(String) ? editor : editor.name)
+    - id = (editor.kind_of?(String) ? editor : editor.id)
+    = render 'works/forms/fields/list_item', :list_type => 'editor_name_strings', :item_id => id,
+      :item_value => name, :item_class=>"movable"

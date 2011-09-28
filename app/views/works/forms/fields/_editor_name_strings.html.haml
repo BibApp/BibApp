@@ -1,4 +1,3 @@
--# TODO this view is complex, can it be simplified?
 -# Add an Editor field, with Auto-Complete.
 -# Also adds a list of existing Editors
 
@@ -9,20 +8,21 @@
 - editors = @editor_name_strings if @editor_name_strings
 
 = label :editor, :string, "Editor(s):"
-= text_field_with_auto_complete :editor, :string, {:class=>'text'}, {:method => :get, :skip_style => true, :on_show => "function(element, update) {show_autocomplete_names(element, update);}", :on_hide => "function(element, update) {hide_autocomplete_names(element, update);}", :frequency => 0.5}
+= text_field_with_auto_complete :editor, :string, {:class=>'text'},
+  {:method => :get, :skip_style => true,
+  :on_show => "function(element, update) {show_autocomplete_names(element, update);}",
+  :on_hide => "function(element, update) {hide_autocomplete_names(element, update);}", :frequency => 0.5}
 -# Ajax-enabled link to add new items to below list
 = link_to_remote "Add Editor to List", :url => add_item_to_list_works_url, :condition => "$('editor_string').value.length > 0",
   :with => "'list_type=editor_name_strings&item_value='+$F('editor_string')+'&item_class=movable&sortable=true&clear_field=editor_string'"
 -# If more than one editor name, add a hint for how to reorder them
-- if editors and editors.length>1
+- if editors and editors.length > 1
   %p#list_hint
     (Drag and drop names to reorder editors in list)
 %ol.form_item_list#editor_name_strings_list
-  - if editors
-    - editors.each do |editor|
-      - name = (editor.kind_of?(String) ? editor : editor.name)
-      - id = (editor.kind_of?(String) ? editor : editor.id)
-      = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'editor_name_strings', :item_id => id, :item_value => name, :item_class=>"movable"}
+  = render 'works/forms/fields/editor_name_strings_list', :editors => editors
   -# make the editor list sortable, so users can change order of editors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
-  = sortable_element 'editor_name_strings_list', :update => 'list_hint', :url => {:action => "reorder_list", :list_type =>'editor_name_strings'}, :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
+  = sortable_element 'editor_name_strings_list', :update => 'list_hint',
+    :url => {:action => "reorder_list", :list_type =>'editor_name_strings'},
+    :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)

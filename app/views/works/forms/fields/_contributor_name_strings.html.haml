@@ -1,24 +1,15 @@
 - include_stylesheet('specific/works/fields/common')
--# TODO this view is complex, can it be simplified?
 -# Add an contributors field, with Auto-Complete.
 -# Also adds a list of existing contributors
 
 -# Get the roles for this work subklass
 -# Need arrays for the select box: <option value="Author">Author</option>
-- roles = @work.class.roles
--#Delete the first role; it's Author
-- first_role = roles.delete_at(0)
+- roles = @work.all_contributor_roles
 
--# Get the contributors associated with this work
--# We won't take the first role, because it's the Author,
--# which is displayed separately
-- contributors = @work.work_name_strings.collect{ |wns| {:name => wns.name_string.name, :role => wns.role} unless wns.role == first_role} if @work.name_strings
-- contributors.compact!
-
--#  @editor_name_strings should only exist if there were errors in saving work
+-# if name strings are explicitly passed then use them, otherwise collect them from the work
 - contributors = @editor_name_strings if @editor_name_strings
+- contributors ||= @work.work_name_strings.reject{|wns| wns.role == @work.creator_role}.collect{ |wns| {:name => wns.name_string.name, :role => wns.role}} if @work.name_strings
 
-- count = 0
 .author_block
   = label :author, :string, "Contributor(s):"
   %span.instructions Format: LastName, FirstName Middle (e.g., Smith, John L.)
@@ -26,21 +17,15 @@
   %ol#contributor_name_strings_list
     -# Build list of contributors
     - if contributors.empty?
-      %li.list_item{:id => "contributor_#{count}", :class => "movable"}
+      %li.list_item{:id => "contributor_0", :class => "movable"}
         %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
           - roles.each do |r|
-            - if r == roles[0]
-              %option{:selected => "selected", :value => r}
-                = r
-            - else
-              %option{:value => r}
-                = r
+            %option{:value => r, :selected => selected_if_equal(r, roles[0])}= r
         = text_field_tag "contributors[]", nil, {:class=>'text'}
-        = link_to_remote "[remove]", :url => remove_contributor_from_list_works_url(:ns_id => count)
+        = link_to_remote "[remove]", :url => remove_contributor_from_list_works_url(:ns_id => 0)
     -else
-      - contributors.each do |contributor|
-        = render :partial => 'works/forms/fields/contributor_list_item', :locals => {:ns_id=>count, :ns_name=>contributor[:name], :ns_role=>contributor[:role]}
-        - count += 1
+      - contributors.each_with_index do |contributor, i|
+        = render 'works/forms/fields/contributor_list_item', :ns_id=> i, :ns_name=>contributor[:name], :ns_role=>contributor[:role]
 
   -# Ajax-enabled link to add new items to below list
   = link_to_remote "[add more contributors]", :url => add_contributor_to_list_works_url, :with => "'ns_id='+$('contributor_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
