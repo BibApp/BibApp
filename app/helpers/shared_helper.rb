@@ -66,4 +66,30 @@ module SharedHelper
     end
   end
 
+  def add_filter(params, facet, value, count)
+    filter = Hash.new
+    if params[:fq]
+      filter[:fq] = params[:fq].collect
+    else
+      filter[:fq] = []
+    end
+
+    filter[:fq] << "#{facet}:\"#{value}\""
+    filter[:fq].uniq!
+
+    link_to "#{value} (#{count})", params.merge(filter)
+  end
+
+  def remove_filter(params, facet)
+    filter = Hash.new
+    if params[:fq]
+      filter[:fq] = params[:fq].collect
+      filter[:fq].delete(facet)
+      filter[:fq].uniq!
+
+      #Split filter into field name and display value (they are separated by a colon)
+      field_name, display_value = facet.split(':')
+      link_to "#{display_value}", params.merge(filter)
+    end
+  end
 end
