@@ -4,7 +4,7 @@
 %h3.heading= link_to "Groups", groups_path
 %ol#groups
   -# if there's a count specified, only show the first few
-  - groups = count!=nil ? @facets[:groups_data].first(count) : @facets[:groups_data]
+  - groups = (count ? @facets[:groups_data].first(count) : @facets[:groups_data])
   - groups.each do |g|
     - name, id = Group.parse_solr_data(g.name)
     %li
