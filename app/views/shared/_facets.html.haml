@@ -27,7 +27,6 @@
       .facet
         .facet_heading Formats
         %ol.facet_filters
-          - logger.debug("ViewFQ: #{params[:fq].inspect}")
           - @facets[:types].each do |p|
             %li
               = add_filter(params,"type_facet",p.name,p.value)
