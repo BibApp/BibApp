@@ -29,24 +29,6 @@ module ApplicationHelper
     link_to link_text, "#{base_url}?#{suffix}"
   end
 
-  def link_to_google_book(work)
-    if !work.publication.nil? and !work.publication.isbns.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
-        work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
-    elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
-        work.publication.issn_isbn
-        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
-    else
-      # Nothing
-    end
-  end
-
   def coin(work)
     # @TODO - improve - probably have subklass.to_coin methods for each.
     # Genre differences: journal/article = atitle ; book/proceeding = title
