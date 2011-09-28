@@ -10,14 +10,14 @@ class PasswordsController < ApplicationController
   def create
     respond_to do |format|
 
-      if user = User.find_by_email(params[:email])
+      if user = User.find_by_email(params[:password][:email])
         @new_password = User.random_password
         user.password = user.password_confirmation = @new_password
         user.save_without_session_maintenance
         UserMailer.new_password(user, @new_password).deliver
 
         format.html do
-          flash[:notice] = "We sent a new password to #{params[:email]}"
+          flash[:notice] = "We sent a new password to #{params[:password][:email]}"
           redirect_to login_url
         end
       else
