@@ -9,7 +9,7 @@ rss_document_on(xml) do
 
         xml.description {
           xml.cdata!(work['type'])
-          xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
+          xml.cdata!(render("shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :work => work))
           xml.cdata!(work['abstract'])
         }
 
