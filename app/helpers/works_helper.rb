@@ -262,4 +262,18 @@ def link_to_google_book(work)
     end
   end
 
+  def issn_isbn_field_label(isbn, issn, isrc)
+    label = case
+      when isbn
+        'ISBN'
+      when issn
+        'ISSN'
+      when isrc
+        'ISRC'
+      else
+        'ISSN/ISBN'
+    end
+    label + ':'
+  end
+
 end
