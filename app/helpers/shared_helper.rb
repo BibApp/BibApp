@@ -92,4 +92,11 @@ module SharedHelper
       link_to "#{display_value}", params.merge(filter)
     end
   end
+
+  #Determines the pretty name of a particular Work Status
+  def work_state_name(work_state_id)
+    #Load Work States hash from personalize.rb
+    $WORK_STATUS[work_state_id]
+  end
+
 end

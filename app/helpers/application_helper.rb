@@ -64,11 +64,7 @@ module ApplicationHelper
     code.encode(data, :basic)
   end
 
-  #Determines the pretty name of a particular Work Status
-  def work_state_name(work_state_id)
-    #Load Work States hash from personalize.rb
-    $WORK_STATUS[work_state_id]
-  end
+
 
   #Finds the Error message for a *specific field* in a Form
   # This is useful to display the error messages next to the
