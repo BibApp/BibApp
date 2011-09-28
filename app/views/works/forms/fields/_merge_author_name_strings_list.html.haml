@@ -1,0 +1,6 @@
+%ol.form_item_list#author_name_strings_list
+  - authors.each do |author|
+    - name = (author.kind_of?(String) ? author : author.name)
+    - id = (author.kind_of?(String) ? author : author.id)
+    = render 'works/forms/fields/list_item', :list_type => 'author_name_strings',
+      :item_id => id, :item_value => name, :item_class=>"movable"
