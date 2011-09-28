@@ -7,6 +7,6 @@
 - if @facets[:people_data].size > 1
   %h3.heading Co-authors at #{$UNIVERSITY_SHORT_NAME}
   - if @facets[:people_data].size <= 7
-    = render 'shared/co_authors_list', :solr_people_data => @facets[:people_data]
+    = render 'shared/coauthors_list', :solr_people_data => @facets[:people_data]
   - else
-    = render 'shared/co_authors_list_small', :solr_people_data => @facets[:people_data]
+    = render 'shared/coauthors_list_small', :solr_people_data => @facets[:people_data]
