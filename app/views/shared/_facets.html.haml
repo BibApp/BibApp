@@ -44,24 +44,7 @@
 
     / Years - to use facet partial need to sort @facets[:years] by name, descending
     - if @facets[:years].present?
-      .facet
-        .facet_heading Years
-
-        - sorted_hash = @facets[:years].collect{|p| [p.name, p.value]}.sort{|a,b| b <=> a}
-
-        %ol#top-five-years.facet_filters
-          -sorted_hash.first(5).each do |key, value|
-            %li.show
-              = add_filter(params,"year_facet", key, value)
-
-        - if sorted_hash.size > 5
-          %ol#all-years.facet_filters{:style => "display:none"}
-
-            -sorted_hash.each do |key, value|
-              %li.show
-                = add_filter(params,"year_facet", key, value)
-
-          %p.more_filters= link_to_function "More Years", "$('all-years').show(); $('top-five-years').hide(); this.hide();"
+      = render 'shared/facet', :facet_key => :years, :facets => @facets[:years].sort {|a, b| b.name <=> a.name }
 
     / Publications
     -#Remove Publication facets that represents the current publication or "Unknown"
