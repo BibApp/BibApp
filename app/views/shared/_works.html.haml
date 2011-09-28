@@ -41,10 +41,7 @@
           %label Send to:
           %select{:name => "export"}
             - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
-              - if opt.downcase == @export
-                %option{:value => "#{opt.downcase}", :selected=>"selected"}=opt
-              - else
-                %option{:value => "#{opt.downcase}"}=opt
+              %option{:value => opt.downcase, :selected => (opt.downcase == @export)}= opt
 
           = hidden_field_tag "q", @query
 
