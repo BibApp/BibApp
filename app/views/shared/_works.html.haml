@@ -17,12 +17,12 @@
           %label Show:
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
-              %option{:value => opt, :selected => (opt == @rows ? 'selected' : nil)}
+              %option{:value => opt, :selected => (opt == @rows ? 'selected' : nil)}= opt
 
           %label Sort by:
           %select{:name => "sort"}
             - ["", "Year", "Title", "Score", "Created"].each do |opt|
-              %option{:value => opt.downcase, :selected => ((opt.downcase == @sort or opt.downcase == @sort.split("_")[0]) ? 'selected' : nil)}
+              %option{:value => opt.downcase, :selected => ((opt.downcase == @sort or opt.downcase == @sort.split("_")[0]) ? 'selected' : nil)}= opt
 
           %label Order:
           %select{:name => "order"}
