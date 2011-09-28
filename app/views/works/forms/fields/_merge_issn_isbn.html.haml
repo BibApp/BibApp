@@ -2,29 +2,17 @@
 -#   Defaults to displaying ISSN/ISBN
 -#
 -# Possible Input Variables:
--#    :isbn         => if true, displays ISBN heading 
+-#    :isbn         => if true, displays ISBN heading
 -#    :issn         => if true, displays ISSN heading
 
 -# Initialize optional input variables
 - isbn ||= false
 - issn ||= false
-
-- if isbn
-  - label = "ISBN"
-- if issn
-  - label = "ISSN"
-- if !issn and !isbn
-  - label = "ISSN/ISBN"
-
 %td.duplicate
-  = label_tag 'dupe_issn_isbn', "#{label}:"
+  = label_tag 'dupe_issn_isbn', issn_isbn_field_label(isbn, issn, false)
   %br/
-  - publication = @dupe.publication unless @dupe.publication.nil?
-  - issn_isbn = publication.issn_isbn unless publication.nil?
-  = text_field_tag 'dupe_issn_isbn', issn_isbn, {:class=>'text mediumbox', :readonly => 'readonly'}
+  = text_field_tag 'dupe_issn_isbn', @dupe.publication.try(:issn_isbn), {:class=>'text mediumbox', :readonly => 'readonly'}
 %td
   = label_tag 'issn_isbn', "#{label}:"
   %br/
-  - @publication = @work.publication unless @work.publication.nil?
-  - issn_isbn = @publication.issn_isbn unless @publication.nil?
-  = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'
+  = text_field_tag 'issn_isbn', @work.publication.try(:issn_isbn), :class=>'text mediumbox'
