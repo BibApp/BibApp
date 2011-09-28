@@ -10,7 +10,7 @@
             - headers.each do |h|
               %th #{h}
             %th
-        =render :partial => "authority_form_item", :collection => authorities, :locals => {:page => page}
+        = render :partial => "authority_form_item", :collection => authorities, :locals => {:page => page}
       = hidden_field_tag :page, page, :id => 'page'
     = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => authorities.length <= 1
     = submit_tag "Cancel", :name => 'cancel', :id => 'cancel_button', :disabled => authorities.length <= 1
