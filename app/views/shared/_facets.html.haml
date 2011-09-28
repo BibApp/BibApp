@@ -29,7 +29,7 @@
         %ol.facet_filters
           - @facets[:types].each do |p|
             %li
-              = add_filter(params,"type_facet",p.name,p.value)
+              = add_filter(params, "type_facet", p.name, p.value)
 
     / Groups
     -#Remove group facet that represents the current group
