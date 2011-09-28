@@ -113,7 +113,7 @@
     / Publishers
     -#Remove Publisher facets that represents the current publisher or "Unknown"
     - @facets[:publishers].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publisher) and @current_object.name==p.name) }
-    - if @facets[:publications].present?
+    - if @facets[:publishers].present?
       .facet
         .facet_heading Publishers
         %ol#top-five-publishers.facet_filters
