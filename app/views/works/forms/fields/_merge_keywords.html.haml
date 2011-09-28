@@ -7,19 +7,16 @@
 -#  @keywords should only exist if there were errors in saving work
 %td.duplicate
   -# Initialize our list of keywords
-  - keywords = @dupe.keywords if @dupe.keywords
   = label_tag 'dupe_keyword_name_strings[]', "Keyword(s):"
   -# Build list of keywords
-  - if keywords
-    - keywords.each do |keyword|
-      - name = (keyword.kind_of?(String) ? keyword : keyword.name)
-      %br/
-      = text_field_tag 'dupe_keyword_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
+  - @dupe.keywords.each do |keyword|
+    %br/
+    = text_field_tag 'dupe_keyword_name_strings[]', self_or_name(keyword), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of keywords
   -#  Default: use keywords assigned to @work.
   -#  @keywords should only exist if there were errors in saving work
-  - keywords = @work.keywords if @work.keywords
+  - keywords = @work.keywords
   - keywords = @keywords if @keywords
   = label :keyword, "Keyword(s):"
   %br/
@@ -29,8 +26,5 @@
       :with => "'list_type=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'"
   %ul.form_item_list#keywords_list
     -# Build list of existing keywords
-    - if keywords
-      - keywords.each do |keyword|
-        - name = (keyword.kind_of?(String) ? keyword : keyword.name)
-        - id = (keyword.kind_of?(String) ? keyword : keyword.id)
-        = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'keywords', :item_id => id, :item_value => name}
+    - keywords.each do |keyword|
+      = render 'works/forms/fields/list_item', :list_type => 'keywords', :item_id => self_or_id(keyword), :item_value => self_or_name(keyword)

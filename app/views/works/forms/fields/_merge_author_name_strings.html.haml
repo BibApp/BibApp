@@ -8,9 +8,8 @@
   -# Build list of authors
   - if authors
     - authors.each do |author|
-      - name = (author.kind_of?(String) ? author : author.name)
       %br/
-      = text_field_tag 'dupe_author_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
+      = text_field_tag 'dupe_author_name_strings[]', self_or_name(author), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of authors
   -#  Default: use authors assigned to @work.

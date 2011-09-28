@@ -18,7 +18,7 @@
 %li.list_item{:id => "contributor_#{ns_id}", :class => "movable"}
   %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
     - roles.each do |r|
-      %option{:value => r, :selected => (r == ns_role ? 'selected' : nil)}= r
+      %option{:value => r, :selected => selected_if_equal(r, ns_role)}= r
 
   -#= select :roles, ns_id, roles, {:include_blank => false, :selected => ns_role.to_s }
   = text_field_tag "contributors[]", ns_name, {:class=>'text'}

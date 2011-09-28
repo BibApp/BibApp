@@ -276,4 +276,19 @@ def link_to_google_book(work)
     label + ':'
   end
 
+  #The self_or_x methods return the passed object if a string or the field value for :x if not.
+  #The exception is self_or_field which is a general method to implement these
+  #Used to simplify some of the views/works/forms/fields views
+  def self_or_name(string_or_object)
+    self_or_field(string_or_object, :name)
+  end
+
+  def self_or_id(string_or_object)
+    self_or_field(string_or_object, :id)
+  end
+
+  def self_or_field(string_or_object, field)
+    string_or_object.kind_of?(String) ? string_or_object : string_or_object.send(field)
+  end
+
 end

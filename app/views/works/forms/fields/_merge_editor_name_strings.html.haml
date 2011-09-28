@@ -8,9 +8,8 @@
   -# Build list of editors
   - if editors
     - editors.each do |editor|
-      - name = (editor.kind_of?(String) ? editor : editor.name)
       %br/
-      = text_field_tag 'dupe_editor_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
+      = text_field_tag 'dupe_editor_name_strings[]', self_or_name(editor), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of editors
   -#  Default: use editors assigned to @work.
