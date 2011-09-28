@@ -41,13 +41,13 @@
         %ol#top-five-groups.facet_filters
           - @facets[:groups].first(5).each do |g|
             %li.show
-              = add_filter(params,"group_facet",g.name,g.value)
+              = add_filter(params,"group_facet", g.name, g.value)
 
         - if @facets[:groups].size > 5
           %ol#all-groups.facet_filters{:style => "display:none"}
             - @facets[:groups].each do |g|
               %li.show
-              = add_filter(params,"group_facet",g.name,g.value)
+              = add_filter(params,"group_facet", g.name, g.value)
 
           %p.more_filters= link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
 
@@ -60,13 +60,13 @@
         %ol#top-five-people.facet_filters
           - @facets[:people].first(5).each do |p|
             %li.show
-              = add_filter(params,"person_facet",p.name,p.value)
+              = add_filter(params,"person_facet", p.name, p.value)
 
         - if @facets[:people].size > 5
           %ol#all-people.facet_filters{:style => "display:none"}
             -@facets[:people].each do |p|
               %li.show
-                = add_filter(params,"person_facet",p.name,p.value)
+                = add_filter(params,"person_facet", p.name, p.value)
 
           %p.more_filters= link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
 
@@ -100,13 +100,13 @@
         %ol#top-five-publications.facet_filters
           - @facets[:publications].first(5).each do |p|
             %li.show
-              = add_filter(params,"publication_facet",p.name,p.value)
+              = add_filter(params,"publication_facet", p.name, p.value)
 
         - if @facets[:publications].size > 5
           %ol#all-publications.facet_filters{:style => "display:none"}
             - @facets[:publications].each do |p|
               %li.show
-                = add_filter(params,"publication_facet",p.name,p.value)
+                = add_filter(params,"publication_facet", p.name, p.value)
 
           %p.more_filters= link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
 
@@ -119,12 +119,12 @@
         %ol#top-five-publishers.facet_filters
           - @facets[:publishers].first(5).each do |p|
             %li.show
-              = add_filter(params,"publisher_facet",p.name,p.value)
+              = add_filter(params,"publisher_facet", p.name, p.value)
 
         - if @facets[:publications].size > 5
           %ol#all-publishers.facet_filters{:style => "display:none"}
             - @facets[:publishers].each do |p|
               %li.show
-                = add_filter(params,"publisher_facet",p.name,p.value)
+                = add_filter(params,"publisher_facet", p.name, p.value)
 
           %p.more_filters= link_to_function "More Publishers", "$('all-publishers').show(); $('top-five-publishers').hide(); this.hide();"
