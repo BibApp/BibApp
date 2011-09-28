@@ -70,12 +70,6 @@ module ApplicationHelper
     $WORK_STATUS[work_state_id]
   end
 
-  #Determines the pretty name of a particular Work Archival Status
-  def work_archive_state_name(work_archive_state_id)
-    #Load Work States hash from personalize.rb
-    $WORK_ARCHIVE_STATUS[work_archive_state_id]
-  end
-
   #Finds the Error message for a *specific field* in a Form
   # This is useful to display the error messages next to the
   # appropriate field in a form.
