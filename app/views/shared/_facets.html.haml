@@ -35,42 +35,14 @@
     / Groups
     -#Remove group facet that represents the current group
     - @facets[:groups].delete_if{ |g| @current_object.kind_of?(Group) and @current_object.name == g.name }
-    - if @facets[:groups].present?
-      .facet
-        .facet_heading Groups
-        %ol#top-five-groups.facet_filters
-          - @facets[:groups].first(5).each do |g|
-            %li.show
-              = add_filter(params,"group_facet", g.name, g.value)
-
-        - if @facets[:groups].size > 5
-          %ol#all-groups.facet_filters{:style => "display:none"}
-            - @facets[:groups].each do |g|
-              %li.show
-              = add_filter(params,"group_facet", g.name, g.value)
-
-          %p.more_filters= link_to_function "More Groups", "$('all-groups').show(); $('top-five-groups').hide(); this.hide();"
+    = render 'shared/facet', :facet_key => :groups, :facets => @facets[:groups]
 
     / People
     -#Remove person facet that represents the current person
     - @facets[:people].delete_if{ |p| @current_object.kind_of?(Person) and @current_object.name == p.name }
-    - if @facets[:people].present?
-      .facet
-        .facet_heading People
-        %ol#top-five-people.facet_filters
-          - @facets[:people].first(5).each do |p|
-            %li.show
-              = add_filter(params,"person_facet", p.name, p.value)
+    = render 'shared/facet', :facet_key => :people, :facets => @facets[:people]
 
-        - if @facets[:people].size > 5
-          %ol#all-people.facet_filters{:style => "display:none"}
-            -@facets[:people].each do |p|
-              %li.show
-                = add_filter(params,"person_facet", p.name, p.value)
-
-          %p.more_filters= link_to_function "More People", "$('all-people').show(); $('top-five-people').hide(); this.hide();"
-
-    / Years
+    / Years - to use facet partial need to sort @facets[:years] by name, descending
     - if @facets[:years].present?
       .facet
         .facet_heading Years
@@ -94,37 +66,9 @@
     / Publications
     -#Remove Publication facets that represents the current publication or "Unknown"
     - @facets[:publications].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publication) and @current_object.name==p.name) }
-    - if @facets[:publications].present?
-      .facet
-        .facet_heading Publications
-        %ol#top-five-publications.facet_filters
-          - @facets[:publications].first(5).each do |p|
-            %li.show
-              = add_filter(params,"publication_facet", p.name, p.value)
-
-        - if @facets[:publications].size > 5
-          %ol#all-publications.facet_filters{:style => "display:none"}
-            - @facets[:publications].each do |p|
-              %li.show
-                = add_filter(params,"publication_facet", p.name, p.value)
-
-          %p.more_filters= link_to_function "More Publications", "$('all-publications').show(); $('top-five-publications').hide(); this.hide();"
+    = render 'shared/facet', :facet_key => :publications, :facets => @facets[:publications]
 
     / Publishers
     -#Remove Publisher facets that represents the current publisher or "Unknown"
     - @facets[:publishers].delete_if{ |p| p.name == "Unknown" or (@current_object.kind_of?(Publisher) and @current_object.name==p.name) }
-    - if @facets[:publishers].present?
-      .facet
-        .facet_heading Publishers
-        %ol#top-five-publishers.facet_filters
-          - @facets[:publishers].first(5).each do |p|
-            %li.show
-              = add_filter(params,"publisher_facet", p.name, p.value)
-
-        - if @facets[:publications].size > 5
-          %ol#all-publishers.facet_filters{:style => "display:none"}
-            - @facets[:publishers].each do |p|
-              %li.show
-                = add_filter(params,"publisher_facet", p.name, p.value)
-
-          %p.more_filters= link_to_function "More Publishers", "$('all-publishers').show(); $('top-five-publishers').hide(); this.hide();"
+    = render 'shared/facet', :facet_key => :publishers, :facets => @facets[:publishers]
