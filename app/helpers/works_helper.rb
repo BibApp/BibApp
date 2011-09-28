@@ -211,12 +211,12 @@ module WorksHelper
   #as its second element an array of name strings for contributors with those roles.
   def contributors_by_role(work)
     #This gets us an ordered hash
-    work.work_name_strings.select {|wns| wns.role != work.creator_role}.group_by {|wns| wns.role}
+    work.work_name_strings.select { |wns| wns.role != work.creator_role }.group_by { |wns| wns.role }
   end
 
   #takes an array of work name strings and gives back the html for links to the names
   def work_name_strings_to_links(work_name_strings)
-    work_name_strings.collect {|wns| wns.name_string}.collect do |ns|
+    work_name_strings.collect { |wns| wns.name_string }.collect do |ns|
       link_to(h(ns.name.gsub(',', ', ')), name_string_path(ns))
     end.join(', ').html_safe
   end
@@ -231,7 +231,7 @@ module WorksHelper
 
   def decide_partial(work, prefix)
     name = work.class.name.to_s.underscore
-    partial = if ['.haml', ''].detect {|suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form#{prefix}_#{name}.html#{suffix}")}
+    partial = if ['.haml', ''].detect { |suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form#{prefix}_#{name}.html#{suffix}") }
       name
     else
       'generic'
@@ -244,7 +244,7 @@ module WorksHelper
     "Add Works#{suffix}"
   end
 
-def link_to_google_book(work)
+  def link_to_google_book(work)
     if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
         haml_tag :span, {:title => "ISBN"}
@@ -299,6 +299,12 @@ def link_to_google_book(work)
         "Successfully updated order of editors!"
       else
         "Successfully updated order of list!"
+    end
+  end
+
+  def alpha_pagination_items(include_numbers = false)
+    ('A'..'Z').to_a.tap do |items|
+      items = ('0'..'9').to_a + items if include_numbers
     end
   end
 
