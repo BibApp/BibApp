@@ -125,14 +125,14 @@ class ApplicationController < ActionController::Base
     end
 
     # Enable Citeproc
-    if @export && !@export.empty?
+    if @export.present?
       works = Work.order("publication_date desc").find(@works.collect { |c| c['pk_i'] })
       ce = WorkExport.new
       @works = ce.drive_csl(@export, works)
     end
 
     # Gather Spelling Suggestions
-    if !@query.empty?
+    if @query.present?
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
       @spelling_suggestions.each do |suggestion|
