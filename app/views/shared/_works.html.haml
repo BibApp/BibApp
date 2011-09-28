@@ -33,10 +33,7 @@
           %label Order:
           %select{:name => "order"}
             - ["Ascending", "Descending"].each do |opt|
-              - if opt.downcase == @order
-                %option{:selected => "selected", :value => "#{opt.downcase}"}= opt.titleize
-              - else
-                %option{:value => "#{opt.downcase}"}= opt
+              %option{:value => opt.downcase, :selected => (opt.downcase == @order)}= opt
 
           %label Send to:
           %select{:name => "export"}
