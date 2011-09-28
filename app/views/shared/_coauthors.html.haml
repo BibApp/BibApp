@@ -7,30 +7,6 @@
 - if @facets[:people_data].size > 1
   %h3.heading Co-authors at #{$UNIVERSITY_SHORT_NAME}
   - if @facets[:people_data].size <= 7
-    %ol#coauthors.span-6.append-1
-      -@facets[:people_data].each do |p|
-        - last_name, id, image_url = Person.parse_solr_data(p.name)
-        - #Skip over the current person in the co-author listing
-        - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
-        %li.inline
-          .person-coauthor
-            .person-image-wrapper
-              = link_to(image_tag(image_url, :size => "56x74", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
-            .person-image-metadata
-              %strong #{ p.value}
-            .person-last-name.left
-              %strong #{link_to truncate(last_name, :length => 12), person_path(id)}
+    = render 'shared/co_authors_list', :solr_people_data => @facets[:people_data]
   - else
-    %ol#coauthors.span-6.append-1
-      -@facets[:people_data].each do |p|
-        - last_name, id, image_url = Person.parse_solr_data(p.name)
-        - #Skip over the current person in the co-author listing
-        - next if @current_object.kind_of?(Person) and @current_object.id == id.to_i
-        %li.inline
-          .person-coauthor-tiny
-            .person-image-wrapper
-              #{ link_to(image_tag(image_url, :size => "44x55", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))}
-            .person-image-metadata-tiny
-              %strong #{p.value}
-            .person-last-name-tiny.left
-              %strong #{link_to truncate(last_name, :length => 10), person_path(id)}
+    = render 'shared/co_authors_list_small', :solr_people_data => @facets[:people_data]
