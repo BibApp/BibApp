@@ -42,8 +42,7 @@
     = render 'shared/facet', :facet_key => :people, :facets => @facets[:people]
 
     / Years - to use facet partial need to sort @facets[:years] by name, descending
-    - if @facets[:years].present?
-      = render 'shared/facet', :facet_key => :years, :facets => @facets[:years].sort {|a, b| b.name <=> a.name }
+    = render 'shared/facet', :facet_key => :years, :facets => @facets[:years].sort {|a, b| b.name <=> a.name }
 
     / Publications
     -#Remove Publication facets that represents the current publication or "Unknown"
