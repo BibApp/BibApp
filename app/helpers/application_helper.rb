@@ -232,4 +232,9 @@ module ApplicationHelper
     authorizable.is_a?(Class) ? nil : authorizable.id
   end
 
+ #return 'selected' if x == y, nil otherwise. Useful for select option generation
+  def selected_if_equal(x, y)
+    x == y ? 'selected' : nil
+  end
+
 end
