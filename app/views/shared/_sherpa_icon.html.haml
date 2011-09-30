@@ -1,3 +1,3 @@
-- color = publisher.romeo_color.present? ? publisher.romeo_color.to_sym : :unknown
+- color = publisher.romeo_color.try(:to_sym) || :unknown
 %span{:class => ['sherpa-icon', "romeo-#{color}"], :title => "SHERPA: #{$SHERPA_COLORS[color]}"}
   &nbsp;
