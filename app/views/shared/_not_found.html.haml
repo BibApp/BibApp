@@ -8,20 +8,13 @@
       longer at #{$UNIVERSITY_SHORT_NAME}.
 
   %p Did you try searching? Enter a keyword(s) in the search field above.
-    
+
 #facets.span-24
-  / People
   .span-5.prepend-1
-    = render :partial => "shared/people_list", :locals => {:count => 5}
-
-  / Groups
+    = render "shared/people_list", :count => 5
   .span-5.prepend-1
-    = render :partial => "shared/groups", :locals => {:count => 5}
-
-  / Publications
+    = render "shared/groups", :count => 5
   .span-5.prepend-1
-    = render :partial => "shared/publications", :locals => {:count => 5}
-
-  / Publishers
+    = render "shared/publications", :count => 5
   .span-4.prepend-1.last
-    = render :partial => "shared/publishers", :locals => {:count => 5}
+    = render "shared/publishers", :count => 5
