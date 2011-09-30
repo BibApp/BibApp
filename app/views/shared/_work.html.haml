@@ -27,7 +27,7 @@
 
   -if show_dupes
     -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
-    -if work['status']== Work::STATE_DUPLICATE
+    -if work['status'] == Work::STATE_DUPLICATE
       = render "shared/duplicate_of_work", :work => work
 
   -# Change the class name depending on dupe or not
@@ -35,8 +35,8 @@
 
   -#Display the work
   %div{:class => the_class}
-    - if work['issn_isbn'] != nil && work['issn_isbn'].length > 9
-      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title=>"ISBN:#{work['issn_isbn'].gsub(" ", "")}"}
+    - if work['issn_isbn'] && work['issn_isbn'].length > 9
+      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN:#{work['issn_isbn'].gsub(' ', '')}"}
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
     %h5.work-type #{work['type']}
     -#display status of a work, if specified
@@ -45,11 +45,11 @@
 
     .links
       - unless links_array.include? 'none'
-        -links_array.each do |link|
+        - links_array.each do |link|
 
           -#"Find It" Link
           -if link == :find_it
-            =link_to_findit(work)
+            = link_to_findit(work)
 
           -#"Add to Saved" and "Remove from Saved" links
           -if link == :saved
@@ -61,10 +61,10 @@
               = link_to "Save", add_to_saved_work_url(work['pk_i'])
 
           -#"Edit" link
-          -if link==:edit
+          - if link==:edit
             =link_to "Edit", edit_work_path(work['pk_i'], :return_path=>@return_path)
 
           -#As long as not last link, add a vertical pipe between links
-          -unless link==links_array.last
-            ="|"
+          - unless link==links_array.last
+            |
   .clear-both
