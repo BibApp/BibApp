@@ -12,7 +12,6 @@
 -#                                    :edit,    (edit work)
 -#                                    :none     (trumps all)}
 
-
 - include_stylesheet('specific/shared/_work')
 -# Initialize optional input variables
 - allow_select ||= false
@@ -32,9 +31,7 @@
       = render "shared/duplicate_of_work", :work => work
 
   -# Change the class name depending on dupe or not
-  -the_class = "screen-format"
-  -if show_dupes
-    -the_class = "screen-format-dupes"
+  -the_class = show_dupes ? "screen-format-dupes" : "screen-format"
 
   -#Display the work
   %div{:class => the_class}
