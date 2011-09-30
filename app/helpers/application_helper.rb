@@ -237,23 +237,4 @@ module ApplicationHelper
     x == y ? 'selected' : nil
   end
 
-  def work_action_link(link_type, solr_work, return_path = nil, saved = nil)
-    work_id = solr_work['pk_i']
-    case link_type
-      when :find_it
-        link_to_findit(solr_work)
-      when :saved
-        if saved and saved.items and saved.items.include?(work_id.to_i)
-          content_tag(:strong, 'Saved - ') +
-            link_to('Remove', remove_from_saved_work_url(work_id))
-        else
-          link_to 'Save', add_to_saved_work_url(work_id)
-        end
-      when :edit
-        link_to 'Edit', edit_work_path(work_id, :return_path => return_path)
-      else
-        nil
-    end
-  end
-
 end
