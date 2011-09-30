@@ -30,11 +30,8 @@
     -if work['status'] == Work::STATE_DUPLICATE
       = render "shared/duplicate_of_work", :work => work
 
-  -# Change the class name depending on dupe or not
-  -the_class = show_dupes ? "screen-format-dupes" : "screen-format"
-
   -#Display the work
-  %div{:class => the_class}
+  %div{:class => (show_dupes ? "screen-format-dupes" : "screen-format")}
     - if work['issn_isbn'] && work['issn_isbn'].length > 9
       %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN:#{work['issn_isbn'].gsub(' ', '')}"}
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
