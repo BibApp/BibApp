@@ -25,9 +25,9 @@
     .select_multiple
       = check_box_tag "work_id[]", "#{work['pk_i']}"
 
-  -if show_dupes
+  - if show_dupes
     -#If this is a duplicate (status==2), display the "accepted" work this is a duplicate of
-    -if work['status'] == Work::STATE_DUPLICATE
+    - if work['status'] == Work::STATE_DUPLICATE
       = render "shared/duplicate_of_work", :work => work
 
   -#Display the work
