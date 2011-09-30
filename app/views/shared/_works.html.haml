@@ -17,22 +17,22 @@
           %label Show:
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
-              %option{:value => opt, :selected => (opt == @rows ? 'selected' : nil)}= opt
+              %option{:value => opt, :selected => selected_if_equal(opt, @rows)}= opt
 
           %label Sort by:
           %select{:name => "sort"}
             - ["", "Year", "Title", "Score", "Created"].each do |opt|
-              %option{:value => opt.downcase, :selected => ((opt.downcase == @sort or opt.downcase == @sort.split("_")[0]) ? 'selected' : nil)}= opt
+              %option{:value => opt.downcase, :selected => selected_if_equal(opt.downcase, @sort.split('_').first)}= opt
 
           %label Order:
           %select{:name => "order"}
             - ["Ascending", "Descending"].each do |opt|
-              %option{:value => opt.downcase, :selected => (opt.downcase == @order ? 'selected' : nil)}= opt
+              %option{:value => opt.downcase, :selected => selected_if_equal(opt.downcase, @order)}= opt
 
           %label Send to:
           %select{:name => "export"}
             - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
-              %option{:value => opt.downcase, :selected => (opt.downcase == @export ? 'selected' : nil)}= opt
+              %option{:value => opt.downcase, :selected => selected_if_equal(opt.downcase, @export)}= opt
 
           = hidden_field_tag "q", @query
 
@@ -45,7 +45,8 @@
 
           = submit_tag 'Go'
 
-    .span-17.pagination #{ will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)}
+    = pagination = capture do
+      .span-17.pagination #{ will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)}
 
     - if @export.blank?
       .span-17.clear-both.no-padding-or-margin
@@ -56,4 +57,4 @@
       .span-17.clear-both.no-padding-or-margin
         = @works.html_safe
 
-    .span-17= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
+    = pagination
