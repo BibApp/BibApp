@@ -105,4 +105,22 @@ module SharedHelper
     filter
   end
 
+  #Take the list of facets of person data
+  #skip those that we don't want to show, convert those we do want to show to a hash, end if we reach a maximum number
+  def convert_and_filter_people_facets(person_facets, max_count, group, check_group, randomize)
+    person_facets ||= []
+    person_facets = person_facets.shuffle if randomize
+    acc = Array.new
+    counter = 0
+    person_facets.each do |facet|
+      last_name, id, image_url, group_ids, active, research_focus = Person.parse_solr_data(facet.name)
+      next if active.blank? or active == 'false'
+      next if check_group and group_ids.exclude?(group.id)
+      break if max_count and counter >= max_count
+      counter += 1
+      acc << {:last_name => last_name, :id => id, :value => facet.value, :image_url => image_url}
+    end
+    return acc
+  end
+
 end
