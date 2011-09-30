@@ -99,4 +99,10 @@ module SharedHelper
     $WORK_STATUS[work_state_id]
   end
 
+  def keyword_filter(keyword, object)
+    filter = [%Q(keyword_facet:"#{keyword.name}")]
+    filter << %Q(#{object.class.to_s.downcase}_facet:"#{object.name}") if object
+    filter
+  end
+
 end

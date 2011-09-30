@@ -7,15 +7,11 @@
     %ul
       - keywords.each do |kw|
         %li{:class => "tag#{kw.count}"}
-          - filter = Array.new
-          - filter << "keyword_facet:" + '"' + kw.name + '"'
-          - unless @current_object.nil?
-            - filter << "#{@current_object.class.to_s.downcase}_facet:" + '"' + @current_object.name + '"'
-          = link_to h(kw.name), search_path(:fq => filter)
+          = link_to h(kw.name), search_path(:fq => keyword_filter(kw, @current_object))
 
     #timeline-form.text-center
       = form_tag self.send("timeline_#{current_object.class.to_s.downcase}_keywords_path", current_object), :method => :get do
         = submit_tag "Load Timeline View", :onclick=>"go_dim()"
-\
+
   #darkBackgroundLayer.darkenBackground{:name=>"darkBackgroundLayer", :style=>"display:none;"}
   %img#spinner.highZ{:src=>"/images/ajax-loader.gif", :style=>"display:none;"}
