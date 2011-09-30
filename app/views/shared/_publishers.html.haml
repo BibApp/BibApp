@@ -4,8 +4,8 @@
 %h3.heading= link_to "Publishers", publishers_path
 %ol#publishers
   -# if there's a count specified, only show the first few
-  -publishers = count!=nil ? @facets[:publishers_data].first(count) : @facets[:publishers_data]
-  -publishers.each do |p|
+  - publishers = count!=nil ? @facets[:publishers_data].first(count) : @facets[:publishers_data]
+  - publishers.each do |p|
     - name, id = Publisher.parse_solr_data(p.name)
     - next if name == "Unknown"
     %li
