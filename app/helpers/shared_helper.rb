@@ -24,7 +24,7 @@ module SharedHelper
       end
     end
 
-    links.join(", ").html_safe
+    links.join("; ").html_safe
   end
 
   def link_to_editors(work)
@@ -42,7 +42,7 @@ module SharedHelper
         links << link_to("more...", work_path(work['pk_i']))
       end
 
-      str += links.join(", ")
+      str += links.join("; ")
       str += " (Eds.), "
       str
     end
