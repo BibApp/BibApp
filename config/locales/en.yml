@@ -25,7 +25,7 @@ en:
     more_people: "More people"
     more_publications: "More publications"
     more_publishers: "More publishers"
-    more_years: "More years"        
+    more_years: "More years"
     name: "Name"
     next: "next"
     percentage: "Percentage"
@@ -51,13 +51,13 @@ en:
       date: "Date Deposited"
       information: "Deposit Information"
       repository: "Repository"
-      return: "Return to work"   
+      return: "Return to work"
       success: "Deposit was successful!"
       title: "Title"
       treatment: "Treatment Deposited Item"
       uri: "URI of Deposited Item"
     duplicates:
-      results: 
+      results:
         zero: "No duplicates"
         one: "1 possible duplicate"
         other: "%{count} possible duplicates"
@@ -79,7 +79,7 @@ en:
     unverified: "unverified"
     verified: "verified"
     denied: "denied"
-        
+
   groups:
     index: "Groups"
     new: "Add group"
@@ -93,7 +93,7 @@ en:
     members: "Members"
     hidden: "Show hidden groups"
     roles: "Change Roles"
-    
+
   imports:
     new: "Import File"
 
@@ -101,10 +101,10 @@ en:
     edit: "Edit name"
     published: "Has published under this name"
     unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
-    
+
   pen_names:
     index: "Pen Names"
-  
+
   people:
     index: "People"
     new: "Add a person"
@@ -117,9 +117,9 @@ en:
     roles: "Manage roles"
     personal: "Personal Information"
     import_csv: "CSV load"
-    
+
   publications:
-    show: "Publicatioh"
+    show: "Publication"
     index: "Publications"
     new: "Add a publication"
     edit: "Edit publication"
@@ -127,7 +127,7 @@ en:
     confirm: "Really delete this publication?"
     publisher: "Published by"
     authority: "Admin publication authorities"
-    
+
   publishers:
     index: "Publishers"
     show: "Publisher"
@@ -139,12 +139,12 @@ en:
     authorized: "Authorized names"
     authority: "Admin Publisher Authorities"
     sherpa: "Update publisher data from SHERPA/RoMEO"
-    
+
   roles:
     index: "Manage Roles"
     new_admin: "Add administrator"
     new_editor: "Add editor"
-    
+
   search:
     results:
       one: "1 hit"
@@ -152,7 +152,7 @@ en:
     refine: "Refine Search"
     within: "Search within the results"
     query: "Search for: "
-    
+
   users:
     index: "User"
     show: "View"
@@ -162,7 +162,7 @@ en:
     delete: "Delete user"
     confirm: "Really delete this user?"
     role: "Update Roles"
- 
+
   works:
     index: "Works"
     show: "Work"
@@ -170,11 +170,11 @@ en:
     edit: "Edit work"
     delete: "Delete work"
     confirm: "Really delete this work?"
-    new_attachment: "Add attachement"
+    new_attachment: "Add attachment"
     authors: "Authors at {{institution}}"
     coauthors: "Coauthors at {{institution}}"
     contributors: "Contributor"
-    recent: "Recents works"
+    recent: "Recent works"
     recommendations: "Similar works at {{institution}}"
     no_abstract: "No abstract available"
     duplicate: "Show duplicates"
