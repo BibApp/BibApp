@@ -1,6 +1,11 @@
+-# may pass numbers, show_all to show number links and 'all' link respectively
+-# may pass path to give path for letter link
 - include_stylesheet('specific/shared/_alpha_pagination')
+- path ||= nil
+- numbers ||= nil
+- all ||= nil
 %ol#alpha-nav.pagination
-  - path ||= nil
-  - numbers ||= nil
+  - if path and all
+    %li{:class => {:current => 'all' == @page}} #{link_to 'All', "#{path[:path]}?page=all", :class => 'some'}
   - alpha_pagination_items(numbers).each do |item|
     = letter_link_for(@a_to_z, item, item == @page, :path => path)

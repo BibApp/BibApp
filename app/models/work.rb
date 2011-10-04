@@ -603,12 +603,18 @@ class Work < ActiveRecord::Base
     to_apa
   end
 
-#Convert Work into a String in the APA Citation Format
-# This is currently used during generation of METS file
-# conforming to EPrints DC XML Schema for use with SWORD.
-# @TODO: There is likely a better way to do this more generically.
-# TODO: it may also not be doing what it should - what if there are both authors and editors
-# - it's not clear how they are distinguished.
+  #Convert Work into a String in the APA Citation Format
+  # This is currently used during generation of METS file
+  # conforming to EPrints DC XML Schema for use with SWORD.
+  # @TODO: There is likely a better way to do this more generically.
+  # TODO: it may also not be doing what it should - what if there are both authors and editors
+  # - it's not clear how they are distinguished.
+  # TODO: in an ideal world this is just WorkExport.new.drive_csl('apa', self).html_safe
+  # However, I'm not sure that the current csl and/or citeproc.rb does it well enough to be better
+  # It may also be that how WorkExport feeds the work into the processor is a problem.
+  # Note for future reference there is a ruby 1.9.2 citeproc-ruby that is actually active - look into it
+  # when appropriate!
+  # Note that we could, if necessary, deploy this as a service
   def to_apa
     String.new.tap do |citation_string|
       #---------------------------------------------
