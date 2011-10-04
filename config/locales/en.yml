@@ -49,6 +49,16 @@ en:
       flash_update_publishers_successful: "Update successful."#individual views
       flash_update_publishers_error: "Error updating publisher data: %{message}"
 
+    attachments:
+      flash_new_error: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+      flash_create_warning: "No file was uploaded."
+      flash_create_notice:
+        one: "Attachment was successfully uploaded"
+        other: "%{count} attachments were successfully uploaded"
+      flash_update_warning: "No file was uploaded."
+      flash_update_notice: "Attachment was successfully uploaded"
+      flash_delete_notice: "Attachment was successfully deleted"
+
     contributorships:
       index: "Works of a person"
       matches: "Possible Matches"
