@@ -65,7 +65,7 @@ class WorksController < ApplicationController
     end
 
     before :show do
-      @recommendations = Index.recommendations(@current_object).collect {|r| r.first}
+      @recommendations = Index.recommendations(@current_object).collect { |r| r.first }
       # Specify text at end of HTML title tag
       @title = @current_object.title_primary
       true
@@ -393,16 +393,7 @@ class WorksController < ApplicationController
   #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
   def auto_complete_for_name_string(name_string)
-    name_string = name_string.downcase
-
-    #search at beginning of name
-    beginning_search = name_string + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + name_string + "%"
-
-    names = NameString.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8).collect { |ns| ns.name }
-
+    names = name_search(name_string.downcase, NameString, 8).collect {|ns| ns.name}
     render 'works/forms/fields/autocomplete_list', :objects => names
   end
 
@@ -416,19 +407,8 @@ class WorksController < ApplicationController
 
   #provide matching keywords or tags for autocomplete based off of the supplied name
   def auto_complete_for_name(name)
-    name = name.downcase
-
-    #search at beginning of word
-    beginning_search = name + "%"
-    #search at beginning of any other words
-    word_search = "% " + name + "%"
-
-    #Search both keywords and tags
-    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8)
-
-    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                     beginning_search, word_search).order_by_name.limit(8)
+    keywords = name_search(name.downcase, Keyword, 8)
+    tags = name_search(name.downcase, Tag, 8)
 
     #Combine both lists
     keywords_and_tags = (keywords + tags).collect { |x| x.name }
@@ -440,16 +420,7 @@ class WorksController < ApplicationController
   #  This method provides users with a list of matching Publications
   #  already in BibApp.
   def auto_complete_for_publication_name
-    publication_name = params[:publication][:name].downcase
-
-    #search at beginning of name
-    beginning_search = publication_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + publication_name + "%"
-
-    publications = Publication.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                                     beginning_search, word_search).order_by_name.limit(8)
-
+    publications = name_search(params[:publication][:name].downcase, Publication, 8)
     render 'works/forms/fields/publication_autocomplete_list', :publications => publications
   end
 
@@ -457,16 +428,7 @@ class WorksController < ApplicationController
   #  This method provides users with a list of matching Publishers
   #  already in BibApp.
   def auto_complete_for_publisher_name
-    publisher_name = params[:publisher][:name].downcase
-
-    #search at beginning of name
-    beginning_search = publisher_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + publisher_name + "%"
-
-    publishers = Publisher.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                                 beginning_search, word_search).order_by_name.limit(8)
-
+    publishers = name_search(params[:publisher][:name].downcase, Publisher, 8)
     render 'works/forms/fields/autocomplete_list', :objects => publishers
   end
 
@@ -697,6 +659,12 @@ class WorksController < ApplicationController
         end
       end
     end
+  end
+
+  def name_search(name, klass, limit = 8)
+    beginning_search = "#{name}%"
+    word_search = "% #{name}%"
+    klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
   end
 
 end
