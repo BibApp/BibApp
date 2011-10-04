@@ -5,7 +5,7 @@ require 'redcloth'
 class PeopleController < ApplicationController
   include GoogleChartsHelper
   include KeywordCloudHelper
-  
+
   # Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :batch_csv_show, :batch_csv_create]
 
@@ -42,7 +42,6 @@ class PeopleController < ApplicationController
         @group = Group.find_by_id(params[:group_id].split("-")[0])
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Array.new
@@ -51,14 +50,14 @@ class PeopleController < ApplicationController
           end
           @a_to_z = @a_to_z.uniq
           @page = params[:page] || @a_to_z[0]
-          @current_objects = @group.people.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
+          @current_objects = @group.people.order("upper(last_name), upper(first_name)")
+          @current_objects = @current_objects.where("upper(last_name) like ?", "#{@page}%") unless @page == 'all'
         end
 
         @title = "#{@group.name} - People"
       else
 
         if params[:q]
-          query = params[:q]
           @current_objects = current_objects
         else
           @a_to_z = Person.letters
@@ -117,6 +116,10 @@ class PeopleController < ApplicationController
       @return_path = params[:return_path] || people_url
       person.destroy if person
       #flash[:notice] = "#{person.display_name} was successfully deleted."
+    end
+
+    before :edit do
+      @title = "#{@person.display_name}: Personal Info"
     end
 
   end
@@ -202,33 +205,21 @@ class PeopleController < ApplicationController
     chdl = "chdl="
     chdlp = "chdlp=b|"
     @person.publication_reftypes.each_with_index do |r, i|
-      perc = (r.count.to_f/@person.works.size.to_f*100).round.to_s
-      chd += "#{perc},"
+      percent = (r.count.to_f/@person.works.size.to_f*100).round.to_s
+      chd += "#{percent},"
       ref = r[:type].to_s == 'BookWhole' ? 'Book' : r[:type].to_s
       chl += "#{ref.titleize.pluralize}|"
-      chdl += "#{perc}% #{ref.titleize.pluralize}|"
+      chdl += "#{percent}% #{ref.titleize.pluralize}|"
       chdlp += "#{i.to_s},"
     end
-    chd = chd[0...(chd.length-1)]
-    chl = chl[0...(chl.length-1)]
-    chdl = chdl[0...(chdl.length-1)]
-    chdlp = chdlp[0...(chdlp.length-1)]
+    chd.chop!
+    chl.chop!
     @chart_url = "http://chart.apis.google.com/chart?cht=p&chco=346090&chs=350x100&#{chd}&#{chl}"
 
     render :update do |page|
       page.replace_html "loading_reftype_chart", "<img src='#{@chart_url}' alt='work-type chart' style='margin-left: -50px;margin-bottom:20px;' />"
     end
 
-  end
-
-  def load_keyword_cloud
-    #get keywords for the tag cloud
-    @person = Person.find(params[:person_id])
-    @keywords = @person.keywords(10)
-
-    render :update do |page|
-      page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
-    end
   end
 
   def batch_csv_show

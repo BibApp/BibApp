@@ -1,15 +1,10 @@
--#
--# Render 'flash' messages consistently throughout application
--#
-
-/ Flash Messages
-- if !flash.empty?
-  %div#flash-message.span-22
+- if flash.present?
+  #flash-message.span-22
     - if flash[:notice]
-      %div.notice= flash[:notice]
+      .notice= flash[:notice]
 
     - if flash[:warning]
-      %div.warning= flash[:warning]
+      .warning= flash[:warning]
 
     - if flash[:error]
-      %div.error= flash[:error]
+      .error= flash[:error]

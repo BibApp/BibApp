@@ -7,8 +7,8 @@ class ISBN < Identifier
     [:isbn]
   end
 
-  #I'm not sure this is guaranteed to work (e.g. that every stem as produced will become a valid ISBN
-  #by appending one of the possible check digits, but I think it's okay and it seems to work.
+  # I'm not sure this is guaranteed to work (e.g. that every stem as produced will become a valid ISBN
+  # by appending one of the possible check digits, but I think it's okay and it seems to work.
   def self.random
     stem = '978' + 9.times.collect { ActiveSupport::SecureRandom.random_number(10) }.join('')
     ((0..9).to_a << 'X').each do |tail|

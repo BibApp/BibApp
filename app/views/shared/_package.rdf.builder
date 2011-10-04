@@ -1,6 +1,6 @@
 locator = link_to_findit(Index.work_to_solr_hash(work))
 locator = locator.gsub(/<a\shref=\"/, "")
-locator = locator.gsub(/\">Find It<\/a>/, "")
+locator = locator.gsub(/">Find It<\/a>/, "")
 
 peer_reviewed = ""
 unless work.peer_reviewed.nil?

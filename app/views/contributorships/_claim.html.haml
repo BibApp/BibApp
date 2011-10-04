@@ -1,7 +1,7 @@
 - include_stylesheet('specific/contributorships/_claim')
 .span-20.contributorship-claim{:id => "contributorship_id-#{claim.id}", :class => "#{cycle("even","odd")}"}
   .span-3
-    %div.text-center
+    .text-center
       = image_tag(claim.person.image_url, {:height => "100px", :width => "75px"})
   .span-10
     %h2=claim.person.display_name

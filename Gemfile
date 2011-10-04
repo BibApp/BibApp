@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "3.0.4"
+gem "rails", "3.0.10"
 
 gem 'rake'
 

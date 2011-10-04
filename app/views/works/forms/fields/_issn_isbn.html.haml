@@ -2,7 +2,7 @@
 -#   Defaults to displaying ISSN/ISBN
 -#
 -# Possible Input Variables:
--#    :isbn         => if true, displays ISBN heading 
+-#    :isbn         => if true, displays ISBN heading
 -#    :issn         => if true, displays ISSN heading
 -#    :isrc         => if true, displays ISRC heading
 
@@ -11,15 +11,8 @@
 - issn ||= false
 - isrc ||= false
 
-- if isbn
-  = label_tag 'issn_isbn', "ISBN:"
-- if issn
-  = label_tag 'issn_isbn', "ISSN:"
-- if isrc
-  = label_tag 'issn_isbn', "ISRC:"
-- if !issn and !isbn and !isrc
-  = label_tag 'issn_isbn', "ISSN/ISBN:"
+= label_tag 'issn_isbn', issn_isbn_field_label(isbn, issn, isrc)
 
-- @publication = @work.publication unless @publication or @work.publication.nil?
-- issn_isbn = @publication.issn_isbn unless @publication.nil?
+- @publication ||= @work.publication
+- issn_isbn = @publication.issn_isbn if @publication
 = text_field_tag 'issn_isbn', issn_isbn, :class=>'text mediumbox'

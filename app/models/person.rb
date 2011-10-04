@@ -1,10 +1,12 @@
 require 'bibapp_ldap'
-require 'lib/machine_name'
-require 'lib/solr_helper_methods'
+require 'machine_name'
+require 'solr_helper_methods'
+require 'solr_updater'
 
 class Person < ActiveRecord::Base
   include MachineName
   include SolrHelperMethods
+  include SolrUpdater
 
   acts_as_authorizable #some actions on people require authorization
 
@@ -223,6 +225,14 @@ class Person < ActiveRecord::Base
 
   def solr_filter
     %Q(person_id:"#{self.id}")
+  end
+
+  def get_associated_works
+    self.works.verified
+  end
+
+  def require_reindex?
+    self.first_name_changed? or self.last_name_changed? or self.machine_name_changed? or self.active_changed? or self.research_focus_changed?
   end
 
   def publication_reftypes

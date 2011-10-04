@@ -1,0 +1,9 @@
+%h1 New keywording
+
+= error_messages_for :keywording
+
+= form_for(@keywording) do |f|
+  %p
+    = f.submit "Create"
+
+= link_to 'Back', keywordings_path

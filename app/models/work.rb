@@ -160,11 +160,27 @@ class Work < ActiveRecord::Base
   end
 
   def self.orphans
+    (self.orphans_no_contributorships + self.orphans_denied_contributorships).uniq.sort {|a, b| a.title_primary <=> b.title_primary}
+  end
+
+  def self.orphans_no_contributorships
     self.order('title_primary').joins('LEFT JOIN contributorships ON works.id = contributorships.work_id').
         where(:contributorships => {:id => nil})
   end
 
-#### Callbacks ####
+  #The implementation may be improvable, but this only does 3 SQL calls. It could be done in one, but I'm not
+  #sure how to accomplish that in the Rails query language.
+  #We first find all works that have at least one denied contributorship. Then we load those works eager loading
+  #all their contributorships and find the ones with all denied contributorships in code
+  def self.orphans_denied_contributorships
+    contributorships = Contributorship.denied.select("DISTINCT work_id")
+    works = self.includes(:contributorships).where(:id => contributorships.collect {|c| c.work_id})
+    works.select do |work|
+      !work.contributorships.detect {|c| !c.denied?}
+    end
+  end
+
+  #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   after_create :after_create_actions
   before_save :before_save_actions
@@ -428,7 +444,7 @@ class Work < ActiveRecord::Base
 
     #@TODO: Is there a way that we can calculate the *canonical best*
     # version of a work? We've tried this in the past, but we need to do
-    # it in a better way (e.g.  we don't end up accidently re-marking things as
+    # it in a better way (e.g.  we don't end up accidentally re-marking things as
     # dupes that have previously been determined to not be dupes by a human)
   end
 
@@ -658,7 +674,7 @@ class Work < ActiveRecord::Base
   # Override in a subclass to assign a specific type_uri to that subclass
   # By default return nil
   #To get the full map used before breaking out into subclasses, which includes some types for
-  #which there may not yet be subclases, consult this method in version control history prior to 2011-02-28
+  #which there may not yet be subclasses, consult this method in version control history prior to 2011-02-28
   def type_uri
     return nil
   end
@@ -676,12 +692,18 @@ class Work < ActiveRecord::Base
     to_apa
   end
 
-#Convert Work into a String in the APA Citation Format
-# This is currently used during generation of METS file
-# conforming to EPrints DC XML Schema for use with SWORD.
-# @TODO: There is likely a better way to do this more generically.
-# TODO: it may also not be doing what it should - what if there are both authors and editors
-# - it's not clear how they are distinguished.
+  #Convert Work into a String in the APA Citation Format
+  # This is currently used during generation of METS file
+  # conforming to EPrints DC XML Schema for use with SWORD.
+  # @TODO: There is likely a better way to do this more generically.
+  # TODO: it may also not be doing what it should - what if there are both authors and editors
+  # - it's not clear how they are distinguished.
+  # TODO: in an ideal world this is just WorkExport.new.drive_csl('apa', self).html_safe
+  # However, I'm not sure that the current csl and/or citeproc.rb does it well enough to be better
+  # It may also be that how WorkExport feeds the work into the processor is a problem.
+  # Note for future reference there is a ruby 1.9.2 citeproc-ruby that is actually active - look into it
+  # when appropriate!
+  # Note that we could, if necessary, deploy this as a service
   def to_apa
     String.new.tap do |citation_string|
       #---------------------------------------------
@@ -770,7 +792,11 @@ class Work < ActiveRecord::Base
     self.class.contributor_role
   end
 
-# In case there isn't a subklass open_url_kevs method
+  def all_contributor_roles
+    self.class.roles - [self.contributor_role]
+  end
+
+  # In case there isn't a subklass open_url_kevs method
   def open_url_kevs
     open_url_kevs = Hash.new
     open_url_kevs[:format] = "&rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal"
@@ -792,7 +818,7 @@ class Work < ActiveRecord::Base
   #return OpenURL context string for this hash, e.g. for mets export of work
   #ignore any key that has a nil value
   def open_url_context_string
-    self.open_url_context_hash.collect do |k,v|
+    self.open_url_context_hash.collect do |k, v|
       v ? URI.escape("&#{k}=#{v}") : nil
     end.compact.join('')
   end
@@ -819,6 +845,19 @@ class Work < ActiveRecord::Base
 
   def update_solr_no_autocommit
     Index.update_solr(self, false)
+  end
+
+  #The following methods are used by the IndexObserver, distinct from the other reindexing that happens.
+  def require_reindex?
+    !self.batch_index? and self.changed?
+  end
+
+  def reindex_after_save
+    Index.update_solr(self)
+  end
+
+  def reindex_before_destroy
+    Index.remove_from_solr(self)
   end
 
   protected

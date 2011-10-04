@@ -265,7 +265,7 @@ class Index
   end
 
   def self.fetch_by_solr_id(solr_id)
-    docs = SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).hits
+    SOLRCONN.send(Solr::Request::Standard.new(:query => "id:#{solr_id}")).hits
   end
 
   # Retrieve recommendations from Solr, based on current Work

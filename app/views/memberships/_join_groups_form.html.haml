@@ -1,0 +1,11 @@
+= form_tag create_multiple_memberships_url, :method => :put, :name => "memberships_form", :id => "memberships_form" do
+  %div
+    #bulk_links
+      = submit_tag "Join selected groups"
+
+      = hidden_field_tag "person_id", @person.id
+      = hidden_field_tag "status", @status
+      -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
+      = hidden_field_tag "authenticity_token", form_authenticity_token
+  .clear-both
+  = render :partial => "group_list"

@@ -1,6 +1,6 @@
 - include_stylesheet('specific/works/_local_authors')
 - if @work.people.size > 0
-  .right_box_no_border
+  = render :layout => 'layouts/right_box_no_border' do
     .box_heading #{$UNIVERSITY_SHORT_NAME} Authors
     %ol.people
       -@work.people.each do |person|

@@ -1,12 +1,12 @@
 -#
 -# Render People facets from Solr data
 -#
-%h3.heading=link_to "People", people_path
+%h3.heading= link_to "People", people_path
 %ol#people
   -# if there's a count specified, only show the first few
   -people = count!=nil ? @facets[:people_data].first(count) : @facets[:people_data]
   -people.each do |p|
     - name, id = Person.parse_solr_data(p.name)
     %li
-      =link_to name, person_path(id)
-      ="(#{p.value})"
+      = link_to name, person_path(id)
+      (#{p.value})

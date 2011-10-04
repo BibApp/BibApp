@@ -1,0 +1,8 @@
+.span-8.attend-1.last.right
+  = form_tag :action => "search_groups", :method => :get, :class => "memberships_search_form" do
+
+    #search-box
+      = text_field_tag(:q, nil, :size => 21)
+      = hidden_field_tag "person_id", @person.id
+      = hidden_field_tag "status", @status
+      = submit_tag 'Search Groups'

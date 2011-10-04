@@ -1,0 +1,6 @@
+.right
+  %h3 Select a type:
+  %ul
+    %li= link_to_unless_current "Batch Import", new_user_import_path(current_user)
+    %li -----
+    = render 'shared/work_type_list'

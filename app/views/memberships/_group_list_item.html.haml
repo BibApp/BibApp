@@ -1,8 +1,8 @@
 - if !group_list_item.hide?
   - # only show groups that are in the @groups list
-  - if @groups.include?(group_list_item) 
+  - if @groups.include?(group_list_item)
     %li.parent.list-style-none
-      %div.membership-group{:id => "group_id-#{group_list_item.id}"}
+      .membership-group{:id => "group_id-#{group_list_item.id}"}
         - if group_list_item.children.empty?
           &nbsp;&nbsp;
         - else
@@ -15,9 +15,5 @@
         = group_list_item.name
 
       - unless group_list_item.children.empty?
-        - if @query.blank?
-          %ul#children_of.children.list-style-none{:id => group_list_item.id, :style => "display: none;"}
-            = render :partial => 'group_list_item', :collection => group_list_item.children
-        - else
-          %ul#children_of.children.list-style-none{:id => group_list_item.id}
-            = render :partial => 'group_list_item', :collection => group_list_item.children
+        %ul#children_of.children.list-style-none{:id => group_list_item.id, :style => @query.if_blank("display: none;")}
+          = render :partial => 'group_list_item', :collection => group_list_item.children

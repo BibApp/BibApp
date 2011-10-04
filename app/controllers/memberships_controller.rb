@@ -1,4 +1,7 @@
+require 'autocomplete_controller_mixin'
 class MembershipsController < ApplicationController
+
+  include AutocompleteControllerMixin
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -17,42 +20,26 @@ class MembershipsController < ApplicationController
 
     before :new do
       @person = Person.find(params[:person_id])
+      @title = "#{@person.display_name}: Group Memberships"
 
       member = @person.groups.empty? ? "non_member" : "member"
       @status = params[:status] || member
 
-      #For searching groups:
-      #  Start by building the "LIKE" string for :conditions
-      #  e.g. if two terms, (LOWER(name) LIKE ?) AND (LOWER(name) LIKE ?)
-      if params[:q]
-        @query = params[:q]
-        like_string = ""
+      #For searching groups: AND together like conditions on all pieces of the query
+      @query = params[:q]
+      rails_query = Group.order_by_name
+      if @query
         query_words = @query.downcase.split
         query_words.each do |qw|
-          like_string += "(LOWER(name) LIKE ?) AND "
+          rails_query = rails_query.where("LOWER(name) LIKE ?", "%#{qw}%")
         end
-
-        #Chop five times to remove the trailing " AND "
-        like_string = like_string.chop.chop.chop.chop.chop
-
-        #Add the "LIKE" string to the array
-        query_string = []
-        query_string << like_string
-
-        #Add the search terms
-        query_words.each do |qw|
-          query_string << ("%" + qw + "%")
-        end
-
-        results = Group.where(query_string).order_by_name
-      else
-        results = Group.order_by_name
       end
+      results = rails_query
 
       @parents = Array.new
       @groups = Array.new
 
-      # 'results' contians a list of all groups, or all groups returned by the
+      # 'results' contains a list of all groups, or all groups returned by the
       # search. We now form two arrays, one for top-level parents, the other
       # for all groups. We will paginate on top-level parents.
       #
@@ -206,17 +193,7 @@ class MembershipsController < ApplicationController
   end
 
   def auto_complete_for_group_name
-    group_name = params[:group][:name].downcase
-
-    #search at beginning of name
-    beginning_search = group_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + group_name + "%"
-
-    groups = Group.unhidden.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                                  beginning_search, word_search).order_by_name.limit(8)
-
-    render :partial => 'autocomplete_list', :locals => {:objects => groups}
+    generic_autocomplete_for_group_name(false)
   end
 
   private
@@ -229,18 +206,18 @@ class MembershipsController < ApplicationController
   end
 
   def find_membership
-    @membership = Membership.find_by_person_id_and_group_id(params[:person_id],params[:group_id])
+    @membership = Membership.find_by_person_id_and_group_id(params[:person_id], params[:group_id])
   end
 
-  #for the membership update we're having problems when a non-nil date is updated to be
-  #blank, which appears to be caused by how Rails handles date through the date-select
-  #helper and subsequent model side processing. This is to fix that. If a year field
-  #is blank, we delete all of the partial fields and replace with a whole field set
-  #to nil
+#for the membership update we're having problems when a non-nil date is updated to be
+#blank, which appears to be caused by how Rails handles date through the date-select
+#helper and subsequent model side processing. This is to fix that. If a year field
+#is blank, we delete all of the partial fields and replace with a whole field set
+#to nil
   def fix_date_parameters
     ['start_date', 'end_date'].each do |date_field|
       if params[:membership]["#{date_field}(1i)"].blank?
-        params[:membership].keys.select {|k| k.match(/^#{date_field}/)}.each do |key|
+        params[:membership].keys.select { |k| k.match(/^#{date_field}/) }.each do |key|
           params[:membership].delete(key)
         end
         params[:membership][date_field] = nil

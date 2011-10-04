@@ -1,6 +1,8 @@
+require 'cmess/guess_encoding'
+require 'will_paginate/array'
+
 class WorksController < ApplicationController
   #require CMess to help guess encoding of uploaded text files
-  require 'cmess/guess_encoding'
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required,
@@ -63,7 +65,7 @@ class WorksController < ApplicationController
     end
 
     before :show do
-      @recommendations = Index.recommendations(@current_object)
+      @recommendations = Index.recommendations(@current_object).collect { |r| r.first }
       # Specify text at end of HTML title tag
       @title = @current_object.title_primary
       true
@@ -85,6 +87,7 @@ class WorksController < ApplicationController
   end # end make_resourceful
 
   def index
+    @title = "Works"
     if params[:person_id]
       @current_object = Person.find_by_id(params[:person_id].split("-")[0])
       @person = @current_object
@@ -125,7 +128,6 @@ class WorksController < ApplicationController
 
   def change_type
     t = params[:type]
-    klass = t.constantize
     work = Work.find(params[:id])
 
     # lazy mapping of all creator/contributor roles to top creator role
@@ -391,17 +393,8 @@ class WorksController < ApplicationController
   #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
   def auto_complete_for_name_string(name_string)
-    name_string = name_string.downcase
-
-    #search at beginning of name
-    beginning_search = name_string + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + name_string + "%"
-
-    names = NameString.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8).collect { |ns| ns.name }
-
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
+    names = name_search(name_string.downcase, NameString, 8).collect {|ns| ns.name}
+    render 'works/forms/fields/autocomplete_list', :objects => names
   end
 
   def auto_complete_for_keyword_name
@@ -414,58 +407,29 @@ class WorksController < ApplicationController
 
   #provide matching keywords or tags for autocomplete based off of the supplied name
   def auto_complete_for_name(name)
-    name = name.downcase
-
-    #search at beginning of word
-    beginning_search = name + "%"
-    #search at beginning of any other words
-    word_search = "% " + name + "%"
-
-    #Search both keywords and tags
-    keywords = Keyword.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                             beginning_search, word_search).order_by_name.limit(8)
-
-    tags = Tag.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                     beginning_search, word_search).order_by_name.limit(8)
+    keywords = name_search(name.downcase, Keyword, 8)
+    tags = name_search(name.downcase, Tag, 8)
 
     #Combine both lists
     keywords_and_tags = (keywords + tags).collect { |x| x.name }
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywords_and_tags.uniq.sort.first(8)}
+    render 'works/forms/fields/autocomplete_list', :objects => keywords_and_tags.uniq.sort.first(8)
   end
 
   #Auto-Complete for entering Publication Titles in Web-based Work entry
   #  This method provides users with a list of matching Publications
   #  already in BibApp.
   def auto_complete_for_publication_name
-    publication_name = params[:publication][:name].downcase
-
-    #search at beginning of name
-    beginning_search = publication_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + publication_name + "%"
-
-    publications = Publication.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                                     beginning_search, word_search).order_by_name.limit(8)
-
-    render :partial => 'works/forms/fields/publication_autocomplete_list', :locals => {:publications => publications}
+    publications = name_search(params[:publication][:name].downcase, Publication, 8)
+    render 'works/forms/fields/publication_autocomplete_list', :publications => publications
   end
 
   #Auto-Complete for entering Publisher Name in Web-based Work entry
   #  This method provides users with a list of matching Publishers
   #  already in BibApp.
   def auto_complete_for_publisher_name
-    publisher_name = params[:publisher][:name].downcase
-
-    #search at beginning of name
-    beginning_search = publisher_name + "%"
-    #search at beginning of any other words in name
-    word_search = "% " + publisher_name + "%"
-
-    publishers = Publisher.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
-                                 beginning_search, word_search).order_by_name.limit(8)
-
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
+    publishers = name_search(params[:publisher][:name].downcase, Publisher, 8)
+    render 'works/forms/fields/autocomplete_list', :objects => publishers
   end
 
   #Adds a single item value to list of items in Web-based Work entry
@@ -553,29 +517,7 @@ class WorksController < ApplicationController
     list_type = params[:list_type]
 
     #display message that reorder was successful
-    render :partial => 'works/forms/fields/reorder_list', :locals => {:list_type=>list_type}
-  end
-
-  def update_tags
-    @work = Work.find(params[:id])
-    ###
-    # Setting Tags
-    ###
-    # Save tags to instance variable @tags,
-    # in case any errors should occur in saving work
-    @tags = params[:tags]
-    @work.set_tag_strings(@tags)
-
-    respond_to do |format|
-      if @work.save and Index.update_solr(@work)
-        flash[:notice] = "Work was successfully updated."
-        format.html { redirect_to work_url(@work) }
-        format.xml { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml { render :xml => @work.errors.to_xml }
-      end
-    end
+    render 'works/forms/fields/reorder_list', :list_type => list_type
   end
 
   private
@@ -587,7 +529,7 @@ class WorksController < ApplicationController
     klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Work
-      raise NameError.new("#{klass_type} is not a subclass of Work") and return
+      raise NameError.new("#{klass_type} is not a subclass of Work")
     end
     klass.new(work)
   end
@@ -717,6 +659,12 @@ class WorksController < ApplicationController
         end
       end
     end
+  end
+
+  def name_search(name, klass, limit = 8)
+    beginning_search = "#{name}%"
+    word_search = "% #{name}%"
+    klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
   end
 
 end

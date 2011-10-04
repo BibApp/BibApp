@@ -1,0 +1,9 @@
+.left.span-7
+  %h3 Import Names
+  %p Select missing variations of your name.
+  / PenName matches
+  .left.append-1
+    %ul#import_names.no-padding-or-margin
+      -@import.name_string_work_count.sort.inspect
+      - @import.name_string_work_count.sort.each do |ns|
+        = import_name_string_line(ns, @person)

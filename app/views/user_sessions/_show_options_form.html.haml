@@ -1,0 +1,17 @@
+.span-13.append-1.last
+  = form_tag "#works", :method => :get do
+    #sort-by
+      %label Show:
+      %select{:name => "rows"}
+        - ["10", "20", "50", "100", "250", "500"].each do |opt|
+          %option{:selected => (opt == @rows ? 'selected' : nil), :value => opt}= opt.titleize
+
+      %label Send to:
+      %select{:name => "export"}
+        - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
+          %option{:value => "#{opt.downcase}"}= opt
+
+      - @page = 1 if @page == 0
+      = hidden_field_tag "page", @page
+
+      = submit_tag 'Go'

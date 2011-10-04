@@ -1,4 +1,4 @@
-require 'lib/string_methods'
+require 'string_methods'
 class Import < ActiveRecord::Base
   cattr_reader :per_page
   @@per_page = 10
@@ -49,7 +49,7 @@ class Import < ActiveRecord::Base
   end
 
   def notify_user
-    logger.debug("\n=== Notifiy User - #{self.id} ===\n\n\n")
+    logger.debug("\n=== Notify User - #{self.id} ===\n\n\n")
 
     # @TODO: Email should send via delayed job?
     Notifier.import_review_notification(self.user, self.id).deliver
@@ -115,7 +115,7 @@ class Import < ActiveRecord::Base
   def batch_import
     logger.debug("\n\n==== Starting Batch Import ==== \n\n")
 
-    # Initialize an array of all the works added and hash of errors encounterd in the batch
+    # Initialize an array of all the works added and hash of errors encountered in the batch
     self.works_added = Array.new
     self.import_errors = Hash.new
 

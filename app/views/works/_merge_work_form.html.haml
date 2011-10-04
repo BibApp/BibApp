@@ -1,0 +1,3 @@
+= form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"merge_work_form", :method => :put} do |form|
+  = hidden_field_tag "return_path" , admin_duplicates_url
+  = render decide_merge_partial(@work), :form => form

@@ -1,4 +1,4 @@
 %ul.actions
-  %li=link_to "show", name_string_path(ns)
-  %li=link_to "edit", edit_name_string_path(ns)
-  %li=link_to "destroy",{:controller=>"name_strings", :action=>"destroy", :id=>ns.id}, :confirm => "Are you sure?", :method => :delete
+  %li= link_to "show", name_string_path(ns)
+  %li= link_to "edit", edit_name_string_path(ns)
+  %li= link_to "destroy", {:controller=>"name_strings", :action=>"destroy", :id=>ns.id}, :confirm => "Are you sure?", :method => :delete

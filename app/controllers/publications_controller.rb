@@ -1,5 +1,5 @@
 class PublicationsController < ApplicationController
-  include PubPubHelper
+  include PubCommonHelper
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -37,12 +37,13 @@ class PublicationsController < ApplicationController
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters(true)
+      @title = "Publications"
 
       if params[:q]
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
-        #I'm not sure if the first condition here is the same as the authorities scope, but it might be
+        # I'm not sure if the first condition here is the same as the authorities scope, but it might be
         @current_objects = Publication.includes(:publisher, :works).where("publications.id = authority_id").
             upper_name_like("#{@page}%").order_by_upper_name
       end
@@ -92,7 +93,6 @@ class PublicationsController < ApplicationController
     @page = params[:page] || @a_to_z[0]
 
     if params[:q]
-      query = params[:q]
       @current_objects = current_objects
     else
       @current_objects = Publication.authorities.upper_name_like("#{@page}%").order_by_upper_name.

@@ -1,7 +1,7 @@
 -#
 -# Render Publication facets from Solr data
 -#
-%h3.heading=link_to "Publications", publications_path
+%h3.heading= link_to "Publications", publications_path
 %ol#publications
   -# if there's a count specified, only show the first few
   -publications = count!=nil ? @facets[:publications_data].first(count) : @facets[:publications_data]
@@ -10,4 +10,4 @@
     - next if name == "Unknown"
     %li
       =link_to name, publication_path(id)
-      ="(#{p.value})"
+      (#{p.value})

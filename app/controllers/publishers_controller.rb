@@ -1,5 +1,5 @@
 class PublishersController < ApplicationController
-  include PubPubHelper
+  include PubCommonHelper
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -35,13 +35,13 @@ class PublishersController < ApplicationController
     end
 
     before :index do
+      @title = "Publishers"
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters(true)
 
       @authorities = Publisher.authorities.upper_name_like("%#{params[:search]}%")
 
       if params[:q]
-        query = params[:q]
         @current_objects = current_objects
       else
         @page = params[:page] || @a_to_z[0]
@@ -90,7 +90,6 @@ class PublishersController < ApplicationController
     @a_to_z = Publisher.letters
 
     if params[:q]
-      query = params[:q]
       @current_objects = current_objects
     else
       @page = params[:page] || @a_to_z[0]

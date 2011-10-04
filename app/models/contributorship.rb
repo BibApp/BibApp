@@ -1,6 +1,8 @@
 require 'set'
 class Contributorship < ActiveRecord::Base
 
+  attr_accessor :skip_refresh_contributorships
+
   STATE_UNVERIFIED = 1
   STATE_VERIFIED = 2
   STATE_DENIED = 3
@@ -17,7 +19,7 @@ class Contributorship < ActiveRecord::Base
   scope :denied, where(:contributorship_state_id => STATE_DENIED)
   # TODO: For now we don't want editors showing up as contributors
   #   although in the future we might want them to show up for whole
-  #   conference preceedings, entire books, et cetera
+  #   conference proceedings, entire books, et cetera
   scope :visible, where(:hide => false, :role => "Author")
   #By default, show all verified, visible contributorships
   scope :to_show, where(:hide => false, :contributorship_state_id => STATE_VERIFIED)
@@ -101,7 +103,7 @@ class Contributorship < ActiveRecord::Base
   ########## Methods ##########
   def calculate_score(person_scoring_hash = nil)
 
-    # Build the calcuated Contributorship.score attribute--a rough
+    # Build the calculated Contributorship.score attribute--a rough
     # guess whether we think the Person has written the Work
     #
     # Field           Value   Scoring Algorithm
@@ -189,7 +191,7 @@ class Contributorship < ActiveRecord::Base
     # If verified.size == possibilities.size
     # - Loop through competing Contributorships
     # - Set Contributorship.hide = true
-
+    return if self.skip_refresh_contributorships
     if Contributorship.verified.for_work(self.work_id).size == self.possibilities
       logger.debug("\n=== Refresh contributorships ===\n")
       refresh = Contributorship.for_work(self.work).unverified.where('id <> ?', self.id)
@@ -202,6 +204,7 @@ class Contributorship < ActiveRecord::Base
       #If not, remove this comment and all's well.
       refresh.each do |r|
         r.hide = true
+        r.skip_refresh_contributorships = true
         r.save
       end
     end

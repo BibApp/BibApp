@@ -1,0 +1,11 @@
+%h1 Editing keywording
+
+= error_messages_for :keywording
+
+= form_for(@keywording) do |f|
+  %p
+    = f.submit "Update"
+
+= link_to 'Show', @keywording
+|
+= link_to 'Back', keywordings_path

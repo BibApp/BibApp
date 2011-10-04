@@ -1,35 +1,29 @@
-%fieldset
-  %legend Performance
-
-  = hidden_field_tag :klass, 'Performance'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
-
-  %ul
-    %li
-      = render :partial => 'works/forms/fields/author_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/date_range', :locals => {:form => form, :label => "Performance Date"}
-    %li
-      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Title of Larger Performance"}
-    %li
-      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Venue"}
-    %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
-    %li
-      = render :partial => 'works/forms/fields/keywords'
-    %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Performance'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form
+  %li
+    = render 'works/forms/fields/title_tertiary', :form => form
+  %li
+    = render 'works/forms/fields/date_range', :form => form, :label => "Performance Date"
+  %li
+    = render 'works/forms/fields/publication', :label => "Title of Larger Performance"
+  %li
+    = render 'works/forms/fields/publisher', :label => "Venue"
+  %li
+    = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form

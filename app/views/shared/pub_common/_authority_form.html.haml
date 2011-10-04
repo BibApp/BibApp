@@ -1,0 +1,17 @@
+-#requires authorities, submit_url, headers, page to be passed
+= form_tag submit_url, {:method => :put, :id => 'authority_box', :page => page} do
+  %fieldset
+    %legend Add Records and Set Authority
+    - if authorities.present?
+      %table#pub-cart
+        %thead
+          %tr
+            %th
+            - headers.each do |h|
+              %th #{h}
+            %th
+        %tbody
+          = render :partial => "authority_form_item", :collection => authorities, :locals => {:page => page}
+      = hidden_field_tag :page, page, :id => 'page'
+    = submit_tag "Set Authority", :name => nil, :id => 'authority_button', :disabled => authorities.length <= 1
+    = submit_tag "Cancel", :name => 'cancel', :id => 'cancel_button', :disabled => authorities.length <= 1

@@ -16,6 +16,7 @@ class AttachmentsController < ApplicationController
 
       if @asset.kind_of?(Person)
         @person = @asset
+        params[:type] = "Image"
       end
 
       #only editors of this asset can attach files to it
@@ -23,11 +24,6 @@ class AttachmentsController < ApplicationController
 
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]
-
-      # Default to Image for Person asset
-      # @TODO: Is there a better way to default this?
-      params[:type] = "Image" if @asset.kind_of?(Person)
-
 
       #initialize attachment subclass with any passed in attachment info
       @attachment = subklass_init(params[:type], params[:attachment])
@@ -126,7 +122,7 @@ class AttachmentsController < ApplicationController
 
     permit "editor of :asset", :asset => @attachment.asset
 
-    if params[:attachment].blank?
+    if params[:file].blank?
       respond_to do |format|
         flash[:warning] = 'No file was uploaded.'
         if @attachment.asset.kind_of?(Person)
@@ -140,8 +136,8 @@ class AttachmentsController < ApplicationController
       return
     end
 
-    @attachment.attributes = params[:attachment]
     respond_to do |format|
+      @attachment.uploaded_data = params[:file].first
       if @attachment.save
         flash[:notice] = 'Attachment was successfully uploaded'
         if @asset.kind_of?(Person)
@@ -226,7 +222,7 @@ class AttachmentsController < ApplicationController
     klass_type.gsub!(/[()]/, "") #remove any parens
     klass = klass_type.constantize #change into a class
     if klass.superclass != Attachment
-      raise NameError.new("#{klass_type} is not a subclass of Attachment") and return
+      raise NameError.new("#{klass_type} is not a subclass of Attachment")
     end
     klass.new({:uploaded_data => file})
   end
@@ -250,5 +246,6 @@ class AttachmentsController < ApplicationController
       return person_url(asset)
     end
   end
+  helper_method :get_response_url
 
 end
