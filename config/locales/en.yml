@@ -44,6 +44,11 @@ en:
     yes: "yes"
 
   common:
+
+    admin:
+      flash_update_publishers_successful: "Update successful."#individual views
+      flash_update_publishers_error: "Error updating publisher data: %{message}"
+
     contributorships:
       index: "Works of a person"
       matches: "Possible Matches"
@@ -124,7 +129,7 @@ en:
     search:
       results:
         one: "1 hit"
-        other: "{{count}} hits"
+        other: "%{count} hits"
       refine: "Refine Search"
       within: "Search within the results"
       query: "Search for: "
@@ -147,15 +152,14 @@ en:
       delete: "Delete work"
       confirm: "Really delete this work?"
       new_attachment: "Add attachment"
-      authors: "Authors at {{institution}}"
-      coauthors: "Coauthors at {{institution}}"
+      authors: "Authors at %{institution}"
+      coauthors: "Coauthors at %{institution}"
       contributors: "Contributor"
       recent: "Recent works"
-      recommendations: "Similar works at {{institution}}"
+      recommendations: "Similar works at %{institution}"
       no_abstract: "No abstract available"
       duplicate: "Show duplicates"
 
-#individual views
   admin:
     ready_to_archive:
       ready: "Ready to Archive: %{count} remain"

@@ -75,13 +75,13 @@ class AdminController < ApplicationController
   def update_publishers_from_sherpa
     Publisher.update_sherpa_data
     respond_to do |format|
-      flash[:notice] = "Update successful."
+      flash[:notice] = t('common.admin.flash_update_publishers_successful')
       format.html { redirect_to admin_update_sherpa_data_url }
       format.xml { head :ok }
     end
   rescue Exception => e
     respond_to do |format|
-      flash[:notice] = "Error updating publisher data: #{e.message}"
+      flash[:notice] = t('common.admin.flash_update_publishers_error', :message => e.message)
       format.html { redirect_to admin_update_sherpa_data_url }
       format.xml { head :error }
     end
@@ -114,7 +114,7 @@ class AdminController < ApplicationController
         # add entry for our METS package
         zip_stream.put_next_entry("mets.xml")
         # render our METS package for this Work
-        zip_stream.print render_to_string(:partial => "works/package.mets.haml", :locals => {:work => work, :filenames_only => true})
+        zip_stream.print render_to_string("works/package.mets.haml", :work => work, :filenames_only => true)
 
         #loop through attached files
         work.attachments.each do |att|
