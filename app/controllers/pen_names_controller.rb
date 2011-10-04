@@ -18,6 +18,7 @@ class PenNamesController < ApplicationController
              :permission_denied_redirection => edit_person_url(@person)
 
       @suggestions = NameString.name_like(@person.last_name).order_by_name
+      @title = "#{@person.display_name}: Pen Names"
 
     end
 

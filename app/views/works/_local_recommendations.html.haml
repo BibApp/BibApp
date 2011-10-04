@@ -7,7 +7,7 @@
         %li
           %p.metadata #{link_to rec.title_primary.titleize, work_path(rec)}
           %p.metadata
-            - if !rec.publication.blank?
+            - if rec.publication.present?
               #{rec.publication.authority.name} |
             - if rec.publication_date
               #{rec.publication_date.year}

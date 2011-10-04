@@ -1,0 +1,13 @@
+.left.span-8.append-1
+  %table#pen_names.import-review-table
+    %thead
+      %tr
+        %th My Names
+        %th Works Matched
+    %tbody#current
+      = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
+
+    %tfoot
+      %tr
+        %td Total
+        %td{:id => "pen_names_count_total"} 0

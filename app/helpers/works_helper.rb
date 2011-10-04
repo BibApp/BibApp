@@ -49,4 +49,257 @@ module WorksHelper
     "http://dx.doi.org/#{CGI.escape(link)}"
   end
 
+  def work_class(work)
+    work.class.name.to_s
+  end
+
+  def normalized_work_class(work)
+    type = work_class(work)
+    if ['.haml', ''].detect { |ext| File.exist?("#{Rails.root}/app/views/works/apa/_#{type.underscore}.html#{ext}") }
+      type
+    else
+      'generic'
+    end
+  end
+
+  def tag_filter(tag)
+    %Q(tags: "#{tag.name}")
+  end
+
+  #helpers for metadata views
+  def location_label(work)
+    if work.class == PresentationLecture
+      "Location Given"
+    else
+      "Conference Location"
+    end
+  end
+
+  def publication_place_label(work)
+    case work.class.to_s
+      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
+        'Location'
+      else
+        "Publication Place"
+    end
+  end
+
+  def date_range_label(work)
+    case work.class.to_s
+      when 'Patent'
+        "Filing Date"
+      when 'WebPage'
+        "Date of Last Visit"
+      when 'Exhibition'
+        "Exhibition Dates"
+      when 'Performance'
+        "Performance Date"
+      when 'JournalWhole'
+        "Dates"
+      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
+        "Conference Dates"
+      else
+        'Date Range'
+    end
+  end
+
+  def end_page_label(work)
+    case work.class.to_s
+      when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
+        "Total Pages"
+      else
+        'End Page'
+    end
+  end
+
+  def issue_label(work)
+    case work.class.to_s
+      when 'Report'
+        'Series Number'
+      else
+        'Issue'
+    end
+  end
+
+  def publication_date_label(work)
+    case work.class.to_s
+      when 'ConferencePoster'
+        "Date Presented"
+      when 'PresentationLecture'
+        "Date Given"
+      when 'Artwork'
+        "Date of Composition"
+      when 'DissertationThesis'
+        "Degree Date"
+      when 'Patent', 'RecordingMovingImage'
+        "Date Issued"
+      else
+        'Date Published'
+    end
+  end
+
+  def issn_isbn_label(work)
+    case work.class.to_s
+      when 'JournalArticle', 'JournalWhole', 'BookReview'
+        "ISSN"
+      when 'RecordingSound', 'RecordingMovingImage'
+        "ISRC"
+      else
+        'ISBN'
+    end
+  end
+
+  def publication_label(work)
+    case work.class.to_s
+      when 'BookSection'
+        "Book Title"
+      when 'JournalArticle', 'BookReview'
+        "Journal Title"
+      when 'ConferencePaper', 'ConferencePoster'
+        "Conference Title"
+      when 'PresentationLecture'
+        "Title of Conference or Occasion"
+      when 'Performance', 'RecordingSound', 'RecordingMovingImage'
+        "Title of Larger Work"
+      when 'Report'
+        "Series Title"
+      else
+        'Publication Title'
+    end
+  end
+
+  def publisher_label(work)
+    case work.class.to_s
+      when 'Artwork'
+        "Institution or Collection Name"
+      when 'DissertationThesis'
+        "Degree Granting Institution"
+      when 'Exhibition', 'Performance'
+        "Venue"
+      when 'RecordingSound'
+        "Recording Label"
+      when 'RecordingMovingImage'
+        "Production Company"
+      when 'Grant'
+        "Institution"
+      else
+        'Publisher'
+    end
+  end
+
+  def title_primary_label(work)
+    case @work.class.to_s
+      when 'BookSection'
+        "Article/Chapter Title"
+      when 'JournalArticle'
+        "Article Title"
+      else
+        'Title'
+    end
+  end
+
+  def skip_title_secondary(work)
+    work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(work.class.to_s)
+  end
+
+  #return a string with links to all of the creators
+  def creator_links(work)
+    work_name_strings_to_links(work.work_name_strings.select { |wns| wns.role == @work.creator_role })
+  end
+
+  #return an array of arrays. Each array has as its first element a contributor role and
+  #as its second element an array of name strings for contributors with those roles.
+  def contributors_by_role(work)
+    #This gets us an ordered hash
+    work.work_name_strings.select { |wns| wns.role != work.creator_role }.group_by { |wns| wns.role }
+  end
+
+  #takes an array of work name strings and gives back the html for links to the names
+  def work_name_strings_to_links(work_name_strings)
+    work_name_strings.collect { |wns| wns.name_string }.collect do |ns|
+      link_to(h(ns.name.gsub(',', ', ')), name_string_path(ns))
+    end.join(', ').html_safe
+  end
+
+  def decide_edit_partial(work)
+    decide_partial(work, '')
+  end
+
+  def decide_merge_partial(work)
+    decide_partial(work, '_merge')
+  end
+
+  def decide_partial(work, prefix)
+    name = work.class.name.to_s.underscore
+    partial = if ['.haml', ''].detect { |suffix| File.exist?("#{Rails.root}/app/views/works/forms/_form#{prefix}_#{name}.html#{suffix}") }
+      name
+    else
+      'generic'
+    end
+    "works/forms/form#{prefix}_#{partial}"
+  end
+
+  def new_work_header(person)
+    suffix = person ? " for #{link_to person.display_name, person_path(person)}" : ''
+    "Add Works#{suffix}"
+  end
+
+  def link_to_google_book(work)
+    if !work.publication.nil? and !work.publication.isbns.blank?
+      capture_haml :div, {:class => "right"} do
+        haml_tag :span, {:title => "ISBN"}
+        work.publication.isbns.first[:name]
+        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+      end
+    elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
+      capture_haml :div, {:class => "right"} do
+        haml_tag :span, {:title => "ISBN"}
+        work.publication.issn_isbn
+        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+      end
+    else
+      # Nothing
+    end
+  end
+
+  def issn_isbn_field_label(isbn, issn, isrc)
+    label = case
+      when isbn
+        'ISBN'
+      when issn
+        'ISSN'
+      when isrc
+        'ISRC'
+      else
+        'ISSN/ISBN'
+    end
+    label + ':'
+  end
+
+  #The self_or_x methods return the passed object if a string or the field value for :x if not.
+  #The exception is self_or_field which is a general method to implement these
+  #Used to simplify some of the views/works/forms/fields views
+  def self_or_name(string_or_object)
+    self_or_field(string_or_object, :name)
+  end
+
+  def self_or_id(string_or_object)
+    self_or_field(string_or_object, :id)
+  end
+
+  def self_or_field(string_or_object, field)
+    string_or_object.kind_of?(String) ? string_or_object : string_or_object.send(field)
+  end
+
+  def reorder_list_message(list_type)
+    case list_type
+      when "author_name_strings"
+        "Successfully updated order of authors!"
+      when "editor_name_strings"
+        "Successfully updated order of editors!"
+      else
+        "Successfully updated order of list!"
+    end
+  end
+
 end

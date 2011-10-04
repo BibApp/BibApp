@@ -1,0 +1,8 @@
+- unless @work.links.blank?
+  %tr
+    %td.label DOI/URL:
+    %td
+      -#to keep long, unbroken URLS from expanding the table
+      .span-11.work-link
+        - split_potential_links(@work).each do |link|
+          %p #{link_potential_link(link)}

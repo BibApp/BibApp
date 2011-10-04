@@ -2,20 +2,16 @@
 -# Also adds a list of existing tags
 
 -# Initialize our list of tags
--#  Default: use tags assigned to @work.  
+-#  Default: use tags assigned to @work.
 -#  @tags should only exist if there were errors in saving work
-- tags = @work.tags if @work.tags
-- tags = @tags if @tags
+- tags = @tags  || @work.tags
 
 = label :tag, :name, "Tag(s):"
-= text_field_with_auto_complete :tag, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5} 
+= text_field_with_auto_complete :tag, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
 -# Ajax-enabled link to add new items to below list
 = link_to "Add Tag to List", :url => add_item_to_list_url, :condition => "$('tag_name').value.length > 0",
    :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
 %ul.form_item_list#tags_list
   -# Build list of existing tags
-  - if tags
-    - tags.each do |tag|
-      - name = (tag.kind_of?(String) ? tag : tag.name)
-      - id = (tag.kind_of?(String) ? tag : tag.id)
-      = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'tags', :item_id => id, :item_value => name} 
+  - tags.each do |tag|
+    = render 'works/forms/fields/list_item', :list_type => 'tags', :item_id => self_or_id(tag), :item_value => self_or_name(tag)

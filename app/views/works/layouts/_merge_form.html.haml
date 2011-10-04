@@ -1,0 +1,15 @@
+-# requires to be passed: type (string identifying class), form (the form being acted upon)
+-# may take hidden_fields, a hash for additional hidden fields
+- hidden_fields ||= {}
+%table#accepted_work.span-22
+  %tr
+    %td.span-8.duplicate
+      %h3 Duplicate work
+    %td.span-12
+      %h3 Accepted work
+  = yield
+
+= hidden_field_tag :type, type
+- hidden_fields.each do |k, v|
+  = hidden_field_tag k, v
+= render 'works/forms/fields/form_buttons', :form => form

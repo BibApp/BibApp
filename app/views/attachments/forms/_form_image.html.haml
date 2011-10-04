@@ -18,16 +18,16 @@
 
     .span-4.prepend-1
       #picture.span-3
-        %p= render :partial => "shared/person_image", :locals => {:o => @asset}
+        %p= render "shared/person_image", :o => @asset
 
       -if @person.image
         = link_to "delete image", attachment_url(:id => @asset.image.id), :method => :delete
 
   %fieldset
-    %legend="New Image"
-    %label="Upload File:"
+    %legend New Image
+    %label Upload File:
     %br/
-    = render :partial => 'upload_file', :locals => { :form => form }
+    = render 'upload_file', :form => form
 
     -# save asset id as person_id
     = hidden_field_tag :person_id, @asset.id

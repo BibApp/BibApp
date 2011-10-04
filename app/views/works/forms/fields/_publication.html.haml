@@ -6,6 +6,7 @@
 -# Initialize optional input variables
 - label ||= "Publication Title"
 
-- @publication = @work.publication unless @publication or @work.publication.nil?
+- @publication ||= @work.publication
 = label 'publication', :name, "#{label}:"
-= text_field_with_auto_complete 'publication', :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}
+= text_field_with_auto_complete 'publication', :name, {:class=>'text', :size => 40},
+  {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}

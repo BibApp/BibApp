@@ -1,24 +1,24 @@
 %fieldset
-  %legend="Publisher"
+  %legend Publisher
   = form_for @publisher do |form|
     %p
-      %label="Name"
+      %label Name
       %br/
       = form.text_field :name
     %p
-      %label="URL"
+      %label URL
       %br/
       = form.text_field :url
     %p
-      %label="Romeo Color"
+      %label Romeo Color
       %br/
       = form.text_field :romeo_color
     %p
-      %label="Copyright Notice"
+      %label Copyright Notice
       %br/
       = form.text_field :copyright_notice
     %p
-      %label="Publisher's Copy Allowed?"
+      %label Publisher's Copy Allowed?
       %br/
       = form.check_box :publisher_copy
     -if @publisher.authority_id

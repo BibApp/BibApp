@@ -1,49 +1,24 @@
-/ === Sessions === Saved ===
-/ Main
-.span-24
-  .span-22.prepend-1
-    - if @works.nil? || @works.empty?
-      %h2 Saved
-      %p Nothing added yet.
+= render :layout => '/layouts/main_body_no_h2' do
+  - if @works.blank?
+    %h2 Saved
+    %p Nothing added yet.
 
-    - elsif !@export.blank?
-      %h2 Works
-      = @works
+  - elsif @export.present?
+    %h2 Works
+    = @works
 
-    - else
-      - content_for :admin_bar do
-        #admin-actions.span-24
-          %ul#edit-actions
-            %li #{ link_to "Empty saved items?", delete_saved_url}
-      
-      %h2 Saved #{@saved.items.size}
+  - else
+    = render :layout => 'layouts/admin_bar' do
+      %li #{ link_to "Empty saved items?", delete_saved_url}
 
-      / Sort Form
-      .span-13.append-1.last
-        = form_tag "#works", :method => :get do
-          #sort-by
-            %label Show:
-            %select{:name => "rows"}
-              - ["10", "20", "50", "100", "250", "500"].each do |opt|
-                - if opt == @rows
-                  %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-                - else
-                  %option{:value => "#{opt}"}= opt.titleize
-            
-            %label Send to:
-            %select{:name => "export"}
-              - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
-                %option{:value => "#{opt.downcase}"}=opt
+    %h2 Saved #{@saved.items.size}
 
-            - @page = 1 if @page == 0
-            = hidden_field_tag "page", @page              
+    = render 'show_options_form'
 
-            = submit_tag 'Go'
-      
-        .span-14 #{ will_paginate @works.paginate}
+    .span-14 #{ will_paginate @works.paginate}
 
-        %ol.span-14.works.clear-both
-          - @works.each do |work|
-            = render :partial => "shared/work", :locals => {:work => Index.work_to_solr_hash(work)}
+    %ol.span-14.works.clear-both
+      - @works.each do |work|
+        = render "shared/work", :work => Index.work_to_solr_hash(work)
 
-        .span-14 #{ will_paginate @works.paginate}
+    .span-14 #{ will_paginate @works.paginate}

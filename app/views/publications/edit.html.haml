@@ -1,15 +1,5 @@
-/ === Publications === Edit ===
+- if current_user_any_role?("editor", Group)
+  = render :layout => 'layouts/admin_bar' do
+    %li=link_to "Delete this publication", publication_url(@publication), :method => :delete, :confirm => 'Permanently delete this publication? This cannot be undone.'
 
-- if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    %div.span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Delete this publication", publication_url(@publication), :method => :delete, :confirm => 'Permanently delete this publication? This cannot be undone.'
-
-/ Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    %h2 Edit this Publication
-    
-    = render :partial => 'form'
+= render :partial => 'form', :layout => 'layouts/main_body', :locals => {:header => 'Edit this Publication'}

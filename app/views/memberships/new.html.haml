@@ -2,78 +2,23 @@
 / Main
 - include_stylesheet('specific/memberships/new')
 - include_javascript('specific/memberships/new')
-- @title = "#{@person.display_name}: Group Memberships"
-- if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-        %li= link_to "Add a new person", new_person_path
+- if current_user_any_role?("editor", Group)
+  = render :layout => '/layouts/admin_bar' do
+    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Add a new person", new_person_path
 
-.span-24
-  .span-22.prepend-1
-    %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Group Memberships
+= render :layout => '/layouts/main_body',
+  :locals => {:header => "#{person_link(@person)}: Group Memberships".html_safe} do
 
-    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
+  = render "shared/local_nav", :object => "person", :state => "edit"
 
-    .span-4.prepend-1
-      #picture.span-3
-        %p= render :partial => "shared/person_image", :locals => {:o => @person}
+  = render :partial => 'body_leftbar', :layout => 'layouts/main_body_left'
 
-      %h3 Groups (#{@person.groups.size})
-      %ol.groups_alphabetical
-        - @person.groups.each do |g|
-          %li #{link_to "#{g.name}", group_path(g)}
-
-    %fieldset
-      %legend Group Memberships
-      .span-16.last.column
-        - if @status == "non_member"
-          /Search Form
-          .span-8.attend-1.last.right
-            = form_tag :action => "search_groups", :method => :get, :class => "memberships_search_form" do
-
-              #search-box
-                = text_field_tag(:q, nil, :size => 21)
-                = hidden_field_tag "person_id", @person.id
-                = hidden_field_tag "status", @status
-                = submit_tag 'Search Groups'
-
-        %ul.actions
-          %li=link_to_unless((@status.downcase == "member"), "Memberships (#{@person.groups.count})",
-              new_membership_url(:person_id => @person.id, :status => 'member'))
-          |
-          %li=link_to_unless((!defined?(@query) && @status.downcase == "non_member"), "All Groups (#{Group.count})",
-              new_membership_url(:person_id => @person.id, :status => 'non_member'))
-
-        - if @status == "non_member"
-          .span-15.append-1.last
-            - if defined?(@query)
-              %h3
-                Searching for:
-                = @query
-                = link_to image_tag('/images/remove_facet.gif'), new_person_membership_path(:person_id=>@person.id,:status=>"non_member")
-            - if @groups.length < 1
-              %p No groups found
-            - else
-              = form_tag create_multiple_memberships_url, :method => :put, :name => "memberships_form", :id => "memberships_form" do
-                %div
-                  #bulk_links
-                    = submit_tag "Join selected groups"
-
-                    = hidden_field_tag "person_id", @person.id
-                    = hidden_field_tag "status", @status
-                    -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
-                    = hidden_field_tag "authenticity_token", form_authenticity_token
-
-                .span-15.append-1.last
-                  = render :partial => "group_list"
-
-        - if @status == "member"
-          .span-15.append-1.last
-            #edit_membership_active
-            %ol#current
-              = render :partial => "group", :collection => @person.groups(true)
-
-          =sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)
+  %fieldset
+    %legend Group Memberships
+    .span-16.last.column
+      - if @status == "non_member"
+        = render :partial => 'search_form'
+      = render "action_links"
+      .span-15.append-1.last
+        = render "#{@status}_groups"

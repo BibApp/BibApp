@@ -1,72 +1,32 @@
-/ === Groups === Show ===
-/ Main
 - include_stylesheet('specific/groups/show')
-- @title = @group.name  # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_role?("editor", @group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li=link_to "Add a Group", new_group_path
-        %li= link_to "Edit this group", edit_group_path
-        %li=link_to "Manage Roles", group_roles_path(@group)
+- if current_user_role?("editor", @group)
+  = render :layout => 'layouts/admin_bar' do
+    %li= link_to "Add a Group", new_group_path
+    %li= link_to "Edit this group", edit_group_path
+    %li= link_to "Manage Roles", group_roles_path(@group)
 
-/ ### Main ###
-.span-24
-  .span-22.prepend-1
+= render :layout => 'layouts/main_body', :locals => {:header => body_header(@group)} do
+  = render "shared/local_nav", :object => "group"
 
-    %h2
-      = @group.name
-      =link_to(image_tag("feed-icon-14x14.png"), group_path(@group, :format => "rss"))
-    = render :partial => "shared/local_nav", :locals => {:object => "group"}
+.span-15.prepend-1
+  = render "shared/people", :count => 15, :randomize => true
 
-  .span-15.prepend-1
-    / People
-    = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
+  .span-14
+    %h3.heading Description
+    %p= @group.description
+    - if @group.url.present?
+      %p= link_to h(@group.url), @group.canonicalize_url
 
-    .span-14
-      / Description
-      %h3.heading Description
-      %p= @group.description
-      - if @group.url.present?
-        %p= link_to h(@group.url), @group.canonicalize_url
+    .span-6.append-2
+      = render "shared/publications", :count => 10
 
-      / Publications
-      .span-6.append-2
-        = render :partial => "shared/publications", :locals => {:count => 10}
-
-      / Publishers
-      .span-6.last
-        = render :partial => "shared/publishers", :locals => {:count => 10}
+    .span-6.last
+      = render "shared/publishers", :count => 10
 
 
-  .span-7.last
-    / Sub-Groups
-    .span-6.right_box_no_border
-      - unless @group.parent.nil? or @group.parent.hide?
-        %h3.heading Belongs to
-        %ul.parent-group
-          %li= link_to @group.parent.name, group_path(@group.parent)
-      - unless @group.children.empty?
-        %h3.heading Sub-Groups
-        %ul.sub-groups
-          -@group.children.each do |g|
-            - unless g.hide?
-              %li
-                =link_to g.name, group_path(g)
-                ="(#{g.works.count})"
-
-    .span-7.right_box_no_border
-      %h3 Types of Work
-      .text-center
-        %img{:src => "#{@chart_url}", :class => 'group-show-chart-image'}
-
-    = render :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords}
-
-    .span-7.last.right_box_no_border
-      %h3.heading
-        =link_to "Recent Works", group_works_path(@group)
-      %ol#works.span-7.works
-        - @works.first(3).each do |work|
-          = render :partial => "shared/work", :locals => {:work => work}
+.span-7.last
+  = render :partial => 'related_groups_box', :layout => 'layouts/right_box_no_border'
+  = render :partial => 'work_types_box', :layout => 'layouts/right_box_no_border'
+  = render :partial => "shared/keyword_cloud", :layout => 'layouts/right_box_no_border', :locals => {:keywords => @keywords, :id => 'tagcloud'}
+  = render :partial => 'recent_works_box', :layout => 'layouts/right_box_no_border'

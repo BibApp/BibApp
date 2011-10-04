@@ -1,0 +1,13 @@
+.span-20.prepend-1
+  %h4.error
+    Sorry, your search for &ldquo;#{@query}&rdquo; came up empty.
+    -if @spelling_suggestions.present?
+      = render :partial => 'spelling_suggestions'
+
+  %h4 Suggestions:
+  %ul
+    %li Double check your spelling.
+    %li Try different keywords.
+    %li Try our advanced search options.
+
+  = render "advanced_search_form"

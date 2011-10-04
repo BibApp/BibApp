@@ -1,7 +1,6 @@
 - include_stylesheet('specific/shared/_alpha_pagination')
 %ol#alpha-nav.pagination
   - path ||= nil
-  - letters = ('A'..'Z').to_a
-  - (letters = ('0'..'9').to_a + letters) if defined?(numbers) and numbers
-  - letters.each do |letter|
-    = letter_link_for(@a_to_z, letter, letter == @page, :path => path)
+  - numbers ||= nil
+  - alpha_pagination_items(numbers).each do |item|
+    = letter_link_for(@a_to_z, item, item == @page, :path => path)

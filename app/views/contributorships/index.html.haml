@@ -1,68 +1,17 @@
 - include_javascript('specific/contributorships/index')
-- @title = "#{@person.display_name}: #{@status.capitalize} Contributorships"
-- if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-        %li= link_to "Add a new person", new_person_path
+- if current_user_any_role?("editor", Group)
+  = render :layout => '/layouts/admin_bar' do
+    %li= link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
+    %li= link_to "Add a new person", new_person_path
 
-.span-24
-  .span-22.prepend-1
+= render :layout => 'layouts/main_body', :locals => {:header => body_header(@person, @status)} do
+  = render "shared/local_nav", :object => "person", :state => "edit"
+  = render 'status_nav'
 
-    %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: #{@status.capitalize} Contributorships
-    = render :partial => "shared/local_nav", :locals => {:object => "person", :state => "edit"}
-    .span-14.column
-      .span-13
-        %ul.actions
-          %li=link_to_unless((@status.downcase == "unverified"), "Unverified (#{@person.contributorships.unverified.size})", contributorships_path(:person_id => @person.id, :status => "unverified", :page => 1))
-          |
-          %li=link_to_unless((@status.downcase == "verified"), "Verified (#{@person.contributorships.verified.size})", contributorships_path(:person_id => @person.id, :status => "verified", :page => 1))
-          |
-          %li=link_to_unless((@status.downcase == "denied"), "Denied (#{@person.contributorships.denied.size})", contributorships_path(:person_id => @person.id, :status => "denied", :page => 1))
+  .span-13.append-1.last
+    #sort-by.right
+      = render 'row_count_form'
 
-    .span-13.append-1.last
-      #sort-by.right
-        = form_tag "#", :method => :get, :name => "contributorships_form_show_rows" do
-          %label Show:
-          = render :partial => 'shared/row_select'
-          = hidden_field_tag "person_id", @person.id
-          = hidden_field_tag "status", @status
-          -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
-          = hidden_field_tag "authenticity_token", form_authenticity_token
+    = render 'act_on_multiple_form'
 
-          = submit_tag 'Go'
-
-
-      = form_tag act_on_multiple_contributorships_url, :method => :put, :name => "contributorships_form", :id => "contributorships_form" do
-        #bulk_links
-          = check_box_tag "select_contributorships", "yes", false, :id => 'global-checkbox'
-          %strong Select All
-          |
-          %select#action-select{:name => "do_to_all"}
-            %option{:selected => "selected", :value => "null", :id => "null"} Action
-            - if @status != "verified"
-              %option{:value => "verify", :id => "verify"} Verify
-            - if @status != 'unverified'
-              %option{:value => "unverify", :id => "unverify"} Unverify
-            - if @status != 'denied'
-              %option{:value => "deny", :id => "deny"} Deny
-          |
-          - if @person
-            = hidden_field_tag :person_id, @person.id
-          = hidden_field_tag :status, @status
-          =submit_tag "Apply to selection", :id => 'contributorships-submit'
-
-        .clear-both= will_paginate @contributorships
-
-        = render :partial => 'contributorships'
-
-    %div{:class => "span-7 prepend-1 last"}
-      #picture{:class => "span-6"}
-        %p= render :partial => "shared/person_image", :locals => {:o => @person}
-
-      %h3="Groups (#{@person.groups.size})"
-      %ol.groups_alphabetical
-        - @person.groups.each do |g|
-          %li=link_to "#{g.name}", group_path(g)
+  = render 'right_bar'

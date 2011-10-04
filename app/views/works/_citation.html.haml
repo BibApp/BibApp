@@ -1,7 +1,0 @@
-- include_stylesheet('specific/works/_citation')
-- work_class = @work.class.name.to_s
-- normalized_work_class = File.exist?("#{Rails.root}/app/views/works/apa/_#{work_class.underscore}.html.haml") || File.exist?("#{Rails.root}/app/views/works/apa/_#{work_class.underscore}.html") ? work_class : 'generic'
-%h4.citation-header APA Format: #{normalized_work_class.underscore.humanize}
-%p.apa_citation
-  = render :partial => "works/apa/#{normalized_work_class.underscore}", :locals => { :c => @work }
-

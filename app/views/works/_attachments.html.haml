@@ -1,6 +1,6 @@
 .links
   %strong Local Library Link: #{link_to_findit(Index.work_to_solr_hash(@work))}
-  - if !@work.attachments.nil? and !@work.attachments.empty?
+  - if @work.attachments.present?
     - if @work.archived?
       - @work.external_system_uris.each do |s|
         .file
@@ -15,7 +15,5 @@
         %br/
         %p
           The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}.
-
-
 
 %br/

@@ -6,6 +6,7 @@ Make assignment/deletion of roles for explicit roles - don't consider (but do no
 Only show header for external credential login when such a method is actually used.
 Fix bug after will_paginate 3.0.0 upgrade
 Prevent a possible infinite loop after saving a contributorship from even being possible
+View refactoring - internal layouts, relocation of logic to helpers, more use of partials, etc.
 
 1.1.2 - September 1, 2011
 --------------

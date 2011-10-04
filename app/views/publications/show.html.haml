@@ -1,65 +1,29 @@
-/ === Publications === Show ===
-/ Main
 - include_stylesheet('specific/publications/show')
 - include_stylesheet('common/sherpa')
 
 - if @export.present?
-  .span-24
-    .span-22.prepend-1
-      %h2 Works
-      = @works
+  = render :layout => 'layouts/main_body', :locals => {:header => "Works"} do
+    = @works.html_safe
 
 - else
-  - if logged_in? && current_user.has_any_role?("editor", Group)
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        %ul#edit-actions
-          %li #{link_to "Edit this publication", edit_publication_path(@publication)}
+  - if current_user_any_role?("editor", Group)
+    = render :layout => '/layouts/admin_bar' do
+      %li #{link_to "Edit this publication", edit_publication_path(@publication)}
 
-  .span-24
+  = render :layout => 'layouts/main_body', :locals => {:header => @publication.name} do
+    -if @publication.publisher
+      = render 'show_publisher'
 
-    .span-22.prepend-1
-      %h2 #{ @publication.name}
-      -if @publication.publisher
-        %h4
-          Published by:
-          #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
-          = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @publication.publisher}
+    / Authority check
+    - if @authority_for.size == 0
+      = render 'show_not_authority'
 
-      / Authority check
-      - if @authority_for.size == 0
-        .notice
-          %h3 Authorized Title
-          - if @publication.authority
-            %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}
+    -else
 
-      -else
+      = render "shared/people", :count => 10, :randomize => false
 
-        / People
-        = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
+      = render "shared/groups", :count => 10
 
-        / Groups
-        = render :partial => "shared/groups", :locals => {:count => 10}
+      = render 'shared/pub_common/search_within_div', :submit_url => publication_path
 
-        = render 'shared/pub_common/search_within_div', :submit_url => publication_path
-
-        / Authority
-        #authority.span-22
-          - if @authority_for.present?
-            %h4
-              #{@publication.name}
-              &ndash; authorized name for:
-            %table#authority-children
-              %thead
-                %tr
-                  %th Name
-                  %th ISSN/ISBN
-                  %th Publisher
-              %tbody
-                - @authority_for.each do |auth|
-                  %tr
-                    %td=link_to auth.name, publication_path(auth)
-                    %td= auth.issn_isbn
-                    -if auth.publisher
-                      %td= auth.publisher.name
+      = render 'show_authority'

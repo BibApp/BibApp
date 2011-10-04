@@ -18,8 +18,8 @@
     - if (@feeds)
       - @feeds.each do |feed|
         = auto_discovery_link_tag(feed[:format].to_sym, { :action => feed[:action], :id => feed[:id], :format => feed[:format] })
-        
-    %title=$APPLICATION_NAME + " - " + (@title || "Find an Expert")
+
+    %title= $APPLICATION_NAME + " - " + (@title || "Find an Expert")
   %body
     -#= link_to_function('Toggle env', '$("env").toggle();')
     -#%div.container#env{:style => 'display: none;'}
@@ -33,10 +33,10 @@
     -#    - controller.request.env.keys.sort.each do |key|
     -#      %li
     -#        #{key}: #{controller.request.env[key]}
-    %div.container
+    .container
       = render :partial => "shared/header"
       = yield :admin_bar
-      %div#flash-messages.span-22.prepend-1
+      #flash-messages.span-22.prepend-1
         = render :partial => "shared/flash_messages"
       = yield
       = render :partial => "shared/footer"
@@ -44,5 +44,5 @@
   -if $DISPLAY_GOOGLE_ANALYTICS == true
     = js_data_div('google-analytics-id', $GOOGLE_ANALYTICS_ID)
     = javascript_include_tag 'specific/shared/google_analytics'
-     
+
   = yield :javascripts

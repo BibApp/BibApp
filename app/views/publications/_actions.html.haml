@@ -1,4 +1,4 @@
 %ul.actions
   %li=link_to "show", publication_path(pub)
   %li=link_to "edit", edit_publication_path(pub)
-  %li=link_to "destroy",{:controller=>"publication", :action=>"destroy", :id=>pub.id}, :confirm => "Are you sure?", :method => :delete
+  %li=link_to "destroy", {:controller=>"publication", :action=>"destroy", :id=>pub.id}, :confirm => "Are you sure?", :method => :delete

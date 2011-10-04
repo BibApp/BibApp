@@ -1,14 +1,10 @@
-/ === Passwords === New (Forgot Password) ===
-/ Main
-%div{:class => "span-24"}
-  %div.span-22.prepend-1
-    %h2 Forgot Password
-    %fieldset
-      %legend="Request New Password"
-      = form_for :password, :url => passwords_path do |form|
-        %p
-          %label="Email"
-          %br/
-          = form.text_field 'email'
-        %p.submit
-          = form.submit 'Send Password'
+= render :layout => '/layouts/main_body', :locals => {:header => 'Forgot Password'} do
+  %fieldset
+    %legend Request New Password
+    = form_for :password, :url => passwords_path do |form|
+      %p
+        %label Email
+        %br/
+        = form.text_field 'email'
+      %p.submit
+        = form.submit 'Send Password'

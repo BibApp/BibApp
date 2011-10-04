@@ -1,26 +1,26 @@
-%div{:class => "vcard span-8 hide"}
-  %div{:class => "span-4"}
-    = render :partial => "shared/person_image", :locals => {:o => o}
-  %a{:class => "fn url hide", :href => ""}
-    =o.name
-  %div{:class => "adr"}
-    %span{:class => "work"}
-    %div{:class => "street-address"}
-      =o.office_address_line_one
-    %span{:class => "locality"}
-      =o.office_city
-    %span{:class => "region"}
-      =o.office_state
-    %span{:class => "postal-code"}
-      =o.office_zip
+.vcard.span-8.hide
+  .span-4
+    = render "shared/person_image", :o => o
+  %a.fn.url.hide{:href => ""}
+    = o.name
+  .adr
+    %span.work
+    %div.street-address
+      = o.office_address_line_one
+    %span.locality
+      = o.office_city
+    %span.region
+      = o.office_state
+    %span.postal-code
+      = o.office_zip
   - if o.phone
-    %div{:class => "tel"}
-      %span{:class => "type hide"} Work
+    %div.tel
+      %span.type.hide Work
       = o.phone
   - if o.email
-    %div{:class => "email"}
-      %span{:class => "type hide"} Work
+    %div.email
+      %span.type.hide Work
       %a{:href => "mailto:#{o.email}"}
         = o.email
-    
-  
+
+

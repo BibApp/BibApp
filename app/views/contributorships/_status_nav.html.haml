@@ -1,0 +1,8 @@
+.span-14.column
+  .span-13
+    %ul.actions
+      %li #{status_link(@person, @status, 'unverified')}
+      |
+      %li #{status_link(@person, @status, 'verified')}
+      |
+      %li #{status_link(@person, @status, 'denied')}

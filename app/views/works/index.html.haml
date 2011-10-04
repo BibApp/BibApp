@@ -1,101 +1,43 @@
-/ === Works === Index ===
-/ Main
 - include_stylesheet('specific/works/index')
-- @title = "Works" # Specify text at end of HTML <title> tag
 
 / ### Person / Works ###
-- if params[:person_id]
-  - if logged_in? && current_user.has_role?("editor", Person.find(params[:person_id]))
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        = render :partial => "people/admin_actions"
+- if params[:person_id] and current_user_role?("editor", Person.find(params[:person_id]))
+  = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
 
-- else
-  - if logged_in? && (current_user.has_any_role?("editor", Group) or current_user.has_role?('admin', Work))
-    - content_for :admin_bar do
-      / #### Admin Actions ###
-      #admin-actions.span-24
-        %ul#edit-actions
-          - if current_user.has_any_role?("editor", Group)
-            %li #{link_to "Add a Work", new_user_import_path(current_user)}
-          - if current_user.has_role?('admin', Work)
-            %li #{link_to("View orphaned works", orphans_works_url)}
+- elsif current_user_any_role?("editor", Group) or current_user_role?('admin', Work)
+  = render :layout => 'layouts/admin_bar' do
+    - if current_user.has_any_role?("editor", Group)
+      %li #{link_to "Add a Work", new_user_import_path(current_user)}
+    - if current_user.has_role?('admin', Work)
+      %li #{link_to("View orphaned works", orphans_works_url)}
 
-/ ### Main ###
-.span-24
-  / If they want to see *everything*, let them see it!
-  / params[:view] = "all"
+= render :layout => 'layouts/main_body_no_h2' do
   - if @view == "all"
 
-    .span-22.prepend-1
+    - if params[:person_id]
+      = render 'person_index_search'
+    - if params[:group_id]
+      = render 'group_index_search'
 
-      / ### Person / Works ###
-      - if params[:person_id]
-        .span-5
-          .left_box.search-within
-            .box_heading Search Within
-            = form_tag(person_works_path(@person), :method => :get) do
-              = text_field_tag(:q, params[:q], :size => 15)
-              = submit_tag 'Go'
-
-        .span-17.last
-          - if @person
-            %h2 #{link_to(h(@person.display_name), person_path(@person))}
-            = render :partial => "shared/local_nav", :locals => {:object => "person"}
-
-      / ### Group / Works ###
-      - if params[:group_id]
-        .span-5
-          .left_box.search-within
-            .box_heading Search Within
-            = form_tag(group_works_path(@group), :method => :get) do
-              = text_field_tag(:q, params[:q], :size => 15)
-              = submit_tag 'Go'
-
-        .span-17.last
-          %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
-          = render :partial => "shared/local_nav", :locals => {:object => "group"}
-
-
-    / Render
-    #results.span-22.prepend-1
-      = render :partial => "shared/facets"
-
-      / Works
-      = render :partial => "shared/works"
+    #results.span-22
+      = render "shared/facets"
+      = render "shared/works"
 
   - else
-    .span-22.prepend-1
+    %h2
+      At the library, we
+      %span.hearts &hearts;
+      our researchers.
 
-      %h2
-        At the library, we
-        %span.hearts &hearts;
-        our researchers.
-
-      .span-15
-        / People - Randomized
-        = render :partial => "shared/people", :locals => {:count => 15, :randomize => true}
-
-      / Works
-      .span-7.last
-        %h3.heading
-          =link_to "Works", works_url(:view => "all")
-          &ndash; Recent additions
-        %ol#works.works
-          - @works.first(3).each do |work|
-            = render :partial => "shared/work", :locals => {:work => work}
+    .span-15
+      = render "shared/people", :count => 15, :randomize => true
+    .span-7.last
+      = render 'first_works'
 
     #facets.span-24
-
-      / Groups
       .span-6.prepend-1
-        = render :partial => "shared/groups", :locals => {:count => 10}
-
-      / Publications
+        = render "shared/groups", :count => 10
       .span-6.prepend-1.append-2
-        = render :partial => "shared/publications", :locals => {:count => 10}
-
-      / Publishers
+        = render "shared/publications", :count => 10
       .span-6.last
-        = render :partial => "shared/publishers", :locals => {:count => 10}
+        = render "shared/publishers", :count => 10

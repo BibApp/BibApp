@@ -1,0 +1,6 @@
+- creators_text = creator_links(@work)
+- unless creators_text.blank?
+  %tr
+    %td.label #{@work.creator_role}(s):
+    %td #{creators_text}
+

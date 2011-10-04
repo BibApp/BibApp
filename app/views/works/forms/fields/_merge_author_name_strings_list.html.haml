@@ -1,0 +1,4 @@
+%ol.form_item_list#author_name_strings_list
+  - authors.each do |author|
+    = render 'works/forms/fields/list_item', :list_type => 'author_name_strings',
+      :item_id => self_or_id(author), :item_value => self_or_name(author), :item_class=>"movable"

@@ -1,35 +1,29 @@
-%fieldset
-  %legend Artwork
-
-  = hidden_field_tag :klass, 'Artwork'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
-
-  %ul
-    %li
-      = render :partial => 'works/forms/fields/author_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:label => "Title", :form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:label => "Alternate Title", :form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_tertiary', :locals => {:label => "Title Series", :form => form}
-    %li
-      = render :partial => 'works/forms/fields/medium', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Institution or Collection Name"}
-    %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location (City)"}
-    %li
-      = render :partial => 'works/forms/fields/publication_date', :locals => {:label => "Date of Composition"}
-    %li
-      = render :partial => 'works/forms/fields/keywords'
-    %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/copyright_holder', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
+= render :layout => 'works/layouts/edit_form', :locals => {:klass => 'Artwork', :form => form} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :label => "Title", :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :label => "Alternate Title", :form => form
+  %li
+    = render 'works/forms/fields/title_tertiary', :label => "Title Series", :form => form
+  %li
+    = render 'works/forms/fields/medium', :form => form
+  %li
+    = render 'works/forms/fields/publisher', :label => "Institution or Collection Name"
+  %li
+    = render 'works/forms/fields/publication_place', :form => form, :label => "Location (City)"
+  %li
+    = render 'works/forms/fields/publication_date', :label => "Date of Composition"
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/copyright_holder', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form

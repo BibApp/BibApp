@@ -1,55 +1,9 @@
 - include_stylesheet('specific/contributorships/archivable')
--@title = "Archival Analysis: #{@person.display_name}"
-/ === Contributorships === Archivable ===
-/ Main
 .span-24
   .span-22.prepend-1.archival-analysis-header
     %h2 Archival Analysis: #{link_to @person.display_name, person_path(@person)}
-    
-    %table
-      %thead
-        %tr
-          %td RoMEO<br />Color
-          %td Archiving Policy
-          %td Percentage
-          %td Works
-      %tfoot
-        %tr
-          %td &nbsp;
-          %td &nbsp;
-          %td Total
-          %td=@pub_totals
-      %tbody
-        - @pub_table.each do |row|
-          -# Default colors to unknown
-          - color = "unknown"
-          - color = row.color.downcase if row.color and !row.color.empty?
-          %tr{:class => "#{color}"}
-            %td=color.capitalize
-            %td=$SHERPA_COLORS[color.downcase.to_sym]
-            %td="#{((row.count.to_f / @pub_totals.to_f)*100).round}%"
-            %td=row.count
 
+    = render 'archive_analysis_table'
 
     %h3 Publications
-    %table
-      %thead
-        %tr
-          %td RoMEO<br />Color
-          %td Pub Copy<br />Allowed
-          %td Name
-          %td Publisher
-          %td Works
-          
-      %tbody
-        - @publ_table.each do |row|
-          -# Default colors to unknown
-          - color = "unknown"
-          - color = row.color.downcase if (row.color && !row.color.empty?)
-          %tr{:class => "#{color}"}
-            %td=color.capitalize
-            %td="yes" if row.pub_copy?
-            %td=row.name
-            %td=row.pub_name
-            %td
-              = link_to row.count, person_works_path(@person, "fq[]" => URI.unescape("publication_facet%3A\"#{row.name}\""))
+    = render 'archive_publications_table'

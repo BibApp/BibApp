@@ -1,25 +1,20 @@
-/ === Users === Index ===
-/ Main
-%div{:class => "span-24"}
-      
-  %div{:class => "span-22 prepend-1"}
-    %h2="Users"
-    
-    = render :partial => "shared/alpha_pagination"
+= render :layout => '/layouts/main_body', :locals => {:header => 'Users'} do
 
-    %table#users.prepend-1
-      %tr
-        %th.span-6="Email"
-        %th.span-8.last="Roles"
-      -@current_objects.each do |user|
-        %tr{:class => cycle("odd", "even")}
-          %td=link_to user.email, user_path(user)
-          %td
-            %ul
-              - user.roles.each do |role|
-                - if role.authorizable_type == 'System' or role.authorizable_type == 'Group' or role.authorizable_type == 'Person'
-                  %li=role.description
+  = render "shared/alpha_pagination"
 
-    %br/
-    %br/
-    = render :partial => "shared/alpha_pagination"
+  %table#users.prepend-1
+    %tr
+      %th.span-6 Email
+      %th.span-8.last Roles
+    -@current_objects.each do |user|
+      %tr{:class => cycle("odd", "even")}
+        %td= link_to user.email, user_path(user)
+        %td
+          %ul
+            - user.roles.each do |role|
+              - if displayable_role(role)
+                %li= role.description
+
+  %br/
+  %br/
+  = render "shared/alpha_pagination"

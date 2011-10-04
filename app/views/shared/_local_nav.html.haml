@@ -1,35 +1,11 @@
 #local-nav
-  - c = params[:controller]
   - if object == "person"
     - if defined?(state) && state == "new"
-      %ul#local-pages
-        %li.current=link_to "Personal Info", new_person_path
-        %li=link_to "Pen Names", "javascript:void(0)", :disabled => "true"
-        %li=link_to "Photo", "javascript:void(0)", :disabled => "true"
-        %li=link_to "Groups", "javascript:void(0)", :disabled => "true"
-        %li=link_to "Works", "javascript:void(0)", :disabled => "true"
-
+      = render 'shared/local_nav_person_new'
     - elsif defined?(state) && state == "edit"
-      %ul#local-pages
-        %li{give_current_class_if_equal('people', c)}=link_to "Personal Info", edit_person_path(@person.id)
-        %li{give_current_class_if_equal('pen_names', c)}=link_to "Pen Names", new_person_pen_name_path(@person.id)
-        %li{give_current_class_if_equal('attachments', c)}
-          - if @person.image
-            =link_to "Photo", edit_person_attachment_path(@person, @person.image)
-          - else
-            =link_to "Photo", new_person_attachment_path(@person), :params => {"type" => "Image"}
-        %li{give_current_class_if_equal('memberships', c)}=link_to "Groups", new_person_membership_path(@person.id)
-        %li{give_current_class_if_equal('contributorships', c)}=link_to "Works", contributorships_url(:person_id => @person.id)
-
-
+      = render 'shared/local_nav_person_edit'
     - else
-      %ul#local-pages
-        %li{give_current_class_if_equal('people', c)}=link_to "Home", person_path(@person)
-        %li{give_current_class_if_equal('works', c)}=link_to "Works", person_works_path(@person)
-        %li{give_current_class_if_equal('groups', c)}=link_to "Groups", person_groups_path(@person)
+      = render 'shared/local_nav_person'
 
   - if object == "group"
-    %ul#local-pages
-      %li{give_current_class_if_equal('groups', c)}=link_to "Home", group_path(@group)
-      %li{give_current_class_if_equal('works', c)}=link_to "Works", group_works_path(@group)
-      %li{give_current_class_if_equal('people', c)}=link_to "People", group_people_path(@group)
+    = render 'shared/local_nav_group'

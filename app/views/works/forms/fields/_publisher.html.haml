@@ -6,6 +6,6 @@
 -# Initialize optional input variables
 - label ||= "Publisher"
 
-- @publisher = @work.publisher unless @publisher or @work.publisher.nil?
+- @publisher ||= @work.publisher
 = label 'publisher', :name, "#{label}:"
 = text_field_with_auto_complete 'publisher', :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5}

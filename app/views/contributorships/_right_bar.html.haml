@@ -1,0 +1,8 @@
+.span-7.prepend-1.last
+  #picture.span-6
+    %p= render "shared/person_image", :o => @person
+
+  %h3 Groups (#{@person.groups.size})
+  %ol.groups_alphabetical
+    - @person.groups.each do |g|
+      %li=link_to "#{g.name}", group_path(g)

@@ -1,0 +1,14 @@
+- if logged_in? && current_user.has_role?("editor", Person.find(params[:person_id]))
+  = render :partial => "people/admin_actions", :layout => 'layouts/admin_bar'
+
+= render :layout => 'layouts/main_body_no_h2'  do
+  .span-5
+    .text-center
+      =image_tag(@person.image_url, :class => 'group-index-person-image', :size => "75x100")
+
+  %div.span-17.last
+    %h2
+      #{link_to(h(@person.display_name), person_path(@person)).html_safe}
+    = render "shared/local_nav", :object => "person"
+
+    = render 'shared/group_list'

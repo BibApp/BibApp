@@ -2,20 +2,16 @@
 -# Also adds a list of existing tags
 %td.duplicate
   -# Initialize our list of tags
-  - tags = @dupe.tags if @dupe.tags
   = label_tag 'dupe_tag_name_strings[]', "Tag(s):"
   -# Build list of tags
-  - if tags
-    - tags.each do |tag|
-      - name = (tag.kind_of?(String) ? tag : tag.name)
-      %br/
-      = text_field_tag 'dupe_tag_name_strings[]', name, {:class => 'text', :readonly => 'readonly'}
+  - @dupe.tags.each do |tag|
+    %br/
+    = text_field_tag 'dupe_tag_name_strings[]', self_or_name(tag), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Initialize our list of tags
   -#  Default: use tags assigned to @work.
   -#  @tags should only exist if there were errors in saving work
-  - tags = @work.tags if @work.tags
-  - tags = @tags if @tags
+  - tags = @tags && @work.tags
 
   = label :tag, :name, "Tag(s):"
   %br/
@@ -25,8 +21,6 @@
      :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
   %ul.form_item_list#tags_list
     -# Build list of existing tags
-    - if tags
-      - tags.each do |tag|
-        - name = (tag.kind_of?(String) ? tag : tag.name)
-        - id = (tag.kind_of?(String) ? tag : tag.id)
-        = render :partial => 'works/forms/fields/list_item', :locals => {:list_type => 'tags', :item_id => id, :item_value => name}
+    - tags.each do |tag|
+      = render 'works/forms/fields/list_item', :list_type => 'tags', :item_id => self_or_id(tag),
+        :item_value => self_or_name(tag)

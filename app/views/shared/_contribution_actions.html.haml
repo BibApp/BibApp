@@ -1,5 +1,5 @@
-%ul{:id => "contributorship_actions-#{contribution.id}", :class => "contributorship_actions_list"}
+%ul.contributorship_actions_list{:id => "contributorship_actions-#{contribution.id}"}
 
-  %li{:class => "inline"}=link_to("Verify", verify_contributorship_path(contribution.id), :method => :put)
+  %li.inline= link_to("Verify", verify_contributorship_path(contribution.id), :method => :put)
   |
-  %li{:class => "inline"}=link_to("Deny", deny_contributorship_path(contribution.id), :method => :put)
+  %li.inline= link_to("Deny", deny_contributorship_path(contribution.id), :method => :put)
