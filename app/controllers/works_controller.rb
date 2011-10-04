@@ -403,7 +403,7 @@ class WorksController < ApplicationController
     names = NameString.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                              beginning_search, word_search).order_by_name.limit(8).collect { |ns| ns.name }
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => names}
+    render 'works/forms/fields/autocomplete_list', :objects => names
   end
 
   def auto_complete_for_keyword_name
@@ -433,7 +433,7 @@ class WorksController < ApplicationController
     #Combine both lists
     keywords_and_tags = (keywords + tags).collect { |x| x.name }
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => keywords_and_tags.uniq.sort.first(8)}
+    render 'works/forms/fields/autocomplete_list', :objects => keywords_and_tags.uniq.sort.first(8)
   end
 
   #Auto-Complete for entering Publication Titles in Web-based Work entry
@@ -450,7 +450,7 @@ class WorksController < ApplicationController
     publications = Publication.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                                      beginning_search, word_search).order_by_name.limit(8)
 
-    render :partial => 'works/forms/fields/publication_autocomplete_list', :locals => {:publications => publications}
+    render 'works/forms/fields/publication_autocomplete_list', :publications => publications
   end
 
   #Auto-Complete for entering Publisher Name in Web-based Work entry
@@ -467,7 +467,7 @@ class WorksController < ApplicationController
     publishers = Publisher.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?",
                                  beginning_search, word_search).order_by_name.limit(8)
 
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
+    render 'works/forms/fields/autocomplete_list', :objects => publishers
   end
 
   #Adds a single item value to list of items in Web-based Work entry
@@ -555,7 +555,7 @@ class WorksController < ApplicationController
     list_type = params[:list_type]
 
     #display message that reorder was successful
-    render :partial => 'works/forms/fields/reorder_list', :locals => {:list_type=>list_type}
+    render 'works/forms/fields/reorder_list', :list_type => list_type
   end
 
   private
