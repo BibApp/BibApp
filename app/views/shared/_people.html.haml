@@ -1,31 +1,18 @@
 -#
 -# Render People facets from Solr data
 -#
-%div{:class => "span-15"}
+- #count and randomize may be passed
+- count ||= nil
+- randomize ||= false
+.span-15
   %h3 People
   %ol#people
-    - people = @facets[:people_data]
-
-    - if randomize
-      - people = people.sort_by{rand}
-
-    - counter = 0
-
-    - people.each do |p|
-      - last_name, id, image_url, group_ids, active, research_focus = Person.parse_solr_data(p.name)
-
-      - if active.blank? or active == "false"
-        - next
-      - if controller.controller_name == "groups" and !group_ids.include?(@group.id)
-        - next
-      - if count and counter >= count
-        - break
-      - counter += 1
+    - convert_and_filter_people_facets(@facets[:people_data], count, @group, controller.controller_name == 'groups', randomize).each do |fields|
       %li.inline
-        %div.person.span-3
-          %div.person-image-wrapper
-            = link_to(image_tag(image_url, :size => "75x100", :alt => last_name, :title => last_name, :class => 'person-image'), person_path(id))
-          %div.person-image-metadata
-            %strong= p.value
-          %div.person-last-name.left
-            %strong=link_to last_name, person_path(id)
+        .person.span-3
+          .person-image-wrapper
+            = link_to(image_tag(fields[:image_url], :size => "75x100", :alt => fields[:last_name], :title => fields[:last_name], :class => 'person-image'), person_path(fields[:id]))
+          .person-image-metadata
+            %strong= fields[:value]
+          .person-last-name.left
+            %strong= link_to fields[:last_name], person_path(fields[:id])

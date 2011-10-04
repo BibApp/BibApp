@@ -1,0 +1,19 @@
+-# general partial for display the facet sections of the _facets partial
+-# must pass facet_key, facets
+- heading = facet_key.to_s.titlecase
+- filter_name = "#{facet_key.to_s.singularize}_facet"
+- if facets.present?
+  .facet
+    .facet_heading #{heading}
+    %ol.facet_filters{:id => "top-five-#{facet_key}"}
+      - facets.first(5).each do |f|
+        %li.show
+          = add_filter(params, filter_name, f.name, f.value)
+
+    - if @facets[:publications].size > 5
+      %ol.facet_filters{:style => "display:none", :id => "all-#{facet_key}"}
+        - facets.each do |f|
+          %li.show
+            = add_filter(params, filter_name, f.name, f.value)
+
+      %p.more_filters= link_to_function "More #{heading}", "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"

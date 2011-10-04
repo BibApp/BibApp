@@ -2,41 +2,13 @@
 
   %fieldset.span-17.prepend-2
     %legend Advanced Search
-    %div.span-17
-      .span-8
-        %label.span-4 Keywords
-        %p Return items with these words appearing anywhere
 
-      = text_field_tag(:keywords, nil, :size => 40)
-      %p=$SEARCH_EXAMPLES[:keywords] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:keywords].nil?
-
-    %div.span-17
-      .span-8
-        %label.span-4 Title
-        %p Return items with these words in the title
-      = text_field_tag(:title, nil, :size => 40)
-      %p=$SEARCH_EXAMPLES[:title] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:title].nil?
-
-    %div.span-17
-      .span-8
-        %label.span-4 Authors
-        %p Return items by author
-      = text_field_tag(:authors, nil, :size => 40)
-      %p=$SEARCH_EXAMPLES[:authors] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:authors].nil?
-
-    %div.span-17
-      .span-8
-        %label.span-4 Groups
-        %p Return items by groups
-      = text_field_tag(:groups, nil, :size => 40)
-      %p=$SEARCH_EXAMPLES[:groups] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:groups].nil?
-
-    %div.span-17
-      .span-8
-        %label.span-4 ISSN or ISBN
-        %p Return item associated with the standard number
-      = text_field_tag(:issn_isbn, nil, :size => 40)
-      %p=$SEARCH_EXAMPLES[:issn_isbn] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:issn_isbn].nil?
+    = render 'generic_form_field', :field => :keywords, :text => "Return items with these words appearing anywhere"
+    = render 'generic_form_field', :field => :title, :text => 'Return items with these words in the title'
+    = render 'generic_form_field', :field => :authors, :text => 'Return items by author'
+    = render 'generic_form_field', :field => :groups, :text => 'Return items by groups'
+    = render 'generic_form_field', :field => :issn_isbn, :text => 'Return item associated with the standard number',
+      :label => 'ISSN or ISBN'
 
     %div.span-17
       .span-8
@@ -45,7 +17,7 @@
       = text_field_tag(:start_date, nil, :size => 4)
       &nbsp; to &nbsp;
       = text_field_tag(:end_date, nil, :size => 4)
-      %p=$SEARCH_EXAMPLES[:year] if !$SEARCH_EXAMPLES.nil? && !$SEARCH_EXAMPLES[:year].nil?
+      %p= search_example(:year)
 
     %div.span-17
       .span-8

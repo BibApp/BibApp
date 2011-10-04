@@ -2,6 +2,5 @@
   %div.field
     %label
       = pluralize(@work.tags.size, "Tag: ", "Tags: ")
-    - @work.tags.each do |tg|
-      - filter = 'tags:' + '"' + tg.name + '"'
-      %a{:href => search_path(:fq => filter, :qt => "standard") }= tg.name
+    - @work.tags.each do |tag|
+      %a{:href => search_path(:fq => tag_filter(tag), :qt => "standard") }= tag.name

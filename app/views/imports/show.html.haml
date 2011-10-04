@@ -3,149 +3,23 @@
 - include_stylesheet('specific/imports/show')
 - include_javascript('specific/imports/show')
 
-.span-24
+= render :layout => 'layouts/admin_bar' do
+  %li= link_to_unless_current "Show my imports", user_imports_path(current_user)
+  %li= link_to_unless_current "Add an import", new_user_import_path(current_user)
 
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    #admin-actions.span-24
-      %ul#edit-actions
-        %li=link_to_unless_current "Show my imports", user_imports_path(current_user)
-        %li=link_to_unless_current "Add an import", new_user_import_path(current_user)
+= render :layout => '/layouts/main_body_no_h2' do
 
-  .span-22.prepend-1
+  %h2
+    Review Batch -
+    %span.import-review-batch-header Imported For #{imported_for(@import)}
 
-    %h2
-      Review Batch -
-      %span.import-review-batch-header Imported For #{imported_for(@import)}
+  / Right - Admin div
+  .import-admin-div
+    - case @import.state
+      - when 'rejected', 'processing', 'accepted'
+        = render @import.state
+      else
+        = render 'default'
 
-    / Right - Admin div
-    .import-admin-div
-      - case @import.state
-        - when "rejected"
-          .error
-            %h3 Batch-#{@import.id}
-            %p
-              This import was
-              %strong rejected
-              and all works associated with the import were destroyed.
-
-        - when "processing"
-          .warning
-            %h3 Batch-#{@import.id}
-            %p
-              This import is in processing.  You'll receive an
-              %strong email
-              when the batch is complete.
-
-        - when "accepted"
-          .notice
-            %h3 Batch-#{@import.id}
-            %p
-              This import was
-              %strong accepted.
-          - if @works.blank?
-            .warning
-              %p
-                This import has been accepted, but contains no works. They may have been deleted.
-
-        - else #includes 'reviewable' case
-          .warning
-            %h3 Actions
-            .left= button_to("Accept Batch", user_import_path(current_user, @import, :decision => "accept"), :method => "put")
-            .span-1.text-center
-              %p
-                %strong or
-            .left= button_to("Reject Batch", user_import_path(current_user, @import, :decision => "reject"), :method => "put")
-            - if defined?(@works) and @works.blank?
-              .clear
-                %p This import is reviewable, but contains no works. They may have been deleted.
-            -else
-              .clear
-                %p Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
-
-    -unless @import.state == "processing"
-      - err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
-      %div
-        %h3 Batch report
-
-        - if @person
-          .left.span-8.append-1
-            %table#pen_names.import-review-table
-              %thead
-                %tr
-                  %th My Names
-                  %th Works Matched
-              %tbody#current
-                = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
-
-              %tfoot
-                %tr
-                  %td Total
-                  %td{:id => "pen_names_count_total"} 0
-
-        .left.span-6.append-1
-          / Works added
-          %table.import-review-table
-            %thead
-              %tr
-                %th Works
-                %th Count
-            %tbody
-              %tr
-                %td New works
-                - ct = (@work_batch.size - @dupe_count - err_ct)
-                %td= ct < 0 ? 0 : ct
-              %tr
-                %td Duplicate works
-                %td= @dupe_count
-              %tr
-                %td Errors
-                %td= err_ct
-            %tfoot
-              %tr
-                %td Total
-                %td#works_imported_total= @work_batch.size
-
-
-        .left.span-14.last
-          / Errors
-          %table.import-review-table
-            %thead
-              %tr
-                %th Errors
-            %tbody
-              - if !@errors.empty?
-                - @errors.each do |key, value|
-                  %tr
-                    %td
-                      %strong "#{key.to_s.humanize}:#{value}"
-              - else
-                %tr
-                  %td{:colspan => "2"}
-                    %p No errors encountered during import.
-
-        .clear
-          - if @person
-            %p
-              Matched
-              %strong#matched_total "#{@match_count} work to #{imported_for(@import)}."
-              %strong#remaining_total "#{@work_batch.size - @match_count} remain to match."
-
-        %hr/
-      - if @person
-        .left.span-7
-          %h3 Import Names
-          %p Select missing variations of your name.
-          / PenName matches
-          .left.append-1
-            %ul#import_names.no-padding-or-margin
-              -@import.name_string_work_count.sort.inspect
-              - @import.name_string_work_count.sort.each do |ns|
-                = import_name_string_line(ns, @person)
-
-      .left.prepend-1
-        - ct = @work_batch.size - err_ct
-        - ct = ct < 0 ? 0 : ct
-        %h3#works Works Imported (#{ct})
-        = render :partial => "works" if @works
-
+  -unless @import.state == "processing"
+    = render 'details'

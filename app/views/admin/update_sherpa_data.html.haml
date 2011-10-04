@@ -1,11 +1,8 @@
 / === Admin === Update SHERPA Data ===
 / Main
-- @title="Update SHERPA Data" # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
+- @title = "Update SHERPA Data" # Specify text at end of HTML <title> tag
+= render :layout => '/layouts/main_body', :locals => {:header => t('admin.sherpa.update')} do
+  %p=t('admin.sherpa.info1')
+  %p=t('admin.sherpa.info2')
 
-    %h2=t('admin.sherpa.update')
-    %p=t('admin.sherpa.info1')
-    %p=t('admin.sherpa.info2')
-
-    = button_to t('admin.sherpa.update'), :action => :update_publishers_from_sherpa
+  = button_to t('admin.sherpa.update'), :action => :update_publishers_from_sherpa

@@ -1,0 +1,10 @@
+.notice
+  %h3 Batch-#{@import.id}
+  %p
+    This import was
+    %strong accepted.
+- if @works.blank?
+  .warning
+    %p
+      This import has been accepted, but contains no works. They may have been deleted.
+

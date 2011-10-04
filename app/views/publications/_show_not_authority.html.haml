@@ -1,0 +1,4 @@
+.notice
+  %h3 Authorized Title
+  - if @publication.authority
+    %p #{link_to(h(@publication.authority.name), publication_path(@publication.authority)).html_safe}

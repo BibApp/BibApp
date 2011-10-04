@@ -1,28 +1,20 @@
-%table#accepted_work.span-22
-  %tr
-    %td.span-8.duplicate
-      %h3 Duplicate work
-    %td.span-12
-      %h3 Accepted work
+= render :layout => 'works/layouts/merge_form', :locals => {:form => form, :type => 'ConferenceProceeding'} do
   %tr#title_primary
-    = render :partial => 'works/forms/fields/merge_title_primary', :locals => {:label => "Article/Chapter Title", :form => form}
+    = render 'works/forms/fields/merge_title_primary', :label => "Article/Chapter Title", :form => form
   %tr#authors
-    = render :partial => 'works/forms/fields/merge_author_name_strings'
+    = render 'works/forms/fields/merge_author_name_strings'
   %tr#publication_date
-    = render :partial => 'works/forms/fields/merge_publication_date'
+    = render 'works/forms/fields/merge_publication_date'
   %tr#publication
-    = render :partial => 'works/forms/fields/merge_publication'
+    = render 'works/forms/fields/merge_publication'
   %tr#publisher
-    = render :partial => 'works/forms/fields/merge_publisher'
+    = render 'works/forms/fields/merge_publisher'
   %tr#volume_issue
-    = render :partial => 'works/forms/fields/merge_volume_issue', :locals => {:form => form}
+    = render 'works/forms/fields/merge_volume_issue', :form => form
   %tr#pages
-    = render :partial => 'works/forms/fields/merge_pages', :locals => {:form => form}
+    = render 'works/forms/fields/merge_pages', :form => form
   - if current_user.has_role?("admin", System)
     %tr#keywords
-      = render :partial => 'works/forms/fields/merge_keywords'
+      = render 'works/forms/fields/merge_keywords'
   %tr#abstract
-    = render :partial => 'works/forms/fields/merge_abstract', :locals => {:form => form}
-
-= hidden_field_tag :type, 'ConferenceProceeding'
-= render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
+    = render 'works/forms/fields/merge_abstract', :form => form

@@ -1,0 +1,11 @@
+-# requires klass and form
+-# accepts legend or computes it from klass (TODO this may need to change for i18n)
+- legend ||= klass.underscore.titlecase
+%fieldset
+  %legend #{legend}
+
+  = hidden_field_tag :klass, klass
+  = render 'works/forms/fields/form_buttons', :form => form
+
+  %ul
+    = yield

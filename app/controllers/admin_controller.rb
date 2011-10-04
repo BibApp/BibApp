@@ -7,6 +7,7 @@ class AdminController < ApplicationController
   permit "admin of System"
 
   def index
+    @title = t('admin.tasks')
     @tab_name = params[:tab] || "works"
   end
 
@@ -48,7 +49,7 @@ class AdminController < ApplicationController
   end
 
   def duplicates
-
+    @title = t('admin.duplicates.works')
     # Default the filter to only show works marked as "duplicate"
     filter = [Work.solr_duplicate_filter]
     # Add any param filters

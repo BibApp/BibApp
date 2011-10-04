@@ -1,45 +1,40 @@
-%fieldset
-  %legend Recording (Sound)
-
-  = hidden_field_tag :klass, 'RecordingSound'
-  = render :partial => 'works/forms/fields/form_buttons', :locals => {:form => form}
-
-  %ul
-    %li
-      = render :partial => 'works/forms/fields/author_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/contributor_name_strings'
-    %li
-      = render :partial => 'works/forms/fields/title_primary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_secondary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/title_tertiary', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/publication', :locals => {:label => "Title of Larger Work"}
-    %li
-      = render :partial => 'works/forms/fields/issn_isbn', :locals => {:isrc => true}
-    %li
-      = render :partial => 'works/forms/fields/publisher', :locals => {:label => "Recording Label"}
-    %li
-      = render :partial => 'works/forms/fields/publication_place', :locals => {:form => form, :label => "Location"}
-    %li
-      = render :partial => 'works/forms/fields/publication_date'
-    %li
-      = render :partial => 'works/forms/fields/pages', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/language', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/keywords'
-    %li
-      = render :partial => 'works/forms/fields/abstract', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/copyright_holder', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/sponsor', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/links', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/identifier', :locals => {:form => form}
-    %li
-      = render :partial => 'works/forms/fields/notes', :locals => {:form => form}
+= render :layout => 'works/layouts/edit_form',
+  :locals => {:form => form, :klass => 'RecordingSound', :legend => 'Recording (Sound)'} do
+  %li
+    = render 'works/forms/fields/author_name_strings'
+  %li
+    = render 'works/forms/fields/contributor_name_strings'
+  %li
+    = render 'works/forms/fields/title_primary', :form => form
+  %li
+    = render 'works/forms/fields/title_secondary', :form => form
+  %li
+    = render 'works/forms/fields/title_tertiary', :form => form
+  %li
+    = render 'works/forms/fields/publication', :label => "Title of Larger Work"
+  %li
+    = render 'works/forms/fields/issn_isbn', :isrc => true
+  %li
+    = render 'works/forms/fields/publisher', :label => "Recording Label"
+  %li
+    = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
+  %li
+    = render 'works/forms/fields/publication_date'
+  %li
+    = render 'works/forms/fields/pages', :form => form
+  %li
+    = render 'works/forms/fields/language', :form => form
+  %li
+    = render 'works/forms/fields/keywords'
+  %li
+    = render 'works/forms/fields/abstract', :form => form
+  %li
+    = render 'works/forms/fields/copyright_holder', :form => form
+  %li
+    = render 'works/forms/fields/sponsor', :form => form
+  %li
+    = render 'works/forms/fields/links', :form => form
+  %li
+    = render 'works/forms/fields/identifier', :form => form
+  %li
+    = render 'works/forms/fields/notes', :form => form

@@ -1,13 +1,10 @@
-/ === Search === Index ===
-/ Main
 .span-24
-  - if @q.nil?
-    .span-22.prepend-1
+  .span-22.prepend-1
+    - if @q.nil?
       %h2 Search
       .span-20.prepend-1
-        = render :partial => "advanced_search_form"
-  - else
-    .span-22.prepend-1
+        = render "advanced_search_form"
+    - else
       %h2
         -if @query == "*:*"
           ="#{pluralize(@q.total_hits, "Result", "Results")}"
@@ -15,38 +12,15 @@
           ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
           %strong=" #{@query}"
 
-      -if !@spelling_suggestions.empty? && !@q.total_hits == 0
+      -if @spelling_suggestions.present? and !@q.total_hits == 0
         %p.warning.span-22
-          Did you mean:
-          - @spelling_suggestions.each do |suggestion|
-            %em.spelling-suggestion=link_to suggestion, search_url( :q => suggestion)
+          = render 'spelling_suggestions'
 
       -if @q.total_hits == 0
-        .span-20.prepend-1
-          %h4.error
-            Sorry, your search for &ldquo;#{@query}&rdquo; came up empty.
-            -if !@spelling_suggestions.empty?
-              Did you mean:
-              - @spelling_suggestions.each do |suggestion|
-                %em.spelling-suggestion=link_to suggestion, search_url(:q => suggestion)
-              ?
-          %h4 Suggestions:
-          %ul
-            %li Double check your spelling.
-            %li Try different keywords.
-            %li Try our advanced search options.
-                
-          =render :partial => "advanced_search_form"
+        = render 'no_hits'
       - else
-        / People
-        = render :partial => "shared/people", :locals => {:count => 10, :randomize => false}
-
-        / Groups
-        = render :partial => "shared/groups", :locals => {:count => 10}
-
+        = render "shared/people", :count => 10, :randomize => false
+        = render "shared/groups", :count => 10
         #results.span-22
-          / Facets
-          = render :partial => "shared/facets"
-                  
-          / Works 
-          = render :partial => "shared/works"
+          = render "shared/facets"
+          = render "shared/works"

@@ -1,16 +1,16 @@
 %ol.works.facets
   - @works.each do |doc|
     %li
-      =link_to "#{doc.title_primary}", work_path(doc)
-      %p 
+      =link_to doc.title_primary, work_path(doc)
+      %p
         %strong NameStrings:
         - doc.name_strings.each do |ns|
-          =link_to "#{ns.name}", name_string_path(ns)
+          =link_to ns.name, name_string_path(ns)
         %br/
-        %strong=t('app.source') + ":"
-        =link_to "#{doc.publication.authority.name}", publication_path(doc.publication.authority.to_param)
+        %strong #{t('app.source')}:
+        =link_to doc.publication.authority.name, publication_path(doc.publication.authority.to_param)
         = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
-        -if doc.publication_date != nil
+        -if doc.publication_date.present?
           %br/
-          %strong=t('app.year') + ":"
-          ="#{doc.publication_date.year}"
+          %strong #{t('app.year')}:
+          = doc.publication_date.year

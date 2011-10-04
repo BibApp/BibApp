@@ -1,0 +1,13 @@
+%ul#global-nav
+  %li
+    %a{:href => "/about"} About
+  %li
+    %a{:href => "/faq"} FAQ
+  - if logged_in?
+    %li
+      %span #{link_to "Account", edit_user_path(current_user)}
+    %li
+      %span #{link_to "Logout", logout_path}
+  - else
+    %li
+      %span #{link_to "Login | Sign Up", login_path(:return_to => request.fullpath)}

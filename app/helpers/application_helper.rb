@@ -1,7 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   require 'config/personalize.rb'
-  require 'htmlentities' if defined? HTMLEntities
 
   def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected
@@ -17,68 +16,6 @@ module ApplicationHelper
     check_box_tag("name_string_#{name_string.id}_toggle", 1, selected, {:onclick => js})
   end
 
-  def letter_link_for(letters, letter, current, path)
-    li_opts = (current == true) ? {:class => "current"} : {}
-    link = path ? "#{path[:path]}?page=#{letter}" : {:page=> letter}
-    content_tag(:li, (letters.index(letter) ? link_to(letter, link, :class => "some") : content_tag(:a, letter, :class => 'none')), li_opts)
-  end
-
-  def link_to_authors(work)
-    links = Array.new
-
-    if work['authors_data'] != nil
-      work['authors_data'].first(5).each do |au|
-        name, id = NameString.parse_solr_data(au)
-        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
-      end
-
-      if work['authors_data'].size > 5
-        links << link_to("more...", work_path(work['pk_i']))
-      end
-    end
-
-    links.join(", ").html_safe
-  end
-
-  def link_to_editors(work)
-    if work['editors_data'] != nil
-      # If no authors, editors go first
-      str = work['authors_data'] ? "In " : ''
-      links = Array.new
-
-      work['editors_data'].first(5).each do |ed|
-        name, id = NameString.parse_solr_data(ed)
-        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
-      end
-
-      if work['editors_data'].size > 5
-        links << link_to("more...", work_path(work['pk_i']))
-      end
-
-      str += links.join(", ")
-      str += " (Eds.), "
-      str
-    end
-  end
-
-  def link_to_work_publication(work)
-    if work['publication_data'].blank?
-      "Unknown"
-    else
-      pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-      link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
-    end
-  end
-
-  def link_to_work_publisher(work)
-    if work['publisher_data'].blank?
-      "Unknown"
-    else
-      pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
-      link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
-    end
-  end
-
   #Generate a "Find It!" OpenURL link,
   # based on Work information as received from Solr
   def link_to_findit(work)
@@ -90,39 +27,6 @@ module ApplicationHelper
 
     # Prepare link
     link_to link_text, "#{base_url}?#{suffix}"
-  end
-
-  def work_details(work)
-    str = ""
-    if work.publication.authority.present? and work.publication.authority.name != "Unknown"
-      str += link_to "#{work.publication.authority.name}", publication_path(work.publication.authority.id)
-      str += " &#149; "
-    end
-    str += "#{work.publication_date.year} " if work.publication_date != nil
-    str += " #{work.volume}" if work.volume != nil
-    str += "(#{work.issue}), " if work.issue != nil && !work.issue.empty?
-    str += " pgs."
-    str += " #{work.start_page}-" if work.start_page != nil
-    str += "#{work.end_page}." if work.end_page != nil
-    str
-  end
-
-  def link_to_google_book(work)
-    if !work.publication.nil? and !work.publication.isbns.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
-        work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
-    elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
-        work.publication.issn_isbn
-        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
-    else
-      # Nothing
-    end
   end
 
   def coin(work)
@@ -154,55 +58,10 @@ module ApplicationHelper
     coin
   end
 
-  def add_filter(params, facet, value, count)
-    filter = Hash.new
-    if params[:fq]
-      filter[:fq] = params[:fq].collect
-    else
-      filter[:fq] = []
-    end
-
-    filter[:fq] << "#{facet}:\"#{value}\""
-    filter[:fq].uniq!
-
-    link_to "#{value} (#{count})", params.merge(filter)
-  end
-
-  def remove_filter(params, facet)
-    filter = Hash.new
-    if params[:fq]
-      filter[:fq] = params[:fq].collect
-      filter[:fq].delete(facet)
-      filter[:fq].uniq!
-
-      #Split filter into field name and display value (they are separated by a colon)
-      field_name, display_value = facet.split(':')
-      link_to "#{display_value}", params.merge(filter)
-    end
-  end
-
-  #Encodes UTF-8 data such that it is valid in HTML
-  def encode_for_html(data)
-    code = HTMLEntities.new
-    code.encode(data, :decimal)
-  end
-
   #Encodes UTF-8 data such that it is valid in XML
   def encode_for_xml(data)
     code = HTMLEntities.new
     code.encode(data, :basic)
-  end
-
-  #Determines the pretty name of a particular Work Status
-  def work_state_name(work_state_id)
-    #Load Work States hash from personalize.rb
-    $WORK_STATUS[work_state_id]
-  end
-
-  #Determines the pretty name of a particular Work Archival Status
-  def work_archive_state_name(work_archive_state_id)
-    #Load Work States hash from personalize.rb
-    $WORK_ARCHIVE_STATUS[work_archive_state_id]
   end
 
   #Finds the Error message for a *specific field* in a Form
@@ -356,4 +215,26 @@ module ApplicationHelper
       yield
     end
   end
+
+  def current_user_role?(role, object)
+    logged_in? and current_user.has_role?(role, object)
+  end
+
+  def current_user_any_role?(role, object)
+    logged_in? and current_user.has_any_role?(role, object)
+  end
+
+  def authorizable_type(authorizable)
+    authorizable.is_a?(Class) ? authorizable.to_s : authorizable.class.to_s
+  end
+
+  def authorizable_id(authorizable)
+    authorizable.is_a?(Class) ? nil : authorizable.id
+  end
+
+  #return 'selected' if x == y, nil otherwise. Useful for select option generation
+  def selected_if_equal(x, y)
+    x == y ? 'selected' : nil
+  end
+
 end

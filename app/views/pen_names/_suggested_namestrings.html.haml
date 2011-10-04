@@ -1,0 +1,6 @@
+%ol#inactive
+  - if (@suggestions - @person.name_strings).size < 1
+    There are no immediate suggestions for:
+    %strong= "#{@person.last_name}"
+  - else
+    = render :partial => "name_string", :collection => @suggestions - @person.name_strings(true), :locals => { :person => @person, :selected => false }

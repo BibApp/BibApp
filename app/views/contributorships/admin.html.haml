@@ -2,20 +2,18 @@
 / Main
 - include_data_tables
 - include_javascript('specific/contributorships/admin')
-.span-24
-  .span-22.prepend-1
-    %h2 Admin: Unverified Contributorships
-    - if @people.length == 0
-      %p Congratulations! Nothing to do here.
-    - else
-      %table#people
-        %thead
+= render :layout => 'layouts/main_body', :locals => {:header => "Admin: Unverified Contributorships"} do
+  - if @people.length == 0
+    %p Congratulations! Nothing to do here.
+  - else
+    %table#people
+      %thead
+        %tr
+          %th Person
+          %th.text-center Potential Matches
+      %tbody
+        - @people.each do |p|
+          - person = Person.find(p[0])
           %tr
-            %th Person
-            %th.text-center Potential Matches
-        %tbody
-          - @people.each do |p|
-            - person = Person.find(p[0])
-            %tr
-              %td=link_to person.name, contributorships_path(:person_id=>p[0])
-              %td.text-center=p[1].length
+            %td=link_to person.name, contributorships_path(:person_id=>p[0])
+            %td.text-center=p[1].length

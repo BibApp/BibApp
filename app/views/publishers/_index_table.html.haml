@@ -1,0 +1,12 @@
+%table#publishers
+  %tr
+    %th.span-12 Publisher Name
+    %th.span-8 Recent Year
+    %th.span-1.last Publications
+  - @current_objects.each do |publisher|
+    %tr{:class => cycle("odd", "even")}
+      %td
+        = render 'shared/sherpa_icon', :publisher => publisher
+        #{link_to publisher.name, publisher_path(publisher)}
+      %td #{publisher.most_recent_year}
+      %td #{publisher.publications.length}

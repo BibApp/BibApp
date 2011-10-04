@@ -1,6 +1,2 @@
-/ === Publishers === Edit ===
-/ Main
-%div.span-24
-  %div.span-22.prepend-1
-    %h2 Edit this Publisher
-    = render :partial => 'form'
+= render :partial => 'form', :layout => '/layouts/main_body',
+  :locals => {:header => 'Edit this Publisher'}

@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
     end
 
     before :index do
+      @title = "Groups"
       # find first letter of group names (in uppercase, for paging mechanism)
       @a_to_z = Group.letters
 
@@ -43,6 +44,7 @@ class GroupsController < ApplicationController
     before :show do
       search(params)
       @group = @current_object
+      @title = @group.name
       work_count = @q.data['response']['numFound']
 
       if work_count > 0
@@ -87,6 +89,7 @@ class GroupsController < ApplicationController
 
   def hidden
     @hidden_groups = Group.hidden.order_by_upper_name
+    @title = "Hidden Groups"
   end
 
   def auto_complete_for_group_name

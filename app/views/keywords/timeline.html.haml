@@ -1,30 +1,23 @@
-/ === Timeline ===
-/ Main
 - include_stylesheet('specific/keywords/timeline')
 - include_javascript('specific/keywords/timeline')
 
-.span-24
-  .span-22.prepend-1
-    %h2
-      = link_to "#{@current_object.name}", url_for(@current_object)
-      = " - Timeline"
+= render :layout => '/layouts/main_body', :locals => {:header => body_header(@current_object)} do
 
-    #yearnav
-      %h3#curyear
-      .track#track1
-        .handle#handle1
-          %img{:alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
-      
-    #timeline-tagcloud.span-12
-      %h3 Popular Research Topics by Year
-      = render :partial => "timeline_list", :collection => @year_keywords
+  #yearnav
+    %h3#curyear
+    .track#track1
+      .handle#handle1
+        %img{:alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
 
-    #timeline-chart.span-7.prepend-1.last-1
-      %h3 Work Types by Year
-      #chart-img
-        %img.left{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
+  #timeline-tagcloud.span-12
+    %h3 Popular Research Topics by Year
+    = render :partial => "timeline_list", :collection => @year_keywords
 
-    = js_data_div('year-tags', @years)
-    = js_data_div('chart-urls', @chart_urls)
-    = js_data_div('work-counts', @work_counts)
-    
+  #timeline-chart.span-7.prepend-1.last-1
+    %h3 Work Types by Year
+    #chart-img
+      %img.left{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
+
+  = js_data_div('year-tags', @years)
+  = js_data_div('chart-urls', @chart_urls)
+  = js_data_div('work-counts', @work_counts)

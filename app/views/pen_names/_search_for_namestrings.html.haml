@@ -1,0 +1,6 @@
+= form_remote_tag :url => live_search_for_name_strings_pen_names_url do
+  Search other last names to add suggestions (ex. "Smith")
+  %br/
+  = text_field_tag(:q)
+  = hidden_field_tag(:person_id, @person.id)
+  = submit_tag 'Search'

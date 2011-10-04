@@ -1,19 +1,5 @@
 #requires author name argument
 xml.description h("My latest scholarly work")
 @works.each do |work|
-  xml.item do
-    xml.title work['title']
-
-    xml.description {
-      xml.cdata!(work['type'])
-      xml.cdata!(render(:partial => "shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :locals => {:work => work}))
-      xml.cdata!(work['abstract'])
-    }
-
-    xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])
-
-    xml.guid work_url(:only_path => false, :id => work['id'].split("-")[1])
-
-    xml.author h(author_name)
-  end
+  xml << render('shared/rss_item', :work => work, :author_name => author_name)
 end

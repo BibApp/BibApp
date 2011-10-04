@@ -1,0 +1,5 @@
+- c = params[:controller]
+%ul#local-pages
+  %li{give_current_class_if_equal('people', c)}= link_to "Home", person_path(@person)
+  %li{give_current_class_if_equal('works', c)}= link_to "Works", person_works_path(@person)
+  %li{give_current_class_if_equal('groups', c)}= link_to "Groups", person_groups_path(@person)

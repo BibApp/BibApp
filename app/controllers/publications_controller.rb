@@ -37,6 +37,7 @@ class PublicationsController < ApplicationController
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters(true)
+      @title = "Publications"
 
       if params[:q]
         @current_objects = current_objects

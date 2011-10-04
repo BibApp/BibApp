@@ -1,28 +1,13 @@
-/ === Works === New ===
-/ Main
-%div.span-24
-  %div.span-22.prepend-1
+= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person)} do
 
-    -#Check if we are adding Works directly to a Person
-    -if @person
-      %h2 Add Works for #{link_to @person.display_name, person_path(@person)}
-    -else
-      %h2 Add Works
-    %div.right
-      %h3 Select a type:
-      %ul
-        - if @person
-          %li= link_to "Batch Import", new_user_import_path(current_user, :person_id => @person.id)
-        - else
-          %li= link_to "Batch Import", new_user_import_path(current_user)
+  .right
+    %h3 Select a type:
+    %ul
+      %li #{link_to "Batch Import", new_user_import_path(current_user, :person_id => (@person and @person.id))}
+      %li -----
+      = render 'shared/work_type_list'
 
-
-        %li -----
-
-        = render :partial => 'shared/work_type_list'
-
-    %div.span-16
-      = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
-        = render :partial => "works/forms/form_#{@work.class.name.to_s.underscore}", :locals => { :form => form }
-        -#Save person id in form, if adding Work to a Person
-        = hidden_field_tag :person_id, @person.id if @person
+  .span-16
+    = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+      = render "works/forms/form_#{@work.class.name.to_s.underscore}", :form => form
+      = hidden_field_tag :person_id, @person.id if @person

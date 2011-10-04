@@ -1,40 +1,16 @@
-/ === Publications === Index ===
-/ Main
 - include_stylesheet('common/sherpa')
-- @title = "Publications" # Specify text at end of HTML <title> tag
 
-- if logged_in? && current_user.has_any_role?("editor", Group)
-  - content_for :admin_bar do
-    / #### Admin Actions ###
-    .span-24#admin-actions
-      %ul#edit-actions
-        %li #{link_to "Add a Publication", new_publication_path}
-        %li #{link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])}
+- if current_user_any_role?("editor", Group)
+  = render :layout => 'layouts/admin_bar' do
+    %li #{link_to "Add a Publication", new_publication_path}
+    %li #{link_to "Admin Publication Authorities", authorities_publications_path(:page => params[:page])}
 
-.span-24
-  .span-22.prepend-1
-    %h2 Publications
-    
-    = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}
+= render :layout => 'layouts/main_body', :locals => {:header => 'Publication'} do
 
-    %table#publications
-      %tr
-        %th ISSN / ISBN
-        %th Publication Name
-        %th Publisher
-        %th Works
-      -@current_objects.each do |publication|
-        %tr{:class => cycle("odd", "even")}
-          - if publication.issn_isbn.nil?
-            %td
-          - else
-            %td #{link_to publication.issn_isbn, publication}
-          %td #{link_to publication.name, publication}
-          %td
-            = render :partial => 'shared/sherpa_icon', :locals => {:publisher => publication.publisher}
-            #{link_to publication.publisher.name, publisher_path(publication.publisher)}
-          %td #{publication.works.length}
+  = render "shared/alpha_pagination", :numbers => true
 
-    %br/
-    %br/
-    = render :partial => "shared/alpha_pagination", :locals => {:numbers => true}
+  = render 'index_table'
+
+  %br/
+  %br/
+  = render "shared/alpha_pagination", :numbers => true

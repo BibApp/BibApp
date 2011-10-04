@@ -1,0 +1,6 @@
+- unless @work.publisher.blank?
+  %tr
+    %td.label #{publisher_label(@work)}
+    %td
+      = link_to @work.publisher.name, publisher_path(@work.publisher.id)
+      = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @work.publisher}

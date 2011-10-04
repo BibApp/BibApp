@@ -1,0 +1,15 @@
+- err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
+%div
+  %h3 Batch report
+
+  = render 'pen_names'
+  = render 'work_counts', :err_ct => err_ct
+  = render 'errors'
+
+  .clear
+    = render 'matched'
+
+  %hr/
+
+= render 'import_names'
+= render 'works_imported', :err_ct => err_ct

@@ -1,0 +1,10 @@
+.span-5
+  .left_box.search-within
+    .box_heading Search Within
+    = form_tag(group_works_path(@group), :method => :get) do
+      = text_field_tag(:q, params[:q], :size => 15)
+      = submit_tag 'Go'
+
+.span-17.last
+  %h2 #{link_to(h(@group.name), group_path(@group)).html_safe}
+  = render "shared/local_nav",:object => "group"

@@ -1,0 +1,15 @@
+%table
+  %thead
+    %tr
+      %td Batch #
+      %td Imported For
+      %td Date
+      %td Status
+  - if @authorized
+    - @imports.each do |import|
+      %tbody
+        %tr
+          %td= link_to "Batch-#{import.id}", user_import_path(current_user, import.id)
+          %td= imported_for(import)
+          %td= import.created_at
+          %td= import.state

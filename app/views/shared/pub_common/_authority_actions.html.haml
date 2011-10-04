@@ -1,0 +1,6 @@
+-# required to pass update_path
+= form_tag update_path, {:method => :put, :id => 'authority'} do
+  = hidden_field_tag :pub_ids, params[:pub_ids], :id => 'pub_ids'
+  = hidden_field_tag :auth_id, params[:auth_id], :id => 'auth_id'
+  = hidden_field_tag :page, params[:page] || @a_to_z[0], :id => 'page'
+  = submit_tag "Set Authority", :name => nil, :id => 'authority_button'

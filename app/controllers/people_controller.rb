@@ -117,6 +117,10 @@ class PeopleController < ApplicationController
       #flash[:notice] = "#{person.display_name} was successfully deleted."
     end
 
+    before :edit do
+      @title = "#{@person.display_name}: Personal Info"
+    end
+
   end
 
   def create
@@ -215,16 +219,6 @@ class PeopleController < ApplicationController
       page.replace_html "loading_reftype_chart", "<img src='#{@chart_url}' alt='work-type chart' style='margin-left: -50px;margin-bottom:20px;' />"
     end
 
-  end
-
-  def load_keyword_cloud
-    #get keywords for the tag cloud
-    @person = Person.find(params[:person_id])
-    @keywords = @person.keywords(10)
-
-    render :update do |page|
-      page.replace_html "loading_keyword_cloud", :partial => "shared/keyword_cloud", :locals => {:keywords => @keywords, :current_object => @person}
-    end
   end
 
   def batch_csv_show

@@ -1,7 +1,6 @@
--#If SWORD is configured, and Work is "Ready for Archiving"
--if SwordClient.configured? and @work.ready_to_archive?
+- if SwordClient.configured? and @work.ready_to_archive?
   %fieldset
     %legend Administrative Tasks
     %ul#tasks
       %li
-        = link_to "Deposit Immediately via SWORD", admin_deposit_via_sword_url(:work_id => @work)    
+        = link_to "Deposit Immediately via SWORD", admin_deposit_via_sword_url(:work_id => @work)

@@ -1,28 +1,23 @@
-/ === Admin === Deposit via SWORD ===
-/ Main
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-    %h2= "SWORD Deposit results:"
-
-    - if @deposit
-      %p.success=t('admin.deposit.success')
-      %fieldset
-        %legend=t('admin.deposit.information')
-        %div.field
-          %label=t('admin.deposit.title') + ":"
-          %span.field_value=@deposit['title']
-        %div.field
-          %label=t('admin.deposit.uri') + ":"
-          %span.field_value
-            =link_to @deposit['id'], @deposit['id']
-        %div.field
-          %label=t('admin.deposit.treatment') * ":"
-          %span.field_value=@deposit['treatment']
-        %div.field
-          %label=t('admin.deposit.repository') + ":"
-          %span.field_value
-            =link_to "#{$REPOSITORY_NAME}", $REPOSITORY_BASE_URL
-        %div.field
-          %label=t('admin.deposit.date') + ":"
-          %span.field_value=@deposit['updated']
-    =link_to t('admin.deposit.return'), work_path(@work)
+= render :layout => '/layouts/main_body', :locals => {:header => 'SWORD Deposit results:'} do
+  - if @deposit
+    %p.success #{t('admin.deposit.success')}
+    %fieldset
+      %legend #{t('admin.deposit.information')}
+      .field
+        %label #{t('admin.deposit.title')}:
+        %span.field_value=@deposit['title']
+      .field
+        %label #{t('admin.deposit.uri')}:
+        %span.field_value
+          =link_to @deposit['id'], @deposit['id']
+      .field
+        %label #{t('admin.deposit.treatment')}:
+        %span.field_value=@deposit['treatment']
+      .field
+        %label #{t('admin.deposit.repository')}:
+        %span.field_value
+          =link_to "#{$REPOSITORY_NAME}", $REPOSITORY_BASE_URL
+      .field
+        %label #{t('admin.deposit.date')}:
+        %span.field_value=@deposit['updated']
+  = link_to t('admin.deposit.return'), work_path(@work)

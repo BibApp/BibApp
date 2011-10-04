@@ -6,7 +6,7 @@
 #works.span-17.last
   - if @q
     %div
-      %h3=t('admin.duplicates.results', :count => @q.total_hits)
+      %h3= t('admin.duplicates.results', :count => @q.total_hits)
 
     / Sort Form
     .span-15.append-1.last
@@ -15,12 +15,9 @@
           %label=t('app.show') + ":"
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
-              - if opt == @rows
-                %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
-              - else
-                %option{:value => "#{opt}"}= opt.titleize
+              %option{:value => "#{opt}", :selected => (opt == @rows ? 'selected' : nil)}= opt.titleize
 
-          = render :partial => 'admin/dupes_hidden_tags'
+          = render 'admin/dupes_hidden_tags'
 
           = submit_tag t('app.go')
 
@@ -30,13 +27,13 @@
           %strong=t('app.select_all')
 
           = submit_tag t('app.delete_selected')
-          = render :partial => 'admin/dupes_hidden_tags'
+          = render 'admin/dupes_hidden_tags'
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
 
-
         %ol#work-list.span-17.clear-both.no-padding-or-margin
           - @works.each do |work|
-            = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => [:edit]}
+            = render "shared/work", :work => work, :allow_select => true, :show_status => true,
+              :show_dupes => true, :links_array => [:edit]
 
         %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

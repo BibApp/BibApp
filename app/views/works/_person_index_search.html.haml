@@ -1,0 +1,11 @@
+.span-5
+  .left_box.search-within
+    .box_heading Search Within
+    = form_tag(person_works_path(@person), :method => :get) do
+      = text_field_tag(:q, params[:q], :size => 15)
+      = submit_tag 'Go'
+
+.span-17.last
+  - if @person
+    %h2 #{link_to(h(@person.display_name), person_path(@person))}
+    = render "shared/local_nav", :object => "person"

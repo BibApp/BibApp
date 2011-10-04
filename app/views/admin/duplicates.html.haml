@@ -1,13 +1,5 @@
-/ === Admin === Duplicates ===
-/ Main
-- @title=t('admin.duplicates.works') # Specify text at end of HTML <title> tag
-%div{:class => "span-24"}
-  %div{:class => "span-22 prepend-1"}
-
-    %h2=t('admin.duplicates.works')
-    %div#results{:class => "span-22"}
-      / Facets
-      = render :partial => "shared/facets"
-
-      / Works 
-      = render :partial => "dupes"
+= render :layout => '/layouts/main_body', :locals => {:header => @title} do
+  #results.span-22
+    = render "shared/facets"
+    / Works
+    = render "dupes"

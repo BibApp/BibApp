@@ -2,7 +2,10 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper :all # include all helpers, all the time
+  clear_helpers
+  helper PrototypeHelper
+  helper AutoCompleteMacrosHelper
+  helper SharedHelper
   helper_method :current_user_session, :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
@@ -134,14 +137,14 @@ class ApplicationController < ActionController::Base
     end
 
     # Enable Citeproc
-    if @export && !@export.empty?
+    if @export.present?
       works = Work.order("publication_date desc").find(@works.collect { |c| c['pk_i'] })
       ce = WorkExport.new
       @works = ce.drive_csl(@export, works)
     end
 
     # Gather Spelling Suggestions
-    if !@query.empty?
+    if @query.present?
       @spelling_suggestions = Index.get_spelling_suggestions(@query)
 
       @spelling_suggestions.each do |suggestion|

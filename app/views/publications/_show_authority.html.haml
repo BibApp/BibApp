@@ -1,0 +1,18 @@
+#authority.span-22
+  - if @authority_for.present?
+    %h4
+      #{@publication.name}
+      &ndash; authorized name for:
+    %table#authority-children
+      %thead
+        %tr
+          %th Name
+          %th ISSN/ISBN
+          %th Publisher
+      %tbody
+        - @authority_for.each do |auth|
+          %tr
+            %td=link_to auth.name, publication_path(auth)
+            %td= auth.issn_isbn
+            -if auth.publisher
+              %td= auth.publisher.name
