@@ -50,7 +50,8 @@ class PeopleController < ApplicationController
           end
           @a_to_z = @a_to_z.uniq
           @page = params[:page] || @a_to_z[0]
-          @current_objects = @group.people.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
+          @current_objects = @group.people.order("upper(last_name), upper(first_name)")
+          @current_objects = @current_objects.where("upper(last_name) like ?", "#{@page}%") unless @page == 'all'
         end
 
         @title = "#{@group.name} - People"

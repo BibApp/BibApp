@@ -143,8 +143,9 @@ module SharedHelper
   end
 
   def alpha_pagination_items(include_numbers = false)
-    ('A'..'Z').to_a.tap do |items|
-      items = ('0'..'9').to_a + items if include_numbers
-    end
+    items = ('A'..'Z').to_a
+    items = ('0'..'9').to_a + items if include_numbers
+    return items
   end
+
 end

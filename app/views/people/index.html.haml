@@ -5,9 +5,10 @@
 = render :layout => 'layouts/main_body_no_h2' do
   / ### Group / People ###
   - if params[:group_id]
+    - show_all = true
     %h2= @group.name
     = render "shared/local_nav", :object => "group"
-    = render "shared/alpha_pagination", :path => group_people_path(@group.id)
+    = render "shared/alpha_pagination", :path => group_people_path(@group.id), :all => true
   - else
     %h2 People
     = render "shared/alpha_pagination"
