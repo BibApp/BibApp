@@ -16,7 +16,7 @@ de:
     month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
     abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     order: [ :day, :month, :year ]
-  
+
   time:
     formats:
       default: "%A, %d. %B %Y, %H:%M Uhr"
@@ -26,7 +26,7 @@ de:
 
     am: "vormittags"
     pm: "nachmittags"
-      
+
   datetime:
     distance_in_words:
       half_a_minute: 'eine halbe Minute'
@@ -141,7 +141,7 @@ de:
         even: "muss gerade sein"
         record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: {{errors}}"
 
-# Bibapp specific translations        
+# Bibapp specific translations
   app:
     about: "Über"
     delete_selected: "Ausgewählte löschen"
@@ -179,21 +179,132 @@ de:
     powered: "Basierend auf "
     keywords: "Schlüsselwörter"
 
+  common:
+    contributorships:
+      index: "Arbeiten der Person"
+      matches: "Mögliche Treffer"
+      analysis: "Archiv-Analyse"
+      verify: "Arbeiten bestätigen"
+      color: "RoMEO Farbe"
+      policy: "Richtlinien Archivierung"
+      allow_copy: "Verlagskopie"
+      unverified: "unbestätigt"
+      verified: "bestätigt"
+      denied: "abgelehnt"
+
+    groups:
+      index: "Einrichtungen/Institute"
+      new: "Einrichtung/Institut hinzufügen"
+      edit: "Einrichtung/Institut ändern"
+      destroy: "Einrichtung/Institut löschen"
+      confirm: "Einrichtung/Institut wirklich löschen?"
+      hide: "Einrichtung/Institut verstecken"
+      unhide: "Einrichtung/Institut anzeigen"
+      parent: "Übergeordnete Gruppe"
+      children: "Untergruppen"
+      members: "Mitglieder"
+      hidden: "Versteckte Einrichtungen/Institute anzeigen"
+      roles: "Rollen für Einrichtung/Institut ändern"
+
+    imports:
+      new: "Datei importieren"
+
+    name_strings:
+      edit: "Name ändern"
+      published: "Hat mit diesen Namen publiziert"
+      unknown: "Niemand unter diesem Namen registriert. Vielleicht ist die Person von einer anderen Institution."
+
+    pen_names:
+      index: "Andere Namen"
+
+    people:
+      index: "Personen"
+      new: "Person hinzufügen"
+      edit: "Person ändern"
+      delete: "Person löschen"
+      confirm: "Diese Person wirklich löschen?"
+      image: "Photo"
+      types: "Arten der Arbeiten"
+      contributorships: "Arbeiten verwalten"
+      roles: "Rollen verwalten"
+      personal: "Persönliche Informationen"
+      import_csv: "Import via CSV"
+
+    publications:
+      show: "Zeitschrift/Buch"
+      index: "Zeitschriften/Bücher"
+      new: "Zeitschrift/Buch hinzufügen"
+      edit: "Zeitschrift/Buch ändern"
+      delete: "Zeitschrift/Buch löschen"
+      confirm: "Zeitschrift/Buch wirklich löschen?"
+      publisher: "Herausgegeben von"
+      authority: "Normdaten der Publikationen bearbeiten"
+
+    publishers:
+      index: "Verlage"
+      show: "Verlag"
+      new: "Verlag hinzufügen"
+      edit: "Verlag ändern"
+      delete: "Verlag löschen"
+      year: "Letztes Jahr"
+      authorized: "Autorisierter Titel"
+      authority: "Normdaten der Verlage bearbeiten"
+      sherpa: "Daten von SHERPA/RoMEO importieren"
+
+    roles:
+      index: "Rollen aktualisieren"
+      new_admin: "Administrator hinzufügen"
+      new_editor: "Editor hinzufügen"
+
+    search:
+      results:
+        one: "1 Ergebnis"
+        other: "{{count}} Ergebnisse"
+      refine: "Suche einschränken"
+      within: "In den Ergebnissen suchen"
+      query: "Suche nach: "
+
+    users:
+      index: "Benutzer"
+      show: "Anzeigen"
+      show_all: "Alle Anzeigen"
+      new: "Benutzer hinzufügen"
+      edit: "Benutzer löschen"
+      delete: "Benutzer löschen"
+      role: "Rollen aktualisieren"
+
+    works:
+      index: "Arbeiten"
+      show: "Arbeit"
+      new: "Arbeit hinzufügen"
+      edit: "Arbeit ändern"
+      delete: "Arbeit löschen"
+      confirm: "Diese Arbeit wirklich löschen?"
+      new_attachment: "Anhang hinzufügen"
+      authors: "Autoren der {{institution}}"
+      coauthors: "Koautoren an der {{institution}}"
+      contributors: "Betreuung durch"
+      recent: "Aktuelle Arbeiten"
+      recommendations: "Ähnliche Arbeiten an der {{institution}}"
+      no_abstract: "Kein Abstract"
+      duplicate: "Dublettenkontrolle"
+
+#individual views
   admin:
     archive:
       ready: "Bereit zur Archivierung: %{count} verbleibend"
-      no_works: 'Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!'    
+      no_works: 'Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!'
     deposit:
       date: "Einreichdatum"
       information: "Informationen zur Volltextveröffentlichung im Repositorium"
       repository: "Repositorium"
-      return: "Zurück zur Arbeit"    
+      return: "Zurück zur Arbeit"
       success: "Veröffentlichung der Ressource im Repositorium war erfolgreich."
       title: "Titel"
       treatment: "Behandlung der veröffentlichten Ressource"
       uri: "URI der veröffentlichten Ressource"
     duplicates:
-      results: 
+      results:
         zero: "Keine möglichen Dubletten"
         one: "Eine mögliche Dublette"
         other: "%{count} mögliche Dubletten"
@@ -201,114 +312,7 @@ de:
     sherpa:
       info1: "Die Verlagseinträge werden auf Basis der Daten von SHERPA/ROMEO aktualisiert. Lokale Änderungen können dabei überschrieben werden."
       info2: "Die Aktualisierung der SHERPA-Daten kann einige Zeit in Anspruch nehmen."
-      update: "SHERPA-Daten aktualisieren"      
+      update: "SHERPA-Daten aktualisieren"
     tasks: "Administrative Aufgaben"
 
-  contributorships:
-    index: "Arbeiten der Person"
-    matches: "Mögliche Treffer"
-    analysis: "Archiv-Analyse"
-    verify: "Arbeiten bestätigen"
-    color: "RoMEO Farbe"
-    policy: "Richtlinien Archivierung"
-    allow_copy: "Verlagskopie"
-    unverified: "unbestätigt"
-    verified: "bestätigt"
-    denied: "abgelehnt"
-        
-  groups:
-    index: "Einrichtungen/Institute"
-    new: "Einrichtung/Institut hinzufügen"
-    edit: "Einrichtung/Institut ändern"
-    destroy: "Einrichtung/Institut löschen"
-    confirm: "Einrichtung/Institut wirklich löschen?"
-    hide: "Einrichtung/Institut verstecken"
-    unhide: "Einrichtung/Institut anzeigen"
-    parent: "Übergeordnete Gruppe"
-    children: "Untergruppen"
-    members: "Mitglieder"
-    hidden: "Versteckte Einrichtungen/Institute anzeigen"
-    roles: "Rollen für Einrichtung/Institut ändern"
-    
-  imports:
-    new: "Datei importieren"
-
-  name_strings:
-    edit: "Name ändern"
-    published: "Hat mit diesen Namen publiziert"
-    unknown: "Niemand unter diesem Namen registriert. Vielleicht ist die Person von einer anderen Institution."
-    
-  pen_names:
-    index: "Andere Namen"
-  
-  people:
-    index: "Personen"
-    new: "Person hinzufügen"
-    edit: "Person ändern"
-    delete: "Person löschen"
-    confirm: "Diese Person wirklich löschen?"
-    image: "Photo"
-    types: "Arten der Arbeiten"
-    contributorships: "Arbeiten verwalten"
-    roles: "Rollen verwalten"
-    personal: "Persönliche Informationen"
-    import_csv: "Import via CSV"    
-    
-  publications:
-    show: "Zeitschrift/Buch"
-    index: "Zeitschriften/Bücher"
-    new: "Zeitschrift/Buch hinzufügen"
-    edit: "Zeitschrift/Buch ändern"
-    delete: "Zeitschrift/Buch löschen"
-    confirm: "Zeitschrift/Buch wirklich löschen?"
-    publisher: "Herausgegeben von"
-    authority: "Normdaten der Publikationen bearbeiten"
-    
-  publishers:
-    index: "Verlage"
-    show: "Verlag"
-    new: "Verlag hinzufügen"
-    edit: "Verlag ändern"
-    delete: "Verlag löschen"
-    year: "Letztes Jahr"
-    authorized: "Autorisierter Titel"
-    authority: "Normdaten der Verlage bearbeiten"
-    sherpa: "Daten von SHERPA/RoMEO importieren"
-    
-  roles:
-    index: "Rollen aktualisieren"
-    new_admin: "Administrator hinzufügen"
-    new_editor: "Editor hinzufügen"
-    
-  search:
-    results:
-      one: "1 Ergebnis"
-      other: "{{count}} Ergebnisse"
-    refine: "Suche einschränken"
-    within: "In den Ergebnissen suchen"
-    query: "Suche nach: "
-    
-  users:
-    index: "Benutzer"
-    show: "Anzeigen"
-    show_all: "Alle Anzeigen"
-    new: "Benutzer hinzufügen"
-    edit: "Benutzer löschen"
-    delete: "Benutzer löschen"
-    role: "Rollen aktualisieren"
- 
-  works:
-    index: "Arbeiten"
-    show: "Arbeit"
-    new: "Arbeit hinzufügen"
-    edit: "Arbeit ändern"
-    delete: "Arbeit löschen"
-    confirm: "Diese Arbeit wirklich löschen?"
-    new_attachment: "Anhang hinzufügen"
-    authors: "Autoren der {{institution}}"
-    coauthors: "Koautoren an der {{institution}}"
-    contributors: "Betreuung durch"
-    recent: "Aktuelle Arbeiten"
-    recommendations: "Ähnliche Arbeiten an der {{institution}}"
-    no_abstract: "Kein Abstract"
-    duplicate: "Dublettenkontrolle"
+#models

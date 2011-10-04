@@ -1,9 +1,9 @@
 #admin-nav
   %ul
-    %li{give_current_class_if_equal('works', @tab_name)}=link_to t('works.index'), admin_index_url(:tab => "works")
-    %li{give_current_class_if_equal('groups', @tab_name)}=link_to t('groups.index'), admin_index_url(:tab => "groups")
-    %li{give_current_class_if_equal('people', @tab_name)}=link_to t('people.index'), admin_index_url(:tab => "people")
-    %li{give_current_class_if_equal('publications', @tab_name)}=link_to t('publications.index'), admin_index_url(:tab => "publications")
-    %li{give_current_class_if_equal('publishers', @tab_name)}=link_to t('publishers.index'), admin_index_url(:tab => "publishers")
-    %li{give_current_class_if_equal('users', @tab_name)}=link_to t('users.index'), admin_index_url(:tab => "users")
+    %li{give_current_class_if_equal('works', @tab_name)}=link_to t('common.works.index'), admin_index_url(:tab => "works")
+    %li{give_current_class_if_equal('groups', @tab_name)}=link_to t('common.groups.index'), admin_index_url(:tab => "groups")
+    %li{give_current_class_if_equal('people', @tab_name)}=link_to t('common.people.index'), admin_index_url(:tab => "people")
+    %li{give_current_class_if_equal('publications', @tab_name)}=link_to t('common.publications.index'), admin_index_url(:tab => "publications")
+    %li{give_current_class_if_equal('publishers', @tab_name)}=link_to t('common.publishers.index'), admin_index_url(:tab => "publishers")
+    %li{give_current_class_if_equal('users', @tab_name)}=link_to t('common.users.index'), admin_index_url(:tab => "users")
 
