@@ -1,7 +1,3 @@
-/ === People === Index ===
-/ Main
-- @title = "People" # Specify text at end of HTML <title> tag
-
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to "Add a Person", new_person_path}
@@ -9,9 +5,10 @@
 = render :layout => 'layouts/main_body_no_h2' do
   / ### Group / People ###
   - if params[:group_id]
+    - show_all = true
     %h2= @group.name
     = render "shared/local_nav", :object => "group"
-    = render "shared/alpha_pagination", :path => group_people_path(@group.id)
+    = render "shared/alpha_pagination", :path => group_people_path(@group.id), :all => true
   - else
     %h2 People
     = render "shared/alpha_pagination"
