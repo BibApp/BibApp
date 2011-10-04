@@ -218,7 +218,7 @@ module WorksHelper
   def work_name_strings_to_links(work_name_strings)
     work_name_strings.collect { |wns| wns.name_string }.collect do |ns|
       link_to(h(ns.name.gsub(',', ', ')), name_string_path(ns))
-    end.join(', ').html_safe
+    end.join('; ').html_safe
   end
 
   def decide_edit_partial(work)
