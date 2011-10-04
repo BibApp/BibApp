@@ -1,6 +1,6 @@
 = render :layout => 'layouts/main_body',
-  :locals => {:header => t('admin.archive.ready', :count => @works.size)} do
+  :locals => {:header => t('.ready', :count => @works.size)} do
   - if @works.size > 0
     = render "works"
   - else
-    %p= t('admin.archive.no_works')
+    %p= t('.no_works')

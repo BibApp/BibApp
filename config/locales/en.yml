@@ -157,7 +157,7 @@ en:
 
 #individual views
   admin:
-    archive:
+    ready_to_archive:
       ready: "Ready to Archive: %{count} remain"
       no_works: 'No works are marked "ready to archive"!'
     deposit:

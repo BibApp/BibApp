@@ -291,7 +291,7 @@ de:
 
 #individual views
   admin:
-    archive:
+    ready_to_archive:
       ready: "Bereit zur Archivierung: %{count} verbleibend"
       no_works: 'Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!'
     deposit:
