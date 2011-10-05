@@ -18,7 +18,7 @@
     - case @import.state
       - when 'rejected', 'processing', 'accepted'
         = render @import.state
-      else
+      - else
         = render 'default'
 
   -unless @import.state == "processing"
