@@ -42,6 +42,7 @@ en:
     show: Show
     signup: "Signup"
     source: "Source"
+    system: 'System'
     total: Total
     unknown: "unknown"
     url: 'URL'
@@ -127,6 +128,15 @@ en:
 
     imports:
       new: "Import File"
+      unauthorized: 'Unauthorized.'
+      flash_create_success: "Thanks for the import!  It will take a few minutes to process.  We'll send you an email when it is ready for review."
+      flash_create_failure: "Sorry... but there was an error uploading your import file."
+      flash_update_accepted: "Batch accepted -- The imported data will appear shortly."
+      flash_update_rejected: "Batch rejected"
+      flash_update_error: "Sorry... but there was an error updating the import."
+      deleted_person: 'Deleted Person'
+      header: "Add Works"
+      person_header: "Add Works for %{person_link}"
 
     name_strings:
       edit: "Edit name"

@@ -5,10 +5,10 @@ module ImportsHelper
       if person = Person.find_by_id(import.person_id)
         return link_to(person.display_name, person_path(person))
       else
-        return 'Deleted Person'
+        return t('common.imports.deleted_person')
       end
     else
-      return "System"
+      return t('app.system')
     end
   end
 
@@ -24,7 +24,11 @@ module ImportsHelper
   end
 
   def body_header(person)
-    ('Add Works' + (person ? " for #{link_to person.display_name, person_path(person)}" : '')).html_safe
+    if person
+      t('common.imports.person_header', :person_link => link_to(person.display_name, person_path(person))).html_safe
+    else
+      t('common.imports.header')
+    end
   end
 
 end
