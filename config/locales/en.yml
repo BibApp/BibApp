@@ -91,6 +91,9 @@ en:
       unverified: "unverified"
       verified: "verified"
       denied: "denied"
+      index_title: "%{display_name}: %{status} Contributorships"
+      archivable_title: "Archival Analysis: %{display_name}"
+      flash_act_on_many:  "Contributorships were successfully %{action}."
 
     groups:
       index: "Groups"
@@ -156,6 +159,13 @@ en:
       index: "Manage Roles"
       new_admin: "Add administrator"
       new_editor: "Add editor"
+
+    romeo:
+      green: "green"
+      blue: "blue"
+      yellow: "yellow"
+      white: "white"
+      black: "black"
 
     search:
       results:
