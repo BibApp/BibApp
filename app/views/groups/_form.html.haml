@@ -1,20 +1,20 @@
 %fieldset
-  %legend Group
+  %legend #{t('models.groups', :count => 1)}
   %p
-    %label Name
+    %label #{t('app.name')}
     %br/
     = text_field_with_auto_complete :group, :name, {}, {:method => :get, :skip_style => true, :frequency => 0.5}
   %p
-    %label Description
+    %label #{t('app.description')}
     %br/
     = form.text_area :description
   %p
-    %label URL
+    %label #{t('app.url')}
     %br/
     = form.text_field :url
   %p
-    %label Parent Group
+    %label #{t('.parent_group')}
     %br/
     = form.collection_select :parent_id, @groups, :id, :name, :include_blank => true
   %p.submit
-    = submit_tag :save
+    = submit_tag t('app.save')

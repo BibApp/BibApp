@@ -1,11 +1,11 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Add a Group", new_group_path
+    %li= link_to t('.add_group'), new_group_path
     - if logged_in? && current_user.has_role?("admin", System)
-      %li= link_to "Show Hidden Groups", hidden_groups_path
+      %li= link_to t('.show_hidden'), hidden_groups_path
 
 = render :layout => 'layouts/main_body_no_h2'  do
-  %h2 Groups
+  %h2 #{t('models.group', :count => 2)}
 
   = render "shared/alpha_pagination"
 

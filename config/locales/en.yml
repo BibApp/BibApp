@@ -9,6 +9,7 @@ en:
     about: "About"
     account: "Account"
     advanced_search: "Advanced Search"
+    are_you_sure: 'Are you sure?'
     archive: "Prepare for archiving full text"
     authorized: "Authority controlled names"
     bookmarks: "Social Bookmarking"
@@ -33,6 +34,7 @@ en:
     powered: "Powered by"
     previous: "previous"
     results: "Results"
+    save: "Save"
     saved: "Saved"
     search: "Search"
     search_within: "Search Within"
@@ -42,6 +44,7 @@ en:
     source: "Source"
     total: Total
     unknown: "unknown"
+    url: 'URL'
     year: "Year"
     years: "Years"
     yes: "yes"
@@ -268,6 +271,39 @@ en:
       add_person: "Add a new person"
     verified:
       verified: 'Verified'
+
+  groups:
+    complete_index:
+      add_group: 'Add a Group'
+      show_hidden: 'Show Hidden Groups'
+    form:
+      parent_group: 'Parent Group'
+    group_table:
+      group_name: 'Group Name'
+      parent_group: 'Parent Group'
+      members: 'Members'
+    recent_works_box:
+      recent_works: 'Recent Works'
+    related_groups_box:
+      belongs_to: 'Belongs to'
+      subgroups: 'Sub-Groups'
+    work_types_box:
+      types_of_work: 'Types of Work'
+    edit:
+      unhide: "Unhide Group"
+      hide: "Hide Group"
+      delete: "Delete Group"
+      delete_confirm: 'Permanently delete this group? This cannot be undone.'
+      header: "Edit %{link_to_group}"
+    hidden:
+      header: 'Hidden Groups'
+      empty: 'No hidden groups'
+    new:
+      header: 'Add a Group'
+    show:
+      add: 'Add a Group'
+      edit: 'Edit this group'
+      roles: 'Manage Roles'
 
   works:
     show:
