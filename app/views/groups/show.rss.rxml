@@ -5,5 +5,4 @@ rss_document_on(xml) do
     xml.image h($APPLICATION_URL + $APPLICATION_LOGO)
     xml << render('shared/rss_works', :author_name => @group.name)
     end
-  end
 end
