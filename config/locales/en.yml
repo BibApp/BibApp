@@ -13,8 +13,11 @@ en:
     archive: "Prepare for archiving full text"
     authorized: "Authority controlled names"
     bookmarks: "Social Bookmarking"
+    count: 'Count'
+    date: 'Date'
     delete_selected: "Delete selected"
     description: "Description"
+    errors: 'Errors'
     faq: "FAQ"
     go: "Go"
     formats: "Formats"
@@ -42,6 +45,7 @@ en:
     show: Show
     signup: "Signup"
     source: "Source"
+    status: 'Status'
     system: 'System'
     total: Total
     unknown: "unknown"
@@ -137,6 +141,7 @@ en:
       deleted_person: 'Deleted Person'
       header: "Add Works"
       person_header: "Add Works for %{person_link}"
+      batch_id: "Batch-%{id}"
 
     name_strings:
       edit: "Edit name"
@@ -314,6 +319,63 @@ en:
       add: 'Add a Group'
       edit: 'Edit this group'
       roles: 'Manage Roles'
+
+  imports:
+    accepted:
+      text: "This import was <strong>accepted</strong>"
+      warning: "This import has been accepted, but contains no works. They may have been deleted."
+    batch_import_form:
+      legend: "Batch Import (RIS | Medline | Refworks XML)"
+      text: "Upload a file containing the citations"
+    default:
+      accept: 'Accept Batch'
+      reject: 'Reject Batch'
+      blank: "This import is reviewable, but contains no works. They may have been deleted."
+      not_blank: "Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear."
+    details_generic:
+      header: 'Batch report'
+    details_person:
+      header: 'Batch report'
+    errors:
+      no_errors: "No errors encountered during import."
+    import_names:
+      header: 'Import Names'
+      text: 'Select missing variations of your name.'
+    index_table:
+      batch: 'Batch #'
+      imported_for: 'Imported For'
+    matched:
+      matched: 'Matched'
+      matched_total: "%{count} work to %{imported_for}."
+      remaining_total: "%{count} remain to match."
+    pen_names:
+      my_names: 'My Names'
+      works_matched: 'Works Matched'
+    processing:
+      text: "This import is in processing. You'll receive an <strong>email</strong> when the batch is complete"
+    rejected:
+      text: "This import was <strong>rejected</strong> and all works associated with the import were destroyed."
+    work_counts:
+      new_works: "New works"
+      duplicate_works: "Duplicate works"
+    work_type_list:
+      header: 'Select a type'
+      link: 'Batch Import'
+    works_destroy_form:
+      submit: 'Delete selected works'
+    works_imported:
+      header: 'Works Imported'
+    index:
+      link: 'Add an import'
+      header: "Imports for %{email}"
+    new:
+      show_all: 'Show all Imports'
+      add_import: 'Add an Import!'
+    show:
+      show: 'Show my imports'
+      add: 'Add an import'
+      header: 'Review Batch'
+      subheader: "Imported For %{imported_for}"
 
   works:
     show:

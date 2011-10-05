@@ -2,7 +2,7 @@
   %table.import-review-table
     %thead
       %tr
-        %th Errors
+        %th #{t('app.errors')}
     %tbody
       - if !@errors.empty?
         - @errors.each do |key, value|
@@ -12,4 +12,4 @@
       - else
         %tr
           %td{:colspan => "2"}
-            %p No errors encountered during import.
+            %p #{t('.no_errors')}

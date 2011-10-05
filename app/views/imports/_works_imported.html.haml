@@ -1,4 +1,4 @@
 .left.prepend-1
   - ct = [@work_batch.size - err_ct, 0].max
-  %h3#works Works Imported (#{ct})
+  %h3#works #{t('.header')} (#{ct})
   = render :partial => "works" if @works

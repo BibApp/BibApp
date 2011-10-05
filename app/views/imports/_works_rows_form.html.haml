@@ -1,9 +1,9 @@
 = form_tag "#works", :method => :get, :name => "works_form_show_rows" do
   #sort-by
-    %label Show:
+    %label #{t('app.show')}:
     = render 'shared/row_select'
     = hidden_field_tag "return_path", @return_path
     -#Authenticity token is necessary so that Rails doesn't think this request is fraudulent (when someone clicks "delete selected" link)
     = hidden_field_tag "authenticity_token", form_authenticity_token
 
-    = submit_tag 'Go'
+    = submit_tag t('app.go')

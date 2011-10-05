@@ -1,10 +1,8 @@
 .notice
-  %h3 Batch-#{@import.id}
-  %p
-    This import was
-    %strong accepted.
+  %h3 #{t('common.imports.batch_id', :id => @import.id)}
+  %p #{t('.text').html_safe}
 - if @works.blank?
   .warning
-    %p
-      This import has been accepted, but contains no works. They may have been deleted.
+    %p #{t('.warning')}
+
 
