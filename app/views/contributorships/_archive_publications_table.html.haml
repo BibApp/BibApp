@@ -1,20 +1,20 @@
 %table
   %thead
     %tr
-      %td RoMEO<br />Color
-      %td Pub Copy<br />Allowed
-      %td Name
-      %td Publisher
-      %td Works
+      %td #{t('contributorships.archive_analysis_table.romeo_color').html_safe}
+      %td #{t('.pub_copy_allowed').html_safe}
+      %td #{t('app.name')}
+      %td #{t('models.publisher', :count => 1)}
+      %td #{t('models.work', :count => 2)}
 
   %tbody
     - @publ_table.each do |row|
       -# Default colors to unknown
       - color = romeo_color(row)
       %tr{:class => color}
-        %td=color.capitalize
-        %td="yes" if row.pub_copy?
-        %td=row.name
-        %td=row.pub_name
+        %td #{t("common.romeo.#{color}").capitalize}
+        %td= t('app.yes') if row.pub_copy?
+        %td #{row.name}
+        %td #{row.pub_name}
         %td
           = link_to row.count, person_works_path(@person, "fq[]" => URI.unescape("publication_facet%3A\"#{row.name}\""))

@@ -7,7 +7,7 @@
     .span-3{:id => "contributorship_admin-#{contributorship.id}"}
       - if contributorship.verified?
         %p
-          %strong Verified!
+          %strong #{t('.verified')}!
       - else
         .span-3.big-number.contributorship_score{:id => "contributorship_score-#{contributorship.id}"}
-          %strong #{contributorship.score}% sure
+          %strong #{t('app.percent_sure', :percentage => contributorship.score)}

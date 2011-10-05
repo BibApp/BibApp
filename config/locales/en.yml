@@ -28,6 +28,7 @@ en:
     more_years: "More years"
     name: "Name"
     next: "next"
+    percent_sure: "%{percentage}% sure"
     percentage: "Percentage"
     powered: "Powered by"
     previous: "previous"
@@ -36,8 +37,10 @@ en:
     search: "Search"
     search_within: "Search Within"
     select_all: "Select All"
+    show: Show
     signup: "Signup"
     source: "Source"
+    total: Total
     unknown: "unknown"
     year: "Year"
     years: "Years"
@@ -226,6 +229,36 @@ en:
       update: "Update SHERPA Data"
     tasks: "Administrative Tasks"
 
+  contributorships:
+    act_on_multiple_form:
+      apply_to_selection: "Apply to selection"
+      verify: verify
+      unverify: unverify
+      deny: deny
+      action: "Action"
+    archive_analysis_table:
+      romeo_color: 'RoMEO<br />Color'
+      archiving_policy: "Archiving Policy"
+    archive_publications_table:
+      pub_copy_allowed: "Pub Copy<br />Allowed"
+    claim:
+      verify: 'Verify'
+      deny: 'Deny'
+    contributorship:
+      verified: 'Verified'
+    admin:
+      header: 'Admin: Unverified Contributorships'
+      no_people: 'Congratulations! Nothing to do here'
+      matches: 'Potential Matches'
+    archivable:
+      header: "Archival Analysis: %{person_link}"
+    index:
+      delete_person: "Delete this person"
+      delete_person_confirm: 'Permanently delete this person? This cannot be undone.'
+      add_person: "Add a new person"
+    verified:
+      verified: 'Verified'
+
   works:
     show:
       edit: "Edit this work"
@@ -237,9 +270,24 @@ en:
     content_file:
       one: 'Content File'
       other: 'Content Files'
+    group:
+      one: 'Group'
+      other: 'Groups'
     image:
       one: 'Image'
       other: 'Images'
     import_file:
       one: 'Import File'
       other: 'Import Files'
+    person:
+      one: 'Person'
+      other: 'People'
+    publication:
+      one: 'Publication'
+      other: 'Publications'
+    publisher:
+      one: 'Publisher'
+      other: 'Publishers'
+    work:
+      one: 'Work'
+      other: 'Works'
