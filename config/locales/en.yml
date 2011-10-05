@@ -111,6 +111,16 @@ en:
       members: "Members"
       hidden: "Show hidden groups"
       roles: "Change Roles"
+      flash_create_success: "Group was successfully created."
+      flash_create_duplicate: "This group already exists"
+      hidden_groups: 'Hidden Groups'
+      flash_hide_success: "Group was successfully removed."
+      flash_hide_failure: "Group cannot be hidden. It has visible child groups: %{children}"
+      flash_unhide_success: "Group was successfully unhidden."
+      flash_unhide_failure: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
+      flash_destroy_success: "Group was successfully removed."
+      flash_destroy_failure_memberships: "Group cannot be deleted. Memberships exist."
+      flash_destroy_failure_children: "Group cannot be deleted. It has visible child groups: %{child_list}"
 
     imports:
       new: "Import File"
