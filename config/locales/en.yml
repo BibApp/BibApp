@@ -42,6 +42,7 @@ en:
     year: "Year"
     years: "Years"
     yes: "yes"
+    cancel: "Cancel"
 
   common:
 
@@ -58,6 +59,21 @@ en:
       flash_update_warning: "No file was uploaded."
       flash_update_notice: "Attachment was successfully uploaded"
       flash_delete_notice: "Attachment was successfully deleted"
+      add_files: "[Add More Files]"
+      agree_to_terms: "I agree to the terms of the"
+      deposit_license: "Deposit License"
+      local_repository: "my local repository"
+      must_agree_to_license: "You must agree to the license terms before you can upload files."
+      upload_files: "Upload file(s)"
+      uploading_files: "Uploading files..."
+      delete_image: "delete image"
+      upload_image: "Upload image"
+      uploading_image: "Uploading your image..."
+      upload_with_class: "Upload %{class}"
+
+      delete_person: "Delete this person"
+      add_person: "Add a new person"
+      form_person_title: "%{display_name}: Photo"
 
     contributorships:
       index: "Works of a person"
@@ -202,3 +218,13 @@ en:
       deposit: "Deposit Attachments"
 
 #models
+  models:
+    content_file:
+      one: 'Content File'
+      other: 'Content Files'
+    image:
+      one: 'Image'
+      other: 'Images'
+    import_file:
+      one: 'Import File'
+      other: 'Import Files'

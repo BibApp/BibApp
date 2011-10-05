@@ -1,9 +1,9 @@
-- @title = "Upload #{@attachment.class.to_s.underscore.titleize}"
+- @title = t('common.attachments.upload_with_class', :class => @attachment.class.human_name)
 
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :attachment
 
-  %h2 Upload #{@attachment.class.to_s.underscore.titleize}
+  %h2 #{t('common.attachments.upload_with_class', :class => @attachment.class.human_name)}
 
   .column.span-14
     = render "attachments/forms/form_#{@attachment.class.name.to_s.underscore}"

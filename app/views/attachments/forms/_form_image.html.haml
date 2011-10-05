@@ -21,7 +21,7 @@
         %p= render "shared/person_image", :o => @asset
 
       -if @person.image
-        = link_to "delete image", attachment_url(:id => @asset.image.id), :method => :delete
+        = link_to t('common.attachments.delete_image'), attachment_url(:id => @asset.image.id), :method => :delete
 
   %fieldset
     %legend New Image
@@ -36,5 +36,5 @@
     = hidden_field_tag :type, @attachment.class
 
     %p.submit
-      = submit_tag "Upload image", :disable_with => "Uploading your image..."
-      = link_to "Cancel", get_response_url(@asset)
+      = submit_tag t('common.attachments.upload_image'), :disable_with => t('common.attachments.uploading_image')
+      = link_to t('app.cancel'), get_response_url(@asset)
