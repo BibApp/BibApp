@@ -12,11 +12,15 @@ en:
     are_you_sure: 'Are you sure?'
     archive: "Prepare for archiving full text"
     authorized: "Authority controlled names"
+    back: 'Back'
     bookmarks: "Social Bookmarking"
     count: 'Count'
+    create: 'Create'
     date: 'Date'
     delete_selected: "Delete selected"
     description: "Description"
+    destroy: 'Destroy'
+    edit: 'Edit'
     errors: 'Errors'
     faq: "FAQ"
     go: "Go"
@@ -49,6 +53,7 @@ en:
     system: 'System'
     total: Total
     unknown: "unknown"
+    update: 'Update'
     url: 'URL'
     year: "Year"
     years: "Years"
@@ -376,6 +381,15 @@ en:
       add: 'Add an import'
       header: 'Review Batch'
       subheader: "Imported For %{imported_for}"
+
+  keywordings:
+    edit:
+      header: 'Editing keywording'
+    index:
+      header: 'Listing keywordings'
+      new: 'New keywording'
+    new:
+      header: 'New keywording'
 
   works:
     show:
