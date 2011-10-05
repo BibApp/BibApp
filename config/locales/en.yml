@@ -70,10 +70,15 @@ en:
       upload_image: "Upload image"
       uploading_image: "Uploading your image..."
       upload_with_class: "Upload %{class}"
-
       delete_person: "Delete this person"
       add_person: "Add a new person"
       form_person_title: "%{display_name}: Photo"
+
+    authentications:
+      flash_sign_in: "Signed in successfully."
+      flash_authentication: "Authentication successful."
+      flash_create: "User created and signed in successfully."
+      flash_destroy: "Successfully destroyed authentication."
 
     contributorships:
       index: "Works of a person"
