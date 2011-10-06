@@ -8,6 +8,7 @@ en:
     admin: "Admin"
     about: "About"
     account: "Account"
+    add: 'Add'
     advanced_search: "Advanced Search"
     are_you_sure: 'Are you sure?'
     archive: "Prepare for archiving full text"
@@ -474,6 +475,23 @@ en:
       legend: "Request New Password"
       submit: "Send Password"
 
+  pen_names:
+    new_namestring_form:
+      add_text: 'Add a name string (ex. "Smith, J")'
+    search_for_namestrings:
+      search_text: 'Search other last names to add suggestions (ex. "Smith")'
+    suggested_namestrings:
+      no_suggestions: 'There are no immediate suggestions for'
+    name_string_filter:
+      no_results: "<strong>%{phrase}</strong> returned no results"
+    new:
+      delete: "Delete this person"
+      confirm: "Permanently delete this person? This cannot be undone."
+      current: "Current pen names"
+      suggested: "Suggested pen names"
+      instructions: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
+      explanation: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
+
   works:
     show:
       edit: "Edit this work"
@@ -500,6 +518,9 @@ en:
     name_string:
       one: 'Name String'
       other: 'Name Strings'
+    pen_name:
+      one: 'Pen Name'
+      other: 'Pen Names'
     person:
       one: 'Person'
       other: 'People'
