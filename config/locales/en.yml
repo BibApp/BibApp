@@ -499,37 +499,38 @@ en:
       deposit: "Deposit Attachments"
 
 #models
-  models:
-    content_file:
-      one: 'Content File'
-      other: 'Content Files'
-    group:
-      one: 'Group'
-      other: 'Groups'
-    image:
-      one: 'Image'
-      other: 'Images'
-    import_file:
-      one: 'Import File'
-      other: 'Import Files'
-    membership:
-      one: 'Membership'
-      other: 'Memberships'
-    name_string:
-      one: 'Name String'
-      other: 'Name Strings'
-    pen_name:
-      one: 'Pen Name'
-      other: 'Pen Names'
-    person:
-      one: 'Person'
-      other: 'People'
-    publication:
-      one: 'Publication'
-      other: 'Publications'
-    publisher:
-      one: 'Publisher'
-      other: 'Publishers'
-    work:
-      one: 'Work'
-      other: 'Works'
+  activerecord:
+    models:
+      content_file:
+        one: 'Content File'
+        other: 'Content Files'
+      group:
+        one: 'Group'
+        other: 'Groups'
+      image:
+        one: 'Image'
+        other: 'Images'
+      import_file:
+        one: 'Import File'
+        other: 'Import Files'
+      membership:
+        one: 'Membership'
+        other: 'Memberships'
+      name_string:
+        one: 'Name String'
+        other: 'Name Strings'
+      pen_name:
+        one: 'Pen Name'
+        other: 'Pen Names'
+      person:
+        one: 'Person'
+        other: 'People'
+      publication:
+        one: 'Publication'
+        other: 'Publications'
+      publisher:
+        one: 'Publisher'
+        other: 'Publishers'
+      work:
+        one: 'Work'
+        other: 'Works'
