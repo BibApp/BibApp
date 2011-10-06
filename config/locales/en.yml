@@ -22,6 +22,8 @@ en:
     destroy: 'Destroy'
     edit: 'Edit'
     errors: 'Errors'
+    flash_require_user: 'You must be logged in to access this page'
+    flash_require_no_user: 'You must be logged out to acces this page'
     faq: "FAQ"
     go: "Go"
     formats: "Formats"
@@ -55,6 +57,7 @@ en:
     unknown: "unknown"
     update: 'Update'
     url: 'URL'
+    web_password: 'Web Password'
     year: "Year"
     years: "Years"
     yes: "yes"
