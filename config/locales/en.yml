@@ -205,6 +205,7 @@ en:
       file_unconvertible: "The file could not be converted to UTF8."
       file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
       batch_csv_error: "An error was generated processing your request."
+      edit_header: "%{link}: Personal Info"
 
     publications:
       show: "Publication"
