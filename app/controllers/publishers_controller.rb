@@ -35,7 +35,7 @@ class PublishersController < ApplicationController
     end
 
     before :index do
-      @title = "Publishers"
+      @title = Publisher.human_name_pl
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters(true)
 
