@@ -1,9 +1,9 @@
 %strong
-  Edit: 
-= link_to "Personal Info", edit_person_path(@person)
+  #{t 'app.edit'}:
+= link_to t('.personal_info'), edit_person_path(@person)
 |
-= link_to "Contributorships", contributorships_url(:person_id => @person.id)
-| 
-= link_to "Groups", new_memberships_url(:person_id => @person.id)
-| 
-= link_to "Pen Names", new_pen_names_url(:person_id => @person.id)
+= link_to Contributorship.human_name_pl, contributorships_url(:person_id => @person.id)
+|
+= link_to Group.human_name_pl, new_memberships_url(:person_id => @person.id)
+|
+= link_to PenName.human_name_pl, new_pen_names_url(:person_id => @person.id)

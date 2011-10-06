@@ -43,6 +43,7 @@ en:
     next: "next"
     percent_sure: "%{percentage}% sure"
     percentage: "Percentage"
+    personal_info: "Personal Info"
     powered: "Powered by"
     previous: "previous"
     results: "Results"
@@ -508,6 +509,18 @@ en:
       instructions: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
       explanation: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
 
+  people:
+    admin_actions:
+      edit: "Edit this Person"
+      add: "Add Works"
+      manage_contributorships: "Manage Contributorships"
+      manage_roles: "Manage Roles"
+      archive: "Archive Analysis"
+    edit_actions:
+      personal_info: 'Personal Info'
+    form:
+      disable: 'Saving...'
+
   works:
     show:
       edit: "Edit this work"
@@ -520,6 +533,9 @@ en:
       content_file:
         one: 'Content File'
         other: 'Content Files'
+      contributorship:
+        one: 'Contributorship'
+        other: 'Contributorships'
       group:
         one: 'Group'
         other: 'Groups'
@@ -550,3 +566,17 @@ en:
       work:
         one: 'Work'
         other: 'Works'
+    attributes:
+      person:
+        uid: University ID
+        first_name: First Name
+        middle_name: Middle Name
+        last_name: Last Name
+        suffix: Suffix
+        display_name: Display Name
+        email: Email
+        im: IM
+        phone: Phone
+        postal_address: Postal Address
+        active: Active
+        research_focus: Research Focus
