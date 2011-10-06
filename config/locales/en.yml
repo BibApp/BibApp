@@ -24,6 +24,7 @@ en:
     edit: 'Edit'
     email: 'Email'
     errors: 'Errors'
+    exception_with_message: 'Exception: %{message}'
     flash_require_user: 'You must be logged in to access this page'
     flash_require_no_user: 'You must be logged out to acces this page'
     faq: "FAQ"
@@ -190,6 +191,20 @@ en:
       roles: "Manage roles"
       personal: "Personal Information"
       import_csv: "CSV load"
+      ldap_fail_configuration: "LDAP is not properly configured"
+      ldap_fail_authentication: "Error authenticating LDAP user."
+      ldap_fail_too_many: "Too many LDAP results"
+      edit_title: "%{name}: Personal Info"
+      flash_create_success: "Person was successfully created."
+      flash_create_field_missing: "One or more required fields are missing."
+      flash_create_person_exists: 'This person already exists in the BibApp system: <a href="%{url}">view their record</a>.'
+      flash_update_success: "Personal info was successfully updated."
+      flash_update_failure: "One or more required fields are missing."
+      file_unreadable: "The File you submitted could not be read."
+      flash_batch_csv_create_bad_encoding: "The character encoding could not be determined or could not be converted to UTF-8."
+      file_unconvertible: "The file could not be converted to UTF8."
+      file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
+      batch_csv_error: "An error was generated processing your request."
 
     publications:
       show: "Publication"
