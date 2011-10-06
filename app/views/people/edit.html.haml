@@ -1,7 +1,7 @@
 - if current_user_role?("admin", @person)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-    %li= link_to "Add a new person", new_person_path
+    %li= link_to t('.delete'), person_url(@person), :method => :delete, :confirm => t('.confirm')
+    %li= link_to t('.add'), new_person_path
 
 = render :layout => 'layouts/main_body', :locals => {:header => edit_header(@person)} do
   = render "shared/local_nav", :object => "person", :state => "edit"

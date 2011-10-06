@@ -533,6 +533,16 @@ en:
       header: 'Types of Work'
     show_works:
       recent: 'recent additions'
+    batch_csv_show:
+      legend_present: CSV Upload
+      legend_absent: Select a comma delimited file
+      select_file: Select a CSV Comma delimited file for batch processing.
+    edit:
+      delete: 'Delete this person'
+      confirm: 'Permanently delete this person? This cannot be undone.'
+      add: "Add a new person"
+    new:
+      header: 'New Person'
 
   works:
     show:

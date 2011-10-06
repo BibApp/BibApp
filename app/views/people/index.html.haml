@@ -10,7 +10,7 @@
     = render "shared/local_nav", :object => "group"
     = render "shared/alpha_pagination", :path => group_people_path(@group.id), :all => true
   - else
-    %h2 People
+    %h2 #{Person.human_name_pl}
     = render "shared/alpha_pagination"
 
   = render 'people_table'

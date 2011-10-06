@@ -5,11 +5,11 @@
     %fieldset.span-15
 
       - if results.present?
-        %legend CSV Upload
+        %legend #{t '.legend_present'}
         %p #{results}
 
       - else
-        %legend Select a comma delimited file
-        %p Select a CSV Comma delimited file for batch processing.
+        %legend #{t '.legend_absent'}
+        %p #{t '.select_file'}
 
         = render 'shared/upload_form'
