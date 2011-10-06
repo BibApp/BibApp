@@ -21,6 +21,7 @@ en:
     description: "Description"
     destroy: 'Destroy'
     edit: 'Edit'
+    email: 'Email'
     errors: 'Errors'
     flash_require_user: 'You must be logged in to access this page'
     flash_require_no_user: 'You must be logged out to acces this page'
@@ -165,6 +166,13 @@ en:
       edit: "Edit name"
       published: "Has published under this name"
       unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
+
+    passwords:
+      flash_create_sent: "We sent a new password to %{email}"
+      flash_create_no_account: "Sorry, we cannot find that account.  Try again."
+      flash_update_success: "Your password was updated successfully."
+      flash_update_bad_match: "Sorry, your new password didn't match the confirmation.  Try again."
+      flash_update_incorrect: "Sorry, your old password was incorrect. Try again."
 
     pen_names:
       index: "Pen Names"
@@ -453,6 +461,18 @@ en:
       edit_link: 'Edit this name string'
       have_published: 'I have published using this name'
       no_claim: "Nobody at %{university_name} has claimed this name. This might be somebody from another campus."
+
+  passwords:
+    edit:
+      header: 'Change Password'
+      old: "Old Password"
+      new: "New Password"
+      confirm: "Confirm New Password"
+      submit: "Update Password"
+    new:
+      header: "Forgot Password"
+      legend: "Request New Password"
+      submit: "Send Password"
 
   works:
     show:

@@ -1,10 +1,10 @@
-= render :layout => '/layouts/main_body', :locals => {:header => 'Forgot Password'} do
+= render :layout => '/layouts/main_body', :locals => {:header => t('passwords.new.header')} do
   %fieldset
-    %legend Request New Password
+    %legend = t('passwords.new.legend')
     = form_for :password, :url => passwords_path do |form|
       %p
-        %label Email
+        %label #{t 'app.email'}
         %br/
         = form.text_field 'email'
       %p.submit
-        = form.submit 'Send Password'
+        = form.submit t('passwords.new.submit')
