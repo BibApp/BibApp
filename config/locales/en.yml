@@ -218,6 +218,8 @@ en:
       confirm: "Really delete this publication?"
       publisher: "Published by"
       authority: "Admin publication authorities"
+      flash_destroy_success: "Publications were successfully deleted."
+      flash_destroy_failure: "This publication has %{count} work associated with it, which must be altered or removed before this publication can be deleted."
 
     publishers:
       index: "Publishers"
