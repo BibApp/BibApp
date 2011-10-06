@@ -53,6 +53,7 @@ en:
     source: "Source"
     status: 'Status'
     system: 'System'
+    title: Title
     total: Total
     unknown: "unknown"
     update: 'Update'
@@ -419,6 +420,28 @@ en:
       cloud_header: 'Popular Research Topics by Year'
       chart_header: 'Work Types by Year'
       chart_loading: 'loading...'
+
+  memberships:
+    action_links:
+      all_groups: 'All Groups'
+    group:
+      leave: 'Leave group'
+      confirm: "Are you sure you want to leave this group?"
+      year_joined: 'Year Joined'
+      year_left: 'Year Left'
+    join_groups_form:
+      submit: 'Join selected groups'
+    non_member_groups:
+      searching_for: 'Searching for'
+      no_groups: 'No groups found'
+    search_form:
+      submit: 'Search Groups'
+    new:
+      delete_person: "Delete this person"
+      delete_confirm: 'Permanently delete this person? This cannot be undone.'
+      add_person: "Add a new person"
+      group_memeberships: 'Group Memberships'
+
   works:
     show:
       edit: "Edit this work"
@@ -439,6 +462,9 @@ en:
     import_file:
       one: 'Import File'
       other: 'Import Files'
+    membership:
+      one: 'Membership'
+      other: 'Memberships'
     person:
       one: 'Person'
       other: 'People'

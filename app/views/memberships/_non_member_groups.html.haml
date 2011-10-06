@@ -1,9 +1,9 @@
 - if @query.present?
   %h3
-    Searching for:
+    #{t '.searching_for'}
     = @query
-    = link_to image_tag('/images/remove_facet.gif'), new_person_membership_path(:person_id=>@person.id, :status=>"non_member")
+    = link_to image_tag('/images/remove_facet.gif'), new_person_membership_path(:person_id => @person.id, :status => "non_member")
 - if @groups.length < 1
-  %p No groups found
+  %p #{t '.no_groups'}
 - else
-  = render :partial => 'join_groups_form'
+  = render 'join_groups_form'

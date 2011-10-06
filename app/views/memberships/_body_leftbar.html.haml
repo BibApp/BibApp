@@ -1,7 +1,7 @@
 #picture.span-3
   %p= render "shared/person_image", :o => @person
 
-%h3 Groups (#{@person.groups.size})
+%h3 #{t 'models.group', :count => 2} (#{@person.groups.size})
 %ol.groups_alphabetical
   - @person.groups.each do |g|
     %li #{link_to "#{g.name}", group_path(g)}
