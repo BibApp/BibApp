@@ -1,5 +1,5 @@
 - if @person.groups.empty?
   &nbsp;
 - else
-  %h3.heading Groups
+  %h3.heading #{Group.human_name_pl}
   = render 'shared/group_list'

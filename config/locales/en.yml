@@ -51,6 +51,7 @@ en:
     saved: "Saved"
     search: "Search"
     search_within: "Search Within"
+    select: Select
     select_all: "Select All"
     show: Show
     signup: "Signup"
@@ -520,6 +521,18 @@ en:
       personal_info: 'Personal Info'
     form:
       disable: 'Saving...'
+    ldap_search:
+      explanation: 'Search campus directory (to pre-populate person information)'
+      example: 'Ex: Smith, John OR Smith, J'
+      results: 'Search results'
+      no_results: 'No results for %{query}'
+      failed:  "Search failed: %{message}."
+    people_table:
+      recent_publication: 'Recent Publication'
+    show_work_types:
+      header: 'Types of Work'
+    show_works:
+      recent: 'recent additions'
 
   works:
     show:

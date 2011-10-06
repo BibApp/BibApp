@@ -1,6 +1,6 @@
 %h3.heading
-  = link_to "Works", person_works_path(@person)
-  &ndash; recent additions
+  = link_to Work.human_name_pl, person_works_path(@person)
+  &ndash; #{t '.recent'}
 %ol.works
   - @works.first(3).each do |work|
     = render "shared/work", :work => work
