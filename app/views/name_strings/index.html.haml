@@ -1,8 +1,8 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Add a NameString", new_name_string_path
+    %li= link_to t('name_strings.index.add'), new_name_string_path
 
-= render :layout => 'layouts/main_body', :locals => {:header => "NameStrings (#{@page})"} do
+= render :layout => 'layouts/main_body', :locals => {:header => "#{t 'models.name_string', :count => 2} (#{@page})"} do
   = render "shared/alpha_pagination"
 
   %ol#name_strings

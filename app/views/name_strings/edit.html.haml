@@ -1,2 +1,2 @@
 = render :partial => 'form', :layout => 'layouts/main_body',
-  :locals => {:header => "Edit the NameString: #{@current_object.name}"}
+  :locals => {:header => t('.header', :name => @current_object.name)}

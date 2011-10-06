@@ -1,8 +1,8 @@
 %fieldset
-  %legend NameString
+  %legend #{t 'models.name_string', :count => 2}
   = form_for @name_string do |form|
     %p
-      %label Name
+      %label #{t 'app.name'}
       %br/
       = form.text_field :name
       = form.hidden_field :cleaned, :value => true

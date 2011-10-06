@@ -442,6 +442,18 @@ en:
       add_person: "Add a new person"
       group_memeberships: 'Group Memberships'
 
+  name_strings:
+    edit:
+      header: "Edit the NameString: %{name}"
+    index:
+      add: 'Add a NameString'
+    new:
+      header: 'Enter a new NameString'
+    show:
+      edit_link: 'Edit this name string'
+      have_published: 'I have published using this name'
+      no_claim: "Nobody at %{university_name} has claimed this name. This might be somebody from another campus."
+
   works:
     show:
       edit: "Edit this work"
@@ -465,6 +477,9 @@ en:
     membership:
       one: 'Membership'
       other: 'Memberships'
+    name_string:
+      one: 'Name String'
+      other: 'Name Strings'
     person:
       one: 'Person'
       other: 'People'
