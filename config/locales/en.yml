@@ -154,6 +154,12 @@ en:
     keywords:
       timeline: 'Timeline'
 
+    memberships:
+      new_title: "%{name}: Group Memberships"
+      flash_create_multiple_membership: "One or more groups could not be joined; a membership already exists."
+      flash_create_multiple_success: "Groups were successfully joined."
+      flash_create_multiple_privileges: "One or more groups could not be joined; you have insufficient privileges"
+
     name_strings:
       edit: "Edit name"
       published: "Has published under this name"
