@@ -121,7 +121,6 @@ en:
       flash_act_on_many:  "Contributorships were successfully %{action}."
 
     groups:
-      index: "Groups"
       new: "Add group"
       edit: "Edit group"
       destroy: "Delete group"
@@ -178,11 +177,7 @@ en:
       flash_update_bad_match: "Sorry, your new password didn't match the confirmation.  Try again."
       flash_update_incorrect: "Sorry, your old password was incorrect. Try again."
 
-    pen_names:
-      index: "Pen Names"
-
     people:
-      index: "People"
       new: "Add a person"
       edit: "Edit person"
       delete: "Delete person"
@@ -210,20 +205,17 @@ en:
       edit_header: "%{link}: Personal Info"
 
     publications:
-      show: "Publication"
-      index: "Publications"
-      new: "Add a publication"
-      edit: "Edit publication"
-      delete: "Delete publication"
-      confirm: "Really delete this publication?"
+      new: "Add a Publication"
+      edit: "Edit this Publication"
+      delete: "Delete this Publication"
+      confirm: "Really delete this Publication?"
       publisher: "Published by"
-      authority: "Admin publication authorities"
+      authority: "Admin Publication Authorities"
       flash_destroy_success: "Publications were successfully deleted."
       flash_destroy_failure: "This publication has %{count} work associated with it, which must be altered or removed before this publication can be deleted."
+      publication_name: 'Publication Name'
 
     publishers:
-      index: "Publishers"
-      show: "Publisher"
       new: "Add a publisher"
       edit: "Edit publisher"
       delete: "Delete publisher"
@@ -254,7 +246,6 @@ en:
       query: "Search for: "
 
     users:
-      index: "User"
       show: "View"
       show_all: "View all"
       new: "Add a user"
@@ -264,8 +255,6 @@ en:
       role: "Update Roles"
 
     works:
-      index: "Works"
-      show: "Work"
       new: "Add a work"
       edit: "Edit work"
       delete: "Delete work"
@@ -546,6 +535,22 @@ en:
     new:
       header: 'New Person'
 
+  publications:
+    form:
+      auth_record: 'Publication Authority Record'
+      save_show: "Save and show"
+      save_go: "Save and go to list"
+    show_authority:
+      auth_name: 'authorized name for'
+    show_not_authority:
+      header: 'Authorized Title'
+    show_publisher:
+      published_by: 'Published by'
+    authorities:
+      instructions: 'To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.'
+    edit:
+      confirm: "Permanently delete this publication? This cannot be undone."
+
   works:
     show:
       edit: "Edit this work"
@@ -588,6 +593,9 @@ en:
       publisher:
         one: 'Publisher'
         other: 'Publishers'
+      user:
+        one: 'User'
+        other: 'Users'
       work:
         one: 'Work'
         other: 'Works'
@@ -605,3 +613,7 @@ en:
         postal_address: Postal Address
         active: Active
         research_focus: Research Focus
+      publication:
+        issn_isbn: 'ISSN / ISBN'
+        name: Name
+        url: URL

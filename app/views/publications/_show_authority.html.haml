@@ -2,13 +2,13 @@
   - if @authority_for.present?
     %h4
       #{@publication.name}
-      &ndash; authorized name for:
+      &ndash; #{t '.auth_name'}:
     %table#authority-children
       %thead
         %tr
-          %th Name
-          %th ISSN/ISBN
-          %th Publisher
+          %th #{t 'app.name'}
+          %th #{Publication.human_attribute_name(:issn_isbn)}
+          %th #{Publisher.human_name}
       %tbody
         - @authority_for.each do |auth|
           %tr

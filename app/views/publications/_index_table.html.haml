@@ -1,9 +1,9 @@
 %table#publications
   %tr
-    %th ISSN / ISBN
-    %th Publication Name
-    %th Publisher
-    %th Works
+    %th #{Publication.human_attribute_name(:issn_isbn)}
+    %th #{t 'common.publications.publication_name'}
+    %th #{Publisher.human_name}
+    %th #{Work.human_name_pl}
   -@current_objects.each do |publication|
     %tr{:class => cycle("odd", "even")}
       - if publication.issn_isbn.nil?

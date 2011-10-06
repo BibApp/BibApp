@@ -1,29 +1,29 @@
 %fieldset
-  %legend Publication
+  %legend #{Publication.human_name}
   = form_for @publication do |form|
     %p
-      %label Name
+      %label #{Publication.human_attribute_name(:name)}
       %br/
       = form.text_field :name
     %p
-      %label URL
+      %label #{Publication.human_attribute_name(:url)}
       %br/
       = form.text_field :url
     %p
-      %label ISSN or ISBN
+      %label #{Publication.human_attribute_name(:issn_isbn)}
       %br/
       = form.text_field :issn_isbn
     %p
-      %label Publisher
+      %label #{Publisher.human_name}
       %br/
       = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
 
     -if @publication.authority_id
       %p
-        %label Publication Authority Record
+        %label #{t('.auth_record')}
         %br/
         = form.collection_select :authority_id, @publications, :id, :name, {}, {:class => "span-12"}
 
     %p.submit
-      = submit_tag 'Save and show', :name => :save_and_show
-      = submit_tag 'Save and go to list', :name => :save_and_list
+      = submit_tag t('publications.form.save_show'), :name => :save_and_show
+      = submit_tag t('publications.form.save_go'), :name => :save_and_list
