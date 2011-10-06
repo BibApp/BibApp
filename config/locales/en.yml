@@ -148,6 +148,9 @@ en:
       person_header: "Add Works for %{person_link}"
       batch_id: "Batch-%{id}"
 
+    keywords:
+      timeline: 'Timeline'
+
     name_strings:
       edit: "Edit name"
       published: "Has published under this name"
@@ -391,6 +394,22 @@ en:
     new:
       header: 'New keywording'
 
+  keywords:
+    timeline_list:
+      no_data: 'No data'
+    edit:
+      heading: 'Editing keyword'
+    index:
+      heading: 'Listing keywords'
+      no_keywords: 'No keywords exist.'
+      new_keyword: 'New keyword'
+    new:
+      heading: 'New keyword'
+    timeline:
+      handle_alt: 'Drag left or right'
+      cloud_header: 'Popular Research Topics by Year'
+      chart_header: 'Work Types by Year'
+      chart_loading: 'loading...'
   works:
     show:
       edit: "Edit this work"
