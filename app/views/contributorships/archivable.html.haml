@@ -5,5 +5,5 @@
 
     = render 'archive_analysis_table'
 
-    %h3 #{t('models.publication', :count => 1)}
+    %h3 #{Publication.human_name}
     = render 'archive_publications_table'

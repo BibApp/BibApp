@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     end
 
     before :index do
-      @title = t('models.group', :count => 2)
+      @title = Group.human_name_pl
       # find first letter of group names (in uppercase, for paging mechanism)
       @a_to_z = Group.letters
 

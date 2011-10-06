@@ -1,5 +1,5 @@
 %fieldset
-  %legend #{t 'models.name_string', :count => 2}
+  %legend #{NameString.human_name_pl}
   = form_for @name_string do |form|
     %p
       %label #{t 'app.name'}
