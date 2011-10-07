@@ -1,5 +1,3 @@
-/ === Import === New ===
-/ Main
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
     %li=link_to_unless_current "Show all Imports", user_imports_path
