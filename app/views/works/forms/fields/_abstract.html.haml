@@ -1,7 +1,2 @@
--# Abstract field
--#
--# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
-
-= form.label :abstract, "Abstract:"
-= form.text_area :abstract
+= render 'works/forms/fields/generic_field', :form => form, :attribute => :abstract
