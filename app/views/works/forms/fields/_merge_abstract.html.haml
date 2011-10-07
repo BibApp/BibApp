@@ -4,10 +4,10 @@
 -#    :form         => current form (REQUIRED)
 
 %td.duplicate
-  = label_tag 'dupe_abstract', "Abstract:"
+  = label_tag 'dupe_abstract', "#{Work.human_attribute_name(:abstract)}:"
   %br/
   = text_area_tag 'dupe_abstract', @dupe.abstract, {:class=>'text', :readonly => 'readonly'}
 %td
-  = form.label :abstract, "Abstract:"
+  = form.label :abstract, "#{Work.human_attribute_name(:abstract)}:"
   %br/
   = form.text_area :abstract, :class=>'text'

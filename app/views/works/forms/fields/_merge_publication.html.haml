@@ -1,12 +1,12 @@
 - include_javascript('specific/works/forms/fields/_merge_publication')
 %td.duplicate
-  = label_tag 'dupe_publication', "Periodical Title:"
+  = label_tag 'dupe_publication', "#{t 'works.forms.fields.merge_publications.label'}:"
   %br/
   = text_field_tag 'dupe_publication', @dupe.publication.try(:name), {:class => 'text', :readonly => 'readonly'}
 %td
   -# Publication field with Auto-Complete.
   -# Also includes some special Javascript - c.f. included javascript file
-  = label :publication, :name, "Periodical Title:"
+  = label :publication, :name, "#{t 'works.forms.fields.merge_publications.label'}:"
   %br/
   - @publication = @work.publication unless @work.publication.nil?
   = text_field_with_auto_complete :publication, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}

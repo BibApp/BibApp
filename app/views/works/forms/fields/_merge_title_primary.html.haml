@@ -5,7 +5,7 @@
 -#    :label    => Label to display (default: Primary Title)
 
 -# Initialize optional input variables
-- label ||= "Primary Title"
+- label ||= Work.human_attribute_name(:title_primary)
 
 %td.duplicate
   = label_tag 'dupe_title_primary', "#{label}:"

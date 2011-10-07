@@ -4,14 +4,14 @@
 -#    :form         => current form (REQUIRED)
 -#    :dupe         => duplicate work (REQUIRED)
 %td.duplicate
-  = label_tag 'dupe_start_page', "Start Page:"
+  = label_tag 'dupe_start_page', "#{Work.human_attribute_name(:start_page)}:"
   = text_field_tag 'dupe_start_page', @dupe.start_page, {:class=>'text smallbox', :readonly => 'readonly'}
 
-  = label_tag 'dupe_end_page', "End Page:", :class => 'inline_label'
+  = label_tag 'dupe_end_page', "#{Work.human_attribute_name(:end_page)}:", :class => 'inline_label'
   = text_field_tag 'dupe_end_page', @dupe.end_page, {:class=>'text smallbox', :readonly => 'readonly'}
 %td
-  = form.label :start_page, "Start Page:"
+  = form.label :start_page, "#{Work.human_attribute_name(:start_page)}:"
   = form.text_field :start_page, :class=>'text smallbox'
 
-  = form.label :end_page, "End Page:", :class => 'inline_label'
+  = form.label :end_page, "#{Work.human_attribute_name(:end_page)}:", :class => 'inline_label'
   = form.text_field :end_page, :class=>'text smallbox'

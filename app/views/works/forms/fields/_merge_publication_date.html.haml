@@ -1,10 +1,10 @@
 -# Publication Date field
 %td.duplicate
-  = label_tag 'dupe_publication_date', "Publication Date:"
+  = label_tag 'dupe_publication_date', "#{Work.human_attribute_name(:publication_date)}:"
   %br/
   = text_field_tag 'dupe_publication_date', @dupe.publication_date, {:class=>'text', :readonly => 'readonly'}
 %td
-  = label_tag 'publication_date', "Publication Date:"
+  = label_tag 'publication_date', "#{Work.human_attribute_name(:publication_date)}:"
   %br/
   = date_select 'work', 'publication_date', :start_year => 1950, :end_year => Time.now.year, :include_blank=>true
 

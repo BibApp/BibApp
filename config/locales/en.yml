@@ -730,7 +730,21 @@ en:
         keywords:
           label: "Keyword(s)"
           instructions: "When adding multiple keywords, separate them with semicolons (;)"
-
+        merge_author_name_strings:
+          label: 'Author(s)'
+          instructions: "(Drag and drop names to reorder authors in list)"
+        merge_editor_name_strings:
+          label: 'Editor(s)'
+          instructions: "(Drag and drop names to reorder editors in list)"
+        merge_form_buttons:
+          delete_dup: "Save Accepted Work and Delete Duplicate"
+          keep_dup: "Save Accepted Work and Keep Duplicate"
+        merge_keywords:
+          label: 'Keyword(s)'
+        merge_publications:
+          label: 'Periodical Title'
+        merge_tags:
+          label: 'Tag(s)'
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -828,11 +842,18 @@ en:
         date_range: 'Dates'
         degree_level: 'Degree Level'
         discipline: Discipline
+        end_page: End Page
         identifier: Identifier
         instrumentation: Instrumentation
+        issue: Issue
         language: Language
         location: Location
         medium: Medium
+        publication_date: Publication Date
+        start_page: Start Page
+        title_primary: Primary Title
+        title_secondary: Secondary Title
+        volume: Volume
 
   #this relates to contributor/creator roles as established in the work subclasses
   work_roles:
