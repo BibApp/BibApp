@@ -1,11 +1,11 @@
-= render :layout => '/layouts/main_body', :locals => {:header => 'Users'} do
+= render :layout => '/layouts/main_body', :locals => {:header => User.human_name_pl} do
 
   = render "shared/alpha_pagination"
 
   %table#users.prepend-1
     %tr
-      %th.span-6 Email
-      %th.span-8.last Roles
+      %th.span-6 #{User.human_attribute_name(:email)}
+      %th.span-8.last #{Role.human_name_pl}
     -@current_objects.each do |user|
       %tr{:class => cycle("odd", "even")}
         %td= link_to user.email, user_path(user)

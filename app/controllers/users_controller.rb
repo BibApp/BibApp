@@ -30,7 +30,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     @user.save
     if @user.errors.empty?
-      flash[:notice] = "Thanks for signing up!  You should receive an email (#{@user.email}) shortly which will allow you to activate your account."
+      flash[:notice] = t('common.users.flash_create', :email => @user.email)
       redirect_back_or_default($APPLICATION_URL)
     else
       render :action => 'new'
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     code = @user.email_update_code(new_email)
 
     if new_email == @user.email
-      flash[:notice] = "You entered your current email"
+      flash[:notice] = t('common.users.flash_update_no_change')
       redirect_to(edit_user_url(@user)) and return
     end
 
@@ -58,8 +58,7 @@ class UsersController < ApplicationController
     else
       url = update_email_user_url(@user, :new_email => new_email, :code => code)
       UserMailer.update_email(@user, url).deliver
-      flash[:notice] = %Q(NOTICE An email has been sent to #{new_email} with a confirmation link.
- Your email address will be updated after you follow the link in that email.)
+      flash[:notice] = t('common.users.flash_update_success', :email => new_email)
       redirect_back_or_default(root_url)
     end
 
@@ -73,14 +72,14 @@ class UsersController < ApplicationController
     if code == user.email_update_code(new_email)
       user.email = new_email
       if user.save
-        flash[:notice] = "Email updated"
+        flash[:notice] = t('common.users.flash_update_email_success')
         redirect_back_or_default(root_url)
       else
-        flash[:notice] = "Problem updating email - this email may be in use already. Try again."
+        flash[:notice] = t('common.users.flash_update_email_duplicate')
         redirect_to(edit_user_url(user))
       end
     else
-      flash[:notice] = "Problem updating email - your code or new email is incorrect. Try again."
+      flash[:notice] = t('common.users.flash_update_email_invalid')
       redirect_to(edit_user_url(user))
     end
   end
@@ -90,7 +89,7 @@ class UsersController < ApplicationController
     user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
     if user and !user.active?
       user.activate
-      flash[:notice] = "Signup is complete!  You may now login using your email and password."
+      flash[:notice] = t('common.users.flash_activate')
     end
     redirect_back_or_default(root_url)
   end

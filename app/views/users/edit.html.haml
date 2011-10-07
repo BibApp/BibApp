@@ -5,21 +5,18 @@
 
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :user, :class => 'notice'
-  %h2 Edit My Account
+  %h2= t('users.edit.header')
 
   %fieldset
-    %legend User Account
+    %legend= t('users.edit.legend')
     = form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
       %p
-        %label Email:
+        %label #{User.human_attribute_name(:email)}:
         = form.text_field :email
       %p
-        %strong Important:
-        When you submit this form, you will receive a message with
-        a confirmation link at the new email address above.
-        Your email address will not be changed until <em>after</em> you
-        visit this confirmation link.
+        %strong #{t 'app.important'}:
+        #{t 'users.edit.important_text'}
       %p
-        = link_to "Change Password", edit_user_password_path(@user)
+        = link_to t('users.edit.change_password'), edit_user_password_path(@user)
       %p.submit
-        = submit_tag 'Update'
+        = submit_tag t('app.update')

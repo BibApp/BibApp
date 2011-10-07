@@ -1,21 +1,21 @@
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :user, :class => 'notice'
-  %h2 Create an Account
+  %h2 #{t 'users.new.header'}
 
   %fieldset
-    %legend User Account
+    %legend #{t 'users.new.legend'}
     = form_for :user, :url => users_path do |form|
       %p
-        %label Email
+        %label #{User.human_attribute_name(:email)}
         %br/
         = form.text_field :email
       %p
-        %label Password
+        %label #{User.human_attribute_name(:password)}
         %br/
         = form.password_field :password
       %p
-        %label Confirm Password
+        %label #{User.human_attribute_name(:password_confirmation)}
         %br/
         = form.password_field :password_confirmation
       %p.submit
-        = submit_tag 'Sign Up'
+        = submit_tag t('users.new.submit')

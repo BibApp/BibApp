@@ -31,6 +31,7 @@ en:
     faq: "FAQ"
     go: "Go"
     formats: "Formats"
+    important: Important
     imports: "Manage imports"
     keywords: "Keywords"
     login: "Login"
@@ -236,6 +237,9 @@ en:
       index: "Manage Roles"
       new_admin: "Add administrator"
       new_editor: "Add editor"
+      description_class_and_name: " of %{class} '%{name}'"
+      description_class: " of %{class}"
+      description_generic: " (generic role)"
 
     romeo:
       green: "green"
@@ -260,7 +264,13 @@ en:
       delete: "Delete user"
       confirm: "Really delete this user?"
       role: "Update Roles"
-
+      flash_create: "Thanks for signing up!  You should receive an email (%{email}) shortly which will allow you to activate your account."
+      flash_update_no_change: "You entered your current email"
+      flash_update_success: 'NOTICE An email has been sent to #{email} with a confirmation link. Your email address will be updated after you follow the link in that email.'
+      flash_update_email_success: "Email updated"
+      flash_update_email_duplicate: "Problem updating email - this email may be in use already. Try again."
+      flash_update_email_invalid: "Problem updating email - your code or new email is incorrect. Try again."
+      flash_activate: "Signup is complete!  You may now login using your email and password."
     works:
       new: "Add a work"
       edit: "Edit work"
@@ -559,7 +569,7 @@ en:
       confirm: "Permanently delete this publication? This cannot be undone."
   publishers:
     form:
-      copy_allowed: 'Publisher's Copy Allowed?'
+      copy_allowed: "Publisher's Copy Allowed?"
       auth_record: 'Publisher Authority Record'
       save_show: "Save and show"
       save_go: "Save and go to list"
@@ -589,6 +599,21 @@ en:
       advanced_search: Try our advanced search options.
     spelling_suggestions:
       did_you_mean: Did you mean
+  users:
+    edit:
+      header: "Edit My Account"
+      legend: "User Account"
+      change_password: "Change Password"
+      important_text: 'When you submit this form, you will receive a message with a confirmation link at the new email address above. Your email address will not be changed until <em>after</em> you visit this confirmation link.'
+    new:
+      header: 'Create an Account'
+      legend: 'User Account'
+      submit: "Sign Up"
+    show:
+      header: 'User Account (%{email})'
+      account_information: 'Account Information'
+      role_label: "Roles in %{app_name}"
+      remove: " [remove]"
   works:
     show:
       edit: "Edit this work"
@@ -634,6 +659,12 @@ en:
       publisher:
         one: 'Publisher'
         other: 'Publishers'
+      role:
+        one: Role
+        other: Roles
+      system:
+        one: System
+        other: Systems
       user:
         one: 'User'
         other: 'Users'
@@ -663,3 +694,7 @@ en:
         url: URL
         romeo_color: Romeo Color
         copyright_notice: Copyright Notice
+      user:
+        email: Email
+        password: Password
+        password_confirmation: Confirm Password
