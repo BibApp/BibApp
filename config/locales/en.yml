@@ -704,6 +704,10 @@ en:
     show_options_form:
       send_to: 'Send to'
   works:
+    forms:
+      fields:
+        author_list_item:
+          remove: '[remove]'
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -797,3 +801,42 @@ en:
         password_confirmation: Confirm Password
       work:
         abstract: 'Abstract'
+
+  #this relates to contributor/creator roles as established in the work subclasses
+  work_roles:
+    actor: Actor
+    advisor: Advisor
+    artist: Artist
+    author: Author
+    band: Band
+    choir: Choir
+    choreographer: Choreographer
+    committee_chair: Committee Chair
+    committe_member: Committee Member
+    composer: Composer
+    co_principal_investigator: Co-Principal Investigator
+    creator: Creator
+    conductor: Conductor
+    contributor: Contributor
+    costume_designer: Costume Designer
+    curator: Curator
+    dancer: Dancer
+    director: Director
+    director_of_research: Director of Research
+    editor: Editor
+    editorial_board_member: Editorial Board Member
+    illustrator: Illustrator
+    interviewee: Interviewee
+    interviewer: Interviewer
+    lighting_designer: Lighting Designer
+    managing_editor: Managing Editor
+    musical_ensemble: Musical Ensemble
+    musician: Musician
+    orchestra: Orchestra
+    other: Other
+    patent_owner: Patent Owner
+    performer: Performer
+    principal_investigator: Principal Investigator
+    presenter: Presenter
+    producer: Producer
+    translator: Translator
