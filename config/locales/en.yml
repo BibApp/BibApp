@@ -240,8 +240,12 @@ en:
       description_class_and_name: " of %{class} '%{name}'"
       description_class: " of %{class}"
       description_generic: " (generic role)"
-      admin: 'Admin'
-      editor: 'Editor'
+      admin:
+        one: 'Admin'
+        other: 'Admins'
+      editor:
+        one: 'Editor'
+        other: 'Editors'
       index_header_system: "System-wide Roles: %{app_name}"
       index_header_group: "Roles for Group: %{group}"
       index_header_person: "Roles for Person: %{person}"
@@ -589,6 +593,17 @@ en:
     show:
       auth_name: authorized name for
       auth_title: Authorized Title
+  roles:
+    form:
+      has_permissions: "Already has %{role} permissions"
+      has_implicitly: "Has role implicitly"
+      remove: ' [remove]'
+      add: "Add as %{role}"
+    index:
+      add_admins: 'Add Administrators'
+      add_editors: "Add Editors"
+      no_admins: "No administrators currently assigned."
+      no_editors: "No editors currently assigned."
   search:
     advanced_search_form:
       legend: Advanced Search

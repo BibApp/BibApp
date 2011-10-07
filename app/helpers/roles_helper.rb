@@ -11,7 +11,7 @@ module RolesHelper
   end
 
   def form_header(authorizable, role_name)
-    translated_role = t("common.roles.#{role_name.downcase}")
+    translated_role = t_role_name(role_name)
     if authorizable.is_a? Class and authorizable == System
       t('common.roles.form_header_system', :role => translated_role, :app_name => $APPLICATION_NAME)
     elsif authorizable.kind_of?(Group)
@@ -32,6 +32,11 @@ module RolesHelper
   def url_opts(user, role_name, authorizable)
     {:name => role_name, :user_id => user.id, :authorizable_type => authorizable_type(authorizable),
      :authorizable_id => authorizable_id(authorizable)}
+  end
+
+  def t_role_name(role_name, opts = {})
+    opts.reverse_merge!(:count => 1)
+    t("common.roles.#{role_name.downcase}", opts)
   end
 
 end
