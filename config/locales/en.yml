@@ -240,6 +240,14 @@ en:
       description_class_and_name: " of %{class} '%{name}'"
       description_class: " of %{class}"
       description_generic: " (generic role)"
+      admin: 'Admin'
+      editor: 'Editor'
+      index_header_system: "System-wide Roles: %{app_name}"
+      index_header_group: "Roles for Group: %{group}"
+      index_header_person: "Roles for Person: %{person}"
+      form_header_system: "Add System-wide %{role}: %{app_name}"
+      form_header_group: "Add %{role} on Group: %{group}"
+      form_header_person: "Add %{role} on Person: %{person}"
 
     romeo:
       green: "green"
