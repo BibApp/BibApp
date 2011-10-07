@@ -299,7 +299,54 @@ en:
       recommendations: "Similar works at %{institution}"
       no_abstract: "No abstract available"
       duplicate: "Show duplicates"
-
+      orphans: 'Orphaned works'
+      flash_create: 'Work was successfully created.'
+      flash_update: "Work was successfully updated."
+      flash_destroy_success: "Works were successfully deleted."
+      flash_destroy_has_duplicates: "This work has duplicates, which must be altered or deleted before this work can be deleted."
+      flash_destroy_multiple_successful: "Works were successfully deleted."
+      et_al: "et al."
+      location_given: "Location Given"
+      conference_location: "Conference Location"
+      location: "Location"
+      publication_place: "Publication Place"
+      filing_date: "Filing Date"
+      date_of_last_visit: "Date of Last Visit"
+      exhibition_dates: "Exhibition Dates"
+      performance_date: "Performance Date"
+      dates: "Dates"
+      conference_dates: "Conference Dates"
+      date_range: "Date Range"
+      total_pages: "Total Pages"
+      end_page: "End Page"
+      series_number: "Series Number"
+      issue: "Issue"
+      date_presented: "Date Presented"
+      date_given: "Date Given"
+      date_of_composition: "Date of Composition"
+      degree_date: "Degree Date"
+      date_issued: "Date Issued"
+      date_published: "Date Published"
+      book_title: "Book Title"
+      journal_title: "Journal Title"
+      conference_title: "Conference Title"
+      title_of_conference_or_occasion: "Title of Conference or Occasion"
+      title_of_larger_work: "Title of Larger Work"
+      series_title: "Series Title"
+      publication_title: "Publication Title"
+      institution_or_collection_name: "Institution or Collection Name"
+      degree_granting_institution: "Degree Granting Institution"
+      venue: "Venue"
+      recording_label: "Recording Label"
+      production_company: "Production Company"
+      institution: "Institution"
+      article_chapter_title: "Article/Chapter Title"
+      article_title: "Article Title"
+      add_works: "Add Works"
+      add_works_for_person: "Add Works for %{person_link}"
+      update_author_list: "Successfully updated order of authors!"
+      update_editor_list: "Successfully updated order of editors!"
+      update_list: "Successfully updated order of list!"
   admin:
     ready_to_archive:
       ready: "Ready to Archive: %{count} remain"
@@ -661,7 +708,9 @@ en:
       archive: "Archive Research"
       deposit: "Deposit Attachments"
 
-#models
+
+    common:
+      flash_destroy_multiple_privileges: "One or more works could not be deleted, as you have insufficient privileges"#models
   activerecord:
     models:
       content_file:
@@ -679,6 +728,15 @@ en:
       import_file:
         one: 'Import File'
         other: 'Import Files'
+      isbn:
+        one: 'ISBN'
+        other: 'ISBNs'
+      isrc:
+        one: 'ISRC'
+        other: 'ISRCs'
+      issn:
+        one: 'ISSN'
+        other: 'ISSNs'
       keyword:
         one: 'Keyword'
         other: 'Keywords'

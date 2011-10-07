@@ -87,7 +87,7 @@ class WorksController < ApplicationController
   end # end make_resourceful
 
   def index
-    @title = "Works"
+    @title = Work.human_name_pl
     if params[:person_id]
       @current_object = Person.find_by_id(params[:person_id].split("-")[0])
       @person = @current_object
@@ -112,7 +112,7 @@ class WorksController < ApplicationController
 
   def orphans
     permit "editor for Work"
-    @title = 'Orphaned works'
+    @title = t('common.works.orphans')
     @orphans = Work.orphans.paginate(:page => params[:page] || 1, :per_page => params[:per_page] || 20)
   end
 
@@ -197,7 +197,7 @@ class WorksController < ApplicationController
 
       respond_to do |format|
         if work_id
-          flash[:notice] = "Work was successfully created."
+          flash[:notice] = t('common.works.flash_create')
           format.html { redirect_to work_url(work_id) }
           format.xml { head :created, :location => work_url(work_id) }
         else
@@ -242,7 +242,7 @@ class WorksController < ApplicationController
       permit "editor on work"
 
       #First, update work attributes (ensures deduplication keys are updated)
-      @work.attributes=params[:work]
+      @work.attributes = params[:work]
 
       #Then, update other work information
       #update_work_info
@@ -256,7 +256,7 @@ class WorksController < ApplicationController
 
       respond_to do |format|
         if work_id
-          flash[:notice] = "Work was successfully updated."
+          flash[:notice] = t('common.works.flash_update')
           if return_path.nil?
             #default to returning to work page
             format.html { redirect_to work_path(@work.id) }
@@ -292,7 +292,7 @@ class WorksController < ApplicationController
       work.destroy
     else
       #can't destroy an accepted work that has duplicates
-      if work.work_state_id != 3
+      if !work.accepted?
         work.destroy
       else
         full_success = false
@@ -302,12 +302,12 @@ class WorksController < ApplicationController
 
     respond_to do |format|
       if full_success
-        flash[:notice] = "Works were successfully deleted."
+        flash[:notice] = t('common.works.flash_destroy_success')
         #forward back to path which was specified in params
         format.html { redirect_to return_path }
         format.xml { head :ok }
       else
-        flash[:warning] = "This work has duplicates, which must be altered or deleted before this work can be deleted."
+        flash[:warning] = t('common.works.flash_destroy_has_duplicates')
         format.html { redirect_to edit_work_path(work.id) }
         format.xml { head :ok }
       end
@@ -341,9 +341,9 @@ class WorksController < ApplicationController
 
     respond_to do |format|
       if full_success
-        flash[:notice] = "Works were successfully deleted."
+        flash[:notice] = t('common.works.flash_destroy_multiple_successful')
       else
-        flash[:warning] = "One or more works could not be deleted, as you have insufficient privileges"
+        flash[:warning] = t('works.common.flash_destroy_multiple_privileges')
       end
       #forward back to path which was specified in params
       format.html { redirect_to return_path }
