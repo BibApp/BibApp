@@ -13,6 +13,7 @@ en:
     are_you_sure: 'Are you sure?'
     archive: "Prepare for archiving full text"
     authorized: "Authority controlled names"
+    authors: 'Authors'
     back: 'Back'
     bookmarks: "Social Bookmarking"
     count: 'Count'
@@ -47,7 +48,12 @@ en:
     powered: "Powered by"
     previous: "previous"
     remove: "Remove"
-    results: "Results"
+    result:
+      one: "Result"
+      other: "Results"
+    result_with_query:
+      one: "Result for:"
+      other: "Results for:"
     save: "Save"
     saved: "Saved"
     search: "Search"
@@ -565,6 +571,24 @@ en:
     show:
       auth_name: authorized name for
       auth_title: Authorized Title
+  search:
+    advanced_search_form:
+      legend: Advanced Search
+      keywords_text: "Return items with these words appearing anywhere"
+      title_text: "Return items with these words in the title"
+      authors_text: "Return items by author"
+      groups_text: "Return items by groups"
+      issn_isbn_text: "Return item associated with the standard number"
+      restrict_date: "Return only items published from"
+      to: 'to'
+    no_hits:
+      error: "Sorry, your search for &ldquo;&{query}&rdquo; came up empty."
+      suggestions: Suggestions
+      double_check: Double check your spelling.
+      different_keywords: Try different keywords.
+      advanced_search: Try our advanced search options.
+    spelling_suggestions:
+      did_you_mean: Did you mean
   works:
     show:
       edit: "Edit this work"
@@ -589,6 +613,9 @@ en:
       import_file:
         one: 'Import File'
         other: 'Import Files'
+      keyword:
+        one: 'Keyword'
+        other: 'Keywords'
       membership:
         one: 'Membership'
         other: 'Memberships'

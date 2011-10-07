@@ -1,16 +1,16 @@
 .span-24
   .span-22.prepend-1
     - if @q.nil?
-      %h2 Search
+      %h2 #{t 'app.search'}
       .span-20.prepend-1
         = render "advanced_search_form"
     - else
       %h2
         -if @query == "*:*"
-          ="#{pluralize(@q.total_hits, "Result", "Results")}"
+          = t('app.result', :count => @q.total_hits)
         -else
-          ="#{pluralize(@q.total_hits, "Result", "Results")} for:"
-          %strong=" #{@query}"
+          = t('app.result_with_query', :count => @q.total_hits)
+          %strong #{@query}
 
       -if @spelling_suggestions.present? and !@q.total_hits == 0
         %p.warning.span-22

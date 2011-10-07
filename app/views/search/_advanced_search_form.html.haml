@@ -1,25 +1,29 @@
 = form_tag advanced_search_path, :method => :get do
 
   %fieldset.span-17.prepend-2
-    %legend Advanced Search
+    %legend #{t('.legend')}
 
-    = render 'generic_form_field', :field => :keywords, :text => "Return items with these words appearing anywhere"
-    = render 'generic_form_field', :field => :title, :text => 'Return items with these words in the title'
-    = render 'generic_form_field', :field => :authors, :text => 'Return items by author'
-    = render 'generic_form_field', :field => :groups, :text => 'Return items by groups'
-    = render 'generic_form_field', :field => :issn_isbn, :text => 'Return item associated with the standard number',
-      :label => 'ISSN or ISBN'
+    = render 'generic_form_field', :field => :keywords, :text => t('search.advanced_search_form.keywords_text'),
+      :label => Keyword.human_name_pl
+    = render 'generic_form_field', :field => :title, :text => t('search.advanced_search_form.title_text'),
+      :label => t('app.title')
+    = render 'generic_form_field', :field => :authors, :text => t('search.advanced_search_form.authors_text'),
+      :label => t('app.authors')
+    = render 'generic_form_field', :field => :groups, :text => t('search.advanced_search_form.groups_text'),
+      :label => Group.human_name_pl
+    = render 'generic_form_field', :field => :issn_isbn, :text => t('search.advanced_search_form.issn_isbn_text'),
+      :label => Publication.human_attribute_name(:issn_isbn)
 
     %div.span-17
       .span-8
-        %label.span-4 Year
-        %p Return only items published from
+        %label.span-4 #{t('app.year')}
+        %p = t('search.advanced_search_form.restrict_date')
       = text_field_tag(:start_date, nil, :size => 4)
-      &nbsp; to &nbsp;
+      &nbsp; #{t('.to')} &nbsp;
       = text_field_tag(:end_date, nil, :size => 4)
       %p= search_example(:year)
 
     %div.span-17
       .span-8
         &nbsp;
-      = submit_tag 'Search'
+      = submit_tag t('app.search')
