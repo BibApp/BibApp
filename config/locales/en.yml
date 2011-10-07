@@ -46,6 +46,7 @@ en:
     personal_info: "Personal Info"
     powered: "Powered by"
     previous: "previous"
+    remove: "Remove"
     results: "Results"
     save: "Save"
     saved: "Saved"
@@ -216,10 +217,10 @@ en:
       publication_name: 'Publication Name'
 
     publishers:
-      new: "Add a publisher"
-      edit: "Edit publisher"
-      delete: "Delete publisher"
-      confirm: "Really delete this publisher?"
+      new: "Add a Publisher"
+      edit: "Edit this Publisher"
+      delete: "Delete this Publisher"
+      confirm: "Really delete this Publisher?"
       year: "Year"
       authorized: "Authorized names"
       authority: "Admin Publisher Authorities"
@@ -550,7 +551,20 @@ en:
       instructions: 'To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.'
     edit:
       confirm: "Permanently delete this publication? This cannot be undone."
-
+  publishers:
+    form:
+      copy_allowed: 'Publisher's Copy Allowed?'
+      auth_record: 'Publisher Authority Record'
+      save_show: "Save and show"
+      save_go: "Save and go to list"
+    index_table:
+      publisher_name: 'Publisher Name'
+      recent_year: "Recent Year"
+    authorities:
+      instructions: 'To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.'
+    show:
+      auth_name: authorized name for
+      auth_title: Authorized Title
   works:
     show:
       edit: "Edit this work"
@@ -617,3 +631,8 @@ en:
         issn_isbn: 'ISSN / ISBN'
         name: Name
         url: URL
+      publisher:
+        name: Name
+        url: URL
+        romeo_color: Romeo Color
+        copyright_notice: Copyright Notice

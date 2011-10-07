@@ -1,31 +1,31 @@
 %fieldset
-  %legend Publisher
+  %legend #{Publisher.human_name}
   = form_for @publisher do |form|
     %p
-      %label Name
+      %label #{Publisher.human_attribute_name(:name)}
       %br/
       = form.text_field :name
     %p
-      %label URL
+      %label #{Publisher.human_attribute_name(:url)}
       %br/
       = form.text_field :url
     %p
-      %label Romeo Color
+      %label #{Publisher.human_attribute_name(:romeo_color)}
       %br/
       = form.text_field :romeo_color
     %p
-      %label Copyright Notice
+      %label #{Publisher.human_attribute_name(:copyright_notice)}
       %br/
       = form.text_field :copyright_notice
     %p
-      %label Publisher's Copy Allowed?
+      %label #{t '.copy_allowed'}
       %br/
       = form.check_box :publisher_copy
     -if @publisher.authority_id
       %p
-        %label Publisher Authority Record
+        %label #{t '.auth_record'}
         %br/
         = form.collection_select :authority_id, @publishers, :id, :name, {}, {:class => "span-12"}
     %p.submit
-      = submit_tag 'Save and show', :name => :save_and_show
-      = submit_tag 'Save and go to list', :name => :save_and_list
+      = submit_tag t('.save_show'), :name => :save_and_show
+      = submit_tag t('.save_go'), :name => :save_and_list

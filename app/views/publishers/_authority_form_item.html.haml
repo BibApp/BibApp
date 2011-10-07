@@ -4,4 +4,4 @@
   %td= link_to "#{authority_form_item.authority.name}", edit_publisher_path(authority_form_item)
   %td= authority_form_item.publisher_source.name if authority_form_item.publisher_source
   %td= authority_form_item.publications.length
-  %td= link_to 'remove', remove_from_box_publishers_url(:rem_pa => authority_form_item.id, :page => page)
+  %td= link_to t('app.remove'), remove_from_box_publishers_url(:rem_pa => authority_form_item.id, :page => page)

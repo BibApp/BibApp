@@ -1,11 +1,11 @@
 - include_stylesheet('specific/publishers/show')
 - if current_user_any_role?("editor", Group) and @export.blank?
   = render :layout => 'layouts/admin_bar' do
-    %li #{link_to "Edit this publisher", edit_publisher_path(@publisher)}
+    %li #{link_to t('common.publishers.edit'), edit_publisher_path(@publisher)}
 
 = render :layout => 'layouts/main_body_no_h2' do
   - if @export.present?
-    %h2 Works
+    %h2 #{Work.human_name_pl}
     = @works
 
   - else
@@ -23,11 +23,10 @@
       - if @publisher.present?
         %h4
           #{ @publisher.name }
-          &ndash; authorized name for:
+          &ndash; #{t('publishers.show.auth_name')}:
         %ul.authority-children
-          -# @publisher.authority_for.collect{|c| c.name}.uniq.each do |auth|
           - @publisher.authority_for.uniq.each do |auth|
             %li= link_to auth.name, publisher_path(auth.id)
       - else
-        %h3 Authorized Title
+        %h3 #{t 'publishers.show.auth_title'}
         %p #{link_to @publisher.authority.name, publisher_path(@publisher.authority)}

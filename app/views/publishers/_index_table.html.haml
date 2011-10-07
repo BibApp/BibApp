@@ -1,8 +1,8 @@
 %table#publishers
   %tr
-    %th.span-12 Publisher Name
-    %th.span-8 Recent Year
-    %th.span-1.last Publications
+    %th.span-12 #{t '.publisher_name'}
+    %th.span-8= t('.recent_year')
+    %th.span-1.last #{Publication.human_name_pl}
   - @current_objects.each do |publisher|
     %tr{:class => cycle("odd", "even")}
       %td

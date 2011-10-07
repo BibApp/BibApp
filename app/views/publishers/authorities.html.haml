@@ -2,13 +2,11 @@
 - include_javascript('specific/publishers/authorities')
 - if current_user_any_role?("editor", "Group")
   = render :layout => 'layouts/admin_bar' do
-    %li #{link_to "Add a Publisher", new_publisher_path}
+    %li #{link_to t('common.publishers.new'), new_publisher_path}
 
-= render :layout => 'layouts/main_body', :locals => {:header => 'Admin Publisher Authoritites'} do
+= render :layout => 'layouts/main_body', :locals => {:header => t('common.publishers.authority')} do
   #authority_form
-    %p
-      To set publisher authorities, add publication records to the box below,
-      select one record as the authority, and click the <em>Set Authority</em> button.
+    %p #{t '.instructions'}
     = render "authority_form", :authorities => @pas, :page => @page
 
   = render "shared/alpha_pagination"

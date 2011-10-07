@@ -2,10 +2,10 @@
 
 - if current_user_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li #{link_to "Add a Publisher", new_publisher_path}
-    %li #{link_to "Admin Publisher Authorities", authorities_publishers_path(:page => params[:page])}
+    %li #{link_to t('common.publishers.new'), new_publisher_path}
+    %li #{link_to t('common.publishers.authority'), authorities_publishers_path(:page => params[:page])}
 
-= render :layout => '/layouts/main_body', :locals => {:header => 'Publishers'} do
+= render :layout => '/layouts/main_body', :locals => {:header => Publisher.human_name_pl} do
   = render "shared/alpha_pagination"
 
   = render 'index_table'
