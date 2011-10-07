@@ -708,6 +708,11 @@ en:
       fields:
         author_list_item:
           remove: '[remove]'
+        author_name_strings:
+          role: "%{role}(s)"
+          example: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
+          remove: '[remove]'
+          add: "[add more %{role}s]"
     show:
       edit: "Edit this work"
       archive: "Archive Research"

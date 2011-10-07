@@ -10,8 +10,8 @@
 - authors.compact!
 
 .author_block
-  = label :author, :string, "#{role}(s):"
-  %span.instructions Format: LastName, FirstName Middle (e.g., Smith, John L.)
+  = label :author, :string, t('works.forms.fields.author_name_strings.role', :role => t_work_role_name(role))
+  %span.instructions = t('works.forms.fields.author_name_strings.example')
 
   %ol#author_name_strings_list
     -# Build list of authors
@@ -19,14 +19,15 @@
       %li.list_item{:id => "author_0", :class => "movable"}
         = hidden_field_tag "author_roles[]", "#{role}"
         = text_field_tag "authors[]", nil, {:class => 'text'}
-        = link_to_remote "[remove]",  :url => remove_author_from_list_works_url(:ns_id => 0, :id => @work.id)
+        = link_to_remote t('works.forms.fields.author_name_strings.remove'),  :url => remove_author_from_list_works_url(:ns_id => 0, :id => @work.id)
     -else
       - authors.each_with_index do |author, i|
         = render 'works/forms/fields/author_list_item', :ns_id=> i, :ns_name=> author[:name], :ns_role=> author[:role]
 
   -# Ajax-enabled link to add new items to below list
   = #link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
-  = link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
+  = link_to_remote t('works.forms.fields.author_name_strings.add', :role => t_work_role_name(role)), :url => add_author_to_list_works_url,
+    :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
 
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
