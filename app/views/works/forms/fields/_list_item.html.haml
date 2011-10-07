@@ -9,11 +9,10 @@
 -#    :item_class   => Additional class to put on <li> tag
 
 -# Initialize optional input variables
-- item_class ||=""
+- item_class ||= ""
 
 %li.list_item{:id => "#{list_type}_#{item_id}", :class => "#{item_class}"}
   .list_item_value
     = hidden_field_tag "#{list_type}[]", "#{item_value}"
     = item_value
-  = link_to_remote "remove", :url => remove_item_from_list_works_url(:list_type => list_type, :item_id => item_id)
-   
+  = link_to_remote t('app.remove'), :url => remove_item_from_list_works_url(:list_type => list_type, :item_id => item_id)

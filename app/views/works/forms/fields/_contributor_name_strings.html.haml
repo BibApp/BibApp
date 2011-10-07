@@ -11,8 +11,8 @@
 - contributors ||= @work.work_name_strings.reject{|wns| wns.role == @work.creator_role}.collect{ |wns| {:name => wns.name_string.name, :role => wns.role}} if @work.name_strings
 
 .author_block
-  = label :author, :string, "Contributor(s):"
-  %span.instructions Format: LastName, FirstName Middle (e.g., Smith, John L.)
+= label :author, :string, t('works.forms.fields.contributor_name_strings.label')
+  %span.instructions= t('works.forms.fields.contributor_name_strings.instructions')
 
   %ol#contributor_name_strings_list
     -# Build list of contributors
@@ -20,15 +20,15 @@
       %li.list_item{:id => "contributor_0", :class => "movable"}
         %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
           - roles.each do |r|
-            %option{:value => r, :selected => selected_if_equal(r, roles[0])}= r
+            %option{:value => r, :selected => selected_if_equal(r, roles[0])}= t_work_role_name(r)
         = text_field_tag "contributors[]", nil, {:class=>'text'}
-        = link_to_remote "[remove]", :url => remove_contributor_from_list_works_url(:ns_id => 0)
+        = link_to_remote t('works.forms.fields.contributor_name_strings.remove'), :url => remove_contributor_from_list_works_url(:ns_id => 0)
     -else
       - contributors.each_with_index do |contributor, i|
         = render 'works/forms/fields/contributor_list_item', :ns_id=> i, :ns_name=>contributor[:name], :ns_role=>contributor[:role]
 
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote "[add more contributors]", :url => add_contributor_to_list_works_url, :with => "'ns_id='+$('contributor_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
+  = link_to_remote t('works.forms.fields.contributor_name_strings.add'), :url => add_contributor_to_list_works_url, :with => "'ns_id='+$('contributor_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
 
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'

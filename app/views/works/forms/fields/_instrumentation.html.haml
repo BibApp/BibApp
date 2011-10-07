@@ -5,7 +5,5 @@
 -#    :label    => Label to display (default: Instrumentation)
 
 -# Initialize optional input variables
-- label ||= "Instrumentation"
-
-= form.label :instrumentation, "#{label}:"
-= form.text_field :instrumentation, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :instrumentation, :label => label

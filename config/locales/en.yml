@@ -713,6 +713,24 @@ en:
           example: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
           remove: '[remove]'
           add: "[add more %{role}s]"
+        contributor_list_item:
+          remove: '[remove]'
+        contributor_name_strings:
+          label: "Contributor(s)"
+          instructions: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
+          add: "[add more contributors]"
+          remove: "[remove]"
+        editor_name_strings:
+          label: 'Editor(s):'
+          add: "Add Editor to List"
+          drag: "(Drag and drop names to reorder editors in list)"
+        form_buttons:
+          save: 'Save Changes'
+          saving: "Saving..."
+        keywords:
+          label: "Keyword(s)"
+          instructions: "When adding multiple keywords, separate them with semicolons (;)"
+
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -806,6 +824,15 @@ en:
         password_confirmation: Confirm Password
       work:
         abstract: 'Abstract'
+        copyright_holder: 'Copyright Statement'
+        date_range: 'Dates'
+        degree_level: 'Degree Level'
+        discipline: Discipline
+        identifier: Identifier
+        instrumentation: Instrumentation
+        language: Language
+        location: Location
+        medium: Medium
 
   #this relates to contributor/creator roles as established in the work subclasses
   work_roles:

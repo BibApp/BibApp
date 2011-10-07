@@ -5,7 +5,5 @@
 -#    :label    => Label to display (default: Identifier)
 
 -# Initialize optional input variables
-- label ||= "Identifier"
-
-= form.label :identifier, "#{label}:"
-= form.text_field :identifier, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :identifier, :label => label

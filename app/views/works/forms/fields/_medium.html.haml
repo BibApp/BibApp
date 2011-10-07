@@ -5,7 +5,5 @@
 -#    :label    => Label to display (default: Medium)
 
 -# Initialize optional input variables
-- label ||= "Medium"
-
-= form.label :medium, "#{label}:"
-= form.text_field :medium, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :medium, :label => label

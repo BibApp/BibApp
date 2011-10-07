@@ -1,11 +1,9 @@
--# Date Range field
+_generic_text_area.html.haml-# Date Range field
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
 -#    :label    => Label to display (default: Date Range)
 
 -# Initialize optional input variables
-- label ||= "Dates"
-
-= form.label :date_range, "#{label}:"
-= form.text_field :date_range, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :date_range, :label => label

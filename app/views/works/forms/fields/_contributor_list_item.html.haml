@@ -18,9 +18,9 @@
 %li.list_item{:id => "contributor_#{ns_id}", :class => "movable"}
   %select{:id => "contributor_roles[]", :name => "contributor_roles[]"}
     - roles.each do |r|
-      %option{:value => r, :selected => selected_if_equal(r, ns_role)}= r
+      %option{:value => r, :selected => selected_if_equal(r, ns_role)}= t_work_role_name(r)
 
   -#= select :roles, ns_id, roles, {:include_blank => false, :selected => ns_role.to_s }
   = text_field_tag "contributors[]", ns_name, {:class=>'text'}
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote "[remove]", :url => remove_contributor_from_list_works_url(:ns_id => ns_id)
+  = link_to_remote t('works.forms.fields.contributor_list_item.remove'), :url => remove_contributor_from_list_works_url(:ns_id => ns_id)

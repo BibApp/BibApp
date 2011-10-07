@@ -2,6 +2,4 @@
 -#
 -# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
-
-= form.label :language, "Language:"
-= form.text_field :language, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute =>:language
