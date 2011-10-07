@@ -283,6 +283,9 @@ en:
       flash_update_email_duplicate: "Problem updating email - this email may be in use already. Try again."
       flash_update_email_invalid: "Problem updating email - your code or new email is incorrect. Try again."
       flash_activate: "Signup is complete!  You may now login using your email and password."
+    user_sessions:
+      flash_create_successful: 'Login successful!'
+      flash_destroy_successful: "Logout successful!"
     works:
       new: "Add a work"
       edit: "Edit work"
@@ -637,6 +640,21 @@ en:
       account_information: 'Account Information'
       role_label: "Roles in %{app_name}"
       remove: " [remove]"
+  user_sessions:
+    federated_login_form:
+      header: 'Login using external credentials'
+      button_open_id: "Sign in With %{name} OpenID"
+      generic: 'Generic'
+      button_oauth: 'Sign in With %{name}'
+    local_login_form:
+      header: 'Login using local (%{app_name}) credentials'
+      remember: "Remember Me"
+      cookies: "(requires browser cookies be enabled)"
+      forgot_password: "Forgot Password"
+      sign_up: "Sign Up"
+      submit: "Log in"
+    show_options_form:
+      send_to: 'Send to'
   works:
     show:
       edit: "Edit this work"

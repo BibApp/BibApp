@@ -1,21 +1,21 @@
 %fieldset
-  %legend Login using local (#{$APPLICATION_NAME}) credentials
+  %legend #{t '.header', :app_name => $APPLICATION_NAME}
   = form_for @user_session, :url => user_session_url(:return_to => params[:return_to]) do |f|
     %p
-      %label Email
+      %label #{User.human_attribute_name(:email)}
       %br/
       = f.text_field 'email'
     %p
-      %label Password
+      %label #{User.human_attribute_name(:password)}
       %br/
       = f.password_field 'password'
     %p
       = f.check_box 'remember_me'
-      %label Remember Me
-      (requires browser cookies be enabled)
+      %label= t('user_sessions.local_login_form.remember')
+      = t('user_sessions.local_login_form.cookies')
     %p
-      =link_to "Forgot Password", new_password_path
+      = link_to t('user_sessions.local_login_form.forgot_password'), new_password_path
       |
-      =link_to "Sign Up", signup_path
+      = link_to t('user_sessions.local_login_form.sign_up'), signup_path
     %p.submit
-      = submit_tag 'Log in'
+      = submit_tag t('user_sessions.local_login_form.submit')
