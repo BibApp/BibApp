@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper PrototypeHelper
   helper AutoCompleteMacrosHelper
   helper SharedHelper
+  helper TranslationsHelper
   helper_method :current_user_session, :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
