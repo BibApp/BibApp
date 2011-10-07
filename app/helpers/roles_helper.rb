@@ -11,7 +11,7 @@ module RolesHelper
   end
 
   def form_header(authorizable, role_name)
-    translated_role = t_role_name(role_name)
+    translated_role = t_bibapp_role_name(role_name)
     if authorizable.is_a? Class and authorizable == System
       t('common.roles.form_header_system', :role => translated_role, :app_name => $APPLICATION_NAME)
     elsif authorizable.kind_of?(Group)
