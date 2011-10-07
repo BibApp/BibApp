@@ -343,7 +343,7 @@ class WorksController < ApplicationController
       if full_success
         flash[:notice] = t('common.works.flash_destroy_multiple_successful')
       else
-        flash[:warning] = t('works.common.flash_destroy_multiple_privileges')
+        flash[:warning] = t('common.works.flash_destroy_multiple_privileges')
       end
       #forward back to path which was specified in params
       format.html { redirect_to return_path }

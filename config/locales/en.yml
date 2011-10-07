@@ -305,6 +305,7 @@ en:
       flash_destroy_success: "Works were successfully deleted."
       flash_destroy_has_duplicates: "This work has duplicates, which must be altered or deleted before this work can be deleted."
       flash_destroy_multiple_successful: "Works were successfully deleted."
+      flash_destroy_multiple_privileges: "One or more works could not be deleted, as you have insufficient privileges"
       et_al: "et al."
       location_given: "Location Given"
       conference_location: "Conference Location"
@@ -708,9 +709,6 @@ en:
       archive: "Archive Research"
       deposit: "Deposit Attachments"
 
-
-    common:
-      flash_destroy_multiple_privileges: "One or more works could not be deleted, as you have insufficient privileges"#models
   activerecord:
     models:
       content_file:
@@ -797,3 +795,5 @@ en:
         email: Email
         password: Password
         password_confirmation: Confirm Password
+      work:
+        abstract: 'Abstract'
