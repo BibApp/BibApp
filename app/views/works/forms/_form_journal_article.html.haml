@@ -10,7 +10,9 @@
   %li
     = render 'works/forms/fields/publication', :label => JournalArticle.human_attribute_name(:publication)
   %li
-    = render 'works/forms/fields/volume_issue', :form => form
+    = render 'works/forms/fields/volume', :form => form
+  %li
+    = render 'works/forms/fields/issue', :form => form
   %li
     = render 'works/forms/fields/issn_isbn', :issn => true
   %li

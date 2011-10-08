@@ -8,7 +8,7 @@
   %li
     = render 'works/forms/fields/title_secondary', :form => form, :label => Report.human_attribute_name(:title_secondary)
   %li
-    = render 'works/forms/fields/volume_issue', :form => form, :omit_volume => true, :label => "Series Number"
+    = render 'works/forms/fields/issue', :form => form,  :label => Report.human_attribute_name(:issue)
   %li
     = render 'works/forms/fields/publisher'
   %li

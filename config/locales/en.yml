@@ -980,6 +980,7 @@ en:
       report:
         title_primary: Report Title
         title_secondary: Series Title
+        issue: Series Number
       user:
         email: Email
         password: Password
