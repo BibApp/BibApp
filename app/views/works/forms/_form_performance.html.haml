@@ -1,4 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Performance'} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => Performance} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -10,13 +10,13 @@
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
-    = render 'works/forms/fields/date_range', :form => form, :label => "Performance Date"
+    = render 'works/forms/fields/date_range', :form => form, :label => Performance.human_attribute_name(:date_range)
   %li
-    = render 'works/forms/fields/publication', :label => "Title of Larger Performance"
+    = render 'works/forms/fields/publication', :label => Performance.human_attribute_name(:publication)
   %li
-    = render 'works/forms/fields/publisher', :label => "Venue"
+    = render 'works/forms/fields/publisher', :label => Performance.human_attribute_name(:publisher)
   %li
-    = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
+    = render 'works/forms/fields/publication_place', :form => form, :label => Performance.human_attribute_name(:publication_place)
   %li
     = render 'works/forms/fields/keywords'
   %li

@@ -1,14 +1,14 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'JournalArticle'} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => JournalArticle} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
-    = render 'works/forms/fields/title_primary', :form => form, :label => "Article Title"
+    = render 'works/forms/fields/title_primary', :form => form, :label => JournalArticle.human_attribute_name(:title_primary)
   %li
     = render 'works/forms/fields/title_secondary', :form => form
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
-    = render 'works/forms/fields/publication', :label => "Journal Title"
+    = render 'works/forms/fields/publication', :label => JournalArticle.human_attribute_name(:publication)
   %li
     = render 'works/forms/fields/volume_issue', :form => form
   %li

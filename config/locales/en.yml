@@ -754,6 +754,14 @@ en:
           label: 'Alternate Title'
         title_tertiary:
           label: 'Series Title'
+      form_add_batch:
+        legend: 'Add Batch (RIS | Medline | Refworks XML)'
+        instructions: "Either upload a file containing the citations, or cut and paste the citations into the box below."
+        upload: "Upload File:"
+        paste: "Or, Paste Citations:"
+        add: "Add Batch"
+        disable: "Parsing and Importing Batch..."
+
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -761,12 +769,48 @@ en:
 
   activerecord:
     models:
+      artwork:
+        one: 'Artwork'
+        other: 'Artworks'
+      book_review:
+        one: 'Book Review'
+        other: 'Book Reviews'
+      book_section:
+        one: 'Book Section'
+        other:'Book Sections'
+      book_whole:
+        one: 'Book Whole'
+        other: 'Books Whole'
+      composition:
+        one: 'Composition'
+        other: 'Compositions'
+      conference_paper:
+        one: 'Conference Paper'
+        other: 'Conference Papers'
+      conference_poster:
+        one: 'Conference Poster'
+        other: 'Conference Posters'
+      conference_proceeding_whole:
+        one: 'Conference Proceeding (Whole)'
+        other: 'Conference Proceedings (Whole)'
       content_file:
         one: 'Content File'
         other: 'Content Files'
       contributorship:
         one: 'Contributorship'
         other: 'Contributorships'
+      dissertation_thesis:
+        one: 'Dissertation / Thesis'
+        other:'Dissertations / Theses'
+      exhibition:
+        one: 'Exhibition'
+        other: 'Exhibitions'
+      generic:
+        one: 'Generic / Other'
+        other: 'Generics / Others'
+      grant:
+        one: Grant
+        other: Grants
       group:
         one: 'Group'
         other: 'Groups'
@@ -785,27 +829,54 @@ en:
       issn:
         one: 'ISSN'
         other: 'ISSNs'
+      journal_article:
+        one: Journal Article
+        other: Journal Articles
+      journal_whole:
+        one: Journal (Whole)
+        other: Journals (Whole)
       keyword:
         one: 'Keyword'
         other: 'Keywords'
       membership:
         one: 'Membership'
         other: 'Memberships'
+      monograph:
+        one: Monograph
+        other: Monographs
       name_string:
         one: 'Name String'
         other: 'Name Strings'
+      patent:
+        one: 'Patent'
+        other: 'Patents'
       pen_name:
         one: 'Pen Name'
         other: 'Pen Names'
+      performance:
+        one: Performance
+        other: Performances
       person:
         one: 'Person'
         other: 'People'
+      presentation_lecture:
+        one: 'Presentation / Lecture'
+        other: 'Presentations / Lectures'
       publication:
         one: 'Publication'
         other: 'Publications'
       publisher:
         one: 'Publisher'
         other: 'Publishers'
+      recording_moving_image:
+        one: 'Recording (Moving Image)'
+        other: 'Recordings (Moving Image)'
+      recording_sound:
+        one: 'Recording (Sound)'
+        other: 'Recordings (Sound)'
+      report:
+        one: 'Report'
+        other: 'Reports'
       role:
         one: Role
         other: Roles
@@ -815,10 +886,63 @@ en:
       user:
         one: 'User'
         other: 'Users'
+      web_page:
+        one: 'Web Page'
+        other: 'Web Pages'
       work:
         one: 'Work'
         other: 'Works'
     attributes:
+      artwork:
+        title_primary: Title
+        title_secondary: Alternate Title
+        title_tertiary: Title Series
+        publisher: Institution or Collection Name
+        publication_place: Location (City)
+        publication_date: Date of Composition
+      book_review:
+        publication: Journal Title
+      book_section:
+        title_primary: Article/Review Title
+        title_secondary: Book Title
+      book_whole:
+        pages: Total Pages
+        title_primary: Title
+      composition:
+        publication_place: Location
+      conference:
+        title_secondary: Conference Title
+      conference_poster:
+        title_secondary: Conference Title
+        publication_date: Date Presented
+      conference_proceeding_whole:
+        pages: Total Pages
+      dissertation_thesis:
+        publisher: Degree Granting Institution
+        publication_date: Degree Date
+      exhibition:
+        date_range: Exhibition Dates
+        publisher: Venue
+        publication_place: Location
+      grant:
+        date_range: Dates Funded
+        publisher: Institution
+        sponsor: Funding Agency / Sponsor
+        identifier: Grant Identifier
+      journal_article:
+        title_primary: Article Title
+        publication: Journal Title
+      monograph:
+        pages: Total Pages
+      patent:
+        date_range: Filing Date
+        publication_date: Date Issued
+        identifier: Patent Number
+      performance:
+        date_range: Performance Date
+        publication: Title of Larger Performance
+        publisher: Venue
+        publication_place: Location
       person:
         uid: University ID
         first_name: First Name
@@ -832,6 +956,10 @@ en:
         postal_address: Postal Address
         active: Active
         research_focus: Research Focus
+      presentation_lecture:
+        title_secondary: Title of Conference or Occasion
+        location: Location Given
+        publication_date: Date Given
       publication:
         issn_isbn: 'ISSN / ISBN'
         name: Name
@@ -841,10 +969,23 @@ en:
         url: URL
         romeo_color: Romeo Color
         copyright_notice: Copyright Notice
+      recording_moving_image:
+        publication: Title of Larger Work
+        publisher: Production Company
+        publication_date: Date Issued
+      recording_sound:
+        publication: Title of Larger Work
+        publisher: Recording Label
+        publication_place: Location
+      report:
+        title_primary: Report Title
+        title_secondary: Series Title
       user:
         email: Email
         password: Password
         password_confirmation: Confirm Password
+      web_page:
+        date_range: Date of Last Visit
       work:
         abstract: 'Abstract'
         copyright_holder: 'Copyright Statement'
@@ -904,3 +1045,7 @@ en:
     presenter: Presenter
     producer: Producer
     translator: Translator
+  work:
+    forms:
+      form_artwork:
+        location: "Location (City)"

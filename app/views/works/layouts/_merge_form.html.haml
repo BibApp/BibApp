@@ -9,7 +9,7 @@
       %h3 Accepted work
   = yield
 
-= hidden_field_tag :type, type
+= hidden_field_tag :type, type.to_s
 - hidden_fields.each do |k, v|
   = hidden_field_tag k, v
 = render 'works/forms/fields/form_buttons', :form => form

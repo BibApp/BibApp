@@ -1,4 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => 'Composition'} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => Composition} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -12,7 +12,7 @@
   %li
     = render 'works/forms/fields/publisher'
   %li
-    = render 'works/forms/fields/publication_place', :form => form, :label => "Location"
+    = render 'works/forms/fields/publication_place', :form => form, :label => Composition.human_attribute_name(:publication_place)
   %li
     = render 'works/forms/fields/publication_date'
   %li

@@ -1,22 +1,22 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:klass => 'Artwork', :form => form} do
+= render :layout => 'works/layouts/edit_form', :locals => {:klass => Artwork, :form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
     = render 'works/forms/fields/contributor_name_strings'
   %li
-    = render 'works/forms/fields/title_primary', :label => "Title", :form => form
+    = render 'works/forms/fields/title_primary', :label => Artwork.human_attribute_name(:title_primary), :form => form
   %li
-    = render 'works/forms/fields/title_secondary', :label => "Alternate Title", :form => form
+    = render 'works/forms/fields/title_secondary', :label => Artwork.human_attribute_name(:title_secondary), :form => form
   %li
-    = render 'works/forms/fields/title_tertiary', :label => "Title Series", :form => form
+    = render 'works/forms/fields/title_tertiary', :label => Artwork.human_attribute_name(:title_tertiary), :form => form
   %li
     = render 'works/forms/fields/medium', :form => form
   %li
-    = render 'works/forms/fields/publisher', :label => "Institution or Collection Name"
+    = render 'works/forms/fields/publisher', :label => Artwork.human_attribute_name(:publisher)
   %li
-    = render 'works/forms/fields/publication_place', :form => form, :label => "Location (City)"
+    = render 'works/forms/fields/publication_place', :form => form, :label => Artwork.human_attribute_name(:publication_place)
   %li
-    = render 'works/forms/fields/publication_date', :label => "Date of Composition"
+    = render 'works/forms/fields/publication_date', :label => Artwork.human_attribute_name(:publication_date)
   %li
     = render 'works/forms/fields/keywords'
   %li
