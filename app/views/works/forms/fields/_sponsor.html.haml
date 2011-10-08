@@ -5,7 +5,5 @@
 -#    :label    => Label to display (default: Sponsor)
 
 -# Initialize optional input variables
-- label ||= "Sponsor"
-
-= form.label :sponsor, "#{label}:"
-= form.text_field :sponsor, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :sponsor, :label => label

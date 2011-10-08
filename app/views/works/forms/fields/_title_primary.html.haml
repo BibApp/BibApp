@@ -6,7 +6,7 @@
 -#    :label    => Label to display (default: Title)
 
 -# Initialize optional input variables
-- label ||= "Title"
+- label ||= t('app.title')
 
 = form.label :title_primary, "#{label} <span class='instructions'>(required)</span>:".html_safe
 = form.text_field :title_primary, :class=>'text'

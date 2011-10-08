@@ -5,7 +5,5 @@
 -#    :label    => Label to display (default: Publication City)
 
 -# Initialize optional input variables
-- label ||= "Publication City"
-
-= form.label :publication_place, "#{label}:"
-= form.text_field :publication_place, :class=>'text'
+- label ||= nil
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :publication_place, :label => label

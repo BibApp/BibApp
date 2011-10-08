@@ -6,11 +6,11 @@
 -#    :label       => Label for Issue (default: Issue)
 
 -# Initialize optional input variables
-- label ||= "Issue"
+- label ||= Work.human_attribute_name(:issue)
 - omit_volume ||= false
 
 - unless omit_volume
-  = form.label :volume, "Volume:", :class => 'inline_label'
+  = form.label :volume, "#{Work.human_attribute_name(:volume)}:", :class => 'inline_label'
   = form.text_field :volume, :class=>'text smallbox'
 
 = form.label :issue, "#{label}:", :class => 'inline_label'

@@ -7,11 +7,11 @@
 -#    :label       => Label to display (default: End Page)
 
 -# Initialize optional input variables
-- label ||= "End Page"
+- label ||= Work.human_attribute_name(:end_page)
 - omit_start ||= false
 
 - unless omit_start
-  = form.label :start_page, "Start Page:", :class => 'inline_label'
+  = form.label :start_page, "#{Work.human_attribute_name(:start_page)}:", :class => 'inline_label'
   = form.text_field :start_page, :class=>'text smallbox'
 
 = form.label :end_page, "#{label}:", :class => 'inline_label'

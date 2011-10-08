@@ -745,6 +745,15 @@ en:
           label: 'Periodical Title'
         merge_tags:
           label: 'Tag(s)'
+        publication:
+          label: "Publication Title"
+        tags:
+          label: 'Tag(s)'
+          add: "Add Tag to List"
+        title_secondary:
+          label: 'Alternate Title'
+        title_tertiary:
+          label: 'Series Title'
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -850,6 +859,8 @@ en:
         location: Location
         medium: Medium
         publication_date: Publication Date
+        publication_place: Publication Place
+        sponsor: Sponsor
         start_page: Start Page
         title_primary: Primary Title
         title_secondary: Secondary Title

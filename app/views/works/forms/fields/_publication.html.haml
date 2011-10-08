@@ -4,7 +4,7 @@
 -#    :label    => Label to display (default: Publication Title)
 
 -# Initialize optional input variables
-- label ||= "Publication Title"
+- label ||= t('works.forms.fields.publication.label')
 
 - @publication ||= @work.publication
 = label 'publication', :name, "#{label}:"

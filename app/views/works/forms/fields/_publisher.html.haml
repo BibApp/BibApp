@@ -4,7 +4,7 @@
 -#    :label    => Label to display (default: Publication Place)
 
 -# Initialize optional input variables
-- label ||= "Publisher"
+- label ||= Publisher.human_name
 
 - @publisher ||= @work.publisher
 = label 'publisher', :name, "#{label}:"

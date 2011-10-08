@@ -6,10 +6,10 @@
 -#  @tags should only exist if there were errors in saving work
 - tags = @tags  || @work.tags
 
-= label :tag, :name, "Tag(s):"
+= label :tag, :name, t('works.forms.fields.tags.label')
 = text_field_with_auto_complete :tag, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
 -# Ajax-enabled link to add new items to below list
-= link_to "Add Tag to List", :url => add_item_to_list_url, :condition => "$('tag_name').value.length > 0",
+= link_to t('works.forms.fields.tags.add'), :url => add_item_to_list_url, :condition => "$('tag_name').value.length > 0",
    :with => "'list_type=tags&item_value='+$F('tag_name')+'&clear_field=tag_name'"
 %ul.form_item_list#tags_list
   -# Build list of existing tags
