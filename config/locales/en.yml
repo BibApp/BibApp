@@ -778,6 +778,7 @@ en:
     index:
       add: 'Add a Work'
       view_orphans: "View orphaned works"
+      heading: 'At the library, we <span class="hearts"> &hearts;</span> our researchers.'
     merge_duplicates:
       header: 'Duplicate work side-by-side editor'
       instructions: "Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to save changes."
@@ -793,7 +794,6 @@ en:
       edit: "Edit this work"
       archive: "Archive Research"
       deposit: "Deposit Attachments"
-      heading: 'At the library, we <span class="hearts"> &hearts;</span> our researchers.'
   activerecord:
     models:
       artwork:
