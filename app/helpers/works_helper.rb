@@ -66,52 +66,6 @@ module WorksHelper
     %Q(tags: "#{tag.name}")
   end
 
-  #helpers for metadata views
-  def location_label(work)
-    if work.class == PresentationLecture
-      t('common.works.location_given')
-    else
-      t('common.works.conference_location')
-    end
-  end
-
-  def publication_place_label(work)
-    case work.class.to_s
-      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
-        t('common.works.location')
-      else
-        t('common.works.publication_place')
-    end
-  end
-
-  def date_range_label(work)
-    case work.class.to_s
-      when 'Patent'
-        t('common.works.filing_date')
-      when 'WebPage'
-        t('common.works.date_of_last_visit')
-      when 'Exhibition'
-        t('common.works.exhibition_dates')
-      when 'Performance'
-        t('common.works.performance_date')
-      when 'JournalWhole'
-        t('common.works.dates')
-      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
-        t('common.works.conference_dates')
-      else
-        t('common.works.date_range')
-    end
-  end
-
-  def end_page_label(work)
-    case work.class.to_s
-      when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
-        t('common.works.total_pages')
-      else
-        t('common.works.end_page')
-    end
-  end
-
   def issue_label(work)
     case work.class.to_s
       when 'Report'

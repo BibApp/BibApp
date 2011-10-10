@@ -315,15 +315,6 @@ en:
       conference_location: "Conference Location"
       location: "Location"
       publication_place: "Publication Place"
-      filing_date: "Filing Date"
-      date_of_last_visit: "Date of Last Visit"
-      exhibition_dates: "Exhibition Dates"
-      performance_date: "Performance Date"
-      dates: "Dates"
-      conference_dates: "Conference Dates"
-      date_range: "Date Range"
-      total_pages: "Total Pages"
-      end_page: "End Page"
       series_number: "Series Number"
       issue: "Issue"
       date_presented: "Date Presented"
@@ -939,28 +930,40 @@ en:
         title_primary: Title
         title_tertiary: Title Series
         publisher: Institution or Collection Name
-        publication_place: Location (City)
         publication_date: Date of Composition
+        publication_place: Location
       book_review:
         publication: Journal Title
       book_section:
         title_primary: Article/Review Title
         title_secondary: Book Title
       book_whole:
+        end_page: Total Pages
         pages: Total Pages
         title_primary: Title
       composition:
         publication_place: Location
-      conference:
+      conference_paper:
         title_secondary: Conference Title
+        location: Conference Location
+        publication_place: Location
+        date_range: Conference Dates
       conference_poster:
         title_secondary: Conference Title
         publication_date: Date Presented
+        location: Conference Location
+        publication_place: Location
+        date_range: Conference Dates
       conference_proceeding_whole:
         pages: Total Pages
+        end_page: Total Pages
+        publication_place: Location
+        location: Conference Location
+        date_range: Conference Dates
       dissertation_thesis:
         publisher: Degree Granting Institution
         publication_date: Degree Date
+        end_page: Total Pages
       exhibition:
         date_range: Exhibition Dates
         publisher: Venue
@@ -973,7 +976,10 @@ en:
       journal_article:
         title_primary: Article Title
         publication: Journal Title
+      journal_whole:
+        date_range: Dates
       monograph:
+        end_page: Total Pages
         pages: Total Pages
       patent:
         date_range: Filing Date
@@ -1001,6 +1007,8 @@ en:
         title_secondary: Title of Conference or Occasion
         location: Location Given
         publication_date: Date Given
+        publication_place: Location
+        date_range: Conference Dates
       publication:
         issn_isbn: 'ISSN / ISBN'
         name: Name
