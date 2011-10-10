@@ -109,7 +109,7 @@ module WorksHelper
 
   def new_work_header(person)
     if person
-      t('common.works.add_works_for_person', :person_link => link_to person.display_name, person_path(person))
+      t('common.works.add_works_for_person', :person_link => link_to(person.display_name, person_path(person)))
     else
       t('common.works.add_works')
     end
