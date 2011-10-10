@@ -66,17 +66,6 @@ module WorksHelper
     %Q(tags: "#{tag.name}")
   end
 
-  def issn_isbn_label(work)
-    case work.class.to_s
-      when 'JournalArticle', 'JournalWhole', 'BookReview'
-        ISSN.human_name
-      when 'RecordingSound', 'RecordingMovingImage'
-        ISRC.human_name
-      else
-        ISBN.human_name
-    end
-  end
-
   def skip_title_secondary(work)
     work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(work.class.to_s)
   end

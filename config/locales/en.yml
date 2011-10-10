@@ -911,6 +911,7 @@ en:
         publication_place: Location
       book_review:
         publication: Journal Title
+        issn_isbn: ISSN
       book_section:
         title_primary: Article/Chapter Title
         title_secondary: Book Title
@@ -956,8 +957,10 @@ en:
       journal_article:
         title_primary: Article Title
         publication: Journal Title
+        issn_isbn: ISSN
       journal_whole:
         date_range: Dates
+        issn_isbn: ISSN
       monograph:
         end_page: Total Pages
         pages: Total Pages
@@ -1003,10 +1006,12 @@ en:
         publication: Title of Larger Work
         publisher: Production Company
         publication_date: Date Issued
+        issn_isbn: ISRC
       recording_sound:
         publication: Title of Larger Work
         publisher: Recording Label
         publication_place: Location
+        issn_isbn: ISRC
       report:
         title_primary: Report Title
         title_secondary: Series Title
@@ -1027,6 +1032,7 @@ en:
         end_page: End Page
         identifier: Identifier
         instrumentation: Instrumentation
+        issn_isbn: ISBN
         issue: Issue
         language: Language
         location: Location

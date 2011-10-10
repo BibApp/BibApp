@@ -1,4 +1,4 @@
 - unless @work.publication.nil? or @work.publication.issn_isbn.blank?
   %tr
-    %td.label #{issn_isbn_label(@work)}:
+    %td.label #{@work.human_attribute_name(:issn_isbn)}:
     %td #{@work.publication.issn_isbn}
