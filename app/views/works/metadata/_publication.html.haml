@@ -1,5 +1,5 @@
 - unless @work.publication.nil? or @work.publication.name.blank?
   %tr
-    %td.label #{@work.class.human_attribute_name(:publication)}
+    %td.label #{@work.class.human_attribute_name(:publication) + ':'}
     %td
       = link_to @work.publication.name, publication_path(@work.publication.id)
