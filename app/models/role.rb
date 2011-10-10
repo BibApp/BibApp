@@ -15,9 +15,9 @@ class Role < ActiveRecord::Base
   def description
     @description = self.name
     if self.authorizable_id
-      @description << I18n.t('common.roles.description_class_and_name', self.authorizable.class.human_name, self.authorizable.name)
+      @description << I18n.t('common.roles.description_class_and_name', :class => self.authorizable.class.human_name, :name => self.authorizable.name)
     elsif self.authorizable_type
-      @description << I18n.t('common.roles.description_class', self.authorizable_type.constantize.human_name)
+      @description << I18n.t('common.roles.description_class', :class => self.authorizable_type.constantize.human_name)
     else
       @description << I18n.t('common.roles.description_generic')
     end
