@@ -1,33 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
-  %li
-    = render 'works/forms/fields/author_name_strings'
-  %li
-    = render 'works/forms/fields/contributor_name_strings'
-  %li
-    = render 'works/forms/fields/title_primary', :form => form
-  %li
-    = render 'works/forms/fields/title_secondary', :form => form
-  %li
-    = render 'works/forms/fields/title_tertiary', :form => form
-  %li
-    = render 'works/forms/fields/publication'
-  %li
-    = render 'works/forms/fields/issn_isbn'
-  %li
-    = render 'works/forms/fields/publisher'
-  %li
-    = render 'works/forms/fields/publication_date'
-  %li
-    = render 'works/forms/fields/language', :form => form
-  %li
-    = render 'works/forms/fields/keywords'
-  %li
-    = render 'works/forms/fields/abstract', :form => form
-  %li
-    = render 'works/forms/fields/copyright_holder', :form => form
-  %li
-    = render 'works/forms/fields/sponsor', :form => form
-  %li
-    = render 'works/forms/fields/links', :form => form
-  %li
-    = render 'works/forms/fields/notes', :form => form
+= render 'works/forms/form_from_field_list', :form => form,
+  :field_list => [:author_name_strings, :contributor_name_strings, :title_primary, :title_secondary, :title_tertiary,
+  :publication, :issn_isbn, :publisher, :publication_date, :language, :keywords, :abstract, :copyright_holder,
+  :sponsor, :links, :notes]
