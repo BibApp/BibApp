@@ -2,7 +2,7 @@ rss_document_on(xml) do
   xml.channel do
     xml.title $UNIVERSITY_SHORT_NAME + ": " + object.name
     xml.link link_url
-    xml.description h("Latest #{$UNIVERSITY_SHORT_NAME} work from #{object.name}.")
+    xml.description h(t('pub_common.show.description', :university_name => $UNIVERSITY_SHORT_NAME, :object_name => object.name))
     @works.each do |work|
       xml << render('shared/rss_item', :work => work, :author_name => object.name)
     end

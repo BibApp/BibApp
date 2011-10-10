@@ -595,7 +595,14 @@ en:
       add: "Add a new person"
     new:
       header: 'New Person'
-
+  pub_common:
+    authority_actions:
+      submit: 'Set Authority'
+    authority_form:
+      legend: 'Add Records and Set Authority'
+      submit: "Set Authority"
+    show:
+      description: 'Latest %{university_name} work from %{object_name}'
   publications:
     form:
       auth_record: 'Publication Authority Record'
