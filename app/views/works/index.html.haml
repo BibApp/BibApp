@@ -7,9 +7,9 @@
 - elsif current_user_any_role?("editor", Group) or current_user_role?('admin', Work)
   = render :layout => 'layouts/admin_bar' do
     - if current_user.has_any_role?("editor", Group)
-      %li #{link_to "Add a Work", new_user_import_path(current_user)}
+      %li #{link_to t('works.index.add'), new_user_import_path(current_user)}
     - if current_user.has_role?('admin', Work)
-      %li #{link_to("View orphaned works", orphans_works_url)}
+      %li #{link_to(t('works.index.view_orphans'), orphans_works_url)}
 
 = render :layout => 'layouts/main_body_no_h2' do
   - if @view == "all"
@@ -24,10 +24,7 @@
       = render "shared/works"
 
   - else
-    %h2
-      At the library, we
-      %span.hearts &hearts;
-      our researchers.
+    %h2 #{t 'works.show.heading'}
 
     .span-15
       = render "shared/people", :count => 15, :randomize => true

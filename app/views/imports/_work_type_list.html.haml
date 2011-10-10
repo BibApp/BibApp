@@ -1,6 +1,6 @@
 .right
   %h3 #{t('.header')}:
   %ul
-    %li= link_to_unless_current t('.link'), new_user_import_path(current_user)
+    %li= link_to_unless_current t('app.batch_import'), new_user_import_path(current_user)
     %li -----
     = render 'shared/work_type_list'

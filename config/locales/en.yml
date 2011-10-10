@@ -15,6 +15,7 @@ en:
     authorized: "Authority controlled names"
     authors: 'Authors'
     back: 'Back'
+    batch_import: Batch Import
     bookmarks: "Social Bookmarking"
     count: 'Count'
     create: 'Create'
@@ -479,7 +480,6 @@ en:
       duplicate_works: "Duplicate works"
     work_type_list:
       header: 'Select a type'
-      link: 'Batch Import'
     works_destroy_form:
       submit: 'Delete selected works'
     works_imported:
@@ -786,12 +786,29 @@ en:
       heading: '%{university_name} Authors'
     local_recommendations:
       heading: 'Related %{university_name} Work'
-
+    edit:
+      delete_link: 'Delete this work'
+      confirm: "Permanently delete this work? This cannot be undone."
+      header: "Edit a Work"
+    index:
+      add: 'Add a Work'
+      view_orphans: "View orphaned works"
+    merge_duplicates:
+      header: 'Duplicate work side-by-side editor'
+      instructions: "Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to save changes."
+      flash_excluded: "%{work} is not a possible duplicate for this work."
+      flash_not_accepted: "This is a <strong>%{work_status}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
+    new:
+      header: 'Select a type'
+    orphans:
+          header: 'Orphaned works'
+          submit: "Delete checked works"
+          confirm: "Are you sure? This operation cannot be undone."
     show:
       edit: "Edit this work"
       archive: "Archive Research"
       deposit: "Deposit Attachments"
-
+      heading: 'At the library, we <span class="hearts"> &hearts;</span> our researchers.'
   activerecord:
     models:
       artwork:

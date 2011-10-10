@@ -1,11 +1,11 @@
 - if current_user_role?("editor", @work)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to "Delete this work", work_url(@work), :method => :delete, :confirm => 'Permanently delete this work? This cannot be undone.'
+    %li= link_to t('works.edit.delete_link'), work_url(@work), :method => :delete, :confirm => t('works.edit.confirm')
 
 = render :layout => 'layouts/main_body_no_h2' do
   = render 'change_type_form'
 
-  %h2 Edit a Work
+  %h2= t('works.edit.header')
 
   .span-22
     = render 'edit_work_form'
