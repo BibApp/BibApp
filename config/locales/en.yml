@@ -315,29 +315,6 @@ en:
       conference_location: "Conference Location"
       location: "Location"
       publication_place: "Publication Place"
-      series_number: "Series Number"
-      issue: "Issue"
-      date_presented: "Date Presented"
-      date_given: "Date Given"
-      date_of_composition: "Date of Composition"
-      degree_date: "Degree Date"
-      date_issued: "Date Issued"
-      date_published: "Date Published"
-      book_title: "Book Title"
-      journal_title: "Journal Title"
-      conference_title: "Conference Title"
-      title_of_conference_or_occasion: "Title of Conference or Occasion"
-      title_of_larger_work: "Title of Larger Work"
-      series_title: "Series Title"
-      publication_title: "Publication Title"
-      institution_or_collection_name: "Institution or Collection Name"
-      degree_granting_institution: "Degree Granting Institution"
-      venue: "Venue"
-      recording_label: "Recording Label"
-      production_company: "Production Company"
-      institution: "Institution"
-      article_chapter_title: "Article/Chapter Title"
-      article_title: "Article Title"
       add_works: "Add Works"
       add_works_for_person: "Add Works for %{person_link}"
       update_author_list: "Successfully updated order of authors!"
@@ -935,8 +912,9 @@ en:
       book_review:
         publication: Journal Title
       book_section:
-        title_primary: Article/Review Title
+        title_primary: Article/Chapter Title
         title_secondary: Book Title
+        publication: Book Title
       book_whole:
         end_page: Total Pages
         pages: Total Pages
@@ -947,6 +925,7 @@ en:
         title_secondary: Conference Title
         location: Conference Location
         publication_place: Location
+        publication: Conference Title
         date_range: Conference Dates
       conference_poster:
         title_secondary: Conference Title
@@ -954,6 +933,7 @@ en:
         location: Conference Location
         publication_place: Location
         date_range: Conference Dates
+        publication: Conference Title
       conference_proceeding_whole:
         pages: Total Pages
         end_page: Total Pages
@@ -1008,6 +988,7 @@ en:
         location: Location Given
         publication_date: Date Given
         publication_place: Location
+        publication: Title of Conference or Occasion
         date_range: Conference Dates
       publication:
         issn_isbn: 'ISSN / ISBN'
@@ -1030,6 +1011,7 @@ en:
         title_primary: Report Title
         title_secondary: Series Title
         issue: Series Number
+        publication: Series Title
       user:
         email: Email
         password: Password
@@ -1049,11 +1031,13 @@ en:
         language: Language
         location: Location
         medium: Medium
-        publication_date: Publication Date
+        publication: Publication Title
+        publication_date: Date Published
         publication_place: Publication Place
+        publisher: Publisher
         sponsor: Sponsor
         start_page: Start Page
-        title_primary: Primary Title
+        title_primary: Title
         title_secondary: Alternate Title
         title_tertiary: Title Series
         volume: Volume

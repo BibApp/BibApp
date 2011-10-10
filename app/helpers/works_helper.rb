@@ -66,32 +66,6 @@ module WorksHelper
     %Q(tags: "#{tag.name}")
   end
 
-  def issue_label(work)
-    case work.class.to_s
-      when 'Report'
-        t('common.works.series_number')
-      else
-        t('common.works.issue')
-    end
-  end
-
-  def publication_date_label(work)
-    case work.class.to_s
-      when 'ConferencePoster'
-        t('common.works.date_presented')
-      when 'PresentationLecture'
-        t('common.works.date_given')
-      when 'Artwork'
-        t('common.works.date_of_composition')
-      when 'DissertationThesis'
-        t('common.works.degree_date')
-      when 'Patent', 'RecordingMovingImage'
-        t('common.works.date_issued')
-      else
-        t('common.works.date_published')
-    end
-  end
-
   def issn_isbn_label(work)
     case work.class.to_s
       when 'JournalArticle', 'JournalWhole', 'BookReview'
@@ -100,55 +74,6 @@ module WorksHelper
         ISRC.human_name
       else
         ISBN.human_name
-    end
-  end
-
-  def publication_label(work)
-    case work.class.to_s
-      when 'BookSection'
-        t('common.works.book_title')
-      when 'JournalArticle', 'BookReview'
-        t('common.works.journal_title')
-      when 'ConferencePaper', 'ConferencePoster'
-        t('common.works.conference_title')
-      when 'PresentationLecture'
-        t('common.works.title_of_conference_or_occasion')
-      when 'Performance', 'RecordingSound', 'RecordingMovingImage'
-        t('common.works.title_of_larger_work')
-      when 'Report'
-        t('common.works.series_title')
-      else
-        t('common.works.publication_title')
-    end
-  end
-
-  def publisher_label(work)
-    case work.class.to_s
-      when 'Artwork'
-        t('common.works.institution_or_collection_name')
-      when 'DissertationThesis'
-        t('common.works.degree_granting_institution')
-      when 'Exhibition', 'Performance'
-        t('common.works.venue')
-      when 'RecordingSound'
-        t('common.works.recording_label')
-      when 'RecordingMovingImage'
-        t('common.works.production_company')
-      when 'Grant'
-        t('common.works.institution')
-      else
-        Publisher.human_name
-    end
-  end
-
-  def title_primary_label(work)
-    case @work.class.to_s
-      when 'BookSection'
-        t('common.works.article_chapter_title')
-      when 'JournalArticle'
-        t('common.works.article_title')
-      else
-        t('app.title')
     end
   end
 
