@@ -8,7 +8,7 @@
   %tr#publication_date
     = render 'works/forms/fields/merge_publication_date'
   %tr#isbn_issn
-    = render 'works/forms/fields/merge_issn_isbn', :isbn => true
+    = render 'works/forms/fields/merge_issn_isbn'
   %tr#publisher
     = render 'works/forms/fields/merge_publisher'
   - if current_user.has_role?("admin", System)

@@ -916,10 +916,12 @@ en:
         title_primary: Article/Chapter Title
         title_secondary: Book Title
         publication: Book Title
+        issn_isbn: ISBN
       book_whole:
         end_page: Total Pages
         pages: Total Pages
         title_primary: Title
+        issn_isbn: ISBN
       composition:
         publication_place: Location
       conference_paper:
@@ -928,6 +930,7 @@ en:
         publication_place: Location
         publication: Conference Title
         date_range: Conference Dates
+        issn_isbn: ISBN
       conference_poster:
         title_secondary: Conference Title
         publication_date: Date Presented
@@ -941,6 +944,7 @@ en:
         publication_place: Location
         location: Conference Location
         date_range: Conference Dates
+        issn_isbn: ISBN
       dissertation_thesis:
         publisher: Degree Granting Institution
         publication_date: Degree Date
@@ -964,6 +968,7 @@ en:
       monograph:
         end_page: Total Pages
         pages: Total Pages
+        issn_isbn: ISBN
       patent:
         date_range: Filing Date
         publication_date: Date Issued
@@ -1032,7 +1037,7 @@ en:
         end_page: End Page
         identifier: Identifier
         instrumentation: Instrumentation
-        issn_isbn: ISBN
+        issn_isbn: ISBN/ISSN
         issue: Issue
         language: Language
         location: Location

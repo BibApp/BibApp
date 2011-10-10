@@ -1,17 +1,8 @@
 -# ISSN/ISBN field
 -#   Defaults to displaying ISSN/ISBN
 -#
--# Possible Input Variables:
--#    :isbn         => if true, displays ISBN heading
--#    :issn         => if true, displays ISSN heading
--#    :isrc         => if true, displays ISRC heading
 
--# Initialize optional input variables
-- isbn ||= false
-- issn ||= false
-- isrc ||= false
-
-= label_tag 'issn_isbn', issn_isbn_field_label(isbn, issn, isrc)
+= label_tag 'issn_isbn', @work.class.human_attribute_name(:issn_isbn) + ':'
 
 - @publication ||= @work.publication
 - issn_isbn = @publication.issn_isbn if @publication

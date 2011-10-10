@@ -5,14 +5,11 @@
 -#    :isbn         => if true, displays ISBN heading
 -#    :issn         => if true, displays ISSN heading
 
--# Initialize optional input variables
-- isbn ||= false
-- issn ||= false
 %td.duplicate
-  = label_tag 'dupe_issn_isbn', issn_isbn_field_label(isbn, issn, false)
+  = label_tag 'dupe_issn_isbn', @dupe.class.human_attribute_name(:issn_isbn) + ':'
   %br/
   = text_field_tag 'dupe_issn_isbn', @dupe.publication.try(:issn_isbn), {:class=>'text mediumbox', :readonly => 'readonly'}
 %td
-  = label_tag 'issn_isbn', "#{label}:"
+  = label_tag 'issn_isbn', @work.class.human_attribute_name(:issn_isbn) + ':'
   %br/
   = text_field_tag 'issn_isbn', @work.publication.try(:issn_isbn), :class=>'text mediumbox'
