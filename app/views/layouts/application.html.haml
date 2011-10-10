@@ -19,7 +19,7 @@
       - @feeds.each do |feed|
         = auto_discovery_link_tag(feed[:format].to_sym, { :action => feed[:action], :id => feed[:id], :format => feed[:format] })
 
-    %title= $APPLICATION_NAME + " - " + (@title || "Find an Expert")
+    %title= $APPLICATION_NAME + " - " + (@title || t('layouts.application.default_title'))
   %body
     .container
       = render :partial => "shared/header"

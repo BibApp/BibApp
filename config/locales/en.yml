@@ -495,7 +495,11 @@ en:
       cloud_header: 'Popular Research Topics by Year'
       chart_header: 'Work Types by Year'
       chart_loading: 'loading...'
-
+  layouts:
+    application:
+      default_title: 'Find an Expert'
+    error:
+      default_title: 'Find an Expert'
   memberships:
     action_links:
       all_groups: 'All Groups'
