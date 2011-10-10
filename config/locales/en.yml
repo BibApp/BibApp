@@ -27,8 +27,11 @@ en:
     errors: 'Errors'
     exception_with_message: 'Exception: %{message}'
     flash_require_user: 'You must be logged in to access this page'
-    flash_require_no_user: 'You must be logged out to acces this page'
+    flash_require_no_user: 'You must be logged out to access this page'
     faq: "FAQ"
+    file:
+      one: File
+      other: Files
     go: "Go"
     formats: "Formats"
     important: Important
@@ -765,6 +768,25 @@ en:
       merge_form:
         duplicate: 'Duplicate work'
         accepted: 'Accepted work'
+    metadata:
+      links:
+        label: 'DOI/URL'
+    admin:
+      legend: 'Administrative Tasks'
+      link: "Deposit Immediately via SWORD"
+    attachments:
+      local_library: 'Local Library Link'
+      download_page: 'Download Page'
+      download_file: 'Download File'
+    change_type_form:
+      label: 'Change Type'
+    first_works:
+      recent: 'Recent additions'
+    local_authors:
+      heading: '%{university_name} Authors'
+    local_recommendations:
+      heading: 'Related %{university_name} Work'
+
     show:
       edit: "Edit this work"
       archive: "Archive Research"
@@ -780,7 +802,7 @@ en:
         other: 'Book Reviews'
       book_section:
         one: 'Book Section'
-        other:'Book Sections'
+        other: 'Book Sections'
       book_whole:
         one: 'Book Whole'
         other: 'Books Whole'
@@ -804,7 +826,7 @@ en:
         other: 'Contributorships'
       dissertation_thesis:
         one: 'Dissertation / Thesis'
-        other:'Dissertations / Theses'
+        other: 'Dissertations / Theses'
       exhibition:
         one: 'Exhibition'
         other: 'Exhibitions'
@@ -898,7 +920,6 @@ en:
     attributes:
       artwork:
         title_primary: Title
-        title_secondary: Alternate Title
         title_tertiary: Title Series
         publisher: Institution or Collection Name
         publication_place: Location (City)
@@ -1008,7 +1029,8 @@ en:
         sponsor: Sponsor
         start_page: Start Page
         title_primary: Primary Title
-        title_secondary: Secondary Title
+        title_secondary: Alternate Title
+        title_tertiary: Title Series
         volume: Volume
 
   #this relates to contributor/creator roles as established in the work subclasses
@@ -1049,7 +1071,4 @@ en:
     presenter: Presenter
     producer: Producer
     translator: Translator
-  work:
-    forms:
-      form_artwork:
-        location: "Location (City)"
+

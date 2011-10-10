@@ -1,19 +1,19 @@
 .links
-  %strong Local Library Link: #{link_to_findit(Index.work_to_solr_hash(@work))}
+  %strong #{t '.local_library'}: #{link_to_findit(Index.work_to_solr_hash(@work))}
   - if @work.attachments.present?
     - if @work.archived?
       - @work.external_system_uris.each do |s|
         .file
-          %strong Download Page: #{link_to(s.uri, s.uri)}
+          %strong #{t '.download_page'}: #{link_to(s.uri, s.uri)}
     - else
       - @work.attachments.each do |f|
         .file
-          %strong Download File: #{link_to(f.filename, f.public_filename)}
+          %strong #{t '.download_file'}: #{link_to(f.filename, f.public_filename)}
           (#{f.filesize}) -
-          = link_to "remove", attachment_url(f), :method => :delete
+          = link_to t('app.remove'), attachment_url(f), :method => :delete
       -if SwordClient.configured?
         %br/
         %p
-          The #{pluralize(files.size, "file", "files")} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}.
+          The #{t 'app.file', :count => files.size} above will shortly be deposited in #{link_to($REPOSITORY_NAME, $REPOSITORY_BASE_URL)}.
 
 %br/
