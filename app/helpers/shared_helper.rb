@@ -20,7 +20,7 @@ module SharedHelper
       end
 
       if work['authors_data'].size > 5
-        links << link_to("more...", work_path(work['pk_i']))
+        links << link_to(t('common.shared.more'), work_path(work['pk_i']))
       end
     end
 
@@ -30,7 +30,7 @@ module SharedHelper
   def link_to_editors(work)
     if work['editors_data'] != nil
       # If no authors, editors go first
-      str = work['authors_data'] ? "In " : ''
+      str = work['authors_data'] ? t('common.shared.in') : ''
       links = Array.new
 
       work['editors_data'].first(5).each do |ed|
@@ -39,18 +39,18 @@ module SharedHelper
       end
 
       if work['editors_data'].size > 5
-        links << link_to("more...", work_path(work['pk_i']))
+        links << link_to(t('common.shared.more'), work_path(work['pk_i']))
       end
 
       str += links.join("; ")
-      str += " (Eds.), "
+      str += " (#{t 'common.shared.eds'}), "
       str
     end
   end
 
   def link_to_work_publication(work)
     if work['publication_data'].blank?
-      "Unknown"
+      t('app.unknown')
     else
       pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
       link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
@@ -59,7 +59,7 @@ module SharedHelper
 
   def link_to_work_publisher(work)
     if work['publisher_data'].blank?
-      "Unknown"
+      t('app.unknown')
     else
       pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
       link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
@@ -130,13 +130,13 @@ module SharedHelper
         link_to_findit(solr_work)
       when :saved
         if saved and saved.items and saved.items.include?(work_id.to_i)
-          content_tag(:strong, 'Saved - ') +
-              link_to('Remove', remove_from_saved_work_url(work_id))
+          content_tag(:strong, "#{t 'app.saved'} - ") +
+              link_to(t('app.remove'), remove_from_saved_work_url(work_id))
         else
-          link_to 'Save', add_to_saved_work_url(work_id)
+          link_to t('app.saved'), add_to_saved_work_url(work_id)
         end
       when :edit
-        link_to 'Edit', edit_work_path(work_id, :return_path => return_path)
+        link_to t('app.edit'), edit_work_path(work_id, :return_path => return_path)
       else
         nil
     end

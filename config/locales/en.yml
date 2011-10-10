@@ -72,7 +72,7 @@ en:
     system: 'System'
     title: Title
     total: Total
-    unknown: "unknown"
+    unknown: "Unknown"
     update: 'Update'
     url: 'URL'
     web_password: 'Web Password'
@@ -215,7 +215,10 @@ en:
       file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
       batch_csv_error: "An error was generated processing your request."
       edit_header: "%{link}: Personal Info"
-
+    pub_common:
+      flash_update_multiple_generic_cancel: 'Cancelled authority selection'
+      flash_update_multiple_generic_not_unique: 'You must select one record as the authority.'
+      flash_operate_on_box_generic: "One or more publications could not be found."
     publications:
       new: "Add a Publication"
       edit: "Edit this Publication"
@@ -271,7 +274,10 @@ en:
       refine: "Refine Search"
       within: "Search within the results"
       query: "Search for: "
-
+    shared:
+      eds: 'Eds.'
+      more: 'more...'
+      in: 'In '
     users:
       show: "View"
       show_all: "View all"
