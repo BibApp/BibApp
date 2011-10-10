@@ -133,20 +133,6 @@ module WorksHelper
     end
   end
 
-  def issn_isbn_field_label(isbn, issn, isrc)
-    label = case
-      when isbn
-        ISBN.human_name
-      when issn
-        ISSN.human_name
-      when isrc
-        ISRC.human_name
-      else
-        Publication.human_attribute_name(:issn_isbn)
-    end
-    label + ':'
-  end
-
   #The self_or_x methods return the passed object if a string or the field value for :x if not.
   #The exception is self_or_field which is a general method to implement these
   #Used to simplify some of the views/works/forms/fields views

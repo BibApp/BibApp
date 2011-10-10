@@ -1,4 +1,4 @@
-= form_for @work, :as => :work, :url => work_path(@work), :html => {:class=>"work_form", :method => :put} do |form|
+= form_for @work, :as => :work, :url => work_path(@work), :html => {:class => "work_form", :method => :put} do |form|
   = render decide_edit_partial(@work), :form => form
 
   -#Add return path & page to form, if specified
