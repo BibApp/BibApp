@@ -1,8 +1,5 @@
--# Start & End page fields
--#
 -# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
--#    :dupe         => duplicate work (REQUIRED)
 %td.duplicate
   = label_tag 'dupe_start_page', "#{Work.human_attribute_name(:start_page)}:"
   = text_field_tag 'dupe_start_page', @dupe.start_page, {:class=>'text smallbox', :readonly => 'readonly'}

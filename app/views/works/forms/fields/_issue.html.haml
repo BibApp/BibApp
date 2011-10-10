@@ -1,3 +1,1 @@
-- label ||= Work.human_attribute_name(:issue)
-= form.label :issue, "#{label}:", :class => 'inline_label'
-= form.text_field :issue, :class=>'text smallbox'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :issue, :label_class => 'inline_label', :field_class => 'text smallbox'

@@ -1,6 +1,6 @@
-= render :layout => 'works/layouts/merge_form', :locals => {:form => form, :type => ConferenceProceedingWhole} do
+= render :layout => 'works/layouts/merge_form', :locals => {:form => form} do
   %tr#title_primary
-    = render 'works/forms/fields/merge_title_primary', :label => ConferenceProceedingWhole.human_attribute_name(:title_primary), :form => form
+    = render 'works/forms/fields/merge_title_primary', :form => form
   %tr#authors
     = render 'works/forms/fields/merge_author_name_strings'
   %tr#publication_date

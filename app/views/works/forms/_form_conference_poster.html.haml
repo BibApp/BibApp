@@ -1,4 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => ConferencePoster} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -6,7 +6,7 @@
   %li
     = render 'works/forms/fields/title_primary', :form => form
   %li
-    = render 'works/forms/fields/title_secondary', :form => form, :label => ConferencePoster.human_attribute_name(:title_secondary)
+    = render 'works/forms/fields/title_secondary', :form => form
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
@@ -18,7 +18,7 @@
   %li
     = render 'works/forms/fields/publication_place', :form => form
   %li
-    = render 'works/forms/fields/publication_date', :label => ConferencePoster.human_attribute_name(:publication_date)
+    = render 'works/forms/fields/publication_date'
   %li
     = render 'works/forms/fields/pages', :form => form
   %li

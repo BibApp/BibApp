@@ -1,11 +1,3 @@
--# Publisher text field, with auto-complete
--#
--# Possible Input Variables:
--#    :label    => Label to display (default: Publication Place)
-
--# Initialize optional input variables
-- label ||= Publisher.human_name
-
 - @publisher ||= @work.publisher
-= label 'publisher', :name, "#{label}:"
+= label 'publisher', :name, "#{@work.human_attribute_name(:publisher)}:"
 = text_field_with_auto_complete 'publisher', :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5}

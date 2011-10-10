@@ -1,12 +1,12 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => Patent} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
     = render 'works/forms/fields/title_primary', :form => form
   %li
-    = render 'works/forms/fields/date_range', :form => form, :label => Patent.human_attribute_name(:date_range)
+    = render 'works/forms/fields/date_range', :form => form
   %li
-    = render 'works/forms/fields/publication_date', :label => Patent.human_attribute_name(:publication_date)
+    = render 'works/forms/fields/publication_date'
   %li
     = render 'works/forms/fields/keywords'
   %li
@@ -14,6 +14,6 @@
   %li
     = render 'works/forms/fields/links', :form => form
   %li
-    = render 'works/forms/fields/identifier', :form => form, :label => Patent.human_attribute_name(:identifier)
+    = render 'works/forms/fields/identifier', :form => form
   %li
     = render 'works/forms/fields/notes', :form => form

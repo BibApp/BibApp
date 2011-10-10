@@ -1,5 +1,4 @@
-= render :layout => 'works/layouts/edit_form',
-  :locals => {:form => form, :klass => ConferenceProceedingWhole} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -21,7 +20,7 @@
   %li
     = render 'works/forms/fields/publication_date'
   %li
-    = render 'works/forms/fields/pages', :form => form, :omit_start => true, :label => ConferenceProceedingWhole.human_attribute_name(:end_page)
+    = render 'works/forms/fields/end_page', :form => form
   %li
     = render 'works/forms/fields/keywords'
   %li

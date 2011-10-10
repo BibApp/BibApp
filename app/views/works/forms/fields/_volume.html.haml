@@ -1,2 +1,2 @@
-= form.label :volume, "#{Work.human_attribute_name(:volume)}:", :class => 'inline_label'
-= form.text_field :volume, :class=>'text smallbox'
+-# requires form to be passed
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :volume, :label_class => 'inline_label'

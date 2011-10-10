@@ -1,6 +1,6 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => BookReview} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
-    = render :partial => 'works/forms/fields/author_name_strings'
+    = render 'works/forms/fields/author_name_strings'
   %li
     = render 'works/forms/fields/title_primary', :form => form
   %li
@@ -12,7 +12,7 @@
   %li
     = render 'works/forms/fields/issue', :form => form
   %li
-    = render 'works/forms/fields/publication', :label => t('works.forms.form_book_review.publication')
+    = render 'works/forms/fields/publication'
   %li
     = render 'works/forms/fields/issn_isbn'
   %li

@@ -1,6 +1,7 @@
--#requires form, attribute to be passed, label is optional (otherwise found from the translation for the attribute)
+-#requires form, attribute to be passed
 -#field_class is optional, gives the class of the text field (pass nil to get no class). By default, 'text'
-- label ||= Work.human_attribute_name(attribute)
+-#label_class is optional, gives class of label (pass nil to get no class). By default nil
 - field_class = 'text' unless defined?(field_class)
-= form.label attribute, "#{label}:"
+- label_class = nil unless defined?(label_class)
+= form.label attribute, "#{@work.class.human_attribute_name(attribute)}:", :class => label_class
 = form.text_field attribute, :class => field_class

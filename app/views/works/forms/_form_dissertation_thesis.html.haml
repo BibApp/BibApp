@@ -1,5 +1,4 @@
-= render :layout => 'works/layouts/edit_form',
-  :locals => {:form => form, :klass => 'DissertationThesis'} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -9,13 +8,13 @@
   %li
     = render 'works/forms/fields/title_secondary', :form => form
   %li
-    = render 'works/forms/fields/publisher', :label => DissertationThesis.human_attribute_name(:publisher)
+    = render 'works/forms/fields/publisher'
   %li
     = render 'works/forms/fields/degree_level', :form => form
   %li
     = render 'works/forms/fields/discipline', :form => form
   %li
-    = render 'works/forms/fields/publication_date', :label => DissertatinThesis.human_attribute_name(:publication_date)
+    = render 'works/forms/fields/publication_date'
   %li
     = render 'works/forms/fields/pages', :form => form
   %li

@@ -1,9 +1,2 @@
--# Title (Tertiary) field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Series Title)
-
--# Initialize optional input variables
-- label ||= t('works.forms.fields.title_tertiary.label')
-= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :title_tertiary, :label => label
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :title_tertiary

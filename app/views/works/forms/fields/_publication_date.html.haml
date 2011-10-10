@@ -1,9 +1,2 @@
--# Publication Date field
--#
--# Possible Input Variables:
--#    :label    => Label to display (default: Publication Date)
-
-- label ||= Work.human_attribute_name(:publication_date)
-
-= label 'work', 'publication_date', "#{label}:"
+= label 'work', 'publication_date', "#{@work.class.human_attribute_name(:publication_date)}:"
 = date_select 'work', 'publication_date', :start_year => Time.now.year + 1, :end_year => 1850, :include_blank => true

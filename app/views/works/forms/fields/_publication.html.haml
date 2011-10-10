@@ -1,12 +1,4 @@
--# Publication Title field
--#
--# Possible Input Variables:
--#    :label    => Label to display (default: Publication Title)
-
--# Initialize optional input variables
-- label ||= t('works.forms.fields.publication.label')
-
 - @publication ||= @work.publication
-= label 'publication', :name, "#{label}:"
+= label 'publication', :name, "#{@work.class.human_attribute_name(:publication)}:"
 = text_field_with_auto_complete 'publication', :name, {:class=>'text', :size => 40},
   {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}

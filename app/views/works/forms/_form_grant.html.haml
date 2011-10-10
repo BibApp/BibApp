@@ -1,4 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => Grant} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -8,18 +8,18 @@
   %li
     = render 'works/forms/fields/title_secondary', :form => form
   %li
-    = render 'works/forms/fields/date_range', :form => form, :label => Grant.human_attribute_name(:date_range)
+    = render 'works/forms/fields/date_range', :form => form
   %li
-    = render 'works/forms/fields/publisher', :label => Grant.human_attribute_name(:publisher)
+    = render 'works/forms/fields/publisher'
   %li
     = render 'works/forms/fields/keywords'
   %li
     = render 'works/forms/fields/abstract', :form => form
   %li
-    = render 'works/forms/fields/sponsor', :form => form, :label => Grant.human_attribute_name(:sponsor)
+    = render 'works/forms/fields/sponsor', :form => form
   %li
     = render 'works/forms/fields/links', :form => form
   %li
-    = render 'works/forms/fields/identifier', :form => form, :label => Grant.human_attribute_name(:identifier)
+    = render 'works/forms/fields/identifier', :form => form
   %li
     = render 'works/forms/fields/notes', :form => form

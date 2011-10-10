@@ -1,20 +1,20 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => JournalArticle} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
-    = render 'works/forms/fields/title_primary', :form => form, :label => JournalArticle.human_attribute_name(:title_primary)
+    = render 'works/forms/fields/title_primary', :form => form
   %li
     = render 'works/forms/fields/title_secondary', :form => form
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
-    = render 'works/forms/fields/publication', :label => JournalArticle.human_attribute_name(:publication)
+    = render 'works/forms/fields/publication'
   %li
     = render 'works/forms/fields/volume', :form => form
   %li
     = render 'works/forms/fields/issue', :form => form
   %li
-    = render 'works/forms/fields/issn_isbn', :issn => true
+    = render 'works/forms/fields/issn_isbn'
   %li
     = render 'works/forms/fields/publisher'
   %li

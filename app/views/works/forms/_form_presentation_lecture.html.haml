@@ -1,19 +1,18 @@
-= render :layout => 'works/layouts/edit_form',
-  :locals => {:form => form, :klass => PresentationLecture} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
     = render 'works/forms/fields/title_primary', :form => form
   %li
-    = render 'works/forms/fields/title_secondary', :form => form, :label => PresentationLecture.human_attribute_name(:title_secondary)
+    = render 'works/forms/fields/title_secondary', :form => form
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
     = render 'works/forms/fields/date_range', :form => form
   %li
-    = render 'works/forms/fields/location', :form => form, :label => PresentationLecture.human_attribute_name(:location)
+    = render 'works/forms/fields/location', :form => form
   %li
-    = render 'works/forms/fields/publication_date', :label => PresentationLecture.human_attribute_name(:publication_date)
+    = render 'works/forms/fields/publication_date'
   %li
     = render 'works/forms/fields/language', :form => form
   %li

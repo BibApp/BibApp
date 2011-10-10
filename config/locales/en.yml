@@ -1040,6 +1040,7 @@ en:
         issn_isbn: ISBN/ISSN
         issue: Issue
         language: Language
+        links: URL
         location: Location
         medium: Medium
         publication: Publication Title

@@ -1,4 +1,4 @@
-= render :layout => 'works/layouts/edit_form', :locals => {:form => form, :klass => Report} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -6,9 +6,9 @@
   %li
     = render 'works/forms/fields/title_primary', :form => form
   %li
-    = render 'works/forms/fields/title_secondary', :form => form, :label => Report.human_attribute_name(:title_secondary)
+    = render 'works/forms/fields/title_secondary', :form => form
   %li
-    = render 'works/forms/fields/issue', :form => form,  :label => Report.human_attribute_name(:issue)
+    = render 'works/forms/fields/issue', :form => form
   %li
     = render 'works/forms/fields/publisher'
   %li

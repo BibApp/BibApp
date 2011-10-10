@@ -1,5 +1,4 @@
-= render :layout => 'works/layouts/edit_form',
-  :locals => {:form => form, :klass => RecordingMovingImage} do
+= render :layout => 'works/layouts/edit_form', :locals => {:form => form} do
   %li
     = render 'works/forms/fields/author_name_strings'
   %li
@@ -11,13 +10,13 @@
   %li
     = render 'works/forms/fields/title_tertiary', :form => form
   %li
-    = render 'works/forms/fields/publication', :label => RecordingMovingImage.human_attribute_name(:publication)
+    = render 'works/forms/fields/publication'
   %li
     = render 'works/forms/fields/issn_isbn'
   %li
-    = render 'works/forms/fields/publisher', :label => RecordingMovingImage.human_attribute_name(:publisher)
+    = render 'works/forms/fields/publisher'
   %li
-    = render 'works/forms/fields/publication_date', :label => RecordingMovingImage.human_attribute_name(:publication_date)
+    = render 'works/forms/fields/publication_date'
   %li
     = render 'works/forms/fields/language', :form => form
   %li

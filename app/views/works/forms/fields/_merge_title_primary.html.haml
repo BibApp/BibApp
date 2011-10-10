@@ -1,18 +1,10 @@
--# Title (Primary) field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Primary Title)
-
--# Initialize optional input variables
-- label ||= Work.human_attribute_name(:title_primary)
-
 %td.duplicate
-  = label_tag 'dupe_title_primary', "#{label}:"
+  = label_tag 'dupe_title_primary', "#{@dupe.class.human_attribute_name(:title_primary)}:"
   %br/
   = text_field_tag 'dupe_title_primary', @dupe.title_primary, {:class => 'text', :readonly => 'readonly'}
 %td
-  = form.label :title_primary, "#{label}*:"
+  = form.label :title_primary, "#{@work.class.human_attribute_name(:title_primary)}*:"
   %br/
   = form.text_field :title_primary, :class=>'text'
   = error_for 'work', 'title_primary'
