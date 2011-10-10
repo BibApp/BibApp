@@ -761,7 +761,10 @@ en:
         paste: "Or, Paste Citations:"
         add: "Add Batch"
         disable: "Parsing and Importing Batch..."
-
+    layouts:
+      merge_form:
+        duplicate: 'Duplicate work'
+        accepted: 'Accepted work'
     show:
       edit: "Edit this work"
       archive: "Archive Research"

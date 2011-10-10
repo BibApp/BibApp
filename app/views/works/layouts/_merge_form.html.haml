@@ -4,9 +4,9 @@
 %table#accepted_work.span-22
   %tr
     %td.span-8.duplicate
-      %h3 Duplicate work
+      %h3 #{t 'works.layouts.merge_form.duplicate'}
     %td.span-12
-      %h3 Accepted work
+      %h3 #{t 'works.layouts.merge_form.accepted'}
   = yield
 
 = hidden_field_tag :type, type.to_s
