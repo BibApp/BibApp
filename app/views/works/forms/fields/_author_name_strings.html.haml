@@ -11,7 +11,7 @@
 
 .author_block
   = label :author, :string, t('works.forms.fields.author_name_strings.role', :role => t_work_role_name(role))
-  %span.instructions = t('works.forms.fields.author_name_strings.example')
+  %span.instructions= t('works.forms.fields.author_name_strings.example')
 
   %ol#author_name_strings_list
     -# Build list of authors

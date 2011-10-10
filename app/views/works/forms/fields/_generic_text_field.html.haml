@@ -2,5 +2,5 @@
 -#field_class is optional, gives the class of the text field (pass nil to get no class). By default, 'text'
 - label ||= Work.human_attribute_name(attribute)
 - field_class = 'text' unless defined?(field_class)
-= form.label field, "#{label}:"
+= form.label attribute, "#{label}:"
 = form.text_field attribute, :class => field_class

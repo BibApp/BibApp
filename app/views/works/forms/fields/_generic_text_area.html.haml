@@ -1,4 +1,4 @@
 -#requires form, attribute to be passed, label is optional (otherwise found from the translation for the attribute)
 - label ||= Work.human_attribute_name(attribute)
-= form.label field, "#{label}:"
+= form.label attribute, "#{label}:"
 = form.text_area attribute

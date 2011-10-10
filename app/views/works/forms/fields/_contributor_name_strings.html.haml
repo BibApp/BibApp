@@ -11,7 +11,7 @@
 - contributors ||= @work.work_name_strings.reject{|wns| wns.role == @work.creator_role}.collect{ |wns| {:name => wns.name_string.name, :role => wns.role}} if @work.name_strings
 
 .author_block
-= label :author, :string, t('works.forms.fields.contributor_name_strings.label')
+  = label :author, :string, t('works.forms.fields.contributor_name_strings.label')
   %span.instructions= t('works.forms.fields.contributor_name_strings.instructions')
 
   %ol#contributor_name_strings_list
