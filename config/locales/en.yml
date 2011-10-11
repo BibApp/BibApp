@@ -848,6 +848,12 @@ en:
       artwork:
         one: 'Artwork'
         other: 'Artworks'
+      attachment:
+        one: Attachment
+        other: Attachments
+      authentication:
+        one: Authentication
+        other: Authentications
       book_review:
         one: 'Book Review'
         other: 'Book Reviews'
@@ -881,6 +887,12 @@ en:
       exhibition:
         one: 'Exhibition'
         other: 'Exhibitions'
+      external_system:
+        one: External System
+        other: External Systems
+      external_system_uri:
+        one: External System URI
+        other: External System URIs
       generic:
         one: 'Generic / Other'
         other: 'Generics / Others'
@@ -890,6 +902,9 @@ en:
       group:
         one: 'Group'
         other: 'Groups'
+      identifier:
+        one: 'Identifier'
+        other: 'Identifiers'
       image:
         one: 'Image'
         other: 'Images'
@@ -959,6 +974,12 @@ en:
       system:
         one: System
         other: Systems
+      tag:
+        one: Tag
+        other: Tags
+      tagging:
+        one: Tagging
+        other: Taggings
       user:
         one: 'User'
         other: 'Users'
