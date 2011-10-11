@@ -5,7 +5,7 @@
 - count ||= nil
 - randomize ||= false
 .span-15
-  %h3 People
+  %h3 #{Person.human_name_pl}
   %ol#people
     - convert_and_filter_people_facets(@facets[:people_data], count, @group, controller.controller_name == 'groups', randomize).each do |fields|
       %li.inline

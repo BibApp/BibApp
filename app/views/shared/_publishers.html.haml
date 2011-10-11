@@ -1,13 +1,13 @@
 -#
 -# Render Publisher facets from Solr data
 -#
-%h3.heading= link_to "Publishers", publishers_path
+%h3.heading= link_to Publisher.human_name_pl, publishers_path
 %ol#publishers
   -# if there's a count specified, only show the first few
   - publishers = count!=nil ? @facets[:publishers_data].first(count) : @facets[:publishers_data]
   - publishers.each do |p|
     - name, id = Publisher.parse_solr_data(p.name)
-    - next if name == "Unknown"
+    - next if name == t('app.unknown')
     %li
       = link_to name, publisher_path(id)
       (#{p.value})

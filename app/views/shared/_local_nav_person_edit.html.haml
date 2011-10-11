@@ -1,11 +1,11 @@
 - c = params[:controller]
 %ul#local-pages
-  %li{give_current_class_if_equal('people', c)}= link_to "Personal Info", edit_person_path(@person.id)
-  %li{give_current_class_if_equal('pen_names', c)}= link_to "Pen Names", new_person_pen_name_path(@person.id)
+  %li{give_current_class_if_equal('people', c)}= link_to t('app.personal_info'), edit_person_path(@person.id)
+  %li{give_current_class_if_equal('pen_names', c)}= link_to PenName.human_name_pl, new_person_pen_name_path(@person.id)
   %li{give_current_class_if_equal('attachments', c)}
     - if @person.image
-      = link_to "Photo", edit_person_attachment_path(@person, @person.image)
+      = link_to t('app.photo'), edit_person_attachment_path(@person, @person.image)
     - else
-      = link_to "Photo", new_person_attachment_path(@person), :params => {"type" => "Image"}
-  %li{give_current_class_if_equal('memberships', c)}= link_to "Groups", new_person_membership_path(@person.id)
-  %li{give_current_class_if_equal('contributorships', c)}= link_to "Works", contributorships_url(:person_id => @person.id)
+      = link_to t('app.photo'), new_person_attachment_path(@person), :params => {"type" => "Image"}
+  %li{give_current_class_if_equal('memberships', c)}= link_to Group.human_name_pl, new_person_membership_path(@person.id)
+  %li{give_current_class_if_equal('contributorships', c)}= link_to Work.human_name_pl, contributorships_url(:person_id => @person.id)

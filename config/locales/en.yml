@@ -14,15 +14,19 @@ en:
     all: 'All'
     are_you_sure: 'Are you sure?'
     archive: "Prepare for archiving full text"
+    ascending: 'Ascending'
     authorized: "Authority controlled names"
     authors: 'Authors'
     back: 'Back'
     batch_import: Batch Import
+    blank: ''
     bookmarks: "Social Bookmarking"
     count: 'Count'
     create: 'Create'
+    created: 'Created'
     date: 'Date'
     delete_selected: "Delete selected"
+    descending: 'Descending'
     description: "Description"
     destroy: 'Destroy'
     edit: 'Edit'
@@ -37,6 +41,7 @@ en:
       other: Files
     go: "Go"
     formats: "Formats"
+    home: Home
     important: Important
     imports: "Manage imports"
     keywords: "Keywords"
@@ -49,9 +54,11 @@ en:
     more_years: "More years"
     name: "Name"
     next: "next"
+    order: 'Order'
     percent_sure: "%{percentage}% sure"
     percentage: "Percentage"
     personal_info: "Personal Info"
+    photo: Photo
     powered: "Powered by"
     previous: "previous"
     remove: "Remove"
@@ -63,12 +70,15 @@ en:
       other: "Results for:"
     save: "Save"
     saved: "Saved"
+    score: Score
     search: "Search"
     search_within: "Search Within"
     select: Select
     select_all: "Select All"
+    send_to: 'Send to'
     show: Show
     signup: "Signup"
+    sort_by: Sort By
     source: "Source"
     status: 'Status'
     system: 'System'
@@ -692,6 +702,14 @@ en:
     keyword_cloud:
       header: Popular research topics
       submit: Load Timeline Views
+    not_found:
+      title: "Error 404: Page not found"
+      bad_link: "You may have followed a link to a %{type} no longer at %{university_name}."
+      try_searching: Did you try searching? Enter a keyword(s) in the search field above.
+    upload_form:
+      upload: "Upload File"
+      submit: 'Add Batch'
+      disable: "Importing Batch..."
   users:
     edit:
       header: "Edit My Account"
