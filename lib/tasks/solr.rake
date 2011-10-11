@@ -7,6 +7,7 @@ require 'rake'
 require 'net/http'
 require 'active_record'
 require 'index'
+require 'rbconfig'
 
 namespace :solr do
 
@@ -24,7 +25,7 @@ namespace :solr do
       SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
 
       #If Windows
-      if RUBY_PLATFORM.include?('mswin32')
+      if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
         Dir.chdir(SOLR_PATH) do
           exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java #{SOLR_STARTUP_OPTS} -jar start.jar"
           puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}."
@@ -65,7 +66,7 @@ namespace :solr do
   desc 'Stops Solr. Specify the environment by using: RAILS_ENV=your_env. Defaults to development if none.'
   task :stop => :environment do
     #If Windows
-    if RUBY_PLATFORM.include?('mswin32')
+    if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
       #taskkill is only available in Windows XP
       exec "taskkill /im java.exe /fi #{'"'}Windowtitle eq solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} "
       Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
