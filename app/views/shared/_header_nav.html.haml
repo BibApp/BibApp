@@ -4,29 +4,29 @@
     - if current_user.has_role?("admin", System)
       %li{give_current_id_if_equal("admin", controller_name)}
         %a{:href => admin_index_url}
-          %span Admin
+          %span #{t 'app.admin'}
 
   %li{give_current_id_if_equal("works", controller_name)}
     %a{:href => works_path(:view => 'all')}
-      %span Works
+      %span #{Work.human_name_pl}
 
   %li{give_current_id_if_equal("groups", controller_name)}
     %a{:href => groups_path}
-      %span Groups
+      %span #{Group.human_name_pl}
 
   %li{give_current_id_if_equal('people', controller_name)}
     %a{:href => people_path}
-      %span People
+      %span #{Person.human_name_pl}
 
   %li{give_current_id_if_equal('publications', controller_name)}
     %a{:href => publications_path}
-      %span Publications
+      %span #{Publication.human_name_pl}
 
   %li{give_current_id_if_equal('publishers', controller_name)}
     %a{:href => publishers_path}
-      %span Publishers
+      %span #{Publisher.human_name_pl}
 
   - if !session[:saved].nil? && session[:saved].items.size > 0
     %li
       %a{:href => saved_path}
-        %span Saved
+        %span #{t 'app.saved'}

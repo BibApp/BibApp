@@ -1,5 +1,5 @@
 %p
-  %label Select a File:
+  %label #{t 'shared.file_upload.select_file'}:
   = form.file_field :uploaded_data
 %p.submit
-  = submit_tag :upload  
+  = submit_tag t('app.upload')

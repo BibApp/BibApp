@@ -4,12 +4,12 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 
-%h4 #{$UNIVERSITY_SHORT_NAME} Co-Authors
+%h4 #{t 'shared.coauthors_table.header', :university_name => $UNIVERSITY_SHORT_NAME}
 %table
   %thead
     %tr
-      %th Last Name
-      %th # of Works
+      %th #{t 'shared.coauthors_table.last_name'}
+      %th #{t 'shared.coauthors_table.work_count'}
   %tbody
     -@facets[:people_data].each do |p|
     - last_name, id, image_url = Person.parse_solr_data(p.name)

@@ -9,6 +9,7 @@ en:
     about: "About"
     account: "Account"
     add: 'Add'
+    advanced: 'Advanced'
     advanced_search: "Advanced Search"
     all: 'All'
     are_you_sure: 'Are you sure?'
@@ -75,6 +76,7 @@ en:
     total: Total
     unknown: "Unknown"
     update: 'Update'
+    upload: 'Upload'
     url: 'URL'
     web_password: 'Web Password'
     year: "Year"
@@ -662,6 +664,34 @@ en:
       advanced_search: Try our advanced search options.
     spelling_suggestions:
       did_you_mean: Did you mean
+  shared:
+    application_error:
+      header: "Error 500: Something is *very* wrong!"
+      list_1: "Don't worry, but %{link} is unexpectedly broken."
+      list_2: "It's okay, because %{link} has emailed us to say so."
+      list_3: "Need to contact someone? Email:"
+      email_subject: "%{app_name} Support"
+    coauthors:
+      heading: "Co-authors at %{university_name}"
+    coauthors_table:
+      header: "%{university_name} Co-Authors"
+      last_name: 'Last Name'
+      work_count: '# of Works'
+    contribution_actions:
+      verify: Verify
+      deny: Deny
+    facet:
+      more: "More %{heading}"
+    facets:
+      heading: Refine Results
+      formats: Formats
+    file_upload:
+      select_file: Select a File
+    footer:
+      powered_by: 'Powered by'
+    keyword_cloud:
+      header: Popular research topics
+      submit: Load Timeline Views
   users:
     edit:
       header: "Edit My Account"
@@ -1110,4 +1140,14 @@ en:
     presenter: Presenter
     producer: Producer
     translator: Translator
+
+  #this section is for the facet headings - much of this is duplicate, but
+  #it facilitates the code
+  facet_headings:
+    publishers: Publishers
+    publications: Publications
+    years: Years
+    people: People
+    groups: Groups
+
 

@@ -2,7 +2,7 @@
 
 .span-5
   .left_box
-    .box_heading Refine Results
+    .box_heading #{t 'shared.facets.heading'}
 
     / Remove Filter(s)
     - remove_filter = @filter.clone
@@ -25,7 +25,7 @@
     / WorkType Filter
     - if @facets[:types].present?
       .facet
-        .facet_heading Formats
+        .facet_heading #{t 'shared.facets.formats'}
         %ol.facet_filters
           - @facets[:types].each do |p|
             %li
