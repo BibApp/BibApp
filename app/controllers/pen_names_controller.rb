@@ -17,7 +17,7 @@ class PenNamesController < ApplicationController
       permit "editor of Person"
 
       @suggestions = NameString.name_like(@person.last_name).order_by_name
-      @title = "#{@person.display_name}: #{PenName.human_name_pl}"
+      @title = "#{@person.display_name}: #{PenName.model_name.human_pl}"
 
     end
 

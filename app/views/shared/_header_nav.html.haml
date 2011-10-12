@@ -8,23 +8,23 @@
 
   %li{give_current_id_if_equal("works", controller_name)}
     %a{:href => works_path(:view => 'all')}
-      %span #{Work.human_name_pl}
+      %span #{Work.model_name.human_pl}
 
   %li{give_current_id_if_equal("groups", controller_name)}
     %a{:href => groups_path}
-      %span #{Group.human_name_pl}
+      %span #{Group.model_name.human_pl}
 
   %li{give_current_id_if_equal('people', controller_name)}
     %a{:href => people_path}
-      %span #{Person.human_name_pl}
+      %span #{Person.model_name.human_pl}
 
   %li{give_current_id_if_equal('publications', controller_name)}
     %a{:href => publications_path}
-      %span #{Publication.human_name_pl}
+      %span #{Publication.model_name.human_pl}
 
   %li{give_current_id_if_equal('publishers', controller_name)}
     %a{:href => publishers_path}
-      %span #{Publisher.human_name_pl}
+      %span #{Publisher.model_name.human_pl}
 
   - if !session[:saved].nil? && session[:saved].items.size > 0
     %li

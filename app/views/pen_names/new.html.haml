@@ -11,7 +11,7 @@
     %p= render "shared/person_image", :o => @person
 
   %fieldset
-    %legend #{PenName.human_name_pl}
+    %legend #{PenName.model_name.human_pl}
     %p #{t '.explanation'}
     %h3= t('pen_names.new.current')
     = render 'current_namestrings'

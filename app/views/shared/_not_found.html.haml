@@ -3,7 +3,7 @@
 
 = render :layout => 'layouts/main_body', :locals => {:header => @title}  do
   - if controller.controller_name == "people" || controller.controller_name == "groups"
-    %h2 #{t 'shared.not_found.bad_link', :type => controller.controller_name.camelize.singularize.constantize.human_name,
+    %h2 #{t 'shared.not_found.bad_link', :type => controller.controller_name.camelize.singularize.constantize.model_name.human,
       :university_name => $UNIVERSITY_SHORT_NAME}
 
   %p #{t 'shared.not_found.try_searching'}

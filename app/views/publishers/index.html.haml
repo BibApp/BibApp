@@ -5,7 +5,7 @@
     %li #{link_to t('common.publishers.new'), new_publisher_path}
     %li #{link_to t('common.publishers.authority'), authorities_publishers_path(:page => params[:page])}
 
-= render :layout => '/layouts/main_body', :locals => {:header => Publisher.human_name_pl} do
+= render :layout => '/layouts/main_body', :locals => {:header => Publisher.model_name.human_pl} do
   = render "shared/alpha_pagination"
 
   = render 'index_table'

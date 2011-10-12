@@ -7,7 +7,7 @@
     %h2 #{claim.person.display_name}
 
     .span-5
-      %strong #{Group.human_name_pl}:
+      %strong #{Group.model_name.human_pl}:
       %ul#groups
         - claim.person.groups.each do |g|
           %li #{g.name}

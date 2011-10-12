@@ -2,7 +2,7 @@
 - include_stylesheet('common/sherpa')
 
 - if @export.present?
-  = render :layout => 'layouts/main_body', :locals => {:header => Work.human_name_pl} do
+  = render :layout => 'layouts/main_body', :locals => {:header => Work.model_name.human_pl} do
     = @works.html_safe
 
 - else

@@ -5,7 +5,7 @@
 
 = render :layout => 'layouts/main_body_no_h2' do
   - if @export.present?
-    %h2 #{Work.human_name_pl}
+    %h2 #{Work.model_name.human_pl}
     = @works
 
   - else

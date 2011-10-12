@@ -118,15 +118,15 @@ module WorksHelper
   def link_to_google_book(work)
     if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => ISBN.human_name}
+        haml_tag :span, {:title => ISBN.model_name.human}
         work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "#{ISBN.human_name}:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
       capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => ISBN.human_name}
+        haml_tag :span, {:title => ISBN.model_name.human}
         work.publication.issn_isbn
-        haml_tag :span, {:title => "#{ISBN.human_name}:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     else
       # Nothing

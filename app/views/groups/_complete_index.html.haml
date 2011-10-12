@@ -5,7 +5,7 @@
       %li= link_to t('.show_hidden'), hidden_groups_path
 
 = render :layout => 'layouts/main_body_no_h2'  do
-  %h2 #{Group.human_name_pl}
+  %h2 #{Group.model_name.human_pl}
 
   = render "shared/alpha_pagination"
 

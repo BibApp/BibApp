@@ -1,7 +1,7 @@
 -#
 -# Render Publisher facets from Solr data
 -#
-%h3.heading= link_to Publisher.human_name_pl, publishers_path
+%h3.heading= link_to Publisher.model_name.human_pl, publishers_path
 %ol#publishers
   -# if there's a count specified, only show the first few
   - publishers = count!=nil ? @facets[:publishers_data].first(count) : @facets[:publishers_data]

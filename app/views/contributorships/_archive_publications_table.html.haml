@@ -4,8 +4,8 @@
       %td #{t('contributorships.archive_analysis_table.romeo_color').html_safe}
       %td #{t('.pub_copy_allowed').html_safe}
       %td #{t('app.name')}
-      %td #{Publisher.human_name}
-      %td #{Work.human_name_pl}
+      %td #{Publisher.model_name.human}
+      %td #{Work.model_name.human_pl}
 
   %tbody
     - @publ_table.each do |row|

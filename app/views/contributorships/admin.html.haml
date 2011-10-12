@@ -7,7 +7,7 @@
     %table#people
       %thead
         %tr
-          %th #{Person.human_name}
+          %th #{Person.model_name.human}
           %th.text-center #{t('contributorships.admin.matches')}
       %tbody
         - @people.each do |p|

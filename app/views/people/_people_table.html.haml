@@ -3,7 +3,7 @@
     %th.span-1
     %th.span-6 #{t 'app.name'}
     %th.span-12 #{t '.recent_publication'}
-    %th.span-1.last #{Work.human_name_pl}
+    %th.span-1.last #{Work.model_name.human_pl}
   -@current_objects.each do |person|
     %tr{:class => cycle("odd", "even")}
       %td.person-image #{link_to image_tag(person.image_url, :size => "50x66"), person_path(person)}

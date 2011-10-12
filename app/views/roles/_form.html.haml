@@ -1,7 +1,7 @@
 %h2 #{form_header(@authorizable, @role_name)}
 = error_messages_for :role
 
-%h3 #{User.human_name_pl} (#{@page})
+%h3 #{User.model_name.human_pl} (#{@page})
 
 = render "shared/alpha_pagination"
 

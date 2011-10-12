@@ -5,7 +5,7 @@
     %li #{link_to t('common.publications.new'), new_publication_path}
     %li #{link_to t('common.publications.authority'), authorities_publications_path(:page => params[:page])}
 
-= render :layout => 'layouts/main_body', :locals => {:header => Publication.human_name} do
+= render :layout => 'layouts/main_body', :locals => {:header => Publication.model_name.human} do
 
   = render "shared/alpha_pagination", :numbers => true
 

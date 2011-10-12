@@ -1,6 +1,6 @@
 %ul#local-pages
   %li.current= link_to t('app.personal_info'), new_person_path
-  %li= link_to PenName.human_name_pl, "javascript:void(0)", :disabled => "true"
+  %li= link_to PenName.model_name.human_pl, "javascript:void(0)", :disabled => "true"
   %li= link_to t('app.photo'), "javascript:void(0)", :disabled => "true"
-  %li= link_to Group.human_name_pl, "javascript:void(0)", :disabled => "true"
-  %li= link_to Work.human_name_pl, "javascript:void(0)", :disabled => "true"
+  %li= link_to Group.model_name.human_pl, "javascript:void(0)", :disabled => "true"
+  %li= link_to Work.model_name.human_pl, "javascript:void(0)", :disabled => "true"

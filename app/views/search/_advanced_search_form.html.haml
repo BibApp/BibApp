@@ -4,13 +4,13 @@
     %legend #{t('.legend')}
 
     = render 'generic_form_field', :field => :keywords, :text => t('search.advanced_search_form.keywords_text'),
-      :label => Keyword.human_name_pl
+      :label => Keyword.model_name.human_pl
     = render 'generic_form_field', :field => :title, :text => t('search.advanced_search_form.title_text'),
       :label => t('app.title')
     = render 'generic_form_field', :field => :authors, :text => t('search.advanced_search_form.authors_text'),
       :label => t('app.authors')
     = render 'generic_form_field', :field => :groups, :text => t('search.advanced_search_form.groups_text'),
-      :label => Group.human_name_pl
+      :label => Group.model_name.human_pl
     = render 'generic_form_field', :field => :issn_isbn, :text => t('search.advanced_search_form.issn_isbn_text'),
       :label => Publication.human_attribute_name(:issn_isbn)
 

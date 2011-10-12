@@ -4,7 +4,7 @@
       %th #{t 'app.select'}
       %th #{t 'app.title'}
       %th #{t 'app.source'}
-      %th #{Publication.human_name_pl}
+      %th #{Publication.model_name.human_pl}
   %tbody
     -@current_objects.each do |publisher|
       %tr#publisher.publisher{:id => publisher.id, :class => cycle("odd", "even")}

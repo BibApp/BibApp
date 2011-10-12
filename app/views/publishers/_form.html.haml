@@ -1,5 +1,5 @@
 %fieldset
-  %legend #{Publisher.human_name}
+  %legend #{Publisher.model_name.human}
   = form_for @publisher do |form|
     %p
       %label #{Publisher.human_attribute_name(:name)}

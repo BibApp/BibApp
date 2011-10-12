@@ -54,7 +54,7 @@ class PeopleController < ApplicationController
           @current_objects = @current_objects.where("upper(last_name) like ?", "#{@page}%") unless @page == 'all'
         end
 
-        @title = "#{@group.name} - #{NameString.human_name_pl}"
+        @title = "#{@group.name} - #{NameString.model_name.human_pl}"
       else
 
         if params[:q]
@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
               order("upper(last_name), upper(first_name)").includes(:contributorships => :work)
         end
 
-        @title = Person.human_name_pl
+        @title = Person.model_name.human_pl
       end
     end
 

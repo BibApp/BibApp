@@ -8,7 +8,7 @@
         %tr
           %th #{t 'app.name'}
           %th #{Publication.human_attribute_name(:issn_isbn)}
-          %th #{Publisher.human_name}
+          %th #{Publisher.model_name.human}
       %tbody
         - @authority_for.each do |auth|
           %tr
