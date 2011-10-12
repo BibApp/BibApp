@@ -75,8 +75,10 @@ module ApplicationHelper
     else
       err = @errors["#{object}"] rescue nil
     end
-    options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
-    content_tag("p", err || "", options)
+    if err.present?
+      options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
+      content_tag("p", err || "", options)
+    end
   end
 
   #create a hash for Haml that gives id => current if the controller matches the argument
