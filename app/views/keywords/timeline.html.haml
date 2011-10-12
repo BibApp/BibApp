@@ -10,11 +10,11 @@
         %img{:alt=> t('.handle_alt'), :src=>"/images/slider-images-handle.png"}
 
   #timeline-tagcloud.span-12
-    %h3 #{t('.cloud_header')}
+    %h3 #{t('keywords.timeline.cloud_header')}
     = render :partial => "timeline_list", :collection => @year_keywords
 
   #timeline-chart.span-7.prepend-1.last-1
-    %h3 #{t('.chart_header')}
+    %h3 #{t('keywords.timeline.chart_header')}
     #chart-img
       %img.left{:src => "/images/ajax-loader.gif", :title => t('.chart_loading')}
 
