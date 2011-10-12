@@ -477,7 +477,7 @@ en:
       header: "Imports for %{email}"
     new:
       show_all: 'Show all Imports'
-      add_import: 'Add an Import!'
+      add_import: 'Add an Import'
     show:
       show: 'Show my imports'
       add: 'Add an import'

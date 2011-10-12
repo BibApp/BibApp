@@ -1,6 +1,6 @@
 -if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to_unless_current t('.link'), new_user_import_path(current_user)
+    %li= link_to_unless_current t('imports.index.link'), new_user_import_path(current_user)
 
 = render :layout => 'layouts/main_body', :locals => {:header => t('imports.index.header', :email => User.find(params[:user_id]).email)} do
   = will_paginate @imports

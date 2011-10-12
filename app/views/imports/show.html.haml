@@ -2,14 +2,14 @@
 - include_javascript('specific/imports/show')
 
 = render :layout => 'layouts/admin_bar' do
-  %li= link_to_unless_current t('.show'), user_imports_path(current_user)
-  %li= link_to_unless_current t('.add'), new_user_import_path(current_user)
+  %li= link_to_unless_current t('imports.show.show'), user_imports_path(current_user)
+  %li= link_to_unless_current t('imports.show.add'), new_user_import_path(current_user)
 
 = render :layout => '/layouts/main_body_no_h2' do
 
   %h2
-    #{t('.header')} -
-    %span.import-review-batch-header #{t('.subheader', :imported_for => imported_for(@import))}
+    #{t('imports.show.header')} -
+    %span.import-review-batch-header #{t('imports.show.subheader', :imported_for => imported_for(@import)).html_safe}
 
   / Right - Admin div
   .import-admin-div

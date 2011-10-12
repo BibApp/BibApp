@@ -13,7 +13,6 @@
         %strong #{t '.has_permissions', :role => t_bibapp_role_name(@role_name)}
         = link_to t('.remove'), roles_destroy_url(url_opts(user, @role_name, @authorizable))
       - else
-        = link_to "Add as #{@role_name}", roles_create_url(url_opts(user, @role_name, @authorizable))
         = link_to t('.add', :role => t_bibapp_role_name(@role_name)), roles_create_url(url_opts(user, @role_name, @authorizable))
         - if user.has_role?(@role_name.downcase, @authorizable)
           [#{t '.has_implicitly'}]

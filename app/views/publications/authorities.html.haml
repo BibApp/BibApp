@@ -7,7 +7,7 @@
 
 = render :layout => 'layouts/main_body', :locals => {:header => t('common.publications.authority')} do
   #authority_form
-    %p #{t '.instructions'}
+    %p #{t('publications.authorities.instructions').html_safe}
     = render "authority_form", :authorities => @pas, :page => @page
 
   = render "shared/alpha_pagination"
