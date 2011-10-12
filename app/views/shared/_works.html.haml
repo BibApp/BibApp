@@ -14,12 +14,12 @@
     .span-17.append-1
       = form_tag "#works", :method => :get do
         #sort-by
-          %label #{t 'app.show}:
+          %label #{t 'app.show'}:
           %select{:name => "rows"}
             - ["10", "20", "50", "100", "250", "500"].each do |opt|
               %option{:value => opt, :selected => selected_if_equal(opt, @rows)}= opt
 
-          %label #{t 'app.sort_by}:
+          %label #{t 'app.sort_by'}:
           %select{:name => "sort"}
             - ['', 'year', 'title', 'score', 'created'].each do |opt|
               %option{:value => opt, :selected => selected_if_equal(opt, @sort.split('_').first)}= t("app.#{opt.self_or_blank_default(:blank)}")
