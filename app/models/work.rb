@@ -704,7 +704,7 @@ class Work < ActiveRecord::Base
   end
 
   def all_contributor_roles
-    self.class.roles - [self.contributor_role]
+    self.class.roles - [self.creator_role]
   end
 
   # In case there isn't a subklass open_url_kevs method
