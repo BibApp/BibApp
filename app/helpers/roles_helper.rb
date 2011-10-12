@@ -4,10 +4,10 @@ module RolesHelper
     if authorizable == System
       t('common.roles.index_header_system', :app_name => $APPLICATION_NAME)
     elsif authorizable.kind_of?(Group)
-      t('common.roles.index_header_group', group_link(authorizable)).html_safe
+      t('common.roles.index_header_group', :group => group_link(authorizable))
     elsif @authorizable.kind_of?(Person)
-      t('common.roles.index_header_person', person_link(authorizable)).html_safe
-    end
+      t('common.roles.index_header_person', :person => person_link(authorizable))
+    end.html_safe
   end
 
   def form_header(authorizable, role_name)
