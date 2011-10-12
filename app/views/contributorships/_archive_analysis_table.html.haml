@@ -1,8 +1,8 @@
 %table
   %thead
     %tr
-      %td #{t('.romeo_color')}.html_safe
-      %td = t('contributorships.archive_analysis_table.archiving_policy')
+      %td #{t('.romeo_color').html_safe}
+      %td= t('contributorships.archive_analysis_table.archiving_policy')
       %td #{t('app.percentage')}
       %td #{Work.model_name.human_pl}
   %tfoot
@@ -16,7 +16,7 @@
       -# Default colors to unknown
       - color = romeo_color(row)
       %tr{:class => color}
-        %td #{t("common.romeo.#{color}").capitalize}
+        %td #{t("common.romeo.#{color.downcase}").capitalize}
         %td #{$SHERPA_COLORS[color.downcase.to_sym]}
         %td #{((row.count.to_f / @pub_totals.to_f) * 100).round}%
         %td #{row.count}

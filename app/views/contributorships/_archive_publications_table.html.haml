@@ -12,7 +12,7 @@
       -# Default colors to unknown
       - color = romeo_color(row)
       %tr{:class => color}
-        %td #{t("common.romeo.#{color}").capitalize}
+        %td #{t("common.romeo.#{color.downcase}").capitalize}
         %td= t('app.yes') if row.pub_copy?
         %td #{row.name}
         %td #{row.pub_name}
