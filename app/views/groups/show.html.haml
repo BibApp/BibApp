@@ -2,9 +2,9 @@
 
 - if current_user_role?("editor", @group)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to t('.add'), new_group_path
-    %li= link_to t('.edit'), edit_group_path
-    %li= link_to t('.manage'), group_roles_path(@group)
+    %li= link_to t('groups.show.add'), new_group_path
+    %li= link_to t('groups.show.edit'), edit_group_path
+    %li= link_to t('groups.show.roles'), group_roles_path(@group)
 
 = render :layout => 'layouts/main_body', :locals => {:header => body_header(@group)} do
   = render "shared/local_nav", :object => "group"

@@ -483,7 +483,6 @@ en:
       add: 'Add an import'
       header: 'Review Batch'
       subheader: "Imported For %{imported_for}"
-
   keywordings:
     edit:
       header: 'Editing keywording'
