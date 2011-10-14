@@ -1,318 +1,331 @@
-# German translations for Ruby on Rails
-# by Clemens Kofler (clemens@railway.at)
-
-# Based on the initial translation of BibApp by Martin Fenner see https://github.com/mfenner/BibApp
-
+---
 de:
   date:
     formats:
-      default: "%d.%m.%y"
-      short: "%d.%m."
-      long: "%e. %B %Y"
-      only_day: "%e"
-
-    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
-    abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
-    month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
-    abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
-    order: [ day, month, year ]
-
+      default: ! '%d.%m.%y'
+      short: ! '%d.%m.'
+      long: ! '%e. %B %Y'
+      only_day: ! '%e'
+    day_names:
+    - Sonntag
+    - Montag
+    - Dienstag
+    - Mittwoch
+    - Donnerstag
+    - Freitag
+    - Samstag
+    abbr_day_names:
+    - So
+    - Mo
+    - Di
+    - Mi
+    - Do
+    - Fr
+    - Sa
+    month_names:
+    - !!null 
+    - Januar
+    - Februar
+    - März
+    - April
+    - Mai
+    - Juni
+    - Juli
+    - August
+    - September
+    - Oktober
+    - November
+    - Dezember
+    abbr_month_names:
+    - !!null 
+    - Jan
+    - Feb
+    - Mär
+    - Apr
+    - Mai
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Okt
+    - Nov
+    - Dez
+    order:
+    - day
+    - month
+    - year
   time:
     formats:
-      default: "%A, %d. %B %Y, %H:%M Uhr"
-      short: "%d. %B, %H:%M Uhr"
-      long: "%A, %d. %B %Y, %H:%M Uhr"
-      time: "%H:%M"
-
-    am: "vormittags"
-    pm: "nachmittags"
-
+      default: ! '%A, %d. %B %Y, %H:%M Uhr'
+      short: ! '%d. %B, %H:%M Uhr'
+      long: ! '%A, %d. %B %Y, %H:%M Uhr'
+      time: ! '%H:%M'
+    am: vormittags
+    pm: nachmittags
   datetime:
     distance_in_words:
-      half_a_minute: 'eine halbe Minute'
+      half_a_minute: eine halbe Minute
       less_than_x_seconds:
-        zero: 'weniger als 1 Sekunde'
-        one: 'weniger als 1 Sekunde'
-        other: 'weniger als %{count} Sekunden'
+        zero: weniger als 1 Sekunde
+        one: weniger als 1 Sekunde
+        other: weniger als %{count} Sekunden
       x_seconds:
-        one: '1 Sekunde'
-        other: '%{count} Sekunden'
+        one: 1 Sekunde
+        other: ! '%{count} Sekunden'
       less_than_x_minutes:
-        zero: 'weniger als 1 Minute'
-        one: 'weniger als eine Minute'
-        other: 'weniger als %{count} Minuten'
+        zero: weniger als 1 Minute
+        one: weniger als eine Minute
+        other: weniger als %{count} Minuten
       x_minutes:
-        one: '1 Minute'
-        other: '%{count} Minuten'
+        one: 1 Minute
+        other: ! '%{count} Minuten'
       about_x_hours:
-        one: 'etwa 1 Stunde'
-        other: 'etwa %{count} Stunden'
+        one: etwa 1 Stunde
+        other: etwa %{count} Stunden
       x_days:
-        one: '1 Tag'
-        other: '%{count} Tage'
+        one: 1 Tag
+        other: ! '%{count} Tage'
       about_x_months:
-        one: 'etwa 1 Monat'
-        other: 'etwa %{count} Monate'
+        one: etwa 1 Monat
+        other: etwa %{count} Monate
       x_months:
-        one: '1 Monat'
-        other: '%{count} Monate'
+        one: 1 Monat
+        other: ! '%{count} Monate'
       about_x_years:
-        one: 'etwa 1 Jahr'
-        other: 'etwa %{count} Jahre'
+        one: etwa 1 Jahr
+        other: etwa %{count} Jahre
       over_x_years:
-        one: 'mehr als 1 Jahr'
-        other: 'mehr als %{count} Jahre'
+        one: mehr als 1 Jahr
+        other: mehr als %{count} Jahre
     prompts:
-      second: "Sekunden"
-      minute: "Minuten"
-      hour: "Stunden"
-      day: "Tag"
-      month: "Monat"
-      year: "Jahr"
-
+      second: Sekunden
+      minute: Minuten
+      hour: Stunden
+      day: Tag
+      month: Monat
+      year: Jahr
   number:
     format:
       precision: 2
-      separator: ','
-      delimiter: '.'
+      separator: ! ','
+      delimiter: .
     currency:
       format:
-        unit: '€'
-        format: '%n%u'
-        separator:
-        delimiter:
-        precision:
+        unit: €
+        format: ! '%n%u'
+        separator: !!null 
+        delimiter: !!null 
+        precision: !!null 
     percentage:
       format:
-        delimiter: ""
+        delimiter: ''
     precision:
       format:
-        delimiter: ""
+        delimiter: ''
     human:
       format:
-        delimiter: ""
+        delimiter: ''
         precision: 1
       storage_units:
-        # Storage units output formatting.
-        # %u is the storage unit, %n is the number (default: 2 MB)
-        format: "%n %u"
+        format: ! '%n %u'
         units:
           byte:
-            one: "Byte"
-            other: "Bytes"
-          kb: "KB"
-          mb: "MB"
-          gb: "GB"
-          tb: "TB"
-
+            one: Byte
+            other: Bytes
+          kb: KB
+          mb: MB
+          gb: GB
+          tb: TB
   support:
     array:
-      words_connector: ", "
-      two_words_connector: " und "
-      last_word_connector: " und "
-
+      words_connector: ! ', '
+      two_words_connector: ! ' und '
+      last_word_connector: ! ' und '
   activerecord:
     errors:
       template:
         header:
-          one: "Konnte dieses %{model} Objekt nicht speichern: 1 Fehler."
-          other: "Konnte dieses %{model} Objekt nicht speichern: %{count} Fehler."
-        body: "Bitte überprüfen Sie die folgenden Felder:"
-
+          one: ! 'Konnte dieses %{model} Objekt nicht speichern: 1 Fehler.'
+          other: ! 'Konnte dieses %{model} Objekt nicht speichern: %{count} Fehler.'
+        body: ! 'Bitte überprüfen Sie die folgenden Felder:'
       messages:
-        inclusion: "ist kein gültiger Wert"
-        exclusion: "ist nicht verfügbar"
-        invalid: "ist nicht gültig"
-        confirmation: "stimmt nicht mit der Bestätigung überein"
-        accepted: "muss akzeptiert werden"
-        empty: "muss ausgefüllt werden"
-        blank: "muss ausgefüllt werden"
-        too_long: "ist zu lang (nicht mehr als %{count} Zeichen)"
-        too_short: "ist zu kurz (nicht weniger als %{count} Zeichen)"
-        wrong_length: "hat die falsche Länge (muss genau %{count} Zeichen haben)"
-        taken: "ist bereits vergeben"
-        not_a_number: "ist keine Zahl"
-        greater_than: "muss größer als %{count} sein"
-        greater_than_or_equal_to: "muss größer oder gleich %{count} sein"
-        equal_to: "muss genau %{count} sein"
-        less_than: "muss kleiner als %{count} sein"
-        less_than_or_equal_to: "muss kleiner oder gleich %{count} sein"
-        odd: "muss ungerade sein"
-        even: "muss gerade sein"
-        record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: %{errors}"
-
-# Bibapp specific translations
+        inclusion: ist kein gültiger Wert
+        exclusion: ist nicht verfügbar
+        invalid: ist nicht gültig
+        confirmation: stimmt nicht mit der Bestätigung überein
+        accepted: muss akzeptiert werden
+        empty: muss ausgefüllt werden
+        blank: muss ausgefüllt werden
+        too_long: ist zu lang (nicht mehr als %{count} Zeichen)
+        too_short: ist zu kurz (nicht weniger als %{count} Zeichen)
+        wrong_length: hat die falsche Länge (muss genau %{count} Zeichen haben)
+        taken: ist bereits vergeben
+        not_a_number: ist keine Zahl
+        greater_than: muss größer als %{count} sein
+        greater_than_or_equal_to: muss größer oder gleich %{count} sein
+        equal_to: muss genau %{count} sein
+        less_than: muss kleiner als %{count} sein
+        less_than_or_equal_to: muss kleiner oder gleich %{count} sein
+        odd: muss ungerade sein
+        even: muss gerade sein
+        record_invalid: ! 'Gültigkeitsprüfung ist fehlgeschlagen: %{errors}'
   app:
-    about: "Über"
-    delete_selected: "Ausgewählte löschen"
-    faq: "FAQ"
-    go: "Los"
-    login: "Anmelden"
-    logout: "Abmelden"
-    account: "Konto"
-    signup: "Neu"
-    admin: "Administration"
-    search: "Suche"
-    search_within: "Suche in Ergebnissen"
-    select_all: "Alle auswählen"
-    saved: "Gespeichert"
-    advanced_search: "Fortgeschrittene Suche"
-    name: "Name"
-    description: "Beschreibung"
-    previous: "vorherige"
-    next: "nächste"
-    authorized: "Authorisierte Namen"
-    formats: "Formate"
-    years: "Jahre"
-    more_years: "Weitere Jahre"
-    more_people: "Weitere Personen"
-    more_groups: "Weitere Einrichtungen/Institute"
-    more_publications: "Weitere Bücher/Zeitschriften"
-    more_publishers: "Weitere Verlage"
-    bookmarks: "Social Bookmarking"
-    results: "Ergebnisse"
-    archive: "Datei für Archivierung vorbereiten"
-    imports: "Datei-Importe verwalten"
-    unknown: "unbekannt"
-    yes: "ja"
-    percentage: "Anteil"
-    powered: "Basierend auf "
-    keywords: "Schlüsselwörter"
-
+    about: Über
+    delete_selected: Ausgewählte löschen
+    faq: FAQ
+    go: Los
+    login: Anmelden
+    logout: Abmelden
+    account: Konto
+    signup: Neu
+    admin: Administration
+    search: Suche
+    search_within: Suche in Ergebnissen
+    select_all: Alle auswählen
+    saved: Gespeichert
+    advanced_search: Fortgeschrittene Suche
+    name: Name
+    description: Beschreibung
+    previous: vorherige
+    next: nächste
+    authorized: Authorisierte Namen
+    formats: Formate
+    years: Jahre
+    more_years: Weitere Jahre
+    more_people: Weitere Personen
+    more_groups: Weitere Einrichtungen/Institute
+    more_publications: Weitere Bücher/Zeitschriften
+    more_publishers: Weitere Verlage
+    bookmarks: Social Bookmarking
+    results: Ergebnisse
+    archive: Datei für Archivierung vorbereiten
+    imports: Datei-Importe verwalten
+    unknown: unbekannt
+    true: ja
+    percentage: Anteil
+    powered: ! 'Basierend auf '
+    keywords: Schlüsselwörter
   common:
     contributorships:
-      index: "Arbeiten der Person"
-      matches: "Mögliche Treffer"
-      analysis: "Archiv-Analyse"
-      verify: "Arbeiten bestätigen"
-      color: "RoMEO Farbe"
-      policy: "Richtlinien Archivierung"
-      allow_copy: "Verlagskopie"
-      unverified: "unbestätigt"
-      verified: "bestätigt"
-      denied: "abgelehnt"
-
+      index: Arbeiten der Person
+      matches: Mögliche Treffer
+      analysis: Archiv-Analyse
+      verify: Arbeiten bestätigen
+      color: RoMEO Farbe
+      policy: Richtlinien Archivierung
+      allow_copy: Verlagskopie
+      unverified: unbestätigt
+      verified: bestätigt
+      denied: abgelehnt
     groups:
-      index: "Einrichtungen/Institute"
-      new: "Einrichtung/Institut hinzufügen"
-      edit: "Einrichtung/Institut ändern"
-      destroy: "Einrichtung/Institut löschen"
-      confirm: "Einrichtung/Institut wirklich löschen?"
-      hide: "Einrichtung/Institut verstecken"
-      unhide: "Einrichtung/Institut anzeigen"
-      parent: "Übergeordnete Gruppe"
-      children: "Untergruppen"
-      members: "Mitglieder"
-      hidden: "Versteckte Einrichtungen/Institute anzeigen"
-      roles: "Rollen für Einrichtung/Institut ändern"
-
+      index: Einrichtungen/Institute
+      new: Einrichtung/Institut hinzufügen
+      edit: Einrichtung/Institut ändern
+      destroy: Einrichtung/Institut löschen
+      confirm: Einrichtung/Institut wirklich löschen?
+      hide: Einrichtung/Institut verstecken
+      unhide: Einrichtung/Institut anzeigen
+      parent: Übergeordnete Gruppe
+      children: Untergruppen
+      members: Mitglieder
+      hidden: Versteckte Einrichtungen/Institute anzeigen
+      roles: Rollen für Einrichtung/Institut ändern
     imports:
-      new: "Datei importieren"
-
+      new: Datei importieren
     name_strings:
-      edit: "Name ändern"
-      published: "Hat mit diesen Namen publiziert"
-      unknown: "Niemand unter diesem Namen registriert. Vielleicht ist die Person von einer anderen Institution."
-
+      edit: Name ändern
+      published: Hat mit diesen Namen publiziert
+      unknown: Niemand unter diesem Namen registriert. Vielleicht ist die Person von
+        einer anderen Institution.
     pen_names:
-      index: "Andere Namen"
-
+      index: Andere Namen
     people:
-      index: "Personen"
-      new: "Person hinzufügen"
-      edit: "Person ändern"
-      delete: "Person löschen"
-      confirm: "Diese Person wirklich löschen?"
-      image: "Photo"
-      types: "Arten der Arbeiten"
-      contributorships: "Arbeiten verwalten"
-      roles: "Rollen verwalten"
-      personal: "Persönliche Informationen"
-      import_csv: "Import via CSV"
-
+      index: Personen
+      new: Person hinzufügen
+      edit: Person ändern
+      delete: Person löschen
+      confirm: Diese Person wirklich löschen?
+      image: Photo
+      types: Arten der Arbeiten
+      contributorships: Arbeiten verwalten
+      roles: Rollen verwalten
+      personal: Persönliche Informationen
+      import_csv: Import via CSV
     publications:
-      show: "Zeitschrift/Buch"
-      index: "Zeitschriften/Bücher"
-      new: "Zeitschrift/Buch hinzufügen"
-      edit: "Zeitschrift/Buch ändern"
-      delete: "Zeitschrift/Buch löschen"
-      confirm: "Zeitschrift/Buch wirklich löschen?"
-      publisher: "Herausgegeben von"
-      authority: "Normdaten der Publikationen bearbeiten"
-
+      show: Zeitschrift/Buch
+      index: Zeitschriften/Bücher
+      new: Zeitschrift/Buch hinzufügen
+      edit: Zeitschrift/Buch ändern
+      delete: Zeitschrift/Buch löschen
+      confirm: Zeitschrift/Buch wirklich löschen?
+      publisher: Herausgegeben von
+      authority: Normdaten der Publikationen bearbeiten
     publishers:
-      index: "Verlage"
-      show: "Verlag"
-      new: "Verlag hinzufügen"
-      edit: "Verlag ändern"
-      delete: "Verlag löschen"
-      year: "Letztes Jahr"
-      authorized: "Autorisierter Titel"
-      authority: "Normdaten der Verlage bearbeiten"
-      sherpa: "Daten von SHERPA/RoMEO importieren"
-
+      index: Verlage
+      show: Verlag
+      new: Verlag hinzufügen
+      edit: Verlag ändern
+      delete: Verlag löschen
+      year: Letztes Jahr
+      authorized: Autorisierter Titel
+      authority: Normdaten der Verlage bearbeiten
+      sherpa: Daten von SHERPA/RoMEO importieren
     roles:
-      index: "Rollen aktualisieren"
-      new_admin: "Administrator hinzufügen"
-      new_editor: "Editor hinzufügen"
-
+      index: Rollen aktualisieren
+      new_admin: Administrator hinzufügen
+      new_editor: Editor hinzufügen
     search:
       results:
-        one: "1 Ergebnis"
-        other: "%{count} Ergebnisse"
-      refine: "Suche einschränken"
-      within: "In den Ergebnissen suchen"
-      query: "Suche nach: "
-
+        one: 1 Ergebnis
+        other: ! '%{count} Ergebnisse'
+      refine: Suche einschränken
+      within: In den Ergebnissen suchen
+      query: ! 'Suche nach: '
     users:
-      index: "Benutzer"
-      show: "Anzeigen"
-      show_all: "Alle Anzeigen"
-      new: "Benutzer hinzufügen"
-      edit: "Benutzer löschen"
-      delete: "Benutzer löschen"
-      role: "Rollen aktualisieren"
-
+      index: Benutzer
+      show: Anzeigen
+      show_all: Alle Anzeigen
+      new: Benutzer hinzufügen
+      edit: Benutzer löschen
+      delete: Benutzer löschen
+      role: Rollen aktualisieren
     works:
-      index: "Arbeiten"
-      show: "Arbeit"
-      new: "Arbeit hinzufügen"
-      edit: "Arbeit ändern"
-      delete: "Arbeit löschen"
-      confirm: "Diese Arbeit wirklich löschen?"
-      new_attachment: "Anhang hinzufügen"
-      authors: "Autoren der %{institution}"
-      coauthors: "Koautoren an der %{institution}"
-      contributors: "Betreuung durch"
-      recent: "Aktuelle Arbeiten"
-      recommendations: "Ähnliche Arbeiten an der %{institution}"
-      no_abstract: "Kein Abstract"
-      duplicate: "Dublettenkontrolle"
-
-#individual views
+      index: Arbeiten
+      show: Arbeit
+      new: Arbeit hinzufügen
+      edit: Arbeit ändern
+      delete: Arbeit löschen
+      confirm: Diese Arbeit wirklich löschen?
+      new_attachment: Anhang hinzufügen
+      authors: Autoren der %{institution}
+      coauthors: Koautoren an der %{institution}
+      contributors: Betreuung durch
+      recent: Aktuelle Arbeiten
+      recommendations: Ähnliche Arbeiten an der %{institution}
+      no_abstract: Kein Abstract
+      duplicate: Dublettenkontrolle
   admin:
     ready_to_archive:
-      ready: "Bereit zur Archivierung: %{count} verbleibend"
-      no_works: 'Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!'
+      ready: ! 'Bereit zur Archivierung: %{count} verbleibend'
+      no_works: Keine Werk sind als "Bereit zur Archivierung" gekennzeichnet!
     deposit:
-      date: "Einreichdatum"
-      information: "Informationen zur Volltextveröffentlichung im Repositorium"
-      repository: "Repositorium"
-      return: "Zurück zur Arbeit"
-      success: "Veröffentlichung der Ressource im Repositorium war erfolgreich."
-      title: "Titel"
-      treatment: "Behandlung der veröffentlichten Ressource"
-      uri: "URI der veröffentlichten Ressource"
+      date: Einreichdatum
+      information: Informationen zur Volltextveröffentlichung im Repositorium
+      repository: Repositorium
+      return: Zurück zur Arbeit
+      success: Veröffentlichung der Ressource im Repositorium war erfolgreich.
+      title: Titel
+      treatment: Behandlung der veröffentlichten Ressource
+      uri: URI der veröffentlichten Ressource
     duplicates:
       results:
-        zero: "Keine möglichen Dubletten"
-        one: "Eine mögliche Dublette"
-        other: "%{count} mögliche Dubletten"
-      works: "Dublettenkontrolle"
+        zero: Keine möglichen Dubletten
+        one: Eine mögliche Dublette
+        other: ! '%{count} mögliche Dubletten'
+      works: Dublettenkontrolle
     sherpa:
-      info1: "Die Verlagseinträge werden auf Basis der Daten von SHERPA/ROMEO aktualisiert. Lokale Änderungen können dabei überschrieben werden."
-      info2: "Die Aktualisierung der SHERPA-Daten kann einige Zeit in Anspruch nehmen."
-      update: "SHERPA-Daten aktualisieren"
-    tasks: "Administrative Aufgaben"
-
-#models
+      info1: Die Verlagseinträge werden auf Basis der Daten von SHERPA/ROMEO aktualisiert.
+        Lokale Änderungen können dabei überschrieben werden.
+      info2: Die Aktualisierung der SHERPA-Daten kann einige Zeit in Anspruch nehmen.
+      update: SHERPA-Daten aktualisieren
+    tasks: Administrative Aufgaben
