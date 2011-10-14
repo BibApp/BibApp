@@ -93,12 +93,6 @@ module SharedHelper
     end
   end
 
-  #Determines the pretty name of a particular Work Status
-  def work_state_name(work_state_id)
-    #Load Work States hash from personalize.rb
-    $WORK_STATUS[work_state_id]
-  end
-
   def keyword_filter(keyword, object)
     filter = [%Q(keyword_facet:"#{keyword.name}")]
     filter << %Q(#{object.class.to_s.downcase}_facet:"#{object.name}") if object

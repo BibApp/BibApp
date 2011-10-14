@@ -97,7 +97,7 @@ module ApplicationHelper
   #    OpenURL link text, base url, and query suffixes
   def find_openurl_info
     # Set the canonical resolver variables (from personalize.rb)
-    link_text = $WORK_LINK_TEXT
+    link_text = t('personalize.work_link_text')
     base_url = $WORK_BASE_URL
     suffix = $WORK_SUFFIX
     # #If we've already found this info for

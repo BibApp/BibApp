@@ -17,4 +17,12 @@ module TranslationsHelper
     role_name.gsub(/[ -]/, '_').downcase
   end
 
+  def t_sherpa_color_explanation(color_string_or_sym)
+    t("personalize.sherpa_colors.#{color_string_or_sym.to_s.downcase}")
+  end
+
+  def t_work_status(status_id)
+    t('personalize.work_status')[status_id.to_i]
+  end
+
 end
