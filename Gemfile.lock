@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/BibApp/tolk.git
-  revision: 5a4eeef74137328d3464fa93c54f39359ee85063
+  revision: 27afcff0363410c2bb2390e3a675c90254d2a18c
   branch: rails3
   specs:
     tolk (1.0)

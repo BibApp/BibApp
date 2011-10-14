@@ -98,10 +98,9 @@ group :development do
 #  if File.exist?(File.join(File.dirname(__FILE__), 'config', 'newrelic.yml'))
 #    gem 'newrelic_rpm'
 #  end
-  #We use a custom version of tolk to fix some loading issues that 
-  #are in the issues/pulls for the main tolk but haven't been 
-  #incorporated. If these get fixed then it'd be fine to revert
-  #to the canonical version.
+  #We use a custom version of tolk for two reasons:
+  # - some necessary requires are missing from the main version
+  # - we filter the personalize keys so that Tolk doesn't sync them
   gem 'tolk', :git => 'git://github.com/BibApp/tolk.git', :branch => 'rails3'
 end
 
