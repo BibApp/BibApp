@@ -1,1127 +1,139 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
-# Based on the i18n work done by Martin Fenner see https://github.com/mfenner/BibApp
-
-en:
-  app:
-    admin: "Admin"
-    about: "About"
-    account: "Account"
-    add: 'Add'
-    advanced: 'Advanced'
-    advanced_search: "Advanced Search"
-    all: 'All'
-    are_you_sure: 'Are you sure?'
-    archive: "Prepare for archiving full text"
-    ascending: 'Ascending'
-    authorized: "Authority controlled names"
-    authors: 'Authors'
-    back: 'Back'
-    batch_import: Batch Import
-    blank: ''
-    bookmarks: "Social Bookmarking"
-    count: 'Count'
-    create: 'Create'
-    created: 'Created'
-    date: 'Date'
-    delete_selected: "Delete selected"
-    descending: 'Descending'
-    description: "Description"
-    destroy: 'Destroy'
-    edit: 'Edit'
-    email: 'Email'
-    errors: 'Errors'
-    exception_with_message: 'Exception: %{message}'
-    flash_require_user: 'You must be logged in to access this page'
-    flash_require_no_user: 'You must be logged out to access this page'
-    faq: "FAQ"
-    file:
-      one: File
-      other: Files
-    go: "Go"
-    formats: "Formats"
-    home: Home
-    important: Important
-    imports: "Manage imports"
-    keywords: "Keywords"
-    login: "Login"
-    logout: "Logout"
-    more_groups: "More groups"
-    more_people: "More people"
-    more_publications: "More publications"
-    more_publishers: "More publishers"
-    more_years: "More years"
-    name: "Name"
-    next: "next"
-    order: 'Order'
-    percent_sure: "%{percentage}% sure"
-    percentage: "Percentage"
-    personal_info: "Personal Info"
-    photo: Photo
-    powered: "Powered by"
-    previous: "previous"
-    remove: "Remove"
-    result:
-      one: "Result"
-      other: "Results"
-    result_with_query:
-      one: "Result for:"
-      other: "Results for:"
-    save: "Save"
-    saved: "Saved"
-    score: Score
-    search: "Search"
-    search_within: "Search Within"
-    select: Select
-    select_all: "Select All"
-    send_to: 'Send to'
-    show: Show
-    signup: "Signup"
-    sort_by: Sort By
-    source: "Source"
-    status: 'Status'
-    system: 'System'
-    title: Title
-    total: Total
-    unknown: "Unknown"
-    update: 'Update'
-    upload: 'Upload'
-    url: 'URL'
-    web_password: 'Web Password'
-    year: "Year"
-    years: "Years"
-    yes: "yes"
-    cancel: "Cancel"
-
-  common:
-
-    admin:
-      flash_update_publishers_successful: "Update successful."#individual views
-      flash_update_publishers_error: "Error updating publisher data: %{message}"
-
-    attachments:
-      flash_new_error: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
-      flash_create_warning: "No file was uploaded."
-      flash_create_notice:
-        one: "Attachment was successfully uploaded"
-        other: "%{count} attachments were successfully uploaded"
-      flash_update_warning: "No file was uploaded."
-      flash_update_notice: "Attachment was successfully uploaded"
-      flash_delete_notice: "Attachment was successfully deleted"
-      add_files: "[Add More Files]"
-      agree_to_terms: "I agree to the terms of the"
-      deposit_license: "Deposit License"
-      local_repository: "my local repository"
-      must_agree_to_license: "You must agree to the license terms before you can upload files."
-      upload_files: "Upload file(s)"
-      uploading_files: "Uploading files..."
-      delete_image: "delete image"
-      upload_image: "Upload image"
-      uploading_image: "Uploading your image..."
-      upload_with_class: "Upload %{class}"
-      delete_person: "Delete this person"
-      add_person: "Add a new person"
-      form_person_title: "%{display_name}: Photo"
-
-    authentications:
-      flash_sign_in: "Signed in successfully."
-      flash_authentication: "Authentication successful."
-      flash_create: "User created and signed in successfully."
-      flash_destroy: "Successfully destroyed authentication."
-
-    contributorships:
-      index: "Works of a person"
-      matches: "Possible Matches"
-      analysis: "Archive Analysis"
-      verify: "Verify contributorship"
-      color: "RoMEO Color"
-      policy: "Policy"
-      allow_copy: "Publishers Copy"
-      unverified: "unverified"
-      verified: "verified"
-      denied: "denied"
-      index_title: "%{display_name}: %{status} Contributorships"
-      archivable_title: "Archival Analysis: %{display_name}"
-      flash_act_on_many:  "Contributorships were successfully %{action}."
-
-    groups:
-      new: "Add group"
-      edit: "Edit group"
-      destroy: "Delete group"
-      confirm: "Really delete group?"
-      hide: "Hide group"
-      unhide: "Unhide group"
-      parent: "Parent group"
-      children: "Children"
-      members: "Members"
-      hidden: "Show hidden groups"
-      roles: "Change Roles"
-      flash_create_success: "Group was successfully created."
-      flash_create_duplicate: "This group already exists"
-      hidden_groups: 'Hidden Groups'
-      flash_hide_success: "Group was successfully removed."
-      flash_hide_failure: "Group cannot be hidden. It has visible child groups: %{children}"
-      flash_unhide_success: "Group was successfully unhidden."
-      flash_unhide_failure: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
-      flash_destroy_success: "Group was successfully removed."
-      flash_destroy_failure_memberships: "Group cannot be deleted. Memberships exist."
-      flash_destroy_failure_children: "Group cannot be deleted. It has visible child groups: %{child_list}"
-
-    imports:
-      new: "Import File"
-      unauthorized: 'Unauthorized.'
-      flash_create_success: "Thanks for the import!  It will take a few minutes to process.  We'll send you an email when it is ready for review."
-      flash_create_failure: "Sorry... but there was an error uploading your import file."
-      flash_update_accepted: "Batch accepted -- The imported data will appear shortly."
-      flash_update_rejected: "Batch rejected"
-      flash_update_error: "Sorry... but there was an error updating the import."
-      deleted_person: 'Deleted Person'
-      header: "Add Works"
-      person_header: "Add Works for %{person_link}"
-      batch_id: "Batch-%{id}"
-
-    keywords:
-      timeline: 'Timeline'
-
-    memberships:
-      new_title: "%{name}: Group Memberships"
-      flash_create_multiple_membership: "One or more groups could not be joined; a membership already exists."
-      flash_create_multiple_success: "Groups were successfully joined."
-      flash_create_multiple_privileges: "One or more groups could not be joined; you have insufficient privileges"
-
-    name_strings:
-      edit: "Edit name"
-      published: "Has published under this name"
-      unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
-
-    passwords:
-      flash_create_sent: "We sent a new password to %{email}"
-      flash_create_no_account: "Sorry, we cannot find that account.  Try again."
-      flash_update_success: "Your password was updated successfully."
-      flash_update_bad_match: "Sorry, your new password didn't match the confirmation.  Try again."
-      flash_update_incorrect: "Sorry, your old password was incorrect. Try again."
-
-    people:
-      new: "Add a person"
-      edit: "Edit person"
-      delete: "Delete person"
-      confirm: "Really delete this person?"
-      image: "Photo"
-      types: "Types of work"
-      contributorships: "Manage works"
-      roles: "Manage roles"
-      personal: "Personal Information"
-      import_csv: "CSV load"
-      ldap_fail_configuration: "LDAP is not properly configured"
-      ldap_fail_authentication: "Error authenticating LDAP user."
-      ldap_fail_too_many: "Too many LDAP results"
-      edit_title: "%{name}: Personal Info"
-      flash_create_success: "Person was successfully created."
-      flash_create_field_missing: "One or more required fields are missing."
-      flash_create_person_exists: 'This person already exists in the BibApp system: <a href="%{url}">view their record</a>.'
-      flash_update_success: "Personal info was successfully updated."
-      flash_update_failure: "One or more required fields are missing."
-      file_unreadable: "The File you submitted could not be read."
-      flash_batch_csv_create_bad_encoding: "The character encoding could not be determined or could not be converted to UTF-8."
-      file_unconvertible: "The file could not be converted to UTF8."
-      file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
-      batch_csv_error: "An error was generated processing your request."
-      edit_header: "%{link}: Personal Info"
-    pub_common:
-      flash_update_multiple_generic_cancel: 'Cancelled authority selection'
-      flash_update_multiple_generic_not_unique: 'You must select one record as the authority.'
-      flash_operate_on_box_generic: "One or more publications could not be found."
-    publications:
-      new: "Add a Publication"
-      edit: "Edit this Publication"
-      delete: "Delete this Publication"
-      confirm: "Really delete this Publication?"
-      publisher: "Published by"
-      authority: "Admin Publication Authorities"
-      flash_destroy_success: "Publications were successfully deleted."
-      flash_destroy_failure: "This publication has %{count} work associated with it, which must be altered or removed before this publication can be deleted."
-      publication_name: 'Publication Name'
-
-    publishers:
-      new: "Add a Publisher"
-      edit: "Edit this Publisher"
-      delete: "Delete this Publisher"
-      confirm: "Really delete this Publisher?"
-      year: "Year"
-      authorized: "Authorized names"
-      authority: "Admin Publisher Authorities"
-      sherpa: "Update publisher data from SHERPA/RoMEO"
-
-    roles:
-      index: "Manage Roles"
-      new_admin: "Add administrator"
-      new_editor: "Add editor"
-      description_class_and_name: " of %{class} '%{name}'"
-      description_class: " of %{class}"
-      description_generic: " (generic role)"
-      admin:
-        one: 'Admin'
-        other: 'Admins'
-      editor:
-        one: 'Editor'
-        other: 'Editors'
-      index_header_system: "System-wide Roles: %{app_name}"
-      index_header_group: "Roles for Group: %{group}"
-      index_header_person: "Roles for Person: %{person}"
-      form_header_system: "Add System-wide %{role}: %{app_name}"
-      form_header_group: "Add %{role} on Group: %{group}"
-      form_header_person: "Add %{role} on Person: %{person}"
-
-    romeo:
-      green: "green"
-      blue: "blue"
-      yellow: "yellow"
-      white: "white"
-      black: "black"
-      unknown: 'unknown'
-
-    search:
-      results:
-        one: "1 hit"
-        other: "%{count} hits"
-      refine: "Refine Search"
-      within: "Search within the results"
-      query: "Search for: "
-    shared:
-      eds: 'Eds.'
-      more: 'more...'
-      in: 'In '
-    users:
-      show: "View"
-      show_all: "View all"
-      new: "Add a user"
-      edit: "Edit user"
-      delete: "Delete user"
-      confirm: "Really delete this user?"
-      role: "Update Roles"
-      flash_create: "Thanks for signing up!  You should receive an email (%{email}) shortly which will allow you to activate your account."
-      flash_update_no_change: "You entered your current email"
-      flash_update_success: 'NOTICE An email has been sent to #{email} with a confirmation link. Your email address will be updated after you follow the link in that email.'
-      flash_update_email_success: "Email updated"
-      flash_update_email_duplicate: "Problem updating email - this email may be in use already. Try again."
-      flash_update_email_invalid: "Problem updating email - your code or new email is incorrect. Try again."
-      flash_activate: "Signup is complete!  You may now login using your email and password."
-    user_sessions:
-      flash_create_successful: 'Login successful!'
-      flash_destroy_successful: "Logout successful!"
-    works:
-      new: "Add a work"
-      edit: "Edit work"
-      delete: "Delete work"
-      confirm: "Really delete this work?"
-      new_attachment: "Add attachment"
-      authors: "Authors at %{institution}"
-      coauthors: "Coauthors at %{institution}"
-      contributors: "Contributor"
-      recent: "Recent works"
-      recommendations: "Similar works at %{institution}"
-      no_abstract: "No abstract available"
-      duplicate: "Show duplicates"
-      orphans: 'Orphaned works'
-      flash_create: 'Work was successfully created.'
-      flash_update: "Work was successfully updated."
-      flash_destroy_success: "Works were successfully deleted."
-      flash_destroy_has_duplicates: "This work has duplicates, which must be altered or deleted before this work can be deleted."
-      flash_destroy_multiple_successful: "Works were successfully deleted."
-      flash_destroy_multiple_privileges: "One or more works could not be deleted, as you have insufficient privileges"
-      et_al: "et al."
-      location_given: "Location Given"
-      conference_location: "Conference Location"
-      location: "Location"
-      publication_place: "Publication Place"
-      add_works: "Add Works"
-      add_works_for_person: "Add Works for %{person_link}"
-      update_author_list: "Successfully updated order of authors!"
-      update_editor_list: "Successfully updated order of editors!"
-      update_list: "Successfully updated order of list!"
-  admin:
-    ready_to_archive:
-      ready: "Ready to Archive: %{count} remain"
-      no_works: 'No works are marked "ready to archive"!'
-    deposit:
-      date: "Date Deposited"
-      information: "Deposit Information"
-      repository: "Repository"
-      return: "Return to work"
-      success: "Deposit was successful!"
-      title: "Title"
-      treatment: "Treatment Deposited Item"
-      uri: "URI of Deposited Item"
-    duplicates:
-      results:
-        zero: "No duplicates"
-        one: "1 possible duplicate"
-        other: "%{count} possible duplicates"
-      works: "Duplicate Works"
-    sherpa:
-      info1: "Publisher records will be replaced with those retrieved from SHERPA/RoMEO; local changes may be lost."
-      info2: "SHERPA data may take several moments to load."
-      update: "Update SHERPA Data"
-    tasks: "Administrative Tasks"
-
-  contributorships:
-    act_on_multiple_form:
-      apply_to_selection: "Apply to selection"
-      verify: verify
-      unverify: unverify
-      deny: deny
-      action: "Action"
-    archive_analysis_table:
-      romeo_color: 'RoMEO<br />Color'
-      archiving_policy: "Archiving Policy"
-    archive_publications_table:
-      pub_copy_allowed: "Pub Copy<br />Allowed"
-    claim:
-      verify: 'Verify'
-      deny: 'Deny'
-    contributorship:
-      verified: 'Verified'
-    admin:
-      header: 'Admin: Unverified Contributorships'
-      no_people: 'Congratulations! Nothing to do here'
-      matches: 'Potential Matches'
-    archivable:
-      header: "Archival Analysis: %{person_link}"
-    index:
-      delete_person: "Delete this person"
-      delete_person_confirm: 'Permanently delete this person? This cannot be undone.'
-      add_person: "Add a new person"
-    verified:
-      verified: 'Verified'
-
-  groups:
-    complete_index:
-      add_group: 'Add a Group'
-      show_hidden: 'Show Hidden Groups'
-    form:
-      parent_group: 'Parent Group'
-    group_table:
-      group_name: 'Group Name'
-      parent_group: 'Parent Group'
-      members: 'Members'
-    recent_works_box:
-      recent_works: 'Recent Works'
-    related_groups_box:
-      belongs_to: 'Belongs to'
-      subgroups: 'Sub-Groups'
-    work_types_box:
-      types_of_work: 'Types of Work'
-    edit:
-      unhide: "Unhide Group"
-      hide: "Hide Group"
-      delete: "Delete Group"
-      delete_confirm: 'Permanently delete this group? This cannot be undone.'
-      header: "Edit %{link_to_group}"
-    hidden:
-      header: 'Hidden Groups'
-      empty: 'No hidden groups'
-    new:
-      header: 'Add a Group'
-    show:
-      add: 'Add a Group'
-      edit: 'Edit this group'
-      roles: 'Manage Roles'
-
-  imports:
-    accepted:
-      text: "This import was <strong>accepted</strong>"
-      warning: "This import has been accepted, but contains no works. They may have been deleted."
-    batch_import_form:
-      legend: "Batch Import (RIS | Medline | Refworks XML)"
-      text: "Upload a file containing the citations"
-    default:
-      accept: 'Accept Batch'
-      reject: 'Reject Batch'
-      blank: "This import is reviewable, but contains no works. They may have been deleted."
-      not_blank: "Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear."
-    details_generic:
-      header: 'Batch report'
-    details_person:
-      header: 'Batch report'
-    errors:
-      no_errors: "No errors encountered during import."
-    import_names:
-      header: 'Import Names'
-      text: 'Select missing variations of your name.'
-    index_table:
-      batch: 'Batch #'
-      imported_for: 'Imported For'
-    matched:
-      matched: 'Matched'
-      matched_total: "%{count} work to %{imported_for}."
-      remaining_total: "%{count} remain to match."
-    pen_names:
-      my_names: 'My Names'
-      works_matched: 'Works Matched'
-    processing:
-      text: "This import is in processing. You'll receive an <strong>email</strong> when the batch is complete"
-    rejected:
-      text: "This import was <strong>rejected</strong> and all works associated with the import were destroyed."
-    work_counts:
-      new_works: "New works"
-      duplicate_works: "Duplicate works"
-    work_type_list:
-      header: 'Select a type'
-    works_destroy_form:
-      submit: 'Delete selected works'
-    works_imported:
-      header: 'Works Imported'
-    index:
-      link: 'Add an import'
-      header: "Imports for %{email}"
-    new:
-      show_all: 'Show all Imports'
-      add_import: 'Add an Import'
-    show:
-      show: 'Show my imports'
-      add: 'Add an import'
-      header: 'Review Batch'
-      subheader: "Imported For %{imported_for}"
-  keywordings:
-    edit:
-      header: 'Editing keywording'
-    index:
-      header: 'Listing keywordings'
-      new: 'New keywording'
-    new:
-      header: 'New keywording'
-
-  keywords:
-    timeline_list:
-      no_data: 'No data'
-    edit:
-      heading: 'Editing keyword'
-    index:
-      heading: 'Listing keywords'
-      no_keywords: 'No keywords exist.'
-      new_keyword: 'New keyword'
-    new:
-      heading: 'New keyword'
-    timeline:
-      handle_alt: 'Drag left or right'
-      cloud_header: 'Popular Research Topics by Year'
-      chart_header: 'Work Types by Year'
-      chart_loading: 'loading...'
-  layouts:
-    application:
-      default_title: 'Find an Expert'
-    error:
-      default_title: 'Find an Expert'
-  memberships:
-    action_links:
-      all_groups: 'All Groups'
-    group:
-      leave: 'Leave group'
-      confirm: "Are you sure you want to leave this group?"
-      year_joined: 'Year Joined'
-      year_left: 'Year Left'
-    join_groups_form:
-      submit: 'Join selected groups'
-    non_member_groups:
-      searching_for: 'Searching for'
-      no_groups: 'No groups found'
-    search_form:
-      submit: 'Search Groups'
-    new:
-      delete_person: "Delete this person"
-      delete_confirm: 'Permanently delete this person? This cannot be undone.'
-      add_person: "Add a new person"
-      group_memeberships: 'Group Memberships'
-
-  name_strings:
-    edit:
-      header: "Edit the NameString: %{name}"
-    index:
-      add: 'Add a NameString'
-    new:
-      header: 'Enter a new NameString'
-    show:
-      edit_link: 'Edit this name string'
-      have_published: 'I have published using this name'
-      no_claim: "Nobody at %{university_name} has claimed this name. This might be somebody from another campus."
-
-  passwords:
-    edit:
-      header: 'Change Password'
-      old: "Old Password"
-      new: "New Password"
-      confirm: "Confirm New Password"
-      submit: "Update Password"
-    new:
-      header: "Forgot Password"
-      legend: "Request New Password"
-      submit: "Send Password"
-
-  pen_names:
-    new_namestring_form:
-      add_text: 'Add a name string (ex. "Smith, J")'
-    search_for_namestrings:
-      search_text: 'Search other last names to add suggestions (ex. "Smith")'
-    suggested_namestrings:
-      no_suggestions: 'There are no immediate suggestions for'
-    name_string_filter:
-      no_results: "<strong>%{phrase}</strong> returned no results"
-    new:
-      delete: "Delete this person"
-      confirm: "Permanently delete this person? This cannot be undone."
-      current: "Current pen names"
-      suggested: "Suggested pen names"
-      instructions: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
-      explanation: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
-
-  people:
-    admin_actions:
-      edit: "Edit this Person"
-      add: "Add Works"
-      manage_contributorships: "Manage Contributorships"
-      manage_roles: "Manage Roles"
-      archive: "Archive Analysis"
-    edit_actions:
-      personal_info: 'Personal Info'
-    form:
-      disable: 'Saving...'
-    ldap_search:
-      explanation: 'Search campus directory (to pre-populate person information)'
-      example: 'Ex: Smith, John OR Smith, J'
-      results: 'Search results'
-      no_results: 'No results for %{query}'
-      failed:  "Search failed: %{message}."
-    people_table:
-      recent_publication: 'Recent Publication'
-    show_work_types:
-      header: 'Types of Work'
-    show_works:
-      recent: 'recent additions'
-    batch_csv_show:
-      legend_present: CSV Upload
-      legend_absent: Select a comma delimited file
-      select_file: Select a CSV Comma delimited file for batch processing.
-    edit:
-      delete: 'Delete this person'
-      confirm: 'Permanently delete this person? This cannot be undone.'
-      add: "Add a new person"
-    new:
-      header: 'New Person'
-  pub_common:
-    authority_actions:
-      submit: 'Set Authority'
-    authority_form:
-      legend: 'Add Records and Set Authority'
-      submit: "Set Authority"
-    show:
-      description: 'Latest %{university_name} work from %{object_name}'
-  publications:
-    form:
-      auth_record: 'Publication Authority Record'
-      save_show: "Save and show"
-      save_go: "Save and go to list"
-    show_authority:
-      auth_name: 'authorized name for'
-    show_not_authority:
-      header: 'Authorized Title'
-    show_publisher:
-      published_by: 'Published by'
-    authorities:
-      instructions: 'To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.'
-    edit:
-      confirm: "Permanently delete this publication? This cannot be undone."
-  publishers:
-    form:
-      copy_allowed: "Publisher's Copy Allowed?"
-      auth_record: 'Publisher Authority Record'
-      save_show: "Save and show"
-      save_go: "Save and go to list"
-    index_table:
-      publisher_name: 'Publisher Name'
-      recent_year: "Recent Year"
-    authorities:
-      instructions: 'To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.'
-    show:
-      auth_name: authorized name for
-      auth_title: Authorized Title
-  roles:
-    form:
-      has_permissions: "Already has %{role} permissions"
-      has_implicitly: "Has role implicitly"
-      remove: ' [remove]'
-      add: "Add as %{role}"
-    index:
-      add_admins: 'Add Administrators'
-      add_editors: "Add Editors"
-      no_admins: "No administrators currently assigned."
-      no_editors: "No editors currently assigned."
-  search:
-    advanced_search_form:
-      legend: Advanced Search
-      keywords_text: "Return items with these words appearing anywhere"
-      title_text: "Return items with these words in the title"
-      authors_text: "Return items by author"
-      groups_text: "Return items by groups"
-      issn_isbn_text: "Return item associated with the standard number"
-      restrict_date: "Return only items published from"
-      to: 'to'
-    no_hits:
-      error: "Sorry, your search for &ldquo;&{query}&rdquo; came up empty."
-      suggestions: Suggestions
-      double_check: Double check your spelling.
-      different_keywords: Try different keywords.
-      advanced_search: Try our advanced search options.
-    spelling_suggestions:
-      did_you_mean: Did you mean
-  shared:
-    application_error:
-      header: "Error 500: Something is *very* wrong!"
-      list_1: "Don't worry, but %{link} is unexpectedly broken."
-      list_2: "It's okay, because %{link} has emailed us to say so."
-      list_3: "Need to contact someone? Email:"
-      email_subject: "%{app_name} Support"
-    coauthors:
-      heading: "Co-authors at %{university_name}"
-    coauthors_table:
-      header: "%{university_name} Co-Authors"
-      last_name: 'Last Name'
-      work_count: '# of Works'
-    contribution_actions:
-      verify: Verify
-      deny: Deny
-    facet:
-      more: "More %{heading}"
-    facets:
-      heading: Refine Results
-      formats: Formats
-    file_upload:
-      select_file: Select a File
-    footer:
-      powered_by: 'Powered by'
-    keyword_cloud:
-      header: Popular research topics
-      submit: Load Timeline Views
-    not_found:
-      title: "Error 404: Page not found"
-      bad_link: "You may have followed a link to a %{type} no longer at %{university_name}."
-      try_searching: Did you try searching? Enter a keyword(s) in the search field above.
-    upload_form:
-      upload: "Upload File"
-      submit: 'Add Batch'
-      disable: "Importing Batch..."
-  users:
-    edit:
-      header: "Edit My Account"
-      legend: "User Account"
-      change_password: "Change Password"
-      important_text: 'When you submit this form, you will receive a message with a confirmation link at the new email address above. Your email address will not be changed until <em>after</em> you visit this confirmation link.'
-    new:
-      header: 'Create an Account'
-      legend: 'User Account'
-      submit: "Sign Up"
-    show:
-      header: 'User Account (%{email})'
-      account_information: 'Account Information'
-      role_label: "Roles in %{app_name}"
-      remove: " [remove]"
-  user_sessions:
-    federated_login_form:
-      header: 'Login using external credentials'
-      button_open_id: "Sign in With %{name} OpenID"
-      generic: 'Generic'
-      button_oauth: 'Sign in With %{name}'
-    local_login_form:
-      header: 'Login using local (%{app_name}) credentials'
-      remember: "Remember Me"
-      cookies: "(requires browser cookies be enabled)"
-      forgot_password: "Forgot Password"
-      sign_up: "Sign Up"
-      submit: "Log in"
-    show_options_form:
-      send_to: 'Send to'
-  works:
-    forms:
-      fields:
-        author_list_item:
-          remove: '[remove]'
-        author_name_strings:
-          role: "%{role}(s)"
-          example: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
-          remove: '[remove]'
-          add: "[add more %{role}s]"
-        contributor_list_item:
-          remove: '[remove]'
-        contributor_name_strings:
-          label: "Contributor(s)"
-          instructions: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
-          add: "[add more contributors]"
-          remove: "[remove]"
-        editor_name_strings:
-          label: 'Editor(s):'
-          add: "Add Editor to List"
-          drag: "(Drag and drop names to reorder editors in list)"
-        form_buttons:
-          save: 'Save Changes'
-          saving: "Saving..."
-        keywords:
-          label: "Keyword(s)"
-          instructions: "When adding multiple keywords, separate them with semicolons (;)"
-        merge_author_name_strings:
-          label: 'Author(s)'
-          instructions: "(Drag and drop names to reorder authors in list)"
-        merge_editor_name_strings:
-          label: 'Editor(s)'
-          instructions: "(Drag and drop names to reorder editors in list)"
-        merge_form_buttons:
-          delete_dup: "Save Accepted Work and Delete Duplicate"
-          keep_dup: "Save Accepted Work and Keep Duplicate"
-        merge_keywords:
-          label: 'Keyword(s)'
-        merge_publications:
-          label: 'Periodical Title'
-        merge_tags:
-          label: 'Tag(s)'
-        publication:
-          label: "Publication Title"
-        tags:
-          label: 'Tag(s)'
-          add: "Add Tag to List"
-        title_secondary:
-          label: 'Alternate Title'
-        title_tertiary:
-          label: 'Series Title'
-      form_add_batch:
-        legend: 'Add Batch (RIS | Medline | Refworks XML)'
-        instructions: "Either upload a file containing the citations, or cut and paste the citations into the box below."
-        upload: "Upload File:"
-        paste: "Or, Paste Citations:"
-        add: "Add Batch"
-        disable: "Parsing and Importing Batch..."
-    layouts:
-      merge_form:
-        duplicate: 'Duplicate work'
-        accepted: 'Accepted work'
-    metadata:
-      links:
-        label: 'DOI/URL'
-    admin:
-      legend: 'Administrative Tasks'
-      link: "Deposit Immediately via SWORD"
-    attachments:
-      local_library: 'Local Library Link'
-      download_page: 'Download Page'
-      download_file: 'Download File'
-    change_type_form:
-      label: 'Change Type'
-    first_works:
-      recent: 'Recent additions'
-    local_authors:
-      heading: '%{university_name} Authors'
-    local_recommendations:
-      heading: 'Related %{university_name} Work'
-    edit:
-      delete_link: 'Delete this work'
-      confirm: "Permanently delete this work? This cannot be undone."
-      header: "Edit a Work"
-    index:
-      add: 'Add a Work'
-      view_orphans: "View orphaned works"
-      heading: 'At the library, we <span class="hearts"> &hearts;</span> our researchers.'
-    merge_duplicates:
-      header: 'Duplicate work side-by-side editor'
-      instructions: "Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to save changes."
-      flash_excluded: "%{work} is not a possible duplicate for this work."
-      flash_not_accepted: "This is a <strong>%{work_status}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
-    new:
-      header: 'Select a type'
-    orphans:
-          header: 'Orphaned works'
-          submit: "Delete checked works"
-          confirm: "Are you sure? This operation cannot be undone."
-    show:
-      edit: "Edit this work"
-      archive: "Archive Research"
-      deposit: "Deposit Attachments"
-  activerecord:
-    models:
-      artwork:
-        one: 'Artwork'
-        other: 'Artworks'
-      attachment:
-        one: Attachment
-        other: Attachments
-      authentication:
-        one: Authentication
-        other: Authentications
-      book_review:
-        one: 'Book Review'
-        other: 'Book Reviews'
-      book_section:
-        one: 'Book Section'
-        other: 'Book Sections'
-      book_whole:
-        one: 'Book Whole'
-        other: 'Books Whole'
-      composition:
-        one: 'Composition'
-        other: 'Compositions'
-      conference_paper:
-        one: 'Conference Paper'
-        other: 'Conference Papers'
-      conference_poster:
-        one: 'Conference Poster'
-        other: 'Conference Posters'
-      conference_proceeding_whole:
-        one: 'Conference Proceeding (Whole)'
-        other: 'Conference Proceedings (Whole)'
-      content_file:
-        one: 'Content File'
-        other: 'Content Files'
-      contributorship:
-        one: 'Contributorship'
-        other: 'Contributorships'
-      dissertation_thesis:
-        one: 'Dissertation / Thesis'
-        other: 'Dissertations / Theses'
-      exhibition:
-        one: 'Exhibition'
-        other: 'Exhibitions'
-      external_system:
-        one: External System
-        other: External Systems
-      external_system_uri:
-        one: External System URI
-        other: External System URIs
-      generic:
-        one: 'Generic / Other'
-        other: 'Generics / Others'
-      grant:
-        one: Grant
-        other: Grants
-      group:
-        one: 'Group'
-        other: 'Groups'
-      identifier:
-        one: 'Identifier'
-        other: 'Identifiers'
-      image:
-        one: 'Image'
-        other: 'Images'
-      import_file:
-        one: 'Import File'
-        other: 'Import Files'
-      isbn:
-        one: 'ISBN'
-        other: 'ISBNs'
-      isrc:
-        one: 'ISRC'
-        other: 'ISRCs'
-      issn:
-        one: 'ISSN'
-        other: 'ISSNs'
-      journal_article:
-        one: Journal Article
-        other: Journal Articles
-      journal_whole:
-        one: Journal (Whole)
-        other: Journals (Whole)
-      keyword:
-        one: 'Keyword'
-        other: 'Keywords'
-      membership:
-        one: 'Membership'
-        other: 'Memberships'
-      monograph:
-        one: Monograph
-        other: Monographs
-      name_string:
-        one: 'Name String'
-        other: 'Name Strings'
-      patent:
-        one: 'Patent'
-        other: 'Patents'
-      pen_name:
-        one: 'Pen Name'
-        other: 'Pen Names'
-      performance:
-        one: Performance
-        other: Performances
-      person:
-        one: 'Person'
-        other: 'People'
-      presentation_lecture:
-        one: 'Presentation / Lecture'
-        other: 'Presentations / Lectures'
-      publication:
-        one: 'Publication'
-        other: 'Publications'
-      publisher:
-        one: 'Publisher'
-        other: 'Publishers'
-      recording_moving_image:
-        one: 'Recording (Moving Image)'
-        other: 'Recordings (Moving Image)'
-      recording_sound:
-        one: 'Recording (Sound)'
-        other: 'Recordings (Sound)'
-      report:
-        one: 'Report'
-        other: 'Reports'
-      role:
-        one: Role
-        other: Roles
-      system:
-        one: System
-        other: Systems
-      tag:
-        one: Tag
-        other: Tags
-      tagging:
-        one: Tagging
-        other: Taggings
-      user:
-        one: 'User'
-        other: 'Users'
-      web_page:
-        one: 'Web Page'
-        other: 'Web Pages'
-      work:
-        one: 'Work'
-        other: 'Works'
-    attributes:
-      artwork:
-        title_primary: Title
-        title_tertiary: Title Series
-        publisher: Institution or Collection Name
-        publication_date: Date of Composition
+--- 
+en: 
+  activerecord: 
+    attributes: 
+      artwork: 
+        publication_date: "Date of Composition"
         publication_place: Location
-      book_review:
-        publication: Journal Title
+        publisher: "Institution or Collection Name"
+        title_primary: Title
+        title_tertiary: "Title Series"
+      book_review: 
         issn_isbn: ISSN
-      book_section:
-        title_primary: Article/Chapter Title
-        title_secondary: Book Title
-        publication: Book Title
+        publication: "Journal Title"
+      book_section: 
         issn_isbn: ISBN
-      book_whole:
-        end_page: Total Pages
-        pages: Total Pages
+        publication: "Book Title"
+        title_primary: "Article/Chapter Title"
+        title_secondary: "Book Title"
+      book_whole: 
+        end_page: "Total Pages"
+        issn_isbn: ISBN
+        pages: "Total Pages"
         title_primary: Title
+      composition: 
+        publication_place: Location
+      conference_paper: 
+        date_range: "Conference Dates"
         issn_isbn: ISBN
-      composition:
+        location: "Conference Location"
+        publication: "Conference Title"
         publication_place: Location
-      conference_paper:
-        title_secondary: Conference Title
-        location: Conference Location
+        title_secondary: "Conference Title"
+      conference_poster: 
+        date_range: "Conference Dates"
+        location: "Conference Location"
+        publication: "Conference Title"
+        publication_date: "Date Presented"
         publication_place: Location
-        publication: Conference Title
-        date_range: Conference Dates
+        title_secondary: "Conference Title"
+      conference_proceeding_whole: 
+        date_range: "Conference Dates"
+        end_page: "Total Pages"
         issn_isbn: ISBN
-      conference_poster:
-        title_secondary: Conference Title
-        publication_date: Date Presented
-        location: Conference Location
+        location: "Conference Location"
+        pages: "Total Pages"
         publication_place: Location
-        date_range: Conference Dates
-        publication: Conference Title
-      conference_proceeding_whole:
-        pages: Total Pages
-        end_page: Total Pages
+      dissertation_thesis: 
+        end_page: "Total Pages"
+        publication_date: "Degree Date"
+        publisher: "Degree Granting Institution"
+      exhibition: 
+        date_range: "Exhibition Dates"
         publication_place: Location
-        location: Conference Location
-        date_range: Conference Dates
-        issn_isbn: ISBN
-      dissertation_thesis:
-        publisher: Degree Granting Institution
-        publication_date: Degree Date
-        end_page: Total Pages
-      exhibition:
-        date_range: Exhibition Dates
         publisher: Venue
-        publication_place: Location
-      grant:
-        date_range: Dates Funded
+      grant: 
+        date_range: "Dates Funded"
+        identifier: "Grant Identifier"
         publisher: Institution
-        sponsor: Funding Agency / Sponsor
-        identifier: Grant Identifier
-      journal_article:
-        title_primary: Article Title
-        publication: Journal Title
+        sponsor: "Funding Agency / Sponsor"
+      journal_article: 
         issn_isbn: ISSN
-      journal_whole:
+        publication: "Journal Title"
+        title_primary: "Article Title"
+      journal_whole: 
         date_range: Dates
         issn_isbn: ISSN
-      monograph:
-        end_page: Total Pages
-        pages: Total Pages
+      monograph: 
+        end_page: "Total Pages"
         issn_isbn: ISBN
-      patent:
-        date_range: Filing Date
-        publication_date: Date Issued
-        identifier: Patent Number
-      performance:
-        date_range: Performance Date
-        publication: Title of Larger Performance
+        pages: "Total Pages"
+      patent: 
+        date_range: "Filing Date"
+        identifier: "Patent Number"
+        publication_date: "Date Issued"
+      performance: 
+        date_range: "Performance Date"
+        publication: "Title of Larger Performance"
+        publication_place: Location
         publisher: Venue
-        publication_place: Location
-      person:
-        uid: University ID
-        first_name: First Name
-        middle_name: Middle Name
-        last_name: Last Name
-        suffix: Suffix
-        display_name: Display Name
-        email: Email
-        im: IM
-        phone: Phone
-        postal_address: Postal Address
+      person: 
         active: Active
-        research_focus: Research Focus
-      presentation_lecture:
-        title_secondary: Title of Conference or Occasion
-        location: Location Given
-        publication_date: Date Given
+        display_name: "Display Name"
+        email: Email
+        first_name: "First Name"
+        im: IM
+        last_name: "Last Name"
+        middle_name: "Middle Name"
+        phone: Phone
+        postal_address: "Postal Address"
+        research_focus: "Research Focus"
+        suffix: Suffix
+        uid: "University ID"
+      presentation_lecture: 
+        date_range: "Conference Dates"
+        location: "Location Given"
+        publication: "Title of Conference or Occasion"
+        publication_date: "Date Given"
         publication_place: Location
-        publication: Title of Conference or Occasion
-        date_range: Conference Dates
-      publication:
-        issn_isbn: 'ISSN / ISBN'
+        title_secondary: "Title of Conference or Occasion"
+      publication: 
+        issn_isbn: "ISSN / ISBN"
         name: Name
         url: URL
-      publisher:
+      publisher: 
+        copyright_notice: "Copyright Notice"
         name: Name
+        romeo_color: "Romeo Color"
         url: URL
-        romeo_color: Romeo Color
-        copyright_notice: Copyright Notice
-      recording_moving_image:
-        publication: Title of Larger Work
-        publisher: Production Company
-        publication_date: Date Issued
+      recording_moving_image: 
         issn_isbn: ISRC
-      recording_sound:
-        publication: Title of Larger Work
-        publisher: Recording Label
+        publication: "Title of Larger Work"
+        publication_date: "Date Issued"
+        publisher: "Production Company"
+      recording_sound: 
+        issn_isbn: ISRC
+        publication: "Title of Larger Work"
         publication_place: Location
-        issn_isbn: ISRC
-      report:
-        title_primary: Report Title
-        title_secondary: Series Title
-        issue: Series Number
-        publication: Series Title
-      user:
+        publisher: "Recording Label"
+      report: 
+        issue: "Series Number"
+        publication: "Series Title"
+        title_primary: "Report Title"
+        title_secondary: "Series Title"
+      user: 
         email: Email
         password: Password
-        password_confirmation: Confirm Password
-      web_page:
-        date_range: Date of Last Visit
-      work:
-        abstract: 'Abstract'
-        copyright_holder: 'Copyright Statement'
-        date_range: 'Dates'
-        degree_level: 'Degree Level'
+        password_confirmation: "Confirm Password"
+      web_page: 
+        date_range: "Date of Last Visit"
+      work: 
+        abstract: Abstract
+        copyright_holder: "Copyright Statement"
+        date_range: Dates
+        degree_level: "Degree Level"
         discipline: Discipline
-        end_page: End Page
+        end_page: "End Page"
         identifier: Identifier
         instrumentation: Instrumentation
         issn_isbn: ISBN/ISSN
@@ -1130,19 +142,880 @@ en:
         links: URL
         location: Location
         medium: Medium
-        publication: Publication Title
-        publication_date: Date Published
-        publication_place: Publication Place
+        publication: "Publication Title"
+        publication_date: "Date Published"
+        publication_place: "Publication Place"
         publisher: Publisher
         sponsor: Sponsor
-        start_page: Start Page
+        start_page: "Start Page"
         title_primary: Title
-        title_secondary: Alternate Title
-        title_tertiary: Title Series
+        title_secondary: "Alternate Title"
+        title_tertiary: "Title Series"
         volume: Volume
-
-  #this relates to contributor/creator roles as established in the work subclasses
-  work_roles:
+    models: 
+      artwork: 
+        one: Artwork
+        other: Artworks
+      attachment: 
+        one: Attachment
+        other: Attachments
+      authentication: 
+        one: Authentication
+        other: Authentications
+      book_review: 
+        one: "Book Review"
+        other: "Book Reviews"
+      book_section: 
+        one: "Book Section"
+        other: "Book Sections"
+      book_whole: 
+        one: "Book Whole"
+        other: "Books Whole"
+      composition: 
+        one: Composition
+        other: Compositions
+      conference_paper: 
+        one: "Conference Paper"
+        other: "Conference Papers"
+      conference_poster: 
+        one: "Conference Poster"
+        other: "Conference Posters"
+      conference_proceeding_whole: 
+        one: "Conference Proceeding (Whole)"
+        other: "Conference Proceedings (Whole)"
+      content_file: 
+        one: "Content File"
+        other: "Content Files"
+      contributorship: 
+        one: Contributorship
+        other: Contributorships
+      dissertation_thesis: 
+        one: "Dissertation / Thesis"
+        other: "Dissertations / Theses"
+      exhibition: 
+        one: Exhibition
+        other: Exhibitions
+      external_system: 
+        one: "External System"
+        other: "External Systems"
+      external_system_uri: 
+        one: "External System URI"
+        other: "External System URIs"
+      generic: 
+        one: "Generic / Other"
+        other: "Generics / Others"
+      grant: 
+        one: Grant
+        other: Grants
+      group: 
+        one: Group
+        other: Groups
+      identifier: 
+        one: Identifier
+        other: Identifiers
+      image: 
+        one: Image
+        other: Images
+      import_file: 
+        one: "Import File"
+        other: "Import Files"
+      isbn: 
+        one: ISBN
+        other: ISBNs
+      isrc: 
+        one: ISRC
+        other: ISRCs
+      issn: 
+        one: ISSN
+        other: ISSNs
+      journal_article: 
+        one: "Journal Article"
+        other: "Journal Articles"
+      journal_whole: 
+        one: "Journal (Whole)"
+        other: "Journals (Whole)"
+      keyword: 
+        one: Keyword
+        other: Keywords
+      membership: 
+        one: Membership
+        other: Memberships
+      monograph: 
+        one: Monograph
+        other: Monographs
+      name_string: 
+        one: "Name String"
+        other: "Name Strings"
+      patent: 
+        one: Patent
+        other: Patents
+      pen_name: 
+        one: "Pen Name"
+        other: "Pen Names"
+      performance: 
+        one: Performance
+        other: Performances
+      person: 
+        one: Person
+        other: People
+      presentation_lecture: 
+        one: "Presentation / Lecture"
+        other: "Presentations / Lectures"
+      publication: 
+        one: Publication
+        other: Publications
+      publisher: 
+        one: Publisher
+        other: Publishers
+      recording_moving_image: 
+        one: "Recording (Moving Image)"
+        other: "Recordings (Moving Image)"
+      recording_sound: 
+        one: "Recording (Sound)"
+        other: "Recordings (Sound)"
+      report: 
+        one: Report
+        other: Reports
+      role: 
+        one: Role
+        other: Roles
+      system: 
+        one: System
+        other: Systems
+      tag: 
+        one: Tag
+        other: Tags
+      tagging: 
+        one: Tagging
+        other: Taggings
+      user: 
+        one: User
+        other: Users
+      web_page: 
+        one: "Web Page"
+        other: "Web Pages"
+      work: 
+        one: Work
+        other: Works
+  admin: 
+    deposit: 
+      date: "Date Deposited"
+      information: "Deposit Information"
+      repository: Repository
+      return: "Return to work"
+      success: "Deposit was successful!"
+      title: Title
+      treatment: "Treatment Deposited Item"
+      uri: "URI of Deposited Item"
+    duplicates: 
+      results: 
+        one: "1 possible duplicate"
+        other: "%{count} possible duplicates"
+        zero: "No duplicates"
+      works: "Duplicate Works"
+    ready_to_archive: 
+      no_works: "No works are marked \"ready to archive\"!"
+      ready: "Ready to Archive: %{count} remain"
+    sherpa: 
+      info1: "Publisher records will be replaced with those retrieved from SHERPA/RoMEO; local changes may be lost."
+      info2: "SHERPA data may take several moments to load."
+      update: "Update SHERPA Data"
+    tasks: "Administrative Tasks"
+  app: 
+    about: About
+    account: Account
+    add: Add
+    admin: Admin
+    advanced: Advanced
+    advanced_search: "Advanced Search"
+    all: All
+    archive: "Prepare for archiving full text"
+    are_you_sure: "Are you sure?"
+    ascending: Ascending
+    authorized: "Authority controlled names"
+    authors: Authors
+    back: Back
+    batch_import: "Batch Import"
+    blank: ""
+    bookmarks: "Social Bookmarking"
+    cancel: Cancel
+    count: Count
+    create: Create
+    created: Created
+    date: Date
+    delete_selected: "Delete selected"
+    descending: Descending
+    description: Description
+    destroy: Destroy
+    edit: Edit
+    email: Email
+    errors: Errors
+    exception_with_message: "Exception: %{message}"
+    faq: FAQ
+    file: 
+      one: File
+      other: Files
+    flash_require_no_user: "You must be logged out to access this page"
+    flash_require_user: "You must be logged in to access this page"
+    formats: Formats
+    go: Go
+    home: Home
+    important: Important
+    imports: "Manage imports"
+    keywords: Keywords
+    login: Login
+    logout: Logout
+    more_groups: "More groups"
+    more_people: "More people"
+    more_publications: "More publications"
+    more_publishers: "More publishers"
+    more_years: "More years"
+    name: Name
+    next: next
+    order: Order
+    percent_sure: "%{percentage}% sure"
+    percentage: Percentage
+    personal_info: "Personal Info"
+    photo: Photo
+    powered: "Powered by"
+    previous: previous
+    remove: Remove
+    result: 
+      one: Result
+      other: Results
+    result_with_query: 
+      one: "Result for:"
+      other: "Results for:"
+    save: Save
+    saved: Saved
+    score: Score
+    search: Search
+    search_within: "Search Within"
+    select: Select
+    select_all: "Select All"
+    send_to: "Send to"
+    show: Show
+    signup: Signup
+    sort_by: "Sort By"
+    source: Source
+    status: Status
+    system: System
+    title: Title
+    total: Total
+    true: "yes"
+    unknown: Unknown
+    update: Update
+    upload: Upload
+    url: URL
+    web_password: "Web Password"
+    year: Year
+    years: Years
+  common: 
+    admin: 
+      flash_update_publishers_error: "Error updating publisher data: %{message}"
+      flash_update_publishers_successful: "Update successful."
+    attachments: 
+      add_files: "[Add More Files]"
+      add_person: "Add a new person"
+      agree_to_terms: "I agree to the terms of the"
+      delete_image: "delete image"
+      delete_person: "Delete this person"
+      deposit_license: "Deposit License"
+      flash_create_notice: 
+        one: "Attachment was successfully uploaded"
+        other: "%{count} attachments were successfully uploaded"
+      flash_create_warning: "No file was uploaded."
+      flash_delete_notice: "Attachment was successfully deleted"
+      flash_new_error: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+      flash_update_notice: "Attachment was successfully uploaded"
+      flash_update_warning: "No file was uploaded."
+      form_person_title: "%{display_name}: Photo"
+      local_repository: "my local repository"
+      must_agree_to_license: "You must agree to the license terms before you can upload files."
+      upload_files: "Upload file(s)"
+      upload_image: "Upload image"
+      upload_with_class: "Upload %{class}"
+      uploading_files: "Uploading files..."
+      uploading_image: "Uploading your image..."
+    authentications: 
+      flash_authentication: "Authentication successful."
+      flash_create: "User created and signed in successfully."
+      flash_destroy: "Successfully destroyed authentication."
+      flash_sign_in: "Signed in successfully."
+    contributorships: 
+      allow_copy: "Publishers Copy"
+      analysis: "Archive Analysis"
+      archivable_title: "Archival Analysis: %{display_name}"
+      color: "RoMEO Color"
+      denied: denied
+      flash_act_on_many: "Contributorships were successfully %{action}."
+      index: "Works of a person"
+      index_title: "%{display_name}: %{status} Contributorships"
+      matches: "Possible Matches"
+      policy: Policy
+      unverified: unverified
+      verified: verified
+      verify: "Verify contributorship"
+    groups: 
+      children: Children
+      confirm: "Really delete group?"
+      destroy: "Delete group"
+      edit: "Edit group"
+      flash_create_duplicate: "This group already exists"
+      flash_create_success: "Group was successfully created."
+      flash_destroy_failure_children: "Group cannot be deleted. It has visible child groups: %{child_list}"
+      flash_destroy_failure_memberships: "Group cannot be deleted. Memberships exist."
+      flash_destroy_success: "Group was successfully removed."
+      flash_hide_failure: "Group cannot be hidden. It has visible child groups: %{children}"
+      flash_hide_success: "Group was successfully removed."
+      flash_unhide_failure: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
+      flash_unhide_success: "Group was successfully unhidden."
+      hidden: "Show hidden groups"
+      hidden_groups: "Hidden Groups"
+      hide: "Hide group"
+      members: Members
+      new: "Add group"
+      parent: "Parent group"
+      roles: "Change Roles"
+      unhide: "Unhide group"
+    imports: 
+      batch_id: "Batch-%{id}"
+      deleted_person: "Deleted Person"
+      flash_create_failure: "Sorry... but there was an error uploading your import file."
+      flash_create_success: "Thanks for the import!  It will take a few minutes to process.  We'll send you an email when it is ready for review."
+      flash_update_accepted: "Batch accepted -- The imported data will appear shortly."
+      flash_update_error: "Sorry... but there was an error updating the import."
+      flash_update_rejected: "Batch rejected"
+      header: "Add Works"
+      new: "Import File"
+      person_header: "Add Works for %{person_link}"
+      unauthorized: Unauthorized.
+    keywords: 
+      timeline: Timeline
+    memberships: 
+      flash_create_multiple_membership: "One or more groups could not be joined; a membership already exists."
+      flash_create_multiple_privileges: "One or more groups could not be joined; you have insufficient privileges"
+      flash_create_multiple_success: "Groups were successfully joined."
+      new_title: "%{name}: Group Memberships"
+    name_strings: 
+      edit: "Edit name"
+      published: "Has published under this name"
+      unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
+    passwords: 
+      flash_create_no_account: "Sorry, we cannot find that account.  Try again."
+      flash_create_sent: "We sent a new password to %{email}"
+      flash_update_bad_match: "Sorry, your new password didn't match the confirmation.  Try again."
+      flash_update_incorrect: "Sorry, your old password was incorrect. Try again."
+      flash_update_success: "Your password was updated successfully."
+    people: 
+      batch_csv_error: "An error was generated processing your request."
+      confirm: "Really delete this person?"
+      contributorships: "Manage works"
+      delete: "Delete person"
+      edit: "Edit person"
+      edit_header: "%{link}: Personal Info"
+      edit_title: "%{name}: Personal Info"
+      file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
+      file_unconvertible: "The file could not be converted to UTF8."
+      file_unreadable: "The File you submitted could not be read."
+      flash_batch_csv_create_bad_encoding: "The character encoding could not be determined or could not be converted to UTF-8."
+      flash_create_field_missing: "One or more required fields are missing."
+      flash_create_person_exists: "This person already exists in the BibApp system: <a href=\"%{url}\">view their record</a>."
+      flash_create_success: "Person was successfully created."
+      flash_update_failure: "One or more required fields are missing."
+      flash_update_success: "Personal info was successfully updated."
+      image: Photo
+      import_csv: "CSV load"
+      ldap_fail_authentication: "Error authenticating LDAP user."
+      ldap_fail_configuration: "LDAP is not properly configured"
+      ldap_fail_too_many: "Too many LDAP results"
+      new: "Add a person"
+      personal: "Personal Information"
+      roles: "Manage roles"
+      types: "Types of work"
+    pub_common: 
+      flash_operate_on_box_generic: "One or more publications could not be found."
+      flash_update_multiple_generic_cancel: "Cancelled authority selection"
+      flash_update_multiple_generic_not_unique: "You must select one record as the authority."
+    publications: 
+      authority: "Admin Publication Authorities"
+      confirm: "Really delete this Publication?"
+      delete: "Delete this Publication"
+      edit: "Edit this Publication"
+      flash_destroy_failure: "This publication has %{count} work associated with it, which must be altered or removed before this publication can be deleted."
+      flash_destroy_success: "Publications were successfully deleted."
+      new: "Add a Publication"
+      publication_name: "Publication Name"
+      publisher: "Published by"
+    publishers: 
+      authority: "Admin Publisher Authorities"
+      authorized: "Authorized names"
+      confirm: "Really delete this Publisher?"
+      delete: "Delete this Publisher"
+      edit: "Edit this Publisher"
+      new: "Add a Publisher"
+      sherpa: "Update publisher data from SHERPA/RoMEO"
+      year: Year
+    roles: 
+      admin: 
+        one: Admin
+        other: Admins
+      description_class: " of %{class}"
+      description_class_and_name: " of %{class} '%{name}'"
+      description_generic: " (generic role)"
+      editor: 
+        one: Editor
+        other: Editors
+      form_header_group: "Add %{role} on Group: %{group}"
+      form_header_person: "Add %{role} on Person: %{person}"
+      form_header_system: "Add System-wide %{role}: %{app_name}"
+      index: "Manage Roles"
+      index_header_group: "Roles for Group: %{group}"
+      index_header_person: "Roles for Person: %{person}"
+      index_header_system: "System-wide Roles: %{app_name}"
+      new_admin: "Add administrator"
+      new_editor: "Add editor"
+    romeo: 
+      black: black
+      blue: blue
+      green: green
+      unknown: unknown
+      white: white
+      yellow: yellow
+    search: 
+      query: "Search for: "
+      refine: "Refine Search"
+      results: 
+        one: "1 hit"
+        other: "%{count} hits"
+      within: "Search within the results"
+    shared: 
+      eds: Eds.
+      in: "In "
+      more: more...
+    user_sessions: 
+      flash_create_successful: "Login successful!"
+      flash_destroy_successful: "Logout successful!"
+    users: 
+      confirm: "Really delete this user?"
+      delete: "Delete user"
+      edit: "Edit user"
+      flash_activate: "Signup is complete!  You may now login using your email and password."
+      flash_create: "Thanks for signing up!  You should receive an email (%{email}) shortly which will allow you to activate your account."
+      flash_update_email_duplicate: "Problem updating email - this email may be in use already. Try again."
+      flash_update_email_invalid: "Problem updating email - your code or new email is incorrect. Try again."
+      flash_update_email_success: "Email updated"
+      flash_update_no_change: "You entered your current email"
+      flash_update_success: "NOTICE An email has been sent to #{email} with a confirmation link. Your email address will be updated after you follow the link in that email."
+      new: "Add a user"
+      role: "Update Roles"
+      show: View
+      show_all: "View all"
+    works: 
+      add_works: "Add Works"
+      add_works_for_person: "Add Works for %{person_link}"
+      authors: "Authors at %{institution}"
+      coauthors: "Coauthors at %{institution}"
+      conference_location: "Conference Location"
+      confirm: "Really delete this work?"
+      contributors: Contributor
+      delete: "Delete work"
+      duplicate: "Show duplicates"
+      edit: "Edit work"
+      et_al: "et al."
+      flash_create: "Work was successfully created."
+      flash_destroy_has_duplicates: "This work has duplicates, which must be altered or deleted before this work can be deleted."
+      flash_destroy_multiple_privileges: "One or more works could not be deleted, as you have insufficient privileges"
+      flash_destroy_multiple_successful: "Works were successfully deleted."
+      flash_destroy_success: "Works were successfully deleted."
+      flash_update: "Work was successfully updated."
+      location: Location
+      location_given: "Location Given"
+      new: "Add a work"
+      new_attachment: "Add attachment"
+      no_abstract: "No abstract available"
+      orphans: "Orphaned works"
+      publication_place: "Publication Place"
+      recent: "Recent works"
+      recommendations: "Similar works at %{institution}"
+      update_author_list: "Successfully updated order of authors!"
+      update_editor_list: "Successfully updated order of editors!"
+      update_list: "Successfully updated order of list!"
+  contributorships: 
+    act_on_multiple_form: 
+      action: Action
+      apply_to_selection: "Apply to selection"
+      deny: deny
+      unverify: unverify
+      verify: verify
+    admin: 
+      header: "Admin: Unverified Contributorships"
+      matches: "Potential Matches"
+      no_people: "Congratulations! Nothing to do here"
+    archivable: 
+      header: "Archival Analysis: %{person_link}"
+    archive_analysis_table: 
+      archiving_policy: "Archiving Policy"
+      romeo_color: "RoMEO<br />Color"
+    archive_publications_table: 
+      pub_copy_allowed: "Pub Copy<br />Allowed"
+    claim: 
+      deny: Deny
+      verify: Verify
+    contributorship: 
+      verified: Verified
+    index: 
+      add_person: "Add a new person"
+      delete_person: "Delete this person"
+      delete_person_confirm: "Permanently delete this person? This cannot be undone."
+    verified: 
+      verified: Verified
+  facet_headings: 
+    groups: Groups
+    people: People
+    publications: Publications
+    publishers: Publishers
+    years: Years
+  groups: 
+    complete_index: 
+      add_group: "Add a Group"
+      show_hidden: "Show Hidden Groups"
+    edit: 
+      delete: "Delete Group"
+      delete_confirm: "Permanently delete this group? This cannot be undone."
+      header: "Edit %{link_to_group}"
+      hide: "Hide Group"
+      unhide: "Unhide Group"
+    form: 
+      parent_group: "Parent Group"
+    group_table: 
+      group_name: "Group Name"
+      members: Members
+      parent_group: "Parent Group"
+    hidden: 
+      empty: "No hidden groups"
+      header: "Hidden Groups"
+    new: 
+      header: "Add a Group"
+    recent_works_box: 
+      recent_works: "Recent Works"
+    related_groups_box: 
+      belongs_to: "Belongs to"
+      subgroups: Sub-Groups
+    show: 
+      add: "Add a Group"
+      edit: "Edit this group"
+      roles: "Manage Roles"
+    work_types_box: 
+      types_of_work: "Types of Work"
+  imports: 
+    accepted: 
+      text: "This import was <strong>accepted</strong>"
+      warning: "This import has been accepted, but contains no works. They may have been deleted."
+    batch_import_form: 
+      legend: "Batch Import (RIS | Medline | Refworks XML)"
+      text: "Upload a file containing the citations"
+    default: 
+      accept: "Accept Batch"
+      blank: "This import is reviewable, but contains no works. They may have been deleted."
+      not_blank: "Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear."
+      reject: "Reject Batch"
+    details_generic: 
+      header: "Batch report"
+    details_person: 
+      header: "Batch report"
+    errors: 
+      no_errors: "No errors encountered during import."
+    import_names: 
+      header: "Import Names"
+      text: "Select missing variations of your name."
+    index: 
+      header: "Imports for %{email}"
+      link: "Add an import"
+    index_table: 
+      batch: "Batch #"
+      imported_for: "Imported For"
+    matched: 
+      matched: Matched
+      matched_total: "%{count} work to %{imported_for}."
+      remaining_total: "%{count} remain to match."
+    new: 
+      add_import: "Add an Import"
+      show_all: "Show all Imports"
+    pen_names: 
+      my_names: "My Names"
+      works_matched: "Works Matched"
+    processing: 
+      text: "This import is in processing. You'll receive an <strong>email</strong> when the batch is complete"
+    rejected: 
+      text: "This import was <strong>rejected</strong> and all works associated with the import were destroyed."
+    show: 
+      add: "Add an import"
+      header: "Review Batch"
+      show: "Show my imports"
+      subheader: "Imported For %{imported_for}"
+    work_counts: 
+      duplicate_works: "Duplicate works"
+      new_works: "New works"
+    work_type_list: 
+      header: "Select a type"
+    works_destroy_form: 
+      submit: "Delete selected works"
+    works_imported: 
+      header: "Works Imported"
+  keywordings: 
+    edit: 
+      header: "Editing keywording"
+    index: 
+      header: "Listing keywordings"
+      new: "New keywording"
+    new: 
+      header: "New keywording"
+  keywords: 
+    edit: 
+      heading: "Editing keyword"
+    index: 
+      heading: "Listing keywords"
+      new_keyword: "New keyword"
+      no_keywords: "No keywords exist."
+    new: 
+      heading: "New keyword"
+    timeline: 
+      chart_header: "Work Types by Year"
+      chart_loading: loading...
+      cloud_header: "Popular Research Topics by Year"
+      handle_alt: "Drag left or right"
+    timeline_list: 
+      no_data: "No data"
+  layouts: 
+    application: 
+      default_title: "Find an Expert"
+    error: 
+      default_title: "Find an Expert"
+  memberships: 
+    action_links: 
+      all_groups: "All Groups"
+    group: 
+      confirm: "Are you sure you want to leave this group?"
+      leave: "Leave group"
+      year_joined: "Year Joined"
+      year_left: "Year Left"
+    join_groups_form: 
+      submit: "Join selected groups"
+    new: 
+      add_person: "Add a new person"
+      delete_confirm: "Permanently delete this person? This cannot be undone."
+      delete_person: "Delete this person"
+      group_memeberships: "Group Memberships"
+    non_member_groups: 
+      no_groups: "No groups found"
+      searching_for: "Searching for"
+    search_form: 
+      submit: "Search Groups"
+  name_strings: 
+    edit: 
+      header: "Edit the NameString: %{name}"
+    index: 
+      add: "Add a NameString"
+    new: 
+      header: "Enter a new NameString"
+    show: 
+      edit_link: "Edit this name string"
+      have_published: "I have published using this name"
+      no_claim: "Nobody at %{university_name} has claimed this name. This might be somebody from another campus."
+  passwords: 
+    edit: 
+      confirm: "Confirm New Password"
+      header: "Change Password"
+      new: "New Password"
+      old: "Old Password"
+      submit: "Update Password"
+    new: 
+      header: "Forgot Password"
+      legend: "Request New Password"
+      submit: "Send Password"
+  pen_names: 
+    name_string_filter: 
+      no_results: "<strong>%{phrase}</strong> returned no results"
+    new: 
+      confirm: "Permanently delete this person? This cannot be undone."
+      current: "Current pen names"
+      delete: "Delete this person"
+      explanation: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
+      instructions: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
+      suggested: "Suggested pen names"
+    new_namestring_form: 
+      add_text: "Add a name string (ex. \"Smith, J\")"
+    search_for_namestrings: 
+      search_text: "Search other last names to add suggestions (ex. \"Smith\")"
+    suggested_namestrings: 
+      no_suggestions: "There are no immediate suggestions for"
+  people: 
+    admin_actions: 
+      add: "Add Works"
+      archive: "Archive Analysis"
+      edit: "Edit this Person"
+      manage_contributorships: "Manage Contributorships"
+      manage_roles: "Manage Roles"
+    batch_csv_show: 
+      legend_absent: "Select a comma delimited file"
+      legend_present: "CSV Upload"
+      select_file: "Select a CSV Comma delimited file for batch processing."
+    edit: 
+      add: "Add a new person"
+      confirm: "Permanently delete this person? This cannot be undone."
+      delete: "Delete this person"
+    edit_actions: 
+      personal_info: "Personal Info"
+    form: 
+      disable: Saving...
+    ldap_search: 
+      example: "Ex: Smith, John OR Smith, J"
+      explanation: "Search campus directory (to pre-populate person information)"
+      failed: "Search failed: %{message}."
+      no_results: "No results for %{query}"
+      results: "Search results"
+    new: 
+      header: "New Person"
+    people_table: 
+      recent_publication: "Recent Publication"
+    show_work_types: 
+      header: "Types of Work"
+    show_works: 
+      recent: "recent additions"
+  pub_common: 
+    authority_actions: 
+      submit: "Set Authority"
+    authority_form: 
+      legend: "Add Records and Set Authority"
+      submit: "Set Authority"
+    show: 
+      description: "Latest %{university_name} work from %{object_name}"
+  publications: 
+    authorities: 
+      instructions: "To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
+    edit: 
+      confirm: "Permanently delete this publication? This cannot be undone."
+    form: 
+      auth_record: "Publication Authority Record"
+      save_go: "Save and go to list"
+      save_show: "Save and show"
+    show_authority: 
+      auth_name: "authorized name for"
+    show_not_authority: 
+      header: "Authorized Title"
+    show_publisher: 
+      published_by: "Published by"
+  publishers: 
+    authorities: 
+      instructions: "To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
+    form: 
+      auth_record: "Publisher Authority Record"
+      copy_allowed: "Publisher's Copy Allowed?"
+      save_go: "Save and go to list"
+      save_show: "Save and show"
+    index_table: 
+      publisher_name: "Publisher Name"
+      recent_year: "Recent Year"
+    show: 
+      auth_name: "authorized name for"
+      auth_title: "Authorized Title"
+  roles: 
+    form: 
+      add: "Add as %{role}"
+      has_implicitly: "Has role implicitly"
+      has_permissions: "Already has %{role} permissions"
+      remove: " [remove]"
+    index: 
+      add_admins: "Add Administrators"
+      add_editors: "Add Editors"
+      no_admins: "No administrators currently assigned."
+      no_editors: "No editors currently assigned."
+  search: 
+    advanced_search_form: 
+      authors_text: "Return items by author"
+      groups_text: "Return items by groups"
+      issn_isbn_text: "Return item associated with the standard number"
+      keywords_text: "Return items with these words appearing anywhere"
+      legend: "Advanced Search"
+      restrict_date: "Return only items published from"
+      title_text: "Return items with these words in the title"
+      to: to
+    no_hits: 
+      advanced_search: "Try our advanced search options."
+      different_keywords: "Try different keywords."
+      double_check: "Double check your spelling."
+      error: "Sorry, your search for &ldquo;&{query}&rdquo; came up empty."
+      suggestions: Suggestions
+    spelling_suggestions: 
+      did_you_mean: "Did you mean"
+  shared: 
+    application_error: 
+      email_subject: "%{app_name} Support"
+      header: "Error 500: Something is *very* wrong!"
+      list_1: "Don't worry, but %{link} is unexpectedly broken."
+      list_2: "It's okay, because %{link} has emailed us to say so."
+      list_3: "Need to contact someone? Email:"
+    coauthors: 
+      heading: "Co-authors at %{university_name}"
+    coauthors_table: 
+      header: "%{university_name} Co-Authors"
+      last_name: "Last Name"
+      work_count: "# of Works"
+    contribution_actions: 
+      deny: Deny
+      verify: Verify
+    facet: 
+      more: "More %{heading}"
+    facets: 
+      formats: Formats
+      heading: "Refine Results"
+    file_upload: 
+      select_file: "Select a File"
+    footer: 
+      powered_by: "Powered by"
+    keyword_cloud: 
+      header: "Popular research topics"
+      submit: "Load Timeline Views"
+    not_found: 
+      bad_link: "You may have followed a link to a %{type} no longer at %{university_name}."
+      title: "Error 404: Page not found"
+      try_searching: "Did you try searching? Enter a keyword(s) in the search field above."
+    upload_form: 
+      disable: "Importing Batch..."
+      submit: "Add Batch"
+      upload: "Upload File"
+  user_sessions: 
+    federated_login_form: 
+      button_oauth: "Sign in With %{name}"
+      button_open_id: "Sign in With %{name} OpenID"
+      generic: Generic
+      header: "Login using external credentials"
+    local_login_form: 
+      cookies: "(requires browser cookies be enabled)"
+      forgot_password: "Forgot Password"
+      header: "Login using local (%{app_name}) credentials"
+      remember: "Remember Me"
+      sign_up: "Sign Up"
+      submit: "Log in"
+    show_options_form: 
+      send_to: "Send to"
+  users: 
+    edit: 
+      change_password: "Change Password"
+      header: "Edit My Account"
+      important_text: "When you submit this form, you will receive a message with a confirmation link at the new email address above. Your email address will not be changed until <em>after</em> you visit this confirmation link."
+      legend: "User Account"
+    new: 
+      header: "Create an Account"
+      legend: "User Account"
+      submit: "Sign Up"
+    show: 
+      account_information: "Account Information"
+      header: "User Account (%{email})"
+      remove: " [remove]"
+      role_label: "Roles in %{app_name}"
+  work_roles: 
     actor: Actor
     advisor: Advisor
     artist: Artist
@@ -1150,43 +1023,135 @@ en:
     band: Band
     choir: Choir
     choreographer: Choreographer
-    committee_chair: Committee Chair
-    committee_member: Committee Member
+    co_principal_investigator: "Co-Principal Investigator"
+    committee_chair: "Committee Chair"
+    committee_member: "Committee Member"
     composer: Composer
-    co_principal_investigator: Co-Principal Investigator
-    creator: Creator
     conductor: Conductor
     contributor: Contributor
-    costume_designer: Costume Designer
+    costume_designer: "Costume Designer"
+    creator: Creator
     curator: Curator
     dancer: Dancer
     director: Director
-    director_of_research: Director of Research
+    director_of_research: "Director of Research"
     editor: Editor
-    editorial_board_member: Editorial Board Member
+    editorial_board_member: "Editorial Board Member"
     illustrator: Illustrator
     interviewee: Interviewee
     interviewer: Interviewer
-    lighting_designer: Lighting Designer
-    managing_editor: Managing Editor
-    musical_ensemble: Musical Ensemble
+    lighting_designer: "Lighting Designer"
+    managing_editor: "Managing Editor"
+    musical_ensemble: "Musical Ensemble"
     musician: Musician
     orchestra: Orchestra
     other: Other
-    patent_owner: Patent Owner
+    patent_owner: "Patent Owner"
     performer: Performer
-    principal_investigator: Principal Investigator
     presenter: Presenter
+    principal_investigator: "Principal Investigator"
     producer: Producer
     translator: Translator
-
-  #this section is for the facet headings - much of this is duplicate, but
-  #it facilitates the code
-  facet_headings:
-    publishers: Publishers
-    publications: Publications
-    years: Years
-    people: People
-    groups: Groups
-
-
+  works: 
+    admin: 
+      legend: "Administrative Tasks"
+      link: "Deposit Immediately via SWORD"
+    attachments: 
+      download_file: "Download File"
+      download_page: "Download Page"
+      local_library: "Local Library Link"
+    change_type_form: 
+      label: "Change Type"
+    edit: 
+      confirm: "Permanently delete this work? This cannot be undone."
+      delete_link: "Delete this work"
+      header: "Edit a Work"
+    first_works: 
+      recent: "Recent additions"
+    forms: 
+      fields: 
+        author_list_item: 
+          remove: "[remove]"
+        author_name_strings: 
+          add: "[add more %{role}s]"
+          example: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
+          remove: "[remove]"
+          role: "%{role}(s)"
+        contributor_list_item: 
+          remove: "[remove]"
+        contributor_name_strings: 
+          add: "[add more contributors]"
+          instructions: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
+          label: Contributor(s)
+          remove: "[remove]"
+        editor_name_strings: 
+          add: "Add Editor to List"
+          drag: "(Drag and drop names to reorder editors in list)"
+          label: "Editor(s):"
+        form_buttons: 
+          save: "Save Changes"
+          saving: Saving...
+        keywords: 
+          instructions: "When adding multiple keywords, separate them with semicolons (;)"
+          label: Keyword(s)
+        merge_author_name_strings: 
+          instructions: "(Drag and drop names to reorder authors in list)"
+          label: Author(s)
+        merge_editor_name_strings: 
+          instructions: "(Drag and drop names to reorder editors in list)"
+          label: Editor(s)
+        merge_form_buttons: 
+          delete_dup: "Save Accepted Work and Delete Duplicate"
+          keep_dup: "Save Accepted Work and Keep Duplicate"
+        merge_keywords: 
+          label: Keyword(s)
+        merge_publications: 
+          label: "Periodical Title"
+        merge_tags: 
+          label: Tag(s)
+        publication: 
+          label: "Publication Title"
+        tags: 
+          add: "Add Tag to List"
+          label: Tag(s)
+        title_secondary: 
+          label: "Alternate Title"
+        title_tertiary: 
+          label: "Series Title"
+      form_add_batch: 
+        add: "Add Batch"
+        disable: "Parsing and Importing Batch..."
+        instructions: "Either upload a file containing the citations, or cut and paste the citations into the box below."
+        legend: "Add Batch (RIS | Medline | Refworks XML)"
+        paste: "Or, Paste Citations:"
+        upload: "Upload File:"
+    index: 
+      add: "Add a Work"
+      heading: "At the library, we <span class=\"hearts\"> &hearts;</span> our researchers."
+      view_orphans: "View orphaned works"
+    layouts: 
+      merge_form: 
+        accepted: "Accepted work"
+        duplicate: "Duplicate work"
+    local_authors: 
+      heading: "%{university_name} Authors"
+    local_recommendations: 
+      heading: "Related %{university_name} Work"
+    merge_duplicates: 
+      flash_excluded: "%{work} is not a possible duplicate for this work."
+      flash_not_accepted: "This is a <strong>%{work_status}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
+      header: "Duplicate work side-by-side editor"
+      instructions: "Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to save changes."
+    metadata: 
+      links: 
+        label: DOI/URL
+    new: 
+      header: "Select a type"
+    orphans: 
+      confirm: "Are you sure? This operation cannot be undone."
+      header: "Orphaned works"
+      submit: "Delete checked works"
+    show: 
+      archive: "Archive Research"
+      deposit: "Deposit Attachments"
+      edit: "Edit this work"
