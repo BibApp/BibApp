@@ -120,13 +120,13 @@ namespace :solr do
   desc "Save the current solr index to a temporary location"
   task :save_index do
     run "rm -rf #{backup_dir}"
-    run %Q("-e #{index_dir}" && "mv #{index_dir} #{backup_dir}")
+    run %Q(mv #{index_dir} #{backup_dir})
   end
 
   desc "Restore the previous solr index from a temporary location"
   task :restore_index do
     run "rm -rf #{index_dir}"
-    run %Q("-e #{backup_dir}" && "mv #{backup_dir} #{index_dir}")
+    run %Q(mv #{backup_dir} #{index_dir})
   end
   
 end

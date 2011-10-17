@@ -78,7 +78,6 @@ gem 'omniauth'
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
-I_KNOW_I_AM_USING_AN_OLD_AND_BUGGY_VERSION_OF_LIBXML2 = true
 gem 'nokogiri', "~> 1.4.0"
 
 #batch loading of authors
