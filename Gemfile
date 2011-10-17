@@ -76,6 +76,10 @@ gem 'authorization'
 gem 'authlogic'
 gem 'omniauth'
 
+#there is a problem compiling 1.5 on athena/sophia until they get an 
+#os upgrade
+gem 'nokogiri', "~> 1.4.0"
+
 #batch loading of authors
 gem 'fastercsv'
 
@@ -110,7 +114,10 @@ group :test, :development do
   gem 'shoulda'
   gem 'factory_girl'
   gem 'rcov'
-  gem 'cucumber-rails'
+#requires Nokogiri 1.5, but there is a problem with compiling that on
+#our deployment servers until there is an OS upgrade, so taking this
+#back out
+#  gem 'cucumber-rails'
   gem 'database_cleaner'
   #I'd prefer to add metric_fu directly here, but something it pulls
   #in pulls in something else that conflicts with the Keyword class.
