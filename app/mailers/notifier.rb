@@ -3,6 +3,7 @@ class Notifier < ActionMailer::Base
   def import_review_notification(user, import_id)
     with_setup_and_mailing(user) do
       @subject = "BibApp - Batch import ready for review"
+      @subject = t('common.notifier.import_review_subject', :app_name => $APPLICATION_NAME)
       @user = user
       @import_id = import_id
     end
@@ -11,7 +12,7 @@ class Notifier < ActionMailer::Base
   def batch_import_persons_notification(user_id, results, filename = "Unknown")
     @user = User.find(user_id)
     with_setup_and_mailing(@user) do
-      @subject = "BibApp Synapse - batch upload of persons has completed"
+      @subject = t('common.notifier.import_persons_subject', :app_name => $APPLICATION_NAME)
       @email = @user.email
       @results = results
       @filename = filename
@@ -22,7 +23,7 @@ class Notifier < ActionMailer::Base
     with_setup_and_mailing do
       @recipients = $SYSADMIN_EMAIL
       @from = $SYSADMIN_EMAIL
-      @subject = "BibApp - Exception summary: #{Time.now.strftime('%B %d, %Y')}"
+      @subject = t('common.notifier.error_summary_subject', :app_name => $APPLICATION_NAME, :time => Time.now.strftime('%B %d, %Y'))
       @exception = exception
       @clean_backtrace = clean_backtrace
       @params = params
@@ -37,6 +38,7 @@ class Notifier < ActionMailer::Base
   def with_setup_and_mailing(user = nil)
     @recipients = user.email if user
     @from = "BibApp <no-reply@bibapp.org>"
+    @from = t('common.notifier.from', :no_reply_email => ((SMTP_SETTINGS['from_email'] if SMTP_SETTINGS) || $NO_REPLY_EMAIL || 'bibapp-noreply@bibapp.org'))
     yield
     mail(:to => @recipients, :subject => @subject, :from => @from)
   end

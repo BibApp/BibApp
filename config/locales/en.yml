@@ -501,6 +501,11 @@ en:
       edit: "Edit name"
       published: "Has published under this name"
       unknown: "Nobody is registered with this name. Maybe this person belongs to another institution."
+    notifier:
+      error_summary_subject: "%{app_name} - Exception summary: %{time}"
+      from: "%{app_name} <%{no_reply_email}>"
+      import_persons_subject: "%{app_name} - batch upload of persons has completed"
+      import_review_subject: "%{app_name} - Batch import ready for review"
     passwords:
       flash_create_no_account: "Sorry, we cannot find that account.  Try again."
       flash_create_sent: "We sent a new password to %{email}"
@@ -593,6 +598,11 @@ en:
       eds: Eds.
       in: "In "
       more: more...
+    user_mailer:
+      activation_subject: "Your account has been activated!"
+      new_password_subject: "New password"
+      signup_notification_subject: "Please activate your new account"
+      update_email_subject: "Email address update confirmation"
     user_sessions:
       flash_create_successful: "Login successful!"
       flash_destroy_successful: "Logout successful!"
