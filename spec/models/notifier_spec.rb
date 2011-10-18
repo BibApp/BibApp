@@ -21,8 +21,8 @@ describe Notifier do
       @email.should deliver_to(@user.email)
     end
 
-    it "should say that an import is ready in the subject" do
-      @email.should have_subject(/BibApp/)
+    it "should say that an import is ready in the subject and have the application name" do
+      @email.should have_subject(/#{I18n.t('personalize.application_name')}/)
       @email.should have_subject(/import ready/)
     end
 

@@ -38,7 +38,8 @@ class Notifier < ActionMailer::Base
   def with_setup_and_mailing(user = nil)
     @recipients = user.email if user
     @from = "BibApp <no-reply@bibapp.org>"
-    @from = t('common.notifier.from', :no_reply_email => ((SMTP_SETTINGS['from_email'] if SMTP_SETTINGS) || $NO_REPLY_EMAIL || 'bibapp-noreply@bibapp.org'))
+    @from = t('common.notifier.from', :no_reply_email => ((SMTP_SETTINGS['from_email'] if SMTP_SETTINGS) || $NO_REPLY_EMAIL || 'bibapp-noreply@bibapp.org'),
+      :app_name => t('personalize.application_name'))
     yield
     mail(:to => @recipients, :subject => @subject, :from => @from)
   end
