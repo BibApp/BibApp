@@ -3,7 +3,7 @@ class Notifier < ActionMailer::Base
   def import_review_notification(user, import_id)
     with_setup_and_mailing(user) do
       @subject = "BibApp - Batch import ready for review"
-      @subject = t('common.notifier.import_review_subject', :app_name => $APPLICATION_NAME)
+      @subject = t('common.notifier.import_review_subject', :app_name => t('personalize.application_name'))
       @user = user
       @import_id = import_id
     end
@@ -12,7 +12,7 @@ class Notifier < ActionMailer::Base
   def batch_import_persons_notification(user_id, results, filename = "Unknown")
     @user = User.find(user_id)
     with_setup_and_mailing(@user) do
-      @subject = t('common.notifier.import_persons_subject', :app_name => $APPLICATION_NAME)
+      @subject = t('common.notifier.import_persons_subject', :app_name => t('personalize.application_name'))
       @email = @user.email
       @results = results
       @filename = filename
@@ -23,7 +23,7 @@ class Notifier < ActionMailer::Base
     with_setup_and_mailing do
       @recipients = $SYSADMIN_EMAIL
       @from = $SYSADMIN_EMAIL
-      @subject = t('common.notifier.error_summary_subject', :app_name => $APPLICATION_NAME, :time => Time.now.strftime('%B %d, %Y'))
+      @subject = t('common.notifier.error_summary_subject', :app_name => t('personalize.application_name'), :time => Time.now.strftime('%B %d, %Y'))
       @exception = exception
       @clean_backtrace = clean_backtrace
       @params = params

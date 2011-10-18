@@ -1,6 +1,9 @@
 en:
   personalize:
+    application_name: "UW Bibapp"
     application_tagline: "Find experts on campus... Promote their research... Archive their work"
+    library_name: "Wendt Library"
+    repository_name: "My Repository"
     search_examples:
       keywords: "ex. plasma confinement physics"
       title: "ex. Transport Phenomena"
@@ -14,6 +17,9 @@ en:
       yellow: "Can archive pre-print (i.e. pre-refereeing)"
       white: "Archiving not formally supported"
       unknown: "Could not determine from data"
+    university_full_address: "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
+    university_full_name: "University of Wisconsin - Madison"
+    university_short_name: "UW-Madison"
     #for work_archive_status 1 = not ready, rights unknown, 2 = ready for archiving, 3 = repository record created, url known
     work_archive_status:
       1: "Not Ready, rights unknown"

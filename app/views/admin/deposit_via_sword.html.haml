@@ -16,7 +16,7 @@
       .field
         %label #{t('admin.deposit.repository')}:
         %span.field_value
-          =link_to "#{$REPOSITORY_NAME}", $REPOSITORY_BASE_URL
+          =link_to "#{t('personalize.repository_name')}", $REPOSITORY_BASE_URL
       .field
         %label #{t('admin.deposit.date')}:
         %span.field_value=@deposit['updated']

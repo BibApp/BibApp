@@ -151,9 +151,9 @@ class AdminController < ApplicationController
 
   def find_or_create_repository_system
     ExternalSystem.find_by_base_url($REPOSITORY_BASE_URL) ||
-        ExternalSystem.find_by_name($REPOSITORY_NAME) ||
+        ExternalSystem.find_by_name(t('personalize.repository_name')) ||
         ExternalSystem.find_or_create_by_name_and_base_url(
-            :name => $REPOSITORY_NAME,
+            :name => t('personalize.repository_name'),
             :base_url => $REPOSITORY_BASE_URL)
   end
 

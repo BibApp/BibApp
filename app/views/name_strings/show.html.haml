@@ -20,4 +20,4 @@
                 %strong #{person.works.size}
                 %h7 #{link_to person.last_name, person_path(person)}
     - else
-      %p #{t 'name_strings.show.no_claim', :university_name => $UNIVERSITY_SHORT_NAME}
+      %p #{t 'name_strings.show.no_claim', :university_name => t('personalize.university_short_name')}

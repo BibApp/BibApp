@@ -10,11 +10,10 @@
       %span.field_value #{@user.email}
     - if @user.roles.present?
       .field
-        %label #{t 'users.show.role_label', :app_name => $APPLICATION_NAME}:
+        %label #{t 'users.show.role_label', :app_name => t('personalize.application_name')}:
         %ul.roles
           - @user.roles.each do |role|
             - if displayable_role(role)
               %li
                 = role.description
                 = link_to t('users.show.remove'), roles_destroy_url(:role_id => role.id, :user_id => @user.id)
-  

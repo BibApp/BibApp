@@ -1,7 +1,7 @@
 - include_stylesheet('specific/works/_local_recommendations')
 - if @recommendations.size > 0
   .right_box
-    .box_heading #{t '.heading', :university_name => $UNIVERSITY_SHORT_NAME}
+    .box_heading #{t '.heading', :university_name => t('personalize.university_short_name')}
     %ul.recommendations
       - @recommendations.each do |rec|
         %li

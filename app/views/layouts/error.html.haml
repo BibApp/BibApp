@@ -6,7 +6,7 @@
     = stylesheet_link_tag "blueprint/local",  :media => "screen"
     = stylesheet_link_tag "blueprint/print",  :media => "print"
 
-    %title= $APPLICATION_NAME + " - " + (@title || t('layouts.error.default_title'))
+    %title= t('personalize.application_name') + " - " + (@title || t('layouts.error.default_title'))
   %body
     .container
       = #render :partial => "shared/header"

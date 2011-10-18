@@ -2,11 +2,11 @@
   .span-23.prepend-1
     %p
       %strong
-        %a{:href => $UNIVERSITY_URL}= $UNIVERSITY_FULL_NAME
+        %a{:href => $UNIVERSITY_URL}= t('personalize.university_full_name')
         |
-        %a{:href => $LIBRARY_URL}= $LIBRARY_NAME
+        %a{:href => $LIBRARY_URL}= t('personalize.library_name')
       %br/
-      = $UNIVERSITY_FULL_ADDRESS.html_safe
+      = t('personalize.university_full_address').html_safe
       %br/
       #{t 'shared.footer.powered_by'}
       %strong

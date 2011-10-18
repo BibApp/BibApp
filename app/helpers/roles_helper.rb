@@ -2,7 +2,7 @@ module RolesHelper
 
   def index_header(authorizable)
     if authorizable == System
-      t('common.roles.index_header_system', :app_name => $APPLICATION_NAME)
+      t('common.roles.index_header_system', :app_name => t('personalize.application_name'))
     elsif authorizable.kind_of?(Group)
       t('common.roles.index_header_group', :group => group_link(authorizable))
     elsif @authorizable.kind_of?(Person)
@@ -13,7 +13,7 @@ module RolesHelper
   def form_header(authorizable, role_name)
     translated_role = t_bibapp_role_name(role_name)
     if authorizable.is_a? Class and authorizable == System
-      t('common.roles.form_header_system', :role => translated_role, :app_name => $APPLICATION_NAME)
+      t('common.roles.form_header_system', :role => translated_role, :app_name => t('personalize.application_name'))
     elsif authorizable.kind_of?(Group)
       t('common.roles.form_header_group', :role => translated_role, :group => group_link(authorizable))
     elsif @authorizable.kind_of?(Person)

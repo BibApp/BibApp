@@ -19,7 +19,8 @@ $SYSADMIN_EMAIL                  = "john_foo_bar@corge.edu"
 $NO_REPLY_EMAIL                  = "no-reply@corge.edu"
 
 # Name & base URL of your BibApp Application
-$APPLICATION_NAME            = "UW BibApp"
+#moved to locale file
+#$APPLICATION_NAME            = "UW BibApp"
 $APPLICATION_URL             = "http://localhost:3000/"
 # moved to locale file
 #$APPLICATION_TAGLINE         = "Find experts on campus... Promote their research... Archive their work"
@@ -27,24 +28,23 @@ $APPLICATION_URL             = "http://localhost:3000/"
 $APPLICATION_LOGO            = "bibapp.png"
 
 # Name of your University and University URL
-$UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison"
-$UNIVERSITY_SHORT_NAME       = "UW-Madison"
+#moved to locale file
+#$UNIVERSITY_FULL_NAME        = "University of Wisconsin - Madison"
+#$UNIVERSITY_SHORT_NAME       = "UW-Madison"
 $UNIVERSITY_URL              = "http://wisc.edu"
 
 # Name of your University Library and Library URL
-$LIBRARY_NAME                = "Wendt Library"
+#moved to locale file
+#$LIBRARY_NAME                = "Wendt Library"
 $LIBRARY_URL                 = "http://wendt.library.wisc.edu"
 
-# Default Address information for all people in BibApp
-$DEFAULT_STATE               = "WI"
-$DEFAULT_CITY                = "Madison"
-$DEFUALT_ZIP_CODE            = "53706"
-
 # Full Address / Contact info of Unit running BibApp
-$UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
+#moved to locale file
+#$UNIVERSITY_FULL_ADDRESS     = "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
 
 # Name and URL of your local institutional repository (only used if SWORD plugin is enabled)
-$REPOSITORY_NAME = "My Repository"
+#moved to locale file
+#$REPOSITORY_NAME = "My Repository"
 $REPOSITORY_BASE_URL = "http://my.repository.edu/"
 
 ####

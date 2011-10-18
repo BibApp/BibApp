@@ -5,7 +5,7 @@
 
 -# Size must be greater than 1, since person is not a co-author with him/herself
 - if @facets[:people_data].size > 1
-  %h3.heading #{t 'shared.coauthors.heading', :university_name => $UNIVERSITY_SHORT_NAME}
+  %h3.heading #{t 'shared.coauthors.heading', :university_name => t('personalize.university_short_name')}
   - if @facets[:people_data].size <= 7
     = render 'shared/coauthors_list', :solr_people_data => @facets[:people_data]
   - else

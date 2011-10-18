@@ -36,7 +36,7 @@ class UserMailer < ActionMailer::Base
   def with_setup_and_mailing(user)
     from = SMTP_SETTINGS['from_email'] if SMTP_SETTINGS
     from ||= $NO_REPLY_EMAIL || 'bibapp-noreply@bibapp.org'
-    @subject = "[#{$APPLICATION_NAME}] "
+    @subject = "[#{t('personalize.application_name')}] "
     @user = user
     yield
     mail(:to => user.email, :subject => @subject, :from => from)
