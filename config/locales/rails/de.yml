@@ -2,7 +2,7 @@
 # by Clemens Kofler (clemens@railway.at)
 # contributors:
 #  - Alexander Dreher - http://github.com/alexdreher - Rails 3 update
-# taken from the rails-i18n project at https://github.com/svenfuchs/rails-18n
+# taken from the rails-i18n project at https://github.com/svenfuchs/rails-18n - see license file in this directory
 de:
   date:
     formats:
