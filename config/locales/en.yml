@@ -1025,6 +1025,10 @@ en:
       header: "User Account (%{email})"
       remove: " [remove]"
       role_label: "Roles in %{app_name}"
+  will_paginate:
+    previous_label: "&#8592; Previous"
+    next_label: "Next &#8594;"
+    page_gap: "&hellip;"
   work_roles:
     actor: Actor
     advisor: Advisor
