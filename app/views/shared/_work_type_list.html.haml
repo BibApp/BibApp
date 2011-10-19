@@ -1,6 +1,7 @@
 - Work.types.each do |ct|
+- label = ct.gsub(/[()\/ ]/, '').constantize.model_name.human
   %li
     -if @person
-      = link_to ct, new_person_work_path(@person, :klass => ct)
+      = link_to label, new_person_work_path(@person, :klass => ct)
     -else
-      = link_to ct, new_work_path(:klass => ct)
+      = link_to label, new_work_path(:klass => ct)
