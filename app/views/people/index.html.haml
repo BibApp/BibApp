@@ -1,6 +1,6 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li #{link_to "Add a Person", new_person_path}
+    %li #{link_to t('people.index.add'), new_person_path}
 
 = render :layout => 'layouts/main_body_no_h2' do
   / ### Group / People ###

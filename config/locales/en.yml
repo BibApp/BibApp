@@ -879,6 +879,8 @@ en:
       personal_info: "Personal Info"
     form:
       disable: Saving...
+    index:
+      add: "Add a Person"
     ldap_search:
       example: "Ex: Smith, John OR Smith, J"
       explanation: "Search campus directory (to pre-populate person information)"
