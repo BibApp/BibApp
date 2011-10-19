@@ -21,7 +21,7 @@
         %p= render "shared/person_image", :o => @asset
 
       -if @person.image
-        %br
+        %br.clear-both
         = link_to t('common.attachments.delete_image'), attachment_url(:id => @asset.image.id), :method => :delete
 
   %fieldset
