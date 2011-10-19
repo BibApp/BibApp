@@ -53,7 +53,7 @@ module SharedHelper
       t('app.unknown')
     else
       pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-      link_to("#{pub_name}", publication_path(pub_id), {:class => "source"})
+      link_to("#{name_or_unknown(pub_name)}", publication_path(pub_id), {:class => "source"})
     end
   end
 
@@ -62,7 +62,7 @@ module SharedHelper
       t('app.unknown')
     else
       pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
-      link_to("#{pub_name}", publisher_path(pub_id), {:class => "source"})
+      link_to("#{name_or_unknown(pub_name)}", publisher_path(pub_id), {:class => "source"})
     end
   end
 

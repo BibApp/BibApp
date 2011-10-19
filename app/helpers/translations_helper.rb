@@ -25,4 +25,27 @@ module TranslationsHelper
     t('personalize.work_status')[status_id.to_i]
   end
 
+  #For i18n - since 'Unknown' is stored as a name in the db for unknown publications/publishers
+  #we need to translate if this is the value. This is kind of kludgy, but will have to do for now
+  def name_or_unknown(name)
+    if is_unknown?(name)
+      translate_unknown(name)
+    else
+      name
+    end
+  end
+
+  protected
+
+  #Need to handle the cases where the name is just 'Unknown' or if it has some identifiers appended to it
+  def is_unknown?(name)
+    return '' if name.match(/^\s*Unknown\s*$/)
+    name.match(/Unknown(\s*\(.*\))?/)
+    return $1
+  end
+
+  def translate_unknown(name)
+    name.sub(/Unknown/, t('app.unknown'))
+  end
+
 end

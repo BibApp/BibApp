@@ -1,7 +1,7 @@
 #authority.span-22
   - if @authority_for.present?
     %h4
-      #{@publication.name}
+      #{name_or_unknown(@publication.name)}
       &ndash; #{t '.auth_name'}:
     %table#authority-children
       %thead
@@ -12,7 +12,7 @@
       %tbody
         - @authority_for.each do |auth|
           %tr
-            %td=link_to auth.name, publication_path(auth)
+            %td=link_to name_or_unknown(auth.name), publication_path(auth)
             %td= auth.issn_isbn
             -if auth.publisher
-              %td= auth.publisher.name
+              %td= name_or_unknown(auth.publisher.name)

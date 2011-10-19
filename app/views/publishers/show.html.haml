@@ -9,7 +9,7 @@
     = @works
 
   - else
-    %h2.span-18.left #{ @publisher.name}
+    %h2.span-18.left #{ name_or_unknown(@publisher.name)}
     %span.span-4.right
       = render 'shared/sherpa_status', :publisher => @publisher, :show_explanation => false
 
@@ -22,11 +22,11 @@
     #authority.span-22
       - if @publisher.present?
         %h4
-          #{ @publisher.name }
+          #{ name_or_unknown(@publisher.name) }
           &ndash; #{t('publishers.show.auth_name')}:
         %ul.authority-children
           - @publisher.authority_for.uniq.each do |auth|
-            %li= link_to auth.name, publisher_path(auth.id)
+            %li= link_to name_or_unknown(auth.name), publisher_path(auth.id)
       - else
         %h3 #{t 'publishers.show.auth_title'}
-        %p #{link_to @publisher.authority.name, publisher_path(@publisher.authority)}
+        %p #{link_to name_or_unknown(@publisher.authority.name), publisher_path(@publisher.authority)}

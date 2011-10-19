@@ -7,6 +7,6 @@
     %tr{:class => cycle("odd", "even")}
       %td
         = render 'shared/sherpa_icon', :publisher => publisher
-        #{link_to publisher.name, publisher_path(publisher)}
+        #{link_to name_or_unknown(publisher.name), publisher_path(publisher)}
       %td #{publisher.most_recent_year}
       %td #{publisher.publications.length}

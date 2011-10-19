@@ -10,7 +10,7 @@
     = render :layout => '/layouts/admin_bar' do
       %li #{link_to t('common.publications.edit'), edit_publication_path(@publication)}
 
-  = render :layout => 'layouts/main_body', :locals => {:header => @publication.name} do
+  = render :layout => 'layouts/main_body', :locals => {:header => name_or_unknown(@publication.name)} do
     -if @publication.publisher
       = render 'show_publisher'
 

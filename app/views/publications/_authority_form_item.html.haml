@@ -2,7 +2,7 @@
   = hidden_field_tag "pub_ids[]", authority_form_item.id
   %td.span-1= radio_button_tag "auth_id", authority_form_item.id
   %td.span-2= authority_form_item.issn_isbn
-  %td.span-6= link_to "#{authority_form_item.authority.name}", edit_publication_path(authority_form_item)
-  %td.span-6= link_to "#{authority_form_item.publisher.authority.name}", publisher_path(authority_form_item.publisher)
+  %td.span-6= link_to name_or_unknown(authority_form_item.authority.name), edit_publication_path(authority_form_item)
+  %td.span-6= link_to name_or_unknown(authority_form_item.publisher.authority.name), publisher_path(authority_form_item.publisher)
   %td= authority_form_item.works.length
   %td.span-2= link_to 'remove', remove_from_box_publications_url(:rem_pa => authority_form_item.id, :page => page)

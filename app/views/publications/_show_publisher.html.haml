@@ -1,4 +1,4 @@
 %h4
   #{t '.published_by'}:
-  #{link_to(h(@publication.publisher.name), publisher_path(@publication.publisher)).html_safe}
+  #{link_to(h(name_or_unknown(@publication.publisher.name)), publisher_path(@publication.publisher)).html_safe}
   = render 'shared/sherpa_icon', :publisher => @publication.publisher
