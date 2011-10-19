@@ -25,6 +25,14 @@ module TranslationsHelper
     t('personalize.work_status')[status_id.to_i]
   end
 
+  def t_solr_work_type(type)
+    type.titlecase.gsub(' ', '').constantize.model_name.human
+  end
+
+  def t_solr_work_type_pl(type)
+    type.titlecase.gsub(' ', '').constantize.model_name.human_pl
+  end
+
   #For i18n - since 'Unknown' is stored as a name in the db for unknown publications/publishers
   #we need to translate if this is the value. This is kind of kludgy, but will have to do for now
   def name_or_unknown(name)
