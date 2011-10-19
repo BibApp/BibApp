@@ -1,0 +1,33 @@
+de:
+  personalize:
+    application_name: "BibApp"
+    application_tagline: "Forschung sichtbar machen"
+    library_name: "Universitätsbibliothek"
+    repository_name: "Mein Repositorium"
+    search_examples:
+      keywords: "z. B.: Teilchenbeschleuniger"
+      title: "z. B.: Qualitätsmanagement"
+      authors: "z. B.: Mustermann, Max"
+      groups: "z. B.: Fakultät für Kulturwissenschaften"
+      issn_isbn: "z. B.: 0003-018X"
+      year: "z. B: 2006  bis  2008"
+    sherpa_colors:
+      green: "Darf Pre- und Postprint archivieren."
+      blue: "Darf Prostprint archivieren."
+      yellow: "Darf Preprint archivieren"
+      white: "Archivierung nicht formell unterstützt"
+      unknown: "Auf Basis der Angaben nicht bestimmbar"
+    university_full_address: "Schwanenwall 28, 99999 Ort | Telefon: 608.890.0787"
+    university_full_name: "Name der Universität"
+    university_short_name: "Kurzbezeichnung"
+    #for work_archive_status 1 = not ready, rights unknown, 2 = ready for archiving, 3 = repository record created, url known
+    work_archive_status:
+      1: "Nicht bereit, Rechte ungeklärt"
+      2: "Fertig zur Archivierung im Repositorium"
+      3: "Eintrag im Repositorium, URL bekannt"
+    work_link_text: "Verfügbarkeitsrecherche"
+    #for work_status 1 = processing, 2 = duplicate, 3 = accepted
+    work_status:
+      1: In Bearbeitung
+      2: Dublette
+      3: Akzeptiert
