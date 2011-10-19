@@ -1,290 +1,1167 @@
---- 
-de: 
-  activerecord: 
-    errors: 
-      messages: 
-        record_invalid: "Gültigkeitsprüfung ist fehlgeschlagen: %{errors}"
-        taken: "ist bereits vergeben"
-      template: 
-        body: "Bitte überprüfen Sie die folgenden Felder:"
-        header: 
-          one: "Konnte dieses %{model} Objekt nicht speichern: 1 Fehler."
-          other: "Konnte dieses %{model} Objekt nicht speichern: %{count} Fehler."
-  admin: 
-    deposit: 
-      date: Einreichdatum
-      information: "Informationen zur Volltextveröffentlichung im Repositorium"
+---
+de:
+  activerecord:
+    attributes:
+      artwork:
+        publication_date: "Datum der Erschaffung"
+        publication_place: Erscheinungsort
+        publisher: "Institution or Collection Name"
+        title_primary: Titel
+        title_tertiary: "Gesamttitel"
+      book_review:
+        issn_isbn: ISSN
+        publication: "Zeitschriften Titel"
+      book_section:
+        issn_isbn: ISBN
+        publication: "Buchtitel"
+        title_primary: "Titel des Artikels oder Kapitels"
+        title_secondary: "Buchtitel"
+      book_whole:
+        end_page: "Seitenzahl"
+        issn_isbn: ISBN
+        pages: "Umfang"
+        title_primary: Titel
+      composition:
+        publication_place: Erscheinungsort
+      conference_paper:
+        date_range: "Konferenzdatum"
+        issn_isbn: ISBN
+        location: "Konferenzort"
+        publication: "Titel der Konferenz"
+        publication_place: Erscheinungsort
+        title_secondary: "Titel der Konferenz"
+      conference_poster:
+        date_range: "Konferenzdatum"
+        location: "Konferenzort"
+        publication: "Titel der Konferenz"
+        publication_date: "Datum der Präsentation/des Vortrags"
+        publication_place: Erscheinungsort
+        title_secondary: "Titel der Konferenz"
+      conference_proceeding_whole:
+        date_range: "Konferenzdatum"
+        end_page: "Seitenzahl"
+        issn_isbn: ISBN
+        location: "Konferenzort"
+        pages: "Umfang"
+        publication_place: Erscheinungsort
+      dissertation_thesis:
+        end_page: "Seitenzahl"
+        publication_date: "Datum der Promotion"
+        publisher: "Institution"
+      exhibition:
+        date_range: "Ausstellungsdatum"
+        publication_place: Erscheinungsort
+        publisher: Veranstalter
+      grant:
+        date_range: "Förderzeitraum"
+        identifier: "Förderkennzeichen"
+        publisher: Institution
+        sponsor: "Förderer / Sponsor"
+      journal_article:
+        issn_isbn: ISSN
+        publication: "Zeitschriftentitel"
+        title_primary: "Article Title"
+      journal_whole:
+        date_range: Erscheinungszeitraum
+        issn_isbn: ISSN
+      monograph:
+        end_page: "Seitenzahl"
+        issn_isbn: ISBN
+        pages: "Umfang"
+      patent:
+        date_range: "Einreichdatum"
+        identifier: "Patentnummer"
+        publication_date: "Ausstellungsdatum"
+      performance:
+        date_range: "Datum der Vorstellung"
+        publication: "Titel der Veranstaltung"
+        publication_place: Erscheinungsort
+        publisher: Veranstalter
+      person:
+        active: Aktiv
+        display_name: "Name für die Anzeige"
+        email: E-Mail
+        first_name: "Vorname"
+        im: IM
+        last_name: "Nachname"
+        middle_name: "Zweitname"
+        phone: Telefon
+        postal_address: "Adresse"
+        research_focus: "Forschungsschwerpunkt"
+        suffix: Namenszusatz
+        uid: "Universitätskennung"
+      presentation_lecture:
+        date_range: "Datum"
+        location: "Ort"
+        publication: "Titel der Konferenz oder des Anlasses"
+        publication_date: "Erscheinungsdatum"
+        publication_place: Erscheinungsort
+        title_secondary: "Titel der Konferenz oder des Anlasses"
+      publication:
+        issn_isbn: "ISSN / ISBN"
+        name: Name
+        url: URL
+      publisher:
+        copyright_notice: "Urheberrechtshinweis"
+        name: Name
+        romeo_color: "Romeo Farbe"
+        url: URL
+      recording_moving_image:
+        issn_isbn: ISRC
+        publication: "Titel des übergeordneten Werkes"
+        publication_date: "Erscheinungsdatum"
+        publisher: "Produzent"
+      recording_sound:
+        issn_isbn: ISRC
+        publication: "Titel des übergeordneten Werkes"
+        publication_place: Erscheinungsort
+        publisher: "Plattenlabel"
+      report:
+        issue: "Zählung"
+        publication: "Gesamttitel"
+        title_primary: "Titel des Reports"
+        title_secondary: "Gesamttitel"
+      user:
+        email: E-Mail
+        password: Passwort
+        password_confirmation: "Passwort bestätigen"
+      web_page:
+        date_range: "Zuletzt besucht am"
+      work:
+        abstract: Kurzfassung
+        copyright_holder: "Urheberrechtshinweis"
+        date_range: Zeitraum
+        degree_level: "Akademischer Grad"
+        discipline: Fachgebiet
+        end_page: "Letzte Seite"
+        identifier: Kennung
+        instrumentation: Instrumentierung
+        issn_isbn: ISBN/ISSN
+        issue: Ausgabe
+        language: Sprache
+        links: URL
+        location: Ort
+        medium: Medium
+        publication: "Titel der Publikation"
+        publication_date: "Erscheingungsdatum"
+        publication_place: "Erscheinungsort"
+        publisher: Verlag
+        sponsor: Sponsor
+        start_page: "Erste Seite"
+        title_primary: Titel
+        title_secondary: "Zusatz zum Titel"
+        title_tertiary: "Gesamttitel"
+        volume: Band
+    models:
+      artwork:
+        one: Kunstwerk
+        other: Kunstwerke
+      attachment:
+        one: Anhang
+        other: Anhänge
+      authentication:
+        one: Authentifizierung
+        other: Authentifizierungen
+      book_review:
+        one: "Rezension"
+        other: "Rezensionen"
+      book_section:
+        one: "Buchabschnitt"
+        other: "Buchabschnitte"
+      book_whole:
+        one: "Buch"
+        other: "Bücher"
+      composition:
+        one: Komposition
+        other: Kompositionen
+      conference_paper:
+        one: "Konferenzbeitrag"
+        other: "Konferenzbeiträge"
+      conference_poster:
+        one: "Konferenzposter"
+        other: "Konferenzposter"
+      conference_proceeding_whole:
+        one: "Konferenzband"
+        other: "Konferenzbände"
+      content_file:
+        one: "Inhalt (Datei)"
+        other: "Inhalte (Datei)"
+      contributorship:
+        one: Mitarbeit
+        other: Mitarbeit
+      dissertation_thesis:
+        one: "Dissertation"
+        other: "Dissertationen"
+      exhibition:
+        one: Ausstellung
+        other: ausstellungen
+      external_system:
+        one: "Externes System"
+        other: "Externe Systeme"
+      external_system_uri:
+        one: "URI des externen Systems"
+        other: "URIs des externen Systems"
+      generic:
+        one: "Generisch / Sonstiges"
+        other: "Generisch / Sonstige"
+      grant:
+        one: Stipendium / Zuschuss
+        other: Stipendien / Zuschüsse
+      group:
+        one: Gruppe
+        other: Gruppen
+      identifier:
+        one: Kennung
+        other: Kennungen
+      image:
+        one: Bild
+        other: Bilder
+      import_file:
+        one: "Datei für den Import"
+        other: "Dateien für den Import"
+      isbn:
+        one: ISBN
+        other: ISBNs
+      isrc:
+        one: ISRC
+        other: ISRCs
+      issn:
+        one: ISSN
+        other: ISSNs
+      journal_article:
+        one: "Zeitschriftenartikel"
+        other: "Zeitschriftenartikel"
+      journal_whole:
+        one: "Zeitschrift"
+        other: "Zeitschriften"
+      keyword:
+        one: Stichwort
+        other: Stichwörter
+      membership:
+        one: Mitgliedschaft
+        other: Mitgliedschaften
+      monograph:
+        one: Monographie
+        other: Monographien
+      name_string:
+        one: "Name"
+        other: "Namen"
+      patent:
+        one: Patent
+        other: Patente
+      pen_name:
+        one: "Weitere Namensform"
+        other: "Weitere Namensformen"
+      performance:
+        one: Vorstellung
+        other: Vorstellungen
+      person:
+        one: Person
+        other: Personen
+      presentation_lecture:
+        one: "Präsentation / Vorlesung"
+        other: "Präsentationen / Vorlesungen"
+      publication:
+        one: Publikation
+        other: Publikationen
+      publisher:
+        one: Verlag
+        other: Verlage
+      recording_moving_image:
+        one: "Aufnahme (Bewegte Bilder)"
+        other: "Aufnahmen (Bewegte Bilder)"
+      recording_sound:
+        one: "Aufnahme (Ton)"
+        other: "Aufnahmen (Ton)"
+      report:
+        one: Report
+        other: Reports
+      role:
+        one: Rolle
+        other: Rollen
+      system:
+        one: System
+        other: Systeme
+      tag:
+        one: Tag
+        other: Tags
+      tagging:
+        one: Tagging
+        other: Taggings
+      user:
+        one: Benutzer
+        other: Benutzer
+      web_page:
+        one: "Webseite"
+        other: "Webseiten"
+      work:
+        one: Werk
+        other: Werke
+  admin:
+    deposit:
+      date: "Datum der Veröffentlichung im Repositorium"
+      information: "Informationen zur Veröffentlichung im Repositorium"
       repository: Repositorium
-      return: "Zurück zur Arbeit"
-      success: "Veröffentlichung der Ressource im Repositorium war erfolgreich."
+      return: "Zurück zum Werk"
+      success: "Werk im Repositorium veröffentlicht"
       title: Titel
-      treatment: "Behandlung der veröffentlichten Ressource"
-      uri: "URI der veröffentlichten Ressource"
-    duplicates: 
-      results: 
-        one: "Eine mögliche Dublette"
+      treatment: "Behandlung des veröffentlichten Werkes"
+      uri: "URI des veröffentlichten Werkes"
+    duplicates:
+      results:
+        one: "1 mögliche Dublette"
         other: "%{count} mögliche Dubletten"
-        zero: "Keine möglichen Dubletten"
-      works: Dublettenkontrolle
-    ready_to_archive: 
-      no_works: "Keine Werk sind als \"Bereit zur Archivierung\" gekennzeichnet!"
-      ready: "Bereit zur Archivierung: %{count} verbleibend"
-    sherpa: 
-      info1: "Die Verlagseinträge werden auf Basis der Daten von SHERPA/ROMEO aktualisiert. Lokale Änderungen können dabei überschrieben werden."
-      info2: "Die Aktualisierung der SHERPA-Daten kann einige Zeit in Anspruch nehmen."
+        zero: "Keine Dubletten"
+      works: "Dubletten"
+    ready_to_archive:
+      no_works: "Keine Werke sind als \"fertig zur Archivierung\" gekennzeichnt!"
+      ready: "Fertig zur Archivierung: %{count} verbleibend"
+    sherpa:
+      info1: "Die Verlagsdaten werden aus der SHERPA/RoMEO-Datenbank aktualisiert. Lokale Änderungen gehen dabei verloren."
+      info2: "Es kann einen Moment dauern, die SHERPA-Daten zu laden."
       update: "SHERPA-Daten aktualisieren"
-    tasks: "Administrative Aufgaben"
-  app: 
-    about: Über
-    account: Konto
+    Gruppe hinzufügen: "Administrative Aufgaben"
+  app:
+    about: Über Uns
+    account: Benutzerkonto
+    add: Hinzufügen
     admin: Administration
-    advanced_search: "Fortgeschrittene Suche"
-    archive: "Datei für Archivierung vorbereiten"
-    authorized: "Authorisierte Namen"
+    advanced: Erweitert
+    advanced_search: "Erweiterte Suche"
+    all: Alles
+    archive: "Archivierung des Volltextes vorbereiten"
+    are_you_sure: "Sind Sie sicher?"
+    ascending: Aufsteigend
+    authorized: "Normdaten"
+    authors: Autoren
+    back: Zurück
+    batch_import: "Import"
+    blank: ""
     bookmarks: "Social Bookmarking"
-    delete_selected: "Ausgewählte löschen"
+    cancel: Abbrechen
+    count: Anzahl
+    create: Anlegen
+    created: Angelegt
+    date: Datum
+    delete_selected: "Auswahl löschen"
+    descending: Absteigend
     description: Beschreibung
+    destroy: Löschen
+    edit: Bearbeiten
+    email: E-Mail
+    errors: Fehler
+    exception_with_message: "Ausnahme: %{message}"
     faq: FAQ
+    file:
+      one: Datei
+      other: Dateien
+    flash_require_no_user: "Sie müssen angemeldet sein, um auf diese Seite zuzugreifen"
+    flash_require_user: "Sie müssen abgemeldet sein, um auf diese Seite zuzugreifen"
     formats: Formate
     go: Los
-    imports: "Datei-Importe verwalten"
-    keywords: Schlüsselwörter
-    login: Anmelden
-    logout: Abmelden
-    more_groups: "Weitere Einrichtungen/Institute"
+    home: Startseite
+    important: Wichtig
+    imports: "Importe verwalten"
+    keywords: Stichwörter
+    login: Einloggen
+    logout: Ausloggen
+    more_groups: "Weitere Gruppen"
     more_people: "Weitere Personen"
-    more_publications: "Weitere Bücher/Zeitschriften"
+    more_publications: "Weitere Publikationen"
     more_publishers: "Weitere Verlage"
     more_years: "Weitere Jahre"
     name: Name
-    next: nächste
-    percentage: Anteil
-    powered: "Basierend auf "
-    previous: vorherige
+    next: weiter
+    order: Sortierung
+    percent_sure: "%{percentage}% sicher"
+    percentage: Prozentsatz
+    personal_info: "Persönliche Daten"
+    photo: Bild
+    powered: "Mit Unterstützung von "
+    previous: zurück
+    remove: Entfernen
+    result:
+      one: Ergebnis
+      other: Ergebnisse
+    result_with_query:
+      one: "Ergebnis für:"
+      other: "Ergebnisse für:"
+    save: Speichern
     saved: Gespeichert
+    score: Resultat
     search: Suche
-    search_within: "Suche in Ergebnissen"
-    select_all: "Alle auswählen"
-    signup: Neu
-    ? "true"
-    : ja
-    unknown: unbekannt
+    search_within: "Suche in"
+    select: Auswahl
+    select_all: "Alles auswählen"
+    send_to: "Senden an"
+    show: Anzeige
+    signup: Anmelden
+    sort_by: "Sortiert nach"
+    source: Quelle
+    status: Status
+    system: System
+    title: Titel
+    total: Gesamt
+    true: "ja"
+    unknown: Unbekannt
+    update: Aktualisieren
+    upload: Hochladen
+    url: URL
+    web_password: "Passwort"
+    year: Jahr
     years: Jahre
-  common: 
-    contributorships: 
-      allow_copy: Verlagskopie
-      analysis: Archiv-Analyse
+  common:
+    admin:
+      flash_update_publishers_error: "Beim Aktualisieren der Verlagsdaten ist ein Fehler aufgetreten: %{message}"
+      flash_update_publishers_successful: "Aktualisierung erfolgreich."
+    attachments:
+      add_files: "[Weitere Dateien hinzufügen]"
+      add_person: "Eine neue Person hinzufügen"
+      agree_to_terms: "Ich stimme den Bedingungen der "
+      delete_image: "Bild löschen"
+      delete_person: "Diese Person löschen"
+      deposit_license: "Lizenzbestimmung"
+      flash_create_notice:
+        one: "Anhang erfolgreich hochgeladen"
+        other: "%{count} Anhänge wurden erfolgreich hochgeladen."
+      flash_create_warning: "Keine Datei hochgeladen."
+      flash_delete_notice: "Anhang erfolgreich gelöscht"
+      flash_new_error: "SWORD schein nicht korrekt in %{rails_root}/config/sword.yml konfiguriert zu sein!<br/> Auch wenn das Hochladen von Dateien funktioniert, ist es nicht möglich, diese an das Repositorium weiterzuleiten."
+      flash_update_notice: "Anhang erfolgreich hochgeladen"
+      flash_update_warning: "Keine Datei hochgeladen."
+      form_person_title: "%{display_name}: Bild"
+      local_repository: "mein Repositorium"
+      must_agree_to_license: "Sie müssen der Lizenzbestimmung zustimmen, bevor Sie Dateien hochladen können."
+      upload_files: "Datei(en) hochladen"
+      upload_image: "Bild hochladen"
+      upload_with_class: "Hochladen von %{class}"
+      uploading_files: "Dateien werden hochgeladen ..."
+      uploading_image: "Ihr Bild wird hochgeladen ..."
+    authentications:
+      flash_authentication: "Authentifizierung erfolgreich."
+      flash_create: "Benutzer erfolgreich angelegt und eingeloggt."
+      flash_destroy: "Authentifizierung gelöscht."
+      flash_sign_in: "Erfolgreich angemeldet."
+    contributorships:
+      allow_copy: "Verlagskopie"
+      analysis: "Archivanalyse"
+      archivable_title: "Archivanalyse: %{display_name}"
       color: "RoMEO Farbe"
       denied: abgelehnt
-      index: "Arbeiten der Person"
+      flash_act_on_many: "Mitarbeit wurde erfolgreich %{action}."
+      index: "Werke einer Person"
+      index_title: "%{display_name}: %{status} Mitarbeiterschaft"
       matches: "Mögliche Treffer"
-      policy: "Richtlinien Archivierung"
+      policy: Policy
       unverified: unbestätigt
       verified: bestätigt
-      verify: "Arbeiten bestätigen"
-    groups: 
+      verify: "Mitarbeit bestätigen"
+    groups:
       children: Untergruppen
-      confirm: "Einrichtung/Institut wirklich löschen?"
-      destroy: "Einrichtung/Institut löschen"
-      edit: "Einrichtung/Institut ändern"
-      hidden: "Versteckte Einrichtungen/Institute anzeigen"
-      hide: "Einrichtung/Institut verstecken"
+      confirm: "Soll die Gruppe wirklich gelöscht werden?"
+      destroy: "Gruppe löschen"
+      edit: "Gruppe bearbeiten"
+      flash_create_duplicate: "Diese Gruppe existiert bereits."
+      flash_create_success: "Gruppe wurde erfolgreich angelegt."
+      flash_destroy_failure_children: "Die Gruppe kann nicht gelöscht werden, Sie hat noch sichtbare Untergruppen: %{child_list}"
+      flash_destroy_failure_memberships: "Gruppe kann nicht gelöscht werden, es gibt noch Mitgliedschaften."
+      flash_destroy_success: "Gruppe wurde erfolgreich gelöscht."
+      flash_hide_failure: "Die Gruppe kann nicht versteckt werden, Sie hat noch sichtbare Untergruppen: %{children}"
+      flash_hide_success: "Gruppe wurde erfolgreich versteckt."
+      flash_unhide_failure: "Gruppe kann nicht wieder sichtbar gemacht werden, solange die übergeordnete Gruppe <ul><li>%{parent_anme}</li></ul> unsichtbar ist."
+      flash_unhide_success: "Die Gruppe wurde erfolgreich wieder sichtbar gemacht."
+      hidden: "Zeige die versteckten Gruppen an."
+      hidden_groups: "Versteckte Gruppen"
+      hide: "Gruppe verstecken"
       members: Mitglieder
-      new: "Einrichtung/Institut hinzufügen"
+      new: "Gruppe hinzufügen"
       parent: "Übergeordnete Gruppe"
-      roles: "Rollen für Einrichtung/Institut ändern"
-      unhide: "Einrichtung/Institut anzeigen"
-    imports: 
-      new: "Datei importieren"
-    name_strings: 
-      edit: "Name ändern"
-      published: "Hat mit diesen Namen publiziert"
-      unknown: "Niemand unter diesem Namen registriert. Vielleicht ist die Person von einer anderen Institution."
-    people: 
-      confirm: "Diese Person wirklich löschen?"
-      contributorships: "Arbeiten verwalten"
+      roles: "Rollen ändern"
+      unhide: "Gruppe wieder sichtbar machen"
+    imports:
+      batch_id: "Import-%{id}"
+      deleted_person: "Person gelöscht"
+      flash_create_failure: "Es tut uns leid, aber beim Hochladen Ihrer Importdatei ist ein Fehler aufgetreten."
+      flash_create_success: "Danke für den Import!  Es wird ein paar Minuten dauern ihn zu bearbeiten.  Sie werden benachrichtigt, sobald er zur Begutachtung bereitsteht."
+      flash_update_accepted: "Import akzeptiert -- Die importierten Daten werden in Kürze angezeigt."
+      flash_update_error: "Es tut uns leid, aber beim Aktualieren ihres Imports ist ein Fehler aufgetreten."
+      flash_update_rejected: "Import abgelehnt"
+      header: "Werke hinzufügen"
+      new: "Importieren"
+      person_header: "Werke für %{person_link} hinzufügen"
+      unauthorized: Nicht autorisiert.
+    keywords:
+      timeline: Zeitschiene
+    memberships:
+      flash_create_multiple_membership: "Eine oder mehreren Gruppen konnte nicht beigetreten werden; eine Mitgliedschaft existiert bereits."
+      flash_create_multiple_privileges: "Eine oder mehreren Gruppen konnte nicht beigetreten werden; Sie haben nicht die notwendigen Rechte."
+      flash_create_multiple_success: "Gruppen erfolgreich beigetreten."
+      new_title: "%{name}: Gruppen Mitgliedschaften"
+    name_strings:
+      edit: "Name bearbeiten"
+      published: "Hat unter diesem Namen veröffentlicht"
+      unknown: "Niemand mit diesem Namen ist registriert. Vielleicht gehört diese Person zu einer anderen Institution."
+    notifier:
+      error_summary_subject: "%{app_name} - Zusammenfassung der Ausnahme: %{time}"
+      from: "%{app_name} <%{no_reply_email}>"
+      import_persons_subject: "%{app_name} - Import von Personen abgeschlossen"
+      import_review_subject: "%{app_name} - Import steht zur Begutachtung bereit"
+    passwords:
+      flash_create_no_account: "Dieses Benutzerkonto konnte nicht gefunden werden.  Versuchen Sie es bitte noch einmal."
+      flash_create_sent: "An die Adresse %{email} wurde ein neues Passwort gesandt"
+      flash_update_bad_match: "Es tut uns leid, das neu eingegebene Passwort stimmt mit der Kontrolleingabe nicht überein.  Versuchen Sie es bitte noch einmal."
+      flash_update_incorrect: "Es tut uns leid, ihr altes Passwort stimmt nicht. Versuchen Sie es bitte noch einmal."
+      flash_update_success: "Ihr Passwort wurde erfolgreich aktualisiert."
+    people:
+      batch_csv_error: "Bei der Bearbeitung Ihrer Anfrage ist ein Fehler aufgetreten."
+      confirm: "Soll diese Person wirklich gelöscht werden?"
+      contributorships: "Werke verwalten"
       delete: "Person löschen"
-      edit: "Person ändern"
-      image: Photo
-      import_csv: "Import via CSV"
-      new: "Person hinzufügen"
-      personal: "Persönliche Informationen"
+      edit: "Person bearbeiten"
+      edit_header: "%{link}: Persönliche Daten"
+      edit_title: "%{name}: Persönliche Daten"
+      file_accepted: "Ihre Datei wurde zur Verarbeitung akzeptiert. Sie werden per E-Mail benachrichtigt, wenn diese abgeschlossen ist."
+      file_unconvertible: "Diese Datei konnten nicht in  UTF-8 umgewandelt werden."
+      file_unreadable: "Die Datei, die Sie hochgeladen haben, ist nicht lesbar."
+      flash_batch_csv_create_bad_encoding: "Der Zeichensatz konnte nicht bestimmt und/oder in  UTF-8 umgewandelt werden."
+      flash_create_field_missing: "Ein oder mehrere erforderliche Felder fehlen."
+      flash_create_person_exists: "Diese Person existiert bereits im System: <a href=\"%{url}\">Eintrag anzeigen</a>."
+      flash_create_success: "Person erfolgreich angelegt."
+      flash_update_failure: "Ein oder mehrere erforderliche Felder fehlen."
+      flash_update_success: "Die persönlichen Daten wurden erfolgreich aktualisiert."
+      image: Bild
+      import_csv: "CSV laden"
+      ldap_fail_authentication: "Fehler bei der Authentifizierung via LDAP."
+      ldap_fail_configuration: "LDAP ist nicht korrekt konfiguriert"
+      ldap_fail_too_many: "Zu viele LDAP-Ergebnisse"
+      new: "Eine Person hinzufügen"
+      personal: "Persönliche Daten"
       roles: "Rollen verwalten"
-      types: "Arten der Arbeiten"
-    publications: 
-      authority: "Normdaten der Publikationen bearbeiten"
-      confirm: "Zeitschrift/Buch wirklich löschen?"
-      delete: "Zeitschrift/Buch löschen"
-      edit: "Zeitschrift/Buch ändern"
-      new: "Zeitschrift/Buch hinzufügen"
-      publisher: "Herausgegeben von"
-    publishers: 
-      authority: "Normdaten der Verlage bearbeiten"
-      authorized: "Autorisierter Titel"
-      delete: "Verlag löschen"
-      edit: "Verlag ändern"
+      types: "Arten von Werken"
+    pub_common:
+      flash_operate_on_box_generic: "Eine oder mehrere Publikationen konnten nicht gefunden werden."
+      flash_update_multiple_generic_cancel: "Normdatenauswahl abgebrochen."
+      flash_update_multiple_generic_not_unique: "Sie müssen einen Eintrag als Normdatum auswählen."
+    publications:
+      authority: "Publikationsnormdaten verwalten"
+      confirm: "Soll diese Publikaton wirklich gelöscht werden?"
+      delete: "Diese Publikation löschen"
+      edit: "Diese Publikation bearbeiten"
+      flash_destroy_failure: "Mit dieser Publikation sind %{count} Werk(e) verbunden. Diese müssen geändert oder gelöscht werden bevor die Publikation gelöscht werden kann."
+      flash_destroy_success: "Publikationen erfolgreich gelöscht."
+      new: "Eine Publikation hinzufügen"
+      publication_name: "Name der Publikation"
+      publisher: "Veröffentlicht von"
+    publishers:
+      authority: "Verlagsnormdaten verwalten"
+      authorized: "Normierte Namen"
+      confirm: "Soll dieser Verlag wirklich gelöscht werden?"
+      delete: "Diesen Verlag löschen"
+      edit: "Diesen Verlag bearbeiten"
       new: "Verlag hinzufügen"
-      sherpa: "Daten von SHERPA/RoMEO importieren"
-      year: "Letztes Jahr"
-    roles: 
-      index: "Rollen aktualisieren"
+      sherpa: "Verlagsdaten von SHERPA/RoMEO aktualisieren"
+      year: Jahr
+    roles:
+      admin:
+        one: Administrator
+        other: Administratorebn
+      description_class: " of %{class}"
+      description_class_and_name: " of %{class} '%{name}'"
+      description_generic: " (generische Rolle)"
+      editor:
+        one: Herausgeber
+        other: Herausgeber
+      form_header_group: "Die Rolle %{role} der Gruppe: %{group} hinzufügen"
+      form_header_person: "Die Rolle %{role} der Person: %{person} hinzufügen"
+      form_header_system: "Systemweite Rolle - %{role} - bei %{app_name} hinzufügen"
+      index: "Rollen verwalten"
+      index_header_group: "Rollen für Gruppe: %{group}"
+      index_header_person: "Rollen für Person: %{person}"
+      index_header_system: "Systemweite Rollen: %{app_name}"
       new_admin: "Administrator hinzufügen"
-      new_editor: "Editor hinzufügen"
-    search: 
+      new_editor: "Herausgeber hinzufügen"
+    romeo:
+      black: schwarz
+      blue: blau
+      green: grün
+      unknown: unbekannt
+      white: weiß
+      yellow: gelb
+    search:
       query: "Suche nach: "
-      refine: "Suche einschränken"
-      results: 
-        one: "1 Ergebnis"
-        other: "%{count} Ergebnisse"
-      within: "In den Ergebnissen suchen"
-    users: 
+      refine: "Suche verfeinern"
+      results:
+        one: "1 Treffer"
+        other: "%{count} Treffer"
+      within: "In den bisherigen Ergebnissen weitersuchen"
+    shared:
+      eds: Hrsg.
+      in: "In "
+      more: weitere...
+    user_mailer:
+      activation_subject: "Ihr Benutzerkonto wurde aktiviert!"
+      new_password_subject: "Neues Passwort"
+      signup_notification_subject: "Bitte aktivieren Sie Ihr neues Benutzerkonto"
+      update_email_subject: "Bestätigung der Änderung der E-Mail-Adresse"
+    user_sessions:
+      flash_create_successful: "Erfolgreich angemeldet!"
+      flash_destroy_successful: "Erfolgreich abgemeldet!"
+    users:
+      confirm: "Soll dieser Benutzer wirklich gelöscht werden?"
       delete: "Benutzer löschen"
-      edit: "Benutzer löschen"
+      edit: "Benutzer bearbeiten"
+      flash_activate: "Registrierung abgeschlossen! Sie können sich nun mit Ihrem E-Mail und dem Passwort anmelden."
+      flash_create: "Danke, dass Sie sich registriert haben.  Sie erhalten an dieser Adresse (%{email}) ein E-Mail, welche einen Aktivierungslink enthält, mit dem Sie die Registrierung abschließen können."
+      flash_update_email_duplicate: "Bei der Aktualisierung der E-Mail-Adresse ist ein Fehler aufgetreten - diese E-Mail-Adresse wird schon verwendet. Bitte versuchen Sie es noch einmal."
+      flash_update_email_invalid: "Bei der Aktualisierung der E-Mail-Adresse ist ein Fehler aufgetreten - Ihr Passwort oder die neue E-Mail-Adresse sind ungültig. Bitte versuchen Sie es noch einmal. "
+      flash_update_email_success: "E-Mail aktualisiert"
+      flash_update_no_change: "Sie haben ihre bereits registrierte E-Mail-Adresse eingegeben."
+      flash_update_success: "Ein E-Mail mit einem Bestätigungslink wurde an #{email} gesandt. Die Adressänderung wird erst gültig, wenn Sie diese mit dem Link bestätigen."
       new: "Benutzer hinzufügen"
       role: "Rollen aktualisieren"
       show: Anzeigen
       show_all: "Alle Anzeigen"
-    works: 
-      authors: "Autoren der %{institution}"
-      coauthors: "Koautoren an der %{institution}"
-      confirm: "Diese Arbeit wirklich löschen?"
-      contributors: "Betreuung durch"
-      delete: "Arbeit löschen"
-      duplicate: Dublettenkontrolle
-      edit: "Arbeit ändern"
-      new: "Arbeit hinzufügen"
+    works:
+      add_works: "Werke hinzufügen"
+      add_works_for_person: "Werke für %{person_link} hinzufügen"
+      authors: "Autoren an %{institution}"
+      coauthors: "Ko-Autoren an %{institution}"
+      conference_publication: "Titel der Konferenz"
+      confirm: "Soll dieses Werk wirklich gelöscht werden"
+      contributors: Mitarbeiter
+      delete: "Werk löschen"
+      duplicate: "Dubletten anzeigen"
+      edit: "Werk bearbeiten"
+      et_al: "u.a."
+      flash_create: "Werk wurde erfolgreich angelegt."
+      flash_destroy_has_duplicates: "Zu diesem Werk gibt es Dubletten. Diese müssen geändert oder gelöscht werden, bevor das Werk gelöscht werden kann."
+      flash_destroy_multiple_privileges: "Ein oder mehrere Werke konnten nicht gelöscht werden, da Ihnen dazu die notwendigen Rechte fehlen."
+      flash_destroy_multiple_successful: "Die Werke wurden erfolgreich gelöscht."
+      flash_destroy_success: "Die Werke wurden erfolgreich gelöscht."
+      flash_update: "Werk erfolgreich aktualisiert."
+      location: Ort
+      location_given: "Angegebener Ort"
+      new: "Werk hinzufügen"
       new_attachment: "Anhang hinzufügen"
-      no_abstract: "Kein Abstract"
-      recent: "Aktuelle Arbeiten"
-      recommendations: "Ähnliche Arbeiten an der %{institution}"
-  date: 
-    abbr_day_names: 
-      - So
-      - Mo
-      - Di
-      - Mi
-      - Do
-      - Fr
-      - Sa
-    abbr_month_names: 
-      - !ruby/object:YAML::PrivateType 
-          type_id: "null"
-          value: 
-            ? "@taguri"
-            : "x-private:null"
-            str: ""
-      - Jan
-      - Feb
-      - Mär
-      - Apr
-      - Mai
-      - Jun
-      - Jul
-      - Aug
-      - Sep
-      - Okt
-      - Nov
-      - Dez
-    day_names: 
-      - Sonntag
-      - Montag
-      - Dienstag
-      - Mittwoch
-      - Donnerstag
-      - Freitag
-      - Samstag
-    formats: 
-      default: "%d.%m.%y"
-      long: "%e. %B %Y"
-      short: "%d.%m."
-    month_names: 
-      - !ruby/object:YAML::PrivateType 
-          type_id: "null"
-          value: 
-            ? "@taguri"
-            : "x-private:null"
-            str: ""
-      - Januar
-      - Februar
-      - März
-      - April
-      - Mai
-      - Juni
-      - Juli
-      - August
-      - September
-      - Oktober
-      - November
-      - Dezember
-    order: 
-      - day
-      - month
-      - year
-  datetime: 
-    distance_in_words: 
-      about_x_hours: 
-        one: "etwa 1 Stunde"
-        other: "etwa %{count} Stunden"
-      about_x_months: 
-        one: "etwa 1 Monat"
-        other: "etwa %{count} Monate"
-      about_x_years: 
-        one: "etwa 1 Jahr"
-        other: "etwa %{count} Jahre"
-      half_a_minute: "eine halbe Minute"
-      over_x_years: 
-        one: "mehr als 1 Jahr"
-        other: "mehr als %{count} Jahre"
-      x_days: 
-        one: "1 Tag"
-        other: "%{count} Tage"
-      x_minutes: 
-        one: "1 Minute"
-        other: "%{count} Minuten"
-      x_months: 
-        one: "1 Monat"
-        other: "%{count} Monate"
-      x_seconds: 
-        one: "1 Sekunde"
-        other: "%{count} Sekunden"
-    prompts: 
-      day: Tag
-      hour: Stunden
-      minute: Minuten
-      month: Monat
-      second: Sekunden
-      year: Jahr
-  number: 
-    currency: 
-      format: 
-        format: "%n%u"
-        unit: €
-    format: 
-      delimiter: "."
-      precision: 2
-      separator: ","
-    human: 
-      format: 
-        precision: 1
-      storage_units: 
-        format: "%n %u"
-        units: 
-          byte: 
-            one: Byte
-            other: Bytes
-          gb: GB
-          kb: KB
-          mb: MB
-          tb: TB
-  support: 
-    array: 
-      last_word_connector: " und "
-      two_words_connector: " und "
-      words_connector: ", "
-  time: 
-    am: vormittags
-    formats: 
-      default: "%A, %d. %B %Y, %H:%M Uhr"
-      long: "%A, %d. %B %Y, %H:%M Uhr"
-      short: "%d. %B, %H:%M Uhr"
-    pm: nachmittags
+      no_abstract: "Keine Kurzfassung vorhanden"
+      orphans: "Verwaiste Werke"
+      publication_place: "Erscheinungsort"
+      recent: "Aktuellste Werke"
+      recommendations: "Ähnliche Werke an %{institution}"
+      update_author_list: "Reihenfolge der Autoren erfolgreich aktualisiert!"
+      update_editor_list: "Reihenfolge der Herausgeber erfolgreich aktualisiert!"
+      update_list: "Reihenfolge der Liste erfolgreich aktualisiert!"
+  contributorships:
+    act_on_multiple_form:
+      action: Aktion
+      apply_to_selection: "Auf die Auswahl anwenden"
+      deny: ablehnen
+      unverify: nicht verifizieren
+      verify: verifizieren
+    admin:
+      header: "Administration: Unbestätigte Autorenschaften"
+      matches: "Mögliche Treffer"
+      no_people: "Hier gibt es zur Zeit nichts zu tun"
+    archivable:
+      header: "Archivanalyse: %{person_link}"
+    archive_analysis_table:
+      archiving_policy: "Archivleitlinie"
+      romeo_color: "RoMEO<br />Farbe"
+    archive_publications_table:
+      pub_copy_allowed: "Verlagskopie<br />Erlaubt"
+    claim:
+      deny: Ablehnen
+      verify: Verifizieren
+    contributorship:
+      verified: Verifiziert
+    index:
+      add_person: "Eine neue Person Hinzufügen"
+      delete_person: "Diese Person löschen"
+      delete_person_confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+    verified:
+      verified: Verifiziert
+  facet_headings:
+    groups: Gruppen
+    people: Personen
+    publications: Publikationen
+    publishers: Verlage
+    years: Jahre
+  groups:
+    complete_index:
+      add_group: "Gruppe hinzufügen"
+      show_hidden: "Versteckte Gruppen anzeigen"
+    edit:
+      delete: "Gruppe löschen"
+      delete_confirm: "Soll diese Gruppe wirklich gelöscht werden?. Dies kann nicht rückgängig gemacht werden."
+      header: "%{link_to_group} bearbeiten"
+      hide: "Gruppe verstecken"
+      unhide: "Gruppe wieder sichtbar machen"
+    form:
+      parent_group: "Übergeordnete Gruppe"
+    group_table:
+      group_name: "Gruppenname"
+      members: Mitglieder
+      parent_group: "Übergeordnete Gruppe"
+    hidden:
+      empty: "Keine versteckten Gruppen"
+      header: "versteckte Gruppen"
+    new:
+      header: "Gruppe hinzufügen"
+    recent_works_box:
+      recent_works: "Aktuellste Werke"
+    related_groups_box:
+      belongs_to: "Gehört zu: "
+      subgroups: Untergruppen
+    show:
+      add: "Gruppe hinzufügen"
+      edit: "Diese Gruppe bearbeiten"
+      roles: "Rollen verwalten"
+    work_types_box:
+      types_of_work: "Arten von Werken"
+  imports:
+    accepted:
+      text: "Dieser Import wurde aktzeptiert"
+      warning: "Dieser Import wurde akzeptiert, aber er enthält keine Werke. Sie wurden vielleicht gelöscht."
+    batch_import_form:
+      legend: "Import (RIS | Medline | Refworks XML)"
+      text: "Laden Sie eine Datei mit den bibliographischen Angaben hoch."
+    default:
+      accept: "Import akzeptieren"
+      blank: "Dieser Import steht zur Begutachtung bereit, enthält aber keine Werke. Sie wurden vielleicht gelöscht."
+      not_blank: "Dubletten werden im System nicht angezeigt. Ein Import, welcher Dubletten enthält, führt dazu, dass diese nicht erscheinen."
+      reject: "Import ablehnen"
+    details_generic:
+      header: "Importergebnis"
+    details_person:
+      header: "Importergebnis"
+    errors:
+      no_errors: "Beim Import sind keine Fehler aufgetreten."
+    import_names:
+      header: "Importnamen"
+      text: "Wählen Sie die fehlenden Variationen Ihres Namens aus."
+    index:
+      header: "Importe für %{email}"
+      link: "Einen Import hinzufügen"
+    index_table:
+      batch: "Import #"
+      imported_for: "Importiert für"
+    matched:
+      matched: Übereinstimmung
+      matched_total: "%{count} Werk(e) für %{imported_for}."
+      remaining_total: "%{count} noch nicht übereinstimmend."
+    new:
+      add_import: "Einen Import hinzufügen"
+      show_all: "Alle Importe anzeigen"
+    pen_names:
+      my_names: "Meine Namensformen"
+      works_matched: "Übereinstimmende Werke"
+    processing:
+      text: "Diese Import wird bearbeitet. Sie erhalten eine E-Mail, wenn er abgeschlossen ist."
+    rejected:
+      text: "Diese Import wurde abgelehnt und alle mit ihm assoziierten Werke gelöscht."
+    show:
+      add: "Einen Import hinzufügen"
+      header: "Einen Import begutachten"
+      show: "Meine Importe anzeigen"
+      subheader: "Importiert für %{imported_for}"
+    work_counts:
+      duplicate_works: "Dubletten"
+      new_works: "Neue Werke"
+    work_type_list:
+      header: "Wählen Sie einen Typ"
+    works_destroy_form:
+      submit: "Ausgewählte Werke löschen"
+    works_imported:
+      header: "Importierte Werke"
+  keywordings:
+    edit:
+      header: "Schlagworte bearbeiten"
+    index:
+      header: "Auflistung der Schlagworte"
+      new: "Neues Schlagwort"
+    new:
+      header: "Neues Schlagwort"
+  keywords:
+    edit:
+      heading: "Schlagwort bearbeiten"
+    index:
+      heading: "Schlagworte Auflisten"
+      new_keyword: "Neues Schlagwort"
+      no_keywords: "Es gibt keine Schlagworte."
+    new:
+      heading: "Neues Schlagwort"
+    timeline:
+      chart_header: "Werkarten nach Jahren"
+      chart_loading: am Laden ...
+      cloud_header: "Themen nach Jahr"
+      handle_alt: "Nach rechts oder links ziehen"
+    timeline_list:
+      no_data: "Keine Daten vorhanden"
+  layouts:
+    application:
+      default_title: "Einen Experten finden"
+    error:
+      default_title: "Einen Experten finden"
+  memberships:
+    action_links:
+      all_groups: "Alle Gruppen"
+    group:
+      confirm: "Sind Sie sicher, dass Sie diese Gruppe verlassen wollen?"
+      leave: "Gruppe verlassen"
+      year_joined: "Start der Gruppenzugehörigkeit"
+      year_left: "Ende der Gruppenzugehörigkeit"
+    join_groups_form:
+      submit: "Ausgewählten Gruppen beitreten"
+    new:
+      add_person: "Eine neue Person hinzufügen"
+      delete_confirm: "Soll diese Person wirlich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+      delete_person: "Diese Person löschen"
+      group_memeberships: "Gruppenmitgliedschaften"
+    non_member_groups:
+      no_groups: "Keine Gruppen gefunden"
+      searching_for: "Suche nach"
+    search_form:
+      submit: "Gruppen suchen"
+  name_strings:
+    edit:
+      header: "Namen editieren: %{name}"
+    index:
+      add: "Namen hinzufügen"
+    new:
+      header: "Einen neuen Namen eingeben"
+    show:
+      edit_link: "Diesen Namen bearbeiten"
+      have_published: "Ich habe unter diesem Namen veröffentlicht."
+      no_claim: "Niemand an der %{university_name} hat diesen Namen beansprucht. Vielleicht handelt es sich um jemanden von einer anderen Einrichtung."
+  passwords:
+    edit:
+      confirm: "Neues Passwort bestätigen"
+      header: "Passwort ändern"
+      new: "Neues Passwort"
+      old: "Altes Passwort"
+      submit: "Passwort aktualisieren"
+    new:
+      header: "Passwort vergessen"
+      legend: "Neues Passwort anfordern"
+      submit: "Passwort senden"
+  pen_names:
+    name_string_filter:
+      no_results: "<strong>%{phrase}</strong> gab keine Treffer"
+    new:
+      confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+      current: "Aktuelle Namensformen"
+      delete: "Diese Person löschen"
+      explanation: "Namensformen werden dazu verwandt, Personen mit Veröffentlichungen zu verbinden. Ihre <strong>Aktuellen Namensformen</strong> sollten alle Variationen Ihres Namens beinhalten, die in Zitationen auftauchen können. Um eine Namensform zu löschen, entfernen Sie einfach den Haken in der Box daneben."
+      instructions: "Haken Sie die Box neben einer Namensform an und diese wird zu Ihren Namensformen hinzugefügt."
+      suggested: "Mögliche Namensformen"
+    new_namestring_form:
+      add_text: "Eine Namensform hinzufügen (z. B. \"Müller, M\")"
+    search_for_namestrings:
+      search_text: "Suche nach anderen Namen (z. B. \"Müller\")"
+    suggested_namestrings:
+      no_suggestions: "Es gibt keine möglichen Namensformen."
+  people:
+    admin_actions:
+      add: "Werke hinzufügen"
+      archive: "Archivanalyse"
+      edit: "Diese Person bearbeiten"
+      manage_contributorships: "Autorenschaften Verwalten"
+      manage_roles: "Rollen verwalten"
+    batch_csv_show:
+      legend_absent: "Wählen Sie eine mit komma separierte Datei aus."
+      legend_present: "CSV Hochladen"
+      select_file: "Wählen Sie eine mit Komma separierte CSV-Datei für den Import aus."
+    edit:
+      add: "Eine Person hinzufügen"
+      confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+      delete: "Diese Person löschen"
+    edit_actions:
+      personal_info: "Persönliche Daten"
+    form:
+      disable: Am Speichern...
+    ldap_search:
+      example: "Z.B.: Mustermann, Max OR Mustermann, M"
+      explanation: "Durchsuchen des Universitätsverzeichnis nach Informationen zur Person"
+      failed: "Suche fehlgeschlagen: %{message}."
+      no_results: "Keine Treffer für %{query}"
+      results: "Suchergebnisse"
+    new:
+      header: "Neue Person"
+    people_table:
+      recent_publication: "Aktuellste Veröffentlichungen"
+    show_work_types:
+      header: "Arten von Werken"
+    show_works:
+      recent: "neueste Zugänge"
+  pub_common:
+    authority_actions:
+      submit: "Normdatenreferenz setzen"
+    authority_form:
+      legend: "Einträge hinzufügen und Normdatenreferenz setzen"
+      submit: "Normdatenreferenz setzen"
+    show:
+      description: "Neueste %{university_name} Werke von %{object_name}"
+  publications:
+    authorities:
+      instructions: "Um Publikationsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
+    edit:
+      confirm: "Soll diese Publikation wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+    form:
+      auth_record: "Normdateneintrag für Publikation"
+      save_go: "Speichern und zurück zur Liste"
+      save_show: "Speichern und Anzeigen"
+    show_authority:
+      auth_name: "normierte Bezeichnung für"
+    show_not_authority:
+      header: "Normierter Titel"
+    show_publisher:
+      published_by: "Veröffentlich von"
+  publishers:
+    authorities:
+      instructions: "Um Verlagsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
+    form:
+      auth_record: "Normdateneintrag für Verlag"
+      copy_allowed: "Verlagskopie zugelassen?"
+      save_go: "Speichern und zurück zur Liste"
+      save_show: "Speichern und Anzeigenw"
+    index_table:
+      publisher_name: "Verlagname"
+      recent_year: "Dieses Jahr"
+    show:
+      auth_name: "normierte Bezeichnung für"
+      auth_title: "Normierter Titel"
+  roles:
+    form:
+      add: "Als %{role} hinzufügen"
+      has_implicitly: "Besitzt die Rolle implizit"
+      has_permissions: "Besitzt bereits die Rechter der Rolle: %{role}"
+      remove: " [entferne]"
+    index:
+      add_admins: "Administratoren hinzufügen"
+      add_editors: "Bearbeiter hinzufügen"
+      no_admins: "Keine Administratoren zugeordnet."
+      no_editors: "Keine Bearbeiter zugeordnet."
+  search:
+    advanced_search_form:
+      authors_text: "Dokumente nach Autoren"
+      groups_text: "Dokumente nach Gruppen"
+      issn_isbn_text: "Dokumente nach Kennung"
+      keywords_text: "Dokumente nach Stichwort"
+      legend: "Erweiterte Suche"
+      restrict_date: "Nur Dokumente verlegt von"
+      title_text: "Nur Dokumente mit diesen Worten im Titel"
+      to: nach
+    no_hits:
+      advanced_search: "Probieren Sie unsere erweiterte Suche aus."
+      different_keywords: "Versuchen Sie es mit verschiedenen Stichworten."
+      double_check: "Überprüfen Sie Ihre Schreibeweise."
+      error: "Es tut uns leid, diese Suche &ldquo;&{query}&rdquo; führte zu keinem Ergebnis."
+      suggestions: Vorschläge
+    spelling_suggestions:
+      did_you_mean: "Meinten Sie"
+  shared:
+    application_error:
+      email_subject: "%{app_name} Kontakt"
+      header: "Fehler 500: Schwerwiegender Fehler!"
+      list_1: "Seien Sie nicht beunruhigt, aber %{link} steht gerade nicht zur Verfügung."
+      list_2: "Wir wurden bereits von %{link} entsprechend benachrichtigt."
+      list_3: "Brauchen Sie einen Ansprechpartner? E-Mail:"
+    coauthors:
+      heading: "Co-Autoren an der %{university_name}"
+    coauthors_table:
+      header: "%{university_name} Ko-Autoren"
+      last_name: "Nachname"
+      work_count: "# an Werken"
+    contribution_actions:
+      deny: Ablehnen
+      verify: Verifizieren
+    facet:
+      more: "Mehr %{heading}"
+    facets:
+      formats: Formate
+      heading: "Ergebnisse verfeinern"
+    file_upload:
+      select_file: "Wählen Sie eine Datei"
+    footer:
+      powered_by: "Mit Unterstützung von "
+    keyword_cloud:
+      header: "Forschungsthemen"
+      submit: "Zeitschiene"
+    not_found:
+      bad_link: "Sie könnten einem Link zu einem %{type} welcher nicht länger an der %{university_name} ist."
+      title: "Fehler 404: Seite nicht gefunden"
+      try_searching: "Haben Sie es bereits mit der Suche versucht? Geben Sie Stichwörter in das Suchfeld oben ein."
+    upload_form:
+      disable: "Importieren ..."
+      submit: "Import hinzufügen"
+      upload: "Datei hochladen"
+  user_sessions:
+    federated_login_form:
+      button_oauth: "Anmelden mit %{name}"
+      button_open_id: "Anmelden mit %{name} OpenID"
+      generic: Generisch
+      header: "Anmelden mit externer Authentifizierung"
+    local_login_form:
+      cookies: "(im Browser müssen Cookies aktiviert sein)"
+      forgot_password: "Passwort vergessen"
+      header: "Einloggen mit lokaler(%{app_name}) Authentifizierung"
+      remember: "Meine Daten merken"
+      sign_up: "Registrieren"
+      submit: "Anmelden"
+    show_options_form:
+      send_to: "Senden an"
+  users:
+    edit:
+      change_password: "Passwort ändern"
+      header: "Mein Benutzerkonto bearbeiten"
+      important_text: "Wenn Sie dieses Formular abschicken, erhalten Sie eine E-Mail, die einen Bestätigungslink enthält. Ihre E-Mail-Adresse wird erst aktualisiert, wenn Sie diesen Link betätigen."
+      legend: "Benutzerkonto"
+    new:
+      header: "Benutzerkonto anlegen"
+      legend: "Benutzerkonto"
+      submit: "Registrieren"
+    show:
+      account_information: "Kontoinformation"
+      header: "Benutzerkonto (%{email})"
+      remove: " [entferne]"
+      role_label: "Rollen in %{app_name}"
+  work_roles:
+    actor: Schauspieler
+    advisor: Berater
+    artist: Künstler
+    author: Autor
+    band: Band
+    choir: Chor
+    choreographer: Choreograph
+    co_principal_investigator: "Co-Forschungleiterr"
+    committee_chair: "Gremiumsvorsitzender"
+    committee_member: "Gremiumsmitglied"
+    composer: Komponist
+    conductor: Dirigent
+    contributor: Beitragender
+    costume_designer: "Kostümdesigner"
+    creator: Erschaffender
+    curator: Kurator
+    dancer: Tänzer
+    director: Direktor
+    director_of_research: "Leiter der Forschung"
+    editor: Herausgeber
+    editorial_board_member: "Mitglied der Herausgeberschaft"
+    illustrator: Illustrator
+    interviewee: Interviewter
+    interviewer: Interviewer
+    lighting_designer: "Lichtbildner"
+    managing_editor: "Leitender Herausgeber"
+    musical_ensemble: "Musikensemble"
+    musician: Musiker
+    orchestra: Orchester
+    other: Sonstiges
+    patent_owner: "Patenthalter"
+    performer: Darsteller
+    presenter: Präsentator
+    principal_investigator: "Forschungsleiter"
+    producer: Produzent
+    translator: Übersetzer
+  works:
+    admin:
+      legend: "Adminsitrative Aufgaben"
+      link: "Direkt via SWORD im Repositorium veröffentlichen"
+    attachments:
+      download_file: "Datei herunterladen"
+      download_page: "Seite herunterladen"
+      local_library: "Bibliothekslink"
+    change_type_form:
+      label: "Typ ändern"
+    edit:
+      confirm: "Soll dieses Werk wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
+      delete_link: "Dieses Werk löschen"
+      header: "Ein Werk bearbeiten"
+    first_works:
+      recent: "Neueste Zugänge"
+    forms:
+      fields:
+        author_list_item:
+          remove: "[entferne]"
+        author_name_strings:
+          add: "[weitere %{role}(n) hinzufügen]"
+          example: "Format: Nachname, Erster Vorname  Zweiter Vorname (z. B.: Mustermann, Max L.)"
+          remove: "[entferne]"
+          role: "%{role}(n)"
+        contributor_list_item:
+          remove: "[entferne]"
+        contributor_name_strings:
+          add: "[weitere Beteiligte hinzufügen]"
+          instructions: "Format: Nachname, Erster Vorname  Zweiter Vorname (z. B.: Mustermann, Max L.)"
+          label: Beteiligte
+          remove: "[remove]"
+        editor_name_strings:
+          add: "Herausgebern zur Liste hinzufügen"
+          drag: "(verschieben Sie einfach die Namen, um die Liste umzusortieren)"
+          label: "Herausgeber:"
+        form_buttons:
+          save: "Änderungen speichern"
+          saving: Speichern ...
+        keywords:
+          instructions: "Bei der eingabe mehrere Schlagwörter, diese mit Semikolon trennen."
+          label: Schlagwörter
+        merge_author_name_strings:
+          instructions: "(verschieben Sie einfach die Namen, um die Liste umzusortierent)"
+          label: Autor(en)
+        merge_editor_name_strings:
+          instructions: "(verschieben Sie einfach die Namen, um die Liste umzusortieren)"
+          label: Herausgeber
+        merge_form_buttons:
+          delete_dup: "Akzeptiertes Werk speichern und Dubletten löschen"
+          keep_dup: "Akzeptiertes Werk speichern und Dubletten behalten"
+        merge_keywords:
+          label: Schlagwörter
+        merge_publications:
+          label: "Titel des Periodikums"
+        merge_tags:
+          label: Tag(s)
+        publication:
+          label: "Titel der Publikation"
+        tags:
+          add: "Tag zur Liste hinzufügen"
+          label: Tag(s)
+        title_secondary:
+          label: "Zusatz zum Titel"
+        title_tertiary:
+          label: "Gesamttitel"
+      form_add_batch:
+        add: "Import hinzufügen"
+        disable: "Import und Überprüfung der Daten..."
+        instructions: "Laden Sie entweder eine Datei mit den Zitation hoch oder kopieren Sie diese in die Box unten."
+        legend: "Import (RIS | Medline | Refworks XML)"
+        paste: "oder Kopieren von Zitationen:"
+        upload: "Datei hochladen:"
+    index:
+      add: "Werk hinzufügen"
+      heading: "Hochschulbibliographie"
+      view_orphans: "Verwaiste Werke anzeigen"
+    layouts:
+      merge_form:
+        accepted: "Akzeptierte Werke"
+        duplicate: "Dubletten"
+    local_authors:
+      heading: "%{university_name} Autoren"
+    local_recommendations:
+      heading: "Ähnliche Werke an der  %{university_name}"
+    merge_duplicates:
+      flash_excluded: "%{work} ist keine mögliche Dublette zu diesem Werk."
+      flash_not_accepted: "Diese Werk ist im Status: <strong>%{work_status}</strong>. Sie können nur Felder in <strong>akzeptierten</strong> Werken zusammenführen."
+      header: "Editor zur Dublettenkontrolle"
+      instructions: "Hier können Sie akzeptierte Werke bearbeiten. Wenn Sie fertig sind, klicken Sie auf die Schaltfläche unten, um Ihre Änderungen zu speichern."
+    metadata:
+      links:
+        label: DOI/URL
+    new:
+      header: "Wählen Sie einen Typ"
+    orphans:
+      confirm: "Sind Sie sicher? Diese Aktion kann nicht rückgängig gemacht werden."
+      header: "Verwaiste Werke"
+      submit: "Ausgewählte Werke löschen"
+    show:
+      archive: "Forschung archivieren"
+      deposit: "Anhänge fürs Deposit"
+      edit: "Dieses Werk bearbeiten"
