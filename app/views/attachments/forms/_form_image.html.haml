@@ -21,11 +21,12 @@
         %p= render "shared/person_image", :o => @asset
 
       -if @person.image
+        %br
         = link_to t('common.attachments.delete_image'), attachment_url(:id => @asset.image.id), :method => :delete
 
   %fieldset
-    %legend New Image
-    %label Upload File:
+    %legend= t('attachments.forms.form_image_file.legend')
+    %label  #{t('attachments.forms.form_image_file.label')}:
     %br/
     = render 'upload_file', :form => form
 

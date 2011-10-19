@@ -410,6 +410,17 @@ en:
     web_password: "Web Password"
     year: Year
     years: Years
+  attachments:
+    forms:
+      form_content_file:
+        header: "Attaching to %{class_name}"
+        legend: "Content Files"
+        label: "Upload File(s)"
+      form_image_file:
+        legend: "New Image"
+        label: "Upload File"
+    form_person:
+      confirm: "Permanently delete this person? This cannot be undone."
   common:
     admin:
       flash_update_publishers_error: "Error updating publisher data: %{message}"
