@@ -1,5 +1,5 @@
 - include_data_tables
-- include_javascript('specific/publishers/authorities')
+- include_javascripts('locale', 'specific/publishers/authorities')
 - if current_user_any_role?("editor", "Group")
   = render :layout => 'layouts/admin_bar' do
     %li #{link_to t('common.publishers.new'), new_publisher_path}
