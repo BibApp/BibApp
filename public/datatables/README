@@ -1,0 +1,9 @@
+This directory contains translations needed for the DataTables javascript
+library: www.datatables.net.
+
+A variety of existing translations are available from 
+http://www.datatables.net/plug-ins/i18n.
+
+Of course these may be adapted as desired.
+
+The translation should be saved here in a file named <locale>.txt.
