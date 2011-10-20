@@ -16,7 +16,7 @@
       -# Default colors to unknown
       - color = romeo_color(row)
       %tr{:class => color}
-        %td #{t("common.romeo.#{color.downcase}").capitalize}
+        %td #{t("personalize.sherpa_colors.#{color.downcase}.name")}
         %td #{t_sherpa_color_explanation(color)}
         %td #{((row.count.to_f / @pub_totals.to_f) * 100).round}%
         %td #{row.count}

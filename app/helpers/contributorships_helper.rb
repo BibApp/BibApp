@@ -11,7 +11,7 @@ module ContributorshipsHelper
   end
 
   def romeo_color(row)
-    row.color.present? ? t("common.romeo.#{row.color.downcase}") : t('app.unknown')
+    t("personalize.sherpa_colors.#{row.color.self_or_blank_default('unknown').downcase}.name")
   end
 
 end

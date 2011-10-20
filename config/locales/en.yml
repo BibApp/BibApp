@@ -591,13 +591,6 @@ en:
       index_header_system: "System-wide Roles: %{app_name}"
       new_admin: "Add administrator"
       new_editor: "Add editor"
-    romeo:
-      black: black
-      blue: blue
-      green: green
-      unknown: unknown
-      white: white
-      yellow: yellow
     search:
       query: "Search for: "
       refine: "Refine Search"
