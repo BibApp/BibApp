@@ -12,11 +12,21 @@ en:
       issn_isbn: "ex. 0003-018X"
       year: "ex. 2006  to  2008"
     sherpa_colors:
-      green: "Can archive pre-print and post-print"
-      blue: "Can archive post-print (i.e. final draft post-refereeing)"
-      yellow: "Can archive pre-print (i.e. pre-refereeing)"
-      white: "Archiving not formally supported"
-      unknown: "Could not determine from data"
+      green:
+        name: "Green"
+        explanation: "Can archive pre-print and post-print"
+      blue:
+        name: "Blue"
+        explanation: "Can archive post-print (i.e. final draft post-refereeing)"
+      yellow:
+        name: "Yellow"
+        explanation: "Can archive pre-print (i.e. pre-refereeing)"
+      white:
+        name: "White"
+        explanation: "Archiving not formally supported"
+      unknown:
+        name: "Unknown"
+        explanation: "Could not determine from data"
     university_full_address: "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
     university_full_name: "University of Wisconsin - Madison"
     university_short_name: "UW-Madison"

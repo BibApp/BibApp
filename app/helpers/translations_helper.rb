@@ -18,7 +18,7 @@ module TranslationsHelper
   end
 
   def t_sherpa_color_explanation(color_string_or_sym)
-    t("personalize.sherpa_colors.#{color_string_or_sym.to_s.downcase}")
+    t("personalize.sherpa_colors.#{color_string_or_sym.to_s.downcase}.explanation")
   end
 
   def t_work_status(status_id)
