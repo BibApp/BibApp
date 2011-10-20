@@ -4,6 +4,7 @@ config/ldap.yml
 config/smtp.yml
 config/solr.yml
 config/sword.yml
+config/locales.yml
 config/personalize.rb
 config/locales/personalize/*.yml
 tmp/
