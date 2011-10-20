@@ -122,7 +122,7 @@ class Publisher < PubCommon
         url = pub.elements['homeurl'].text
         romeo_color = pub.elements['romeocolour'].text
 
-        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+        add = Publisher.find_or_create_by_sherpa_id(:sherpa_id => sherpa_id, :romeo_color => 'unknown')
         add.update_attributes!({
                                    :name => name,
                                    :url => url,
