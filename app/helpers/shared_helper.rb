@@ -3,6 +3,7 @@
 #nevertheless, I want the separation from the methods in ApplicationHelper - these are really specific to
 #the shared views, not all views
 module SharedHelper
+  include TranslationsHelper
 
   def letter_link_for(letters, letter, current, path)
     li_opts = (current == true) ? {:class => "current"} : {}
@@ -66,7 +67,8 @@ module SharedHelper
     end
   end
 
-  def add_filter(params, facet, value, count)
+  def add_filter(params, facet, value, count, label = nil)
+    label ||= value
     filter = Hash.new
     if params[:fq]
       filter[:fq] = params[:fq].collect
@@ -77,7 +79,7 @@ module SharedHelper
     filter[:fq] << "#{facet}:\"#{value}\""
     filter[:fq].uniq!
 
-    link_to "#{value} (#{count})", params.merge(filter)
+    link_to "#{label} (#{count})", params.merge(filter)
   end
 
   def remove_filter(params, facet)
@@ -127,7 +129,7 @@ module SharedHelper
           content_tag(:strong, "#{t 'app.saved'} - ") +
               link_to(t('app.remove'), remove_from_saved_work_url(work_id))
         else
-          link_to t('app.saved'), add_to_saved_work_url(work_id)
+          link_to t('app.save'), add_to_saved_work_url(work_id)
         end
       when :edit
         link_to t('app.edit'), edit_work_path(work_id, :return_path => return_path)
