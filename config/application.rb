@@ -38,7 +38,6 @@ module Bibapp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # Specify desired locales in config/locales.yml. If that doesn't exist use English only.
     # The first in the list will be the default locale by default.
     locales = YAML.load_file(File.join(Rails.root, 'config', 'locales.yml')).collect {|l| l.to_sym} rescue [:en]
