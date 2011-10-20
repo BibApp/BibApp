@@ -20,7 +20,15 @@ class ApplicationController < ActionController::Base
 
   # Adds the locale parameter
   def set_locale
-    I18n.locale = params[:locale] || ((lang = request.env['HTTP_ACCEPT_LANGUAGE']) && lang[/^[a-z]{2}/]) || I18n.default_locale
+    I18n.locale = valid_locale?(params[:locale]) ||
+        valid_locale?((lang = request.env['HTTP_ACCEPT_LANGUAGE']) && lang[/^[a-z]{2}/]) ||
+        I18n.default_locale
+  end
+
+  def valid_locale?(locale)
+    I18n.available_locales.include?(locale.to_sym) ? locale.to_sym : false
+  rescue
+    false
   end
 
   def default_url_options(options = {})
@@ -131,10 +139,10 @@ class ApplicationController < ActionController::Base
     # Add Feeds
     if @current_object
       @feeds = [{
-          :action => "show",
-          :id => @current_object.id,
-          :format => "rss"
-      }]
+                    :action => "show",
+                    :id => @current_object.id,
+                    :format => "rss"
+                }]
     end
 
     # Enable Citeproc

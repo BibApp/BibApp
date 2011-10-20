@@ -797,6 +797,12 @@ de:
       handle_alt: "Nach rechts oder links ziehen"
     timeline_list:
       no_data: "Keine Daten vorhanden"
+  #The i18n section is for 'meta' information about the internationalization/localization
+  #It's not necessarily translated - e.g. the language:name key should correspond to the
+  #language of the locale, not be a translation of 'English'
+  i18n:
+    language:
+      name: Deutsch
   layouts:
     application:
       default_title: "Einen Experten finden"

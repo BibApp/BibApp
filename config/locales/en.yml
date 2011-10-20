@@ -729,6 +729,12 @@ en:
       roles: "Manage Roles"
     work_types_box:
       types_of_work: "Types of Work"
+  #The i18n section is for 'meta' information about the internationalization/localization
+  #It's not necessarily translated - e.g. the language:name key should correspond to the
+  #language of the locale, not be a translation of 'English'
+  i18n:
+    language:
+      name: English
   imports:
     accepted:
       text: "This import was <strong>accepted</strong>"

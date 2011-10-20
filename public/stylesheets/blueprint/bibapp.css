@@ -43,23 +43,23 @@
 }
 
 /* Global Navigation (e.g. FAQ, Login, etc.) */
-ul#global-nav {
+ul.header-nav {
   padding: 0;
   margin: 0;
   float: right;
   text-align: right;
 }
 
-ul#global-nav li {
+ul.header-nav li {
   display: inline;
   padding: 0.5em;
 }
 
-ul#global-nav a {
+ul.header-nav a {
   text-decoration: none;
 }
 
-ul#global-nav a:hover {
+ul.header-nav a:hover {
   background-color: #E6E6E6;
 }
 

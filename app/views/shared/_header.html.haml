@@ -11,9 +11,7 @@
           #{ submit_tag t('app.search')}
         %span.advanced-search-link #{link_to t('app.advanced'), advanced_search_path}
 
-    .span-22
-      %p#tagline
-        #{t('personalize.application_tagline')}
+    = render 'shared/tagline_and_locales'
 
     .span-14
       = render 'shared/header_nav'
