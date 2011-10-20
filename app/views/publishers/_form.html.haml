@@ -12,7 +12,7 @@
     %p
       %label #{Publisher.human_attribute_name(:romeo_color)}
       %br/
-      = form.text_field :romeo_color
+      = form.select(:romeo_color, $SHERPA_COLORS.keys.collect {|k| k.to_s}.sort, :selected => @publisher.romeo_color || 'unknown')
     %p
       %label #{Publisher.human_attribute_name(:copyright_notice)}
       %br/
