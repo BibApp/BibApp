@@ -8,6 +8,7 @@ Fix bug after will_paginate 3.0.0 upgrade
 Prevent a possible infinite loop after saving a contributorship from even being possible
 View refactoring - internal layouts, relocation of logic to helpers, more use of partials, etc.
 Internationalization
+Make romeo color selection use a select box
 
 1.1.2 - September 1, 2011
 --------------
