@@ -443,7 +443,7 @@ class Work < ActiveRecord::Base
 
   def set_publisher_from_name(publisher_name = nil)
     publisher_name = "Unknown" if publisher_name.blank?
-    set_publisher = Publisher.find_or_create_by_name(:name => publisher_name)
+    set_publisher = Publisher.find_or_create_by_name(:name => publisher_name, :romeo_color => 'unknown')
     self.set_initial_publisher(set_publisher)
     return set_publisher
   end
