@@ -4,7 +4,7 @@
   .span-8.last
     %ul#locale-picker.header-nav
       - I18n.available_locales.each do |locale|
-        %li= link_to_unless(locale.to_sym == params[:locale].to_sym, t('i18n.language.name', :locale => locale), url_for(params.merge(:locale => locale)))
+        %li= link_to_unless(locale.to_sym == params[:locale].try(:to_sym), t('i18n.language.name', :locale => locale), url_for(params.merge(:locale => locale)))
 - else
   .span-22
     %p#tagline #{t('personalize.application_tagline')}
