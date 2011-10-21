@@ -1,6 +1,6 @@
 Bibapp::Application.routes.draw do
 
-  locale_regexp = Regexp.new("#{I18n.available_locales.join('|')}")
+  locale_regexp = Regexp.new(I18n.available_locales.join('|'))
   scope "(:locale)", :locale => locale_regexp do
     resources :works do
       collection do
