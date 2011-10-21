@@ -1,6 +1,7 @@
 Bibapp::Application.routes.draw do
 
-  scope "(:locale)", :locale => /en|de/ do  
+  locale_regexp = Regexp.new("#{I18n.available_locales.join('|')}")
+  scope "(:locale)", :locale => locale_regexp do
     resources :works do
       collection do
         get :auto_complete_for_author_string
@@ -59,7 +60,7 @@ Bibapp::Application.routes.draw do
 
     #####
     # Group routes
-    ##### 
+    #####
     # Add Auto-Complete routes for adding new groups
     resources :groups do
       collection do
@@ -115,7 +116,7 @@ Bibapp::Application.routes.draw do
     end
     #####
     # Publisher routes
-    #####   
+    #####
     resources :publishers do
       collection do
         get :authorities
@@ -184,7 +185,7 @@ Bibapp::Application.routes.draw do
     match 'activate/:activation_code', :to => 'users#activate', :as => 'activate'
 
     ####
-    # DEFAULT ROUTES 
+    # DEFAULT ROUTES
     ####
     # Install the default routes as the lowest priority.
     resources :name_strings
@@ -220,7 +221,7 @@ Bibapp::Application.routes.draw do
     match 'admin/update_sherpa_data' => "admin#update_sherpa_data"
     match 'admin/deposit_via_sword' => "admin#deposit_via_sword"
     match 'admin/update_publishers_from_sherpa' => "admin#update_publishers_from_sherpa"
-  
+
     match 'roles/index' => "roles#index"
     match 'roles/destroy' => "roles#destroy"
     match 'roles/create' => "roles#create"
