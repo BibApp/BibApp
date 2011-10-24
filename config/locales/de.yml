@@ -854,6 +854,7 @@ de:
     name_string_filter:
       no_results: "<strong>%{phrase}</strong> gab keine Treffer"
     new:
+      add: "Eine neue Person hinzufügen"      
       confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
       current: "Aktuelle Namensformen"
       delete: "Diese Person löschen"

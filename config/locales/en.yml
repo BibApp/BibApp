@@ -870,6 +870,7 @@ en:
     name_string_filter:
       no_results: "<strong>%{phrase}</strong> returned no results"
     new:
+      add: "Add a new person"
       confirm: "Permanently delete this person? This cannot be undone."
       current: "Current pen names"
       delete: "Delete this person"
