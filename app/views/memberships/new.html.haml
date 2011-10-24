@@ -6,7 +6,7 @@
     %li= link_to t('memberships.new.add_person'), new_person_path
 
 = render :layout => '/layouts/main_body',
-  :locals => {:header => "#{person_link(@person)}: Group Memberships".html_safe} do
+  :locals => {:header => "#{person_link(@person)}: #{Group.model_name.human_pl}".html_safe} do
 
   = render "shared/local_nav", :object => "person", :state => "edit"
 
