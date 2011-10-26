@@ -5,7 +5,11 @@ module TranslationsHelper
   end
 
   def t_work_role_name(role_name)
-    t("work_roles.#{canonicalize_work_role_name(role_name)}")
+    t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => 1)
+  end
+
+  def t_work_role_name_pl(role_name)
+    t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => 2)
   end
 
   #turns the english string for the role name into the appropriate string to do a translation lookup

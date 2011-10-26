@@ -10,7 +10,7 @@
 - authors.compact!
 
 .author_block
-  = label :author, :string, t('works.forms.fields.author_name_strings.role', :role => t_work_role_name(role))
+  = label :author, :string, t_work_role_name_pl(role) + ':'
   %span.instructions= t('works.forms.fields.author_name_strings.example')
 
   %ol#author_name_strings_list

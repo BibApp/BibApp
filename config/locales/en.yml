@@ -1064,42 +1064,114 @@ en:
     next_label: "Next &#8594;"
     page_gap: "&hellip;"
   work_roles:
-    actor: Actor
-    advisor: Advisor
-    artist: Artist
-    author: Author
-    band: Band
-    choir: Choir
-    choreographer: Choreographer
-    co_principal_investigator: "Co-Principal Investigator"
-    committee_chair: "Committee Chair"
-    committee_member: "Committee Member"
-    composer: Composer
-    conductor: Conductor
-    contributor: Contributor
-    costume_designer: "Costume Designer"
-    creator: Creator
-    curator: Curator
-    dancer: Dancer
-    director: Director
-    director_of_research: "Director of Research"
-    editor: Editor
-    editorial_board_member: "Editorial Board Member"
-    illustrator: Illustrator
-    interviewee: Interviewee
-    interviewer: Interviewer
-    lighting_designer: "Lighting Designer"
-    managing_editor: "Managing Editor"
-    musical_ensemble: "Musical Ensemble"
-    musician: Musician
-    orchestra: Orchestra
-    other: Other
-    patent_owner: "Patent Owner"
-    performer: Performer
-    presenter: Presenter
-    principal_investigator: "Principal Investigator"
-    producer: Producer
-    translator: Translator
+    actor:
+      one: "Actor"
+      other: "Actors"
+    advisor:
+      one: "Advisor"
+      other: "Advisors"
+    artist:
+      one: "Artist"
+      other: "Artists"
+    author:
+      one: "Author"
+      other: "Authors"
+    band:
+      one: "Band"
+      other: "Bands"
+    choir:
+      one: "Choir"
+      other: "Choirs"
+    choreographer:
+      one: "Choreographer"
+      other: "Choreographers"
+    co_principal_investigator:
+      one: "Co-Principal Investigator"
+      other: "Co-Principal Investigators"
+    committee_chair:
+      one: "Committee Chair"
+      other: "Committee Chairs"
+    committee_member:
+      one: "Committee Member"
+      other: "Committee Members"
+    composer:
+      one: "Composer"
+      other: "Composers"
+    conductor:
+      one: "Conductor"
+      other: "Conductors"
+    contributor:
+      one: "Contributor"
+      other: "Contributors"
+    costume_designer:
+      one: "Costume Designer"
+      other: "Costume Designers"
+    creator:
+      one: "Creator"
+      other: "Creators"
+    curator:
+      one: "Curator"
+      other: "Curators"
+    dancer:
+      one: "Dancer"
+      other: "Dancers"
+    director:
+      one: "Director"
+      other: "Directors"
+    director_of_research:
+      one: "Director of Research"
+      other: "Directors of Research"
+    editor:
+      one: "Editor"
+      other: "Editors"
+    editorial_board_member:
+      one: "Editorial Board Member"
+      other: "Editorial Board Members"
+    illustrator:
+      one: "Illustrator"
+      other: "Illustrators"
+    interviewee:
+      one: "Interviewee"
+      other: "Interviewees"
+    interviewer:
+      one: "Interviewer"
+      other: "Interviewers"
+    lighting_designer:
+      one: "Lighting Designer"
+      other: "Lighting Designers"
+    managing_editor:
+      one: "Managing Editor"
+      other: "Managing Editors"
+    musical_ensemble:
+      one: "Musical Ensemble"
+      other: "Musical Ensembles"
+    musician:
+      one: "Musician"
+      other: "Musicians"
+    orchestra:
+      one: "Orchestra"
+      other: "Orchestras"
+    other:
+      one: "Other"
+      other: "Other"
+    patent_owner:
+      one: "Patent Owner"
+      other: "Patent Owners"
+    performer:
+      one: "Performer"
+      other: "Performers"
+    presenter:
+      one: "Presenter"
+      other: "Presenters"
+    principal_investigator:
+      one: "Principal Investigator"
+      other: "Principal Investigators"
+    producer:
+      one: "Producer"
+      other: "Producers"
+    translator:
+      one: "Translator"
+      other: "Translators"
   works:
     admin:
       legend: "Administrative Tasks"
@@ -1121,10 +1193,10 @@ en:
         author_list_item:
           remove: "[remove]"
         author_name_strings:
-          add: "[add more %{role}s]"
+          add: "[add another %{role}]"
           example: "Format: LastName, FirstName Middle (e.g., Smith, John L.)"
           remove: "[remove]"
-          role: "%{role}(s)"
+          role: "%{role}"
         contributor_list_item:
           remove: "[remove]"
         contributor_name_strings:
