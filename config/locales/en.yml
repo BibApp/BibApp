@@ -142,6 +142,7 @@ en:
         links: URL
         location: Location
         medium: Medium
+        notes: Notes!!
         publication: "Publication Title"
         publication_date: "Date Published"
         publication_place: "Publication Place"
