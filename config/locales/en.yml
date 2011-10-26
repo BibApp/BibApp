@@ -500,6 +500,11 @@ en:
       header: "Add Works"
       new: "Import File"
       person_header: "Add Works for %{person_link}"
+      states:
+        accepted: "accepted"
+        processing: "processing"
+        rejected: "rejected"
+        reviewable: "reviewable"
       unauthorized: Unauthorized.
     keywords:
       timeline: Timeline
