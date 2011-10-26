@@ -1,4 +1,4 @@
-= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person)} do
+= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person).html_safe} do
 
   .right
     %h3 #{t 'works.new.header'}:
