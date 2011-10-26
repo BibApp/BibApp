@@ -4,5 +4,5 @@
     %select{:name => 'type'}
       - Work.types.each do |t|
         - klass = Work.type_to_class(t)
-        %option{:value => "#{klass}", :selected => selected_if_equal(klass, @work.class)} #{t}
+        %option{:value => "#{klass}", :selected => selected_if_equal(klass, @work.class)} #{klass.model_name.human}
     = form.submit t('app.go')
