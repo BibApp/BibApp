@@ -503,6 +503,8 @@ en:
       states:
         accepted: "accepted"
         processing: "processing"
+        #yes, I know the key is speeled incorrectly, but it's that way in the code and I'm afraid to change it
+        recieved: "received"
         rejected: "rejected"
         reviewable: "reviewable"
       unauthorized: Unauthorized.
