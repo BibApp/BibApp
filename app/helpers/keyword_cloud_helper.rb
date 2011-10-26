@@ -4,7 +4,7 @@ module KeywordCloudHelper
     if facets[:keywords].present?
       max = 10
       bin_count = 5
-      kwords = filter_keywords(facets[:keywords]).first(max)
+      kwords = exclude_keywords(facets[:keywords]).first(max)
       max_kw_freq = kwords[0].value.to_i > bin_count ? kwords[0].value.to_i : bin_count
       s = get_keyword_struct
       kwords.map { |kw|
@@ -30,7 +30,7 @@ module KeywordCloudHelper
     @@keyword_exclusions ||= Regexp.union(load_keyword_exclusions.collect {|ex| Regexp.new(Regexp.quote(ex), Regexp::IGNORECASE)} )
   end
 
-  def filter_keywords(keywords)
+  def exclude_keywords(keywords)
     keywords.reject {|kw| kw.name.match(keyword_exclusions)}
   end
 
