@@ -23,7 +23,7 @@ module KeywordCloudHelper
   end
 
   def load_keyword_exclusions
-    (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) rescue [])
+    (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) || []) rescue []
   end
 
   def keyword_exclusions
