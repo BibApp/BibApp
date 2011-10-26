@@ -854,7 +854,7 @@ de:
     name_string_filter:
       no_results: "<strong>%{phrase}</strong> gab keine Treffer"
     new:
-      add: "Eine neue Person hinzufügen"      
+      add: "Eine neue Person hinzufügen"
       confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
       current: "Aktuelle Namensformen"
       delete: "Diese Person löschen"
@@ -1100,7 +1100,7 @@ de:
           add: "[weitere Beteiligte hinzufügen]"
           instructions: "Format: Nachname, Erster Vorname  Zweiter Vorname (z. B.: Mustermann, Max L.)"
           label: Beteiligte
-          remove: "[remove]"
+          remove: "[entferne]"
         editor_name_strings:
           add: "Herausgebern zur Liste hinzufügen"
           drag: "(verschieben Sie einfach die Namen, um die Liste umzusortieren)"

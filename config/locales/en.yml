@@ -380,6 +380,7 @@ en:
     powered: "Powered by"
     previous: previous
     remove: Remove
+    required: "required"
     result:
       one: Result
       other: Results
