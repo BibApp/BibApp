@@ -1,9 +1,10 @@
+require 'set'
 module KeywordCloudHelper
   def set_keywords(facets)
     if facets[:keywords].present?
       max = 10
       bin_count = 5
-      kwords = facets[:keywords].first(max)
+      kwords = filter_keywords(facets[:keywords]).first(max)
       max_kw_freq = kwords[0].value.to_i > bin_count ? kwords[0].value.to_i : bin_count
       s = get_keyword_struct
       kwords.map { |kw|
@@ -19,6 +20,18 @@ module KeywordCloudHelper
 
   def get_keyword_struct
     Struct.new(:name, :count)
+  end
+
+  def load_keyword_exclusions
+    (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) rescue []).to_set
+  end
+
+  def keyword_exclusions
+    @@keyword_exclusions ||= Regexp.union(load_keyword_exclusions.collect {|ex| Regexp.new(Regexp.quote(ex), 'i')})
+  end
+
+  def filter_keywords(keywords)
+    keywords.reject {|kw| kw.match(@@keyword_exclusions)}
   end
 
 end
