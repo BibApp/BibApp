@@ -23,15 +23,15 @@ module KeywordCloudHelper
   end
 
   def load_keyword_exclusions
-    (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) rescue []).to_set
+    (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) rescue [])
   end
 
   def keyword_exclusions
-    @@keyword_exclusions ||= Regexp.union(load_keyword_exclusions.collect {|ex| Regexp.new(Regexp.quote(ex), 'i')})
+    @@keyword_exclusions ||= Regexp.union(load_keyword_exclusions.collect {|ex| Regexp.new(Regexp.quote(ex), Regexp::IGNORECASE)} )
   end
 
   def filter_keywords(keywords)
-    keywords.reject {|kw| kw.match(@@keyword_exclusions)}
+    keywords.reject {|kw| kw.name.match(keyword_exclusions)}
   end
 
 end
