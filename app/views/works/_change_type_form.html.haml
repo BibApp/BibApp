@@ -2,7 +2,7 @@
   = form_for @work, :url => change_type_work_url(@work), :html => {:method => :put} do |form|
     %label #{t '.label'}
     %select{:name => 'type'}
-      - Work.types.each do |t|
-        - klass = Work.type_to_class(t)
-        %option{:value => "#{klass}", :selected => selected_if_equal(klass, @work.class)} #{klass.model_name.human}
+      - sorted_work_types.each do |type, label|
+        - klass = Work.type_to_class(type)
+        %option{:value => "#{klass}", :selected => selected_if_equal(klass, @work.class)} #{label}
     = form.submit t('app.go')

@@ -47,6 +47,12 @@ module TranslationsHelper
     end
   end
 
+  #return array of arrays. Each sub-array is a pair - the first is the type and the second is the label for the current
+  #locale. Sorted by the labels.
+  def sorted_work_types
+    Work.types.collect {|type| [type, type.gsub(/[()\/ ]/, '').constantize.model_name.human]}.sort_alphabetical_by {|a| a.last}
+  end
+
   protected
 
   #Need to handle the cases where the name is just 'Unknown' or if it has some identifiers appended to it

@@ -82,6 +82,12 @@ gem 'fastercsv'
 #Adds in some things removed from Rails 3 that are used, including error_messages_for
 gem 'dynamic_form'
 
+#Sorting help for different locales.
+#Note that sort_alphabetical is a bit crude. It should suffice for latin locales, though.
+#If we need something more sophisticated then sort_by_alphabet may be helpful, or keep watch
+#for other developments in this area
+gem 'sort_alphabetical'
+
 #For deployment, but can be ignored if not using capistrano
 gem 'capistrano'
 
