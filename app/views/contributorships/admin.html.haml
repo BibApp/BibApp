@@ -1,5 +1,5 @@
 - include_data_tables
-- include_javascripts('locale', 'specific/contributorships/admin')
+- include_javascript('specific/contributorships/admin')
 = render :layout => 'layouts/main_body', :locals => {:header => t('contributorships.admin.header')} do
   - if @people.length == 0
     %p #{t('contributorships.admin.no_people')}

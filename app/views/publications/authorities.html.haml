@@ -1,5 +1,5 @@
 - include_data_tables
-- include_javascripts('locale', 'specific/publications/authorities')
+- include_javascript('specific/publications/authorities')
 
 - if current_user_any_role?("editor", "Group")
   = render :layout => 'layouts/admin_bar' do
