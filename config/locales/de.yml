@@ -773,6 +773,11 @@ de:
       submit: "Ausgewählte Werke löschen"
     works_imported:
       header: "Importierte Werke"
+  jsperanto:
+    specific:
+      imports:
+        show:
+          matched_total: "__count__ Werke"
   keywordings:
     edit:
       header: "Schlagworte bearbeiten"

@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'fileutils'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -13,6 +14,23 @@ Authorization::Base::STORE_LOCATION_METHOD = :store_location
 
 module Bibapp
   class Application < Rails::Application
+
+    #for each available locale dump the part of config/locales/<locale>.yml that jsperanto needs as JSON into
+    #public/javascripts/translations
+    def self.create_jsperanto_locales(locales)
+      json_dir = File.join(Rails.root, 'public', 'javascripts', 'translations')
+      yaml_dir = File.join(Rails.root, 'config', 'locales')
+      FileUtils.mkdir_p(json_dir)
+
+      locales.each do |locale|
+        translations = YAML.load_file(File.join(yaml_dir, "#{locale}.yml"))
+        #json = translations[locale.to_s]['jsperanto'].to_json
+        json = JSON.pretty_generate(translations[locale.to_s]['jsperanto'])
+        File.open(File.join(json_dir, "#{locale}.json"), "w") do |f|
+          f.puts(json)
+        end
+      end
+    end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -40,10 +58,11 @@ module Bibapp
 
     # Specify desired locales in config/locales.yml. If that doesn't exist use English only.
     # The first in the list will be the default locale by default.
-    locales = YAML.load_file(File.join(Rails.root, 'config', 'locales.yml')).collect {|l| l.to_sym} rescue [:en]
+    locales = YAML.load_file(File.join(Rails.root, 'config', 'locales.yml')).collect { |l| l.to_sym } rescue [:en]
     config.i18n.available_locales = locales
     config.i18n.default_locale = locales.first
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
+    self.create_jsperanto_locales(locales)
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
@@ -57,6 +76,7 @@ module Bibapp
     #log deprecations
     config.active_support.deprecation = :log
   end
+
 end
 
 require 'error_handler'

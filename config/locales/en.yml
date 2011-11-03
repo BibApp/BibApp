@@ -792,6 +792,42 @@ en:
       submit: "Delete selected works"
     works_imported:
       header: "Works Imported"
+  #The jsperanto section is for use with the jsperanto jquery i18n library for javascript files
+  #As such, it uses different interpolation and pluralization syntax. See Bibapp wiki.
+  #This section is used to autogenerate files in public/javascripts/translations that jsperanto uses to translate.
+  jsperanto:
+    application:
+      select_item: "Please select an item to delete."
+      confirm_delete: "Are you sure you want to permanently delete this item?"
+      confirm_delete_pl: "Are you sure you want to permanently delete these __count__ items?"
+    specific:
+      contributorships:
+        index:
+          no_action: "No action selected"
+          select_verify: "Please select an item to verify."
+          select_deny: "Please select an item to deny."
+          select_unverify: "Please select an item to unverify."
+          confirm_verify: "Are you sure you want to verify this item?"
+          confirm_verify_plural: "Are you sure you want to verify the __count__ selected items?"
+          confirm_deny: "Are you sure you want to deny this item?"
+          confirm_deny_plural: "Are you sure you want to deny the __count__ selected items?"
+          confirm_unverify: "Are you sure you want to unverify this item?"
+          confirm_unverify_plural: "Are you sure you want to unverify the __count__ selected items?"
+      imports:
+        show:
+          matched_total: "__count__ work"
+          matched_total_plural: "__count__ works"
+          remaining_total: "__count__ remains unmatched."
+          remaining_total_plural: "__count__ remain unmatched."
+          remaining_total_zero: "Everything matches."
+      keywords:
+        timeline:
+          title: "Work Types"
+      memberships:
+        new:
+          select_group: "Please select a group to join."
+          confirm: "Are you sure you want to join this group?"
+          confirm_plural: "Are you sure you want to join these __count__ groups?"
   keywordings:
     edit:
       header: "Editing keywording"
