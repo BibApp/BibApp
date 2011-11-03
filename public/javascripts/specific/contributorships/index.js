@@ -7,21 +7,16 @@ $jq(function () {
     //null action - prevent submission
     var action = $jq('#action-select option:selected').attr('value');
     if (action == "null") {
-      alert('No action selected');
+      alert($jq.t('specific.contributorships.index.no_action'));
       return false;
     }
     var selected = $jq('#contributorships input:checked')
     var count = selected.length;
     if (count == 0) {
-      alert ('Please select an item to ' + action + '.');
+      alert($jq.t('specific.contributorships.index.select_' + action))
       return false;
     }
-    var msg = "Are you sure you want to " + action
-    if (count == 1) {
-      msg =  msg + " this item?"
-    } else {
-      msg = msg + " the " + count + " selected items?"
-    }
+    var msg = $jq.t('specific.contributorships.index.confirm_' + action, {count: count})
     return confirm(msg);
   })
 }

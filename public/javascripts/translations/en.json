@@ -1,3 +1,19 @@
 {
-  "greeting" : "Hello, world"
+  "specific" : {
+    "contributorships": {
+      "index": {
+        "no_action": "No action selected",
+        "select_verify": "Please select an item to verify.",
+        "select_deny": "Please select an item to deny.",
+        "select_unverify": "Please select an item to unverify.",
+        "confirm_verify": "Are you sure you want to verify this item?",
+        "confirm_verify_plural": "Are you sure you want to verify the __count__ selected items?",
+        "confirm_deny": "Are you sure you want to deny this item?",
+        "confirm_deny_plural": "Are you sure you want to deny the __count__ selected items?",
+        "confirm_unverify": "Are you sure you want to unverify this item?",
+        "confirm_unverify_plural": "Are you sure you want to unverify the __count__ selected items?"
+      }
+    }
+  }
+
 }
