@@ -14,7 +14,7 @@
   %tbody
     - @pub_table.each do |row|
       -# Default colors to unknown
-      - color = romeo_color(row)
+      - color = row.color
       %tr{:class => color}
         %td #{t("personalize.sherpa_colors.#{color.downcase}.name")}
         %td #{t_sherpa_color_explanation(color)}
