@@ -3,15 +3,10 @@ $jq(function() {
     var selected = $jq('.group-checkbox:checked');
     var count = selected.length;
     if (count == 0) {
-      alert ('Please select a group to join.');
+      alert ($jq.t("specific.memberships.new.select_group"));
       return false;
     }
-    var msg = "Are you sure you want to join "
-    if (count == 1) {
-      msg = msg + " this group?"
-    } else {
-      msg = msg + ' these ' + count + " groups?"
-    }
+    var msg = $jq.t("specific.memberships.new.confirm", {count: count})
     return confirm(msg);
   })
 })

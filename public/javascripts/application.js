@@ -20,15 +20,10 @@ function confirm_delete_for_items_selected_by(checkbox_selector) {
   var selected = $jq(checkbox_selector);
   var count = selected.length;
   if (count == 0) {
-    alert('Please select an item to delete.');
+    alert($jq.t("application.select_item"));
     return false;
   }
-  var msg = "Are you sure you want to permanently delete ";
-  if (count == 1) {
-    msg = msg + "this item?";
-  } else {
-    msg = msg + "these " + count + " items?";
-  }
+  var msg = $jq.t("application.confirm_delete", {count: count})
   return confirm(msg);
 }
 
@@ -78,15 +73,10 @@ function submit_delete_form(form, checkboxName, action) {
 
   /* Only continue if we have an item seleted */
   if (count == 0) {
-    alert("Please select an item to delete.");
+    alert($jq.t("application.select_item"));
     return false;
   }
-  else if (count == 1) {
-    msg = "Are you sure you want to permanently delete this item?"
-  }
-  else if (count > 1) {
-    msg = "Are you sure you want to permanently delete the " + count + " selected items?"
-  }
+  msg = $jq.t("application.confirm_delete", {count: count})
 
   /*Confirm before deleting anything*/
   if (confirm(msg)) {

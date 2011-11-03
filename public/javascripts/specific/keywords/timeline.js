@@ -24,7 +24,7 @@ function set_year(ydata, num) {
     if (work_counts[num] == 0) {
       chart.innerHTML = "<p>No data</p>"
     } else {
-      chart.innerHTML = "<img src='" + charts[num] + "' title='Work Types'/>";
+      chart.innerHTML = "<img src='" + charts[num] + "' title='" + $jq.t("specific.keywords.timeline.title") + "'/>";
     }
     show_list(ydata);
   }
