@@ -26,6 +26,10 @@ module KeywordCloudHelper
     (YAML.load_file(File.join(Rails.root, 'config', 'keyword_exclusions.yml')) || []) rescue []
   end
 
+  #Note - as I'm thinking now we may require two passes
+  #First construct a Regexp from each loaded value, which may be a Regexp or string
+  #Then construct the union. Note that if the union is constructed directly from a combination of strings and Regexps then
+  #it may not preserve options correctly.
   def keyword_exclusions
     @@keyword_exclusions ||= Regexp.union(load_keyword_exclusions.collect {|ex| Regexp.new(Regexp.quote(ex), Regexp::IGNORECASE)} )
   end
