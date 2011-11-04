@@ -18,6 +18,9 @@ en:
       blue:
         name: "Blue"
         explanation: "Can archive post-print (i.e. final draft post-refereeing)"
+      gray:
+        name: "Gray"
+        explanation: "Publisher in DOAJ but not yet analyzed by RoMEO"
       yellow:
         name: "Yellow"
         explanation: "Can archive pre-print (i.e. pre-refereeing)"

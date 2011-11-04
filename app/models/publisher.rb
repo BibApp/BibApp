@@ -8,7 +8,7 @@ class Publisher < PubCommon
 
   has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
-  ROMEO_COLORS = ['blue', 'yellow', 'green', 'white', 'unknown']
+  ROMEO_COLORS = ['blue', 'yellow', 'green', 'white', 'gray', 'unknown']
 
   validates_inclusion_of :romeo_color, :in => ROMEO_COLORS
 
