@@ -1,0 +1,19 @@
+#This is a simple YAML list of keyword values that you wish to exclude from keyword clouds.
+#If you provide a string value then it will exclude any keyword that matches treating the string
+#as a case-insensitive regular expression.
+#E.g.
+#- library
+#will cause keywords 'library', 'Library administration', 'About the library building' all to be excluded.
+#If you need more control you can provide an arbitrary Ruby regexp as an element of the list, using the following syntax
+#E.g.
+#- !ruby/regexp '/^Library/'
+#This would exclude 'Library' and 'Library administration', but not 'library' or 'about the Library building'
+
+#If you encounter any problems you may want to look up information about YAML, encoding strings in YAML, or encoding
+#Ruby regexps in YAML as appropriate.
+
+#Example list
+#- Academic degrees
+#- library
+#- !ruby/regexp '/^Match this exactly$/'
+
