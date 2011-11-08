@@ -113,59 +113,62 @@ class Import < ActiveRecord::Base
 
   # Process Batch Import
   def batch_import
-    logger.debug("\n\n==== Starting Batch Import ==== \n\n")
+    return unless self.state == 'processing'
+    self.transaction do
+      logger.debug("\n\n==== Starting Batch Import ==== \n\n")
 
-    # Initialize an array of all the works added and hash of errors encountered in the batch
-    self.works_added = Array.new
-    self.import_errors = Hash.new
+      # Initialize an array of all the works added and hash of errors encountered in the batch
+      self.works_added = Array.new
+      self.import_errors = Hash.new
 
-    # Init: Parser and Importer
-    citation_parser = CitationParser.new
-    citation_importer = CitationImporter.new
+      # Init: Parser and Importer
+      citation_parser = CitationParser.new
+      citation_importer = CitationImporter.new
 
-    # Step: 1 -- Read the data
-    begin
+      # Step: 1 -- Read the data
       begin
-        str = StringMethods.ensure_utf8(self.read_import_file)
-      rescue EncodingException => e
-        self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
-        raise e
+        begin
+          str = StringMethods.ensure_utf8(self.read_import_file)
+        rescue EncodingException => e
+          self.import_errors[:invalid_file_format] = "Citations could not be parsed as the character encoding could not be determined or could not be converted to UTF-8."
+          raise e
+        end
+
+        parsed_citations = citation_parser.parse(str)
+      rescue Exception => e
+        self.import_errors[:exception] = e
+        self.save_and_review!
+        return
       end
 
-      parsed_citations = citation_parser.parse(str)
-    rescue Exception => e
-      self.import_errors[:exception] = e
-      self.save_and_review!
-      return
-    end
-
-    if parsed_citations.blank?
-      self.import_errors[:no_parsed_citations] = <<-MESSAGE
+      if parsed_citations.blank?
+        self.import_errors[:no_parsed_citations] = <<-MESSAGE
         The format of the input was unrecognized or unsupported.
         <br/><strong>Supported formats include:</strong> RIS, MedLine and Refworks XML.<br/>
         In addition, if you are uploading a text file, it should use UTF-8 character encoding.
-      MESSAGE
+        MESSAGE
+        self.save_and_review!
+        return
+      end
+
+      begin
+        #import citations
+        attr_hashes = citation_importer.citation_attribute_hashes(parsed_citations)
+
+        # Make sure there is data in the Attribute Hash
+        return nil if attr_hashes.nil?
+
+        #create works and reindex
+        create_works_from_attribute_hashes(attr_hashes)
+        Index.batch_index
+
+      rescue Exception => e
+        self.import_errors[:exception] = e.message
+      end
+
+      # At this point, some or all of the works were saved to the database successfully.
       self.save_and_review!
-      return
     end
-
-    begin
-      #import citations
-      attr_hashes = citation_importer.citation_attribute_hashes(parsed_citations)
-
-      # Make sure there is data in the Attribute Hash
-      return nil if attr_hashes.nil?
-
-      #create works and reindex
-      create_works_from_attribute_hashes(attr_hashes)
-      Index.batch_index
-
-    rescue Exception => e
-      self.import_errors[:exception] = e.message
-    end
-
-    # At this point, some or all of the works were saved to the database successfully.
-    self.save_and_review!
   end
 
   def save_and_review!
