@@ -74,7 +74,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
-gem 'omniauth'
+gem 'omniauth', "~> 0.3"
 
 #batch loading of authors
 gem 'fastercsv'
