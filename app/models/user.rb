@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password, :if => :require_password?
   validates_length_of :email, :within => 3..100
   validates_uniqueness_of :email, :case_sensitive => false
+  validates_inclusion_of :default_locale, :in => I18n.available_locales
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -31,7 +32,7 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy
 
   before_create :make_activation_code
-
+  before_validation :ensure_default_locale
 
   # Activates the user in the database.
   def activate
@@ -203,6 +204,10 @@ class User < ActiveRecord::Base
 
   def make_activation_code
     self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
+  end
+
+  def ensure_default_locale
+    self.default_locale ||= (I18n.locale || I18n.default_locale)
   end
 
   # return the first letter of each email, ordered alphabetically
