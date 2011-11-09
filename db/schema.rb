@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111020210500) do
+ActiveRecord::Schema.define(:version => 20111109185608) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -342,6 +342,7 @@ ActiveRecord::Schema.define(:version => 20111020210500) do
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
     t.string   "persistence_token",                       :default => "", :null => false
+    t.string   "default_locale"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
