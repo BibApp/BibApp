@@ -28,9 +28,8 @@ class UsersController < ApplicationController
     # uncomment at your own risk
     # reset_session
     @user = User.new(params[:user])
-    @user.save
-    if @user.errors.empty?
-      flash[:notice] = t('common.users.flash_create', :email => @user.email)
+    if @user.save
+      flash[:notice] = t('common.users.flash_create', :email => @user.email, :locale => @user.default_locale)
       redirect_back_or_default($APPLICATION_URL)
     else
       render :action => 'new'
@@ -99,9 +98,10 @@ class UsersController < ApplicationController
     user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])
     if user and !user.active?
       user.activate
-      flash[:notice] = t('common.users.flash_activate')
+      flash[:notice] = t('common.users.flash_activate', :locale => user.default_locale)
     end
-    redirect_back_or_default(root_url)
+    current_user_session.destroy if current_user_session
+    redirect_to login_url(:locale => user.default_locale)
   end
 
 end

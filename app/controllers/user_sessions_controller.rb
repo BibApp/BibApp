@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     @user_session.save do |result|
       if result
-        flash[:notice] = t('common.user_sessions.flash_create_successful')
+        flash[:notice] = t('common.user_sessions.flash_create_successful', :locale => @user_session.record.default_locale)
         redirect_to after_login_destination
       else
         render :action => :new
@@ -33,13 +33,14 @@ class UserSessionsController < ApplicationController
 
   def after_login_destination
     #avoid login -> login infinite redirect
+    user = @user_session.record
     if params[:return_to] and params[:return_to].match(/\/login/)
-      if user = @user_session.record and user.person
-        return person_url(user.person)
+      if user and user.person
+        return person_url(user.person, :locale => user.default_locale)
       else
-        return root_url
+        return works_url(:locale => user.default_locale)
       end
     end
-    params[:return_to] || root_url
+    params[:return_to] || works_url(:locale => user.default_locale)
   end
 end

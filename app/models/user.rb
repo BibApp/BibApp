@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :email, :password, :password_confirmation
+  attr_accessible :email, :password, :password_confirmation, :default_locale
 
   #### Associations ####
   has_and_belongs_to_many :roles
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
     @activated = true
     self.activated_at = Time.now.utc
     self.activation_code = nil
-    save(:validate => false)
+    save_without_session_maintenance(:validate => false)
   end
 
   def active?

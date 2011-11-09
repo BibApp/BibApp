@@ -17,5 +17,8 @@
         %label #{User.human_attribute_name(:password_confirmation)}
         %br/
         = form.password_field :password_confirmation
+      %p
+        %label #{User.human_attribute_name(:default_locale)}:
+        = form.select(:default_locale, I18n.available_locales.collect {|locale| locale.to_s}.sort, :selected => I18n.locale.to_s)
       %p.submit
         = submit_tag t('users.new.submit')
