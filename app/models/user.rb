@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     @activated = true
     self.activated_at = Time.now.utc
     self.activation_code = nil
-    save(:validate => false)
+    save_without_session_maintenance(:validate => false)
   end
 
   def active?
