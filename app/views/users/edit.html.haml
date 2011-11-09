@@ -8,15 +8,23 @@
   %h2= t('users.edit.header')
 
   %fieldset
-    %legend= t('users.edit.legend')
-    = form_for :user, :url => user_path(@user), :html => {:method => :put}  do |form|
+    %legend= t('users.edit.email_legend')
+    = form_for :user, :url => request_update_email_user_path(@user), :html => {:method => :post} do |form|
       %p
         %label #{User.human_attribute_name(:email)}:
         = form.text_field :email
       %p
         %strong #{t 'app.important'}:
         #{t('users.edit.important_text').html_safe}
+      %p.submit
+        = submit_tag t('users.edit.email_submit')
+  %fieldset
+    %legend= t('users.edit.legend')
+    = form_for :user, :url => user_path(@user), :html => {:method => :put} do |form|
       %p
-        = link_to t('users.edit.change_password'), edit_user_password_path(@user)
+        %label #{User.human_attribute_name(:default_locale)}:
+        = form.select(:default_locale, I18n.available_locales.collect {|locale| locale.to_s}.sort, :selected => (@user.default_locale || I18n.locale).to_s)
       %p.submit
         = submit_tag t('app.update')
+  %p
+    = link_to t('users.edit.change_password'), edit_user_password_path(@user)

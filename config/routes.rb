@@ -150,6 +150,7 @@ Bibapp::Application.routes.draw do
       end
       member do
         get :update_email
+        post :request_update_email
       end
     end
 

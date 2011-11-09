@@ -1,29 +1,29 @@
 # This controller signs up new users, and activates their accounts
 class UsersController < ApplicationController
-  
-  # Require user be logged in for *everything* except signing up, or activating an account
-  before_filter :login_required, :except => [ :show, :new, :create, :activate ]
 
-  make_resourceful do 
+  # Require user be logged in for *everything* except signing up, or activating an account
+  before_filter :login_required, :except => [:show, :new, :create, :activate]
+
+  make_resourceful do
     build :index, :show, :new, :edit
-    
+
     before :index do
       # find first letter of usernames (in uppercase, for paging mechanism)
       @a_to_z = User.letters
-        
-      #get current page  
+
+      #get current page
       @page = params[:page] || @a_to_z[0]
-      
+
       #get all objects for that current page
       @current_objects = User.where("upper(email) like ?", "#{@page}%").order("upper(email)")
     end
   end
 
- 
+
   # Create - signs up a new user
   def create
     cookies.delete :auth_token
-    # protects against session fixation attacks, wreaks havoc with 
+    # protects against session fixation attacks, wreaks havoc with
     # request forgery protection.
     # uncomment at your own risk
     # reset_session
@@ -36,10 +36,20 @@ class UsersController < ApplicationController
       render :action => 'new'
     end
   end
-  
-  
-  # Update - update user email
+
+
   def update
+    @user = User.find(params[:id])
+    @user.default_locale = params[:user][:default_locale]
+    if @user.save
+      redirect_back_or_default(root_url(:locale => @user.default_locale))
+    else
+      render :action => 'edit'
+    end
+  end
+
+  # Update - update user email
+  def request_update_email
     @user = User.find(params[:id])
     new_email = params[:user][:email]
     code = @user.email_update_code(new_email)

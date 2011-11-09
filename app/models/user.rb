@@ -206,8 +206,10 @@ class User < ActiveRecord::Base
     self.activation_code = Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by { rand }.join)
   end
 
+  #make sure there is a default locale and that it is a symbol
   def ensure_default_locale
     self.default_locale ||= (I18n.locale || I18n.default_locale)
+    self.default_locale = self.default_locale.to_sym
   end
 
   # return the first letter of each email, ordered alphabetically
