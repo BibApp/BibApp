@@ -10,6 +10,8 @@ class Work < ActiveRecord::Base
   # for a specific Person in the system
   # (This occurs when adding a Work directly to a Person).
   attr_accessor :preverified_person
+  # For an import we need this flag in order to be able to create the contributorships at the right time
+  attr_accessor :skip_create_contributorships
 
   serialize :scoring_hash
 
@@ -107,7 +109,7 @@ class Work < ActiveRecord::Base
   end
 
   def after_save_actions
-    create_contributorships
+    create_contributorships unless self.skip_create_contributorships
   end
 
   def before_save_actions
@@ -238,7 +240,7 @@ class Work < ActiveRecord::Base
   end
 
   # Creates a new work from an attribute hash
-  def self.create_from_hash(h)
+  def self.create_from_hash(h, add_contributorships = true)
     klass = h[:klass]
 
     # Are we working with a legit SubKlass?
@@ -248,6 +250,7 @@ class Work < ActiveRecord::Base
     end
 
     work = klass.new
+    work.skip_create_contributorships = !add_contributorships
     work.update_from_hash(h)
   end
 

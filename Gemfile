@@ -45,7 +45,7 @@ gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'
 gem 'cmess', "~>0.1.2"
 
 #AASM - Acts as State Machine - helps manage batch import state
-gem 'aasm'
+gem 'aasm', ">= 2.3.0"
 
 #ISBN Tools - Helps validate ISBNs
 # See: http://isbn-tools.rubyforge.org/rdoc/index.html
@@ -74,7 +74,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
-gem 'omniauth'
+gem 'omniauth', "~> 0.3"
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
