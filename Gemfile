@@ -74,7 +74,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
-gem 'omniauth', "~> 0.3"
+gem 'omniauth', "~> 0.2"
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
