@@ -294,8 +294,8 @@ en:
         one: User
         other: Users
       web_page:
-        one: "Web Page"
-        other: "Web Pages"
+        one: "Web Site"
+        other: "Web Sites"
       work:
         one: Work
         other: Works
