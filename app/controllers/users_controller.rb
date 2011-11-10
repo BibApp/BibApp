@@ -101,7 +101,11 @@ class UsersController < ApplicationController
       flash[:notice] = t('common.users.flash_activate', :locale => user.default_locale)
     end
     current_user_session.destroy if current_user_session
-    redirect_to login_url(:locale => user.default_locale)
+    if user
+      redirect_to login_url(:locale => user.default_locale)
+    else
+      redirect_to root_url
+    end
   end
 
 end

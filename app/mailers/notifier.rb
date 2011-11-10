@@ -1,11 +1,13 @@
 class Notifier < ActionMailer::Base
 
-  def import_review_notification(user, import_id)
+  def import_review_notification(import)
+    user = import.user
     with_setup_and_mailing(user) do
       @subject = "BibApp - Batch import ready for review"
       @subject = t('common.notifier.import_review_subject', :app_name => t('personalize.application_name'))
       @user = user
-      @import_id = import_id
+      @import_id = import.id
+      @locale = user.default_locale || I18n.default_locale
     end
   end
 
