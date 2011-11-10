@@ -184,7 +184,7 @@ class Import < ActiveRecord::Base
   def create_works_from_attribute_hashes(attr_hashes)
     self.transaction do
       attr_hashes.each do |h|
-        work, error = Work.create_from_hash(h)
+        work, error = Work.create_from_hash(h, false)
         if error.nil?
           #add to batch of works created
           self.works_added << work
