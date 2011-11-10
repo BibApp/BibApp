@@ -274,7 +274,7 @@ class Work < ActiveRecord::Base
 
   def publication_name_from_hash(h)
     case self.class.to_s
-      when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole'
+      when 'BookWhole', 'Monograph', 'JournalWhole', 'ConferenceProceedingWhole', 'WebPage'
         h[:title_primary] ? h[:title_primary] : 'Unknown'
       when 'BookSection', 'ConferencePaper', 'ConferencePoster', 'PresentationLecture', 'Report'
         h[:title_secondary] ? h[:title_secondary] : 'Unknown'
