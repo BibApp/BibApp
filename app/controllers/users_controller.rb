@@ -93,7 +93,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Signup is complete!  You may now login using your email and password."
     end
     current_user_session.destroy if current_user_session
-    redirect_to login_url(:locale => user.default_locale)
+    redirect_to login_url
   end
 
 end
