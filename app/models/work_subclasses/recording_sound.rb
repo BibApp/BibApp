@@ -1,5 +1,4 @@
 class RecordingSound < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Musician', 'Performer', 'Interviewer', 'Interviewee', 'Musical Ensemble']

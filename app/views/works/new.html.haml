@@ -9,5 +9,6 @@
 
   .span-16
     = form_for @work, :as => :work, :url => works_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+      = error_messages_for @work
       = render decide_edit_partial(@work), :form => form
       = hidden_field_tag :person_id, @person.id if @person

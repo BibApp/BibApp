@@ -190,14 +190,19 @@ class Import < ActiveRecord::Base
   def create_works_from_attribute_hashes(attr_hashes)
     self.transaction do
       attr_hashes.each do |h|
-        work, error = Work.create_from_hash(h, false)
-        if error.nil?
-          #add to batch of works created
-          self.works_added << work
-        else
-          #error = truncate(error) if error
+        begin
+          work = Work.create_from_hash(h, false)
+          if work.errors.blank?
+            #add to batch of works created
+            self.works_added << work.id
+          else #validation problem
+            self.import_errors[:import_error] ||= Array.new
+            self.import_errors[:import_error] << "<em>#{h[:title_primary]}</em> could not be imported. #{work.errors.to_s}<br/>"
+          end
+        rescue Exception => e
+          #actual exception
           self.import_errors[:import_error] ||= Array.new
-          self.import_errors[:import_error] << "<em>#{h[:title_primary]}</em> could not be imported. #{error}<br/>"
+          self.import_errors[:import_error] << "<em>#{h[:title_primary]}</em> could not be imported. #{e.to_s}<br/>"
         end
       end
     end

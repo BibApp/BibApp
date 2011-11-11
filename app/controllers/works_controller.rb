@@ -175,39 +175,31 @@ class WorksController < ApplicationController
 
       logger.debug("\n\n===ADDING SINGLE WORK===\n\n")
 
-      # Create the basic Work SubKlass
-      @work = subklass_init(params[:klass], params[:work])
-
-
       #Create attribute hash
       r_hash = create_attribute_hash
 
-      work_id, errors = Work.create_from_hash(r_hash)
+      @work = Work.create_from_hash(r_hash)
 
-      # current user automatically gets 'admin' permissions on work
-      # (only if he/she doesn't already have that permission)
-      work_from_work_id(work_id)
-
-      #If this was submitted as an individual work for a specific person then
-      #automatically verify the contributorship
-      if @work and @person
-        c = Contributorship.for_person(@person.id).for_work(@work.id).first
-        c.verify_contributorship if c
-      end
-
-      respond_to do |format|
-        if work_id
+      if @work.errors.blank?
+        ensure_admin(@work, current_user)
+        #If this was submitted as an individual work for a specific person then
+        #automatically verify the contributorship
+        if @person
+          c = Contributorship.for_person(@person.id).for_work(@work.id).first
+          c.verify_contributorship if c
+        end
+        respond_to do |format|
           flash[:notice] = t('common.works.flash_create')
-          format.html { redirect_to work_url(work_id) }
-          format.xml { head :created, :location => work_url(work_id) }
-        else
-          flash[:notice] = errors
-          format.html { render :action => "new" }
-          format.xml { render :xml => error.to_xml }
+          format.html { redirect_to work_url(@work) }
+          format.xml { head :created, :location => work_url(@work) }
+        end
+      else
+        respond_to do |format|
+          format.html { render 'new' }
+          format.xml { render :xml => @work.errors.to_xml }
         end
       end
-
-    end #If 'save' button was pressed
+    end
   end
 
   def merge_duplicates
@@ -244,32 +236,29 @@ class WorksController < ApplicationController
       #First, update work attributes (ensures deduplication keys are updated)
       @work.attributes = params[:work]
 
-      #Then, update other work information
-      #update_work_info
-
       # Create attribute hash from params
       r_hash = create_attribute_hash
 
-      work_id, errors = @work.update_from_hash(r_hash)
-
-      work_from_work_id(work_id)
-
-      respond_to do |format|
-        if work_id
+      @work.update_from_hash(r_hash)
+      if @work.errors.blank?
+        ensure_admin(@work, current_user)
+        respond_to do |format|
           flash[:notice] = t('common.works.flash_update')
           if return_path.nil?
             #default to returning to work page
-            format.html { redirect_to work_path(@work.id) }
+            format.html { redirect_to work_path(@work) }
           else
             format.html { redirect_to return_path }
           end
           format.xml { head :ok }
-        else
-          flash[:notice] = errors
-          format.html { redirect_to edit_work_path(@work.id) }
-          format.xml { render :xml => errors.to_xml }
         end
-      end #end respond to
+      else
+        respond_to do |format|
+          @return_path = params[:return_path]
+          format.html { render 'edit' }
+          format.xml { render :xml => @work.errors.to_xml }
+        end
+      end
     end
   end
 
@@ -393,7 +382,7 @@ class WorksController < ApplicationController
   #  This method provides users with a list of matching NameStrings
   #  already in BibApp.
   def auto_complete_for_name_string(name_string)
-    names = name_search(name_string.downcase, NameString, 8).collect {|ns| ns.name}
+    names = name_search(name_string.downcase, NameString, 8).collect { |ns| ns.name }
     render 'works/forms/fields/autocomplete_list', :objects => names
   end
 
@@ -566,13 +555,6 @@ class WorksController < ApplicationController
     end
   end
 
-  def work_from_work_id(work_id)
-    if work_id
-      @work = Work.find(work_id)
-      @work.accepts_role 'admin', current_user unless !current_user.has_role?('admin', @work)
-    end
-  end
-
   # Create a hash of Work attributes
   # This is called by both create() and update()
   def create_attribute_hash
@@ -665,6 +647,10 @@ class WorksController < ApplicationController
     beginning_search = "#{name}%"
     word_search = "% #{name}%"
     klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
+  end
+
+  def ensure_admin(work, user)
+    work.accepts_role('admin', user) unless user.has_role?('admin', work)
   end
 
 end
