@@ -1,5 +1,4 @@
 class Generic < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Creator', 'Contributor']

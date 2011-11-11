@@ -1,5 +1,4 @@
 class Composition < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Composer']

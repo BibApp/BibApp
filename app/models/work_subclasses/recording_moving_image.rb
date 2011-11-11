@@ -1,5 +1,4 @@
 class RecordingMovingImage < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Director', 'Producer', 'Actor', 'Performer']

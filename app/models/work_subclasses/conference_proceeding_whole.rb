@@ -1,5 +1,4 @@
 class ConferenceProceedingWhole < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Editor']
