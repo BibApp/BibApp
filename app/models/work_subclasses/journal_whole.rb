@@ -1,5 +1,4 @@
 class JournalWhole < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Editor', 'Managing Editor', 'Editorial Board Member']

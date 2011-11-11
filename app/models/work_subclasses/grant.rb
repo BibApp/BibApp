@@ -1,5 +1,4 @@
 class Grant < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Principal Investigator', 'Co-Principal Investigator']
