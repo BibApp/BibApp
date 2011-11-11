@@ -464,4 +464,65 @@ describe Work do
     end
 
   end
+
+  describe "publication date" do
+    before(:each) do
+      @work = Factory.build(:work)
+    end
+
+    def set_date(year = nil, month = nil, day = nil)
+      @work.publication_date_year = year
+      @work.publication_date_month = month
+      @work.publication_date_day = day
+    end
+
+    it "should be valid if all the date fields are blank" do
+      @work.should be_valid
+    end
+
+    it "should be valid if it only has a year" do
+      set_date(2011)
+      @work.should be_valid
+    end
+
+    it "should be valid if it has a year and a valid month but no day" do
+      set_date(2011, 5)
+      @work.should be_valid
+    end
+
+    it "should be invalid if it has a year and an invalid month" do
+      set_date(2011, 13)
+      @work.should_not be_valid
+    end
+
+    it "should be valid if it has a year, valid month, and valid day" do
+      set_date(2011, 4, 12)
+      @work.should be_valid
+    end
+
+    it "should be invalid if it has a year, valid month, and invalid day" do
+      set_date(2011, 2, 29)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a year and day but no month" do
+      set_date(2011, nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a month but lacks a year" do
+      set_date(nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a day but lacks a month" do
+      set_date(2011, nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a day but lacks a year" do
+      set_date(nil, nil, 1)
+      @work.should_not be_valid
+    end
+  end
 end

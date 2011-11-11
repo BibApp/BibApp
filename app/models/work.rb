@@ -41,7 +41,29 @@ class Work < ActiveRecord::Base
   belongs_to :work_archive_state
 
   validates_presence_of :title_primary
-
+  validates_numericality_of :publication_date_year, :allow_nil => true, :greater_than => 0
+  validates_inclusion_of :publication_date_month, :in => 1..12, :allow_nil => true
+  validates_each :publication_date_month do |record, attr, value|
+    if value.present?
+      unless record.publication_date_year
+        record.errors.add attr, 'must have a year in order to supply a month'
+      end
+    end
+  end
+  validates_inclusion_of :publication_date_day, :in => 1..31, :allow_nil => true
+  validates_each :publication_date_day do |record, attr, value|
+    if value.present?
+      if  record.publication_date_year and record.publication_date_month
+        begin
+          Date.new(record.publication_date_year, record.publication_date_month, record.publication_date_day)
+        rescue
+          record.errors.add attr, 'is not a valid day in the given year and month'
+        end
+      else
+        record.errors.add attr, 'must have a year and a month to supply a day'
+      end
+    end
+  end
   #### Named Scopes ####
   #Various Work Statuses
   STATE_IN_PROCESS = 1
