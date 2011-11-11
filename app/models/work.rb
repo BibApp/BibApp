@@ -242,6 +242,7 @@ class Work < ActiveRecord::Base
   end
 
   # Creates a new work from an attribute hash
+  # Caller must check to see if there were any validation errors
   def self.create_from_hash(h, add_contributorships = true)
     klass = h[:klass]
 
@@ -288,6 +289,7 @@ class Work < ActiveRecord::Base
   end
 
   # Updates an existing work from an attribute hash
+  # Caller must check to see if there were any validation errors.
   def update_from_hash(h)
     work_name_strings = (h[:work_name_strings] || []).collect do |wns|
       {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
