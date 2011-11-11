@@ -92,9 +92,9 @@ class Index
 
   # Mapping specific to dates
   #   Since dates are occasionally null they are only passed to Solr
-  #   if the publication_date is *not* null.
+  #   if the publication_date_year is *not* null.
   SOLR_DATE_MAPPING = {
-      :year => Proc.new { |record| record.publication_date.year }
+      :year => Proc.new { |record| record.publication_date_year }
   }
 
 
@@ -151,7 +151,7 @@ class Index
   #Update a single record in Solr
   # (for bulk updating, use 'batch_update_solr', as it is faster)
   def self.update_solr(record, commit_records=true)
-    if record.publication_date != nil
+    if record.publication_date_year
       #add dates to our mapping
       mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
       doc = Solr::Importer::Mapper.new(mapping).map(record)
@@ -167,7 +167,7 @@ class Index
   def self.batch_update_solr(records, commit_records=true)
     docs = Array.new
     records.each do |record|
-      if record.publication_date != nil
+      if record.publication_date_year
         #add dates to our mapping
         mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
         doc = Solr::Importer::Mapper.new(mapping).map(record)
@@ -386,7 +386,7 @@ class Index
   # work data to be in the Hash format Solr returns).
   def self.work_to_solr_hash(work)
     # Transform Work using our Solr Mapping
-    if work.publication_date != nil
+    if work.publication_date_year
       #add dates to our mapping
       mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
       doc = Solr::Importer::Mapper.new(mapping).map(work)
