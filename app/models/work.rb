@@ -73,7 +73,7 @@ class Work < ActiveRecord::Base
   scope :most_recent_first, order('updated_at DESC')
 
   def self.orphans
-    (self.orphans_no_contributorships + self.orphans_denied_contributorships).uniq.sort {|a, b| a.title_primary <=> b.title_primary}
+    (self.orphans_no_contributorships + self.orphans_denied_contributorships).uniq.sort { |a, b| a.title_primary <=> b.title_primary }
   end
 
   def self.orphans_no_contributorships
@@ -87,9 +87,9 @@ class Work < ActiveRecord::Base
   #all their contributorships and find the ones with all denied contributorships in code
   def self.orphans_denied_contributorships
     contributorships = Contributorship.denied.select("DISTINCT work_id")
-    works = self.includes(:contributorships).where(:id => contributorships.collect {|c| c.work_id})
+    works = self.includes(:contributorships).where(:id => contributorships.collect { |c| c.work_id })
     works.select do |work|
-      !work.contributorships.detect {|c| !c.denied?}
+      !work.contributorships.detect { |c| !c.denied? }
     end
   end
 
@@ -287,54 +287,46 @@ class Work < ActiveRecord::Base
 
   # Updates an existing work from an attribute hash
   def update_from_hash(h)
-    begin
-      work_name_strings = (h[:work_name_strings] || []).collect do |wns|
-        {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
-      end
-      self.set_work_name_strings(work_name_strings)
+    work_name_strings = (h[:work_name_strings] || []).collect do |wns|
+      {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
+    end
+    self.set_work_name_strings(work_name_strings)
 
-      #If we are adding to a person, pre-verify that person's contributorship
-      person = Person.find(h[:person_id]) if h[:person_id]
-      self.preverified_person = person if person
+    #If we are adding to a person, pre-verify that person's contributorship
+    person = Person.find(h[:person_id]) if h[:person_id]
+    self.preverified_person = person if person
 
-      ###
-      # Setting Publication Info, including Publisher
-      ###
-      publication_name = publication_name_from_hash(h)
+    ###
+    # Setting Publication Info, including Publisher
+    ###
+    publication_name = publication_name_from_hash(h)
 
-      issn_isbn = h[:issn_isbn]
-      if publication_name == 'Unknown' and issn_isbn.present?
-        publication_name = "Unknown (#{issn_isbn})"
-      end
-
-      self.set_publication_info(:name => publication_name,
-                                :issn_isbn => issn_isbn,
-                                :publisher_name => h[:publisher])
-
-      ###
-      # Setting Keywords
-      ###
-      self.set_keyword_strings(h[:keywords])
-
-      # Clean the hash of non-Work table data
-      # Cleaning will prepare the hash for ActiveRecord insert
-      self.delete_non_work_data(h)
-
-      # When adding a work to a person, person_id causes work.save to fail
-      h.delete(:person_id) if h[:person_id]
-
-      #save remaining hash attributes
-      saved = self.update_attributes(h)
-
-    rescue Exception => e
-      return nil, e
+    issn_isbn = h[:issn_isbn]
+    if publication_name == 'Unknown' and issn_isbn.present?
+      publication_name = "Unknown (#{issn_isbn})"
     end
 
-    if saved
-      return self.id, nil
-    else
-      return nil, "Validation Error: Primary Title is missing."
-    end
+    self.set_publication_info(:name => publication_name,
+                              :issn_isbn => issn_isbn,
+                              :publisher_name => h[:publisher])
+
+    ###
+    # Setting Keywords
+    ###
+    self.set_keyword_strings(h[:keywords])
+
+    # Clean the hash of non-Work table data
+    # Cleaning will prepare the hash for ActiveRecord insert
+    self.delete_non_work_data(h)
+
+    # When adding a work to a person, person_id causes work.save to fail
+    h.delete(:person_id) if h[:person_id]
+
+    #save remaining hash attributes
+    saved = self.update_attributes(h)
+
+    return saved ? self : false
+
   end
 
 
