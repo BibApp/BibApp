@@ -40,6 +40,8 @@ class Work < ActiveRecord::Base
   has_many :attachments, :as => :asset
   belongs_to :work_archive_state
 
+  validates_presence_of :title_primary
+
   #### Named Scopes ####
   #Various Work Statuses
   STATE_IN_PROCESS = 1
@@ -325,7 +327,7 @@ class Work < ActiveRecord::Base
     #save remaining hash attributes
     saved = self.update_attributes(h)
 
-    return saved ? self : false
+    return self
 
   end
 

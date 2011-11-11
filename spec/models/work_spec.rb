@@ -419,7 +419,7 @@ describe Work do
       end
 
       it "uses nil for some classes" do
-        work = Factory.build(:web_page)
+        work = Factory.build(:artwork)
         work.publication_name_from_hash(@hash).should be_nil
       end
 

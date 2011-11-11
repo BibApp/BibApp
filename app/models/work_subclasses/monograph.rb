@@ -1,5 +1,4 @@
 class Monograph < Work
-  validates_presence_of :title_primary
 
   def self.roles
     ['Author', 'Editor', 'Translator', 'Illustrator']
@@ -16,5 +15,5 @@ class Monograph < Work
   def type_uri
     "http://purl.org/eprint/type/Book"
   end
-  
+
 end
