@@ -364,7 +364,7 @@ class Work < ActiveRecord::Base
 
   # Finds year of publication for this work
   def year
-    publication_date ? publication_date.year : nil
+    publication_date_year
   end
 
   # Initializes an array of Keywords
@@ -626,7 +626,7 @@ class Work < ActiveRecord::Base
       append_apa_editor_text(citation_string)
 
       #Publication year
-      citation_string << " (#{self.publication_date.year})" if self.publication_date
+      citation_string << " (#{self.publication_date_year})" if self.publication_date_year
 
       #Only add a period if the string doesn't currently end in a period.
       citation_string << ". " if !citation_string.match("\.\s*\Z")
@@ -716,7 +716,7 @@ class Work < ActiveRecord::Base
       open_url_kevs[:source] = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn] = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
     end
-    open_url_kevs[:date] = "&rft.date=#{self.publication_date}"
+    open_url_kevs[:date] = "&rft.date=#{self.publication_date_string}"
     open_url_kevs[:volume] = "&rft.volume=#{self.volume}"
     open_url_kevs[:issue] = "&rft.issue=#{self.issue}"
     open_url_kevs[:start_page] = "&rft.spage=#{self.start_page}"
@@ -768,6 +768,18 @@ class Work < ActiveRecord::Base
 
   def reindex_before_destroy
     Index.remove_from_solr(self)
+  end
+
+  def publication_date_string
+    if self.publication_date_day
+      sprintf('%04d-%02d-%02d', self.publication_date_year, self.publication_date_month, self.publication_date_day)
+    elsif self.publication_date_month
+      sprintf('%04d-%02d', self.publication_date_year, self.publication_date_month)
+    elsif self.publication_date_year
+      sprintf('%04d', self.publication_date_year)
+    else
+      ""
+    end
   end
 
   protected
