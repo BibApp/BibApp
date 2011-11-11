@@ -538,7 +538,7 @@ class Work < ActiveRecord::Base
 
   # Return a hash comprising all the Contributorship scoring methods
   def update_scoring_hash
-    self.scoring_hash = {:year => self.publication_date.try(:year),
+    self.scoring_hash = {:year => self.publication_date_year,
                          :publication_id => self.publication_id,
                          :collaborator_ids => self.name_strings.collect { |ns| ns.id }, #there's an error if one tries to do this the natural way
                          :keyword_ids => self.keyword_ids}
