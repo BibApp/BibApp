@@ -7,7 +7,8 @@ describe BookSection do
 
   describe "open_url kevs" do
     before(:each) do
-      @bs = Factory.create(:book_section, :title_primary => 'Title', :publication_date => Date.parse('2011-03-02'))
+      @bs = Factory.create(:book_section, :title_primary => 'Title', :publication_date_year => 2011,
+                           :publication_date_month => 3, :publication_date_day => 2)
     end
 
     it "should always have" do

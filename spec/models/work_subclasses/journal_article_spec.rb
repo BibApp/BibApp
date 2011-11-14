@@ -7,7 +7,8 @@ describe JournalArticle do
 
   describe "open_url kevs" do
     before(:each) do
-      @j = Factory.create(:journal_article, :title_primary => 'Title', :publication_date => Date.parse('2011-03-02'),
+      @j = Factory.create(:journal_article, :title_primary => 'Title', :publication_date_year => 2011,
+                          :publication_date_month => 3, :publication_date_day => 2,
                           :volume => '11', :issue => '155', :start_page => '200', :end_page => '233')
     end
 

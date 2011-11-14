@@ -25,7 +25,7 @@ class JournalArticle < Work
         'rft.volume' => self.volume,
         'rft.issue' => self.issue,
         'rft.spage' => self.start_page,
-        'rft.date' => self.publication_date.try(:year),
+        'rft.date' => self.publication_date_year,
         'rft.issn' => (self.publication.authority.issn_isbn rescue nil),
         'rft.aulast' => self.name_strings.first.last_name
     )

@@ -6,4 +6,5 @@
 - label ||= "Publication Date"
 
 = label 'work', 'publication_date', "#{label}:"
-= date_select 'work', 'publication_date', :start_year => Time.now.year + 1, :end_year => 1850, :include_blank=>true
+
+= render 'works/metadata/publication_date_select'

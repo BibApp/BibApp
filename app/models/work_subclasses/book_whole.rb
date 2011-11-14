@@ -27,7 +27,7 @@ class BookWhole < Work
     unless self.publication.nil?
       open_url_kevs[:isbn] = "&rft.isbn=#{self.publication.isbns.first[:name]}" if !self.publication.isbns.empty?
     end
-    open_url_kevs[:date] = "&rft.date=#{self.publication_date}"
+    open_url_kevs[:date] = "&rft.date=#{self.publication_date_string}"
 
     return open_url_kevs
   end

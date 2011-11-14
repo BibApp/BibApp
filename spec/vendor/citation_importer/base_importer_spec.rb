@@ -7,13 +7,16 @@ describe BaseImporter do
 
   it "should be able to parse dates" do
     importer = BaseImporter.new
-    cases = {'2001-09-09' => '2001-09-09', 'pure_junk' => nil, '04-2001' => '2001-04-01',
-             'something with 1 string "1988" of four digits' => '1988-01-01', 'Thursday, September 8, 2011' => '2011-09-08',
-              '18/02/1977' => '1977-02-18', '02-19-1977' => '1977-02-19', 'Mar 1999' => '1999-03-01'}
+    cases = {'2001-09-09' => results(2001,9,9), 'pure_junk' => results(), '04-2001' => results(2001,4),
+             'something with 1 string "1988" of four digits' => results(1988), 'Thursday, September 8, 2011' => results(2011,9,8),
+              '18/02/1977' => results(1977,2,18), '02-19-1977' => results(1977,2,19), 'Mar 1999' => results(1999,3)}
     cases.each do |k,v|
-      importer.parse_date(k).should == v
-      importer.parse_date(k + 'add some junk').should == v
+      importer.publication_date_parse(k).should == v
+      importer.publication_date_parse(k + 'add some junk').should == v
     end
   end
 
+  def results(year = nil, month = nil, day = nil)
+    {:publication_date_year => year, :publication_date_month => month, :publication_date_day => day}
+  end
 end

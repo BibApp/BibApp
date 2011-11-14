@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
 
     # Enable Citeproc
     if @export.present?
-      works = Work.order("publication_date desc").find(@works.collect { |c| c['pk_i'] })
+      works = Work.by_publication_date.find(@works.collect { |c| c['pk_i'] })
       ce = WorkExport.new
       @works = ce.drive_csl(@export, works)
     end

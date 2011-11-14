@@ -41,7 +41,29 @@ class Work < ActiveRecord::Base
   belongs_to :work_archive_state
 
   validates_presence_of :title_primary
-
+  validates_numericality_of :publication_date_year, :allow_nil => true, :greater_than => 0
+  validates_inclusion_of :publication_date_month, :in => 1..12, :allow_nil => true
+  validates_each :publication_date_month do |record, attr, value|
+    if value.present?
+      unless record.publication_date_year
+        record.errors.add attr, 'must have a year in order to supply a month'
+      end
+    end
+  end
+  validates_inclusion_of :publication_date_day, :in => 1..31, :allow_nil => true
+  validates_each :publication_date_day do |record, attr, value|
+    if value.present?
+      if  record.publication_date_year and record.publication_date_month
+        begin
+          Date.new(record.publication_date_year, record.publication_date_month, record.publication_date_day)
+        rescue
+          record.errors.add attr, 'is not a valid day in the given year and month'
+        end
+      else
+        record.errors.add attr, 'must have a year and a month to supply a day'
+      end
+    end
+  end
   #### Named Scopes ####
   #Various Work Statuses
   STATE_IN_PROCESS = 1
@@ -73,6 +95,7 @@ class Work < ActiveRecord::Base
         lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
 
   scope :most_recent_first, order('updated_at DESC')
+  scope :by_publication_date, order('publication_date_year DESC, publication_date_month DESC, publication_date_day DESC')
 
   #This is for Sunspot searching.
   #As this is currently an adaption from the old solr stuff it is somewhat long and subject to future
@@ -332,6 +355,7 @@ class Work < ActiveRecord::Base
   end
 
   # Creates a new work from an attribute hash
+  # Caller must check to see if there were any validation errors
   def self.create_from_hash(h, add_contributorships = true)
     klass = h[:klass]
 
@@ -377,7 +401,9 @@ class Work < ActiveRecord::Base
     end
   end
 
-# Updates an existing work from an attribute hash
+
+  # Updates an existing work from an attribute hash
+  # Caller must check to see if there were any validation errors.
   def update_from_hash(h)
     work_name_strings = (h[:work_name_strings] || []).collect do |wns|
       {:name => wns[:name], :role => self.denormalize_role(wns[:role])}
@@ -452,7 +478,7 @@ class Work < ActiveRecord::Base
 
 # Finds year of publication for this work
   def year
-    publication_date ? publication_date.year : nil
+    publication_date_year
   end
 
 # Initializes an array of Keywords
@@ -625,7 +651,7 @@ class Work < ActiveRecord::Base
 
 # Return a hash comprising all the Contributorship scoring methods
   def update_scoring_hash
-    self.scoring_hash = {:year => self.publication_date.try(:year),
+    self.scoring_hash = {:year => self.publication_date_year,
                          :publication_id => self.publication_id,
                          :collaborator_ids => self.name_strings.collect { |ns| ns.id }, #there's an error if one tries to do this the natural way
                          :keyword_ids => self.keyword_ids}
@@ -713,7 +739,7 @@ class Work < ActiveRecord::Base
       append_apa_editor_text(citation_string)
 
       #Publication year
-      citation_string << " (#{self.publication_date.year})" if self.publication_date
+      citation_string << " (#{self.publication_date_year})" if self.publication_date_year
 
       #Only add a period if the string doesn't currently end in a period.
       citation_string << ". " if !citation_string.match("\.\s*\Z")
@@ -803,7 +829,7 @@ class Work < ActiveRecord::Base
       open_url_kevs[:source] = "&rft.jtitle=#{CGI.escape(self.publication.authority.name)}"
       open_url_kevs[:issn] = "&rft.issn=#{self.publication.issns.first[:name]}" if !self.publication.issns.empty?
     end
-    open_url_kevs[:date] = "&rft.date=#{self.publication_date}"
+    open_url_kevs[:date] = "&rft.date=#{self.publication_date_string}"
     open_url_kevs[:volume] = "&rft.volume=#{self.volume}"
     open_url_kevs[:issue] = "&rft.issue=#{self.issue}"
     open_url_kevs[:start_page] = "&rft.spage=#{self.start_page}"
@@ -855,6 +881,18 @@ class Work < ActiveRecord::Base
 
   def reindex_before_destroy
     Index.remove_from_solr(self)
+  end
+
+  def publication_date_string
+    if self.publication_date_day
+      sprintf('%04d-%02d-%02d', self.publication_date_year, self.publication_date_month, self.publication_date_day)
+    elsif self.publication_date_month
+      sprintf('%04d-%02d', self.publication_date_year, self.publication_date_month)
+    elsif self.publication_date_year
+      sprintf('%04d', self.publication_date_year)
+    else
+      ""
+    end
   end
 
   protected
