@@ -5,10 +5,11 @@ describe BookReview do
   it_should_behave_like "a title_primary validating work subclass", BookReview, ['Author'], 'Author',
                         'Author', "http://purl.org/eprint/type/BookReview"
 
-describe "open_url kevs" do
+  describe "open_url kevs" do
     before(:each) do
-      @br = Factory.create(:book_review, :title_primary => 'Title', :publication_date => Date.parse('2011-03-02'),
-                          :volume => '11', :issue => '155', :start_page => '200', :end_page => '233')
+      @br = Factory.create(:book_review, :title_primary => 'Title', :publication_date_year => 2011,
+                           :publication_date_month => 3, :publication_date_day => 2,
+                           :volume => '11', :issue => '155', :start_page => '200', :end_page => '233')
     end
 
     it "should always have" do

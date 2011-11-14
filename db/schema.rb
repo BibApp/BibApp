@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520031023) do
+ActiveRecord::Schema.define(:version => 20111111201022) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -305,6 +305,32 @@ ActiveRecord::Schema.define(:version => 20110520031023) do
 
   add_index "tags", ["name"], :name => "tag_name", :unique => true
 
+  create_table "tolk_locales", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_locales", ["name"], :name => "index_tolk_locales_on_name", :unique => true
+
+  create_table "tolk_phrases", :force => true do |t|
+    t.text     "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tolk_translations", :force => true do |t|
+    t.integer  "phrase_id"
+    t.integer  "locale_id"
+    t.text     "text"
+    t.text     "previous_text"
+    t.boolean  "primary_updated", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tolk_translations", ["phrase_id", "locale_id"], :name => "index_tolk_translations_on_phrase_id_and_locale_id", :unique => true
+
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "crypted_password",          :limit => 40
@@ -316,6 +342,7 @@ ActiveRecord::Schema.define(:version => 20110520031023) do
     t.string   "activation_code",           :limit => 40
     t.datetime "activated_at"
     t.string   "persistence_token",                       :default => "", :null => false
+    t.string   "default_locale"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -354,7 +381,6 @@ ActiveRecord::Schema.define(:version => 20110520031023) do
     t.text     "original_data"
     t.integer  "batch_index",              :default => 0
     t.text     "scoring_hash"
-    t.date     "publication_date"
     t.string   "language"
     t.text     "copyright_holder"
     t.boolean  "peer_reviewed"
@@ -374,6 +400,9 @@ ActiveRecord::Schema.define(:version => 20110520031023) do
     t.integer  "initial_publication_id"
     t.integer  "initial_publisher_id"
     t.string   "location"
+    t.integer  "publication_date_year"
+    t.integer  "publication_date_month"
+    t.integer  "publication_date_day"
   end
 
   add_index "works", ["batch_index"], :name => "batch_index"

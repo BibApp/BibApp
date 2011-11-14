@@ -6,5 +6,6 @@
 %td
   = label_tag 'publication_date', "Publication Date:"
   %br/
-  = date_select 'work', 'publication_date', :start_year => 1950, :end_year => Time.now.year, :include_blank=>true
+  = render 'works/metadata/publication_date_select'
+
 
