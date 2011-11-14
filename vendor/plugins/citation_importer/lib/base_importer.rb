@@ -172,17 +172,6 @@ class BaseImporter < CitationImporter
     end
   end
 
-  def parse_date_mm_yyyy(date_string)
-    #This _will_ parse something like '02-19-1977', albeit incorrectly, so make sure it doesn't get that chance
-    return nil if date_string.match(/-.*-/)
-    begin
-      date = Date.strptime(date_string, "%m-%Y")
-      return {:publication_date_year => date.year, :publication_date_month => date.month}
-    rescue
-      return nil
-    end
-  end
-
   def parse_date_parsedate(date_string)
     parsed_date = ParseDate.parsedate(date_string) rescue nil
     return nil unless parsed_date and parsed_date[0].present? and parsed_date[0].to_s.size >=4
@@ -199,25 +188,28 @@ class BaseImporter < CitationImporter
     end
   end
 
+  def parse_date_mm_yyyy(date_string)
+    #This _will_ parse something like '02-19-1977', albeit incorrectly, so make sure it doesn't get that chance
+    return nil if date_string.match(/-.*-/)
+    date_strptime_parse_generic(date_string, "%m-%Y", :year, :month)
+  end
+
   def parse_date_dd_mm_yyyy(date_string)
-    date = Date.strptime(date_string, "%d/%m/%Y")
-    return {:publication_date_year => date.year, :publication_date_month => date.month, :publication_date_day => date.day}
-  rescue
-    return nil
+    date_strptime_parse_generic(date_string, "%d/%m/%Y", :year, :month, :day)
   end
 
   def parse_date_mm_dd_yyyy(date_string)
-    date = Date.strptime(date_string, "%m-%d-%Y")
-    return {:publication_date_year => date.year, :publication_date_month => date.month, :publication_date_day => date.day}
-  rescue
-    return nil
+    date_strptime_parse_generic(date_string, "%m-%d-%Y", :year, :month, :day)
   end
 
   def parse_date_year(date_string)
-    year = date_string.match(/\d{4}/)
-    return nil unless year
-    date = Date.strptime(year[0], "%Y")
-    return {:publication_date_year => date.year}
+    date_strptime_parse_generic(date_string.match(/\d{4}/)[0], "%Y", :year)
+  end
+
+  def date_strptime_parse_generic(date_string, format_string, *returned_parts)
+    return nil if date_string.blank?
+    date = Date.strptime(date_string, format_string)
+    returned_parts.each_with_object({}) { |part, hash| hash[:"publication_date_#{part}"] = date.send(part) }
   rescue
     return nil
   end
