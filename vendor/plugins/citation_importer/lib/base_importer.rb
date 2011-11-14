@@ -113,7 +113,7 @@ class BaseImporter < CitationImporter
 
       #remove keys which have nil or empty values
       #This removes empty Arrays, Hashes and Strings
-      if value.nil? or value.empty? or value[0].to_s.blank?
+      if value.blank? or (value.is_a?(Array) and value[0].blank?)
         hash.delete(key)
         next
       end
@@ -147,11 +147,7 @@ class BaseImporter < CitationImporter
   # Global method to parse out publication dates
   # (Can be overriden by individual importers, as necessary)
   def publication_date_parse(publication_date)
-    date = Hash.new
-
-    date[:publication_date] = parse_date(publication_date)
-
-    return date
+    parse_date(publication_date).reverse_merge(:publication_date_year => nil, :publication_date_month => nil, :publication_date_day => nil)
   end
 
 
@@ -160,50 +156,70 @@ class BaseImporter < CitationImporter
   def parse_date(date_to_parse, stripped = nil)
 
     date_string = date_to_parse.to_s.strip
-    return nil if date_string.empty?
-    return nil if stripped and date_string.size < 4
+    return {} if date_string.empty?
+    return {} if stripped and date_string.size < 4
 
     #try a variety of ways of parsing the date string, including stripping the date of non-numbers at the end and
     #recursively calling this function
     date = parse_date_mm_yyyy(date_string) || parse_date_parsedate(date_string) || parse_date_dd_mm_yyyy(date_string) ||
-        parse_date_mm_dd_yyyy(date_string) || (!stripped and parse_date(date_string.sub(/\D*$/, ''),true)) || parse_date_year(date_string)
+        parse_date_mm_dd_yyyy(date_string) || (!stripped and parse_date(date_string.sub(/\D*$/, ''), true)) || parse_date_year(date_string)
 
     if date
-      #return date in YYYY-MM-DD format
-      logger.debug("Date parsed as: #{date.to_s}")
-      return date.to_s
+      return date
     else
       logger.debug("Could not parse this date!\n")
-      return nil
+      return {}
     end
   end
 
   def parse_date_mm_yyyy(date_string)
     #This _will_ parse something like '02-19-1977', albeit incorrectly, so make sure it doesn't get that chance
     return nil if date_string.match(/-.*-/)
-    Date.strptime(date_string, "%m-%Y") rescue nil
+    begin
+      date = Date.strptime(date_string, "%m-%Y")
+      return {:publication_date_year => date.year, :publication_date_month => date.month}
+    rescue
+      return nil
+    end
   end
 
   def parse_date_parsedate(date_string)
     parsed_date = ParseDate.parsedate(date_string) rescue nil
     return nil unless parsed_date and parsed_date[0].present? and parsed_date[0].to_s.size >=4
-    (return (Date.new(parsed_date[0], parsed_date[1], parsed_date[2]) rescue nil)) unless parsed_date[1].nil? or parsed_date[2].nil?
-    (return (Date.new(parsed_date[0], parsed_date[1]) rescue nil)) unless parsed_date[1].nil?
-    return (Date.new(parsed_date[0]) rescue nil)
+    year = parsed_date[0]
+    month = parsed_date[1]
+    day = parsed_date[2]
+    begin
+      #make sure that we have a valid date returned - note that this will, incorrectly, parse something like 21/05/2001
+      #to have a month of 21. This code checks for that.
+      date = Date.new(year, month || 1, day || 1)
+      return {:publication_date_year => year, :publication_date_month => month, :publication_date_day => day}
+    rescue
+      return nil
+    end
   end
 
   def parse_date_dd_mm_yyyy(date_string)
-    Date.strptime(date_string, "%d/%m/%Y") rescue nil
+    date = Date.strptime(date_string, "%d/%m/%Y")
+    return {:publication_date_year => date.year, :publication_date_month => date.month, :publication_date_day => date.day}
+  rescue
+    return nil
   end
 
   def parse_date_mm_dd_yyyy(date_string)
-    Date.strptime(date_string, "%m-%d-%Y") rescue nil
+    date = Date.strptime(date_string, "%m-%d-%Y")
+    return {:publication_date_year => date.year, :publication_date_month => date.month, :publication_date_day => date.day}
+  rescue
+    return nil
   end
 
   def parse_date_year(date_string)
     year = date_string.match(/\d{4}/)
-    #take first matching "year", and make a date out of it
-    year && (Date.strptime(year[0], "%Y") rescue nil)
+    return nil unless year
+    date = Date.strptime(year[0], "%Y")
+    return {:publication_date_year => date.year}
+  rescue
+    return nil
   end
 
   #If a given String is actually a ActiveSupport::Multibyte::Chars",
