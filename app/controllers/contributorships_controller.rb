@@ -16,7 +16,7 @@ class ContributorshipsController < ApplicationController
         @status = 'unverified' unless ['unverified', 'verified', 'denied'].member?(@status.to_s)
         @title = "#{@person.display_name}: #{@status.capitalize} Contributorships"
         @contributorships = @person.contributorships.send(@status).includes(:work).
-            order('works.publication_date desc').paginate(:page => @page, :per_page => @rows)
+            order('works.publication_date_year desc, works.publication_date_month desc, works.publication_date_day desc').paginate(:page => @page, :per_page => @rows)
       else
         render :status => 404
       end

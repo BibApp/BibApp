@@ -95,6 +95,7 @@ class Work < ActiveRecord::Base
         lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
 
   scope :most_recent_first, order('updated_at DESC')
+  scope :by_publication_date, order('publication_date_year DESC, publication_date_month DESC, publication_date_day DESC')
 
   def self.orphans
     (self.orphans_no_contributorships + self.orphans_denied_contributorships).uniq.sort { |a, b| a.title_primary <=> b.title_primary }
