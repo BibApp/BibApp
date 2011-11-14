@@ -47,9 +47,9 @@ xml.mdWrap(:LABEL=>"SWORD Metadata - EPrints DC XML schema", :MDTYPE=>"OTHER", :
             xml.epdcx(:value_string, encode_for_xml(work.notes))
           end
         end
-        if work.publication_date
+        if work.publication_date_year
           xml.epdcx(:statement, 'epdcx:propertyURI'=>"http://purl.org/dc/terms/available") do
-            xml.epdcx(:valueString, {'epdcx:sesURI'=>"http://purl.org/dc/terms/W3CDTF"}, work.publication_date.year)
+            xml.epdcx(:valueString, {'epdcx:sesURI'=>"http://purl.org/dc/terms/W3CDTF"}, work.publication_date_year)
           end
         end
         if work.language

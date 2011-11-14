@@ -17,7 +17,7 @@ class ContributorshipsController < ApplicationController
         @title = t('common.contributorships.index_title', :display_name => @person.display_name,
                    :status => t("common.contributorships.#{@status}").capitalize)
         @contributorships = @person.contributorships.send(@status).includes(:work).
-            order('works.publication_date desc').paginate(:page => @page, :per_page => @rows)
+            order('works.publication_date_year desc, works.publication_date_month desc, works.publication_date_day desc').paginate(:page => @page, :per_page => @rows)
       else
         render :status => 404
       end

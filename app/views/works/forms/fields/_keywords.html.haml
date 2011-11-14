@@ -4,12 +4,13 @@
 
 -# Initialize our list of keywords
 -#  Default: use keywords assigned to @work.
--#  @keywords should only exist if there were errors in saving work
+-#  @keywords should only exist if there were errors in saving work - it will be an Array of Strings
 - keywords = @work.keywords if @work.keywords
-- keywords = @keywords if @keywords
+- keywords = @keywords.collect {|kw| Keyword.find_or_create_by_name(kw)} if @keywords
 
 = label_tag "keywords", "#{t 'works.forms.fields.keywords.label'}:"
 %span.instructions
   = t('works.forms.fields.keywords.instructions')
   %br
+
 = text_area_tag "keywords", keywords.collect {|kw| kw.name}.join('; '), :size => "25x10"

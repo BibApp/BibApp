@@ -58,8 +58,8 @@ describe Work do
     before(:each) do
       #to test the default implementation we need a work subclass that doesn't override open_url_kevs
       #Generic seems a safe choice, but if this test starts failing take that into consideration
-      @work = Factory.create(:generic, :title_primary => 'WorkTitle', :publication_date => Date.parse('2011-03-04'),
-                             :volume => '11', :issue => '9', :start_page => '211', :end_page => '310')
+      @work = Factory.create(:generic, :title_primary => 'WorkTitle', :publication_date_year => 2011, :publication_date_month => 3,
+                             :publication_date_day => 4, :volume => '11', :issue => '9', :start_page => '211', :end_page => '310')
     end
 
     it "always returns a standard set" do
@@ -170,7 +170,9 @@ describe Work do
       publication = Factory.create(:publication)
       keywords = 3.times.collect { Factory.create(:keyword) }
       name_strings = 4.times.collect { Factory.create(:name_string) }
-      work.publication_date = Date.parse('2008-01-02')
+      work.publication_date_year = 2008
+      work.publication_date_month = 1
+      work.publication_date_day = 2
       work.publication = publication
       work.set_keywords(keywords)
       work.name_strings = name_strings
@@ -208,7 +210,8 @@ describe Work do
 
   context "dupe_key checking" do
     before(:each) do
-      @work = Factory.create(:generic, :title_primary => 'Work Name', :publication_date => Date.parse('2009-03-21'))
+      @work = Factory.create(:generic, :title_primary => 'Work Name', :publication_date_year => 2009,
+                             :publication_date_month => 3, :publication_date_day => 21)
     end
 
     describe "title dupe key" do
@@ -433,7 +436,7 @@ describe Work do
   describe 'orphan detection' do
     def work_with_contributorships(*states)
       title = states.blank? ? 'None' : states.join(' ')
-      Factory.create(:work, :title_primary => title ).tap do |work|
+      Factory.create(:work, :title_primary => title).tap do |work|
         states.each do |state|
           Factory.create(:contributorship, :work => work).send("#{state}_contributorship")
         end
@@ -460,5 +463,66 @@ describe Work do
       Work.orphans.to_set.should == [@work_no_contribs, @work_denied_contrib, @work_denied_contribs].to_set
     end
 
+  end
+
+  describe "publication date" do
+    before(:each) do
+      @work = Factory.build(:work)
+    end
+
+    def set_date(year = nil, month = nil, day = nil)
+      @work.publication_date_year = year
+      @work.publication_date_month = month
+      @work.publication_date_day = day
+    end
+
+    it "should be valid if all the date fields are blank" do
+      @work.should be_valid
+    end
+
+    it "should be valid if it only has a year" do
+      set_date(2011)
+      @work.should be_valid
+    end
+
+    it "should be valid if it has a year and a valid month but no day" do
+      set_date(2011, 5)
+      @work.should be_valid
+    end
+
+    it "should be invalid if it has a year and an invalid month" do
+      set_date(2011, 13)
+      @work.should_not be_valid
+    end
+
+    it "should be valid if it has a year, valid month, and valid day" do
+      set_date(2011, 4, 12)
+      @work.should be_valid
+    end
+
+    it "should be invalid if it has a year, valid month, and invalid day" do
+      set_date(2011, 2, 29)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a year and day but no month" do
+      set_date(2011, nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a month but lacks a year" do
+      set_date(nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a day but lacks a month" do
+      set_date(2011, nil, 1)
+      @work.should_not be_valid
+    end
+
+    it "should be invalid if it has a day but lacks a year" do
+      set_date(nil, nil, 1)
+      @work.should_not be_valid
+    end
   end
 end

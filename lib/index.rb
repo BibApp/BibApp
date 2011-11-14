@@ -92,10 +92,8 @@ class Index
 
   # Mapping specific to dates
   #   Since dates are occasionally null they are only passed to Solr
-  #   if the publication_date is *not* null.
-  SOLR_DATE_MAPPING = {
-      :year => Proc.new { |record| record.publication_date.year }
-  }
+  #   if the publication_date_year is *not* null.
+  SOLR_DATE_MAPPING = SOLR_MAPPING.merge({:year => Proc.new { |record| record.publication_date_year }})
 
 
   # Index all Works which have been flagged for batch indexing
@@ -151,13 +149,7 @@ class Index
   #Update a single record in Solr
   # (for bulk updating, use 'batch_update_solr', as it is faster)
   def self.update_solr(record, commit_records=true)
-    if record.publication_date != nil
-      #add dates to our mapping
-      mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-      doc = Solr::Importer::Mapper.new(mapping).map(record)
-    else
-      doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-    end
+    doc = solr_doc_from_record(record)
 
     SOLRCONN.add(doc)
     SOLRCONN.commit if commit_records
@@ -165,24 +157,23 @@ class Index
 
   #Batch update several records with a single request to Solr
   def self.batch_update_solr(records, commit_records=true)
-    docs = Array.new
-    records.each do |record|
-      if record.publication_date != nil
-        #add dates to our mapping
-        mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-        doc = Solr::Importer::Mapper.new(mapping).map(record)
-      else
-        doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
-      end
-
-      #append to array of docs to update
-      docs << doc
+    docs = records.collect do |record|
+      solr_doc_from_record(record)
     end
 
     #Send one update request for all docs!
     request = Solr::Request::AddDocument.new(docs)
     SOLRCONN.send(request)
     SOLRCONN.commit if commit_records
+  end
+
+  def self.solr_doc_from_record(record)
+    if record.publication_date_year
+      #add dates to our mapping
+      Solr::Importer::Mapper.new(SOLR_DATE_MAPPING).map(record)
+    else
+      Solr::Importer::Mapper.new(SOLR_MAPPING).map(record)
+    end
   end
 
   #Remove a single record from Solr
@@ -376,7 +367,7 @@ class Index
     docs = r.data["response"]["docs"]
 
     #Get the Work corresponding to each doc returned by Solr
-    return docs.collect {|doc| Work.find(doc["pk_i"])}
+    return docs.collect { |doc| Work.find(doc["pk_i"]) }
   end
 
   # Output a Work as if it came directly from Solr index
@@ -385,14 +376,7 @@ class Index
   # '/views/shared/work' partial (which expects the
   # work data to be in the Hash format Solr returns).
   def self.work_to_solr_hash(work)
-    # Transform Work using our Solr Mapping
-    if work.publication_date != nil
-      #add dates to our mapping
-      mapping = SOLR_MAPPING.merge(SOLR_DATE_MAPPING)
-      doc = Solr::Importer::Mapper.new(mapping).map(work)
-    else
-      doc = Solr::Importer::Mapper.new(SOLR_MAPPING).map(work)
-    end
+    doc = solr_doc_from_record(work)
 
     # We now have a hash with symbols (e.g. :title) for keys.
     # However, we need one with strings (e.g. "title") for keys.

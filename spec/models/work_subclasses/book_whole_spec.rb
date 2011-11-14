@@ -6,12 +6,13 @@ describe BookWhole do
                         ['Author', 'Editor', 'Translator', 'Illustrator'],
                         'Author', 'Editor', "http://purl.org/eprint/type/Book"
 
-describe "open_url kevs" do
+  describe "open_url kevs" do
     before(:each) do
       authority = Factory.create(:publisher, :name => 'Authority')
       publisher = Factory.create(:publisher, :authority => authority)
-      @b = Factory.create(:book_whole, :title_primary => 'Title', :publication_date => Date.parse('2011-03-02'),
-                            :publisher => publisher)
+      @b = Factory.create(:book_whole, :title_primary => 'Title', :publication_date_year => 2011,
+                          :publication_date_month => 3, :publication_date_day => 2,
+                          :publisher => publisher)
     end
 
     it "should always have" do
