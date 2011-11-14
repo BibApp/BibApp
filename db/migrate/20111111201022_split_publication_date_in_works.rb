@@ -3,30 +3,30 @@ class SplitPublicationDateInWorks < ActiveRecord::Migration
     add_column :works, :publication_date_year, :integer
     add_column :works, :publication_date_month, :integer
     add_column :works, :publication_date_day, :integer
+    IndexObserver.skip = true
     Work.all.each do |work|
       if work.publication_date.present?
-        work.publication_date_year = work.publication_date.year
-        work.publication_date_month = work.publication_date.month
-        work.publication_date_day = work.publication_date.day
+        work.update_attribute(:publication_date_year, work.publication_date.year)
+        work.update_attribute(:publication_date_month, work.publication_date.month)
+        work.update_attribute(:publication_date_day, work.publication_date.day)
       else
-        work.publication_date_year = nil
-        work.publication_date_month = nil
-        work.publication_date_day = nil
+        work.update_attribute(:publication_date_year, nil)
+        work.update_attribute(:publication_date_month, nil)
+        work.update_attribute(:publication_date_day, nil)
       end
-      work.save
     end
     remove_column :works, :publication_date
   end
 
   def self.down
     add_column :works, :publication_date, :date
+    IndexObserver.skip = true
     Work.all.each do |work|
       if work.publication_date_year.present?
-        work.publication_date = Date.new(work.publication_date_year, work.publication_date_month || 1, work.publication_date_day || 1)
+        work.update_attribute(:publication_date, Date.new(work.publication_date_year, work.publication_date_month || 1, work.publication_date_day || 1))
       else
-        work.publication_date = nil
+        work.update_attribute(:publication_date, nil)
       end
-      work.save
     end
     remove_column :works, :publication_date_day
     remove_column :works, :publication_date_month
