@@ -1,5 +1,5 @@
 - include_stylesheet('common/sherpa')
-- color = publisher.romeo_color.try(:to_sym) || :unknown
+- color = publisher.romeo_color.present? ? publication.romeo_color.to_sym : :unknown
 %span{:class => ['sherpa-status', "romeo-#{color}-border"], :title => t_sherpa_color_explanation(color)}
   SHERPA: #{t("personalize.sherpa_colors.#{color}.name")}
 - if show_explanation
