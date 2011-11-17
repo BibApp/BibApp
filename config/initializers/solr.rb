@@ -38,7 +38,7 @@ SOLR_STOP_PORT = SOLR_SETTINGS['stop_port'] if SOLR_SETTINGS and SOLR_SETTINGS['
 SOLR_STOP_PORT = "8097" unless defined? SOLR_STOP_PORT
 
 # Build our Solr URL (used by Solr Connection below)
-SOLR_URL = "http://localhost:#{SOLR_PORT}/solr" unless defined? SOLR_URL
+SOLR_URL = "http://127.0.0.1:#{SOLR_PORT}/solr" unless defined? SOLR_URL
 
 # Solr Connection (used by /app/models/index.rb)
 SOLRCONN = Solr::Connection.new(SOLR_URL)
