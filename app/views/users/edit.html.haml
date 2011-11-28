@@ -23,7 +23,7 @@
     = form_for :user, :url => user_path(@user), :html => {:method => :put} do |form|
       %p
         %label #{User.human_attribute_name(:default_locale)}:
-        = form.select(:default_locale, I18n.available_locales.collect {|locale| locale.to_s}.sort, :selected => (@user.default_locale || I18n.locale).to_s)
+        = form.select(:default_locale, I18n.available_locales.collect {|locale| [t('i18n.language.name', :locale => locale), locale.to_s]}.sort, :selected => (@user.default_locale || I18n.locale).to_s)
       %p.submit
         = submit_tag t('app.update')
   %p
