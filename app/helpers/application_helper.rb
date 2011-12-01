@@ -90,6 +90,12 @@ module ApplicationHelper
     name1 == name2 ? {:class => 'current'} : {}
   end
 
+  #file path is the path from /public/<locale>/ Note that the path shouldn't begin with a '/' - that's included
+  #automatically
+  def static_html_link(file_path, label)
+    link_to label, "/static/#{I18n.locale || I18n.default_locale}/#{file_path}"
+  end
+
   private
 
   #Find information necessary to build our OpenURL query

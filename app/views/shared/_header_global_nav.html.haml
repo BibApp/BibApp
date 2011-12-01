@@ -1,8 +1,8 @@
 %ul#global-nav.header-nav
   %li
-    %a{:href => "/about"} #{t('app.about')}
+    = static_html_link('about.html', t('app.about'))
   %li
-    %a{:href => "/faq"} #{t('app.faq')}
+    = static_html_link('faq.html', t('app.faq'))
   - if logged_in?
     %li
       %span #{link_to t('app.account'), edit_user_path(current_user)}
