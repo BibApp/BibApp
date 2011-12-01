@@ -92,7 +92,7 @@ class Publisher < PubCommon
     # First check that solr is running
     # We need it to be in order for the new publishers to be indexed
     begin
-      n = Net::HTTP.new('localhost', SOLR_PORT)
+      n = Net::HTTP.new('127.0.0.1', SOLR_PORT)
       n.request_head('/').value
 
     rescue Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
