@@ -14,7 +14,7 @@ namespace :solr do
   desc 'Starts Solr. Options accepted: RAILS_ENV=your_env, PORT=XX. Defaults to development if none.'
   task :start => :environment do
     begin
-      n = Net::HTTP.new('localhost', SOLR_PORT)
+      n = Net::HTTP.new('127.0.0.1', SOLR_PORT)
       n.request_head('/').value
 
     rescue Net::HTTPServerException #responding
