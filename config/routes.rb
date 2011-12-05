@@ -235,6 +235,8 @@ Bibapp::Application.routes.draw do
     scope "(:locale)", :locale => locale_regexp do
       make_routes
     end
+    #uncomment to make multi-locale version able to direct locale-less routes as well
+    #make_routes
   else
     make_routes
   end
