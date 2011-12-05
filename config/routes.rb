@@ -1,7 +1,7 @@
 Bibapp::Application.routes.draw do
 
-  locale_regexp = Regexp.new(I18n.available_locales.join('|'))
-  scope "(:locale)", :locale => locale_regexp do
+
+  def make_routes
     resources :works do
       collection do
         get :auto_complete_for_author_string
@@ -173,9 +173,9 @@ Bibapp::Application.routes.draw do
     ####
     match 'saved', :to => 'user_sessions#saved', :as => 'saved'
     match 'sessions/delete_saved', :to => 'user_sessions#delete_saved',
-        :as => 'delete_saved'
+          :as => 'delete_saved'
     match 'sessions/add_many_to_saved', :to => 'user_sessions#add_many_to_saved',
-        :as => 'add_many_to_saved'
+          :as => 'add_many_to_saved'
     ####
     # Authentication routes
     ####
@@ -229,4 +229,15 @@ Bibapp::Application.routes.draw do
     match 'roles/new_admin' => "roles#new_admin"
     match 'roles/new_editor' => "roles#new_editor"
   end
+
+  if I18n.available_locales.many?
+    locale_regexp = Regexp.new(I18n.available_locales.join('|'))
+    scope "(:locale)", :locale => locale_regexp do
+      make_routes
+    end
+  else
+    make_routes
+  end
+
+
 end
