@@ -417,7 +417,7 @@ class WorksController < ApplicationController
   #  already in BibApp.
   def auto_complete_for_publisher_name
     publishers = name_search(params[:publisher][:name].downcase, Publisher, 8)
-    render 'works/forms/fields/autocomplete_list', :objects => publishers
+    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
   end
 
   #Adds a single item value to list of items in Web-based Work entry
