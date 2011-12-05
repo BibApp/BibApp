@@ -3,20 +3,19 @@
 module SolrUpdater
 
   def reindex_after_save
-    reindex_associated_works
+    self.delay.reindex_associated_works
   end
 
   def reindex_before_destroy
-    reindex_associated_works
+    self.delay.reindex_associated_works
   end
 
   private
 
   def reindex_associated_works
     self.get_associated_works.each do |work|
-      work.set_for_index_and_save
+      Index.update_solr(work)
     end
-    Index.delay.batch_index
   end
 
 end
