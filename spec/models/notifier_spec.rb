@@ -27,7 +27,7 @@ describe Notifier do
     end
 
     it "should have a link to the import review page" do
-      @email.should have_body_text(/#{user_import_path(@user, @import)}/)
+      @email.should have_body_text(user_import_path(@user, @import))
     end
 
   end

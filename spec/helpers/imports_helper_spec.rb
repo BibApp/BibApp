@@ -22,7 +22,7 @@ describe ImportsHelper do
 
     it "Should identify and link imports for current persons" do
       link_string = helper.imported_for(@import)
-      link_string.should match(/#{person_path(@person)}/)
+      link_string.should match(Regexp.quote(person_path(@person)))
       link_string.should match(/#{@person.display_name}/)
     end
 
