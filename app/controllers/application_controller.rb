@@ -26,8 +26,7 @@ class ApplicationController < ActionController::Base
           (current_user.default_locale if current_user) ||
           I18n.default_locale
     else
-      I18n.locale = I18n.default_locale
-      params[:locale] = nil
+      I18n.locale = I18n.available_locales.first
     end
   end
 
@@ -38,7 +37,11 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options = {})
-    {:locale => I18n.locale}
+    if I18n.available_locales.many?
+      {:locale => I18n.locale}
+    else
+      {}
+    end
   end
 
   # Adds a work.id to the session[:saved] array
