@@ -69,7 +69,7 @@ namespace :deploy do
   desc "link shared configuration"
   task :link_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml',
-     'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml'].each do |file|
+     'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml', 'locales.yml', 'keyword_exclusions.yml'].each do |file|
       run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
     end
   end
@@ -128,7 +128,7 @@ namespace :solr do
     run "rm -rf #{index_dir}"
     run %Q(mv #{backup_dir} #{index_dir})
   end
-  
+
 end
 
 after 'deploy:setup', 'deploy:create_shared_dirs'
