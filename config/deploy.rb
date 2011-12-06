@@ -72,6 +72,7 @@ namespace :deploy do
      'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml', 'locales.yml', 'keyword_exclusions.yml'].each do |file|
       run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
     end
+    run "ln -nfs #{shared_config}/personalize #{current}/config/locales/personalize"
   end
 
   desc "symlink shared subdirectories of public"
