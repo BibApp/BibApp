@@ -12,11 +12,21 @@ de:
       issn_isbn: "z. B.: 0003-018X"
       year: "z. B: 2006  bis  2008"
     sherpa_colors:
-      green: "Darf Pre- und Postprint archivieren."
-      blue: "Darf Prostprint archivieren."
-      yellow: "Darf Preprint archivieren"
-      white: "Archivierung nicht formell unterstützt"
-      unknown: "Auf Basis der Angaben nicht bestimmbar"
+      green:
+        name: "Grün"
+        explanation: "Darf Pre- und Postprint archivieren"
+      blue:
+        name: "Blau"
+        explanation: "Darf Postprint archivieren"
+      yellow:
+        name: "Gelb"
+        explanation: "Darf Preprint archivieren"
+      white:
+        name: "White"
+        explanation: "Archivierung nicht unterstützt"
+      unknown:
+        name: "Unbekannt"
+        explanation: "Konnte auf Basis der vorliegenden Informationen nicht bestimmt werden."
     university_full_address: "Schwanenwall 28, 99999 Ort | Telefon: 608.890.0787"
     university_full_name: "Name der Universität"
     university_short_name: "Kurzbezeichnung"
