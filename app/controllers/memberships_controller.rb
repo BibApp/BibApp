@@ -20,7 +20,7 @@ class MembershipsController < ApplicationController
 
     before :new do
       @person = Person.find(params[:person_id])
-      @title = "#{@person.display_name}: Group Memberships"
+      @title = t('common.memberships.new_title', :name => @person.display_name)
 
       member = @person.groups.empty? ? "non_member" : "member"
       @status = params[:status] || member
@@ -100,7 +100,7 @@ class MembershipsController < ApplicationController
           begin
             person.groups << group
           rescue ActiveRecord::RecordInvalid
-            flash[:warning] = "One or more groups could not be joined; a membership already exists."
+            flash[:warning] = t('common.memberships.flash_create_multiple_membership')
           end
         else
           full_success = false
@@ -114,9 +114,9 @@ class MembershipsController < ApplicationController
 
     respond_to do |format|
       if full_success
-        flash[:notice] = "Groups were successfully joined."
+        flash[:notice] = t('common.memberships.flash_create_multiple_success')
       else
-        flash[:warning] = "One or more groups could not be joined; you have insufficient privileges"
+        flash[:warning] = t('common.memberships.flash_create_multiple_privileges')
       end
       #forward back to path which was specified in params
       format.html { redirect_to return_path }

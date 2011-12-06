@@ -1,3 +1,3 @@
 = render 'shared/pub_common/authority_form', :authorities => authorities,
   :submit_url => update_multiple_publications_path, :page => page,
-  :headers => ['ISSN / ISBN', 'Publication Name', 'Publisher', 'Works']
+  :headers => [Publication.human_attribute_name(:issn_isbn), t('common.publications.publication_name'), Publisher.model_name.human, Work.model_name.human_pl]

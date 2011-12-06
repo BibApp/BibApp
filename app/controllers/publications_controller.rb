@@ -37,7 +37,7 @@ class PublicationsController < ApplicationController
     before :index do
       # find first letter of publication name (in uppercase, for paging mechanism)
       @a_to_z = Publication.letters(true)
-      @title = "Publications"
+      @title = Publication.model_name.human_pl
 
       if params[:q]
         @current_objects = current_objects
@@ -137,12 +137,12 @@ class PublicationsController < ApplicationController
 
     respond_to do |format|
       if full_success
-        flash[:notice] = "Publications were successfully deleted."
+        flash[:notice] = t('common.publications.flash_destroy_success')
         #forward back to path which was specified in params
         format.html { redirect_to return_path }
         format.xml { head :ok }
       else
-        flash[:warning] = "This publication has #{works.length} work associated with it, which must be altered or removed before this publication can be deleted."
+        flash[:warning] = t('common.publications.flash_destroy_failure', :count => works.length)
         format.html { redirect_to edit_publication_path(publication.id) }
         format.xml { head :ok }
       end

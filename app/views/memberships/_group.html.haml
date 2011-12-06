@@ -5,17 +5,17 @@
     %font{:size => '3'}
       = group.name
     %font{:size => '1'}
-      = link_to "Leave group", membership_url(membership), :confirm => "Are you sure you want to leave this group?", :method => :delete
+      = link_to t('.leave'), membership_url(membership), :confirm => t('.confirm'), :method => :delete
 
   %div.membership-group-form
     = remote_form_for :membership,  membership,  :url => membership_url(membership),
        :complete => visual_effect(:highlight, "group_#{group.id}", :duration => 2), :html => {:method => :put} do |form|
-      Title
+      #{t 'app.title'}
       = form.text_field :title
-      Year Joined:
+      #{t '.year_joined'}:
       = form.date_select 'start_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
-      Year Left:
+      #{t '.year_left'}:
       = form.date_select 'end_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
       %br/
-      = submit_tag :save
+      = submit_tag t('app.save')
 = sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)

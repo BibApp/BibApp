@@ -2,7 +2,7 @@
 
 .span-5
   .left_box
-    .box_heading Refine Results
+    .box_heading #{t 'shared.facets.heading'}
 
     / Remove Filter(s)
     - remove_filter = @filter.clone
@@ -25,11 +25,11 @@
     / WorkType Filter
     - if @facets[:types].present?
       .facet
-        .facet_heading Formats
+        .facet_heading #{t 'shared.facets.formats'}
         %ol.facet_filters
           - @facets[:types].each do |p|
             %li
-              = add_filter(params, "type_facet", p.name, p.value)
+              = add_filter(params, "type_facet", p.name, p.value, t_solr_work_type(p.name))
 
     / Groups
     -#Remove group facet that represents the current group

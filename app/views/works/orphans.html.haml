@@ -1,5 +1,5 @@
 -include_javascript('specific/works/orphans')
-%h3 Orphaned works:
+%h3 #{t '.header'}:
 = will_paginate(@orphans)
 = form_for :orphan_delete, :url => orphans_delete_works_url(:page => params[:page], :per_page => params[:per_page]) do |f|
   %fieldset
@@ -11,5 +11,5 @@
       %li.work
         #{check_box_tag "orphan_delete[orphan_id][]",  orphan.id, false, :id => "orphan_delete_orphan_id_#{orphan.id}", :class => 'orphan_checkbox'}
         #{orphan.title_primary}
-    = f.submit "Delete checked works", :confirm => 'Are you sure? This operation cannot be undone.'
+    = f.submit t('works.orphans.submit'), :confirm => t('works.orphans.confirm')
 = will_paginate(@orphans)

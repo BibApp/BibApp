@@ -1,6 +1,6 @@
-- Work.types.each do |ct|
+- sorted_work_types.each do |type, label|
   %li
     -if @person
-      = link_to ct, new_person_work_path(@person, :klass => ct)
+      = link_to label, new_person_work_path(@person, :klass => type)
     -else
-      = link_to ct, new_work_path(:klass => ct)
+      = link_to label, new_work_path(:klass => type)

@@ -1,45 +1,45 @@
 %fieldset#personal_info
-  %legend Personal Info
+  %legend #{t 'app.personal_info'}
   = form_for @person do |form|
     %div
-      = submit_tag "Save", :disable_with => "Saving...", :class=>"button positive"
-      = submit_tag "Cancel", :name => "cancel", :class =>"button negative"
+      = submit_tag t('app.save'), :disable_with => t('.disable'), :class => "button positive"
+      = submit_tag t('app.cancel'), :name => "cancel", :class => "button negative"
     .span-10
       %div
-        %label University ID*
+        %label #{Person.human_attribute_name(:uid)}*
         = form.text_field :uid
         = error_for "person", "uid"
       %div
-        %label First Name
+        %label #{Person.human_attribute_name(:first_name)}
         = form.text_field :first_name
       %div
-        %label Middle Name
+        %label #{Person.human_attribute_name(:middle_name)}
         = form.text_field :middle_name
       %div
-        %label Last Name
+        %label #{Person.human_attribute_name(:last_name)}
         = form.text_field :last_name
       %div
-        %label Suffix
+        %label #{Person.human_attribute_name(:suffix)}
         = form.text_field :suffix
       %div
-        %label Display Name
+        %label #{Person.human_attribute_name(:display_name)}
         = form.text_field :display_name
       %div
-        %label Email
+        %label #{Person.human_attribute_name(:email)}
         = form.text_field :email
       %div
-        %label IM
+        %label #{Person.human_attribute_name(:im)}
         = form.text_field :im
       %div
-        %label Phone
+        %label #{Person.human_attribute_name(:phone)}
         = form.text_field :phone
       %div
-        %label Postal Address
+        %label #{Person.human_attribute_name(:postal_address)}
         = form.text_area :postal_address, :class => "smallbox"
       -unless @person.new_record?
         %div
-          %label Active?
+          %label #{Person.human_attribute_name(:active)}?
           = form.check_box :active, :class => "checkbox"
     %div
-      %label.lar Research Focus
+      %label.lar #{Person.human_attribute_name(:research_focus)}
       = form.text_area :research_focus

@@ -4,7 +4,9 @@ config/ldap.yml
 config/smtp.yml
 config/solr.yml
 config/sword.yml
+config/locales.yml
 config/personalize.rb
+config/locales/personalize/*.yml
 tmp/
 public.old/
 .svn
@@ -17,4 +19,8 @@ coverage/
 public/attachments/
 public/groups/
 public/people/
+public/tolk/
 *~
+config/solr.yml
+config/smtp.yml
+config/database.yml

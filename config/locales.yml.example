@@ -1,0 +1,8 @@
+# Put all locales you wish to be available here. You must also have
+# the appropriate translation files in place - this file just indicates
+# to Rails the locales you are permitting. The first locale specified
+# will be the default locale.
+- en
+#- de
+#- es
+

@@ -38,9 +38,12 @@ module Bibapp
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    # Specify desired locales in config/locales.yml. If that doesn't exist use English only.
+    # The first in the list will be the default locale by default.
+    locales = YAML.load_file(File.join(Rails.root, 'config', 'locales.yml')).collect { |l| l.to_sym } rescue [:en]
+    config.i18n.available_locales = locales
+    config.i18n.default_locale = locales.first
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 
     # JavaScript files you want as :defaults (application.js is always included).
     # config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
@@ -54,6 +57,7 @@ module Bibapp
     #log deprecations
     config.active_support.deprecation = :log
   end
+
 end
 
 require 'error_handler'

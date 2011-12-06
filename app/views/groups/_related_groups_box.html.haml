@@ -1,9 +1,9 @@
 - unless @group.parent.nil? or @group.parent.hide?
-  %h3.heading Belongs to
+  %h3.heading #{t('.belongs_to')}
   %ul.parent-group
     %li= link_to @group.parent.name, group_path(@group.parent)
 - unless @group.children.empty?
-  %h3.heading Sub-Groups
+  %h3.heading #{t('.subgroups')}
   %ul.sub-groups
     -@group.children.each do |g|
       - unless g.hide?

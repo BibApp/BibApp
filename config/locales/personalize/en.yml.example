@@ -1,0 +1,46 @@
+en:
+  personalize:
+    application_name: "UW Bibapp"
+    application_tagline: "Find experts on campus... Promote their research... Archive their work"
+    library_name: "Wendt Library"
+    repository_name: "My Repository"
+    search_examples:
+      keywords: "ex. plasma confinement physics"
+      title: "ex. Transport Phenomena"
+      authors: "ex. Corradini, Michael"
+      groups: "ex. Engineering Physics"
+      issn_isbn: "ex. 0003-018X"
+      year: "ex. 2006  to  2008"
+    sherpa_colors:
+      green:
+        name: "Green"
+        explanation: "Can archive pre-print and post-print"
+      blue:
+        name: "Blue"
+        explanation: "Can archive post-print (i.e. final draft post-refereeing)"
+      gray:
+        name: "Gray"
+        explanation: "Publisher in DOAJ but not yet analyzed by RoMEO"
+      yellow:
+        name: "Yellow"
+        explanation: "Can archive pre-print (i.e. pre-refereeing)"
+      white:
+        name: "White"
+        explanation: "Archiving not formally supported"
+      unknown:
+        name: "Unknown"
+        explanation: "Could not determine from data"
+    university_full_address: "215 N. Randall Avenue Madison, WI 53706-1494 | Phone: 608.890.0787"
+    university_full_name: "University of Wisconsin - Madison"
+    university_short_name: "UW-Madison"
+    #for work_archive_status 1 = not ready, rights unknown, 2 = ready for archiving, 3 = repository record created, url known
+    work_archive_status:
+      1: "Not Ready, rights unknown"
+      2: "Ready for archiving"
+      3: "Repository record created, URL known"
+    work_link_text: "Find It"
+    #for work_status 1 = processing, 2 = duplicate, 3 = accepted
+    work_status:
+      1: Processing
+      2: Duplicate
+      3: Accepted

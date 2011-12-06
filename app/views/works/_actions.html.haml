@@ -1,4 +1,4 @@
 %ul.actions
-  %li=link_to "show", work_path(c)
-  %li=link_to "edit", edit_work_path(c)
-  %li=link_to "destroy", {:controller=>"works", :action=>"destroy", :id=>c.id}, :confirm => "Are you sure?", :method => :delete
+  %li=link_to t('app.show'), work_path(c)
+  %li=link_to t('app.edit'), edit_work_path(c)
+  %li=link_to t('app.destroy'), {:controller=>"works", :action=>"destroy", :id=>c.id}, :confirm => t('app.are_you_sure'), :method => :delete

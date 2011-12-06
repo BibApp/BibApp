@@ -1,6 +1,3 @@
 .warning
-  %h3 Batch-#{@import.id}
-  %p
-    This import is in processing.  You'll receive an
-    %strong email
-    when the batch is complete.
+  %h3 #{t('common.imports.batch_id', :id => @import.id)}
+  %p #{t('.text').html_safe}

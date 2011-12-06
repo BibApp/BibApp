@@ -1,9 +1,9 @@
 - include_stylesheet('specific/contributorships/archivable')
 .span-24
   .span-22.prepend-1.archival-analysis-header
-    %h2 Archival Analysis: #{link_to @person.display_name, person_path(@person)}
+    %h2 #{t('.header', :person_link => link_to(@person.display_name, person_path(@person))).html_safe}
 
     = render 'archive_analysis_table'
 
-    %h3 Publications
+    %h3 #{Publication.model_name.human}
     = render 'archive_publications_table'

@@ -1,13 +1,13 @@
-%ul#global-nav
+%ul#global-nav.header-nav
   %li
-    %a{:href => "/about"} About
+    = static_html_link('about.html', t('app.about'))
   %li
-    %a{:href => "/faq"} FAQ
+    = static_html_link('faq.html', t('app.faq'))
   - if logged_in?
     %li
-      %span #{link_to "Account", edit_user_path(current_user)}
+      %span #{link_to t('app.account'), edit_user_path(current_user)}
     %li
-      %span #{link_to "Logout", logout_path}
+      %span #{link_to t('app.logout'), logout_path}
   - else
     %li
-      %span #{link_to "Login | Sign Up", login_path(:return_to => request.fullpath)}
+      %span #{link_to "#{t('app.login')} | #{t('app.signup')}", login_path(:return_to => request.fullpath)}

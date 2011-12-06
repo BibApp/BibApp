@@ -1,9 +1,9 @@
 = form_tag destroy_multiple_works_url, :method => :delete, :name => "works_form", :id => 'works_form' do
   #bulk_links
     = check_box_tag "select_works", "yes", false, :id => 'global-checkbox'
-    %strong Select All
+    %strong #{t('app.select_all')}
     |
-    =submit_tag "Delete selected works"
+    = submit_tag t('.submit')
     = hidden_field_tag "return_path", @return_path
 
   .span-14= will_paginate @works

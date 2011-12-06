@@ -1,8 +1,8 @@
 - if current_user_role?("editor", System)
-  = render :layout => 'layouts/main_body', :locals => {:header => "Hidden Groups"} do
+  = render :layout => 'layouts/main_body', :locals => {:header => t('groups.hidden.header')} do
 
     - if @hidden_groups.empty?
-      %p No hidden groups
+      %p #{t('groups.hidden.empty')}
 
     = render 'group_table', :groups => @hidden_groups
 

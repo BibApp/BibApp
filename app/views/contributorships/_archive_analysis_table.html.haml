@@ -1,22 +1,22 @@
 %table
   %thead
     %tr
-      %td RoMEO<br />Color
-      %td Archiving Policy
-      %td Percentage
-      %td Works
+      %td #{t('.romeo_color').html_safe}
+      %td= t('contributorships.archive_analysis_table.archiving_policy')
+      %td #{t('app.percentage')}
+      %td #{Work.model_name.human_pl}
   %tfoot
     %tr
       %td &nbsp;
       %td &nbsp;
-      %td Total
-      %td=@pub_totals
+      %td #{t('app.total')}
+      %td #{@pub_totals}
   %tbody
     - @pub_table.each do |row|
       -# Default colors to unknown
-      - color = romeo_color(row)
+      - color = row.color
       %tr{:class => color}
-        %td=color.capitalize
-        %td=$SHERPA_COLORS[color.downcase.to_sym]
+        %td #{t("personalize.sherpa_colors.#{color.downcase}.name")}
+        %td #{t_sherpa_color_explanation(color)}
         %td #{((row.count.to_f / @pub_totals.to_f) * 100).round}%
-        %td=row.count
+        %td #{row.count}

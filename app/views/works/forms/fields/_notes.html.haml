@@ -1,7 +1,2 @@
--# Notes field
--#
--# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
-
-= form.label :notes, "Notes:"
-= form.text_area :notes
+= render 'works/forms/fields/generic_text_area', :form => form, :attribute => :notes

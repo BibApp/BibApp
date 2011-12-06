@@ -1,4 +1,4 @@
-<h1>Listing keywordings</h1>
+<h1><%= t('.header') %></h1>
 
 <table>
   <tr>
@@ -6,13 +6,13 @@
 
 <% for keywording in @keywordings %>
   <tr>
-    <td><%= link_to 'Show', keywording %></td>
-    <td><%= link_to 'Edit', edit_keywording_path(keywording) %></td>
-    <td><%= link_to 'Destroy', keywording, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to t('app.show'), keywording %></td>
+    <td><%= link_to t('app.edit'), edit_keywording_path(keywording) %></td>
+    <td><%= link_to t('app.destroy'), keywording, :confirm => t('app.are_you_sure'), :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New keywording', new_keywording_path %>
+<%= link_to t('.new'), new_keywording_path %>

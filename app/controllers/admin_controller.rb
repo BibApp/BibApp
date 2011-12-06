@@ -7,7 +7,7 @@ class AdminController < ApplicationController
   permit "admin of System"
 
   def index
-    @title = "Administrative Tasks"
+    @title = t('admin.tasks')
     @tab_name = params[:tab] || "works"
   end
 
@@ -49,7 +49,7 @@ class AdminController < ApplicationController
   end
 
   def duplicates
-    @title = "Duplicate Works"
+    @title = t('admin.duplicates.works')
     # Default the filter to only show works marked as "duplicate"
     filter = [Work.solr_duplicate_filter]
     # Add any param filters
@@ -75,13 +75,13 @@ class AdminController < ApplicationController
   def update_publishers_from_sherpa
     Publisher.update_sherpa_data
     respond_to do |format|
-      flash[:notice] = "Update successful."
+      flash[:notice] = t('common.admin.flash_update_publishers_successful')
       format.html { redirect_to admin_update_sherpa_data_url }
       format.xml { head :ok }
     end
   rescue Exception => e
     respond_to do |format|
-      flash[:notice] = "Error updating publisher data: #{e.message}"
+      flash[:notice] = t('common.admin.flash_update_publishers_error', :message => e.message)
       format.html { redirect_to admin_update_sherpa_data_url }
       format.xml { head :error }
     end
@@ -114,7 +114,7 @@ class AdminController < ApplicationController
         # add entry for our METS package
         zip_stream.put_next_entry("mets.xml")
         # render our METS package for this Work
-        zip_stream.print render_to_string(:partial => "works/package.mets.haml", :locals => {:work => work, :filenames_only => true})
+        zip_stream.print render_to_string("works/package.mets.haml", :work => work, :filenames_only => true)
 
         #loop through attached files
         work.attachments.each do |att|
@@ -151,9 +151,9 @@ class AdminController < ApplicationController
 
   def find_or_create_repository_system
     ExternalSystem.find_by_base_url($REPOSITORY_BASE_URL) ||
-        ExternalSystem.find_by_name($REPOSITORY_NAME) ||
+        ExternalSystem.find_by_name(t('personalize.repository_name')) ||
         ExternalSystem.find_or_create_by_name_and_base_url(
-            :name => $REPOSITORY_NAME,
+            :name => t('personalize.repository_name'),
             :base_url => $REPOSITORY_BASE_URL)
   end
 

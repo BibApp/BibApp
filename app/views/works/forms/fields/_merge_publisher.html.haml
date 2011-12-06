@@ -1,10 +1,10 @@
 -# Publisher text field, with auto-complete
 %td.duplicate
-  = label_tag :publisher, "Publisher:"
+  = label_tag :publisher, "#{@dupe.class.human_attribute_name(:publisher)}:"
   %br/
   = text_field_tag 'dupe_publisher', @dupe.publisher.name, {:class => 'text', :readonly => 'readonly'}
 %td
-  = label_tag :publisher, "Publisher:"
+  = label_tag :publisher, "#{@work.class.human_attribute_name(:publisher)}:"
   %br/
   - @publisher = @work.publisher unless @work.publisher.nil?
   = text_field_with_auto_complete :publisher, :name, {:class=>'text', :size => 40}, {:method => :get, :skip_style => true, :frequency => 0.5}

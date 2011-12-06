@@ -2,21 +2,19 @@
   .span-23.prepend-1
 
     .span-12
-      #{link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)}
+      #{link_to(image_tag($APPLICATION_LOGO, :alt => t('personalize.application_name')), works_path)}
 
     .span-7.prepend-3.last
       = form_tag search_path, :method => :get, :class => "header-search-form" do
         #search-box
           #{text_field_tag(:q, nil, :size => 21)}
-          #{ submit_tag 'Search'}
-        %span.advanced-search-link #{link_to "Advanced", advanced_search_path}
+          #{ submit_tag t('app.search')}
+        %span.advanced-search-link #{link_to t('app.advanced'), advanced_search_path}
 
-    .span-22
-      %p#tagline
-        #{$APPLICATION_TAGLINE}
+    = render 'shared/tagline_and_locales'
 
-    .span-16
+    .span-14
       = render 'shared/header_nav'
 
-    .span-6.last
+    .span-8.last
       = render 'shared/header_global_nav'

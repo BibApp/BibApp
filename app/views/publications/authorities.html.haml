@@ -3,11 +3,11 @@
 
 - if current_user_any_role?("editor", "Group")
   = render :layout => 'layouts/admin_bar' do
-    %li #{link_to "Add a Publication", new_publication_path}
+    %li #{link_to t('common.publications.new'), new_publication_path}
 
-= render :layout => 'layouts/main_body', :locals => {:header => 'Admin Publication Authorities'} do
+= render :layout => 'layouts/main_body', :locals => {:header => t('common.publications.authority')} do
   #authority_form
-    %p To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button.
+    %p #{t('publications.authorities.instructions').html_safe}
     = render "authority_form", :authorities => @pas, :page => @page
 
   = render "shared/alpha_pagination"

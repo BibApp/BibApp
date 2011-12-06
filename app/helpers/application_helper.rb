@@ -75,8 +75,10 @@ module ApplicationHelper
     else
       err = @errors["#{object}"] rescue nil
     end
-    options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
-    content_tag("p", err || "", options)
+    if err.present?
+      options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
+      content_tag("p", err || "", options)
+    end
   end
 
   #create a hash for Haml that gives id => current if the controller matches the argument
@@ -88,6 +90,12 @@ module ApplicationHelper
     name1 == name2 ? {:class => 'current'} : {}
   end
 
+  #file path is the path from /public/<locale>/ Note that the path shouldn't begin with a '/' - that's included
+  #automatically
+  def static_html_link(file_path, label)
+    link_to label, "/static/#{I18n.locale || I18n.default_locale}/#{file_path}"
+  end
+
   private
 
   #Find information necessary to build our OpenURL query
@@ -95,7 +103,7 @@ module ApplicationHelper
   #    OpenURL link text, base url, and query suffixes
   def find_openurl_info
     # Set the canonical resolver variables (from personalize.rb)
-    link_text = $WORK_LINK_TEXT
+    link_text = t('personalize.work_link_text')
     base_url = $WORK_BASE_URL
     suffix = $WORK_SUFFIX
     # #If we've already found this info for

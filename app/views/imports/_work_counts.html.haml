@@ -3,20 +3,20 @@
   %table.import-review-table
     %thead
       %tr
-        %th Works
-        %th Count
+        %th #{Work.model_name.human_pl}
+        %th #{t('app.count')}
     %tbody
       %tr
-        %td New works
+        %td #{t('.new_works')}
         - ct = (@work_batch.size - @dupe_count - err_ct)
         %td= ct < 0 ? 0 : ct
       %tr
-        %td Duplicate works
+        %td  #{t('.duplicate_works')}
         %td= @dupe_count
       %tr
-        %td Errors
+        %td #{t('app.errors')}
         %td= err_ct
     %tfoot
       %tr
-        %td Total
+        %td #{t('app.total')}
         %td#works_imported_total= @work_batch.size

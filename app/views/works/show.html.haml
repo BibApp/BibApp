@@ -2,18 +2,18 @@
 
 - if current_user_role?("editor", @work)
   = render :layout => '/layouts/admin_bar' do
-    %li= link_to "Edit this work", edit_work_path
-    - unless @work.archived?
-      %li= link_to "Archive Research", new_work_attachment_path(@work)
+    %li= link_to t('works.show.edit'), edit_work_path
+    - if !@work.archived?
+      %li= link_to t('works.show.archive'), new_work_attachment_path(@work)
     -#If SWORD is configured, and Work is "Ready for Archiving"
     -if SwordClient.configured? and @work.ready_to_archive?
-      %li= link_to "Deposit Attachments", admin_deposit_via_sword_url(:work_id => @work)
+      %li= link_to t('works.show.deposit'), admin_deposit_via_sword_url(:work_id => @work)
 
 = render :layout => 'layouts/main_body_no_h2' do
   %h2
     = @work.title_primary
     %span.work-type
-      = @work.type.underscore.humanize
+      = @work.class.model_name.human
 
   / Work Details
   #work-details.span-14

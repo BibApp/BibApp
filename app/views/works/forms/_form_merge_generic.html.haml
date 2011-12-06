@@ -1,24 +1,3 @@
-= render :layout => 'works/layouts/merge_form', :locals => {:form => form, :type => 'Generic'} do
-  %tr#title_primary
-    = render 'works/forms/fields/merge_title_primary', :form => form
-  %tr#title_secondary
-    = render 'works/forms/fields/merge_title_secondary', :form => form
-  %tr#authors
-    = render 'works/forms/fields/merge_author_name_strings'
-  %tr#publication_date
-    = render 'works/forms/fields/merge_publication_date'
-  %tr#publication
-    = render 'works/forms/fields/merge_publication'
-  %tr#publisher
-    = render 'works/forms/fields/merge_publisher'
-  %tr#isbn_issn
-    = render 'works/forms/fields/merge_issn_isbn'
-  %tr#volume_issue
-    = render 'works/forms/fields/merge_volume_issue', :form => form
-  %tr#pages
-    = render 'works/forms/fields/merge_pages', :form => form
-  - if current_user.has_role?("admin", System)
-    %tr#keywords
-      = render 'works/forms/fields/merge_keywords'
-  %tr#abstract
-    = render 'works/forms/fields/merge_abstract', :form => form
+= render :partial => 'works/forms/merge_form_from_field_list', :form => form,
+  :field_list => [:title_primary, :title_secondary, [:author_name_strings, :authors], :publication_date, :publication,
+  :publisher, :isbn_issn, :volume_issue, :pages, :keywords, :abstract]

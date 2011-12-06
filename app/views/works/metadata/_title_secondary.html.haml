@@ -1,5 +1,5 @@
 - unless skip_title_secondary(@work)
   %tr
-    %td.label Alternate Title:
+    %td.label @work.class.human_attribute_name(:title_secondary):
     %td
       = @work.title_secondary

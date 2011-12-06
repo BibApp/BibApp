@@ -1,22 +1,19 @@
-/ === User === Show ===
-/ Main
 = render :layout => 'layouts/main_body_no_h2' do
   = error_messages_for :user, :class => 'notice'
 
-  %h2 User Account (#{@user.email})
+  %h2 #{t 'users.show.header', :email => @user.email}
 
   %fieldset
-    %legend Account Information
+    %legend #{t 'users.show.account_information'}
     .field
-      %label Email:
+      %label #{User.human_attribute_name(:email)}:
       %span.field_value #{@user.email}
     - if @user.roles.present?
       .field
-        %label Roles in #{$APPLICATION_NAME}:
+        %label #{t 'users.show.role_label', :app_name => t('personalize.application_name')}:
         %ul.roles
           - @user.roles.each do |role|
             - if displayable_role(role)
               %li
                 = role.description
-                = link_to " [remove]", roles_destroy_url(:role_id => role.id, :user_id => @user.id)
-  
+                = link_to t('users.show.remove'), roles_destroy_url(:role_id => role.id, :user_id => @user.id)

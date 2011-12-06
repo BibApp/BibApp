@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/BibApp/tolk.git
+  revision: 0d1aab1ab763acf6f3f21643d7bdf7841e9efd43
+  branch: rails3
+  specs:
+    tolk (1.0)
+      will_paginate (~> 3.0)
+      ya2yaml (~> 0.26)
+
+GIT
   remote: https://github.com/parasew/acts_as_tree.git
   revision: ed52495d1671c99e1add582628403bf8104e9077
   specs:
@@ -238,6 +247,8 @@ GEM
       rubyzip
     shoulda (2.11.3)
     solr-ruby (0.0.8)
+    sort_alphabetical (0.1.3)
+      activesupport
     systemu (2.4.1)
     term-ansicolor (1.0.7)
     thin (1.2.11)
@@ -254,6 +265,7 @@ GEM
     will_paginate (3.0.2)
     xpath (0.1.4)
       nokogiri (~> 1.3)
+    ya2yaml (0.30)
     yaml_db (0.2.2)
 
 PLATFORMS
@@ -296,6 +308,8 @@ DEPENDENCIES
   rubyzip (~> 0.9.1)
   shoulda
   solr-ruby (~> 0.0.6)
+  sort_alphabetical
   thin
+  tolk!
   will_paginate (~> 3.0.beta)
   yaml_db

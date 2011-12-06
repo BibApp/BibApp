@@ -2,10 +2,10 @@
 #results.span-22
   .span-5
     .left_box
-      .box_heading Search Within
+      .box_heading #{t('app.search_within')}
       = form_tag submit_url, :method => :get do
         = text_field_tag(:q, params[:q], :size => 15)
-        = submit_tag 'Go'
+        = submit_tag t('app.go')
 
     = render "shared/facets"
 

@@ -2,6 +2,6 @@
   = render 'works/metadata/generic_field', :field => :abstract
   - unless @work.keywords.blank?
     %tr
-      %td.label Keywords:
+      %td.label #{Keyword.model_name.human_pl}:
       %td
         #{@work.keywords.collect {|kw| kw.name}.join('; ')}

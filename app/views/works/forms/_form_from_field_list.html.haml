@@ -1,0 +1,10 @@
+-# requires form and field list
+%fieldset
+  %legend #{@work.class.model_name.human}
+
+  = hidden_field_tag :klass, @work.class.to_s
+  = render 'works/forms/fields/form_buttons', :form => form
+
+  %ul
+    - field_list.each do |field|
+      %li= render "works/forms/fields/#{field}", :form => form

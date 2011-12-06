@@ -16,4 +16,4 @@
     = render "shared/work_subclasses/#{dupe['type'].downcase.gsub(" ", "_")}", :work => dupe
 
     .links
-      #{link_to "Edit", edit_work_path(dupe['pk_i'], :return_path=>@return_path)}
+      #{link_to t('app.edit'), edit_work_path(dupe['pk_i'], :return_path=>@return_path)}

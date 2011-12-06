@@ -1,11 +1,2 @@
--# Title (Secondary) field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Alternate Title)
-
--# Initialize optional input variables
-- label ||= "Alternate Title"
-
-= form.label :title_secondary, "#{label}:"
-= form.text_field :title_secondary, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form =>form, :attribute => :title_secondary

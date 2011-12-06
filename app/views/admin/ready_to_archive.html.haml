@@ -1,9 +1,6 @@
-/ === Admin === Ready to Archive ===
-/ Main
 = render :layout => 'layouts/main_body',
-  :locals => {:header => "Ready to Archive: #{@works.size} remain"} do
+  :locals => {:header => t('.ready', :count => @works.size)} do
   - if @works.size > 0
     = render "works"
   - else
-    %p
-      No works are marked "ready to archive"!
+    %p= t('.no_works')

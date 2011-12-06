@@ -4,24 +4,24 @@
     .text-center
       = image_tag(claim.person.image_url, {:height => "100px", :width => "75px"})
   .span-10
-    %h2=claim.person.display_name
+    %h2 #{claim.person.display_name}
 
     .span-5
-      %strong Groups:
+      %strong #{Group.model_name.human_pl}:
       %ul#groups
         - claim.person.groups.each do |g|
-          %li=g.name
+          %li #{g.name}
 
   .prepend-1.span-3.last
     .span-3{:id => "contributorship_admin-#{claim.id}"}
       - if claim.verified?
         %p
-          %strong Verified!
+          %strong #{t('common.contributorships.verified').capitalize}!
       - else
         .span-3.big-number.contributorship_score{:id => "contributorship_score-#{claim.id}"}
-          %strong #{claim.score}% sure
+          %strong #{t('app.percent_sure', :percentage => claim.score)}
         .span-3
           %ul.contributorship_actions_list{:id => "contributorship_actions-#{claim.id}"}
-            %li.inline=link_to("Verify", verify_contributorship_path(claim.id), :method => :put)
+            %li.inline=link_to(t('.verify'), verify_contributorship_path(claim.id), :method => :put)
             |
-            %li.inline=link_to("Deny", deny_contributorship_path(claim.id), :method => :put)
+            %li.inline=link_to(t('.deny'), deny_contributorship_path(claim.id), :method => :put)

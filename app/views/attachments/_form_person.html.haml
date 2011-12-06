@@ -1,13 +1,13 @@
-- @title = "#{@person.display_name}: Photo"
+- @title = t('common.attachments.form_person_title', :display_name => @person.display_name)
 - if current_user_role?("editor", @person)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-    %li= link_to "Add a new person", new_person_path
+    %li= link_to t('common.attachments.delete_person'), person_url(@person), :method => :delete, :confirm => t('attachments.form_person.confirm')
+    %li= link_to t('common.attachments.add_person'), new_person_path
 
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :attachment
 
-  %h2 #{link_to(h(@person.display_name), person_path(@person)).html_safe}: Photo
+  %h2 #{t('common.attachments.form_person_title', :display_name  => link_to(h(@person.display_name), person_path(@person))).html_safe}
   = render "shared/local_nav", :object => "person", :state => "edit"
 
   .column.span-14

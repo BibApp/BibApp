@@ -1,12 +1,11 @@
-= render :layout => '/layouts/main_body', :locals => {:header => "Duplicate work side-by-side editor"} do
+= render :layout => '/layouts/main_body', :locals => {:header => t('works.merge_duplicates.header')} do
   - unless @work.accepted?
-    - flash[:notice]  = "This is a <strong>#{$WORK_STATUS[@work.work_state_id]}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
+    - flash[:notice]  = t('.flash_not_accepted', :work_status => t_work_status(@work.work_state_id))
   - else
     - possible_dupes = Index.possible_unaccepted_duplicate_works(@work)
     - if possible_dupes.exclude?(@dupe)
-      - flash[:notice] = "#{@dupe} is not a possible duplicate for this work."
+      - flash[:notice] = t('.flash_excluded', :work => @dupe)
     - else
       %p
-        Use this screen to edit the <strong>Accepted Work</strong>.
-        When you are finished, click the button at the bottom of the page to "Save Changes".
+        = t('works.merge_duplicates.instructions')
       = render 'merge_work_form'

@@ -1,18 +1,18 @@
 = form_tag act_on_multiple_contributorships_url, :method => :put, :name => "contributorships_form", :id => "contributorships_form" do
   #bulk_links
     = check_box_tag "select_contributorships", "yes", false, :id => 'global-checkbox'
-    %strong Select All
+    %strong #{t('app.select_all')}
     |
     %select#action-select{:name => "do_to_all"}
-      %option{:selected => "selected", :value => "null", :id => "null"} Action
+      %option{:selected => "selected", :value => "null", :id => "null"} #{t('contributorships.act_on_multiple_form.action')}
       - [['verified', 'verify'], ['unverified', 'unverify'], ['denied', 'deny']].each do |status, value|
         - if @status != status
-          %option{:value => value, :id => value} #{value.capitalize}
+          %option{:value => value, :id => value} #{t(".#{value}")}
     |
     - if @person
       = hidden_field_tag :person_id, @person.id
     = hidden_field_tag :status, @status
-    =submit_tag "Apply to selection", :id => 'contributorships-submit'
+    =submit_tag t(".apply_to_selection"), :id => 'contributorships-submit'
 
   .clear-both= will_paginate @contributorships
 

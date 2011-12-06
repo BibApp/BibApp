@@ -57,7 +57,7 @@ class Publication < PubCommon
 
   def publisher_name=(name)
     name ||= 'Unknown'
-    self.publisher = Publisher.find_or_create_by_name(name) unless name.blank?
+    self.publisher = Publisher.find_or_create_by_name(:name => name, :romeo_color => 'unknown') unless name.blank?
   end
 
   def isbns

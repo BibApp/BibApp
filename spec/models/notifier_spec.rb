@@ -9,7 +9,7 @@ describe Notifier do
     before(:all) do
       @user = Factory.create(:user)
       @import = Factory.create(:import, :user => @user)
-      @email = Notifier.create_import_review_notification(@user, @import)
+      @email = Notifier.create_import_review_notification(@import)
     end
 
     after(:all) do
@@ -21,13 +21,13 @@ describe Notifier do
       @email.should deliver_to(@user.email)
     end
 
-    it "should say that an import is ready in the subject" do
-      @email.should have_subject(/BibApp/)
+    it "should say that an import is ready in the subject and have the application name" do
+      @email.should have_subject(/#{I18n.t('personalize.application_name')}/)
       @email.should have_subject(/import ready/)
     end
 
     it "should have a link to the import review page" do
-      @email.should have_body_text(/#{imports_path(@import)}/)
+      @email.should have_body_text(user_import_path(@user, @import))
     end
 
   end

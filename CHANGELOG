@@ -7,6 +7,7 @@ Only show header for external credential login when such a method is actually us
 Fix bug after will_paginate 3.0.0 upgrade
 Prevent a possible infinite loop after saving a contributorship from even being possible
 View refactoring - internal layouts, relocation of logic to helpers, more use of partials, etc.
+Internationalization
 Make romeo color selection use a select box
 Split publication_date into parts for year/month/day, allowing less information to be specified (e.g. just the year)
 

@@ -1,8 +1,8 @@
 / === Admin === Update SHERPA Data ===
 / Main
-- @title="Update SHERPA Data" # Specify text at end of HTML <title> tag
-= render :layout => '/layouts/main_body', :locals => {:header => 'Update SHERPA Data'} do
-  %p Publisher records will be <strong>replaced</strong> with those retrieved from SHERPA/RoMEO; local changes may be lost.
-  %p SHERPA data may take several moments to load.
+- @title = "Update SHERPA Data" # Specify text at end of HTML <title> tag
+= render :layout => '/layouts/main_body', :locals => {:header => t('admin.sherpa.update')} do
+  %p=t('admin.sherpa.info1')
+  %p=t('admin.sherpa.info2')
 
-  = button_to "Update Publishers", :action => :update_publishers_from_sherpa
+  = button_to t('admin.sherpa.update'), :action => :update_publishers_from_sherpa

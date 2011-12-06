@@ -35,7 +35,7 @@ describe UserSessionsController do
     it 'logs in with correct password' do
       get :create, :user_session => {:email => @a_user.email, :password => 'password'}
       flash[:notice].should == "Login successful!"
-      response.should redirect_to(root_url)      
+      response.should redirect_to(works_url)
     end
 
     it 'renders new with incorrect password' do

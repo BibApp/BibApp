@@ -1,6 +1,6 @@
 - if SwordClient.configured? and @work.ready_to_archive?
   %fieldset
-    %legend Administrative Tasks
+    %legend #{t 'works.layouts.merge_form.accepted'}
     %ul#tasks
       %li
-        = link_to "Deposit Immediately via SWORD", admin_deposit_via_sword_url(:work_id => @work)
+        = link_to t('works.admin.link'), admin_deposit_via_sword_url(:work_id => @work)

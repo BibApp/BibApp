@@ -8,6 +8,10 @@ class Publisher < PubCommon
 
   has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
+  ROMEO_COLORS = ['blue', 'yellow', 'green', 'white', 'gray', 'unknown']
+
+  validates_inclusion_of :romeo_color, :in => ROMEO_COLORS
+
   #### Callbacks ####
   before_validation :set_initial_states, :on => :create
   after_create :initialize_authority_id
@@ -118,7 +122,7 @@ class Publisher < PubCommon
         url = pub.elements['homeurl'].text
         romeo_color = pub.elements['romeocolour'].text
 
-        add = Publisher.find_or_create_by_sherpa_id(sherpa_id)
+        add = Publisher.find_or_create_by_sherpa_id(:sherpa_id => sherpa_id, :romeo_color => 'unknown')
         add.update_attributes!({
                                    :name => name,
                                    :url => url,

@@ -2,12 +2,12 @@
   %table#pen_names.import-review-table
     %thead
       %tr
-        %th My Names
-        %th Works Matched
+        %th #{t('.my_names')}
+        %th #{t('.works_matched')}
     %tbody#current
       = render :partial => "pen_name", :collection => @person.pen_names, :locals => {:selected => true}
 
     %tfoot
       %tr
-        %td Total
+        %td #{t('app.total')}
         %td{:id => "pen_names_count_total"} 0

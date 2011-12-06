@@ -1,11 +1,2 @@
--# Copyright Statement field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Copyright Statement)
-
--# Initialize optional input variables
-- label ||= "Copyright Statement"
-
-= form.label :copyright_holder, "#{label}:"
-= form.text_area :copyright_holder
+= render 'works/forms/fields/generic_text_area', :form => form, :attribute => :copyright_holder

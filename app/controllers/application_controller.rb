@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper PrototypeHelper
   helper AutoCompleteMacrosHelper
   helper SharedHelper
+  helper TranslationsHelper
   helper_method :current_user_session, :current_user, :logged_in?
 
   # See ActionController::RequestForgeryProtection for details
@@ -13,6 +14,35 @@ class ApplicationController < ActionController::Base
 
   # Find the @saved variable, used to display "add" or "remove" links for saved Works
   before_filter :find_saved
+
+  # i18n set the locale
+  before_filter :set_locale
+
+  # Adds the locale parameter
+  def set_locale
+    if I18n.available_locales.many?
+      I18n.locale = valid_locale?(params[:locale]) ||
+          valid_locale?((lang = request.env['HTTP_ACCEPT_LANGUAGE']) && lang[/^[a-z]{2}/]) ||
+          (current_user.default_locale if current_user) ||
+          I18n.default_locale
+    else
+      I18n.locale = I18n.available_locales.first
+    end
+  end
+
+  def valid_locale?(locale)
+    I18n.available_locales.include?(locale.to_sym) ? locale.to_sym : false
+  rescue
+    false
+  end
+
+  def default_url_options(options = {})
+    if I18n.available_locales.many?
+      {:locale => I18n.locale}
+    else
+      {}
+    end
+  end
 
   # Adds a work.id to the session[:saved] array
   def add_to_saved
@@ -118,10 +148,10 @@ class ApplicationController < ActionController::Base
     # Add Feeds
     if @current_object
       @feeds = [{
-          :action => "show",
-          :id => @current_object.id,
-          :format => "rss"
-      }]
+                    :action => "show",
+                    :id => @current_object.id,
+                    :format => "rss"
+                }]
     end
 
     # Enable Citeproc
@@ -165,7 +195,7 @@ class ApplicationController < ActionController::Base
   def require_user
     unless current_user
       store_location
-      flash[:notice] = "You must be logged in to access this page"
+      flash[:notice] = t('app.flash_require_user')
       redirect_to new_user_session_url
       return false
     end
@@ -174,7 +204,7 @@ class ApplicationController < ActionController::Base
   def require_no_user
     if current_user
       store_location
-      flash[:notice] = "You must be logged out to access this page"
+      flash[:notice] = t('app.flash_require_no_user')
       redirect_back_or_default root_url
       return false
     end
@@ -206,7 +236,7 @@ class ApplicationController < ActionController::Base
         redirect_to new_user_session_path
       end
       format.any do
-        request_http_basic_authentication 'Web Password'
+        request_http_basic_authentication t('app.web_password')
       end
     end
   end

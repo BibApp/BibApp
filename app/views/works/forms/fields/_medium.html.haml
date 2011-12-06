@@ -1,11 +1,2 @@
--# Medium field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Medium)
-
--# Initialize optional input variables
-- label ||= "Medium"
-
-= form.label :medium, "#{label}:"
-= form.text_field :medium, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :medium

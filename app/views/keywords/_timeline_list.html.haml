@@ -1,7 +1,7 @@
 %ul{:id=>"list-#{timeline_list.year}"}
   - timeline_list.tags.each do |t|
     -if t.name.nil?
-      %li No data
+      %li #{t('.no_data')}
     -else
       %li{:class=>"tag#{t.bin}"}
         = link_to h(t.name), search_path(:fq => timeline_list_filter(t, @current_object))

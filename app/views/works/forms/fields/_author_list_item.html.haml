@@ -15,4 +15,4 @@
   = hidden_field_tag "author_roles[]", "#{ns_role}"
   = text_field_tag "authors[]", ns_name, {:class=>'text'}
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote "[remove]", :url => remove_author_from_list_works_url(:ns_id => ns_id)
+  = link_to_remote t('works.forms.fields.author_list_item.remove'), :url => remove_author_from_list_works_url(:ns_id => ns_id)

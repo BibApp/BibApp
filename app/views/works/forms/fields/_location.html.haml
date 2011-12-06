@@ -1,11 +1,2 @@
--# Location field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Conference Location)
-
--# Initialize optional input variables
-- label ||= "Conference Location"
-
-= form.label :location, "#{label}:"
-= form.text_field :location, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :location

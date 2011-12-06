@@ -1,15 +1,15 @@
 %table
   %thead
     %tr
-      %td Batch #
-      %td Imported For
-      %td Date
-      %td Status
+      %td #{t('.batch')}
+      %td #{t('.imported_for')}
+      %td #{t('app.date')}
+      %td #{t('app.status')}
   - if @authorized
     - @imports.each do |import|
       %tbody
         %tr
-          %td= link_to "Batch-#{import.id}", user_import_path(current_user, import.id)
+          %td= link_to t('common.imports.batch_id', :id => import.id), user_import_path(current_user, import.id)
           %td= imported_for(import)
           %td= import.created_at
-          %td= import.state
+          %td= t("common.imports.states.#{import.state}")

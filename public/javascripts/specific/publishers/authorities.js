@@ -30,6 +30,9 @@ $jq(document).ready(function() {
     "sPaginationType": "full_numbers",
     "bStateSave": true,
     "iCookieDuration": 600,
-    "bSort": false
+    "bSort": false,
+    "oLanguage": {
+      "sUrl": datatables_language_url()
+    }
   });
 } );

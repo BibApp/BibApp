@@ -35,7 +35,7 @@ class AttachmentsController < ApplicationController
         if SwordClient.configured?
           get_sword_info #gets License & Repository Name for View
         else
-          flash[:error] = "SWORD does not seem to be configured in #{Rails.root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+          flash[:error] = t('common.attachments.flash_new_error', :rails_root => Rails.root.to_s)
         end
       end
     end
@@ -73,7 +73,7 @@ class AttachmentsController < ApplicationController
 
     if params[:file].nil?
       respond_to do |format|
-        flash[:warning] = 'No file was uploaded.'
+        flash[:warning] = t('common.attachments.flash_create_warning')
         format.html { redirect_to new_person_attachment_path(@asset.id) }
         format.xml { render :head => "ok" }
       end
@@ -101,8 +101,7 @@ class AttachmentsController < ApplicationController
 
     respond_to do |format|
       if @asset.save
-        flash[:notice] = (attachment_count == 1) ? 'Attachment was successfully uploaded' :
-            "#{attachment_count.to_s} attachments were successfully uploaded"
+        flash[:notice] = t('common.attachments.flash_create_notice', :count => attachment_count)
         if @asset.kind_of?(Person)
           format.html { redirect_to edit_person_attachment_path(@asset.id, @asset.image.id) }
           format.xml { head :created, :location => get_response_url(@asset) }
@@ -124,7 +123,7 @@ class AttachmentsController < ApplicationController
 
     if params[:file].blank?
       respond_to do |format|
-        flash[:warning] = 'No file was uploaded.'
+        flash[:warning] = t('common.attachments.flash_update_warning')
         if @attachment.asset.kind_of?(Person)
           format.html { redirect_to edit_person_attachment_path(@attachment.asset.id, @attachment.id) }
           format.xml { head :ok }
@@ -139,7 +138,7 @@ class AttachmentsController < ApplicationController
     respond_to do |format|
       @attachment.uploaded_data = params[:file].first
       if @attachment.save
-        flash[:notice] = 'Attachment was successfully uploaded'
+        flash[:notice] = t('common.attachments.flash_update_notice')
         if @asset.kind_of?(Person)
           format.html { redirect_to edit_person_attachment_path(@attachment.asset.id, @attachment.id) }
           format.xml { head :created, :location => get_response_url(@attachment.asset) }
@@ -165,7 +164,7 @@ class AttachmentsController < ApplicationController
 
     respond_to do |format|
       if asset.save! #make sure asset's after_save callbacks are called
-        flash[:notice] = 'Attachment was successfully deleted'
+        flash[:notice] = t('common.attachments.flash_delete_notice')
 
         if asset.kind_of?(Person)
           format.html { redirect_to new_person_attachment_path(asset.id) }

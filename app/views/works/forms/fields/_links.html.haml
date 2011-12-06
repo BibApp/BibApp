@@ -1,7 +1,2 @@
--# URL field
--#
--# Possible Input Variables:
 -#    :form         => current form (REQUIRED)
-
-= form.label :links, "URL:"
-= form.text_field :links, :class => 'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :links

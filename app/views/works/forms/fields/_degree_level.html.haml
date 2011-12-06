@@ -1,11 +1,2 @@
--# Degree Level field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Degree Level)
-
--# Initialize optional input variables
-- label ||= "Degree Level"
-
-= form.label :degree_level, "#{label}:"
-= form.text_field :degree_level, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :degree_level

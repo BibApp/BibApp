@@ -17,7 +17,7 @@ class PenNamesController < ApplicationController
       permit "editor of Person"
 
       @suggestions = NameString.name_like(@person.last_name).order_by_name
-      @title = "#{@person.display_name}: Pen Names"
+      @title = "#{@person.display_name}: #{PenName.model_name.human_pl}"
 
     end
 
@@ -32,14 +32,9 @@ class PenNamesController < ApplicationController
     #only 'editor' of person can assign a pen name
     permit "editor of Person"
 
-
-    logger.debug("\n\n\n\n\n\n\n\n\n\n==== Params: #{params.inspect}")
-
     if params[:reload]
       @reload = true
     end
-
-    logger.debug("\n\n\n\n\n\n\n\n\n\n==== reload? #{@reload.inspect}")
 
     @person.name_strings << @name_string
     respond_to do |format|

@@ -1,10 +1,2 @@
--# Publication Date field
--#
--# Possible Input Variables:
--#    :label    => Label to display (default: Publication Date)
-
-- label ||= "Publication Date"
-
-= label 'work', 'publication_date', "#{label}:"
-
+= label 'work', 'publication_date', "#{@work.class.human_attribute_name(:publication_date)}:"
 = render 'works/metadata/publication_date_select'

@@ -54,7 +54,7 @@ class PeopleController < ApplicationController
           @current_objects = @current_objects.where("upper(last_name) like ?", "#{@page}%") unless @page == 'all'
         end
 
-        @title = "#{@group.name} - People"
+        @title = "#{@group.name} - #{NameString.model_name.human_pl}"
       else
 
         if params[:q]
@@ -66,7 +66,7 @@ class PeopleController < ApplicationController
               order("upper(last_name), upper(first_name)").includes(:contributorships => :work)
         end
 
-        @title = "People"
+        @title = Person.model_name.human_pl
       end
     end
 
@@ -75,11 +75,11 @@ class PeopleController < ApplicationController
         begin
           @ldap_results = BibappLdap.instance.search(params[:q])
         rescue BibappLdapConfigError
-          @fail_message = "LDAP is not properly configured"
+          @fail_message = t('common.people.ldap_fail_configuration')
         rescue BibappLdapConnectionError
-          @fail_message = "Error authenticating LDAP user."
+          @fail_message = t('common.people.ldap_fail_authentication')
         rescue BibappLdapTooManyResultsError
-          @fail_message = "Too many LDAP results"
+          @fail_message = t('common.people.ldap_fail_too_many')
         rescue BibappLdapError => e
           @fail_message = e.message
         end
@@ -89,7 +89,7 @@ class PeopleController < ApplicationController
           @ldap_results.compact!
         end
       end
-      @title = "Add a Person"
+      @title = t('common.people.new')
     end
 
     before :show do
@@ -119,7 +119,7 @@ class PeopleController < ApplicationController
     end
 
     before :edit do
-      @title = "#{@person.display_name}: Personal Info"
+      @title = t('common.people.edit_title', :name => @person.display_name)
     end
 
   end
@@ -142,19 +142,19 @@ class PeopleController < ApplicationController
       if @dupeperson.nil?
         respond_to do |format|
           if @person.save
-            flash[:notice] = "Person was successfully created."
+            flash[:notice] = t('common.people.flash_create_success')
             format.html { redirect_to new_person_pen_name_path(@person.id) }
             #TODO: not sure this is right
             format.xml { head :created, :location => person_url(@person) }
           else
-            flash[:warning] = "One or more required fields are missing."
+            flash[:warning] = t('common.people.flash_create_field_missing')
             format.html { render :action => "new" }
             format.xml { render :xml => @person.errors.to_xml }
           end
         end
       else
         respond_to do |format|
-          flash[:error] = "This person already exists in the BibApp system: <a href=" "", person_path(@dupeperson.id), "" ">view their record.</a>"
+          flash[:error] = t('common.people.flash_create_person_exists', :url => person_path(@dupeperson.id))
           format.html { render :action => "new" }
           #TODO: what will the xml response be?
           #format.xml  {render :xml => "error"}
@@ -181,12 +181,12 @@ class PeopleController < ApplicationController
 
       respond_to do |format|
         if @person.save
-          flash[:notice] = "Personal info was successfully updated."
+          flash[:notice] = t('common.people.flash_update_success')
           format.html { redirect_to new_person_pen_name_path(@person.id) }
           #TODO: not sure this is right
           format.xml { head :created, :location => person_url(@person) }
         else
-          flash[:warning] = "One or more required fields are missing."
+          flash[:warning] = t('common.people.flash_update_failure')
           format.html { render :action => "new" }
           format.xml { render :xml => @person.errors.to_xml }
         end
@@ -239,7 +239,7 @@ class PeopleController < ApplicationController
       elsif File.readable?(data)
         str = File.read(data)
       else
-        msg = 'The File you submitted could not be read.'
+        msg = t('common.people.file_unreadable')
       end
       if msg.empty?
         unless str.is_utf8?
@@ -247,21 +247,20 @@ class PeopleController < ApplicationController
           unless encoding.nil? or encoding.empty? or encoding==CMess::GuessEncoding::Encoding::UNKNOWN
             str =Iconv.iconv('UTF-8', encoding, str).to_s
           else
-            logger.error("The character encoding could not be determined or could not be converted to UTF-8.\n")
-            flash[:notice] = "The character encoding could not be determined or could not be converted to UTF-8."
-            msg = 'The file could not be converted to UTF8.'
+            flash[:notice] = t('common.people.flash_batch_csv_create_bad_encoding')
+            msg = t('common.people.file_unconvertible')
           end
         end
         if msg.empty?
           # is it better to pass the filename instead of storing the csv contents in the db
           # even if the db row is temporary ?
           Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
-          msg = "Your file was accepted for processing. An email will notify you when the job is completed."
+          msg = t('common.people.file_accepted')
         end
       end
     rescue Exception => e
-      flash[:notice] = "Exception: #{e.to_s}"
-      msg = 'An error was generated processing your request.'
+      flash[:notice] = t('app.exception_with_message', :message => e.to_s)
+      msg = t('common.people.batch_csv_error')
     end
     redirect_to batch_csv_show_people_url(:completed => msg)
   end

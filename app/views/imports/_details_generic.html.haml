@@ -1,6 +1,6 @@
 - err_ct = @errors[:import_error] ? @errors.size - 1 + @errors[:import_error].size : @errors.size
 %div
-  %h3 Batch report
+  %h3 #{t('.header')}
 
   = render 'work_counts', :err_ct => err_ct
   = render 'errors'

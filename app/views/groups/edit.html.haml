@@ -2,15 +2,15 @@
   = render :layout => 'layouts/admin_bar' do
     - if logged_in? && current_user.has_role?("editor", @group)
       - if @group.hide == true
-        %li= link_to "Unhide Group", unhide_group_url(@group), :confirm => 'Are you sure?'
+        %li= link_to t('groups.edit.unhide'), unhide_group_url(@group), :confirm => t('app.are_you_sure')
       - else
-        %li= link_to "Hide Group", hide_group_url(@group), :confirm => 'Are you sure?'
+        %li= link_to t('groups.edit.hide'), hide_group_url(@group), :confirm => t('app.are_you_sure')
     - if logged_in? && current_user.has_role?("admin", @group)
-      %li= link_to "Delete Group", group_url(@group), :method => :delete, :confirm => 'Permanently delete this group? This cannot be undone.'
+      %li= link_to t('groups.edit.delete'), group_url(@group), :method => :delete, :confirm => t('groups.edit.delete_confirm')
 
   .span-22.prepend-1
 
-    %h2 Edit #{link_to(h(@group.name), group_path(@group)).html_safe}
+    %h2 #{t('.header', :link_to_group => link_to(h(@group.name), group_path(@group))).html_safe}
 
     .span-16.column
       = form_for @group, :as => :group, :url => group_path(@group), :html => {:method => :put} do |form|

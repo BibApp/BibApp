@@ -17,11 +17,11 @@ class PasswordsController < ApplicationController
         UserMailer.new_password(user, @new_password).deliver
 
         format.html do
-          flash[:notice] = "We sent a new password to #{params[:password][:email]}"
+          flash[:notice] = t('common.passwords.flash_create_sent', :email => params[:password][:email])
           redirect_to login_url
         end
       else
-        flash[:notice] = "Sorry, we cannot find that account.  Try again."
+        flash[:notice] = t('common.passwords.flash_create_no_account')
         format.html { render :action => "new" }
       end
     end
@@ -44,13 +44,13 @@ class PasswordsController < ApplicationController
 
     respond_to do |format|
       if @user.valid_password?(old_password) && @user.save
-        flash[:notice] = "Your password was updated successfully."
+        flash[:notice] = t('common.passwords.flash_update_success')
         format.html { redirect_to edit_user_path(@user) }
       else
         if !@user.errors.empty?
-          flash[:notice] = "Sorry, your new password didn't match the confirmation.  Try again."
+          flash[:notice] = t('common.passwords.flash_update_bad_match')
         else
-          flash[:notice] = "Sorry, your old password was incorrect. Try again."
+          flash[:notice] = t('common.passwords.flash_update_incorrect')
         end
         format.html { render :action => 'edit' }
       end

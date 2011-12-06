@@ -1,6 +1,6 @@
 -# general partial for display the facet sections of the _facets partial
 -# must pass facet_key, facets
-- heading = facet_key.to_s.titlecase
+- heading = t("facet_headings.#{facet_key}")
 - filter_name = "#{facet_key.to_s.singularize}_facet"
 - if facets.present?
   .facet
@@ -16,4 +16,4 @@
           %li.show
             = add_filter(params, filter_name, f.name, f.value)
 
-      %p.more_filters= link_to_function "More #{heading}", "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"
+      %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"
