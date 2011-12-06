@@ -4,7 +4,7 @@
 = render :layout => 'layouts/main_body_no_h2'  do
   .span-5
     .text-center
-      =image_tag(@person.image_url, :class => 'group-index-person-image', :size => "75x100")
+      #{image_tag(@person.image_url, :class => 'group-index-person-image', :size => "75x100")}
 
   %div.span-17.last
     %h2

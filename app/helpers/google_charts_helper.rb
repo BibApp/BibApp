@@ -1,4 +1,5 @@
 module GoogleChartsHelper
+  include TranslationsHelper
 
   #generate the google chart URI
   #see http://code.google.com/apis/chart/docs/making_charts.html
@@ -8,8 +9,7 @@ module GoogleChartsHelper
     facets[:types].each do |r|
       percent = (r.value.to_f / work_count.to_f * 100).round.to_s
       chd += "#{percent},"
-      ref = r.name.to_s == 'BookWhole' ? 'Book' : r.name.to_s
-      chl += "#{ref.titleize.pluralize}|"
+      chl += "#{t_solr_work_type_pl(r.name)}|"
     end
     chd.chop!
     chl.chop!

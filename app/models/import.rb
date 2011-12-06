@@ -50,9 +50,15 @@ class Import < ActiveRecord::Base
 
   def notify_user
     logger.debug("\n=== Notify User - #{self.id} ===\n\n\n")
-
-    # @TODO: Email should send via delayed job?
-    Notifier.import_review_notification(self.user, self.id).deliver
+    current_locale = I18n.locale
+    Thread.exclusive do
+      begin
+        I18n.locale = self.user.default_locale
+        Notifier.import_review_notification(self).deliver
+      ensure
+        I18n.locale = current_locale
+      end
+    end
   end
 
   def accept_import

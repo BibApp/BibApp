@@ -8,9 +8,9 @@
 - keywords = @work.keywords if @work.keywords
 - keywords = @keywords.collect {|kw| Keyword.find_or_create_by_name(kw)} if @keywords
 
-= label_tag "keywords", "Keyword(s):"
+= label_tag "keywords", "#{t 'works.forms.fields.keywords.label'}:"
 %span.instructions
-  When adding multiple keywords, separate them with semicolons (;)
+  = t('works.forms.fields.keywords.instructions')
   %br
 
 = text_area_tag "keywords", keywords.collect {|kw| kw.name}.join('; '), :size => "25x10"

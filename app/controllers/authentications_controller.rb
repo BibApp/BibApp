@@ -5,7 +5,7 @@ class AuthenticationsController < ApplicationController
 
     if authentication
       # User is already registered with application
-      flash[:info] = 'Signed in successfully.'
+      flash[:info] = t('common.authentications.flash_sign_in')
       sign_in_and_redirect(authentication.user)
     elsif user = current_user || User.find_by_email(omniauth['user_info']['email'])
       # User is signed in but has not already authenticated with this social network
@@ -14,13 +14,13 @@ class AuthenticationsController < ApplicationController
       user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
       user.apply_omniauth(omniauth)
       user.save
-      flash[:info] = 'Authentication successful.'
+      flash[:info] = t('common.authentications.flash_authentication')
       redirect_to root_url
     else
       # User is new to this application
       begin
         user = User.new_from_omniauth!(omniauth)
-        flash[:info] = 'User created and signed in successfully.'
+        flash[:info] = t('common.authentications.flash_create')
         user.authentications.create(:provider => omniauth['provider'], :uid => omniauth['uid'])
         sign_in_and_redirect(user)
       rescue
@@ -33,7 +33,7 @@ class AuthenticationsController < ApplicationController
   def destroy
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
-    flash[:notice] = 'Successfully destroyed authentication.'
+    flash[:notice] = t('common.authentications.flash_destroy')
     redirect_to authentications_url
   end
 

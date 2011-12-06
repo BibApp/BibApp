@@ -5,27 +5,27 @@
 
   = render 'works/metadata/creators'
   = render 'works/metadata/contributors'
-  = render 'works/metadata/generic_field', :field => :title_primary, :label => title_primary_label(@work)
+  = render 'works/metadata/generic_field', :field => :title_primary
   = render 'works/metadata/title_secondary'
-  = render 'works/metadata/generic_field', :field => :title_tertiary, :label => 'Title Series'
+  = render 'works/metadata/generic_field', :field => :title_tertiary
   = render 'works/metadata/abstracts_and_keywords'
   = render 'works/metadata/generic_field', :field => :medium
   = render 'works/metadata/generic_field', :field => :instrumentation
   = render 'works/metadata/publication'
   = render 'works/metadata/generic_field', :field => :volume
-  = render 'works/metadata/generic_field', :field => :issue, :label => issue_label(@work)
-  = render 'works/metadata/generic_field', :field => :date_range, :label => date_range_label(@work)
-  = render 'works/metadata/generic_field', :field => :location, :label => location_label(@work)
+  = render 'works/metadata/generic_field', :field => :issue
+  = render 'works/metadata/generic_field', :field => :date_range
+  = render 'works/metadata/generic_field', :field => :location
   = render 'works/metadata/issn_isbn'
   = render 'works/metadata/publisher'
-  = render 'works/metadata/generic_field', :field => :degree_level, :label => 'Degree'
+  = render 'works/metadata/generic_field', :field => :degree_level
   = render 'works/metadata/generic_field', :field => :discipline
-  = render 'works/metadata/generic_field', :field => :publication_place, :label => publication_place_label(@work)
-  = render 'works/metadata/publication_date', :label => publication_date_label(@work)
+  = render 'works/metadata/generic_field', :field => :publication_place
+  = render 'works/metadata/publication_date'
   = render 'works/metadata/generic_field', :field => :start_page
-  = render 'works/metadata/generic_field', :field => :end_page, :label => end_page_label(@work)
+  = render 'works/metadata/generic_field', :field => :end_page
   = render 'works/metadata/generic_field', :field => :language
-  = render 'works/metadata/generic_field', :field => :copyright_holder, :label => 'Copyright Statement'
+  = render 'works/metadata/generic_field', :field => :copyright_holder
   = render 'works/metadata/generic_field', :field => :sponsor
   = render 'works/metadata/links'
   = render 'works/metadata/generic_field', :field => :identifier

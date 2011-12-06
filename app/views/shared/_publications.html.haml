@@ -1,13 +1,13 @@
 -#
 -# Render Publication facets from Solr data
 -#
-%h3.heading= link_to "Publications", publications_path
+%h3.heading= link_to Publication.model_name.human_pl, publications_path
 %ol#publications
   -# if there's a count specified, only show the first few
   -publications = count!=nil ? @facets[:publications_data].first(count) : @facets[:publications_data]
   -publications.each do |p|
     - name, id = Publication.parse_solr_data(p.name)
-    - next if name == "Unknown"
+    - next if name == t('app.unknown')
     %li
       =link_to name, publication_path(id)
       (#{p.value})

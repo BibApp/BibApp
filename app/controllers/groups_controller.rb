@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     end
 
     before :index do
-      @title = "Groups"
+      @title = Group.model_name.human_pl
       # find first letter of group names (in uppercase, for paging mechanism)
       @a_to_z = Group.letters
 
@@ -76,12 +76,12 @@ class GroupsController < ApplicationController
       @group.save
 
       respond_to do |format|
-        flash[:notice] = "Group was successfully created."
+        flash[:notice] = t('common.groups.flash_create_success')
         format.html { redirect_to group_url(@group) }
       end
     else
       respond_to do |format|
-        flash[:notice] = "This group already exists"
+        flash[:notice] = t('common.groups.flash_create_duplicate')
         format.html { redirect_to new_group_path }
       end
     end
@@ -89,7 +89,7 @@ class GroupsController < ApplicationController
 
   def hidden
     @hidden_groups = Group.hidden.order_by_upper_name
-    @title = "Hidden Groups"
+    @title = t('common.groups.hidden_groups')
   end
 
   def auto_complete_for_group_name
@@ -108,12 +108,12 @@ class GroupsController < ApplicationController
       @group.hide = true
       @group.save
       respond_to do |format|
-        flash[:notice] = "Group was successfully removed."
+        flash[:notice] = t('common.groups.flash_hide_success')
         format.html { redirect_to :action => "index" }
       end
     else
       respond_to do |format|
-        flash[:error] = "Group cannot be hidden. It has visible child groups: #{child_list(children)}"
+        flash[:error] = t('common.groups.flash_hide_failure', :children => child_list(children)).html_safe
         format.html { redirect_to :action => "edit" }
       end
     end
@@ -128,7 +128,7 @@ class GroupsController < ApplicationController
 
     if parent.hide?
       respond_to do |format|
-        flash[error] = "Group cannot be unhidden until its parent group is visible. <ul><li>#{parent.name}</li></ul>"
+        flash[error] = t('common.groups.flash_unhide_failure', :parent_name => parent.name)
         format.html { redirect_to :action => "edit" }
       end
 
@@ -136,7 +136,7 @@ class GroupsController < ApplicationController
     @group.hide = false
     @group.save
     respond_to do |format|
-      flash[:notice] = "Group was successfully unhidden."
+      flash[:notice] = t('common.groups.flash_unhide_success')
       format.html { redirect_to :action => "index" }
     end
   end
@@ -155,17 +155,17 @@ class GroupsController < ApplicationController
     if memberships.blank? and children.blank?
       @group.destroy
       respond_to do |format|
-        flash[:notice] = "Group was successfully removed."
+        flash[:notice] = t('common.groups.flash_destroy_success')
         format.html { redirect_to groups_path() }
       end
     elsif !memberships.blank?
       respond_to do |format|
-        flash[:error] = "Group cannot be deleted. Memberships exist."
+        flash[:error] = t('common.groups.flash_destroy_failure_memberships')
         format.html { redirect_to :action => "edit" }
       end
     elsif children.present?
       respond_to do |format|
-        flash[:error] = "Group cannot be deleted. It has visible child groups: #{child_list(children)}"
+        flash[:error] = t('common.groups.flash_destroy_failure_children', :child_list => child_list(children)).html_safe
         format.html { redirect_to :action => "edit" }
       end
     end

@@ -1,19 +1,17 @@
-/ === Contributorships === Admin ===
-/ Main
 - include_data_tables
 - include_javascript('specific/contributorships/admin')
-= render :layout => 'layouts/main_body', :locals => {:header => "Admin: Unverified Contributorships"} do
+= render :layout => 'layouts/main_body', :locals => {:header => t('contributorships.admin.header')} do
   - if @people.length == 0
-    %p Congratulations! Nothing to do here.
+    %p #{t('contributorships.admin.no_people')}
   - else
     %table#people
       %thead
         %tr
-          %th Person
-          %th.text-center Potential Matches
+          %th #{Person.model_name.human}
+          %th.text-center #{t('contributorships.admin.matches')}
       %tbody
         - @people.each do |p|
           - person = Person.find(p[0])
           %tr
-            %td=link_to person.name, contributorships_path(:person_id=>p[0])
-            %td.text-center=p[1].length
+            %td #{link_to person.name, contributorships_path(:person_id=>p[0])}
+            %td.text-center #{p[1].length}

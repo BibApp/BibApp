@@ -1,14 +1,14 @@
 %table#publishers
   %thead
     %tr
-      %th Select
-      %th Title
-      %th Source
-      %th Publications
+      %th #{t 'app.select'}
+      %th #{t 'app.title'}
+      %th #{t 'app.source'}
+      %th #{Publication.model_name.human_pl}
   %tbody
     -@current_objects.each do |publisher|
       %tr#publisher.publisher{:id => publisher.id, :class => cycle("odd", "even")}
-        %td #{link_to 'add', add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)}
-        %td #{link_to publisher.name, publisher_path(publisher)}
-        %td= publisher.publisher_source.name if publisher.publisher_source
+        %td #{link_to t('app.add'), add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)}
+        %td #{link_to name_or_unknown(publisher.name), publisher_path(publisher)}
+        %td= name_or_unknown(publisher.publisher_source.name) if publisher.publisher_source
         %td #{publisher.publications.length}

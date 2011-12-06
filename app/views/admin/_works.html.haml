@@ -7,10 +7,10 @@
         - doc.name_strings.each do |ns|
           =link_to ns.name, name_string_path(ns)
         %br/
-        %strong Source:
+        %strong #{t('app.source')}:
         =link_to doc.publication.authority.name, publication_path(doc.publication.authority.to_param)
         = "#{doc.volume}(#{doc.issue}), #{doc.start_page}-#{doc.end_page}."
         -if doc.publication_date_year
           %br/
-          %strong Year:
+          %strong #{t('app.year')}:
           = doc.publication_date_year

@@ -5,26 +5,20 @@
 
 #header-white.span-24
   .span-22.prepend-1.header-white
-    #{link_to(image_tag($APPLICATION_LOGO, :alt => $APPLICATION_NAME), works_path)}
+    #{link_to(image_tag($APPLICATION_LOGO, :alt => t('personalize.application_name')), works_path)}
 
 
 / ### Main ###
 .span-24
   .span-22.prepend-1.main
-    %h2 Error 500: Something is *very* wrong!
+    %h2 #{t 'shared.application_error.header'}
     .span-12
       %ol
+        %li #{t('shared.application_error.list_1', :link => link_to t('personalize.application_name'), works_path).html_safe}
+        %li #{t('shared.application_error.list_2', :link => link_to t('personalize.application_name'), works_path).html_safe}
         %li
-          Don't worry, but 
-          #{link_to $APPLICATION_NAME, works_path}
-          is unexpectedly broken.
-        %li
-          It's ok, because 
-          #{link_to $APPLICATION_NAME, works_path}
-          has emailed us to say so.
-        %li
-          Need to contact someone? Email:
-          %a{:href=> "mailto:#{$SYSADMIN_EMAIL}?subject=#{$APPLICATION_NAME} Support"} #{$SYSADMIN_EMAIL}
-          
+          #{t('shared.application_error.list_3')}
+          %a{:href=> "mailto:#{$SYSADMIN_EMAIL}?subject=#{t('shared.application_error.email_subject', :app_name => t('personalize.application_name')}"} #{$SYSADMIN_EMAIL}
+
     .span-8.prepend-2.last
       #{image_tag("chucks.jpg")}

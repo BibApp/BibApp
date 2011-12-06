@@ -1,6 +1,5 @@
 - if @work.tags.size > 0
   %div.field
-    %label
-      = pluralize(@work.tags.size, "Tag: ", "Tags: ")
+    %label #{Tag.model_name.human(:count => @work.tags.size)}:
     - @work.tags.each do |tag|
       %a{:href => search_path(:fq => tag_filter(tag), :qt => "standard") }= tag.name

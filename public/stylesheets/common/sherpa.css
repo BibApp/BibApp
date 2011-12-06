@@ -22,6 +22,10 @@
   background-color: #fffafa;
 }
 
+.romeo-gray {
+  background-color: #cccccc;
+}
+
 .romeo-unknown {
   background-color: black;
 }
@@ -47,6 +51,10 @@
 
 .romeo-white-border {
   border-color: #d3d3d3;
+}
+
+.romeo-gray-border {
+  border-color:  #aaaaaa;
 }
 
 .romeo-unknown-border {

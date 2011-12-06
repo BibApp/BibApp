@@ -1,5 +1,5 @@
-%li=link_to "Add works", new_user_import_path(current_user)
-%li=link_to "Verify contributorships", admin_contributorships_path
-%li=link_to "View duplicate works", admin_duplicates_url
-%li=link_to "Prepare files for archiving", admin_ready_to_archive_url
-%li=link_to "Manage imports", user_imports_path(@current_user)
+%li=link_to t('common.works.new'), new_user_import_path(current_user)
+%li=link_to t('common.contributorships.verify'), admin_contributorships_path
+%li=link_to t('common.works.duplicate'), admin_duplicates_url
+%li=link_to t('app.archive'), admin_ready_to_archive_url
+%li=link_to t('app.imports'), user_imports_path(@current_user)

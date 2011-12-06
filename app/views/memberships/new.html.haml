@@ -1,21 +1,19 @@
-/ === Memberships === New ===
-/ Main
 - include_stylesheet('specific/memberships/new')
 - include_javascript('specific/memberships/new')
 - if current_user_any_role?("editor", Group)
   = render :layout => '/layouts/admin_bar' do
-    %li=link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-    %li= link_to "Add a new person", new_person_path
+    %li= link_to t('memberships.new.delete_person'), person_url(@person), :method => :delete, :confirm => t('memberships.new.delete_confirm')
+    %li= link_to t('memberships.new.add_person'), new_person_path
 
 = render :layout => '/layouts/main_body',
-  :locals => {:header => "#{person_link(@person)}: Group Memberships".html_safe} do
+  :locals => {:header => "#{person_link(@person)}: #{Group.model_name.human_pl}".html_safe} do
 
   = render "shared/local_nav", :object => "person", :state => "edit"
 
   = render :partial => 'body_leftbar', :layout => 'layouts/main_body_left'
 
   %fieldset
-    %legend Group Memberships
+    %legend #{t 'memberships.new.group_memeberships'}
     .span-16.last.column
       - if @status == "non_member"
         = render :partial => 'search_form'

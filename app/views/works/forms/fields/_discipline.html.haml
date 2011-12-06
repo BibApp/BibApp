@@ -1,11 +1,2 @@
--# Discipline field
--#
--# Possible Input Variables:
 -#    :form     => current form (REQUIRED)
--#    :label    => Label to display (default: Discipline)
-
--# Initialize optional input variables
-- label ||= "Discipline"
-
-= form.label :discipline, "#{label}:"
-= form.text_field :discipline, :class=>'text'
+= render 'works/forms/fields/generic_text_field', :form => form, :attribute => :discipline

@@ -16,13 +16,13 @@ module PubCommonHelper
 
       if params[:cancel]
         session[key] = nil
-        flash[:notice] = "Cancelled authority selection"
+        flash[:notice] = t('common.pub_common.flash_update_multiple_generic_cancel')
       else
         if auth_id
           klass.update_multiple(pub_ids, auth_id)
           session[key] = nil
         else
-          flash[:warning] = "You must select one record as the authority."
+          flash[:warning] = t('common.pub_common.flash_update_multiple_generic_not_unique')
         end
       end
 
@@ -61,7 +61,7 @@ module PubCommonHelper
         #allow specific operation by client
         yield
       rescue ActiveRecord::RecordNotFound
-        flash[:warning] = "One or more publications could not be found."
+        flash[:warning] = t('common.pub_common.flash_operate_on_box_generic')
         redirect_to(self.send(path)) and return
       end
       session[key] = @pas

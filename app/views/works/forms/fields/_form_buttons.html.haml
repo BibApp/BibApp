@@ -1,5 +1,5 @@
 -# Form submit buttons
 -#  Uses form styles from Blueprint
 %p.buttons
-  = submit_tag "Save Changes", :disable_with => "Saving...", :class=> "button positive"
-  = submit_tag "Cancel", :name => "cancel", :class => "button negative"
+  = submit_tag t('works.forms.fields.form_buttons.save'), :disable_with => t('works.forms.fields.form_buttons.saving'), :class=> "button positive"
+  = submit_tag t('app.cancel'), :name => "cancel", :class => "button negative"

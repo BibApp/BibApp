@@ -1,5 +1,5 @@
 if @results.size < 1
-  page.replace_html 'inactive', "<strong>#{@phrase}</strong> returned no results"
+  page.replace_html 'inactive', t('.no_results', :phrase => @phrase)
 else
   page.replace_html 'inactive', :partial => "name_string", :collection => @results, :locals => {:person => @person, :selected => false}
 end

@@ -1,6 +1,6 @@
 %h3.heading
-  =link_to "Works", works_url(:view => "all")
-  &ndash; Recent additions
+  =link_to Work.model_name.human_pl, works_url(:view => "all")
+  &ndash; #{t '.recent'}
 %ol#works.works
   - @works.first(3).each do |work|
     = render "shared/work", :work => work

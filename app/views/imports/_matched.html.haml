@@ -1,4 +1,4 @@
 %p
-  Matched
-  %strong#matched_total #{@match_count} work to #{imported_for(@import)}.
-  %strong#remaining_total #{@work_batch.size - @match_count} remain to match.
+  #{t('.matched')}
+  %strong#matched_total #{t('.matched_total', :count => @match_count, :imported_for => imported_for(@import))}
+  %strong#remaining_total #{t('.remaining_total', :count => @work_batch.size - @match_count)}

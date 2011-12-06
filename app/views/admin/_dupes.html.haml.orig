@@ -1,0 +1,53 @@
+-#
+-# Render List of Duplicate Works with paging & sorting options
+-#
+- include_stylesheet('specific/admin/_dupes')
+- include_javascript('specific/admin/_dupes')
+#works.span-17.last
+  - if @q
+    %div
+      %h3=t('admin.duplicates.results', :count => @q.total_hits)
+
+    / Sort Form
+    .span-15.append-1.last
+      = form_tag "#works", :name => "dupes_form_show_rows", :method => :get do
+        #sort-by
+          %label=t('app.show') + ":"
+          %select{:name => "rows"}
+            - ["10", "20", "50", "100", "250", "500"].each do |opt|
+              - if opt == @rows
+                %option{:selected => "selected", :value => "#{opt}"}= opt.titleize
+              - else
+                %option{:value => "#{opt}"}= opt.titleize
+
+          = render :partial => 'admin/dupes_hidden_tags'
+
+          = submit_tag t('app.go')
+
+      = form_tag destroy_multiple_works_url, :name => "dupes_form", :method => :delete, :id => "dupes_form" do
+        #bulk_links
+          = check_box_tag "select_dupes", "yes", false, :id => 'global-checkbox'
+          %strong=t('app.select_all')
+
+<<<<<<< HEAD
+          = submit_tag "Delete selected"
+          = render :partial => 'admin/dupes_hidden_tags'
+=======
+          = submit_tag t('app.delete_selected')
+          = hidden_field_tag "q", @query
+          = hidden_field_tag "fq", @filter_no_strip
+          = hidden_field_tag "view", "all"
+          - @page = 1 if @page == 0
+          = hidden_field_tag "page", @page
+          = hidden_field_tag "authenticity_token", form_authenticity_token
+          = hidden_field_tag "return_path" , admin_duplicates_url
+>>>>>>> cjurgen/i18n
+
+        %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)
+
+
+        %ol#work-list.span-17.clear-both.no-padding-or-margin
+          - @works.each do |work|
+            = render :partial => "shared/work", :locals => {:work => work, :allow_select => true, :show_status => true, :show_dupes => true, :links_array => [:edit]}
+
+        %div= will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)

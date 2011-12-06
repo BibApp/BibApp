@@ -7,16 +7,16 @@
     %h3#curyear
     .track#track1
       .handle#handle1
-        %img{:alt=>"Drag left or right", :src=>"/images/slider-images-handle.png"}
+        %img{:alt=> t('.handle_alt'), :src=>"/images/slider-images-handle.png"}
 
   #timeline-tagcloud.span-12
-    %h3 Popular Research Topics by Year
+    %h3 #{t('keywords.timeline.cloud_header')}
     = render :partial => "timeline_list", :collection => @year_keywords
 
   #timeline-chart.span-7.prepend-1.last-1
-    %h3 Work Types by Year
+    %h3 #{t('keywords.timeline.chart_header')}
     #chart-img
-      %img.left{:src=>"/images/ajax-loader.gif", :title=>"loading..."}
+      %img.left{:src => "/images/ajax-loader.gif", :title => t('.chart_loading')}
 
   = js_data_div('year-tags', @years)
   = js_data_div('chart-urls', @chart_urls)

@@ -7,7 +7,7 @@ module WorksHelper
       end
       if limit
         if authors.size > 5
-          authors = authors.first(6) << "et al."
+          authors = authors.first(6) << t('common.works.et_al')
         end
       end
       authors.join(", ")
@@ -66,138 +66,6 @@ module WorksHelper
     %Q(tags: "#{tag.name}")
   end
 
-  #helpers for metadata views
-  def location_label(work)
-    if work.class == PresentationLecture
-      "Location Given"
-    else
-      "Conference Location"
-    end
-  end
-
-  def publication_place_label(work)
-    case work.class.to_s
-      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceeding', 'PresentationLecture', 'Artwork', 'Exhibition', 'Performance', 'RecordingSound'
-        'Location'
-      else
-        "Publication Place"
-    end
-  end
-
-  def date_range_label(work)
-    case work.class.to_s
-      when 'Patent'
-        "Filing Date"
-      when 'WebPage'
-        "Date of Last Visit"
-      when 'Exhibition'
-        "Exhibition Dates"
-      when 'Performance'
-        "Performance Date"
-      when 'JournalWhole'
-        "Dates"
-      when 'ConferencePaper', 'ConferencePoster', 'ConferenceProceedingWhole', 'PresentationLecture'
-        "Conference Dates"
-      else
-        'Date Range'
-    end
-  end
-
-  def end_page_label(work)
-    case work.class.to_s
-      when 'BookWhole', 'Monograph', 'ConferenceProceedingWhole', 'DissertationThesis'
-        "Total Pages"
-      else
-        'End Page'
-    end
-  end
-
-  def issue_label(work)
-    case work.class.to_s
-      when 'Report'
-        'Series Number'
-      else
-        'Issue'
-    end
-  end
-
-  def publication_date_label(work)
-    case work.class.to_s
-      when 'ConferencePoster'
-        "Date Presented"
-      when 'PresentationLecture'
-        "Date Given"
-      when 'Artwork'
-        "Date of Composition"
-      when 'DissertationThesis'
-        "Degree Date"
-      when 'Patent', 'RecordingMovingImage'
-        "Date Issued"
-      else
-        'Date Published'
-    end
-  end
-
-  def issn_isbn_label(work)
-    case work.class.to_s
-      when 'JournalArticle', 'JournalWhole', 'BookReview'
-        "ISSN"
-      when 'RecordingSound', 'RecordingMovingImage'
-        "ISRC"
-      else
-        'ISBN'
-    end
-  end
-
-  def publication_label(work)
-    case work.class.to_s
-      when 'BookSection'
-        "Book Title"
-      when 'JournalArticle', 'BookReview'
-        "Journal Title"
-      when 'ConferencePaper', 'ConferencePoster'
-        "Conference Title"
-      when 'PresentationLecture'
-        "Title of Conference or Occasion"
-      when 'Performance', 'RecordingSound', 'RecordingMovingImage'
-        "Title of Larger Work"
-      when 'Report'
-        "Series Title"
-      else
-        'Publication Title'
-    end
-  end
-
-  def publisher_label(work)
-    case work.class.to_s
-      when 'Artwork'
-        "Institution or Collection Name"
-      when 'DissertationThesis'
-        "Degree Granting Institution"
-      when 'Exhibition', 'Performance'
-        "Venue"
-      when 'RecordingSound'
-        "Recording Label"
-      when 'RecordingMovingImage'
-        "Production Company"
-      when 'Grant'
-        "Institution"
-      else
-        'Publisher'
-    end
-  end
-
-  def title_primary_label(work)
-    case @work.class.to_s
-      when 'BookSection'
-        "Article/Chapter Title"
-      when 'JournalArticle'
-        "Article Title"
-      else
-        'Title'
-    end
-  end
-
   def skip_title_secondary(work)
     work.title_secondary.blank? or ['BookSection', 'ConferencePaper', 'ConferencePoster', 'Report'].include?(work.class.to_s)
   end
@@ -240,40 +108,29 @@ module WorksHelper
   end
 
   def new_work_header(person)
-    suffix = person ? " for #{link_to person.display_name, person_path(person)}" : ''
-    "Add Works#{suffix}"
+    if person
+      t('common.works.add_works_for_person', :person_link => link_to(person.display_name, person_path(person)))
+    else
+      t('common.works.add_works')
+    end
   end
 
   def link_to_google_book(work)
     if !work.publication.nil? and !work.publication.isbns.blank?
       capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
+        haml_tag :span, {:title => ISBN.model_name.human}
         work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "ISBN:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
       capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => "ISBN"}
+        haml_tag :span, {:title => ISBN.model_name.human}
         work.publication.issn_isbn
-        haml_tag :span, {:title => "ISBN:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
+        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
       end
     else
       # Nothing
     end
-  end
-
-  def issn_isbn_field_label(isbn, issn, isrc)
-    label = case
-      when isbn
-        'ISBN'
-      when issn
-        'ISSN'
-      when isrc
-        'ISRC'
-      else
-        'ISSN/ISBN'
-    end
-    label + ':'
   end
 
   #The self_or_x methods return the passed object if a string or the field value for :x if not.
@@ -294,11 +151,11 @@ module WorksHelper
   def reorder_list_message(list_type)
     case list_type
       when "author_name_strings"
-        "Successfully updated order of authors!"
+        t('common.works.update_author_list')
       when "editor_name_strings"
-        "Successfully updated order of editors!"
+        t('common.works.update_editor_list')
       else
-        "Successfully updated order of list!"
+        t('common.works.update_list')
     end
   end
 

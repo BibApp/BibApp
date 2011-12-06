@@ -1,6 +1,5 @@
 module SearchHelper
   def search_example(key)
-    $SEARCH_EXAMPLES ||= Hash.new
-    $SEARCH_EXAMPLES[key]
+    t("personalize.search_examples.#{key.to_s.downcase}")
   end
 end

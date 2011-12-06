@@ -1,13 +1,13 @@
 .warning
   %h3 Actions
-  .left= button_to("Accept Batch", user_import_path(current_user, @import, :decision => "accept"), :method => "put")
+  .left= button_to(t('.accept'), user_import_path(current_user, @import, :decision => "accept"), :method => "put")
   .span-1.text-center
     %p
       %strong or
-  .left= button_to("Reject Batch", user_import_path(current_user, @import, :decision => "reject"), :method => "put")
+  .left= button_to(t('.reject'), user_import_path(current_user, @import, :decision => "reject"), :method => "put")
   .clear
     %p
       - if @works.blank?
-        This import is reviewable, but contains no works. They may have been deleted.
+        #{t('.blank')}
       - else
-        Duplicate works are not shown within the system.  Accepting a batch with duplicates does not mean the dupes will appear.
+        #{t('.not_blank')}

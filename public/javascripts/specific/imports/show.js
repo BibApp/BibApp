@@ -52,15 +52,15 @@ function matchedPenNames() {
   });
 
   $('pen_names_count_total').innerHTML = total;
-  $('matched_total').innerHTML = total + " works";
+  $('matched_total').innerHTML = $jq.t("specific.imports.show.matched_total", {count: total});
 
   remaining = imported - total;
   if (remaining > 0) {
-    $('remaining_total').innerHTML = remaining + " remain unmatched.";
+    $('remaining_total').innerHTML = $jq.t("specific.imports.show.remaining_total", {count: remaining});
     $('remaining_total').addClassName("error")
   }
   else {
-    $('remaining_total').innerHTML = "Everything matches.";
+    $('remaining_total').innerHTML = $jq.t("specific.imports.show.remaining_total_zero");
     $('remaining_total').removeClassName("error")
   }
 

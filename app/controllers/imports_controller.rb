@@ -12,7 +12,7 @@ class ImportsController < ApplicationController
     # Only allow users to view their own imports, unless they are System editors
     @authorized = true
     if params[:user_id].to_i != current_user.id.to_i && !current_user.has_role?("editor", System)
-      flash[:error] = "Unauthorized."
+      flash[:error] = t('common.imports.unauthorized')
       @authorized = false
     end
   end
@@ -42,12 +42,12 @@ class ImportsController < ApplicationController
     if @import.save
       # Success!
       respond_to do |format|
-        flash[:notice] = "Thanks for the import!  It will take a few minutes to process.  We'll send you an email when it is ready for review."
+        flash[:notice] = t('common.imports.flash_create_success')
         format.html { redirect_to user_imports_path }
       end
     else
       # Error!
-      flash[:error] = "Sorry... but there was an error uploading your import file."
+      flash[:error] = t('common.imports.flash_create_failure')
       respond_to do |format|
         format.html { redirect_to :back }
       end
@@ -76,12 +76,12 @@ class ImportsController < ApplicationController
     @dupe_count = 0
       
     #As long as we have a batch of works to review, paginate them
-    if !@work_batch.nil? and !@work_batch.empty?
+    if @work_batch.present?
       
       #determine number of duplicates in batch
       @work_batch.each do |work_id|
         work = Work.find_by_id(work_id)
-        @dupe_count+=1 if !work.nil? and work.duplicate?
+        @dupe_count += 1 if work and work.duplicate?
       end
       
       @works = Work.where("id in (?)", @work_batch).paginate(:page => @page, :per_page => @rows)
@@ -108,15 +108,15 @@ class ImportsController < ApplicationController
       # Success!
       respond_to do |format|
         if @import.state == "accepted"
-          flash[:notice] = "Batch accepted -- The imported data will appear shortly."
+          flash[:notice] = t('common.imports.flash_update_accepted')
         elsif @import.state == "rejected"
-          flash[:notice] = "Batch rejected"
+          flash[:notice] = t('common.imports.flash_update_rejected')
         end
         format.html { redirect_to user_imports_path() }
       end
     else
       # Error!
-      flash[:error] = "Sorry... but there was an error updating the import."
+      flash[:error] = t('common.imports.flash_update_error')
       respond_to do |format|
         format.html { redirect_to :back }
       end

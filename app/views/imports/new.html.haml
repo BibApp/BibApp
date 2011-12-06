@@ -1,7 +1,7 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => 'layouts/admin_bar' do
-    %li=link_to_unless_current "Show all Imports", user_imports_path
-    %li=link_to_unless_current "Add an Import", new_user_import_path
+    %li=link_to_unless_current t('imports.new.show_all'), user_imports_path
+    %li=link_to_unless_current t('imports.new.add_import'), new_user_import_path
 
 = render :layout => 'layouts/main_body', :locals => {:header => body_header(@person)} do
 

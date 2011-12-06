@@ -2,9 +2,9 @@
 
 - if current_user_role?("editor", @group)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Add a Group", new_group_path
-    %li= link_to "Edit this group", edit_group_path
-    %li= link_to "Manage Roles", group_roles_path(@group)
+    %li= link_to t('groups.show.add'), new_group_path
+    %li= link_to t('groups.show.edit'), edit_group_path
+    %li= link_to t('groups.show.roles'), group_roles_path(@group)
 
 = render :layout => 'layouts/main_body', :locals => {:header => body_header(@group)} do
   = render "shared/local_nav", :object => "group"
@@ -13,7 +13,7 @@
   = render "shared/people", :count => 15, :randomize => true
 
   .span-14
-    %h3.heading Description
+    %h3.heading #{t('app.description')}
     %p= @group.description
     - if @group.url.present?
       %p= link_to h(@group.url), @group.canonicalize_url

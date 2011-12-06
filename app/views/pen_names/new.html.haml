@@ -1,7 +1,7 @@
 - if current_user_any_role?("editor", Group)
   = render :layout => '/layouts/admin_bar' do
-    %li= link_to "Delete this person", person_url(@person), :method => :delete, :confirm => 'Permanently delete this person? This cannot be undone.'
-    %li= link_to "Add a new person", new_person_path
+    %li= link_to t('pen_names.new.delete'), person_url(@person), :method => :delete, :confirm => t('pen_names.new.confirm')
+    %li= link_to t('pen_names.new.add'), new_person_path
 
 = render :layout => '/layouts/main_body', :locals => {:header => body_header(@person)} do
   = render "shared/local_nav", :object => "person", :state => "edit"
@@ -11,13 +11,9 @@
     %p= render "shared/person_image", :o => @person
 
   %fieldset
-    %legend Pen Names
-    %p
-      Pen names are used to match people with their publications. Your
-      %strong Current pen names
-      should include every variation of your name that may occur in a citation record.
-      To remove a pen name, simply uncheck the box next to it.
-    %h3 Current pen names
+    %legend #{PenName.model_name.human_pl}
+    %p #{t('pen_names.new.explanation').html_safe}
+    %h3= t('pen_names.new.current')
     = render 'current_namestrings'
 
     = render 'new_namestring_form'
@@ -25,8 +21,8 @@
     %br/
     %hr/
 
-    %h3 Suggested pen names
-    %p Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>.
+    %h3= t('pen_names.new.suggested')
+    %p= t('pen_names.new.instructions')
     = render 'suggested_namestrings'
 
     = render 'search_for_namestrings'

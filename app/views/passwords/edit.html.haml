@@ -1,17 +1,17 @@
-= render :layout => '/layouts/main_body', :locals => {:header => 'Change Password'} do
+= render :layout => '/layouts/main_body', :locals => {:header => t('passwords.edit.header')} do
   %fieldset
     = form_for :user, :url => user_password_path(@user), :html => {:method=>:put} do |form|
       %p
-        %label Old Password
+        %label= t('passwords.edit.old')
         %br/
         = password_field_tag :old_password
       %p
-        %label New Password
+        %label= t('passwords.edit.new')
         %br/
         = form.password_field :password
       %p
-        %label Confirm New Password
+        %label= t('passwords.edit.confirm')
         %br/
         = form.password_field :password_confirmation
       %p.submit
-        = submit_tag 'Update Password'
+        = submit_tag t('passwords.edit.submit')

@@ -14,7 +14,8 @@ class ContributorshipsController < ApplicationController
         @status = params[:status] || "unverified"
         #Don't want to allow an arbitrary send to @person.contributorships below - e.g. params[:status] = 'clear'
         @status = 'unverified' unless ['unverified', 'verified', 'denied'].member?(@status.to_s)
-        @title = "#{@person.display_name}: #{@status.capitalize} Contributorships"
+        @title = t('common.contributorships.index_title', :display_name => @person.display_name,
+                   :status => t("common.contributorships.#{@status}").capitalize)
         @contributorships = @person.contributorships.send(@status).includes(:work).
             order('works.publication_date_year desc, works.publication_date_month desc, works.publication_date_day desc').paginate(:page => @page, :per_page => @rows)
       else
@@ -78,7 +79,7 @@ class ContributorshipsController < ApplicationController
   def archivable
     # Find Person for view
     @person = Person.find(params[:person_id])
-    @title = "Archival Analysis: #{@person.display_name}"
+    @title = t('common.contributorships.archivable_title', :display_name => @person.display_name)
 
     # Collect data for Sherpa color table
     @pub_table = romeo_color_count
@@ -123,7 +124,7 @@ class ContributorshipsController < ApplicationController
       contributorship.send(action)
     end
     respond_to do |format|
-      flash[:notice] = "Contributorships were successfully #{flash_action}."
+      flash[:notice] = t('common.contributorships.flash_act_on_many', :action => t("common.contributorships.#{flash_action}"))
       #forward back to path which was specified in params
       format.html { redirect_to contributorships_path(:person_id=>params[:person_id], :status=>params[:status]) }
       format.xml { head :ok }

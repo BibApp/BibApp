@@ -1,17 +1,18 @@
 = form_for :attachment, :url => attachments_url, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div
-    %h4 Attaching to #{@asset.class.to_s.underscore.humanize}:
+    %h4 Attaching to #{@asset.class.model_name.human}:
+    %h4 #{t('attachments.forms.form_content_file.header', :class_name => @asset.class.model_name.human)}:
     %span.asset= WorkExport.new.drive_csl("apa", @asset).html_safe
     %div
       = render "shared/sherpa_status", :publisher => @asset.publisher, :show_explanation => true
     %br/
 
   %fieldset
-    %legend Content Files
+    %legend= t('attachments.forms.form_content_file.legend')
     #upload_files
-      %label Upload File(s):
+      %label= t('attachments.forms.form_content_file.label'):
       -# Allow uploading multiple files
-      = link_to_remote "[Add More Files]", :url => add_upload_box_attachments_url(:form => form)
+      = link_to_remote t('common.attachments.add_files'), :url => add_upload_box_attachments_url(:form => form)
       %br/
       = render 'upload_file', :form => form
 
@@ -25,17 +26,17 @@
     - if @license
       %p
         = check_box_tag 'license_agree', 'yes'
-        I agree to the terms of the
-        = link_to_function "Deposit License", "$('license').toggle();"
+        = t('common.attachments.agree_to_terms')
+        = link_to_function t('common.attachments.deposit_license'), "$('license').toggle();"
         for
-        = @repository_name || 'my local repository'
+        = @repository_name || t('common.attachments.local_repository')
 
       #license_warning.warning{:style => "display: none;"}
-        You must agree to the license terms before you can upload files.
+        = t('common.attachments.must_agree_to_license')
       #license.scrollarea.span-12{:style => "display: none;"}
         = @license
 
   %p.submit
-    = submit_tag "Upload file(s)", :disable_with => "Uploading files..."
+    = submit_tag t('common.attachments.upload_files'), :disable_with => t('common.attachments.uploading_files')
 
 

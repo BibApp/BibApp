@@ -1,17 +1,17 @@
 %table#publications
   %tr
-    %th ISSN / ISBN
-    %th Publication Name
-    %th Publisher
-    %th Works
+    %th #{Publication.human_attribute_name(:issn_isbn)}
+    %th #{t 'common.publications.publication_name'}
+    %th #{Publisher.model_name.human}
+    %th #{Work.model_name.human_pl}
   -@current_objects.each do |publication|
     %tr{:class => cycle("odd", "even")}
       - if publication.issn_isbn.nil?
         %td
       - else
         %td #{link_to publication.issn_isbn, publication}
-      %td #{link_to publication.name, publication}
+      %td #{link_to name_or_unknown(publication.name), publication}
       %td
         = render 'shared/sherpa_icon', :publisher => publication.publisher
-        #{link_to publication.publisher.name, publisher_path(publication.publisher)}
+        #{link_to name_or_unknown(publication.publisher.name), publisher_path(publication.publisher)}
       %td #{publication.works.length}

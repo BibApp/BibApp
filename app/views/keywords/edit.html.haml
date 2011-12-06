@@ -1,11 +1,11 @@
-%h1 Editing keyword
+%h1 #{t('.heading')}
 
 = error_messages_for :keyword
 
 = form_for(@keyword) do |f|
   %p
-    = f.submit "Update"
+    = f.submit t('app.update')
 
-= link_to 'Show', @keyword
+= link_to t('app.show'), @keyword
 |
-= link_to 'Back', keywords_path
+= link_to t('app.back'), keywords_path

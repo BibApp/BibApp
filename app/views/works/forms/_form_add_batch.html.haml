@@ -1,17 +1,17 @@
 %fieldset
-  %legend Add Batch (RIS | Medline | Refworks XML)
+  %legend #{t('works.forms.form_add_batch.legend')}
 
-  %p Either upload a file containing the citations, or cut and paste the citations into the box below.
+  %p = t('works.forms.form_add_batch.instructions')
   
   %ul
     %li
-      = form.label :works_file, "Upload File:"
-      = form.file_field :works_file, :class=>'text'
+      = form.label :works_file, t('works.forms.form_add_batch.upload')
+      = form.file_field :works_file, :class => 'text'
 
     %li
-      = form.label :works, "Or, Paste Citations:"
+      = form.label :works, t('works.forms.form_add_batch.paste')
       = form.text_area :works 
     
 = hidden_field_tag :type, 'AddBatch'
 %p.buttons
-  = submit_tag "Add Batch", :disable_with => "Parsing and Importing Batch..."
+  = submit_tag t('works.forms.form_add_batch.add'), :disable_with => t('works.forms.form_add_batch.disable')

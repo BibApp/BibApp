@@ -12,7 +12,7 @@ module KeywordsHelper
   end
 
   def body_header(object)
-    link_to "#{object.name}", url_for(object) + ' - Timeline'
+    link_to "#{object.name}", url_for(object) + ' - ' + t('common.keywords.timeline')
   end
 
   def timeline_list_filter(tag, object)

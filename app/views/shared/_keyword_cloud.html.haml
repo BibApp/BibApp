@@ -1,7 +1,7 @@
 - include_stylesheet('specific/shared/_keyword_cloud')
 - include_javascript('specific/shared/_keyword_cloud')
 
-%h3 Popular research topics
+%h3 #{t 'shared.keyword_cloud.header'}
 .text-center
   -if keywords
     %ul
@@ -11,7 +11,7 @@
 
     #timeline-form.text-center
       = form_tag self.send("timeline_#{current_object.class.to_s.downcase}_keywords_path", current_object), :method => :get do
-        = submit_tag "Load Timeline View", :onclick=>"go_dim()"
+        = submit_tag t('shared.keyword_cloud.submit'), :onclick=>"go_dim()"
 
   #darkBackgroundLayer.darkenBackground{:name=>"darkBackgroundLayer", :style=>"display:none;"}
   %img#spinner.highZ{:src=>"/images/ajax-loader.gif", :style=>"display:none;"}

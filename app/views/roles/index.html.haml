@@ -1,22 +1,22 @@
 - if current_user_role?("admin", System)
   = render :layout => 'layouts/admin_bar' do
-    %li= link_to "Add Administrators", {:controller=>"roles", :action=>"new_admin"}
-    %li= link_to "Add Editors", {:controller=>"roles", :action=>"new_editor"}
+    %li= link_to t('roles.index.add_admins'), {:controller=>"roles", :action=>"new_admin"}
+    %li= link_to t('roles.index.add_editors'), {:controller=>"roles", :action=>"new_editor"}
 
 = render :layout => '/layouts/main_body', :locals => {:header => index_header(@authorizable)} do
-  %h3 Administrators
+  %h3 #{t 'common.roles.admin', :count => 2}
   - if @authorizable.has_admins?
     %ol.users
       - @authorizable.has_admins.each do |user|
         = render 'destroy_user_role_form', :role_name => 'admin', :user => user
   - else
     %p
-      No administrators currently assigned.
-  %h3 Editors
+      = t('roles.index.no_admins')
+  %h3 #{t 'common.roles.editor', :count => 2}
   - if @authorizable.has_editors?
     %ol.users
       - @authorizable.has_editors.each do |user|
         = render 'destroy_user_role_form', :role_name => 'editor', :user => user
   - else
     %p
-      No editors currently assigned.
+      = t('roles.index.no_editors')

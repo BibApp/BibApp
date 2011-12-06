@@ -1,9 +1,9 @@
 %ul
   %li
-    = form.label :import_file, "Upload File:"
+    = form.label :import_file, "#{t('shared.upload_form.upload')}:"
     = form.file_field :import_file, :class=>'text'
     - if @person
       = hidden_field_tag :person_id, @person.id
 
 %p.buttons
-  = submit_tag "Add Batch", :disable_with => "Importing Batch..."
+  = submit_tag t('shared.upload_form.submit'), :disable_with => t('shared.upload_form.disable')

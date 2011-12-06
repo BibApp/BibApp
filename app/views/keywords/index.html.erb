@@ -1,4 +1,4 @@
-<h1>Listing keywords</h1>
+<h1><%= t('.heading') %></h1>
 
 <table>
   <tr>
@@ -7,15 +7,15 @@
   <% if @keywords %>
       <% for keyword in @keywords %>
           <tr>
-            <td><%= link_to 'Show', keyword %></td>
-            <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
-            <td><%= link_to 'Destroy', keyword, :confirm => 'Are you sure?', :method => :delete %></td>
+            <td><%= link_to t('app.show'), keyword %></td>
+            <td><%= link_to t('app.edit'), edit_keyword_path(keyword) %></td>
+            <td><%= link_to t('app.destroy'), keyword, :confirm => t('app.are_you_sure'), :method => :delete %></td>
           </tr>
       <% end %>
   <% else %>
     <tr>
       <td>
-        No keywords exist.
+        <%= t('.no_keywords') %>
       </td>
     </tr>
   <% end %>
@@ -23,4 +23,4 @@
 
 <br/>
 
-<%= link_to 'New keyword', new_keyword_path %>
+<%= link_to t('.new_keyword'), new_keyword_path %>

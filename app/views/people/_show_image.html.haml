@@ -1,4 +1,5 @@
 =image_tag(@person.image_url, :class => "person-image", :size => "125x166")
 / ### Hide email for inactive people ###
 - if @person.active?
-  =mail_to(@person.email, "Email", :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")
+  %br
+  =mail_to(@person.email, Person.human_attribute_name(:email), :replace_at => "_at_", :replace_dot => "_dot_", :class => "email")

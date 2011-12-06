@@ -35,7 +35,7 @@
     - if work['issn_isbn'] && work['issn_isbn'].length > 9
       %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN:#{work['issn_isbn'].gsub(' ', '')}"}
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
-    %h5.work-type #{work['type']}
+    %h5.work-type #{t_solr_work_type(work['type'])}
     -#display status of a work, if specified
     = render("shared/work_status", :work => work) if show_status
     = render "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :work => work
