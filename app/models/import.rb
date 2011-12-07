@@ -23,29 +23,24 @@ class Import < ActiveRecord::Base
 
   # Acts As State Machine
   include AASM
-  aasm_column :state
-  aasm_initial_state :recieved
-
-  aasm_state :recieved
-  aasm_state :processing, :after_enter => :queue_import
-  aasm_state :reviewable, :after_enter => :notify_user
-  aasm_state :accepted, :after_enter => :accept_import
-  aasm_state :rejected, :after_enter => :reject_import
-
-  aasm_event :process do
-    transitions :to => :processing, :from => :recieved
-  end
-
-  aasm_event :review do
-    transitions :to => :reviewable, :from => :processing
-  end
-
-  aasm_event :accept do
-    transitions :to => :accepted, :from => :reviewable
-  end
-
-  aasm_event :reject do
-    transitions :to => :rejected, :from => :reviewable
+  aasm :column => :state do
+    state :received, :initial => true
+    state :processing, :after_enter => :queue_import
+    state :reviewable, :after_enter => :notify_user
+    state :accepted, :after_enter => :accept_import
+    state :rejected, :after_enter => :reject_import
+    event :process do
+      transitions :to => :processing, :from => :recieved
+    end
+    event :review do
+      transitions :to => :reviewable, :from => :processing
+    end
+    event :accept do
+      transitions :to => :accepted, :from => :reviewable
+    end
+    event :reject do
+      transitions :to => :rejected, :from => :reviewable
+    end
   end
 
   def notify_user
