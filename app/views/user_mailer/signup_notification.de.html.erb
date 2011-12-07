@@ -1,1 +1,15 @@
-Please translate app/views/user_mailer/signup_notification.html.erb here
+Liebe(r) <%= @user.email %>,
+
+Ihr Benutzerkonto wurde angelegt.
+
+Verwenden Sie diesen Link, um Ihr Konto zu aktivieren:
+
+  <%= @url %>
+
+Danke, dass Sie sich registriert haben.
+
+- Ihr <%= "#{t('personalize.application_name')}" %> Team
+
+- - - -
+
+Fragen oder Anregungen?  Wenden Sie sich an: <%= "#{$SYSADMIN_EMAIL}" %>.

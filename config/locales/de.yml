@@ -341,7 +341,7 @@ de:
     cancel: Abbrechen
     count: Anzahl
     create: Anlegen
-    created: Angelegt
+    created: Erschaffen
     date: Datum
     delete_selected: "Auswahl löschen"
     descending: Absteigend
@@ -389,7 +389,7 @@ de:
       other: "Ergebnisse für:"
     save: Speichern
     saved: Gespeichert
-    score: Resultat
+    score: Gewichtung
     search: Suche
     search_within: "Suche in"
     select: Auswahl
@@ -1032,7 +1032,7 @@ de:
     coauthors: 
       heading: "Co-Autoren an der %{university_name}"
     coauthors_table: 
-      header: "%{university_name} Ko-Autoren"
+      header: "%{university_name} Co-Autoren"
       last_name: Nachname
       work_count: "# an Werken"
     contribution_actions: 
