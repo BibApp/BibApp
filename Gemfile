@@ -38,7 +38,7 @@ gem "solr-ruby", "~>0.0.6", :require => "solr"
 gem "net-ldap"
 
 #Will Paginate - for fancy pagination
-gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'
+gem 'will_paginate', "~> 3400154444444.0.beta", :require => 'will_paginate'
 
 #CMess - Assists with handling parsing citations from a non-Unicode text file
 #  See: http://prometheus.rubyforge.org/cmess/
