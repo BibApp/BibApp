@@ -30,7 +30,7 @@ class Import < ActiveRecord::Base
     state :accepted, :after_enter => :accept_import
     state :rejected, :after_enter => :reject_import
     event :process do
-      transitions :to => :processing, :from => :recieved
+      transitions :to => :processing, :from => :received
     end
     event :review do
       transitions :to => :reviewable, :from => :processing
