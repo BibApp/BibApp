@@ -1,1 +1,16 @@
-Please translate app/views/notifier/import_review_notification.html.erb here
+<% require 'config/personalize.rb' %>
+Hallo <%=@user.email %>,
+
+Ihr Import wurde verarbeitet, über unten aufgeführten Link, können Sie ihn aufrufen:
+
+<%= "#{$APPLICATION_URL.chomp("/")}#{user_import_path(@user, @import_id, :locale => @locale)}" %>
+
+Dankeschön
+- Ihr <%= "#{t('personalize.application_name')}" %> Team
+
+- - - -
+
+Fragen oder Anregungen?  Wenden Sie sich an: <%= "#{$SYSADMIN_EMAIL}" %>.
+
+
+
