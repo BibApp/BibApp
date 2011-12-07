@@ -199,6 +199,8 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
+    rails-i18n (0.2.0)
+      i18n (~> 0.5)
     railties (3.0.10)
       actionpack (= 3.0.10)
       activesupport (= 3.0.10)
@@ -296,6 +298,7 @@ DEPENDENCIES
   omniauth (~> 0.3)
   pg
   rails (= 3.0.10)
+  rails-i18n
   rake
   rcov
   rspec
