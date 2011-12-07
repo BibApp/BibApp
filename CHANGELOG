@@ -3,6 +3,7 @@
 Remove ruby-net-ldap gem in favor of net-ldap
 Update aasm gem
 Update Solr to 3.5
+Use rails-18n gem to get "Rails" translations
 
 1.2.0 - December 7, 2011
 --------------

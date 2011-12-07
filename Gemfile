@@ -58,6 +58,9 @@ gem 'delayed_job'
 gem 'acts_as_list'
 gem 'acts_as_tree', "~> 1.2.3", :git => 'https://github.com/parasew/acts_as_tree.git'
 
+#Rails translations
+gem 'rails-i18n'
+
 #Change this as appropriate if you are using a different database
 #You can also use groups to set it differently for development and
 #production, for example. Note that the appropriate database for your
