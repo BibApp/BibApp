@@ -28,14 +28,14 @@ gem "namecase", "~>1.1.0"
 #RedCloth - converts plain text or textile to HTML (also used by HAML)
 gem "RedCloth",  "~>4.1.9", :require => "redcloth"
 
-#Ruby-Net-LDAP - used to perform LDAP queries
-gem "ruby-net-ldap", "~>0.0.4", :require => "net/ldap"
-
 #RubyZip - used to create Zip file to send via SWORD
 gem "rubyzip", "~>0.9.1", :require => "zip/zip"
 
 #Solr-Ruby - Solr connections for ruby
 gem "solr-ruby", "~>0.0.6", :require => "solr"
+
+#Required for LDAP lookups
+gem "net-ldap"
 
 #Will Paginate - for fancy pagination
 gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'

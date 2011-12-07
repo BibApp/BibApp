@@ -232,7 +232,6 @@ GEM
       linecache (>= 0.3)
     ruby-debug-ide (0.4.16)
       rake (>= 0.8.1)
-    ruby-net-ldap (0.0.4)
     ruby-nuggets (0.7.9)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
@@ -293,6 +292,7 @@ DEPENDENCIES
   isbn-tools (~> 0.1.0)
   libxml-ruby (~> 0.8.3)
   namecase (~> 1.1.0)
+  net-ldap
   omniauth (~> 0.3)
   pg
   rails (= 3.0.10)
@@ -303,7 +303,6 @@ DEPENDENCIES
   ruby-debug
   ruby-debug-base
   ruby-debug-ide
-  ruby-net-ldap (~> 0.0.4)
   rubyzip (~> 0.9.1)
   shoulda
   solr-ruby (~> 0.0.6)
