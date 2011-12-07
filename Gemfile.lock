@@ -20,7 +20,7 @@ GEM
     RedCloth (4.1.9)
     XMLCanonicalizer (1.0.1)
       log4r (>= 1.0.4)
-    aasm (2.3.1)
+    aasm (3.0.0)
       activerecord
     abstract (1.0.0)
     actionmailer (3.0.10)
@@ -271,7 +271,7 @@ PLATFORMS
 
 DEPENDENCIES
   RedCloth (~> 4.1.9)
-  aasm (~> 2.3.0)
+  aasm
   acts_as_list
   acts_as_tree (~> 1.2.3)!
   authlogic

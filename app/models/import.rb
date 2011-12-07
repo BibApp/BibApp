@@ -23,42 +23,32 @@ class Import < ActiveRecord::Base
 
   # Acts As State Machine
   include AASM
-  aasm_column :state
-  aasm_initial_state :recieved
-
-  aasm_state :recieved
-  aasm_state :processing, :after_enter => :queue_import
-  aasm_state :reviewable, :after_enter => :notify_user
-  aasm_state :accepted, :after_enter => :accept_import
-  aasm_state :rejected, :after_enter => :reject_import
-
-  aasm_event :process do
-    transitions :to => :processing, :from => :recieved
-  end
-
-  aasm_event :review do
-    transitions :to => :reviewable, :from => :processing
-  end
-
-  aasm_event :accept do
-    transitions :to => :accepted, :from => :reviewable
-  end
-
-  aasm_event :reject do
-    transitions :to => :rejected, :from => :reviewable
+  aasm :column => :state do
+    state :received, :initial => true
+    state :processing, :after_enter => :queue_import
+    state :reviewable, :after_enter => :notify_user
+    state :accepted, :after_enter => :accept_import
+    state :rejected, :after_enter => :reject_import
+    event :process do
+      transitions :to => :processing, :from => :received
+    end
+    event :review do
+      transitions :to => :reviewable, :from => :processing
+    end
+    event :accept do
+      transitions :to => :accepted, :from => :reviewable
+    end
+    event :reject do
+      transitions :to => :rejected, :from => :reviewable
+    end
   end
 
   def notify_user
     logger.debug("\n=== Notify User - #{self.id} ===\n\n\n")
     current_locale = I18n.locale
-    Thread.exclusive do
-      begin
-        I18n.locale = self.user.default_locale
-        Notifier.import_review_notification(self).deliver
-      ensure
-        I18n.locale = current_locale
-      end
-    end
+    I18n.locale = self.user.default_locale
+    Notifier.import_review_notification(self).deliver
+    I18n.locale = current_locale
   end
 
   def accept_import
@@ -108,16 +98,16 @@ class Import < ActiveRecord::Base
     self.works_added = []
   end
 
-  ###
-  # ===== Import Object Methods =====
-  ###
+###
+# ===== Import Object Methods =====
+###
 
-  # Add Import to Delayed Job queue
+# Add Import to Delayed Job queue
   def queue_import
     self.delay.batch_import
   end
 
-  # Process Batch Import
+# Process Batch Import
   def batch_import
     return unless self.state == 'processing'
     self.transaction do
@@ -186,7 +176,7 @@ class Import < ActiveRecord::Base
     File.read("#{Rails.root}/public#{self.import_file.public_filename}")
   end
 
-  # Create works in database. Use a transaction to rollback if there is an error, allowing error to propagate
+# Create works in database. Use a transaction to rollback if there is an error, allowing error to propagate
   def create_works_from_attribute_hashes(attr_hashes)
     self.transaction do
       attr_hashes.each do |h|
@@ -223,4 +213,5 @@ class Import < ActiveRecord::Base
 
     return name_strings
   end
+
 end
