@@ -4,7 +4,7 @@ module OpenUrlBookContext
       'rft_val_fmt' => 'info:ofi/fmt:kev:mtx:book',
       'genre' => 'book',
       'btitle' => self.title_primary,
-      'date' => self.publication_date.try(:year),
+      'date' => self.publication_date_year,
       'isbn' => (self.publication.authority.issn_isbn rescue nil),
       'aulast' => self.name_strings.first.last_name
     )

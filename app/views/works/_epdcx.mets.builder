@@ -69,7 +69,7 @@ xml.mdWrap(:LABEL=>"SWORD Metadata - EPrints DC XML schema", :MDTYPE=>"OTHER", :
             xml.epdcx(:valueString, encode_for_xml(work.copyright_holder))
           end
         end
-        work.work_name_strings.where(:role => work.contributor_role).include(:name_strings).each do |wns|
+        work.work_name_strings.where(:role => work.contributor_role).includes(:name_string).each do |wns|
           xml.epdcx(:statement, 'epdcx:propertyURI'=>"http://www.loc.gov/loc.terms/relators/EDT") do
             xml.epdcx(:valueString, encode_for_xml(wns.name_string.name))
           end

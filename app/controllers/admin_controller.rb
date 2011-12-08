@@ -114,7 +114,7 @@ class AdminController < ApplicationController
         # add entry for our METS package
         zip_stream.put_next_entry("mets.xml")
         # render our METS package for this Work
-        zip_stream.print render_to_string("works/package.mets.haml", :work => work, :filenames_only => true)
+        zip_stream.print render_to_string("works/_package.mets.builder", :locals => { :work => work, :filenames_only => true })
 
         #loop through attached files
         work.attachments.each do |att|
