@@ -1,6 +1,5 @@
 = form_for :attachment, :url => attachments_url, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
   %div
-    %h4 Attaching to #{@asset.class.model_name.human}:
     %h4 #{t('attachments.forms.form_content_file.header', :class_name => @asset.class.model_name.human)}:
     %span.asset= WorkExport.new.drive_csl("apa", @asset).html_safe
     %div
