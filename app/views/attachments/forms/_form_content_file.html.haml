@@ -10,7 +10,7 @@
   %fieldset
     %legend= t('attachments.forms.form_content_file.legend')
     #upload_files
-      %label= t('attachments.forms.form_content_file.label'):
+      %label #{t('attachments.forms.form_content_file.label')}:
       -# Allow uploading multiple files
       = link_to_remote t('common.attachments.add_files'), :url => add_upload_box_attachments_url(:form => form)
       %br/
