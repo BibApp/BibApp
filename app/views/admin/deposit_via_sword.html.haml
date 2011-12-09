@@ -1,4 +1,4 @@
-= render :layout => '/layouts/main_body', :locals => {:header => 'SWORD Deposit results:'} do
+= render :layout => '/layouts/main_body', :locals => {:header => t('admin.deposit.header')} do
   - if @deposit
     %p.success #{t('admin.deposit.success')}
     %fieldset
