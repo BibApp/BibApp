@@ -33,21 +33,17 @@ module SharedHelper
   end
 
   def link_to_work_publication(work)
-    if work['publication_data'].blank?
-      t('app.unknown')
-    else
-      pub_name, pub_id = Publication.parse_solr_data(work['publication_data'])
-      link_to("#{name_or_unknown(pub_name)}", publication_path(pub_id), {:class => "source"})
-    end
+    link_to_work_pub_common(work['publication_data'], Publication, :publication_path)
   end
 
   def link_to_work_publisher(work)
-    if work['publisher_data'].blank?
-      t('app.unknown')
-    else
-      pub_name, pub_id = Publisher.parse_solr_data(work['publisher_data'])
-      link_to("#{name_or_unknown(pub_name)}", publisher_path(pub_id), {:class => "source"})
-    end
+    link_to_work_pub_common(work['publisher_data'], Publisher, :publisher_path)
+  end
+
+  def link_to_work_pub_common(pub_data, klass, path_helper_name)
+    return t('app.unknown') if pub_data.blank?
+    name, id = klass.parse_solr_data(pub_data)
+    link_to("#{name_or_unknown(name)}", self.send(path_helper_name, id), {:class => "source"})
   end
 
   def add_filter(params, facet, value, count, label = nil)
