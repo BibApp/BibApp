@@ -46,6 +46,9 @@ class AdminController < ApplicationController
     #Save the date deposited to Works table (this will also change the Archived State)
     @work.archived_at = DateTime.parse(@deposit['updated'])
     @work.save
+    respond_to do |format|
+      format.html
+    end
   end
 
   def duplicates
@@ -98,7 +101,7 @@ class AdminController < ApplicationController
   # Returns a parsed out hash of the response from SWORD Server
   ##
   def send_sword_package(work)
-
+    response_doc = nil
     #Generating SWORD Package, which is a
     # single Zip file containing:
     #  - METS package (named 'mets.xml')
@@ -114,7 +117,7 @@ class AdminController < ApplicationController
         # add entry for our METS package
         zip_stream.put_next_entry("mets.xml")
         # render our METS package for this Work
-        zip_stream.print render_to_string("works/_package.mets.builder", :locals => { :work => work, :filenames_only => true })
+        zip_stream.print render_to_string("works/_package.mets.builder", :locals => {:work => work, :filenames_only => true})
 
         #loop through attached files
         work.attachments.each do |att|

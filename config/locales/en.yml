@@ -302,6 +302,7 @@ en:
   admin:
     deposit:
       date: "Date Deposited"
+      header: "SWORD Deposit results:"
       information: "Deposit Information"
       repository: Repository
       return: "Return to work"
