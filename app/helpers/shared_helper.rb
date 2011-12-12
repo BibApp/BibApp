@@ -12,41 +12,24 @@ module SharedHelper
   end
 
   def link_to_authors(work)
-    links = Array.new
-
-    if work['authors_data'] != nil
-      work['authors_data'].first(5).each do |au|
-        name, id = NameString.parse_solr_data(au)
-        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
-      end
-
-      if work['authors_data'].size > 5
-        links << link_to(t('common.shared.more'), work_path(work['pk_i']))
-      end
-    end
-
-    links.join("; ").html_safe
+    name_string_links(work['authors_data'], '', '', work['pk_i'], '')
   end
 
   def link_to_editors(work)
-    if work['editors_data'] != nil
-      # If no authors, editors go first
-      str = work['authors_data'] ? t('common.shared.in') : ''
-      links = Array.new
+    name_string_links(work['editors_data'], work['authors_data'] ? (t('common.shared.in') + ' ') : '',
+                      " (#{t 'common.shared.eds'})", work['pk_i'], nil)
+  end
 
-      work['editors_data'].first(5).each do |ed|
-        name, id = NameString.parse_solr_data(ed)
-        links << link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
-      end
-
-      if work['editors_data'].size > 5
-        links << link_to(t('common.shared.more'), work_path(work['pk_i']))
-      end
-
-      str += links.join("; ")
-      str += " (#{t 'common.shared.eds'}), "
-      str
+  def name_string_links(name_string_data, prefix, postfix, work_id, result_if_blank)
+    return result_if_blank if name_string_data.blank?
+    links = name_string_data.first(5).collect do |datum|
+      name, id = NameString.parse_solr_data(datum)
+      link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
     end
+    if name_string_data.size > 5
+      links << link_to(t('common.shared.more'), work_path(work_id))
+    end
+    return [prefix, links.join("; "), postfix].join.html_safe
   end
 
   def link_to_work_publication(work)
