@@ -11,14 +11,22 @@ class PasswordsController < ApplicationController
     respond_to do |format|
 
       if user = User.find_by_email(params[:password][:email])
-        @new_password = User.random_password
-        user.password = user.password_confirmation = @new_password
-        user.save_without_session_maintenance
-        UserMailer.new_password(user, @new_password).deliver
+        if user.activated_at
+          @new_password = User.random_password
+          user.password = user.password_confirmation = @new_password
+          user.save_without_session_maintenance
+          UserMailer.new_password(user, @new_password).deliver
 
-        format.html do
-          flash[:notice] = t('common.passwords.flash_create_sent', :email => params[:password][:email])
-          redirect_to login_url
+          format.html do
+            flash[:notice] = t('common.passwords.flash_create_sent', :email => params[:password][:email])
+            redirect_to login_url
+          end
+        else
+          flash[:notice] = t('common.passwords.flash_create_inactive')
+          UserMailer.signup_notification(user).deliver
+          format.html do
+            redirect_to root_url
+          end
         end
       else
         flash[:notice] = t('common.passwords.flash_create_no_account')
