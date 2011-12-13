@@ -1,8 +1,8 @@
-/* -------------------------------------------------------------- 
-  
+/* --------------------------------------------------------------
+
    bibapp.css
    * Style specific to BibApp (http://bibapp.googlecode.com/)
-   
+
    See the Readme file in this folder for additional instructions.
 
 -------------------------------------------------------------- */
@@ -287,7 +287,7 @@ ol.facet_filters li {
 /* Active filter (which can be removed) */
 li.active-filter {
   list-style: none;
-  background: url('../../images/remove_facet.gif') left center no-repeat;
+  background: url('../../icons/cross-button.png') left center no-repeat;
   padding-left: 1.5em;
 }
 
