@@ -2,7 +2,7 @@
   %h3
     #{t '.searching_for'}
     = @query
-    = link_to image_tag('/images/remove_facet.gif'), new_person_membership_path(:person_id => @person.id, :status => "non_member")
+    = link_to fugue_icon_tag('cross-button'), new_person_membership_path(:person_id => @person.id, :status => "non_member")
 - if @groups.length < 1
   %p #{t '.no_groups'}
 - else

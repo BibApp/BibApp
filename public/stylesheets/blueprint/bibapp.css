@@ -287,7 +287,7 @@ ol.facet_filters li {
 /* Active filter (which can be removed) */
 li.active-filter {
   list-style: none;
-  background: url('../../images/remove_facet.gif') left center no-repeat;
+  background: url('../../icons/cross-button.png') left center no-repeat;
   padding-left: 1.5em;
 }
 
