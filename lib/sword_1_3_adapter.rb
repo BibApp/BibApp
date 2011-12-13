@@ -22,27 +22,37 @@ class Sword_1_3_Adapter
     end
   end
 
-  def self.parse_sword_return_xml_to_hash(return_xml)
-    doc = Nokogiri::XML::Document.parse(return_xml)
-    HashWithIndifferentAccess.new.tap do |h|
-      {:atom => [:id, :updated, :title], :sword => [:treatment]}.each do |namespace, fields|
-        fields.each do |field|
-          h[field] = doc.at_xpath("//#{namespace}:#{field}", doc.namespaces).text
-        end
+  def self.send_sword_package(work, work_mets)
+    with_mets_package(work, work_mets) do |mets_file|
+      response_xml = nil
+      # Download it to your browser, with correct mimetype
+      # send_file t.path, :type => 'application/zip', :disposition => 'attachment', :filename => "sword.zip"
+
+      # Post the temp file to our SWORD Server (configured in sword.yml)
+      #note that this is a way to abuse Sword2Client to send to a Sword 1.3 server
+      client = Sword2Client.new
+      begin
+        receipt = client.execute("post", "collection", client.config['default_collection_url'], mets_file.path, {},
+                                 {'Content-Type' => 'application/zip', 'X-Verbose' => 'true', 'X-No-Op' => 'false',
+                                  'Content-Disposition' => "filename=#{File.basename(mets_file.path)}",
+                                  'X-Packaging' => 'http://purl.org/net/sword-types/METSDSpaceSIP'})
+        response_xml = receipt.source
+      rescue SwordDepositReceiptParseException => e
+        response_xml = e.source_xml
       end
+      #parse out our response doc into a hash and return
+      return parse_sword_return_xml_to_hash(response_xml)
     end
   end
 
-  def self.send_sword_package(work, work_mets)
-    response_xml = nil
+  protected
+
+  #create a tempfile with the mets package and yield it
+  def self.with_mets_package(work, work_mets)
     #Generating SWORD Package, which is a
     # single Zip file containing:
     #  - METS package (named 'mets.xml')
     #  - all associated files (referenced by name in METS package)
-
-    # Generate a Temp file, which we'll use to Zip everything up into
-    # general concept borrowed from:
-    # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/
     Tempfile.open("sword-deposit-file-#{work.id}.zip") do |tempfile|
 
       # Give the path of the temp file to the zip outputstream, it won't try to open it as an archive.
@@ -69,26 +79,19 @@ class Sword_1_3_Adapter
           file.close
         end
       end
-      # End of the block  automatically closes the temp file.
-
-      # Download it to your browser, with correct mimetype
-      # send_file t.path, :type => 'application/zip', :disposition => 'attachment', :filename => "sword.zip"
-
-      # Post the temp file to our SWORD Server (configured in sword.yml)
-      #TODO note that this is a way to abuse Sword2Client to send to a Sword 1.3 server
-      client = Sword2Client.new
-      begin
-        receipt = client.execute("post", "collection", client.config['default_collection_url'], tempfile.path, {},
-                                 {'Content-Type' => 'application/zip', 'X-Verbose' => 'true', 'X-No-Op' => 'false',
-                                  'Content-Disposition' => "filename=#{File.basename(tempfile.path)}",
-                                  'X-Packaging' => 'http://purl.org/net/sword-types/METSDSpaceSIP'})
-        response_xml = receipt.source
-      rescue SwordDepositReceiptParseException => e
-        response_xml = e.source_xml
-      end
-
+      yield tempfile
     end
-    #parse out our response doc into a hash and return
-    return parse_sword_return_xml_to_hash(response_xml)
   end
+
+  def self.parse_sword_return_xml_to_hash(return_xml)
+    doc = Nokogiri::XML::Document.parse(return_xml)
+    HashWithIndifferentAccess.new.tap do |h|
+      {:atom => [:id, :updated, :title], :sword => [:treatment]}.each do |namespace, fields|
+        fields.each do |field|
+          h[field] = doc.at_xpath("//#{namespace}:#{field}", doc.namespaces).text
+        end
+      end
+    end
+  end
+
 end
