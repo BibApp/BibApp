@@ -1,6 +1,7 @@
 require 'zip/zip'
 require 'zip/zipfilesystem'
-require 'sword_client'
+require 'sword2ruby'
+require 'nokogiri'
 
 class AdminController < ApplicationController
   #Only System Admins can access this controller's methods
@@ -25,9 +26,8 @@ class AdminController < ApplicationController
 
     #Generate a SWORD package and deposit it.
     # Receive back a hash of deposit information
-    @deposit = send_sword_package(@work)
-
-    logger.debug("DEPOSIT HASH =" + @deposit.inspect)
+    return_xml = send_sword_package(@work)
+    @deposit = parse_sword_return_xml_to_hash(return_xml)
 
     #Find ExternalSystem corresponding to local Institutional Repository
     external_system = find_or_create_repository_system
@@ -48,6 +48,17 @@ class AdminController < ApplicationController
     @work.save
     respond_to do |format|
       format.html
+    end
+  end
+
+  def parse_sword_return_xml_to_hash(return_xml)
+    doc = Nokogiri::XML::Document.parse(return_xml)
+    HashWithIndifferentAccess.new.tap do |h|
+      {:atom => [:id, :updated, :title], :sword => [:treatment]}.each do |namespace, fields|
+        fields.each do |field|
+          h[field] = doc.at_xpath("//#{namespace}:#{field}", doc.namespaces).text
+        end
+      end
     end
   end
 
@@ -142,8 +153,17 @@ class AdminController < ApplicationController
       # send_file t.path, :type => 'application/zip', :disposition => 'attachment', :filename => "sword.zip"
 
       # Post the temp file to our SWORD Server (configured in sword.yml)
-      client = SwordClient.new
-      response_doc = client.post_file(tempfile.path)
+      #TODO note that this is a way to abuse Sword2Client to send to a Sword 1.3 server
+      client = Sword2Client.new
+      begin
+        receipt = client.execute("post", "collection", client.config['default_collection_url'], tempfile.path, {},
+                                 {'Content-Type' => 'application/zip', 'X-Verbose' => 'true', 'X-No-Op' => 'false',
+                                  'Content-Disposition' => "filename=#{File.basename(tempfile.path)}",
+                                  'X-Packaging' => 'http://purl.org/net/sword-types/METSDSpaceSIP'})
+      rescue SwordDepositReceiptParseException => e
+        return e.source_xml
+      end
+      return receipt.source
     end
 
     #parse out our response doc into a hash and return

@@ -1,4 +1,5 @@
-require 'sword_client'
+require 'sword2ruby'
+require 'nokogiri'
 
 class AttachmentsController < ApplicationController
 
@@ -32,7 +33,7 @@ class AttachmentsController < ApplicationController
       #SWORD Client is only applicable for ContentFile attachments
       if @attachment.kind_of?(ContentFile)
         #get SWORD information if SWORD is configured
-        if SwordClient.configured?
+        if Sword2Client.configured?
           get_sword_info #gets License & Repository Name for View
         else
           flash[:error] = t('common.attachments.flash_new_error', :rails_root => Rails.root.to_s)
@@ -182,20 +183,21 @@ class AttachmentsController < ApplicationController
   # from SWORD Server for the default collection
   def get_sword_info
 
-    #initialize SWORD client based on SWORD config (sword.yml)
-    sword_client = SwordClient.new
+    #initialize SWORD client based on SWORD config (sword.yml)\
+    #TODO note - this is currently an abuse to use Sword2Client to deal with a v1.3 repository
+    sword_client = Sword2Client.new
 
-    #get our default collection info from SWORD service document
-    # (this automatically requests the service doc as necessary)
-    default_collection = sword_client.get_default_collection
+    service_doc = sword_client.repo.servicedoc
+    service_doc_xml = Nokogiri::XML::Document.parse(service_doc)
+    default_collection = service_doc_xml.at_xpath("//app:collection[@href='#{sword_client.config['default_collection_url']}']", service_doc_xml.namespaces)
 
     # @TODO, right now we are dependent on a default collection!
-    if !default_collection.nil?
+    if default_collection
       #save license text for display in view
-      @license = default_collection['collectionPolicy']
+      @license = default_collection.at_xpath("//sword:collectionPolicy", service_doc_xml.namespaces).text
 
       #save repository name for display in view
-      @repository_name = sword_client.get_repository_name
+      @repository_name = service_doc_xml.at_xpath("//atom:title", service_doc_xml.namespaces).text
     end
   end
 
@@ -245,6 +247,7 @@ class AttachmentsController < ApplicationController
       return person_url(asset)
     end
   end
+
   helper_method :get_response_url
 
 end
