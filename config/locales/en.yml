@@ -528,7 +528,7 @@ en:
       import_persons_subject: "%{app_name} - batch upload of persons has completed"
       import_review_subject: "%{app_name} - Batch import ready for review"
     passwords:
-      flash_create_inactive: "This account has not yet been activated. Resending sign up notice."
+      flash_create_inactive: "This account has not yet been activated. Resending activation link."
       flash_create_no_account: "Sorry, we cannot find that account.  Try again."
       flash_create_sent: "We sent a new password to %{email}"
       flash_update_bad_match: "Sorry, your new password didn't match the confirmation.  Try again."
