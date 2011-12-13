@@ -1,7 +1,8 @@
-class System < ActiveRecord::BaseWithoutTable
+class System < ActiveRecord::Base
+  self.abstract_class = true
 	acts_as_authorizable
-	
-	#This System model has NO underlying database table.  
+
+	#This System model has NO underlying database table.
 	#It is used to give users System-wide roles (using Authorization plugin)
 
   #This class HAS NO INSTANCES!
@@ -9,20 +10,18 @@ class System < ActiveRecord::BaseWithoutTable
     # has_admins? method, which checks to see if
     # there are any system-wide administrators
     def self.has_admins?
-      admins = has_admins
-      admins and !admins.empty?
+      self.has_admins.present?
     end
 
     # Find all system administrators
     def self.has_admins
       has_role("admin")
     end
-  
+
     # has_editors? method, which checks to see if
     # there are any system-wide editors
     def self.has_editors?
-      editors = has_editors
-      editors and !editors.empty?
+      self.has_editors.present?
     end
 
     # Find all system editors
