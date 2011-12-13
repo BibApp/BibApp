@@ -247,7 +247,7 @@ GEM
       linecache (>= 0.3)
     ruby-debug-ide (0.4.16)
       rake (>= 0.8.1)
-    ruby-nuggets (0.7.9)
+    ruby-nuggets (0.8.0)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
