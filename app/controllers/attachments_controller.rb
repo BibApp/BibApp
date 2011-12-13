@@ -1,4 +1,4 @@
-require 'sword_client'
+require 'sword_1_3_adapter'
 
 class AttachmentsController < ApplicationController
 
@@ -32,7 +32,7 @@ class AttachmentsController < ApplicationController
       #SWORD Client is only applicable for ContentFile attachments
       if @attachment.kind_of?(ContentFile)
         #get SWORD information if SWORD is configured
-        if SwordClient.configured?
+        if Sword_1_3_Adapter.configured?
           get_sword_info #gets License & Repository Name for View
         else
           flash[:error] = t('common.attachments.flash_new_error', :rails_root => Rails.root.to_s)
@@ -181,22 +181,9 @@ class AttachmentsController < ApplicationController
   # Pull down necessary information
   # from SWORD Server for the default collection
   def get_sword_info
-
-    #initialize SWORD client based on SWORD config (sword.yml)
-    sword_client = SwordClient.new
-
-    #get our default collection info from SWORD service document
-    # (this automatically requests the service doc as necessary)
-    default_collection = sword_client.get_default_collection
-
-    # @TODO, right now we are dependent on a default collection!
-    if !default_collection.nil?
-      #save license text for display in view
-      @license = default_collection['collectionPolicy']
-
-      #save repository name for display in view
-      @repository_name = sword_client.get_repository_name
-    end
+    repository_info = Sword_1_3_Adapter.repository_information
+    @license = repository_info[:license]
+    @repository_name = repository_info[:repository_name]
   end
 
   # Adds more file upload boxes to the web form,
@@ -245,6 +232,7 @@ class AttachmentsController < ApplicationController
       return person_url(asset)
     end
   end
+
   helper_method :get_response_url
 
 end

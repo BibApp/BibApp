@@ -1,19 +1,21 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe SharedHelper do
+
   before(:each) do
     @work = {}
   end
 
-  def generate_namestrings(prefix, count)
-    count.times.collect { |n| NameString.create(:name => "#{prefix}-#{n}").to_solr_data }
-  end
-
-  def ids(solr_namestrings)
-    solr_namestrings.collect { |n| n.split('||').last }
-  end
-
   describe "can return name string links for authors and editors" do
+
+    def generate_namestrings(prefix, count)
+      count.times.collect { |n| NameString.create(:name => "#{prefix}-#{n}").to_solr_data }
+    end
+
+    def ids(solr_namestrings)
+      solr_namestrings.collect { |n| n.split('||').last }
+    end
+
     it "should return an empty string if there are no authors" do
       @work['authors_data'] = nil
       helper.link_to_authors(@work).should == ''
@@ -77,4 +79,24 @@ describe SharedHelper do
     end
   end
 
+  describe "can generate links for publishers and publications" do
+    it "should return unknown for blank data" do
+      helper.link_to_work_publication(@work).should == t('app.unknown')
+      helper.link_to_work_publisher(@work).should == t('app.unknown')
+    end
+
+    it "should return a link for a publisher with valid data" do
+      @work['publisher_data'] = "PubName||12"
+      link = link_to_work_publisher(@work)
+      link.should match('PubName')
+      link.should match(Regexp.quote(publisher_path(12)))
+    end
+
+    it "should return a link for a publication with valid data" do
+      @work['publication_data'] = "PubName||13"
+      link = link_to_work_publication(@work)
+      link.should match('PubName')
+      link.should match(Regexp.quote(publication_path(13)))
+    end
+  end
 end

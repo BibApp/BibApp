@@ -1,4 +1,5 @@
-- if SwordClient.configured? and @work.ready_to_archive?
+- require 'sword_1_3_adapter'
+- if Sword_1_3_Adapter.configured? and @work.ready_to_archive?
   %fieldset
     %legend #{t 'works.layouts.merge_form.accepted'}
     %ul#tasks
