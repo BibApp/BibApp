@@ -36,7 +36,7 @@ class Sword_1_3_Adapter
                                  {'Content-Type' => 'application/zip', 'X-Verbose' => 'true', 'X-No-Op' => 'false',
                                   'Content-Disposition' => "filename=#{File.basename(mets_file.path)}",
                                   'X-Packaging' => 'http://purl.org/net/sword-types/METSDSpaceSIP'})
-        response_xml = receipt.source
+        response_xml = client.depositreceipt.source
       rescue SwordDepositReceiptParseException => e
         response_xml = e.source_xml
       end
