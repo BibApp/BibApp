@@ -31,6 +31,9 @@ gem "RedCloth",  "~>4.1.9", :require => "redcloth"
 #RubyZip - used to create Zip file to send via SWORD
 gem "rubyzip", "~>0.9.1", :require => "zip/zip"
 
+#Sword2Ruby - used for SWORD interaction
+gem "sword2ruby", ">=0.0.6", :git => 'git://github.com/BibApp/sword2ruby.git'
+
 #Solr-Ruby - Solr connections for ruby
 gem "solr-ruby", "~>0.0.6", :require => "solr"
 

@@ -1,6 +1,6 @@
 require 'zip/zip'
 require 'zip/zipfilesystem'
-require 'sword_client'
+require 'sword_1_3_adapter'
 
 class AdminController < ApplicationController
   #Only System Admins can access this controller's methods
@@ -25,9 +25,7 @@ class AdminController < ApplicationController
 
     #Generate a SWORD package and deposit it.
     # Receive back a hash of deposit information
-    @deposit = send_sword_package(@work)
-
-    logger.debug("DEPOSIT HASH =" + @deposit.inspect)
+    @deposit = Sword_1_3_Adapter.send_sword_package(@work, work_mets(@work))
 
     #Find ExternalSystem corresponding to local Institutional Repository
     external_system = find_or_create_repository_system
@@ -90,66 +88,6 @@ class AdminController < ApplicationController
     end
   end
 
-  ######
-  # Private methods
-  ######
-  private
-
-  ##
-  # Actually build and send the SWORD package for a given Work
-  #
-  # Returns a parsed out hash of the response from SWORD Server
-  ##
-  def send_sword_package(work)
-    response_doc = nil
-    #Generating SWORD Package, which is a
-    # single Zip file containing:
-    #  - METS package (named 'mets.xml')
-    #  - all associated files (referenced by name in METS package)
-
-    # Generate a Temp file, which we'll use to Zip everything up into
-    # general concept borrowed from:
-    # http://info.michael-simons.eu/2008/01/21/using-rubyzip-to-create-zip-files-on-the-fly/
-    Tempfile.open("sword-deposit-file-#{work.id}.zip") do |tempfile|
-
-      # Give the path of the temp file to the zip outputstream, it won't try to open it as an archive.
-      Zip::ZipOutputStream.open(tempfile.path) do |zip_stream|
-        # add entry for our METS package
-        zip_stream.put_next_entry("mets.xml")
-        # render our METS package for this Work
-        zip_stream.print render_to_string("works/_package.mets.builder", :locals => {:work => work, :filenames_only => true})
-
-        #loop through attached files
-        work.attachments.each do |att|
-          #add entry with filename
-          zip_stream.put_next_entry(att.filename)
-
-          #open file in appropriate mode
-          if att.content_type.match('^text\/.*') #check if MIME Type begins with "text/"
-            file=File.open(att.absolute_path) # open as normal (text-based format)
-          else
-            file=File.open(att.absolute_path, 'rb') # force opening in Binary file mode
-          end
-
-          #add contents of file
-          zip_stream.print file.read
-          file.close
-        end
-      end
-      # End of the block  automatically closes the temp file.
-
-      # Download it to your browser, with correct mimetype
-      # send_file t.path, :type => 'application/zip', :disposition => 'attachment', :filename => "sword.zip"
-
-      # Post the temp file to our SWORD Server (configured in sword.yml)
-      client = SwordClient.new
-      response_doc = client.post_file(tempfile.path)
-    end
-
-    #parse out our response doc into a hash and return
-    return SwordClient::Response.post_response_to_hash(response_doc)
-  end
-
   protected
 
   def find_or_create_repository_system
@@ -158,6 +96,10 @@ class AdminController < ApplicationController
         ExternalSystem.find_or_create_by_name_and_base_url(
             :name => t('personalize.repository_name'),
             :base_url => $REPOSITORY_BASE_URL)
+  end
+
+  def work_mets(work)
+    render_to_string("works/_package.mets.builder", :locals => {:work => work, :filenames_only => true})
   end
 
 end
