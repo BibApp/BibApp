@@ -32,7 +32,7 @@ class Sword_1_3_Adapter
       #note that this is a way to abuse Sword2Client to send to a Sword 1.3 server
       client = Sword2Client.new
       begin
-        receipt = client.execute("post", "collection", client.config['default_collection_url'], mets_file.path, {},
+        client.execute("post", "collection", client.config['default_collection_url'], mets_file.path, {},
                                  {'Content-Type' => 'application/zip', 'X-Verbose' => 'true', 'X-No-Op' => 'false',
                                   'Content-Disposition' => "filename=#{File.basename(mets_file.path)}",
                                   'X-Packaging' => 'http://purl.org/net/sword-types/METSDSpaceSIP'})
