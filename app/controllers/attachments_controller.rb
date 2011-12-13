@@ -1,5 +1,4 @@
-require 'sword2ruby'
-require 'nokogiri'
+require 'sword_1_3_adapter'
 
 class AttachmentsController < ApplicationController
 
@@ -33,7 +32,7 @@ class AttachmentsController < ApplicationController
       #SWORD Client is only applicable for ContentFile attachments
       if @attachment.kind_of?(ContentFile)
         #get SWORD information if SWORD is configured
-        if Sword2Client.configured?
+        if Sword_1_3_Adapter.configured?
           get_sword_info #gets License & Repository Name for View
         else
           flash[:error] = t('common.attachments.flash_new_error', :rails_root => Rails.root.to_s)
@@ -182,23 +181,9 @@ class AttachmentsController < ApplicationController
   # Pull down necessary information
   # from SWORD Server for the default collection
   def get_sword_info
-
-    #initialize SWORD client based on SWORD config (sword.yml)\
-    #TODO note - this is currently an abuse to use Sword2Client to deal with a v1.3 repository
-    sword_client = Sword2Client.new
-
-    service_doc = sword_client.repo.servicedoc
-    service_doc_xml = Nokogiri::XML::Document.parse(service_doc)
-    default_collection = service_doc_xml.at_xpath("//app:collection[@href='#{sword_client.config['default_collection_url']}']", service_doc_xml.namespaces)
-
-    # @TODO, right now we are dependent on a default collection!
-    if default_collection
-      #save license text for display in view
-      @license = default_collection.at_xpath("//sword:collectionPolicy", service_doc_xml.namespaces).text
-
-      #save repository name for display in view
-      @repository_name = service_doc_xml.at_xpath("//atom:title", service_doc_xml.namespaces).text
-    end
+    repository_info = Sword_1_3_Adapter.repository_information
+    @license = repository_info[:license]
+    @repository_name = repository_info[:repository_name]
   end
 
   # Adds more file upload boxes to the web form,

@@ -1,4 +1,5 @@
--include_stylesheet('specific/works/show')
+- require 'sword_1_3_adapter'
+- include_stylesheet('specific/works/show')
 
 - if current_user_role?("editor", @work)
   = render :layout => '/layouts/admin_bar' do
@@ -6,7 +7,7 @@
     - if !@work.archived?
       %li= link_to t('works.show.archive'), new_work_attachment_path(@work)
     -#If SWORD is configured, and Work is "Ready for Archiving"
-    -if Sword2Client.configured? and @work.ready_to_archive?
+    -if Sword_1_3_Adapter.configured? and @work.ready_to_archive?
       %li= link_to t('works.show.deposit'), admin_deposit_via_sword_url(:work_id => @work)
 
 = render :layout => 'layouts/main_body_no_h2' do
