@@ -1,4 +1,5 @@
 - @publication ||= @work.publication
 = label 'publication', :name, "#{@work.class.human_attribute_name(:publication)}:"
-= text_field_with_auto_complete 'publication', :name, {:class=>'text', :size => 40},
-  {:method => :get, :skip_style => true, :frequency => 0.5, :after_update_element => "populatePubFields"}
+= text_field 'publication', :name, {:class => 'text', :size => 40}
+:javascript
+  $jq("#publication_name").autocomplete({ source: ["pete", "pearl", "joebob"]});
