@@ -1,10 +1,11 @@
+- include_javascript('specific/works/autocomplete')
 = render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person).html_safe} do
 
   .right
     %h3 #{t 'works.new.header'}:
     %ul
       %li #{link_to t('app.batch_import'), new_user_import_path(current_user, :person_id => (@person and @person.id))}
-      %li -----
+      %li= '-----'
       = render 'shared/work_type_list'
 
   .span-16

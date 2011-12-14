@@ -1,5 +1,3 @@
 - @publication ||= @work.publication
 = label 'publication', :name, "#{@work.class.human_attribute_name(:publication)}:"
 = text_field 'publication', :name, {:class => 'text', :size => 40}
-:javascript
-  $jq("#publication_name").autocomplete({ source: ["pete", "pearl", "joebob"]});

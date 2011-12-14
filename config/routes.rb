@@ -7,8 +7,6 @@ Bibapp::Application.routes.draw do
         get :auto_complete_for_author_string
         get :auto_complete_for_editor_string
         get :auto_complete_for_keyword_name
-        get :auto_complete_for_publication_name
-        get :auto_complete_for_publisher_name
         get :auto_complete_for_tag_name
         get :orphans
         delete :destroy_multiple
@@ -123,6 +121,7 @@ Bibapp::Application.routes.draw do
         put :update_multiple
         get :add_to_box
         get :remove_from_box
+        get :autocomplete
       end
     end
 
@@ -135,6 +134,7 @@ Bibapp::Application.routes.draw do
         put :update_multiple
         get :add_to_box
         get :remove_from_box
+        get :autocomplete
       end
     end
 

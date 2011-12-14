@@ -241,4 +241,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #for the given class with name attribute, search for that given name an return a json list of the first limit
+  #names
+  def json_name_search(name, klass, limit = 8)
+    beginning_search = "#{name}%"
+    word_search = "% #{name}%"
+    objects = klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
+    objects.collect {|o| o.name}.to_json
+  end
+
 end

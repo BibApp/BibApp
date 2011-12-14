@@ -405,22 +405,6 @@ class WorksController < ApplicationController
     render 'works/forms/fields/autocomplete_list', :objects => keywords_and_tags.uniq.sort.first(8)
   end
 
-  #Auto-Complete for entering Publication Titles in Web-based Work entry
-  #  This method provides users with a list of matching Publications
-  #  already in BibApp.
-  def auto_complete_for_publication_name
-    publications = name_search(params[:publication][:name].downcase, Publication, 8)
-    render 'works/forms/fields/publication_autocomplete_list', :publications => publications
-  end
-
-  #Auto-Complete for entering Publisher Name in Web-based Work entry
-  #  This method provides users with a list of matching Publishers
-  #  already in BibApp.
-  def auto_complete_for_publisher_name
-    publishers = name_search(params[:publisher][:name].downcase, Publisher, 8)
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
-  end
-
   #Adds a single item value to list of items in Web-based Work entry
   # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:
