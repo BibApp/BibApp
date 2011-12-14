@@ -60,7 +60,7 @@ Bibapp::Application.routes.draw do
     # Add Auto-Complete routes for adding new groups
     resources :groups do
       collection do
-        get :auto_complete_for_group_name
+        get :autocomplete
         get :hidden
       end
       member do

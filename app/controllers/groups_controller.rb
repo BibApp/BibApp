@@ -2,7 +2,6 @@ require 'autocomplete_controller_mixin'
 class GroupsController < ApplicationController
   include GoogleChartsHelper
   include KeywordCloudHelper
-  include AutocompleteControllerMixin
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :hide]
@@ -92,8 +91,10 @@ class GroupsController < ApplicationController
     @title = t('common.groups.hidden_groups')
   end
 
-  def auto_complete_for_group_name
-    generic_autocomplete_for_group_name(true)
+  def autocomplete
+    respond_to do |format|
+      format.json {render :json => json_name_search(params[:term].downcase, Group, 8)}
+    end
   end
 
   def hide
