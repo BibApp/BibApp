@@ -1,4 +1,0 @@
-page.replace_html "contributorship_admin-#{@contributorship.id}", :partial => 'verified'
-page.replace 'contributorships', :partial => 'contributorship', :collection => @contributorships
-page.visual_effect :highlight, "contributorship_id-#{@contributorship.id}"
-

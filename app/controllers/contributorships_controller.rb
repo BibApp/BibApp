@@ -54,7 +54,6 @@ class ContributorshipsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render :action => :verify_contributorship }
     end
   end
 
@@ -72,7 +71,6 @@ class ContributorshipsController < ApplicationController
     # RJS action removes the denied Work from the view
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { render :action => :deny_contributorship }
     end
   end
 
