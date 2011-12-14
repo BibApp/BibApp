@@ -18,7 +18,7 @@
   - editors = @editor_name_strings if @editor_name_strings
   = label :author, "#{t 'works.forms.fields.editor_name_strings.label'}:"
   %br/
-  = text_field :editor, :string, :class=>'text',
+  = text_field :editor, :string, :class=>'text'
   -# Ajax-enabled link to add new items to below list
   = link_to_remote t('app.add'), :url => add_item_to_list_works_url, :condition => "$('editor_string').value.length > 0",
      :with => "'list_type=editor_name_strings&item_value='+$F('editor_string')+'&item_class=movable&sortable=true&clear_field=editor_string'"
