@@ -20,7 +20,7 @@
   - keywords = @keywords if @keywords
   = label :keyword, "#{t 'works.forms.fields.merge_keywords.label'}:"
   %br/
-  = text_field_with_auto_complete :keyword, :name, {:class=>'text'}, {:method => :get, :skip_style => true, :frequency => 0.5}
+  = text_field :keyword, :name, :class=>'text'
   -# Ajax-enabled link to add new items to below list
   = link_to_remote t('app.add'), add_item_to_list_url, :condition => "$('keyword_name').value.length > 0",
       :with => "'list_type=keywords&item_value='+$F('keyword_name')+'&clear_field=keyword_name'"

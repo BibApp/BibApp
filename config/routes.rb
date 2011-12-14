@@ -3,12 +3,6 @@ Bibapp::Application.routes.draw do
   def make_routes
     resources :works do
       collection do
-        get :auto_complete_for_author_string
-        get :auto_complete_for_editor_string
-        get :auto_complete_for_keyword_name
-        get :auto_complete_for_publication_name
-        get :auto_complete_for_publisher_name
-        get :auto_complete_for_tag_name
         get :orphans
         delete :destroy_multiple
         #Following support legacy RJS stuff
@@ -63,7 +57,7 @@ Bibapp::Application.routes.draw do
     # Add Auto-Complete routes for adding new groups
     resources :groups do
       collection do
-        get :auto_complete_for_group_name
+        get :autocomplete
         get :hidden
       end
       member do
@@ -91,7 +85,6 @@ Bibapp::Application.routes.draw do
     # Add Auto-Complete routes
     resources :memberships do
       collection do
-        get :auto_complete_for_group_name
         put :create_multiple
         post :sort
         post :search_groups
@@ -122,6 +115,7 @@ Bibapp::Application.routes.draw do
         put :update_multiple
         get :add_to_box
         get :remove_from_box
+        get :autocomplete
       end
     end
 
@@ -134,6 +128,7 @@ Bibapp::Application.routes.draw do
         put :update_multiple
         get :add_to_box
         get :remove_from_box
+        get :autocomplete
       end
     end
 
@@ -188,7 +183,11 @@ Bibapp::Application.routes.draw do
     # DEFAULT ROUTES
     ####
     # Install the default routes as the lowest priority.
-    resources :name_strings
+    resources :name_strings do
+      collection do
+        get :autocomplete
+      end
+    end
     resources :memberships
     resources :pen_names do
       collection do

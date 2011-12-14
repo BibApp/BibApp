@@ -368,59 +368,6 @@ class WorksController < ApplicationController
     work.set_work_name_strings(accumulator)
   end
 
-  #Auto-Complete for entering Author NameStrings in Web-based Work entry
-  def auto_complete_for_author_string
-    auto_complete_for_name_string(params[:author][:string])
-  end
-
-  #Auto-Complete for entering Editor NameStrings in Web-based Work entry
-  def auto_complete_for_editor_string
-    auto_complete_for_name_string(params[:editor][:string])
-  end
-
-  #Auto-Complete for entering NameStrings in Web-based Work entry
-  #  This method provides users with a list of matching NameStrings
-  #  already in BibApp.
-  def auto_complete_for_name_string(name_string)
-    names = name_search(name_string.downcase, NameString, 8).collect { |ns| ns.name }
-    render 'works/forms/fields/autocomplete_list', :objects => names
-  end
-
-  def auto_complete_for_keyword_name
-    auto_complete_for_name(params[:keyword][:name])
-  end
-
-  def auto_complete_for_tag_name
-    auto_complete_for_name(params[:tag][:name])
-  end
-
-  #provide matching keywords or tags for autocomplete based off of the supplied name
-  def auto_complete_for_name(name)
-    keywords = name_search(name.downcase, Keyword, 8)
-    tags = name_search(name.downcase, Tag, 8)
-
-    #Combine both lists
-    keywords_and_tags = (keywords + tags).collect { |x| x.name }
-
-    render 'works/forms/fields/autocomplete_list', :objects => keywords_and_tags.uniq.sort.first(8)
-  end
-
-  #Auto-Complete for entering Publication Titles in Web-based Work entry
-  #  This method provides users with a list of matching Publications
-  #  already in BibApp.
-  def auto_complete_for_publication_name
-    publications = name_search(params[:publication][:name].downcase, Publication, 8)
-    render 'works/forms/fields/publication_autocomplete_list', :publications => publications
-  end
-
-  #Auto-Complete for entering Publisher Name in Web-based Work entry
-  #  This method provides users with a list of matching Publishers
-  #  already in BibApp.
-  def auto_complete_for_publisher_name
-    publishers = name_search(params[:publisher][:name].downcase, Publisher, 8)
-    render :partial => 'works/forms/fields/autocomplete_list', :locals => {:objects => publishers}
-  end
-
   #Adds a single item value to list of items in Web-based Work entry
   # This is used to add multiple values in form (e.g. multiple NameStrings, Keywords, etc)
   # Expects three parameters:

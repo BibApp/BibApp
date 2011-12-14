@@ -1,3 +1,4 @@
+- include_javascript('specific/works/autocomplete')
 = render :layout => '/layouts/main_body', :locals => {:header => t('works.merge_duplicates.header')} do
   - unless @work.accepted?
     - flash[:notice]  = t('.flash_not_accepted', :work_status => t_work_status(@work.work_state_id))

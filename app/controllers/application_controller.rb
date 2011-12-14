@@ -4,7 +4,6 @@
 class ApplicationController < ActionController::Base
   clear_helpers
   helper PrototypeHelper
-  helper AutoCompleteMacrosHelper
   helper SharedHelper
   helper TranslationsHelper
   helper_method :current_user_session, :current_user, :logged_in?
@@ -240,6 +239,15 @@ class ApplicationController < ActionController::Base
         request_http_basic_authentication t('app.web_password')
       end
     end
+  end
+
+  #for the given class with name attribute, search for that given name an return a json list of the first limit
+  #names
+  def json_name_search(name, klass, limit = 8)
+    beginning_search = "#{name}%"
+    word_search = "% #{name}%"
+    objects = klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
+    objects.collect {|o| o.name}.to_json
   end
 
 end

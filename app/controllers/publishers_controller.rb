@@ -114,6 +114,12 @@ class PublishersController < ApplicationController
 
   end
 
+  def autocomplete
+    respond_to do |format|
+      format.json {render :json => json_name_search(params[:term].downcase, Publisher, 8)}
+    end
+  end
+
   private
 
   def current_objects
