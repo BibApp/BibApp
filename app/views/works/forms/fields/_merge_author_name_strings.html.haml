@@ -18,9 +18,7 @@
   - authors = @author_name_strings if @author_name_strings
   = label :author, "#{t 'works.forms.fields.merge_author_name_strings.label'}:"
   %br/
-  = text_field_with_auto_complete :author, :string, {:class=>'text',:value =>"#{@person.last_first if @person}"},
-    {:method => :get, :skip_style => true, :on_show => "function(element, update) {show_autocomplete_names(element, update);}",
-    :on_hide => "function(element, update) {hide_autocomplete_names(element, update);}", :frequency => 0.5}
+  = text_field :author, :string, :class=>'text', :value => "#{@person.last_first if @person}"}
   -# Ajax-enabled link to add new items to below list
   = link_to_remote t('app.add'), :url => add_item_to_list_works_url, :condition => "$('author_string').value.length > 0",
      :with => "'list_type=author_name_strings&item_value='+$F('author_string')+'&item_class=movable&sortable=true&clear_field=author_string'"
