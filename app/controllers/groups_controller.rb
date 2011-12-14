@@ -1,4 +1,3 @@
-require 'autocomplete_controller_mixin'
 class GroupsController < ApplicationController
   include GoogleChartsHelper
   include KeywordCloudHelper

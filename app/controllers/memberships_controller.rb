@@ -1,7 +1,4 @@
-require 'autocomplete_controller_mixin'
 class MembershipsController < ApplicationController
-
-  include AutocompleteControllerMixin
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
@@ -190,10 +187,6 @@ class MembershipsController < ApplicationController
     @person = membership.person
     render :partial => 'group', :collection => @person.groups(true)
 
-  end
-
-  def auto_complete_for_group_name
-    generic_autocomplete_for_group_name(false)
   end
 
   private

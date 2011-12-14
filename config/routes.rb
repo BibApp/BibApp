@@ -4,8 +4,6 @@ Bibapp::Application.routes.draw do
   def make_routes
     resources :works do
       collection do
-        get :auto_complete_for_keyword_name
-        get :auto_complete_for_tag_name
         get :orphans
         delete :destroy_multiple
         #Following support legacy RJS stuff
@@ -88,7 +86,6 @@ Bibapp::Application.routes.draw do
     # Add Auto-Complete routes
     resources :memberships do
       collection do
-        get :auto_complete_for_group_name
         put :create_multiple
         post :sort
         post :search_groups
