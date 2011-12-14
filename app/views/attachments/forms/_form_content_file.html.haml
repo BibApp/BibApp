@@ -1,4 +1,5 @@
-= form_for :attachment, :url => attachments_url, :html => { :multipart => true, :onsubmit => "if($('license_agree').checked==false){$('license_warning').toggle(); return false;} return true;" } do |form|
+- include_javascript('specific/attachments/_form_content_file')
+= form_for :attachment, :url => attachments_url, :html => { :multipart => true} do |form|
   %div
     %h4 #{t('attachments.forms.form_content_file.header', :class_name => @asset.class.model_name.human)}:
     %span.asset= WorkExport.new.drive_csl("apa", @asset).html_safe
@@ -26,7 +27,7 @@
       %p
         = check_box_tag 'license_agree', 'yes'
         = t('common.attachments.agree_to_terms')
-        = link_to_function t('common.attachments.deposit_license'), "$('license').toggle();"
+        = link_to_function t('common.attachments.deposit_license'), "toggle_license()"
         for
         = @repository_name || t('common.attachments.local_repository')
 
@@ -37,5 +38,4 @@
 
   %p.submit
     = submit_tag t('common.attachments.upload_files'), :disable_with => t('common.attachments.uploading_files')
-
 
