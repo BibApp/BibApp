@@ -1,3 +1,4 @@
+- include_javascript('specific/publications/_form')
 %fieldset
   %legend #{Publication.model_name.human}
   = form_for @publication do |form|
@@ -16,7 +17,7 @@
     %p
       %label #{Publisher.model_name.human}
       %br/
-      = text_field_with_auto_complete :publication, :publisher_name, {}, {:url => publishers_path(:js), :method => :get, :with => "'search=' + element.value" }
+      = text_field :publication, :publisher_name
 
     -if @publication.authority_id
       %p

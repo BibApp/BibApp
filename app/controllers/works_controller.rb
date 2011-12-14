@@ -368,24 +368,6 @@ class WorksController < ApplicationController
     work.set_work_name_strings(accumulator)
   end
 
-  #Auto-Complete for entering Author NameStrings in Web-based Work entry
-  def auto_complete_for_author_string
-    auto_complete_for_name_string(params[:author][:string])
-  end
-
-  #Auto-Complete for entering Editor NameStrings in Web-based Work entry
-  def auto_complete_for_editor_string
-    auto_complete_for_name_string(params[:editor][:string])
-  end
-
-  #Auto-Complete for entering NameStrings in Web-based Work entry
-  #  This method provides users with a list of matching NameStrings
-  #  already in BibApp.
-  def auto_complete_for_name_string(name_string)
-    names = name_search(name_string.downcase, NameString, 8).collect { |ns| ns.name }
-    render 'works/forms/fields/autocomplete_list', :objects => names
-  end
-
   def auto_complete_for_keyword_name
     auto_complete_for_name(params[:keyword][:name])
   end

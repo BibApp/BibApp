@@ -4,8 +4,6 @@ Bibapp::Application.routes.draw do
   def make_routes
     resources :works do
       collection do
-        get :auto_complete_for_author_string
-        get :auto_complete_for_editor_string
         get :auto_complete_for_keyword_name
         get :auto_complete_for_tag_name
         get :orphans
@@ -189,7 +187,11 @@ Bibapp::Application.routes.draw do
     # DEFAULT ROUTES
     ####
     # Install the default routes as the lowest priority.
-    resources :name_strings
+    resources :name_strings do
+      collection do
+        get :autocomplete
+      end
+    end
     resources :memberships
     resources :pen_names do
       collection do
