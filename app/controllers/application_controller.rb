@@ -245,7 +245,7 @@ class ApplicationController < ActionController::Base
   def json_name_search(name, klass, limit = 8)
     beginning_search = "#{name}%"
     word_search = "% #{name}%"
-    objects = klass.where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
+    objects = klass.select("DISTINCT(name)").where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
     objects.collect {|o| o.name}.to_json
   end
 
