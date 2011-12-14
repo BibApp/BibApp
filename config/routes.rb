@@ -202,7 +202,7 @@ Bibapp::Application.routes.draw do
     resources :passwords
     resources :attachments do
       collection do
-        post :add_upload_box
+        get :add_upload_box
       end
     end
 

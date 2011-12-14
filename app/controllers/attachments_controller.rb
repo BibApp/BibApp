@@ -189,10 +189,10 @@ class AttachmentsController < ApplicationController
   # Adds more file upload boxes to the web form,
   # to allow for multi-uploads
   def add_upload_box
-    form = params[:form]
-    #Add new upload field dynamically using Javascript
     respond_to do |format|
-      format.js { render :action => 'add_file_box', :locals => {:form => form} }
+      format.html do
+        render :partial => 'upload_file', :layout => false
+      end
     end
   end
 

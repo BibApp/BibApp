@@ -204,3 +204,12 @@ function decode_js_data_div(div_id) {
   else
     return null;
 }
+
+//Do an ajax get to the url and append the results to the element(s) selected by the selector
+function ajax_append(url, selector) {
+  $jq.ajax({url: url,
+    success: function(data) {
+      $jq(selector).append(data);
+    }
+  })
+}

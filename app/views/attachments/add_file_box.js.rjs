@@ -1,2 +1,0 @@
-#Add another file upload box
-page.insert_html :bottom, 'upload_files', :partial => "upload_file", :locals => { :form => @form }
