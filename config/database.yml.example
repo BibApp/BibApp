@@ -21,7 +21,7 @@ development:
   encoding: utf8
   database: bibapp_development
   username: root
-  password: 
+  password:
   socket: /tmp/mysql.sock
   # Note: for Ubuntu / Debian, the MySQL socket is often located at
   # socket: /var/run/mysqld/mysqld.sock
@@ -42,26 +42,29 @@ production:
   encoding: utf8
   database: bibapp_production
   username: root
-  password: 
+  password:
   socket: /tmp/mysql.sock
 
-############################################################### 
-# PostgreSQL is also an option!  Version 8.x is recommended, 
+###############################################################
+# PostgreSQL is also an option!  Version 8.x is recommended,
 # but 7.4 and above *should* work.
-# 
+#
 # Install the PostgreSQL driver:
 #   gem install postgres -- --with-pgsql-dir=/path/to/pgsql
 #
+# The min_messages parameter works along with the silent-postgres gem
+# to suppress a lot of postgres related logging that would happen otherwise in Rails 3.
 postgresql_example:
   adapter: postgresql
   encoding: utf8
   database: bibapp_development
   username: root
   password:
-  
+  min_messages: WARNING
+
   # NOTE: There is no 'socket:' option for PostgreSQL.
   # So comment it out in MySQL examples above!
-  
+
   # Connect on a TCP socket.  Omitted by default since the client uses a
   # domain socket that doesn't need configuration.
   #host: remote-database
@@ -73,4 +76,3 @@ postgresql_example:
   # The server defaults to notice.
   #min_messages: warning
 
-  

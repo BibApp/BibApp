@@ -134,4 +134,7 @@ group :test, :development do
   #So instead I've installed the metrical gem separately to see
   #if I can get it to work that way.
   #gem 'metric_fu
+
+  #attempt to remove excess logging caused by postgres
+  gem 'silent-postgres'
 end
