@@ -74,7 +74,6 @@ class MembershipsController < ApplicationController
 
     @person.groups << @group
     respond_to do |format|
-      format.js { render :action => :regen_lists }
       format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
     end
   end
@@ -134,14 +133,12 @@ class MembershipsController < ApplicationController
       @person.groups << @group
       respond_to do |format|
         format.html { redirect_to new_person_membership_path(:person_id => @person.id) }
-        format.js { render :action => :regen_lists }
       end
     end
   end
 
   def search_groups
     respond_to do |format|
-      format.js { render :action => :regen_lists }
       format.html { redirect_to new_person_membership_path(:person_id => params[:person_id],
                                                            :status => params[:status], :q => params[:q]) }
     end
@@ -154,7 +151,6 @@ class MembershipsController < ApplicationController
     @membership = Membership.find(params[:id])
     @membership.destroy if @membership
     respond_to do |format|
-      format.js { render :action => :regen_lists }
       format.html do
         if @membership
           redirect_to new_person_membership_path(:person_id => @membership.person.id)
@@ -192,7 +188,6 @@ class MembershipsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js { render :action => :regen_lists }
       format.html { redirect_to new_membership_path(:person_id => @person.id) }
     end
   end
