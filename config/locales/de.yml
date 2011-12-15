@@ -791,7 +791,7 @@ de:
   jsperanto:
     application:
       confirm_delete: "Soll dieser Eintrag wirklich dauerhaft gelöscht werden?"
-      confirm_delete_pl: "Sind Sie sicher, dass Sie diese  __count__ Einträge permanent löschen wollen?"
+      confirm_delete_plural: "Sind Sie sicher, dass Sie diese  __count__ Einträge permanent löschen wollen?"
       select_item: "Bitte wählen Sie einen Eintrag zum Löschen aus."
     specific:
       contributorships:

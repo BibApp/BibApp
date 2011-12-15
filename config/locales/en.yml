@@ -801,7 +801,7 @@ en:
     application:
       select_item: "Please select an item to delete."
       confirm_delete: "Are you sure you want to permanently delete this item?"
-      confirm_delete_pl: "Are you sure you want to permanently delete these __count__ items?"
+      confirm_delete_plural: "Are you sure you want to permanently delete these __count__ items?"
     specific:
       contributorships:
         index:
