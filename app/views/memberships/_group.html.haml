@@ -18,4 +18,3 @@
       = form.date_select 'end_date', :start_year => 1950, :end_year => Time.now.year, :discard_month => true, :include_blank => true
       %br/
       = submit_tag t('app.save')
-= sortable_element 'current', :url => sort_memberships_url(:person_id => @person.id)

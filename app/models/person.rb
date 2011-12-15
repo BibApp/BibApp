@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   has_many :name_strings, :through => :pen_names
 
   has_many :memberships, :dependent => :destroy
-  has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false], :order => "position"
+  has_many :groups, :through => :memberships, :conditions => ["groups.hide = ?", false], :order => 'position'
 
   has_many :works, :through => :contributorships,
            :conditions => ["contributorships.contributorship_state_id = ?", Contributorship::STATE_VERIFIED]

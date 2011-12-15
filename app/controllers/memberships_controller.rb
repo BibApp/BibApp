@@ -4,7 +4,7 @@ class MembershipsController < ApplicationController
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
 
   before_filter :find_membership, :only => [:destroy]
-  before_filter :find_person, :only => [:create, :create_group, :new, :destroy, :sort]
+  before_filter :find_person, :only => [:create, :create_group, :new, :destroy, :sort, :ajax_sort]
   before_filter :find_group, :only => [:create, :create_group, :destroy]
 
   make_resourceful do
@@ -166,6 +166,24 @@ class MembershipsController < ApplicationController
 
   end
 
+  def ajax_sort
+    ids = params[:ids].collect { |id| id.split('_').last.to_i }
+    @person.transaction do
+      ids.each_with_index do |id, position|
+        membership = @person.memberships.where(:group_id => id).first
+        membership.position = position + 1
+        membership.save
+      end
+    end
+    respond_to do |format|
+      format.html do
+        render :nothing => true
+      end
+    end
+  end
+
+  #TODO - at least some of what this is supposed to do is superseded by ajax_sort. Is it used for anything else,
+  #or can it and its route be removed?
   def sort
     @person.groups.each do |group|
       membership = Membership.find_by_person_id_and_group_id(@person.id, group.id)

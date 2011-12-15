@@ -1,3 +1,6 @@
+- include_javascript('specific/memberships/_member_groups')
 #edit_membership_active
   %ol#current
-    = render :partial => "group", :collection => @person.groups(true)
+    = render :partial => "group", :collection => @person.groups(true).order(:position)
+= hidden_field_tag('sort_url', ajax_sort_memberships_path)
+= hidden_field_tag('person_id', @person.id)

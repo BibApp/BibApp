@@ -88,6 +88,7 @@ Bibapp::Application.routes.draw do
       collection do
         put :create_multiple
         post :sort
+        post :ajax_sort
         post :search_groups
       end
     end
