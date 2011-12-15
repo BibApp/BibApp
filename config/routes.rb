@@ -87,6 +87,7 @@ Bibapp::Application.routes.draw do
       collection do
         put :create_multiple
         post :sort
+        post :ajax_sort
         post :search_groups
       end
     end
@@ -201,7 +202,7 @@ Bibapp::Application.routes.draw do
     resources :passwords
     resources :attachments do
       collection do
-        post :add_upload_box
+        get :add_upload_box
       end
     end
 

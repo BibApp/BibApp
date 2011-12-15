@@ -68,5 +68,5 @@ function matchedPenNames() {
 
 // On Document load
 document.observe("dom:loaded", function() {
-  matchedPenNames();
+ // matchedPenNames();
 });
