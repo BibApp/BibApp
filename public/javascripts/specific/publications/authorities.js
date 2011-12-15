@@ -1,25 +1,12 @@
-// Highlight selected authority candidates
 function highlight_candidates() {
-
-  // Find all authority candidates
-  auth_opts = $$('tr.authority_option');
-  auth_opts.each(function(tr) {
-    select = new String();
-    select = "publication_" + tr.id;
-
-    // If candidate row is listed on current page, "highlight" the row
-    if ($(select)) {
-      $(select).removeClassName("even");
-      $(select).removeClassName("odd");
-      $(select).addClassName("selected");
-    }
+  $jq('tr.authority_option').each(function(i, e) {
+    $jq('#publication_' + this.id).removeClass("even odd").addClass('selected');
   })
 }
 
-// On Document load
-document.observe("dom:loaded", function() {
+$jq(function() {
   highlight_candidates();
-});
+})
 
 // Make table into javascript widget
 $jq(document).ready(function() {

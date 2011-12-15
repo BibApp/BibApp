@@ -799,12 +799,12 @@ thead td {
 }
 
 /* Selected candidates */
-#publishers .selected {
+#publishers .selected td {
   background-color: #FFFF99;
 }
 
 /* Selected candidates */
-#publications .selected {
+#publications .selected td {
   background-color: #FFFF99;
 }
 
