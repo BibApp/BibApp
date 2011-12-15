@@ -1,48 +1,48 @@
-var year_index = 0;
-var year_tags = decode_js_data_div('year-tags')
-var charts = decode_js_data_div('chart-urls')
-var work_counts = decode_js_data_div('work-counts')
+var year_tags = decode_js_data_div('year-tags');
+var charts = decode_js_data_div('chart-urls');
+var work_counts = decode_js_data_div('work-counts');
+var slider_div = $jq('#track1');
 
-function show_list(year) {
-  var items = $('timeline-tagcloud').getElementsByTagName('ul');
-  for (var i = 0; i < items.length; i++) {
-    var l = items[i];
-    if (l.id == "list-" + year) {
-      l.style.display = "block";
-    }
-    else {
-      l.style.display = "none";
-    }
-  }
+function slider_stop() {
+  var index = slider_div.slider('value');
+  show_year(index);
+  show_chart(index);
+  show_list(index);
 }
 
-function set_year(ydata, num) {
-  if (ydata) {
-    var header = document.getElementById("curyear");
-    header.innerHTML = ydata;
-    var chart = document.getElementById("chart-img");
-    if (work_counts[num] == 0) {
-      chart.innerHTML = "<p>No data</p>"
+function show_year(index) {
+  $jq('#curyear').text(year_tags[slider_div.slider('value')]);
+}
+
+function show_chart(index) {
+  var html;
+  if (work_counts[index] == 0) {
+    html = "<p>No data</p>";
+  } else {
+    html = "<img src='" + charts[index] + "' title='" + $jq.jsperanto.t("specific.keywords.timeline.title") + "'/>";
+  }
+  $jq('#chart-img').html(html);
+}
+
+function show_list(index) {
+  $jq('#timeline-tagcloud ul').each(function(i, e) {
+    if(i == index) {
+      $jq(this).css('display', 'block');
     } else {
-      chart.innerHTML = "<img src='" + charts[num] + "' title='" + $jq.jsperanto.t("specific.keywords.timeline.title") + "'/>";
+      $jq(this).css('display', 'none');
     }
-    show_list(ydata);
-  }
+  });
 }
 
-var year_range = new Array(year_tags.length);
-for (var i = 0; i < year_range.length; i++) {
-  year_range[i] = i;
-}
+$jq(function () {
+  slider_div.slider({
+    min: 0,
+    max: year_tags.length - 1,
+    value: 0,
+    stop: function () {
+      slider_stop()
+    }
+  });
+  slider_stop();
+})
 
-var slider = new Control.Slider('handle1', 'track1', {
-  axis:       'horizontal',
-  range: $R(0, year_range.length - 1),
-  values: year_range
-});
-
-set_year(year_tags[0], 0);
-slider.options.onSlide = function(v) {
-  set_year(year_tags[v], v);
-};
-slider.setEnabled();
