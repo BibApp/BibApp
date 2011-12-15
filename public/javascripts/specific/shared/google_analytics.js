@@ -1,3 +1,4 @@
+//note this is pure javascript as provided by Google. No particular library is involved.
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', googleAnalyticsId]);
 _gaq.push(['_trackPageview']);
