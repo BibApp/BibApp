@@ -1,1 +1,0 @@
-page.replace_html "authority_form", :partial => "authority_form", :object => @pas
