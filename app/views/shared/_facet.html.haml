@@ -1,19 +1,22 @@
 -# general partial for display the facet sections of the _facets partial
 -# must pass facet_key, facets
+- include_javascript('specific/shared/_facet')
 - heading = t("facet_headings.#{facet_key}")
 - filter_name = "#{facet_key.to_s.singularize}_facet"
 - if facets.present?
   .facet
     .facet_heading #{heading}
-    %ol.facet_filters{:id => "top-five-#{facet_key}"}
+    %ol.facet_filters.top_facets
       - facets.first(5).each do |f|
         %li.show
           = add_filter(params, filter_name, f.name, f.value)
 
     - if @facets[:publications].size > 5
-      %ol.facet_filters{:style => "display:none", :id => "all-#{facet_key}"}
+      %ol.facet_filters.all_facets{:style => "display:none;"}
         - facets.each do |f|
           %li.show
             = add_filter(params, filter_name, f.name, f.value)
 
-      %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"
+      -# %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"
+      %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "toggle_facets(this);"
+      %p.fewer_filters{:style => 'display:none;'}= link_to_function t('shared.facet.fewer', :heading => heading), "toggle_facets(this);"

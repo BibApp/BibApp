@@ -1049,6 +1049,7 @@ en:
       verify: Verify
     facet:
       more: "More %{heading}"
+      fewer: "Fewer %{heading}"
     facets:
       formats: Formats
       heading: "Refine Results"
