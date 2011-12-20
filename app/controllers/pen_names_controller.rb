@@ -3,10 +3,10 @@ require 'database_methods'
 class PenNamesController < ApplicationController
 
   #Require a user be logged in to create / update / destroy
-  before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :login_required, :only => [:new, :create, :destroy]
 
   before_filter :find_pen_name, :only => [:destroy]
-  before_filter :find_person, :only => [:create, :create_name_string, :new, :destroy, :sort]
+  before_filter :find_person, :only => [:create, :create_name_string, :new, :destroy]
   before_filter :find_name_string, :only => [:create, :create_name_string, :destroy]
   before_filter :ajax_setup, :only => [:ajax_add, :ajax_destroy]
 
