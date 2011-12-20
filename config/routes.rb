@@ -195,7 +195,6 @@ Bibapp::Application.routes.draw do
       collection do
         post :create_name_string
         post :live_search_for_name_strings
-        post :sort
         post :ajax_add
         post :ajax_destroy
       end
