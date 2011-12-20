@@ -4,6 +4,11 @@ source "http://gems.github.com"
 #Rails itself
 gem "rails", "3.0.10"
 
+#Use jquery for javascript - in Rails 3.0 this involves running a generator too
+#once we get to 3.1 all that should be necessary is adding some includes
+#to the application.js file in assets
+gem 'jquery-rails'
+
 gem 'rake'
 
 #Haml - Haml plugin will fail initialization if haml gem is not installed.

@@ -1,6 +1,10 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+//Alias jQuery
+//TODO after all the prototype is out we can undo this
+var $jq = jQuery;
+
 /*
   set the checked attribute of anything selected by the dependentCheckboxSelector
   to be the same as that of the element globalCheckbox

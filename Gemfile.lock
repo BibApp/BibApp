@@ -83,7 +83,7 @@ GEM
     cmess (0.1.2.288)
       htmlentities
       ruby-nuggets (>= 0.3.3)
-    columnize (0.3.5)
+    columnize (0.3.6)
     cucumber (1.1.4)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
@@ -118,11 +118,14 @@ GEM
     gherkin (2.7.1)
       json (>= 1.4.6)
     haml (3.1.4)
-    highline (1.6.8)
+    highline (1.6.9)
     hpricot (0.8.5)
     htmlentities (4.0.0)
     i18n (0.5.0)
     isbn-tools (0.1.0)
+    jquery-rails (1.0.19)
+      railties (~> 3.0)
+      thor (~> 0.14)
     json (1.6.3)
     libxml-ruby (0.8.3)
     linecache (0.46)
@@ -306,6 +309,7 @@ DEPENDENCIES
   hpricot (~> 0.6)
   htmlentities (~> 4.0.0)
   isbn-tools (~> 0.1.0)
+  jquery-rails
   libxml-ruby (~> 0.8.3)
   namecase (~> 1.1.0)
   net-ldap
