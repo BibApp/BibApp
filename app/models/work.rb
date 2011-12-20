@@ -86,10 +86,10 @@ class Work < ActiveRecord::Base
   scope :to_batch_index, where(:batch_index => TO_BE_BATCH_INDEXED)
 
   #Various Work Contribution Statuses
-  scope :unverified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_UNVERIFIED})
-  scope :verified, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_VERIFIED})
-  scope :denied, joins(:contributorships).where(:contributorships => {:contributorship_state_id => Contributorship::STATE_DENIED})
-  scope :visible, joins(:contributorships).where(:contributorships => {:hide => false})
+  scope :unverified, where('contributorships.contributorship_state_id = ?', Contributorship::STATE_UNVERIFIED)
+  scope :verified, where('contributorships.contributorship_state_id = ?', Contributorship::STATE_VERIFIED)
+  scope :denied, where('contributorships.contributorship_state_id = ?', Contributorship::STATE_DENIED)
+  scope :visible, where('contributorships.hide = ?', false)
 
   scope :for_authority_publication,
         lambda { |authority_publication_id| where(:authority_publication_id => authority_publication_id) }
