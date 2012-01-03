@@ -768,7 +768,9 @@ en:
       imported_for: "Imported For"
     matched:
       matched: Matched
-      matched_total: "%{count} work to %{imported_for}."
+      matched_total:
+        one: "%{count} work to %{imported_for}."
+        other: "%{count} works to %{imported_for}."
       remaining_total: "%{count} remain to match."
     new:
       add_import: "Add an Import"
