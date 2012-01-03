@@ -17,6 +17,5 @@
           %li.show
             = add_filter(params, filter_name, f.name, f.value)
 
-      -# %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "$('all-#{facet_key}').show(); $('top-five-#{facet_key}').hide(); this.hide();"
       %p.more_filters= link_to_function t('shared.facet.more', :heading => heading), "toggle_facets(this);"
       %p.fewer_filters{:style => 'display:none;'}= link_to_function t('shared.facet.fewer', :heading => heading), "toggle_facets(this);"
