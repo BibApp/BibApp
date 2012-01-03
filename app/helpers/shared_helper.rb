@@ -77,11 +77,13 @@ module SharedHelper
   def facet_remove_filter(filter, object = nil)
     filter.clone.tap do |remove_filter|
       # Delete any filters pertaining to current object from removal list
-      remove_filter.delete_if { |f| object and f.include?(object.solr_filter) }
       # Delete any filters pertaining to Work status (as different statuses are currently never shown intermixed)
-      remove_filter.delete_if { |f| f.include?(Work.solr_status_field) }
       # Delete any filters pertaining to Person's active status (since we only want to see active people)
-      remove_filter.delete_if { |f| f.include?("person_active:") }
+      remove_filter.delete_if do |f|
+        (object and f.include?(object.solr_filter)) or
+            f.include?(Work.solr_status_field) or
+            f.include?("person_active:")
+      end
     end
   end
 
