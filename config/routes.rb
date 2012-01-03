@@ -139,7 +139,12 @@ Bibapp::Application.routes.draw do
     ####
     # Make URLs like /user/1/password/edit for Users managing their passwords
     resources :users do
-      resources :imports
+      resources :imports do
+        member do
+          post :create_pen_name
+          post :destroy_pen_name
+        end
+      end
       resource :password
       collection do
         match 'activate(/:activation_code)', :to => 'users#activate', :as => 'activate'

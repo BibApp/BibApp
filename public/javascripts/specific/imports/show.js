@@ -42,16 +42,61 @@ function setMatchTotals() {
 
   var remaining = imported - total;
   if (remaining > 0) {
-    $jq('#remaining_total').addClass('error').html(remaining_message(remaining));
+    var text = $.t("specific.imports.show.remaining_total", {count: remaining});
+    $jq('#remaining_total').addClass('error').text(text);
+    //$jq('#remaining_total').addClass('error').text('blah');
   } else {
-    $jq('#remaining_total').removeClass('error').html($jq.t("specific.imports.show.remaining_total_zero"))
+    $jq('#remaining_total').removeClass('error').text($jq.t("specific.imports.show.remaining_total_zero"))
   }
 }
 
-function remaining_message(count) {
-  $jq.t("specific.imports.show.remaining_total", {count: count});
+function set_namestring_callbacks() {
+  var person_id = $jq('#person-id').text();
+  var import_id = $jq('#import-id').text();
+  var url = '/users/' + person_id + '/imports/' + import_id + '/'
+  $jq('#current_pen_names input[type="checkbox"]').each(function() {
+    $jq(this).change(function() {
+      $jq.ajax({
+        url: url + 'destroy_pen_name',
+        data: {
+          name_string_id: $jq(this).closest('td').attr('id'),
+          person_id: person_id
+        },
+        type: 'POST',
+        success: function(data, status, xhr) {
+          rerender_namestring_lists(data)
+        }
+      })
+    });
+  });
+  $jq('#imported_pen_names input[type="checkbox"]').each(function() {
+    $jq(this).change(function() {
+      $jq.ajax({
+        url: url + 'create_pen_name',
+        data: {
+          person_id: person_id,
+          name_string_id: $jq(this).closest('li').attr('id').split('-')[1],
+        },
+        type: 'POST',
+        success: function(data, status, xhr) {
+          rerender_namestring_lists(data)
+        }
+      })
+    });
+  });
 }
 
-$jq(function () {
+function rerender_namestring_lists(data) {
+  var json = $jq.parseJSON(data);
+  $jq('#current_pen_names').replaceWith(json.current_pen_names);
+  $jq('#imported_pen_names').replaceWith(json.imported_pen_names);
+  set_namestring_callbacks();
   matchedPenNames();
-});
+}
+
+$jq(function() {
+  set_namestring_callbacks();
+  $jq.jsperanto.init(function() {
+    matchedPenNames();
+  })
+})
