@@ -49,7 +49,6 @@ function setMatchTotals() {
   if (remaining > 0) {
     var text = $jq.t("specific.imports.show.remaining_total", {count: remaining});
     $jq('#remaining_total').addClass('error').text(text);
-    //$jq('#remaining_total').addClass('error').text('blah');
   } else {
     $jq('#remaining_total').removeClass('error').text($jq.t("specific.imports.show.remaining_total_zero"))
   }
