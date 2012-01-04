@@ -819,8 +819,8 @@ en:
           confirm_unverify_plural: "Are you sure you want to unverify the __count__ selected items?"
       imports:
         show:
-          matched_total: "__count__ work"
-          matched_total_plural: "__count__ works"
+          matched_total: "__count__ work to __imported_for__"
+          matched_total_plural: "__count__ works to __imported_for__"
           remaining_total: "__count__ remains unmatched."
           remaining_total_plural: "__count__ remain unmatched."
           remaining_total_zero: "Everything matches."
