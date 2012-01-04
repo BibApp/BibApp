@@ -42,7 +42,13 @@ function setMatchTotals() {
 
   //This is just a jquery way of getting the html for the full <a> element as a string. One thing jquery doesn't make easy.
   var link_string = $jq('#matched_total a').clone().wrap('<div>').parent().html();
-  var text = $jq.t('specific.imports.show.matched_total', {count: total, imported_for: link_string});
+  var text;
+  if(total != 0) {
+    text = $jq.t('specific.imports.show.matched_total', {count: total, imported_for: link_string});
+  } else {
+    text = $jq.t('specific.imports.show.matched_total_zero', {count: total, imported_for: link_string});
+  }
+
   $jq('#matched_total').html(text);
 
   var remaining = imported - total;
