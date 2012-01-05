@@ -28,8 +28,10 @@
         = render 'works/forms/fields/contributor_list_item', :ns_id=> i, :ns_name=>contributor[:name], :ns_role=>contributor[:role]
 
   -# Ajax-enabled link to add new items to below list
-  = link_to_remote t('works.forms.fields.contributor_name_strings.add'), :url => add_contributor_to_list_works_url, :with => "'ns_id='+$('contributor_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
+  -#TODO JS
+  =# link_to_remote t('works.forms.fields.contributor_name_strings.add'), :url => add_contributor_to_list_works_url, :with => "'ns_id='+$('contributor_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
 
   -# Call Javascript action to make the above author list sortable, so users can change order of authors.
   -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
-  = sortable_element 'contributor_name_strings_list', :update => 'list_hint', :only => 'movable', :url => reorder_list_works_url(:list_type =>'contributor_name_strings'), :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
+  -#TODO JS
+  =# sortable_element 'contributor_name_strings_list', :update => 'list_hint', :only => 'movable', :url => reorder_list_works_url(:list_type =>'contributor_name_strings'), :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
