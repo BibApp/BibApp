@@ -19,7 +19,7 @@
       %li.list_item{:id => "author_0", :class => "movable"}
         = hidden_field_tag "author_roles[]", "#{role}"
         = text_field_tag "authors[]", nil, {:class => 'text'}
-        = link_to_remote t('works.forms.fields.author_name_strings.remove'),  :url => remove_author_from_list_works_url(:ns_id => 0, :id => @work.id)
+        = link_to_function t('works.forms.fields.author_name_strings.remove'),  'remove_enclosing_list_item(this);'
     -else
       - authors.each_with_index do |author, i|
         = render 'works/forms/fields/author_list_item', :ns_id=> i, :ns_name=> author[:name], :ns_role=> author[:role]

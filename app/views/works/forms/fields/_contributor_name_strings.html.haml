@@ -22,7 +22,7 @@
           - roles.each do |r|
             %option{:value => r, :selected => selected_if_equal(r, roles[0])}= t_work_role_name(r)
         = text_field_tag "contributors[]", nil, {:class=>'text'}
-        = link_to_remote t('works.forms.fields.contributor_name_strings.remove'), :url => remove_contributor_from_list_works_url(:ns_id => 0)
+        = link_to_function t('works.forms.fields.contributor_name_strings.remove'), 'remove_enclosing_list_item(this);'
     -else
       - contributors.each_with_index do |contributor, i|
         = render 'works/forms/fields/contributor_list_item', :ns_id=> i, :ns_name=>contributor[:name], :ns_role=>contributor[:role]
