@@ -60,7 +60,7 @@ gem 'aasm'
 gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
 
 #delayed jobs
-gem 'delayed_job'
+gem 'delayed_job', "~>2.1.0"
 
 #data structures
 gem 'acts_as_list'

@@ -300,7 +300,7 @@ DEPENDENCIES
   cucumber-rails
   daemons (~> 1.0.10)
   database_cleaner
-  delayed_job
+  delayed_job (~> 2.1.0)
   dynamic_form
   email_spec
   factory_girl
