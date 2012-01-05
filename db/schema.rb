@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111207205811) do
+ActiveRecord::Schema.define(:version => 20120105211452) do
 
   create_table "attachments", :force => true do |t|
     t.string   "filename"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20111207205811) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   create_table "external_system_uris", :force => true do |t|
