@@ -29,8 +29,3 @@
 
   -# Ajax-enabled link to add new items to below list
   = link_to_function t('works.forms.fields.contributor_name_strings.add'), 'add_contributor_list_item()'
-
-  -# Call Javascript action to make the above author list sortable, so users can change order of authors.
-  -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
-  -#TODO JS
-  =# sortable_element 'contributor_name_strings_list', :update => 'list_hint', :only => 'movable', :url => reorder_list_works_url(:list_type =>'contributor_name_strings'), :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)

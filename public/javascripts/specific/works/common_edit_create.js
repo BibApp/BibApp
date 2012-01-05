@@ -29,4 +29,6 @@ function add_contributor_list_item() {
 $jq(function() {
   store_author_list_item_template();
   store_contributor_list_item_template();
+  $jq('#author_name_strings_list').sortable({placeholder: "ui-state-highlight", items: 'li'});
+  $jq('#contributor_name_strings_list').sortable();
 })

@@ -26,10 +26,3 @@
 
   -# Ajax-enabled link to add new items to below list
   = link_to_function t('works.forms.fields.author_name_strings.add', :role => t_work_role_name(role)), 'add_author_list_item();'
-
-  -# Call Javascript action to make the above author list sortable, so users can change order of authors.
-  -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
-  -#TODO JS
-  -# note that this sorting seems a bit wonky as currently implemented. In particular integrating adding/deleting and sorting.
-  -# it might be best to simply make the list sortable on the page but only attempt to update when the save_changes button is clicked
-  =# sortable_element 'author_name_strings_list', :update => 'list_hint', :only => 'movable', :url => reorder_list_works_url(:list_type =>'author_name_strings'), :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
