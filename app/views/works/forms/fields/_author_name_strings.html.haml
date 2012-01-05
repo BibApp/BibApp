@@ -24,5 +24,4 @@
       - authors.each_with_index do |author, i|
         = render 'works/forms/fields/author_list_item', :ns_id=> i, :ns_name=> author[:name], :ns_role=> author[:role]
 
-  -# Ajax-enabled link to add new items to below list
   = link_to_function t('works.forms.fields.author_name_strings.add', :role => t_work_role_name(role)), 'add_author_list_item();'

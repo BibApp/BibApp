@@ -27,5 +27,4 @@
       - contributors.each_with_index do |contributor, i|
         = render 'works/forms/fields/contributor_list_item', :ns_id=> i, :ns_name=>contributor[:name], :ns_role=>contributor[:role]
 
-  -# Ajax-enabled link to add new items to below list
   = link_to_function t('works.forms.fields.contributor_name_strings.add'), 'add_contributor_list_item()'
