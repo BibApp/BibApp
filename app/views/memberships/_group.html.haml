@@ -8,7 +8,7 @@
       = link_to t('.leave'), membership_url(membership), :confirm => t('.confirm'), :method => :delete
 
   %div.membership-group-form
-    = form_for :membership,  membership,  :url => membership_url(membership), :remote => true, :html => {:method => :put} do |form|
+    = form_for  membership, :as => :membership, :url => membership_url(membership), :remote => true, :html => {:method => :put} do |form|
       #{t 'app.title'}
       = form.text_field :title
       #{t '.year_joined'}:
