@@ -198,8 +198,10 @@ class MembershipsController < ApplicationController
     fix_date_parameters
     membership.update_attributes(params[:membership])
     @person = membership.person
-    render :partial => 'group', :collection => @person.groups(true)
-
+    respond_to do |format|
+      format.html { render :partial => 'group', :collection => @person.groups(true) }
+      format.js {render :nothing => true}
+    end
   end
 
   private
