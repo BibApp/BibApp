@@ -6,7 +6,7 @@ class WorksController < ApplicationController
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required,
-                :only => [:new, :create, :edit, :update, :destroy, :destroy_multiple, :merge_duplicates,
+                :only => [:new, :create, :edit, :update, :destroy, :destroy_multiple,
                           :orphans]
 
   before_filter :find_authorities, :only => [:new, :edit]
@@ -200,13 +200,6 @@ class WorksController < ApplicationController
         end
       end
     end
-  end
-
-  def merge_duplicates
-    #Anyone with 'editor' role on this work can edit it
-    @work = Work.find(params[:id])
-    permit "editor on work"
-    @dupe = Work.find(params[:dupe_id])
   end
 
   def update
