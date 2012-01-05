@@ -68,7 +68,6 @@ class ContributorshipsController < ApplicationController
     @contributorship.deny_contributorship
     @contributorship.save
 
-    # RJS action removes the denied Work from the view
     respond_to do |format|
       format.html { redirect_to :back }
     end
