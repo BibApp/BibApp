@@ -1,3 +1,4 @@
+- include_javascript('specific/pen_names/new')
 - if current_user_any_role?("editor", Group)
   = render :layout => '/layouts/admin_bar' do
     %li= link_to t('pen_names.new.delete'), person_url(@person), :method => :delete, :confirm => t('pen_names.new.confirm')
@@ -26,5 +27,3 @@
     = render 'suggested_namestrings'
 
     = render 'search_for_namestrings'
-
-    = sortable_element 'current', :url => sort_pen_names_url(:person_id => @person.id)

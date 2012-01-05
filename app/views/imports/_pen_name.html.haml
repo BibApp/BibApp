@@ -1,7 +1,7 @@
 - @match_count = 0
 %tr
   %td{:id => pen_name.name_string.id, :class => "pen_name"}
-    = ajax_pen_name_checkbox_toggle pen_name.name_string, @person, selected, true
+    = check_box_tag "name_string_#{pen_name.name_string.id}_toggle", '1', true
     = pen_name.name_string.name
   %td{:id => "pn-#{pen_name.name_string.id}-count", :class => "pen_name_count"} 0
-  
+

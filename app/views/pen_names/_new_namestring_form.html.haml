@@ -1,4 +1,4 @@
-= remote_form_for :name_string, NameString.new, :url => create_name_string_pen_names_url, :method => :post do |form|
+= form_for NameString.new, :url => create_name_string_pen_names_url(), :as => :name_string, :remote => true, :html => {:id => 'new_name_string_form'} do |form|
   #{t '.add_text'}
   %br/
   = form.text_field :name, :size => 20

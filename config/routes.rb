@@ -5,18 +5,9 @@ Bibapp::Application.routes.draw do
       collection do
         get :orphans
         delete :destroy_multiple
-        #Following support legacy RJS stuff
-        post :reorder_list
-        post :add_item_to_list
-        post :remove_item_from_list
-        post :add_author_to_list
-        post :remove_author_from_list
-        post :add_contributor_to_list
-        post :remove_contributor_from_list
         post :orphans_delete
       end
       member do
-        get :merge_duplicates
         get :add_to_saved
         get :remove_from_saved
         put :change_type
@@ -138,7 +129,12 @@ Bibapp::Application.routes.draw do
     ####
     # Make URLs like /user/1/password/edit for Users managing their passwords
     resources :users do
-      resources :imports
+      resources :imports do
+        member do
+          post :create_pen_name
+          post :destroy_pen_name
+        end
+      end
       resource :password
       collection do
         match 'activate(/:activation_code)', :to => 'users#activate', :as => 'activate'
@@ -194,7 +190,8 @@ Bibapp::Application.routes.draw do
       collection do
         post :create_name_string
         post :live_search_for_name_strings
-        post :sort
+        post :ajax_add
+        post :ajax_destroy
       end
     end
     resources :keywords

@@ -1,4 +1,4 @@
-- include_javascript('specific/works/autocomplete')
+- include_javascripts('specific/works/autocomplete', 'specific/works/common_edit_create')
 - if current_user_role?("editor", @work)
   = render :layout => 'layouts/admin_bar' do
     %li= link_to t('works.edit.delete_link'), work_url(@work), :method => :delete, :confirm => t('works.edit.confirm')

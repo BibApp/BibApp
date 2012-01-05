@@ -19,16 +19,9 @@
       %li.list_item{:id => "author_0", :class => "movable"}
         = hidden_field_tag "author_roles[]", "#{role}"
         = text_field_tag "authors[]", nil, {:class => 'text'}
-        = link_to_remote t('works.forms.fields.author_name_strings.remove'),  :url => remove_author_from_list_works_url(:ns_id => 0, :id => @work.id)
+        = link_to_function t('works.forms.fields.author_name_strings.remove'),  'remove_enclosing_list_item(this);'
     -else
       - authors.each_with_index do |author, i|
         = render 'works/forms/fields/author_list_item', :ns_id=> i, :ns_name=> author[:name], :ns_role=> author[:role]
 
-  -# Ajax-enabled link to add new items to below list
-  = #link_to_remote "[add more #{role.downcase}s]", :url => add_author_to_list_works_url, :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
-  = link_to_remote t('works.forms.fields.author_name_strings.add', :role => t_work_role_name(role)), :url => add_author_to_list_works_url,
-    :with => "'ns_id='+$('author_name_strings_list').childElements().length+'&work_type=#{@work.class}'"
-
-  -# Call Javascript action to make the above author list sortable, so users can change order of authors.
-  -# NOTE: params passed to sortable_element NEED to be the same as the page.sortable() call in 'item_list.js.rjs'
-  = sortable_element 'author_name_strings_list', :update => 'list_hint', :only => 'movable', :url => reorder_list_works_url(:list_type =>'author_name_strings'), :complete => visual_effect(:highlight, 'list_hint', :duration => 1.5)
+  = link_to_function t('works.forms.fields.author_name_strings.add', :role => t_work_role_name(role)), 'add_author_list_item();'

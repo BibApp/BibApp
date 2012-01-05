@@ -768,7 +768,9 @@ en:
       imported_for: "Imported For"
     matched:
       matched: Matched
-      matched_total: "%{count} work to %{imported_for}."
+      matched_total:
+        one: "%{count} work to %{imported_for}."
+        other: "%{count} works to %{imported_for}."
       remaining_total: "%{count} remain to match."
     new:
       add_import: "Add an Import"
@@ -817,8 +819,9 @@ en:
           confirm_unverify_plural: "Are you sure you want to unverify the __count__ selected items?"
       imports:
         show:
-          matched_total: "__count__ work"
-          matched_total_plural: "__count__ works"
+          matched_total: "__count__ work to __imported_for__"
+          matched_total_plural: "__count__ works to __imported_for__"
+          matched_total_zero: "__count__ works to __imported_for__"
           remaining_total: "__count__ remains unmatched."
           remaining_total_plural: "__count__ remain unmatched."
           remaining_total_zero: "Everything matches."
@@ -1049,6 +1052,7 @@ en:
       verify: Verify
     facet:
       more: "More %{heading}"
+      fewer: "Fewer %{heading}"
     facets:
       formats: Formats
       heading: "Refine Results"

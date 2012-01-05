@@ -1,3 +1,4 @@
 %li{ :id => "name_string_#{name_string.id}" }
-  = ajax_pen_name_checkbox_toggle name_string, @person, selected
+  = check_box_tag "name_string_#{name_string.id}", 1, selected, :class => 'name_string_checkbox'
   = name_string.name
+  = hidden_field_tag("update_url_#{name_string.id}", selected ? ajax_destroy_pen_names_path : ajax_add_pen_names_path, :class => 'update_url')

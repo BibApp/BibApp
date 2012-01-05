@@ -1,3 +1,0 @@
-if @person
-  page.replace_html 'current', :partial => "group", :collection => @person.groups(true), :locals => {:selected => true}
-end
