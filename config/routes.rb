@@ -6,14 +6,6 @@ Bibapp::Application.routes.draw do
       collection do
         get :orphans
         delete :destroy_multiple
-        #Following support legacy RJS stuff
-        post :reorder_list
-        post :add_item_to_list
-        post :remove_item_from_list
-        post :add_author_to_list
-        post :remove_author_from_list
-        post :add_contributor_to_list
-        post :remove_contributor_from_list
         post :orphans_delete
       end
       member do
