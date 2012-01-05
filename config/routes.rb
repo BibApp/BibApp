@@ -17,7 +17,6 @@ Bibapp::Application.routes.draw do
         post :orphans_delete
       end
       member do
-        get :merge_duplicates
         get :add_to_saved
         get :remove_from_saved
         put :change_type

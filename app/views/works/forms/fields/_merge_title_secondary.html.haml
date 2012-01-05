@@ -1,9 +1,0 @@
--#    :form     => current form (REQUIRED)
-%td.duplicate
-  = label_tag 'dupe_title_secondary', "#{@dupe.class.human_attribute_name(:title_secondary)}:"
-  %br/
-  = text_field_tag 'dupe_title_secondary', @dupe.title_secondary, {:class=>'text', :readonly => 'readonly'}
-%td
-  = form.label :title_secondary, "#{@work.class.human_attribute_name(:title_secondary)}:"
-  %br/
-  = form.text_field :title_secondary, :class=>'text'
