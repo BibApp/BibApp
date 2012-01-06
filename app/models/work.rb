@@ -509,7 +509,7 @@ class Work < ActiveRecord::Base
     # If there is no publisher name, set to Unknown
     set_publisher = set_publisher_from_name(publication_hash[:publisher_name])
     set_publication_from_name(publication_hash[:name], publication_hash[:issn_isbn], set_publisher)
-    self.save
+    self.save!
   end
 
   # All Works begin unverified
