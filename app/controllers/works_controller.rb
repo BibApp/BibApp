@@ -97,7 +97,7 @@ class WorksController < ApplicationController
       @group = @current_object
       search(params)
     elsif params[:format] == "rdf"
-      params[:rows] = 100
+      params[:rows] ||= 100
       search(params)
     else
       logger.debug("\n\n===Works: #{@current_object.inspect}")

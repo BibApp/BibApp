@@ -10,6 +10,8 @@ Change autocompletion to jQueryUI from plugin
 Remove legacy prototype javascript in favor of jQuery, including removal of prototype_legacy_helper plugin
 Remove dead code for merging works
 Update delayed_job to 3.0 - requires migration
+Allow rdf request to works#index to supply rows parameter
+Bug fixes
 
 1.2.0 - December 7, 2011
 --------------
