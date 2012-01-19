@@ -276,6 +276,7 @@ class Work < ActiveRecord::Base
     end
 
     work = klass.new
+    work.title_primary = h[:title_primary]
     work.skip_create_contributorships = !add_contributorships
     work.update_from_hash(h)
   end
