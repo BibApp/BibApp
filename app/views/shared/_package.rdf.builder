@@ -20,7 +20,7 @@ xml.rdf(:Description, 'rdf:about'=>"#{work_url(work)}") do
   end
   if work.editors.present?
     xml.bibo(:editorList) do
-      xml.red(:Seq) do
+      xml.rdf(:Seq) do
         work.editors.each do |e|
           xml.rdf(:li, e[:name])
         end
