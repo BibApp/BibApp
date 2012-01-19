@@ -3,7 +3,7 @@ $jq(
       toggle_folder(this)
     }),
     $jq('.group-checkbox').change(function () {
-      if (this.checked == true) {
+      if (this.checked) {
         check_parent(this)
       }
     })
