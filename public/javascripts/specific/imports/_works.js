@@ -6,4 +6,4 @@ $jq(function () {
         return confirm_delete_for_items_selected_by('#work-list input:checked');
       })
     }
-)
+);

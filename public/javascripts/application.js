@@ -27,12 +27,12 @@ function confirm_delete_for_items_selected_by(checkbox_selector) {
     alert($jq.t("application.select_item"));
     return false;
   }
-  var msg = $jq.t("application.confirm_delete", {count: count})
+  var msg = $jq.t("application.confirm_delete", {count:count});
   return confirm(msg);
 }
 
 function decode_js_data_div(div_id) {
-  div = $jq('#' + div_id)
+  div = $jq('#' + div_id);
   if(div)
     return $jq.parseJSON(div.text());
   else

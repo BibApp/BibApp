@@ -36,13 +36,13 @@ function show_list(index) {
 
 $jq(function () {
   slider_div.slider({
-    min: 0,
-    max: year_tags.length - 1,
-    value: 0,
-    stop: function () {
+    min:0,
+    max:year_tags.length - 1,
+    value:0,
+    stop:function () {
       slider_stop()
     }
   });
   slider_stop();
-})
+});
 

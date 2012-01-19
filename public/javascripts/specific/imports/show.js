@@ -63,7 +63,7 @@ function setMatchTotals() {
 function set_namestring_callbacks() {
   var person_id = $jq('#person-id').text();
   var import_id = $jq('#import-id').text();
-  var url = '/users/' + person_id + '/imports/' + import_id + '/'
+  var url = '/users/' + person_id + '/imports/' + import_id + '/';
   $jq('#current_pen_names input[type="checkbox"]').each(function() {
     $jq(this).change(function() {
       $jq.ajax({
@@ -104,9 +104,9 @@ function rerender_namestring_lists(data) {
   matchedPenNames();
 }
 
-$jq(function() {
+$jq(function () {
   set_namestring_callbacks();
-  $jq.jsperanto.init(function() {
+  $jq.jsperanto.init(function () {
     matchedPenNames();
   })
-})
+});

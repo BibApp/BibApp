@@ -9,14 +9,16 @@ function post_list() {
   })
 }
 
-$jq( function() {
+$jq(function () {
   $jq('#current').sortable({
-    placeholder: "ui-state-highlight",
-    update: function() {post_list()}
+    placeholder:"ui-state-highlight",
+    update:function () {
+      post_list()
+    }
   });
   $jq('.membership-group-form form').bind('ajax:success', function (event, data, status, xhr) {
     $jq(this).effect('highlight', null, 2000);
   })
-})
+});
 
 
