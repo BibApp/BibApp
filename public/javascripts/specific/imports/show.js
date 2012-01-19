@@ -53,7 +53,7 @@ function setMatchTotals() {
 
   var remaining = imported - total;
   if (remaining > 0) {
-    var text = $jq.t("specific.imports.show.remaining_total", {count: remaining});
+    text = $jq.t("specific.imports.show.remaining_total", {count: remaining});
     $jq('#remaining_total').addClass('error').text(text);
   } else {
     $jq('#remaining_total').removeClass('error').text($jq.t("specific.imports.show.remaining_total_zero"))
@@ -85,7 +85,7 @@ function set_namestring_callbacks() {
         url: url + 'create_pen_name',
         data: {
           person_id: person_id,
-          name_string_id: $jq(this).closest('li').attr('id').split('-')[1],
+          name_string_id: $jq(this).closest('li').attr('id').split('-')[1]
         },
         type: 'POST',
         success: function(data, status, xhr) {

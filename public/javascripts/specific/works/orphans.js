@@ -6,19 +6,13 @@
         })
   }
 
-  ;
-
   function check_all_orphans() {
     set_orphan_state(1);
   }
 
-  ;
-
   function uncheck_all_orphans() {
     set_orphan_state(0);
   }
-
-  ;
 
   $jq( function () {
     $jq('#check-all').click(check_all_orphans);
