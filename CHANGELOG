@@ -11,6 +11,7 @@ Remove legacy prototype javascript in favor of jQuery, including removal of prot
 Remove dead code for merging works
 Update delayed_job to 3.0 - requires migration
 Allow rdf request to works#index to supply rows parameter
+Use Rails.env in place of ENV['RAILS_ENV'] which was causing at least one bug
 Bug fixes
 
 1.2.0 - December 7, 2011
