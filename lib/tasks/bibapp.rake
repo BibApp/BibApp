@@ -4,7 +4,7 @@ namespace :bibapp do
   desc 'Starts all BibApp services: solr, delayed_jobs, passenger'
   task :start => :environment do
     puts "\n\n== Starting all BibApp services: solr, delayed_jobs, passenger"
-    
+
     begin
       # Start Solr
       puts "* Starting - Solr."
@@ -20,11 +20,11 @@ namespace :bibapp do
 
       # Create the tmp/pids directory if it's not there
       if File.exists?("#{Rails.root}/tmp/pids")
-        sh "script/delayed_job start #{ENV['RAILS_ENV']}"
+        sh "script/delayed_job start #{Rails.env}"
       else
         sh "mkdir #{Rails.root}/tmp/pids"
         sleep(2)
-        sh "script/delayed_job start #{ENV['RAILS_ENV']}"
+        sh "script/delayed_job start #{Rails.env}"
       end
     rescue
       RuntimeError
@@ -42,29 +42,29 @@ namespace :bibapp do
 
     puts "Finished bibapp:start"
   end
-  
+
   desc 'Stop all BibApp services: solr, delayed_jobs, passenger'
   task :stop => :environment do
     begin
       # Stop Solr
       Rake::Task[ "solr:stop"].execute
-      
+
       # Stop Delayed Job
-      sh "script/delayed_job stop #{ENV['RAILS_ENV']}"
-      
+      sh "script/delayed_job stop #{Rails.env}"
+
       # Spin passenger
       sh "touch tmp/restart.txt"
     end
 
     puts "Finished bibapp:stop"
   end
-  
+
   desc 'Restart all BibApp services: solr, delayed_jobs, passenger'
   task :restart => :environment do
     begin
       # Run rake bibapp:stop
       Rake::Task[ "bibapp:stop"].execute
-      
+
       # Run rake bibapp:start
       Rake::Task[ "bibapp:start"].execute
     end
