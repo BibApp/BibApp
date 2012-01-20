@@ -18,12 +18,12 @@ namespace :bibapp do
       puts "\n\n* Starting - Delayed Job."
 
       # Create the tmp/pids directory if it's not there
-      unless File.exists?("#{Rails.root}/tmp/pids")
-        sh "mkdir #{Rails.root}/tmp/pids"
+      unless File.exists?(delayed_job_pid_dir)
+        sh "mkdir #{delayed_job_pid_dir}"
         sleep(2)
       end
       ENV['RAILS_ENV'] = Rails.env
-      sh "script/delayed_job -p #{Rails.env} start"
+      sh "script/delayed_job -p #{Rails.env} --pid-dir=#{delayed_job_pid_dir} start"
     rescue RuntimeError
       puts "### ERROR - Starting - Delayed Job."
     end
@@ -47,7 +47,7 @@ namespace :bibapp do
 
       # Stop Delayed Job
       ENV['RAILS_ENV'] = Rails.env
-      sh "script/delayed_job -p #{Rails.env} stop"
+      sh "script/delayed_job -p #{Rails.env} --pid-dir=#{delayed_job_pid_dir} stop"
 
       # Spin passenger
       sh "touch tmp/restart.txt"
@@ -66,4 +66,8 @@ namespace :bibapp do
       Rake::Task["bibapp:start"].execute
     end
   end
+end
+
+def delayed_job_pid_dir()
+  "#{Rails.root}/tmp/delayed_job_#{Rails.env}_pids"
 end
