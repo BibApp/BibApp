@@ -32,7 +32,7 @@ function confirm_delete_for_items_selected_by(checkbox_selector) {
 }
 
 function decode_js_data_div(div_id) {
-  div = $jq('#' + div_id);
+  var div = $jq('#' + div_id);
   if(div)
     return $jq.parseJSON(div.text());
   else
