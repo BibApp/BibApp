@@ -442,7 +442,7 @@ de:
       flash_new_error: "SWORD schein nicht korrekt in %{rails_root}/config/sword.yml konfiguriert zu sein!<br/> Auch wenn das Hochladen von Dateien funktioniert, ist es nicht möglich, diese an das Repositorium weiterzuleiten."
       flash_update_notice: "Anhang erfolgreich hochgeladen"
       flash_update_warning: "Keine Datei hochgeladen."
-      form_person_title: "%{display_name}: Bild"
+      form_person_title_html: "%{display_name}: Bild"
       local_repository: "mein Repositorium"
       must_agree_to_license: "Sie müssen der Lizenzbestimmung zustimmen, bevor Sie Dateien hochladen können."
       upload_files: "Datei(en) hochladen"
@@ -463,7 +463,7 @@ de:
       denied: abgelehnt
       flash_act_on_many: "Mitarbeit wurde erfolgreich %{action}."
       index: "Werke einer Person"
-      index_title: "%{display_name}: %{status} Mitarbeiterschaft"
+      index_title_html: "%{display_name}: %{status} Mitarbeiterschaft"
       matches: "Mögliche Treffer"
       policy: Policy
       unverified: unbestätigt
@@ -479,7 +479,7 @@ de:
       flash_destroy_failure_children: "Die Gruppe kann nicht gelöscht werden, Sie hat noch sichtbare Untergruppen: %{child_list}"
       flash_destroy_failure_memberships: "Gruppe kann nicht gelöscht werden, es gibt noch Mitgliedschaften."
       flash_destroy_success: "Gruppe wurde erfolgreich gelöscht."
-      flash_hide_failure: "Die Gruppe kann nicht versteckt werden, Sie hat noch sichtbare Untergruppen: %{children}"
+      flash_hide_failure_html: "Die Gruppe kann nicht versteckt werden, Sie hat noch sichtbare Untergruppen: %{children}"
       flash_hide_success: "Gruppe wurde erfolgreich versteckt."
       flash_unhide_failure: "Gruppe kann nicht wieder sichtbar gemacht werden, solange die übergeordnete Gruppe <ul><li>%{parent_anme}</li></ul> unsichtbar ist."
       flash_unhide_success: "Die Gruppe wurde erfolgreich wieder sichtbar gemacht."
@@ -501,7 +501,7 @@ de:
       flash_update_rejected: "Import abgelehnt"
       header: "Werke hinzufügen"
       new: Importieren
-      person_header: "Werke für %{person_link} hinzufügen"
+      person_header_html: "Werke für %{person_link} hinzufügen"
       states:
         accepted: akzeptiert
         processing: "in Bearbeitung"
@@ -537,7 +537,7 @@ de:
       contributorships: "Werke verwalten"
       delete: "Person löschen"
       edit: "Person bearbeiten"
-      edit_header: "%{link}: Persönliche Daten"
+      edit_header_html: "%{link}: Persönliche Daten"
       edit_title: "%{name}: Persönliche Daten"
       file_accepted: "Ihre Datei wurde zur Verarbeitung akzeptiert. Sie werden per E-Mail benachrichtigt, wenn diese abgeschlossen ist."
       file_unconvertible: "Diese Datei konnten nicht in  UTF-8 umgewandelt werden."
@@ -590,13 +590,13 @@ de:
       editor:
         one: Herausgeber
         other: Herausgeber
-      form_header_group: "Die Rolle %{role} der Gruppe: %{group} hinzufügen"
-      form_header_person: "Die Rolle %{role} der Person: %{person} hinzufügen"
-      form_header_system: "Systemweite Rolle - %{role} - bei %{app_name} hinzufügen"
+      form_header_group_html: "Die Rolle %{role} der Gruppe: %{group} hinzufügen"
+      form_header_person_html: "Die Rolle %{role} der Person: %{person} hinzufügen"
+      form_header_system_html: "Systemweite Rolle - %{role} - bei %{app_name} hinzufügen"
       index: "Rollen verwalten"
-      index_header_group: "Rollen für Gruppe: %{group}"
-      index_header_person: "Rollen für Person: %{person}"
-      index_header_system: "Systemweite Rollen: %{app_name}"
+      index_header_group_html: "Rollen für Gruppe: %{group}"
+      index_header_person_html: "Rollen für Person: %{person}"
+      index_header_system_html: "Systemweite Rollen: %{app_name}"
       new_admin: "Administrator hinzufügen"
       new_editor: "Herausgeber hinzufügen"
     search:
@@ -675,12 +675,12 @@ de:
       matches: "Mögliche Treffer"
       no_people: "Hier gibt es zur Zeit nichts zu tun"
     archivable:
-      header: "Archivanalyse: %{person_link}"
+      header_html: "Archivanalyse: %{person_link}"
     archive_analysis_table:
       archiving_policy: Archivleitlinie
-      romeo_color: "RoMEO<br />Farbe"
+      romeo_color_html: "RoMEO<br />Farbe"
     archive_publications_table:
-      pub_copy_allowed: "Verlagskopie<br />Erlaubt"
+      pub_copy_allowed_html: "Verlagskopie<br />Erlaubt"
     claim:
       deny: Ablehnen
       verify: Verifizieren
@@ -705,7 +705,7 @@ de:
     edit:
       delete: "Gruppe löschen"
       delete_confirm: "Soll diese Gruppe wirklich gelöscht werden?. Dies kann nicht rückgängig gemacht werden."
-      header: "%{link_to_group} bearbeiten"
+      header_html: "%{link_to_group} bearbeiten"
       hide: "Gruppe verstecken"
       unhide: "Gruppe wieder sichtbar machen"
     form:
@@ -735,7 +735,7 @@ de:
       name: Deutsch
   imports:
     accepted:
-      text: "Dieser Import wurde aktzeptiert"
+      text_html: "Dieser Import wurde aktzeptiert"
       warning: "Dieser Import wurde akzeptiert, aber er enthält keine Werke. Sie wurden vielleicht gelöscht."
     batch_import_form:
       legend: "Import (RIS | Medline | Refworks XML)"
@@ -762,7 +762,7 @@ de:
       imported_for: "Importiert für"
     matched:
       matched: Übereinstimmung
-      matched_total: "%{count} Werk(e) für %{imported_for}."
+      matched_total_html: "%{count} Werk(e) für %{imported_for}."
       remaining_total: "%{count} noch nicht übereinstimmend."
     new:
       add_import: "Einen Import hinzufügen"
@@ -771,14 +771,14 @@ de:
       my_names: "Meine Namensformen"
       works_matched: "Übereinstimmende Werke"
     processing:
-      text: "Diese Import wird bearbeitet. Sie erhalten eine E-Mail, wenn er abgeschlossen ist."
+      text_html: "Diese Import wird bearbeitet. Sie erhalten eine E-Mail, wenn er abgeschlossen ist."
     rejected:
-      text: "Diese Import wurde abgelehnt und alle mit ihm assoziierten Werke gelöscht."
+      text_html: "Diese Import wurde abgelehnt und alle mit ihm assoziierten Werke gelöscht."
     show:
       add: "Einen Import hinzufügen"
       header: "Einen Import begutachten"
       show: "Meine Importe anzeigen"
-      subheader: "Importiert für %{imported_for}"
+      subheader_html: "Importiert für %{imported_for}"
     work_counts:
       duplicate_works: Dubletten
       new_works: "Neue Werke"
@@ -912,8 +912,8 @@ de:
       confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
       current: "Aktuelle Namensformen"
       delete: "Diese Person löschen"
-      explanation: "Namensformen werden dazu verwandt, Personen mit Veröffentlichungen zu verbinden. Ihre <strong>Aktuellen Namensformen</strong> sollten alle Variationen Ihres Namens beinhalten, die in Zitationen auftauchen können. Um eine Namensform zu löschen, entfernen Sie einfach den Haken in der Box daneben."
-      instructions: "Haken Sie die Box neben einer Namensform an und diese wird zu Ihren Namensformen hinzugefügt."
+      explanation_html: "Namensformen werden dazu verwandt, Personen mit Veröffentlichungen zu verbinden. Ihre <strong>Aktuellen Namensformen</strong> sollten alle Variationen Ihres Namens beinhalten, die in Zitationen auftauchen können. Um eine Namensform zu löschen, entfernen Sie einfach den Haken in der Box daneben."
+      instructions_html: "Haken Sie die Box neben einer Namensform an und diese wird zu Ihren Namensformen hinzugefügt."
       suggested: "Mögliche Namensformen"
     new_namestring_form:
       add_text: "Eine Namensform hinzufügen (z. B. \"Müller, M\")"
@@ -966,7 +966,7 @@ de:
       description: "Neueste %{university_name} Werke von %{object_name}"
   publications:
     authorities:
-      instructions: "Um Publikationsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
+      instructions_html: "Um Publikationsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
     edit:
       confirm: "Soll diese Publikation wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
     form:
@@ -981,7 +981,7 @@ de:
       published_by: "Veröffentlich von"
   publishers:
     authorities:
-      instructions: "Um Verlagsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
+      instructions_html: "Um Verlagsnormdaten zu setzen, fügen Sie dem Feld Einträge hinzu. Wählen Sie einen als Normdatum und Klicken Sie <em>Normdatenreferenz setzen</em>."
     form:
       auth_record: "Normdateneintrag für Verlag"
       copy_allowed: "Verlagskopie zugelassen?"
@@ -1084,7 +1084,7 @@ de:
       email_legend: "E-Mail-Adresse ändern"
       email_submit: "E-Mail-Adresse aktualisieren"
       header: "Mein Benutzerkonto bearbeiten"
-      important_text: "Wenn Sie dieses Formular abschicken, erhalten Sie eine E-Mail, die einen Bestätigungslink enthält. Ihre E-Mail-Adresse wird erst aktualisiert, wenn Sie diesen Link betätigen."
+      important_text_html: "Wenn Sie dieses Formular abschicken, erhalten Sie eine E-Mail, die einen Bestätigungslink enthält. Ihre E-Mail-Adresse wird erst aktualisiert, wenn Sie diesen Link betätigen."
       legend: Benutzerkonto
     new:
       header: "Benutzerkonto anlegen"
@@ -1294,7 +1294,7 @@ de:
         upload: "Datei hochladen:"
     index:
       add: "Werk hinzufügen"
-      heading: Hochschulbibliographie
+      heading_html: Hochschulbibliographie
       view_orphans: "Verwaiste Werke anzeigen"
     layouts:
       merge_form:

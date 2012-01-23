@@ -113,7 +113,7 @@ class GroupsController < ApplicationController
       end
     else
       respond_to do |format|
-        flash[:error] = t('common.groups.flash_hide_failure', :children => child_list(children)).html_safe
+        flash[:error] = t('common.groups.flash_hide_failure_html', :children => child_list(children))
         format.html { redirect_to :action => "edit" }
       end
     end
@@ -165,7 +165,7 @@ class GroupsController < ApplicationController
       end
     elsif children.present?
       respond_to do |format|
-        flash[:error] = t('common.groups.flash_destroy_failure_children', :child_list => child_list(children)).html_safe
+        flash[:error] = t('common.groups.flash_destroy_failure_children_html', :child_list => child_list(children))
         format.html { redirect_to :action => "edit" }
       end
     end

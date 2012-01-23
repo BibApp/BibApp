@@ -14,7 +14,7 @@ module PeopleHelper
   end
 
   def edit_header(person)
-    t('common.people.edit_header', :link => link_to(h(@person.display_name), person_path(@person))).html_safe
+    t('common.people.edit_header_html', :link => link_to(h(@person.display_name), person_path(@person)))
   end
 
   def show_header(person)

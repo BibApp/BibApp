@@ -444,7 +444,7 @@ en:
       flash_new_error: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
       flash_update_notice: "Attachment was successfully uploaded"
       flash_update_warning: "No file was uploaded."
-      form_person_title: "%{display_name}: Photo"
+      form_person_title_html: "%{display_name}: Photo"
       local_repository: "my local repository"
       must_agree_to_license: "You must agree to the license terms before you can upload files."
       upload_files: "Upload file(s)"
@@ -465,7 +465,7 @@ en:
       denied: denied
       flash_act_on_many: "Contributorships were successfully %{action}."
       index: "Works of a person"
-      index_title: "%{display_name}: %{status} Contributorships"
+      index_title_html: "%{display_name}: %{status} Contributorships"
       matches: "Possible Matches"
       policy: Policy
       unverified: unverified
@@ -481,7 +481,7 @@ en:
       flash_destroy_failure_children: "Group cannot be deleted. It has visible child groups: %{child_list}"
       flash_destroy_failure_memberships: "Group cannot be deleted. Memberships exist."
       flash_destroy_success: "Group was successfully removed."
-      flash_hide_failure: "Group cannot be hidden. It has visible child groups: %{children}"
+      flash_hide_failure_html: "Group cannot be hidden. It has visible child groups: %{children}"
       flash_hide_success: "Group was successfully removed."
       flash_unhide_failure: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
       flash_unhide_success: "Group was successfully unhidden."
@@ -503,7 +503,7 @@ en:
       flash_update_rejected: "Batch rejected"
       header: "Add Works"
       new: "Import File"
-      person_header: "Add Works for %{person_link}"
+      person_header_html: "Add Works for %{person_link}"
       states:
         accepted: "accepted"
         processing: "processing"
@@ -540,7 +540,7 @@ en:
       contributorships: "Manage works"
       delete: "Delete person"
       edit: "Edit person"
-      edit_header: "%{link}: Personal Info"
+      edit_header_html: "%{link}: Personal Info"
       edit_title: "%{name}: Personal Info"
       file_accepted: "Your file was accepted for processing. An email will notify you when the job is completed."
       file_unconvertible: "The file could not be converted to UTF8."
@@ -593,13 +593,13 @@ en:
       editor:
         one: Editor
         other: Editors
-      form_header_group: "Add %{role} on Group: %{group}"
-      form_header_person: "Add %{role} on Person: %{person}"
-      form_header_system: "Add System-wide %{role}: %{app_name}"
+      form_header_group_html: "Add %{role} on Group: %{group}"
+      form_header_person_html: "Add %{role} on Person: %{person}"
+      form_header_system_html: "Add System-wide %{role}: %{app_name}"
       index: "Manage Roles"
-      index_header_group: "Roles for Group: %{group}"
-      index_header_person: "Roles for Person: %{person}"
-      index_header_system: "System-wide Roles: %{app_name}"
+      index_header_group_html: "Roles for Group: %{group}"
+      index_header_person_html: "Roles for Person: %{person}"
+      index_header_system_html: "System-wide Roles: %{app_name}"
       new_admin: "Add administrator"
       new_editor: "Add editor"
     search:
@@ -678,12 +678,12 @@ en:
       matches: "Potential Matches"
       no_people: "Congratulations! Nothing to do here"
     archivable:
-      header: "Archival Analysis: %{person_link}"
+      header_html: "Archival Analysis: %{person_link}"
     archive_analysis_table:
       archiving_policy: "Archiving Policy"
-      romeo_color: "RoMEO<br />Color"
+      romeo_color_html: "RoMEO<br />Color"
     archive_publications_table:
-      pub_copy_allowed: "Pub Copy<br />Allowed"
+      pub_copy_allowed_html: "Pub Copy<br />Allowed"
     claim:
       deny: Deny
       verify: Verify
@@ -708,7 +708,7 @@ en:
     edit:
       delete: "Delete Group"
       delete_confirm: "Permanently delete this group? This cannot be undone."
-      header: "Edit %{link_to_group}"
+      header_html: "Edit %{link_to_group}"
       hide: "Hide Group"
       unhide: "Unhide Group"
     form:
@@ -741,7 +741,7 @@ en:
       name: English
   imports:
     accepted:
-      text: "This import was <strong>accepted</strong>"
+      text_html: "This import was <strong>accepted</strong>"
       warning: "This import has been accepted, but contains no works. They may have been deleted."
     batch_import_form:
       legend: "Batch Import (RIS | Medline | Refworks XML)"
@@ -768,7 +768,7 @@ en:
       imported_for: "Imported For"
     matched:
       matched: Matched
-      matched_total:
+      matched_total_html:
         one: "%{count} work to %{imported_for}."
         other: "%{count} works to %{imported_for}."
       remaining_total: "%{count} remain to match."
@@ -779,14 +779,14 @@ en:
       my_names: "My Names"
       works_matched: "Works Matched"
     processing:
-      text: "This import is in processing. You'll receive an <strong>email</strong> when the batch is complete"
+      text_html: "This import is in processing. You'll receive an <strong>email</strong> when the batch is complete"
     rejected:
-      text: "This import was <strong>rejected</strong> and all works associated with the import were destroyed."
+      text_html: "This import was <strong>rejected</strong> and all works associated with the import were destroyed."
     show:
       add: "Add an import"
       header: "Review Batch"
       show: "Show my imports"
-      subheader: "Imported For %{imported_for}"
+      subheader_html: "Imported For %{imported_for}"
     work_counts:
       duplicate_works: "Duplicate works"
       new_works: "New works"
@@ -924,8 +924,8 @@ en:
       confirm: "Permanently delete this person? This cannot be undone."
       current: "Current pen names"
       delete: "Delete this person"
-      explanation: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
-      instructions: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
+      explanation_html: "Pen names are used to match people with their publications. Your <strong>Current pen names</strong> should include every variation of your name that may occur in a citation record. To remove a pen name, simply uncheck the box next to it."
+      instructions_html: "Check the box next to a pen name and it will be automatically added to your <strong>Current pen names</strong>."
       suggested: "Suggested pen names"
     new_namestring_form:
       add_text: "Add a name string (ex. \"Smith, J\")"
@@ -978,7 +978,7 @@ en:
       description: "Latest %{university_name} work from %{object_name}"
   publications:
     authorities:
-      instructions: "To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
+      instructions_html: "To set publication authorities, add records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
     edit:
       confirm: "Permanently delete this publication? This cannot be undone."
     form:
@@ -993,7 +993,7 @@ en:
       published_by: "Published by"
   publishers:
     authorities:
-      instructions: "To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
+      instructions_html: "To set publisher authorities, add publication records to the box below, select one record as the authority, and click the <em>Set Authority</em> button."
     form:
       auth_record: "Publisher Authority Record"
       copy_allowed: "Publisher's Copy Allowed?"
@@ -1092,7 +1092,7 @@ en:
       email_legend: "Change Email Address"
       email_submit: "Update Email"
       header: "Edit My Account"
-      important_text: "When you submit this form, you will receive a message with a confirmation link at the new email address above. Your email address will not be changed until <em>after</em> you visit this confirmation link."
+      important_text_html: "When you submit this form, you will receive a message with a confirmation link at the new email address above. Your email address will not be changed until <em>after</em> you visit this confirmation link."
       legend: "User Account"
     new:
       header: "Create an Account"
@@ -1291,7 +1291,7 @@ en:
         upload: "Upload File:"
     index:
       add: "Add a Work"
-      heading: "At the library, we <span class=\"hearts\"> &hearts;</span> our researchers."
+      heading_html: "At the library, we <span class=\"hearts\"> &hearts;</span> our researchers."
       view_orphans: "View orphaned works"
     layouts:
       merge_form:
