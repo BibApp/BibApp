@@ -439,7 +439,7 @@ de:
         other: "%{count} Anhänge wurden erfolgreich hochgeladen."
       flash_create_warning: "Keine Datei hochgeladen."
       flash_delete_notice: "Anhang erfolgreich gelöscht"
-      flash_new_error: "SWORD schein nicht korrekt in %{rails_root}/config/sword.yml konfiguriert zu sein!<br/> Auch wenn das Hochladen von Dateien funktioniert, ist es nicht möglich, diese an das Repositorium weiterzuleiten."
+      flash_new_error_html: "SWORD schein nicht korrekt in %{rails_root}/config/sword.yml konfiguriert zu sein!<br/> Auch wenn das Hochladen von Dateien funktioniert, ist es nicht möglich, diese an das Repositorium weiterzuleiten."
       flash_update_notice: "Anhang erfolgreich hochgeladen"
       flash_update_warning: "Keine Datei hochgeladen."
       form_person_title_html: "%{display_name}: Bild"
@@ -481,7 +481,7 @@ de:
       flash_destroy_success: "Gruppe wurde erfolgreich gelöscht."
       flash_hide_failure_html: "Die Gruppe kann nicht versteckt werden, Sie hat noch sichtbare Untergruppen: %{children}"
       flash_hide_success: "Gruppe wurde erfolgreich versteckt."
-      flash_unhide_failure: "Gruppe kann nicht wieder sichtbar gemacht werden, solange die übergeordnete Gruppe <ul><li>%{parent_anme}</li></ul> unsichtbar ist."
+      flash_unhide_failure_html: "Gruppe kann nicht wieder sichtbar gemacht werden, solange die übergeordnete Gruppe <ul><li>%{parent_anme}</li></ul> unsichtbar ist."
       flash_unhide_success: "Die Gruppe wurde erfolgreich wieder sichtbar gemacht."
       hidden: "Zeige die versteckten Gruppen an."
       hidden_groups: "Versteckte Gruppen"
@@ -544,7 +544,7 @@ de:
       file_unreadable: "Die Datei, die Sie hochgeladen haben, ist nicht lesbar."
       flash_batch_csv_create_bad_encoding: "Der Zeichensatz konnte nicht bestimmt und/oder in  UTF-8 umgewandelt werden."
       flash_create_field_missing: "Ein oder mehrere erforderliche Felder fehlen."
-      flash_create_person_exists: "Diese Person existiert bereits im System: <a href=\"%{url}\">Eintrag anzeigen</a>."
+      flash_create_person_exists_html: "Diese Person existiert bereits im System: <a href=\"%{url}\">Eintrag anzeigen</a>."
       flash_create_success: "Person erfolgreich angelegt."
       flash_update_failure: "Ein oder mehrere erforderliche Felder fehlen."
       flash_update_success: "Die persönlichen Daten wurden erfolgreich aktualisiert."
@@ -906,7 +906,7 @@ de:
       submit: "Passwort senden"
   pen_names:
     name_string_filter:
-      no_results: "<strong>%{phrase}</strong> gab keine Treffer"
+      no_results_html: "<strong>%{phrase}</strong> gab keine Treffer"
     new:
       add: "Eine neue Person hinzufügen"
       confirm: "Soll diese Person wirklich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
@@ -1304,11 +1304,6 @@ de:
       heading: "%{university_name} Autoren"
     local_recommendations:
       heading: "Ähnliche Werke an der  %{university_name}"
-    merge_duplicates:
-      flash_excluded: "%{work} ist keine mögliche Dublette zu diesem Werk."
-      flash_not_accepted: "Diese Werk ist im Status: <strong>%{work_status}</strong>. Sie können nur Felder in <strong>akzeptierten</strong> Werken zusammenführen."
-      header: "Editor zur Dublettenkontrolle"
-      instructions: "Hier können Sie akzeptierte Werke bearbeiten. Wenn Sie fertig sind, klicken Sie auf die Schaltfläche unten, um Ihre Änderungen zu speichern."
     metadata:
       links:
         label: DOI/URL

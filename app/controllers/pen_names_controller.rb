@@ -103,7 +103,7 @@ class PenNamesController < ApplicationController
       format.html do
         if request.xhr?
           if @results.size < 1
-            render :text => t('pen_names.name_string_filter.no_results', :phrase => @phrase)
+            render :text => t('pen_names.name_string_filter.no_results_html', :phrase => @phrase)
           else
             render :partial => "name_string", :collection => @results, :locals => {:person => @person, :selected => false}, :layout => false
           end

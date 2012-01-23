@@ -441,7 +441,7 @@ en:
         other: "%{count} attachments were successfully uploaded"
       flash_create_warning: "No file was uploaded."
       flash_delete_notice: "Attachment was successfully deleted"
-      flash_new_error: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
+      flash_new_error_html: "SWORD does not seem to be configured in %{rails_root}/config/sword.yml!<br/> Although uploading files will work, you won't be able to push them into your local repository."
       flash_update_notice: "Attachment was successfully uploaded"
       flash_update_warning: "No file was uploaded."
       form_person_title_html: "%{display_name}: Photo"
@@ -483,7 +483,7 @@ en:
       flash_destroy_success: "Group was successfully removed."
       flash_hide_failure_html: "Group cannot be hidden. It has visible child groups: %{children}"
       flash_hide_success: "Group was successfully removed."
-      flash_unhide_failure: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
+      flash_unhide_failure_html: "Group cannot be unhidden until its parent group is visible. <ul><li>%{parent_anme}</li></ul>"
       flash_unhide_success: "Group was successfully unhidden."
       hidden: "Show hidden groups"
       hidden_groups: "Hidden Groups"
@@ -547,7 +547,7 @@ en:
       file_unreadable: "The File you submitted could not be read."
       flash_batch_csv_create_bad_encoding: "The character encoding could not be determined or could not be converted to UTF-8."
       flash_create_field_missing: "One or more required fields are missing."
-      flash_create_person_exists: "This person already exists in the BibApp system: <a href=\"%{url}\">view their record</a>."
+      flash_create_person_exists_html: "This person already exists in the BibApp system: <a href=\"%{url}\">view their record</a>."
       flash_create_success: "Person was successfully created."
       flash_update_failure: "One or more required fields are missing."
       flash_update_success: "Personal info was successfully updated."
@@ -918,7 +918,7 @@ en:
       submit: "Send Password"
   pen_names:
     name_string_filter:
-      no_results: "<strong>%{phrase}</strong> returned no results"
+      no_results_html: "<strong>%{phrase}</strong> returned no results"
     new:
       add: "Add a new person"
       confirm: "Permanently delete this person? This cannot be undone."
@@ -1301,11 +1301,6 @@ en:
       heading: "%{university_name} Authors"
     local_recommendations:
       heading: "Related %{university_name} Work"
-    merge_duplicates:
-      flash_excluded: "%{work} is not a possible duplicate for this work."
-      flash_not_accepted: "This is a <strong>%{work_status}</strong> work. You may only merge fields into <strong>Accepted</strong> works."
-      header: "Duplicate work side-by-side editor"
-      instructions: "Use this screen to edit the <strong>Accepted Work</strong>. When you are finished, click the button at the bottom of the page to save changes."
     metadata:
       links:
         label: DOI/URL

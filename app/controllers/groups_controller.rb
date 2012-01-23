@@ -128,7 +128,7 @@ class GroupsController < ApplicationController
 
     if parent.hide?
       respond_to do |format|
-        flash[error] = t('common.groups.flash_unhide_failure', :parent_name => parent.name)
+        flash[error] = t('common.groups.flash_unhide_failure_html', :parent_name => parent.name)
         format.html { redirect_to :action => "edit" }
       end
 

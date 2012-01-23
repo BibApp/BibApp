@@ -153,7 +153,7 @@ class PeopleController < ApplicationController
         end
       else
         respond_to do |format|
-          flash[:error] = t('common.people.flash_create_person_exists', :url => person_path(@dupeperson.id))
+          flash[:error] = t('common.people.flash_create_person_exists_html', :url => person_path(@dupeperson.id))
           format.html { render :action => "new" }
           #TODO: what will the xml response be?
           #format.xml  {render :xml => "error"}
