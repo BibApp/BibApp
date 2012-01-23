@@ -13,7 +13,7 @@
 
   %fieldset
     %legend #{PenName.model_name.human_pl}
-    %p #{t('pen_names.new.explanation').html_safe}
+    %p #{t('pen_names.new.explanation_html')}
     %h3= t('pen_names.new.current')
     = render 'current_namestrings'
 
@@ -23,7 +23,7 @@
     %hr/
 
     %h3= t('pen_names.new.suggested')
-    %p= t('pen_names.new.instructions').html_safe
+    %p= t('pen_names.new.instructions_html')
     = render 'suggested_namestrings'
 
     = render 'search_for_namestrings'

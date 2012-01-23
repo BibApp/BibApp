@@ -26,7 +26,7 @@ module ImportsHelper
 
   def body_header(person)
     if person
-      t('common.imports.person_header', :person_link => link_to(person.display_name, person_path(person))).html_safe
+      t('common.imports.person_header_html', :person_link => link_to(person.display_name, person_path(person)))
     else
       t('common.imports.header')
     end

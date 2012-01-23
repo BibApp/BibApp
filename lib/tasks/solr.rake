@@ -22,13 +22,13 @@ namespace :solr do
 
     rescue NoMethodError, Errno::ECONNREFUSED, Errno::EBADF, Errno::ENETUNREACH #not responding
 
-      SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
+      SOLR_STARTUP_OPTS = "-Dsolr.solr.home=\"#{SOLR_HOME_PATH}\" -Dsolr.data.dir=\"#{SOLR_HOME_PATH}/data/#{Rails.env}\" -Djetty.port=#{SOLR_PORT} #{SOLR_JAVA_OPTS}"
 
       #If Windows
       if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
         Dir.chdir(SOLR_PATH) do
-          exec "start #{'"'}solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} /min java #{SOLR_STARTUP_OPTS} -jar start.jar"
-          puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}."
+          exec "start #{'"'}solr_#{Rails.env}_#{SOLR_PORT}#{'"'} /min java #{SOLR_STARTUP_OPTS} -jar start.jar"
+          puts "#{Rails.env} Solr started successfully on #{SOLR_PORT}."
         end
       else #Else if Linux, Mac OSX, etc.
         pid = fork
@@ -49,8 +49,8 @@ namespace :solr do
 	puts "problem forking child" if pid < 0
         Process.detach(pid)
 #        sleep(5)
-        File.open("#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid", "w"){ |f| f << pid}
-        puts "#{ENV['RAILS_ENV']} Solr started successfully on #{SOLR_PORT}, pid: #{pid}."
+        File.open("#{SOLR_PATH}/tmp/#{Rails.env}_pid", "w"){ |f| f << pid}
+        puts "#{Rails.env} Solr started successfully on #{SOLR_PORT}, pid: #{pid}."
       end
     rescue
       puts "Unexpected Error: #{$!.class.to_s} #{$!}"
@@ -68,11 +68,11 @@ namespace :solr do
     #If Windows
     if RbConfig::CONFIG['host_os'] =~ /mswin|mingw/
       #taskkill is only available in Windows XP
-      exec "taskkill /im java.exe /fi #{'"'}Windowtitle eq solr_#{ENV['RAILS_ENV']}_#{SOLR_PORT}#{'"'} "
-      Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
+      exec "taskkill /im java.exe /fi #{'"'}Windowtitle eq solr_#{Rails.env}_#{SOLR_PORT}#{'"'} "
+      Rake::Task["solr:destroy_index"].invoke if Rails.env == 'test'
     else #Else if Linux, Mac OSX, etc.
       Dir.chdir(SOLR_PATH) do
-        file_path = "#{SOLR_PATH}/tmp/#{ENV['RAILS_ENV']}_pid"
+        file_path = "#{SOLR_PATH}/tmp/#{Rails.env}_pid"
         if File.exists?(file_path)
           puts "Sending SHUTDOWN command to Solr..."
           fork do
@@ -89,7 +89,7 @@ namespace :solr do
 
           Process.wait #wait for forked process to complete
           File.unlink(file_path)
-          Rake::Task["solr:destroy_index"].invoke if ENV['RAILS_ENV'] == 'test'
+          Rake::Task["solr:destroy_index"].invoke if Rails.env == 'test'
           puts "Solr shutdown successfully."
         else
           puts "Solr is not running. I haven't done anything."
@@ -100,11 +100,11 @@ namespace :solr do
 
   desc 'Remove Solr index'
   task :destroy_index => :environment do
-    raise "In production mode. I'm not going to delete the index, sorry." if ENV['RAILS_ENV'] == "production"
-    if File.exists?("#{SOLR_HOME_PATH}/data/#{ENV['RAILS_ENV']}")
-      Dir[ SOLR_HOME_PATH + "/data/#{ENV['RAILS_ENV']}/index/*"].each{|f| File.unlink(f)}
-      Dir.rmdir(SOLR_HOME_PATH + "/data/#{ENV['RAILS_ENV']}/index")
-      puts "Index files removed under " + ENV['RAILS_ENV'] + " environment"
+    raise "In production mode. I'm not going to delete the index, sorry." if Rails.env == "production"
+    if File.exists?("#{SOLR_HOME_PATH}/data/#{Rails.env}")
+      Dir[ SOLR_HOME_PATH + "/data/#{Rails.env}/index/*"].each{|f| File.unlink(f)}
+      Dir.rmdir(SOLR_HOME_PATH + "/data/#{Rails.env}/index")
+      puts "Index files removed under " + Rails.env + " environment"
     end
   end
 

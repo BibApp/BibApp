@@ -1,7 +1,7 @@
 module ContributorshipsHelper
   def body_header(person, status)
-    t('common.contributorships.index_title', :display_name => link_to(h(person.display_name), person_path(person)),
-      :status => t("common.contributorships.#{status}").capitalize).html_safe
+    t('common.contributorships.index_title_html', :display_name => link_to(h(person.display_name), person_path(person)),
+      :status => t("common.contributorships.#{status}").capitalize)
   end
 
   def status_link(person, status, link_status)

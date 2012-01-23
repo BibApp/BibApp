@@ -276,6 +276,7 @@ class Work < ActiveRecord::Base
     end
 
     work = klass.new
+    work.title_primary = h[:title_primary]
     work.skip_create_contributorships = !add_contributorships
     work.update_from_hash(h)
   end
@@ -509,7 +510,7 @@ class Work < ActiveRecord::Base
     # If there is no publisher name, set to Unknown
     set_publisher = set_publisher_from_name(publication_hash[:publisher_name])
     set_publication_from_name(publication_hash[:name], publication_hash[:issn_isbn], set_publisher)
-    self.save
+    self.save!
   end
 
   # All Works begin unverified

@@ -10,7 +10,7 @@
 
   .span-22.prepend-1
 
-    %h2 #{t('.header', :link_to_group => link_to(h(@group.name), group_path(@group))).html_safe}
+    %h2 #{t('.header_html', :link_to_group => link_to(h(@group.name), group_path(@group)))}
 
     .span-16.column
       = form_for @group, :as => :group, :url => group_path(@group), :html => {:method => :put} do |form|

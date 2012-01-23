@@ -7,7 +7,7 @@ function arm_checkboxes() {
     //current namestrings, display, and rearm checkboxes
     $jq(this).change(function () {
       var name = $jq(this).attr('name');
-      var update_url = $jq(this).siblings('.update_url').val()
+      var update_url = $jq(this).siblings('.update_url').val();
       $jq(this).parent('li').remove();
       $jq.ajax({
         url: update_url,
@@ -22,18 +22,18 @@ function arm_checkboxes() {
   })
 }
 
-$jq(function() {
+$jq(function () {
   //handle adding a new name string via remote form
-  $jq('#new_name_string_form').bind('ajax:success', function(event, data, status, xhr) {
+  $jq('#new_name_string_form').bind('ajax:success', function (event, data, status, xhr) {
     $jq('#current').replaceWith(data);
     $jq('#name_string_name').val('');
     arm_checkboxes();
   });
   //handle name string search
-  $jq('#name_string_search_form').bind('ajax:success', function(event, data, status, xhr) {
+  $jq('#name_string_search_form').bind('ajax:success', function (event, data, status, xhr) {
     $jq('#inactive').html(data);
     $jq('#name_string_search_form input[name="q"]').val('');
     arm_checkboxes();
   });
   arm_checkboxes();
-})
+});

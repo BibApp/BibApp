@@ -4,8 +4,8 @@
     %strong=link_to m.group.name, group_path(m.group)
     - if m.title
       %span
-        &ndash; 
-        %em #{m.title.html_safe}
+        &ndash;
+        %em #{m.title}
 
     - unless m.group.children.empty?
       %ul.children

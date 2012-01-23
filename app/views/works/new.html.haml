@@ -1,5 +1,5 @@
 - include_javascripts('specific/works/autocomplete', 'specific/works/common_edit_create')
-= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person).html_safe} do
+= render :layout => '/layouts/main_body', :locals => {:header => new_work_header(@person)} do
 
   .right
     %h3 #{t 'works.new.header'}:

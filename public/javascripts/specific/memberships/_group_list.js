@@ -3,11 +3,11 @@ $jq(
       toggle_folder(this)
     }),
     $jq('.group-checkbox').change(function () {
-      if (this.checked == true) {
+      if (this.checked) {
         check_parent(this)
       }
     })
-    )
+);
 
 function toggle_folder(e) {
   $jq('#children_of_' + e.readAttribute('data-item-id')).toggle();
@@ -19,11 +19,11 @@ function toggle_folder(e) {
 }
 
 function check_parent(e) {
-  pid = e.readAttribute('data-parent-id');
+  var pid = e.readAttribute('data-parent-id');
   if (pid != null) {
-    node = $jq('#group_id-' + pid)
+    var node = $jq('#group_id-' + pid);
     if (node == null) return;
-    pnode = node.children()[1];
+    var pnode = node.children()[1];
     if (!pnode.disabled) {
       pnode.checked = true;
     }

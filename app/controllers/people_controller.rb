@@ -62,8 +62,7 @@ class PeopleController < ApplicationController
         else
           @a_to_z = Person.letters
           @page = params[:page] || @a_to_z[0]
-          @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").
-              order("upper(last_name), upper(first_name)").includes(:contributorships => :work)
+          @current_objects = Person.where("upper(last_name) like ?", "#{@page}%").order("upper(last_name), upper(first_name)")
         end
 
         @title = Person.model_name.human_pl
@@ -154,7 +153,7 @@ class PeopleController < ApplicationController
         end
       else
         respond_to do |format|
-          flash[:error] = t('common.people.flash_create_person_exists', :url => person_path(@dupeperson.id))
+          flash[:error] = t('common.people.flash_create_person_exists_html', :url => person_path(@dupeperson.id))
           format.html { render :action => "new" }
           #TODO: what will the xml response be?
           #format.xml  {render :xml => "error"}

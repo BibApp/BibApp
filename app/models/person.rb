@@ -32,6 +32,9 @@ class Person < ActiveRecord::Base
 
   validates_presence_of :uid
 
+  #### Sanitize HTML ####
+  html_fragment :research_focus, :scrub => :escape
+
   #### Callbacks ####
   before_create :make_active
   after_create :set_pen_names

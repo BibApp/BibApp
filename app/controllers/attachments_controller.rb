@@ -35,7 +35,7 @@ class AttachmentsController < ApplicationController
         if Sword_1_3_Adapter.configured?
           get_sword_info #gets License & Repository Name for View
         else
-          flash[:error] = t('common.attachments.flash_new_error', :rails_root => Rails.root.to_s)
+          flash[:error] = t('common.attachments.flash_new_error_html', :rails_root => Rails.root.to_s)
         end
       end
     end

@@ -4,9 +4,9 @@ function highlight_candidates() {
   })
 }
 
-$jq(function() {
+$jq(function () {
   highlight_candidates();
-})
+});
 
 // Make table into javascript widget
 $jq(document).ready(function() {

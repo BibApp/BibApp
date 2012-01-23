@@ -1,4 +1,4 @@
-- @title = t('common.attachments.form_person_title', :display_name => @person.display_name)
+- @title = t('common.attachments.form_person_title_html', :display_name => @person.display_name)
 - if current_user_role?("editor", @person)
   = render :layout => 'layouts/admin_bar' do
     %li= link_to t('common.attachments.delete_person'), person_url(@person), :method => :delete, :confirm => t('attachments.form_person.confirm')
@@ -7,7 +7,7 @@
 = render :layout => '/layouts/main_body_no_h2' do
   = error_messages_for :attachment
 
-  %h2 #{t('common.attachments.form_person_title', :display_name  => link_to(h(@person.display_name), person_path(@person))).html_safe}
+  %h2 #{t('common.attachments.form_person_title_html', :display_name  => link_to(h(@person.display_name), person_path(@person)))}
   = render "shared/local_nav", :object => "person", :state => "edit"
 
   .column.span-14

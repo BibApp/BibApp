@@ -97,7 +97,7 @@ class WorksController < ApplicationController
       @group = @current_object
       search(params)
     elsif params[:format] == "rdf"
-      params[:rows] = 100
+      params[:rows] ||= 100
       search(params)
     else
       logger.debug("\n\n===Works: #{@current_object.inspect}")
@@ -378,27 +378,6 @@ class WorksController < ApplicationController
   def find_authorities
     @publication_authorities = Publication.authorities.order_by_name
     @publisher_authorities = Publisher.authorities.order_by_name
-  end
-
-  # Initialize information about the last batch of works
-  # that was added during this current user's session
-  def init_last_batch
-    last_batch = find_last_batch
-
-    #clear last batch if not empty
-    last_batch.clear unless last_batch.empty?
-
-    #return cleared batch
-    return last_batch
-  end
-
-  # Find the last batch of works that was added during
-  # this current user's session.  Only work_ids are stored.
-  def find_last_batch
-    session[:works_batch] ||= Array.new
-
-    # Quick cleanup of batch...remove any items which have been deleted
-    session[:works_batch].delete_if { |work_id| !Work.exists?(work_id) }
   end
 
   def person_from_person_id

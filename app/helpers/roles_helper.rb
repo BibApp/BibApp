@@ -2,23 +2,23 @@ module RolesHelper
 
   def index_header(authorizable)
     if authorizable == System
-      t('common.roles.index_header_system', :app_name => t('personalize.application_name'))
+      t('common.roles.index_header_system_html', :app_name => t('personalize.application_name'))
     elsif authorizable.kind_of?(Group)
-      t('common.roles.index_header_group', :group => group_link(authorizable))
+      t('common.roles.index_header_group_html', :group => group_link(authorizable))
     elsif @authorizable.kind_of?(Person)
-      t('common.roles.index_header_person', :person => person_link(authorizable))
-    end.html_safe
+      t('common.roles.index_header_person_html', :person => person_link(authorizable))
+    end
   end
 
   def form_header(authorizable, role_name)
     translated_role = t_bibapp_role_name(role_name)
     if authorizable.is_a? Class and authorizable == System
-      t('common.roles.form_header_system', :role => translated_role, :app_name => t('personalize.application_name'))
+      t('common.roles.form_header_system_html', :role => translated_role, :app_name => t('personalize.application_name'))
     elsif authorizable.kind_of?(Group)
-      t('common.roles.form_header_group', :role => translated_role, :group => group_link(authorizable))
+      t('common.roles.form_header_group_html', :role => translated_role, :group => group_link(authorizable))
     elsif @authorizable.kind_of?(Person)
-      t('common.roles.form_header_person', :role => translated_role, :person => person_link(authorizable))
-    end.html_safe
+      t('common.roles.form_header_person_html', :role => translated_role, :person => person_link(authorizable))
+    end
   end
 
   def group_link(group)

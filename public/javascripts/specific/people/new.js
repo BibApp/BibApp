@@ -1,5 +1,5 @@
 function populate_person_form(ldap_result_index) {
-  var ldap_results = decode_js_data_div('ldap_results')
+  var ldap_results = decode_js_data_div('ldap_results');
   var res = ldap_results[ldap_result_index];
 
   $jq('#person_uid').val(res.uid);
@@ -15,8 +15,8 @@ function populate_person_form(ldap_result_index) {
     $jq('#person_display_name').val(res.displayname)
   }
   if (res.postaladdress) {
-    var pa = res.postaladdress.replace(/\$/g, "\n")
-    pa = pa.replace(/\\N/g, "\n")
+    var pa = res.postaladdress.replace(/\$/g, "\n");
+    pa = pa.replace(/\\N/g, "\n");
     $jq('#person_postal_address').val(pa)
   }
   if (res.mail) {
@@ -31,10 +31,10 @@ function populate_person_form(ldap_result_index) {
 }
 
 $jq(function () {
-  $jq('.ldap-result input').each(function(i, e) {
-    $jq(e).click(function () {
-      populate_person_form(i);
-    })
-  })
-}
-    )
+      $jq('.ldap-result input').each(function (i, e) {
+        $jq(e).click(function () {
+          populate_person_form(i);
+        })
+      })
+    }
+);
