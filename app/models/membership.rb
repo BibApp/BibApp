@@ -7,6 +7,8 @@ class Membership < ActiveRecord::Base
   #No duplicate memberships, please
   validates_uniqueness_of :person_id, :scope => :group_id
 
+  html_fragment :title, :scrub => :escape
+
   acts_as_list  :scope => :person
 
   scope :active, where("end_date is ?", nil)

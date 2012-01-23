@@ -14,8 +14,8 @@
     %h2 #{t 'shared.application_error.header'}
     .span-12
       %ol
-        %li #{t('shared.application_error.list_1', :link => link_to t('personalize.application_name'), works_path).html_safe}
-        %li #{t('shared.application_error.list_2', :link => link_to t('personalize.application_name'), works_path).html_safe}
+        %li #{t('shared.application_error.list_1_html', :link => link_to t('personalize.application_name'), works_path)}
+        %li #{t('shared.application_error.list_2_html', :link => link_to t('personalize.application_name'), works_path)}
         %li
           #{t('shared.application_error.list_3')}
           %a{:href=> "mailto:#{$SYSADMIN_EMAIL}?subject=#{t('shared.application_error.email_subject', :app_name => t('personalize.application_name'))}"} #{$SYSADMIN_EMAIL}

@@ -1038,8 +1038,8 @@ en:
     application_error:
       email_subject: "%{app_name} Support"
       header: "Error 500: Something is *very* wrong!"
-      list_1: "Don't worry, but %{link} is unexpectedly broken."
-      list_2: "It's okay, because %{link} has emailed us to say so."
+      list_1_html: "Don't worry, but %{link} is unexpectedly broken."
+      list_2_html: "It's okay, because %{link} has emailed us to say so."
       list_3: "Need to contact someone? Email:"
     coauthors:
       heading: "Co-authors at %{university_name}"

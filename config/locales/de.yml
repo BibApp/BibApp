@@ -1026,8 +1026,8 @@ de:
     application_error:
       email_subject: "%{app_name} Kontakt"
       header: "Fehler 500: Schwerwiegender Fehler!"
-      list_1: "Seien Sie nicht beunruhigt, aber %{link} steht gerade nicht zur Verfügung."
-      list_2: "Wir wurden bereits von %{link} entsprechend benachrichtigt."
+      list_1_html: "Seien Sie nicht beunruhigt, aber %{link} steht gerade nicht zur Verfügung."
+      list_2_html: "Wir wurden bereits von %{link} entsprechend benachrichtigt."
       list_3: "Brauchen Sie einen Ansprechpartner? E-Mail:"
     coauthors:
       heading: "Co-Autoren an der %{university_name}"
