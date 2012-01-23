@@ -13,6 +13,9 @@ Update delayed_job to 3.0 - requires migration
 Allow rdf request to works#index to supply rows parameter
 Use Rails.env in place of ENV['RAILS_ENV'] which was causing at least one bug
 Bug fixes
+Change a bit about how delayed_job is started. Can now run in different environments simultaneously and has env info in process name
+Use _html suffix in I18n keys to denote html strings (which are automatically html safe)
+Use loofah/loofah-activerecord to sanitize some fields directly in database, allowing html to be used in views as appropriate.
 
 1.2.0 - December 7, 2011
 --------------
