@@ -100,6 +100,9 @@ gem 'dynamic_form'
 #for other developments in this area
 gem 'sort_alphabetical'
 
+#allow for HTML sanitizing for fields where we want to allow some html
+gem 'loofah-activerecord'
+
 #For deployment, but can be ignored if not using capistrano
 gem 'capistrano'
 
