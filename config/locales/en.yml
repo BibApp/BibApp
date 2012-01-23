@@ -637,8 +637,8 @@ en:
       show: View
       show_all: "View all"
     works:
-      add_works: "Add Works"
-      add_works_for_person: "Add Works for %{person_link}"
+      add_works_html: "Add Works"
+      add_works_for_person_html: "Add Works for %{person_link}"
       authors: "Authors at %{institution}"
       coauthors: "Coauthors at %{institution}"
       conference_location: "Conference Location"

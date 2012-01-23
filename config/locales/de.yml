@@ -634,8 +634,8 @@ de:
       show: Anzeigen
       show_all: "Alle Anzeigen"
     works:
-      add_works: "Werke hinzufügen"
-      add_works_for_person: "Werke für %{person_link} hinzufügen"
+      add_works_html: "Werke hinzufügen"
+      add_works_for_person_html: "Werke für %{person_link} hinzufügen"
       authors: "Autoren an %{institution}"
       coauthors: "Ko-Autoren an %{institution}"
       conference_location: Konferenzort
