@@ -12,16 +12,16 @@ module SharedHelper
   end
 
   def link_to_authors(work)
-    name_string_links(work['authors_data'], '', '', work['pk_i'], '')
+    name_string_links(work['authors_data'], '', '', work['pk_i'])
   end
 
   def link_to_editors(work)
     name_string_links(work['editors_data'], work['authors_data'] ? (t('common.shared.in') + ' ') : '',
-                      " (#{t 'common.shared.eds'})", work['pk_i'], nil)
+                      " (#{t 'common.shared.eds'})", work['pk_i'])
   end
 
-  def name_string_links(name_string_data, prefix, postfix, work_id, result_if_blank)
-    return result_if_blank if name_string_data.blank?
+  def name_string_links(name_string_data, prefix, postfix, work_id)
+    return '' if name_string_data.blank?
     links = name_string_data.first(5).collect do |datum|
       name, id = NameString.parse_solr_data(datum)
       link_to(h("#{name.gsub(",", ", ")}"), name_string_path(id), {:class => "name_string"})
