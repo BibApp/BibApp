@@ -21,9 +21,9 @@ describe SharedHelper do
       helper.link_to_authors(@work).should == ''
     end
 
-    it "should return nil if there are no editors" do
+    it "should return an empty string if there are no editors" do
       @work['editors_data'] = nil
-      helper.link_to_editors(@work).should be_nil
+      helper.link_to_editors(@work).should == ''
     end
 
     it "should return links to all authors/editors if there are five or fewer" do
