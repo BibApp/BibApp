@@ -105,7 +105,7 @@ class WorksController < ApplicationController
 
       #Solr filter query for active people
       params[:fq] ||= []
-      params[:fq] << "person_active:true"
+      params[:fq] << "person_active:true" if Person.where(:active => true).count > 0
       search(params)
     end
   end
