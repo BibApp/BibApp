@@ -13,7 +13,7 @@
   = render :partial => 'body_leftbar', :layout => 'layouts/main_body_left'
 
   %fieldset
-    %legend #{t 'memberships.new.group_memeberships'}
+    %legend #{t 'memberships.new.group_memberships'}
     .span-16.last.column
       - if @status == "non_member"
         = render :partial => 'search_form'
