@@ -54,6 +54,7 @@ class Index
       :people => Proc.new { |record| record.people.collect { |p| p.first_last } },
       :person_id => Proc.new { |record| record.people.collect { |p| p.id } },
       :people_data => Proc.new { |record| record.people.collect { |p| p.to_solr_data } },
+      :research_focus => Proc.new {|record| record.people.collect {|p| p.research_focus.dump}},
 
       #Person's active status in separate field for filtering
       :person_active => Proc.new { |record| record.people.collect { |p| p.person_active } },
