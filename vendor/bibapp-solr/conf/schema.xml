@@ -16,10 +16,10 @@
  limitations under the License.
 -->
 
-<!--  
+<!--
  This is the Solr schema file. This file should be named "schema.xml" and
  should be in the conf directory under the solr home
- (i.e. ./solr/conf/schema.xml by default) 
+ (i.e. ./solr/conf/schema.xml by default)
  or located where the classloader for the Solr webapp can find it.
 
  This example schema is the recommended starting point for users.
@@ -46,7 +46,7 @@
        org.apache.solr.analysis package.
     -->
 
-    <!-- The StrField type is not analyzed, but indexed/stored verbatim.  
+    <!-- The StrField type is not analyzed, but indexed/stored verbatim.
        - StrField and TextField support an optional compressThreshold which
        limits compression (if enabled in the derived fields) to values which
        exceed a certain size (in characters).
@@ -67,12 +67,12 @@
        - If sortMissingLast="false" and sortMissingFirst="false" (the default),
          then default lucene sorting will be used which places docs without the
          field first in an ascending sort and last in a descending sort.
-    -->    
+    -->
 
 
     <!-- numeric field types that store and index the text
-         value verbatim (and hence don't support range queries, since the
-         lexicographic ordering isn't equal to the numeric ordering) -->
+value verbatim (and hence don't support range queries, since the
+lexicographic ordering isn't equal to the numeric ordering) -->
     <fieldType name="integer" class="solr.IntField" omitNorms="true"/>
     <fieldType name="long" class="solr.LongField" omitNorms="true"/>
     <fieldType name="float" class="solr.FloatField" omitNorms="true"/>
@@ -91,7 +91,7 @@
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
          is a more restricted form of the canonical representation of dateTime
-         http://www.w3.org/TR/xmlschema-2/#dateTime    
+         http://www.w3.org/TR/xmlschema-2/#dateTime
          The trailing "Z" designates UTC time and is mandatory.
          Optional fractional seconds are allowed: 1995-12-31T23:59:59.999Z
          All other components are mandatory.
@@ -106,7 +106,7 @@
                NOW/DAY+6MONTHS+3DAYS
                   ... 6 months and 3 days in the future from the start of
                       the current day
-                      
+
          Consult the DateField javadocs for more information.
       -->
     <fieldType name="date" class="solr.DateField" sortMissingLast="true" omitNorms="true"/>
@@ -114,16 +114,16 @@
 
     <!-- The "RandomSortField" is not used to store or search any
          data.  You can declare fields of this type it in your schema
-         to generate psuedo-random orderings of your docs for sorting 
-         purposes.  The ordering is generated based on the field name 
+         to generate psuedo-random orderings of your docs for sorting
+         purposes.  The ordering is generated based on the field name
          and the version of the index, As long as the index version
          remains unchanged, and the same field name is reused,
-         the ordering of the docs will be consistent.  
+         the ordering of the docs will be consistent.
          If you want differend psuedo-random orderings of documents,
          for the same version of the index, use a dynamicField and
          change the name
      -->
-    <fieldType name="random" class="solr.RandomSortField" indexed="true" />
+    <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
 
     <!-- solr.TextField allows the specification of custom text analyzers
          specified as a tokenizer and a list of token filters. Different
@@ -165,7 +165,8 @@
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1" catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
+        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="1"
+                catenateNumbers="1" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.EnglishPorterFilterFactory" protected="protwords.txt"/>
         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -174,7 +175,8 @@
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
+        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0"
+                catenateNumbers="0" catenateAll="0" splitOnCaseChange="1"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.EnglishPorterFilterFactory" protected="protwords.txt"/>
         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -184,12 +186,13 @@
 
     <!-- Less flexible matching, but less false matches.  Probably not ideal for product names,
          but may be good for SKUs.  Can insert dashes in the wrong place and still match. -->
-    <fieldType name="textTight" class="solr.TextField" positionIncrementGap="100" >
+    <fieldType name="textTight" class="solr.TextField" positionIncrementGap="100">
       <analyzer>
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="false"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="1" catenateNumbers="1" catenateAll="0"/>
+        <filter class="solr.WordDelimiterFilterFactory" generateWordParts="0" generateNumberParts="0" catenateWords="1"
+                catenateNumbers="1" catenateAll="0"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.EnglishPorterFilterFactory" protected="protwords.txt"/>
         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
@@ -209,26 +212,26 @@
         <!-- The LowerCase TokenFilter does what you expect, which can be
              when you want your sorting to be case insensitive
           -->
-        <filter class="solr.LowerCaseFilterFactory" />
+        <filter class="solr.LowerCaseFilterFactory"/>
         <!-- The TrimFilter removes any leading or trailing whitespace -->
-        <filter class="solr.TrimFilterFactory" />
+        <filter class="solr.TrimFilterFactory"/>
         <!-- The PatternReplaceFilter gives you the flexibility to use
              Java Regular expression to replace any sequence of characters
-             matching a pattern with an arbitrary replacement string, 
+             matching a pattern with an arbitrary replacement string,
              which may include back refrences to portions of the orriginal
              string matched by the pattern.
-             
+
              See the Java Regular Expression documentation for more
              infomation on pattern and replacement string syntax.
-             
+
              http://java.sun.com/j2se/1.5.0/docs/api/java/util/regex/package-summary.html
           -->
         <filter class="solr.PatternReplaceFilterFactory"
                 pattern="([^a-z])" replacement="" replace="all"
-        />
+            />
       </analyzer>
     </fieldType>
-    
+
     <fieldType name="spell" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
         <tokenizer class="solr.StandardTokenizerFactory"/>
@@ -245,136 +248,138 @@
       </analyzer>
     </fieldType>
 
-    <!-- since fields of this type are by default not stored or indexed, any data added to 
-         them will be ignored outright 
-     --> 
-    <fieldtype name="ignored" stored="false" indexed="false" class="solr.StrField" />
- </types>
+    <!-- since fields of this type are by default not stored or indexed, any data added to
+         them will be ignored outright
+     -->
+    <fieldtype name="ignored" stored="false" indexed="false" class="solr.StrField"/>
+  </types>
 
-<fields>
-  <!--==== Primary BibApp Fields stored in Solr ====-->
-  <!-- See models/index.rb for how these Solr fields are populated from the database-->
- <field name="id" type="string" indexed="true" stored="true" required="true" /> 
- <field name="pk_i" type="long" indexed="true" stored="true"/>
- <field name="title" type="text" indexed="true" stored="true"/>
- <field name="title_secondary" type="text" indexed="true" stored="true"/>
- <field name="title_tertiary" type="text" indexed="true" stored="true"/>
- <field name="issue" type="text" indexed="true" stored="true"/>
- <field name="volume" type="text" indexed="true" stored="true"/>
- <field name="start_page" type="text" indexed="true" stored="true"/>
- <field name="abstract" type="text" indexed="true" stored="true"/>
- <field name="status" type="long" indexed="true" stored="true"/>
- <field name="issn_isbn" type="text" indexed="true" stored="true"/>
- <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
- <!-- authors are a synonym for name_strings -->
- <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
- <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
- <field name="person_active" type="boolean" indexed="true" stored="true" multiValued="true"/>
- <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
- <field name="publication" type="text" indexed="true" stored="true"/>
- <field name="publisher" type="text" indexed="true" stored="true"/>
- <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
- <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
- <field name="type" type="text" indexed="true" stored="true"/>
- <field name="year" type="text" indexed="true" stored="true"/>
- <field name="created_at" type="date" indexed="true" stored="true"/>
- <field name="updated_at" type="date" indexed="true" stored="true"/>
- 
- <!--====Special Fields====-->
- <!--'text' is used as default search field (see below)-->
- <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
- <!--'word' is used to spell check against -->
- <field name="word" type="spell" indexed="true" stored="true"/>
+  <fields>
+    <!--==== Primary BibApp Fields stored in Solr ====-->
+    <!-- See models/index.rb for how these Solr fields are populated from the database-->
+    <field name="id" type="string" indexed="true" stored="true" required="true"/>
+    <field name="pk_i" type="long" indexed="true" stored="true"/>
+    <field name="title" type="text" indexed="true" stored="true"/>
+    <field name="title_secondary" type="text" indexed="true" stored="true"/>
+    <field name="title_tertiary" type="text" indexed="true" stored="true"/>
+    <field name="issue" type="text" indexed="true" stored="true"/>
+    <field name="volume" type="text" indexed="true" stored="true"/>
+    <field name="start_page" type="text" indexed="true" stored="true"/>
+    <field name="abstract" type="text" indexed="true" stored="true"/>
+    <field name="status" type="long" indexed="true" stored="true"/>
+    <field name="issn_isbn" type="text" indexed="true" stored="true"/>
+    <field name="name_strings" type="text" indexed="true" stored="true" multiValued="true"/>
+    <!-- authors are a synonym for name_strings -->
+    <field name="authors" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="people" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="person_active" type="boolean" indexed="true" stored="true" multiValued="true"/>
+    <field name="research_focus" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="groups" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="publication" type="text" indexed="true" stored="true"/>
+    <field name="publisher" type="text" indexed="true" stored="true"/>
+    <field name="keywords" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="tags" type="text" indexed="true" stored="true" multiValued="true"/>
+    <field name="type" type="text" indexed="true" stored="true"/>
+    <field name="year" type="text" indexed="true" stored="true"/>
+    <field name="created_at" type="date" indexed="true" stored="true"/>
+    <field name="updated_at" type="date" indexed="true" stored="true"/>
 
-
- <!--====Dupe Key Fields====-->
- <!--These fields act as duplication keys for BibApp. 
-     Unique records should have unique duplication keys.  If more than one 
-     record has the same dupe key, then we likely have duplicate data-->
- <!--Dupe keys should be searchable, and stored within Solr-->
- <dynamicField name="*_dupe_key" type="string" indexed="true" stored="true"/>
- 
-
- <!--====Data Fields====-->
- <!--These fields store BibApp data in Solr, so that the majority
-     of Browse/Search interfaces require *no* database interaction.-->
- <field name="publication_data" type="string" indexed="false" stored="true"/>
- <field name="publisher_data" type="string" indexed="false" stored="true"/>
- 
- <!-- All the rest of data fields (*_data fields) are matched by this dynamic field -->
- <dynamicField name="*_data" type="string" indexed="false" stored="true" multiValued="true"/>
+    <!--====Special Fields====-->
+    <!--'text' is used as default search field (see below)-->
+    <field name="text" type="text" indexed="true" stored="false" multiValued="true"/>
+    <!--'word' is used to spell check against -->
+    <field name="word" type="spell" indexed="true" stored="true"/>
 
 
- <!--====ID Fields====-->
- <!-- This dynamic field indexes all of the BibApp database IDs.  These database IDs are
-      used as the primary filter to generate individual Person/Group/Publication/Publisher pages.
-      Using ID as primary filter ensures that, e.g. if a Person changes his/her name, the immediate
-      citation results are still the same from Solr (even if backend indexing hasn't fully updated after name change)-->
- <dynamicField name="*_id" type="long" indexed="true" stored="false" multiValued='true'/>
- 
- <!--===Dynamic Faceting Fields==-->
- <!-- All our facets (*_facet fields) are matched by this dynamic field -->
- <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>
- 
- <!-- All our facet data (*_facet_data fields) are matched by this dynamic field -->
- <dynamicField name="*_facet_data" type="string" indexed="true" stored="false" multiValued="true"/>
- 
- <!--===Dynamic Sorting Fields==-->
- <dynamicField name="*_sort" type="string" indexed="true" stored="false"/>
- 
-</fields>
+    <!--====Dupe Key Fields====-->
+    <!--These fields act as duplication keys for BibApp.
+Unique records should have unique duplication keys.  If more than one
+record has the same dupe key, then we likely have duplicate data-->
+    <!--Dupe keys should be searchable, and stored within Solr-->
+    <dynamicField name="*_dupe_key" type="string" indexed="true" stored="true"/>
 
-<!-- Field to use to determine and enforce document uniqueness. -->
-<uniqueKey>id</uniqueKey>
 
-<!-- Field for the QueryParser to use when an explicit fieldname is absent -->
-<defaultSearchField>text</defaultSearchField>
+    <!--====Data Fields====-->
+    <!--These fields store BibApp data in Solr, so that the majority
+of Browse/Search interfaces require *no* database interaction.-->
+    <field name="publication_data" type="string" indexed="false" stored="true"/>
+    <field name="publisher_data" type="string" indexed="false" stored="true"/>
 
-<!-- Default all searches to "AND" based searches -->
-<solrQueryParser defaultOperator="AND"/>
+    <!-- All the rest of data fields (*_data fields) are matched by this dynamic field -->
+    <dynamicField name="*_data" type="string" indexed="false" stored="true" multiValued="true"/>
 
-<!--Copy major fields over to '*_facet' fields.
-    These are our primary facets for BibApp.-->
-<copyField source="name_strings" dest="name_string_facet"/>
-<copyField source="people" dest="person_facet"/>
-<copyField source="groups" dest="group_facet"/>
-<copyField source="publication" dest="publication_facet"/>
-<copyField source="publisher" dest="publisher_facet"/>
-<copyField source="keywords" dest="keyword_facet"/>
-<copyField source="tags" dest="tag_facet"/>
-<copyField source="type" dest="type_facet"/>
-<copyField source="year" dest="year_facet"/>
 
-<!--Copy data fields over to '*_facet_data',
-    so that we can load all facet data directly from Solr
-	(and avoid database hits until absolutely necessary)-->
-<copyField source="name_strings_data" dest="name_string_facet_data"/>
-<copyField source="people_data" dest="person_facet_data"/>
-<copyField source="groups_data" dest="group_facet_data"/>
-<copyField source="publication_data" dest="publication_facet_data"/>
-<copyField source="publisher_data" dest="publisher_facet_data"/>
+    <!--====ID Fields====-->
+    <!-- This dynamic field indexes all of the BibApp database IDs.  These database IDs are
+used as the primary filter to generate individual Person/Group/Publication/Publisher pages.
+Using ID as primary filter ensures that, e.g. if a Person changes his/her name, the immediate
+citation results are still the same from Solr (even if backend indexing hasn't fully updated after name change)-->
+    <dynamicField name="*_id" type="long" indexed="true" stored="false" multiValued='true'/>
 
-<!--Copy all facet fields over to 'text', so they are searched by default-->
-<copyField source="name_strings" dest="text"/>
-<copyField source="people" dest="text"/>
-<copyField source="groups" dest="text"/>
-<copyField source="publication" dest="text"/>
-<copyField source="publisher" dest="text"/>
-<copyField source="keywords" dest="text"/>
-<copyField source="tags" dest="text"/>
-<copyField source="year" dest="text"/>
-<copyField source="abstract" dest="text"/>
-<copyField source="title" dest="text"/>
+    <!--===Dynamic Faceting Fields==-->
+    <!-- All our facets (*_facet fields) are matched by this dynamic field -->
+    <dynamicField name="*_facet" type="string" indexed="true" stored="false" multiValued="true"/>
 
-<!--Copy titles into 'title_sort' field, so they can be used for sorting-->
-<copyField source="title" dest="title_sort"/>
-<copyField source="year" dest="year_sort"/>
-<copyField source="updated_at" dest="updated_at_sort"/>
+    <!-- All our facet data (*_facet_data fields) are matched by this dynamic field -->
+    <dynamicField name="*_facet_data" type="string" indexed="true" stored="false" multiValued="true"/>
 
-<!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
-<copyField source="abstract" dest="word"/>
+    <!--===Dynamic Sorting Fields==-->
+    <dynamicField name="*_sort" type="string" indexed="true" stored="false"/>
 
-<!--Copy name_strings into the 'authors' field, this keeps name_strings from appearing in our interface and our get params-->
-<copyField source="name_strings" dest="authors"/>
+  </fields>
+
+  <!-- Field to use to determine and enforce document uniqueness. -->
+  <uniqueKey>id</uniqueKey>
+
+  <!-- Field for the QueryParser to use when an explicit fieldname is absent -->
+  <defaultSearchField>text</defaultSearchField>
+
+  <!-- Default all searches to "AND" based searches -->
+  <solrQueryParser defaultOperator="AND"/>
+
+  <!--Copy major fields over to '*_facet' fields.
+These are our primary facets for BibApp.-->
+  <copyField source="name_strings" dest="name_string_facet"/>
+  <copyField source="people" dest="person_facet"/>
+  <copyField source="groups" dest="group_facet"/>
+  <copyField source="publication" dest="publication_facet"/>
+  <copyField source="publisher" dest="publisher_facet"/>
+  <copyField source="keywords" dest="keyword_facet"/>
+  <copyField source="tags" dest="tag_facet"/>
+  <copyField source="type" dest="type_facet"/>
+  <copyField source="year" dest="year_facet"/>
+
+  <!--Copy data fields over to '*_facet_data',
+     so that we can load all facet data directly from Solr
+   (and avoid database hits until absolutely necessary)-->
+  <copyField source="name_strings_data" dest="name_string_facet_data"/>
+  <copyField source="people_data" dest="person_facet_data"/>
+  <copyField source="groups_data" dest="group_facet_data"/>
+  <copyField source="publication_data" dest="publication_facet_data"/>
+  <copyField source="publisher_data" dest="publisher_facet_data"/>
+
+  <!--Copy all facet fields over to 'text', so they are searched by default-->
+  <copyField source="name_strings" dest="text"/>
+  <copyField source="people" dest="text"/>
+  <copyField source="research_focus" dest="text"/>
+  <copyField source="groups" dest="text"/>
+  <copyField source="publication" dest="text"/>
+  <copyField source="publisher" dest="text"/>
+  <copyField source="keywords" dest="text"/>
+  <copyField source="tags" dest="text"/>
+  <copyField source="year" dest="text"/>
+  <copyField source="abstract" dest="text"/>
+  <copyField source="title" dest="text"/>
+
+  <!--Copy titles into 'title_sort' field, so they can be used for sorting-->
+  <copyField source="title" dest="title_sort"/>
+  <copyField source="year" dest="year_sort"/>
+  <copyField source="updated_at" dest="updated_at_sort"/>
+
+  <!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
+  <copyField source="abstract" dest="word"/>
+
+  <!--Copy name_strings into the 'authors' field, this keeps name_strings from appearing in our interface and our get params-->
+  <copyField source="name_strings" dest="authors"/>
 
 </schema>
