@@ -124,10 +124,10 @@ class User < ActiveRecord::Base
     case authorizable_object.class.base_class.to_s
       when 'Person'
         #Look for role on each group associated with the person
-        return authorizable_object.groups.detect {|group| has_role?(role_name, group)}
+        return authorizable_object.groups.detect { |group| has_role?(role_name, group) }
       when 'Work'
         #Look for role on each person associated with the work
-        return authorizable_object.people.detect {|person| has_role?(role_name, person)}
+        return authorizable_object.people.detect { |person| has_role?(role_name, person) }
       else
         return false
     end
@@ -200,6 +200,26 @@ class User < ActiveRecord::Base
   def self.random_password(len = 20)
     chars = (("a".."z").to_a + ("1".."9").to_a)- %w(i o 0 1 l 0)
     Array.new(len, '').collect { chars[rand(chars.size)] }.join
+  end
+
+  def connect_person
+    person = Person.find_by_email self.email
+    if person
+      if self.person == person
+        self.has_role('editor', person)
+      else
+        self.has_no_role('editor', self.person) if self.person
+        self.person = person
+        self.has_role('editor', person)
+        self.save
+      end
+    else
+      if self.person
+        self.has_role('editor', self.person)
+      else
+        #null case
+      end
+    end
   end
 
   protected

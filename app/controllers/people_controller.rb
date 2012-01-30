@@ -8,6 +8,7 @@ class PeopleController < ApplicationController
 
   # Require a user be logged in to create / update / destroy
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy, :batch_csv_show, :batch_csv_create]
+  before_filter :find_person, :only => [:update]
 
   make_resourceful do
     build :index, :new, :create, :show, :edit, :update, :destroy
@@ -118,6 +119,7 @@ class PeopleController < ApplicationController
     end
 
     before :edit do
+      current_user.connect_person
       permit 'editor on Person or editor on :person'
       @title = t('common.people.edit_title', :name => @person.display_name)
     end
@@ -163,9 +165,7 @@ class PeopleController < ApplicationController
   end
 
   def update
-
-    @person = Person.find(params[:id])
-
+    current_user.connect_person
     permit 'editor on Person or editor on :person'
     #Check if user hit cancel button
     if params['cancel']
@@ -263,6 +263,12 @@ class PeopleController < ApplicationController
       msg = t('common.people.batch_csv_error')
     end
     redirect_to batch_csv_show_people_url(:completed => msg)
+  end
+
+  protected
+
+  def find_person
+    @person = Person.find(params[:id])
   end
 
 end
