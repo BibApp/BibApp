@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :authentications, :dependent => :destroy
 
   before_create :make_activation_code
+  after_create :connect_person
   after_destroy :dissociate_person
   before_validation :ensure_default_locale
 
