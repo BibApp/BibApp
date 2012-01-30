@@ -302,15 +302,17 @@ class Person < ActiveRecord::Base
   end
 
   def self.ensure_person_for_user(user)
-    return user.person if user.person
-    #if a person can be looked up in a reasonable way from the user then associate and return that
-    #otherwise create a new person, associate, and return
-    user_ldap = BibappLdap.instance.search(user.email).detect { |x| x[:mail] == user.email } || {}
-    person = self.lookup_person_for_user(user, user_ldap) || self.new_person_for_user(user, user_ldap)
-    if person
-      person.user = user
-      person.save!
+    unless person = user.person
+      #if a person can be looked up in a reasonable way from the user then associate and return that
+      #otherwise create a new person, associate, and return
+      user_ldap = BibappLdap.instance.search(user.email).detect { |x| x[:mail] == user.email } || {}
+      person = self.lookup_person_for_user(user, user_ldap) || self.new_person_for_user(user, user_ldap)
+      if person
+        person.user = user
+        person.save!
+      end
     end
+    user.has_role('editor', person) if person
     return person
   end
 
@@ -335,11 +337,11 @@ class Person < ActiveRecord::Base
       LDAP_PERSON_MAPPING.each do |p_key, ldap_key|
         ldap_key ||= p_key
         p[p_key] = case ldap_key
-                     when String
-                       ldap_key
-                     when Symbol
-                       user_ldap[ldap_key] || ''
-                   end
+          when String
+            ldap_key
+          when Symbol
+            user_ldap[ldap_key] || ''
+        end
       end
     end
 
