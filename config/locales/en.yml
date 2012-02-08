@@ -888,7 +888,7 @@ en:
       add_person: "Add a new person"
       delete_confirm: "Permanently delete this person? This cannot be undone."
       delete_person: "Delete this person"
-      group_memeberships: "Group Memberships"
+      group_memberships: "Group Memberships"
     non_member_groups:
       no_groups: "No groups found"
       searching_for: "Searching for"

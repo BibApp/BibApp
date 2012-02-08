@@ -876,7 +876,7 @@ de:
       add_person: "Eine neue Person hinzufügen"
       delete_confirm: "Soll diese Person wirlich gelöscht werden? Dies kann nicht rückgängig gemacht werden."
       delete_person: "Diese Person löschen"
-      group_memeberships: Gruppenmitgliedschaften
+      group_memberships: Gruppenmitgliedschaften
     non_member_groups:
       no_groups: "Keine Gruppen gefunden"
       searching_for: "Suche nach"
