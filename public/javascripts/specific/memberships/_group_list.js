@@ -10,7 +10,7 @@ $jq(
 );
 
 function toggle_folder(e) {
-  $jq('#children_of_' + e.readAttribute('data-item-id')).toggle();
+  $jq('#children_of_' + $(e).attr('data-item-id')).toggle();
   if (e.innerHTML == "+") {
     $jq(e).html('&ndash; ')
   } else {
@@ -19,7 +19,7 @@ function toggle_folder(e) {
 }
 
 function check_parent(e) {
-  var pid = e.readAttribute('data-parent-id');
+  var pid = $(e).attr('data-parent-id');
   if (pid != null) {
     var node = $jq('#group_id-' + pid);
     if (node == null) return;
