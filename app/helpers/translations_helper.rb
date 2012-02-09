@@ -5,11 +5,11 @@ module TranslationsHelper
   end
 
   def t_work_role_name(role_name)
-    t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => 1)
+    t_work_role_name_with_count(role_name, 1)
   end
 
   def t_work_role_name_pl(role_name)
-    t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => 2)
+    t_work_role_name_with_count(role_name, 2)
   end
 
   def t_work_role_name_with_count(role_name, count)
