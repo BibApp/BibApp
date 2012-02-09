@@ -1,4 +1,4 @@
 - contributors_by_role(@work).each do |role, work_name_strings|
   %tr
-    %td.label #{role}(s):
+    %td.label #{t_work_role_name_with_count(role, work_name_strings.count)}:
     %td #{work_name_strings_to_links(work_name_strings)}
