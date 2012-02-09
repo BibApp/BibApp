@@ -12,6 +12,10 @@ module TranslationsHelper
     t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => 2)
   end
 
+  def t_work_role_name_with_count(role_name, count)
+    t("work_roles.#{canonicalize_work_role_name(role_name)}", :count => count)
+  end
+
   #turns the english string for the role name into the appropriate string to do a translation lookup
   #TODO - now that we're handling all the display through the translations interface, it'd be better to
   #just make all of the keys in the work subclasses into symbols or the corresponding strings in the first place
