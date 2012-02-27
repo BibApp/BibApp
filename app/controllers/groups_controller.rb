@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
       end
 
       @page = params[:page] || @a_to_z[0]
-      @current_objects = Group.unhidden.upper_name_like("#{@page}%").order_by_upper_name
+      @current_objects = Group.unhidden.sort_name_like("#{@page}%").order(:sort_name)
     end
 
     before :show do
@@ -86,7 +86,7 @@ class GroupsController < ApplicationController
   end
 
   def hidden
-    @hidden_groups = Group.hidden.order_by_upper_name
+    @hidden_groups = Group.hidden.order(:sort_name)
     @title = t('common.groups.hidden_groups')
   end
 
