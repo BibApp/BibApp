@@ -28,6 +28,7 @@ class Publisher < PubCommon
   scope :order_by_upper_name, order('upper(name)')
   scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
   scope :name_like, lambda { |name| where('name like ?', name) }
+  scope :sort_name_like, lambda {|name| where ('sort_name like ?', name.downcase)}
 
   #### Methods ####
 

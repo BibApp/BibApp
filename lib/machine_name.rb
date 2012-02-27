@@ -15,8 +15,8 @@ end
 
 module MachineNameUpdater
   include MachineName
-  def update_machine_name
-    if self.name_changed?
+  def update_machine_name(force = false)
+    if self.name_changed? or force
       self.machine_name = make_machine_name(self.name)
     end
   end

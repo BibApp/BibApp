@@ -584,8 +584,8 @@ class Work < ActiveRecord::Base
   end
 
   #base machine name of work on title_primary
-  def update_machine_name
-    if self.title_primary_changed? or self.machine_name.blank?
+  def update_machine_name(force = true)
+    if self.title_primary_changed? or self.machine_name.blank? or force
       self.machine_name = make_machine_name(self.title_primary)
     end
   end
