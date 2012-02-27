@@ -42,6 +42,7 @@ class Publication < PubCommon
 
   def before_save_actions
     self.update_machine_name
+    update_sort_name
     self.parse_identifiers
   end
 

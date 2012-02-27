@@ -18,7 +18,7 @@ class StopWordProcessor
   end
 
   def trim_string_left(string)
-    trim_array_left(string.split(" ")).join(" ")
+    string.blank? ? '' : trim_array_left(string.split(" ")).join(" ")
   end
 
   def trim_array_left(array)

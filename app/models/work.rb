@@ -1,6 +1,9 @@
 require 'machine_name'
+require 'stop_word_name_sorter'
+
 class Work < ActiveRecord::Base
   include MachineName
+  include StopWordNameSorter
 
   acts_as_authorizable #some actions on Works require authorization
 
@@ -142,6 +145,7 @@ class Work < ActiveRecord::Base
     update_scoring_hash
     update_archive_state
     update_machine_name
+    update_sort_name
     deduplicate
   end
 

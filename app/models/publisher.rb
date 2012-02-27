@@ -17,6 +17,7 @@ class Publisher < PubCommon
   after_create :initialize_authority_id
   before_create :update_authorities
   before_save :update_machine_name
+  before_save :update_sort_name
   after_save :update_authorities
   after_save :reindex_callback, :if => :do_reindex
 
