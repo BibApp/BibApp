@@ -39,8 +39,6 @@ class PublishersController < ApplicationController
       # find first letter of publisher name (in uppercase, for paging mechanism)
       @a_to_z = Publisher.letters(true)
 
-      @authorities = Publisher.authorities.upper_name_like("%#{params[:search]}%")
-
       if params[:q]
         @current_objects = current_objects
       else
