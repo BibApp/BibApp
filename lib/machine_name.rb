@@ -1,5 +1,5 @@
 module MachineName
-
+  module_function
   #Machine name is a string with:
   #  1. all punctuation/spaces converted to single space
   #  2. stripped of leading/trailing spaces and downcased
@@ -17,7 +17,7 @@ module MachineNameUpdater
   include MachineName
   def update_machine_name
     if self.name_changed?
-      self.machine_name = self.make_machine_name(self.name)
+      self.machine_name = make_machine_name(self.name)
     end
   end
 end

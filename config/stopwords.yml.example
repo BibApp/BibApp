@@ -1,0 +1,14 @@
+#This file contains words that should be ignored at the beginning of a title/name for the purposes of
+#sorting and determining the initial letter. Case is not taken into account. Multiple words may be removed
+#if they are all in this list, although in no case will we remove the very last word in a title/name.
+
+#E.g. if 'the' is in this, then a Publisher named 'The Working Group' would be found in the W section
+#after 'Working All the Time' and before 'Working Out'
+
+#The models that use this include Publication, Publisher, Group, and Work
+#This is not currently i18n compatible in the sense that there is one global list. I have some thoughts on how
+#to get around that, but that's a much larger change, although nothing that the current system is doing should
+#stand in the way of implementing that later.
+- the
+- a
+- an
