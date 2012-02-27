@@ -21,7 +21,7 @@ class Group < ActiveRecord::Base
 
   scope :hidden, where(:hide => true)
   scope :unhidden, where(:hide => false)
-  scope :sort_name_like, labmda {|name| where('sort_name like ?', name.downcase)}
+  scope :sort_name_like, lambda {|name| where('sort_name like ?', name.downcase)}
   scope :name_like, lambda { |name| where('name like ?', name) }
   scope :order_by_name, order('name')
   #### Callbacks ####
