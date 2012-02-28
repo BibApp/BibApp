@@ -31,6 +31,7 @@ class Index
       :title => :title_primary,
       :title_secondary => :title_secondary,
       :title_tertiary => :title_tertiary,
+      :sort_title => :sort_name,
       :issue => :issue,
       :volume => :volume,
       :start_page => :start_page,
@@ -233,7 +234,7 @@ class Index
             :limit => facet_count
         },
         :start => self.start(page, rows),
-        :sort => [{"#{sort}" => order.to_sym}],
+        :sort => [{sort.to_s => order.to_sym}],
         :rows => rows
     }
 

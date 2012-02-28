@@ -17,6 +17,7 @@ class Publisher < PubCommon
   after_create :initialize_authority_id
   before_create :update_authorities
   before_save :update_machine_name
+  before_save :update_sort_name
   after_save :update_authorities
   after_save :reindex_callback, :if => :do_reindex
 
@@ -24,9 +25,8 @@ class Publisher < PubCommon
   scope :authorities, where("id = authority_id")
   scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
-  scope :order_by_upper_name, order('upper(name)')
-  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
   scope :name_like, lambda { |name| where('name like ?', name) }
+  scope :sort_name_like, lambda {|name| where ('sort_name like ?', name.downcase)}
 
   #### Methods ####
 

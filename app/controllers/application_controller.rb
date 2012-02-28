@@ -104,15 +104,12 @@ class ApplicationController < ActionController::Base
       facet_field = @current_object.class.to_s.downcase
       # We want to show the citation list results page
       params[:view] = "all"
-
       # Append @current_object to filters
       filter << "#{facet_field}_id:\"#{@current_object.id}\""
       @title = @current_object.name
-
     elsif !params[:view].blank? && params[:sort].blank?
       # If showing all works, default sort is "year"
       @sort = "year"
-
     else
       # Recent additions list sorted by "created_at"
       params[:sort] = "created_at" if params[:sort].blank? || params[:sort]=="created"

@@ -66,6 +66,13 @@ namespace :bibapp do
       Rake::Task["bibapp:start"].execute
     end
   end
+
+  desc 'Regenerate all sort_names. Useful after updating stopwords.yml'
+  task :regenerate_sort_names => :environment do
+    [Group, Publication, Publisher, Work].each do |klass|
+      klass.update_all_sort_names
+    end
+  end
 end
 
 def delayed_job_pid_dir()

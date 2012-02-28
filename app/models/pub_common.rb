@@ -2,6 +2,7 @@
 #This aims to abstract out common code from Publication and Publisher,
 #of which there is a good deal.
 require 'machine_name'
+require 'stop_word_name_sorter'
 require 'solr_helper_methods'
 require 'solr_updater'
 
@@ -9,6 +10,7 @@ class PubCommon < ActiveRecord::Base
   self.abstract_class = true
 
   include MachineNameUpdater
+  include StopWordNameSorter
   include SolrHelperMethods
   include SolrUpdater
 

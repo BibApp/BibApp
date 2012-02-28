@@ -1,4 +1,5 @@
 require 'machine_name'
+require 'stop_word_name_sorter'
 require 'solr_helper_methods'
 require 'solr_updater'
 
@@ -6,6 +7,7 @@ class Group < ActiveRecord::Base
   include MachineNameUpdater
   include SolrHelperMethods
   include SolrUpdater
+  include StopWordNameSorter
 
   acts_as_tree :order => "name"
   acts_as_authorizable #some actions on groups require authorization
@@ -19,13 +21,13 @@ class Group < ActiveRecord::Base
 
   scope :hidden, where(:hide => true)
   scope :unhidden, where(:hide => false)
-  scope :upper_name_like, lambda { |name| where('upper(name) like ?', name) }
+  scope :sort_name_like, lambda {|name| where('sort_name like ?', name.downcase)}
   scope :name_like, lambda { |name| where('name like ?', name) }
-  scope :order_by_upper_name, order('upper(name)')
   scope :order_by_name, order('name')
   #### Callbacks ####
 
   before_save :update_machine_name
+  before_save :update_sort_name
 
   # return the first letter of each name, ordered alphabetically
   def self.letters
