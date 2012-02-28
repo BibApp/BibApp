@@ -22,6 +22,8 @@ task :staging do
   set :branch, 'uiuc-connections'
 end
 
+#set this if you want to reindex or to redeploy a new copy of the solr installation (e.g. after a schema change)
+#e.g. cap staging reindex deploy
 task :reindex do
   set :reindex, true
 end
