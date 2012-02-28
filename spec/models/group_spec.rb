@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 require 'set'
 
 describe Group do
+  it_should_behave_like "a class generating sort_name"
 
   describe 'url canonicalization' do
     before(:each) do

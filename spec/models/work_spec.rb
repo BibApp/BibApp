@@ -17,6 +17,8 @@ describe Work do
   it { should have_many(:attachments) }
   it { should belong_to(:work_archive_state) }
 
+  it_should_behave_like "a class generating sort_name"
+
   context "abstract and default methods" do
     it "should raise errors on subclass responsibility" do
       lambda { Work.contributor_role }.should raise_error
