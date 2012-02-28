@@ -262,6 +262,7 @@ lexicographic ordering isn't equal to the numeric ordering) -->
     <field name="title" type="text" indexed="true" stored="true"/>
     <field name="title_secondary" type="text" indexed="true" stored="true"/>
     <field name="title_tertiary" type="text" indexed="true" stored="true"/>
+    <field name="sort_title" type="text" indexed="true" stored="true" />
     <field name="issue" type="text" indexed="true" stored="true"/>
     <field name="volume" type="text" indexed="true" stored="true"/>
     <field name="start_page" type="text" indexed="true" stored="true"/>
@@ -373,9 +374,10 @@ These are our primary facets for BibApp.-->
 
   <!--Copy titles into 'title_sort' field, so they can be used for sorting-->
   <copyField source="title" dest="title_sort"/>
+  <copyField source="sort_title" dest="sort_title_sort"/>
   <copyField source="year" dest="year_sort"/>
   <copyField source="updated_at" dest="updated_at_sort"/>
-
+  
   <!--Copy abstracts into the 'word' field, so they will be used for spell checking-->
   <copyField source="abstract" dest="word"/>
 

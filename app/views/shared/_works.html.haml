@@ -21,8 +21,8 @@
 
           %label #{t 'app.sort_by'}:
           %select{:name => "sort"}
-            - ['', 'year', 'title', 'score', 'created'].each do |opt|
-              %option{:value => opt, :selected => selected_if_equal(opt, @sort.split('_').first)}= t("app.#{opt.self_or_blank_default(:blank)}")
+            - ['', 'year', 'sort_title', 'score', 'created'].each do |opt|
+              %option{:value => opt, :selected => @sort.match(opt)}= t("app.#{opt.self_or_blank_default(:blank)}")
 
           %label #{t 'app.order'}:
           %select{:name => "order"}
