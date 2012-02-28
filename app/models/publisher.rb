@@ -26,7 +26,7 @@ class Publisher < PubCommon
   scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
   scope :name_like, lambda { |name| where('name like ?', name) }
-  scope :sort_name_like, lambda {|name| where ('sort_name like ?', name.downcase)}
+  scope :sort_name_like, lambda {|name| where('sort_name like ?', name.downcase)}
 
   #### Methods ####
 
