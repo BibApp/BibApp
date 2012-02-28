@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
     end
 
     # Are we showing an object's works?
-    if !@current_object.nil?
+    if @current_object
       facet_field = @current_object.class.to_s.downcase
       # We want to show the citation list results page
       params[:view] = "all"
