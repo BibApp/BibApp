@@ -1,3 +1,6 @@
+1.2.2 - ??
+--------------
+
 1.2.1 - February 28, 2012
 --------------
 Remove ruby-net-ldap gem in favor of net-ldap
