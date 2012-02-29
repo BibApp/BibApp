@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
 
     # Gather Spelling Suggestions
     if @query.present?
-      @spelling_suggestions = Index.get_spelling_suggestions(@query).reject {|suggestion| suggestion.downcase == @query.downcase}
+      @spelling_suggestions = Index.get_spelling_suggestions(@query).reject { |suggestion| suggestion.downcase == @query.downcase }
     else
       @spelling_suggestions = ""
     end
@@ -223,7 +223,7 @@ class ApplicationController < ActionController::Base
     beginning_search = "#{name}%"
     word_search = "% #{name}%"
     objects = klass.select("DISTINCT(name)").where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
-    objects.collect {|o| o.name}.to_json
+    objects.collect { |o| o.name }.to_json
   end
 
 end
