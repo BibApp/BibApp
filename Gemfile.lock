@@ -64,6 +64,7 @@ GEM
       activerecord (>= 3.0.7)
       activerecord (>= 3.0.7)
     authorization (1.0.12)
+    backports (2.3.0)
     builder (2.1.2)
     capistrano (2.11.2)
       highline
@@ -303,6 +304,7 @@ DEPENDENCIES
   acts_as_tree (~> 1.2.3)!
   authlogic
   authorization
+  backports
   capistrano
   cmess (~> 0.1.2)
   cucumber-rails
