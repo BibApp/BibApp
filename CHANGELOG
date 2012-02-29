@@ -1,6 +1,6 @@
 1.2.2 - ??
 --------------
-make_resourceful is now available as a gem instead of a plugin, so use it that way
+make_resourceful is now available as a gem instead of a plugin, so use it that way (also include backports gem for older rubies)
 
 1.2.1 - February 28, 2012
 --------------
