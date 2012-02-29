@@ -4,14 +4,9 @@ class Attachment < ActiveRecord::Base
   #### Associations ####
   belongs_to :asset, :polymorphic => true # Polymorphism!
 
-
-  #### Default Attachment_fu settings ####
-  has_attachment :storage => :file_system,
-                 :size => 1.byte...100.megabytes
-
-  #validates_as_attachment
-  #Custom validation messages
-  validates_as_attachment
+  has_attached_file :data
+  validates_attachment_size :data, :in => 1.byte...100.megabytes
+  validates_attachment_presence :data
 
   # List of all currently enabled Attachment types
   def self.types
@@ -41,12 +36,20 @@ class Attachment < ActiveRecord::Base
   # Return the full URL of the file in BibApp
   # Needs the request object to build the URL
   def public_url(request)
-    request.protocol+request.host_with_port+self.public_filename
+    request.protocol + request.host_with_port + self.url
+  end
+
+  def url
+    self.data.url
+  end
+
+  def public_filename
+    self.data.url
   end
 
   # Return the full path of the file on the local filesystem
   def absolute_path
-    "#{Rails.root}/public/#{self.public_filename}"
+    self.data.path
   end
 
   def get_associated_works

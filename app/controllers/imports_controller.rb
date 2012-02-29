@@ -28,7 +28,7 @@ class ImportsController < ApplicationController
 
   def create
     # Start by creating the Attachment
-    @attachment = ImportFile.new({:uploaded_data => params[:import][:import_file]})
+    @attachment = ImportFile.new(params[:import])
     @attachment.save
 
     # Init our Import

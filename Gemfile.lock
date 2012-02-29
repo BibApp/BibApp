@@ -73,6 +73,7 @@ GEM
     cmess (0.1.2.288)
       htmlentities
       ruby-nuggets (>= 0.3.3)
+    cocaine (0.2.1)
     columnize (0.3.6)
     daemons (1.0.10)
     database_cleaner (0.7.1)
@@ -170,6 +171,11 @@ GEM
       oa-more (= 0.2.6)
       oa-oauth (= 0.2.6)
       oa-openid (= 0.2.6)
+    paperclip (2.7.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
     pg (0.13.2)
     polyglot (0.3.3)
     pyu-ruby-sasl (0.0.3.3)
@@ -287,6 +293,7 @@ DEPENDENCIES
   net-ldap
   nokogiri (~> 1.4.0)
   omniauth (~> 0.2)
+  paperclip
   pg
   rails (= 3.0.10)
   rails-i18n

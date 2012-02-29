@@ -19,6 +19,9 @@ gem "haml"
 gem 'backports'
 gem 'make_resourceful'
 
+#file attachment - to replace attachment_fu
+gem 'paperclip'
+
 #Hpricot - used for various HTML parsing purposes
 gem "hpricot", "~>0.6"
 

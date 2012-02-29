@@ -173,7 +173,7 @@ class Import < ActiveRecord::Base
   end
 
   def read_import_file
-    File.read("#{Rails.root}/public#{self.import_file.public_filename}")
+    File.read(self.import_file.absolute_path)
   end
 
 # Create works in database. Use a transaction to rollback if there is an error, allowing error to propagate

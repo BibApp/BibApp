@@ -10,21 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227211132) do
+ActiveRecord::Schema.define(:version => 20120229221908) do
 
   create_table "attachments", :force => true do |t|
-    t.string   "filename"
-    t.integer  "size"
-    t.string   "content_type"
-    t.integer  "parent_id"
-    t.string   "thumbnail"
-    t.integer  "height"
-    t.integer  "width"
     t.integer  "asset_id"
     t.string   "asset_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
   end
 
   create_table "authentications", :force => true do |t|
