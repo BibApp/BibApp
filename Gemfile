@@ -15,6 +15,8 @@ gem 'rake'
 gem "haml"
 
 #Make resourceful - used by some controllers
+#backports is necessary to use the make_resourceful gem
+gem 'backports'
 gem 'make_resourceful'
 
 #Hpricot - used for various HTML parsing purposes
