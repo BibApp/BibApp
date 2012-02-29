@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
       # We want to show the citation list results page
       params[:view] = "all"
       # Append @current_object to filters
-      @filter << "#{facet_field}_id:\"#{@current_object.id}\""
+      @filter << %Q(#{facet_field}_id:"#{@current_object.id}")
       @title = @current_object.name
     elsif !params[:view].blank? && params[:sort].blank?
       # If showing all works, default sort is "year"
