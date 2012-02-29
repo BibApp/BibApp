@@ -78,7 +78,9 @@ gem 'rails-i18n'
 #production, for example. Note that the appropriate database for your
 #set up does need to be specified here, though, or things will fail
 #pretty quickly.
-gem 'pg'
+#For now we need this pegged to 0.12 because the postgres servers are 8.2
+#After the CITES upgrade we should be able to remove this restriction
+gem 'pg', "~> 0.12.2"
 
 #dump database in YAML form - honestly, I'm not sure why we need this, but
 #while I am porting to Rails 3 I'm not going to worry about it.
