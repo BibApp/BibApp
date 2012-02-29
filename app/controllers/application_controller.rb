@@ -90,14 +90,9 @@ class ApplicationController < ActionController::Base
   def search(params)
 
     # Solr filtering
-    # * Start with an empty array
-    # * If there are param filters, collect them
+    # * Start with an empty array or param filters, as appropriate
     # * If we have a nested object, filter for object's works
-
-    filter = Array.new
-    if params[:fq]
-      filter = params[:fq].collect
-    end
+    @filter = params[:fq].present? ? params[:fq].clone : []
 
     # Are we showing an object's works?
     if @current_object
@@ -105,9 +100,9 @@ class ApplicationController < ActionController::Base
       # We want to show the citation list results page
       params[:view] = "all"
       # Append @current_object to filters
-      filter << "#{facet_field}_id:\"#{@current_object.id}\""
+      @filter << %Q(#{facet_field}_id:"#{@current_object.id}")
       @title = @current_object.name
-    elsif !params[:view].blank? && params[:sort].blank?
+    elsif params[:view].present? && params[:sort].blank?
       # If showing all works, default sort is "year"
       @sort = "year"
     else
@@ -115,12 +110,8 @@ class ApplicationController < ActionController::Base
       params[:sort] = "created_at" if params[:sort].blank? || params[:sort]=="created"
     end
 
-    # Make certain filters are uniq before continuing
-    filter.uniq!
-
     # Default SolrRuby params
     @query = params[:q] || "*:*" # Lucene syntax for "find everything"
-    @filter = filter
     @sort = params[:sort] || "year"
     @order = params[:order] || "descending"
     @page = params[:page] || 0
@@ -132,6 +123,7 @@ class ApplicationController < ActionController::Base
 
     # Public resultset... only show "accepted" Works
     @filter << "status:3"
+    @filter.uniq!
 
     logger.debug("Search params: #{@query}, #{@filter}, #{@sort}, #{@order}, #{@page}, #{@facet_count}, #{@rows}}")
     @q, @works, @facets = Index.fetch(@query, @filter, @sort, @order, @page, @facet_count, @rows)
@@ -142,11 +134,7 @@ class ApplicationController < ActionController::Base
 
     # Add Feeds
     if @current_object
-      @feeds = [{
-                    :action => "show",
-                    :id => @current_object.id,
-                    :format => "rss"
-                }]
+      @feeds = [{:action => "show", :id => @current_object.id, :format => "rss"}]
     end
 
     # Enable Citeproc
@@ -158,14 +146,7 @@ class ApplicationController < ActionController::Base
 
     # Gather Spelling Suggestions
     if @query.present?
-      @spelling_suggestions = Index.get_spelling_suggestions(@query)
-
-      @spelling_suggestions.each do |suggestion|
-        # if suggestion matches query don't suggest...
-        if suggestion.downcase == @query.downcase
-          @spelling_suggestions.delete(suggestion)
-        end
-      end
+      @spelling_suggestions = Index.get_spelling_suggestions(@query).reject { |suggestion| suggestion.downcase == @query.downcase }
     else
       @spelling_suggestions = ""
     end
@@ -243,7 +224,7 @@ class ApplicationController < ActionController::Base
     beginning_search = "#{name}%"
     word_search = "% #{name}%"
     objects = klass.select("DISTINCT(name)").where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
-    objects.collect {|o| o.name}.to_json
+    objects.collect { |o| o.name }.to_json
   end
 
 end
