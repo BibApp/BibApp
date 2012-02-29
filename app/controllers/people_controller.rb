@@ -229,8 +229,8 @@ class PeopleController < ApplicationController
     permit "admin"
     begin
       msg = ''
-      data = params[:person][:import_file]
-      filename = params[:person][:import_file].original_filename
+      data = params[:person][:data]
+      filename = params[:person][:data].original_filename
 
       str = ''
       if data.respond_to?(:read)
