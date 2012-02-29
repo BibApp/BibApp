@@ -52,6 +52,10 @@ class Attachment < ActiveRecord::Base
     self.data.path
   end
 
+  def filesize
+    self.data_file_size
+  end
+
   def get_associated_works
     if self.asset.kind_of?(Person) and self.kind_of?(Image)
       self.asset.works.verified
