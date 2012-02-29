@@ -90,14 +90,10 @@ class ApplicationController < ActionController::Base
   def search(params)
 
     # Solr filtering
-    # * Start with an empty array
-    # * If there are param filters, collect them
+    # * Start with an empty array or param filters, as appropriate
     # * If we have a nested object, filter for object's works
 
-    filter = Array.new
-    if params[:fq]
-      filter = params[:fq].collect
-    end
+    @filter = (params[:fq] || []).clone
 
     # Are we showing an object's works?
     if @current_object
@@ -105,7 +101,7 @@ class ApplicationController < ActionController::Base
       # We want to show the citation list results page
       params[:view] = "all"
       # Append @current_object to filters
-      filter << "#{facet_field}_id:\"#{@current_object.id}\""
+      @filter << "#{facet_field}_id:\"#{@current_object.id}\""
       @title = @current_object.name
     elsif !params[:view].blank? && params[:sort].blank?
       # If showing all works, default sort is "year"
@@ -115,12 +111,8 @@ class ApplicationController < ActionController::Base
       params[:sort] = "created_at" if params[:sort].blank? || params[:sort]=="created"
     end
 
-    # Make certain filters are uniq before continuing
-    filter.uniq!
-
     # Default SolrRuby params
     @query = params[:q] || "*:*" # Lucene syntax for "find everything"
-    @filter = filter
     @sort = params[:sort] || "year"
     @order = params[:order] || "descending"
     @page = params[:page] || 0
@@ -132,6 +124,7 @@ class ApplicationController < ActionController::Base
 
     # Public resultset... only show "accepted" Works
     @filter << "status:3"
+    @filter.uniq!
 
     logger.debug("Search params: #{@query}, #{@filter}, #{@sort}, #{@order}, #{@page}, #{@facet_count}, #{@rows}}")
     @q, @works, @facets = Index.fetch(@query, @filter, @sort, @order, @page, @facet_count, @rows)
