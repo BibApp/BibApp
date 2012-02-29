@@ -65,7 +65,7 @@ class Sword_1_3_Adapter
         #loop through attached files
         work.attachments.each do |att|
           #add entry with filename
-          zip_stream.put_next_entry(att.filename)
+          zip_stream.put_next_entry(att.data_file_name)
 
           #open file in appropriate mode
           if att.content_type.match('^text\/.*') #check if MIME Type begins with "text/"

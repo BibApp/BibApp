@@ -136,8 +136,7 @@ class AttachmentsController < ApplicationController
     end
 
     respond_to do |format|
-      @attachment.uploaded_data = params[:file].first
-      if @attachment.save
+      if @attachment.update_attributes(:data => params[:file].first)
         flash[:notice] = t('common.attachments.flash_update_notice')
         if @asset.kind_of?(Person)
           format.html { redirect_to edit_person_attachment_path(@attachment.asset.id, @attachment.id) }
@@ -210,7 +209,7 @@ class AttachmentsController < ApplicationController
     if klass.superclass != Attachment
       raise NameError.new("#{klass_type} is not a subclass of Attachment")
     end
-    klass.new({:uploaded_data => file})
+    klass.new(:data => file)
   end
 
   #Load the asset this attachment is attached to
