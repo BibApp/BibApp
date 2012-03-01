@@ -11,7 +11,7 @@ Bibapp::Application.configure do
 
 # Show full error reports and disable caching
   config.consider_all_requests_local = false
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
 
 # Don't want the mailer to send.
   config.action_mailer.delivery_method = :test
