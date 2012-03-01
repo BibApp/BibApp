@@ -37,6 +37,10 @@ class Publisher < PubCommon
     self.publisher_source_id = IMPORT_SOURCE # Import Data
   end
 
+  def sherpa_color_or_unknown_as_sym
+    self.romeo_color.to_sym rescue :unknown
+  end
+
   #Update authorities for related models, when Publisher Authority changes
   # (called by after_save callback)
   def update_authorities
@@ -74,9 +78,9 @@ class Publisher < PubCommon
 
   #Return the year of the most recent publication
   def most_recent_year
-    max_year = self.publications.collect { |p| p.works }.flatten.collect { |w| w.year.to_i }.max
-    return "" unless max_year
-    return max_year > 0 ? max_year.to_s : ""
+    max_year = Work.where(:publisher_id => self.id).maximum(:publication_date_year)
+    return "" if max_year.blank? or max_year <= 0
+    return max_year.to_s
   end
 
   def self.update_sherpa_data

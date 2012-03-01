@@ -6,7 +6,9 @@
   - @current_objects.each do |publisher|
     %tr{:class => cycle("odd", "even")}
       %td
-        = render 'shared/sherpa_icon', :publisher => publisher
+        - color = publisher.sherpa_color_or_unknown_as_sym
+        - cache(:controller => 'publishers', :action => 'index', :action_suffix => "#{I18n.locale}-shared-sherpa_icon-#{color}") do
+          = render 'shared/sherpa_icon', :color => color
         #{link_to name_or_unknown(publisher.name), publisher_path(publisher)}
       %td #{publisher.most_recent_year}
-      %td #{publisher.publications.length}
+      %td #{publisher.publications.count}

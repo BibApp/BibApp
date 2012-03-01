@@ -3,4 +3,4 @@
     %td.label #{@work.class.human_attribute_name(:publisher) + ':'}
     %td
       = link_to @work.publisher.name, publisher_path(@work.publisher.id)
-      = render :partial => 'shared/sherpa_icon', :locals => {:publisher => @work.publisher}
+      = render :partial => 'shared/sherpa_icon', :locals => {:color => @work.publisher.sherpa_color_or_unknown_as_sym}
