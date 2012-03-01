@@ -1,7 +1,7 @@
 %ul
   %li
     = form.label :import_file, "#{t('shared.upload_form.upload')}:"
-    = form.file_field :import_file, :class=>'text'
+    = form.file_field :data, :class=>'text'
     - if @person
       = hidden_field_tag :person_id, @person.id
 

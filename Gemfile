@@ -15,9 +15,12 @@ gem 'rake'
 gem "haml"
 
 #Make resourceful - used by some controllers
-#backports is necessary to use the make_resourceful gem
+#backports may be needed by a 1.8 ruby to make make_resourceful work
 gem 'backports'
 gem 'make_resourceful'
+
+#file attachment - to replace attachment_fu
+gem 'paperclip'
 
 #Hpricot - used for various HTML parsing purposes
 gem "hpricot", "~>0.6"

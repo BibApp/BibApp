@@ -9,7 +9,7 @@
     - else
       - @work.attachments.each do |f|
         .file
-          %strong #{t '.download_file'}: #{link_to(f.filename, f.public_filename)}
+          %strong #{t '.download_file'}: #{link_to(f.data_file_name, f.public_filename)}
           (#{f.filesize}) -
           = link_to t('app.remove'), attachment_url(f), :method => :delete
       -if Sword_1_3_Adapter.configured?
