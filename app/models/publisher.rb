@@ -76,13 +76,6 @@ class Publisher < PubCommon
     end
   end
 
-  #Return the year of the most recent publication
-  def most_recent_year
-    max_year = Work.where(:publisher_id => self.id).maximum(:publication_date_year)
-    return "" if max_year.blank? or max_year <= 0
-    return max_year.to_s
-  end
-
   def self.update_sherpa_data
 
     # Hpricot chokes on UNICODE; use rexml instead
