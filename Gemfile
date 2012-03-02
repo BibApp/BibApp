@@ -14,6 +14,9 @@ gem 'rake'
 #Haml - Haml plugin will fail initialization if haml gem is not installed.
 gem "haml"
 
+#Make resourceful - used by some controllers
+gem 'make_resourceful'
+
 #Hpricot - used for various HTML parsing purposes
 gem "hpricot", "~>0.6"
 
