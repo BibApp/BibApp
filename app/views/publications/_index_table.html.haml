@@ -4,6 +4,7 @@
     %th #{t 'common.publications.publication_name'}
     %th #{Publisher.model_name.human}
     %th #{Work.model_name.human_pl}
+  - work_counts = work_count_hash(@current_objects)
   -@current_objects.each do |publication|
     %tr{:class => cycle("odd", "even")}
       - if publication.issn_isbn.nil?
@@ -17,4 +18,4 @@
           = render 'shared/sherpa_icon', :color => color
         - publisher_name = publication.publisher.name rescue 'Unknown'
         #{link_to name_or_unknown(publisher_name), publisher_path(publication.publisher)}
-      %td #{publication.works.count}
+      %td #{work_counts[publication.id] || '0'}
