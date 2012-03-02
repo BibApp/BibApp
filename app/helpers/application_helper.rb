@@ -192,4 +192,9 @@ module ApplicationHelper
     "/icons/#{name}.png"
   end
 
+  #yield the ids of the collection to a block
+  def with_ids_from(collection)
+    yield collection.collect {|member| member.id}
+  end
+
 end
