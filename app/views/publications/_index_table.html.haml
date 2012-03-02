@@ -5,7 +5,9 @@
     %th #{Publisher.model_name.human}
     %th #{Work.model_name.human_pl}
   - work_counts = work_count_hash(@current_objects)
+  - all_publisher_data = publisher_data_hash(@current_objects)
   -@current_objects.each do |publication|
+    - publisher_data = all_publisher_data[publication.id]
     %tr{:class => cycle("odd", "even")}
       - if publication.issn_isbn.nil?
         %td
@@ -13,9 +15,9 @@
         %td #{link_to publication.issn_isbn, publication}
       %td #{link_to name_or_unknown(publication.name), publication}
       %td
-        - color = publication.publisher.sherpa_color_or_unknown_as_sym
+        - color = publisher_data[:color]
         - cache(:controller => 'publications', :action => 'index', :action_suffix => "#{I18n.locale}-shared-sherpa_color-#{color}") do
           = render 'shared/sherpa_icon', :color => color
-        - publisher_name = publication.publisher.name rescue 'Unknown'
-        #{link_to name_or_unknown(publisher_name), publisher_path(publication.publisher)}
+        - publisher_name = publisher_data[:name].self_or_blank_default('Unknown')
+        #{link_to name_or_unknown(publisher_name), publisher_path(publisher_data[:id])}
       %td #{work_counts[publication.id] || '0'}
