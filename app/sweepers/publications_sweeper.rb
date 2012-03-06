@@ -1,5 +1,5 @@
 class PublicationsSweeper < AbstractSweeper
-  observe Work, Publisher, Publication
+  observe Work, Publisher, Publication, Contributorship
 
   def after_save(record)
     expire_content(record)
@@ -36,6 +36,8 @@ class PublicationsSweeper < AbstractSweeper
         (record.name_changed? or record.romeo_color_changed?) ? record.publication_ids : []
       when Publication
         (record.name_changed? or record.issn_isbn_changed?) ? [record.id] : []
+      when Contributorship
+        record.contributorship_state_id_changed? ? [record.work.publication_id] : []
     end
   end
 end
