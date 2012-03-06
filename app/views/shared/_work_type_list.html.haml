@@ -1,6 +1,7 @@
-- sorted_work_types.each do |type, label|
-  %li
-    -if @person
-      = link_to label, new_person_work_path(@person, :klass => type)
-    -else
-      = link_to label, new_work_path(:klass => type)
+- bibapp_cache(:controller => 'shared', :action => 'partial', :action_suffix => 'work_type_list', :person => @person.try(:id) || 0) do
+  - sorted_work_types.each do |type, label|
+    %li
+      -if @person
+        = link_to label, new_person_work_path(@person, :klass => type)
+      -else
+        = link_to label, new_work_path(:klass => type)
