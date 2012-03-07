@@ -26,7 +26,7 @@
     %a{:href => publishers_path}
       %span #{Publisher.model_name.human_pl}
 
-  - if !session[:saved].nil? && session[:saved].items.size > 0
+  - if session[:saved] && session[:saved].items.size > 0
     %li
       %a{:href => saved_path}
         %span #{t 'app.saved'}
