@@ -8,8 +8,9 @@
     %tr{:class => cycle("odd", "even")}
       %td.person-image #{link_to image_tag(person.image_url, :size => "50x66"), person_path(person)}
       %td #{link_to "#{person.display_name}", person_path(person)}
-      - if person.works.length > 0
-        %td #{link_to person.works.first.to_s, work_path(person.works.first)}
+      - if person.works.count > 0
+        - work = person.works.order("publication_date_year desc, publication_date_month desc, publication_date_day desc").includes(:work_name_strings => :name_string).first
+        %td #{link_to work.to_s, work_path(work)}
       - else
         %td
-      %td.text-right #{person.works.verified.length}
+      %td.text-right #{person.works.verified.count}
