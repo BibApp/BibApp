@@ -1,17 +1,16 @@
-#footer.span-24
-  .span-23.prepend-1
-    %p
-      %strong
-        %a{:href => $UNIVERSITY_URL}= t('personalize.university_full_name')
-        |
-        %a{:href => $LIBRARY_URL}= t('personalize.library_name')
-        |
-        = link_to t('shared.footer.illinois_informatics_institute'), "http://www.informatics.illinois.edu/"
-      %br/
-      = t('personalize.university_full_address').html_safe
-      %br/
-      #{t 'shared.footer.powered_by'}
-      %strong
-        =link_to "BibApp", "http://bibapp.org/"
-
-
+- bibapp_cache(:controller => 'shared', :action => 'partial', :action_suffix => 'footer') do
+  #footer.span-24
+    .span-23.prepend-1
+      %p
+        %strong
+          %a{:href => $UNIVERSITY_URL}= t('personalize.university_full_name')
+          |
+          %a{:href => $LIBRARY_URL}= t('personalize.library_name')
+          |
+          = link_to t('shared.footer.illinois_informatics_institute'), "http://www.informatics.illinois.edu/"
+        %br/
+        = t('personalize.university_full_address').html_safe
+        %br/
+        #{t 'shared.footer.powered_by'}
+        %strong
+          =link_to "BibApp", "http://bibapp.org/"

@@ -9,9 +9,16 @@ Bibapp::Application.configure do
 # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
 
-# Show full error reports and disable caching
+# Show full error reports \
   config.consider_all_requests_local = false
+
+#control caching
+  # disable caching
+  #config.action_controller.perform_caching = false
+
+  #enable caching on the file system
   config.action_controller.perform_caching = true
+  config.action_controller.cache_store = :file_store, File.join(Rails.root, 'tmp', 'cache', Rails.env)
 
 # Don't want the mailer to send.
   config.action_mailer.delivery_method = :test

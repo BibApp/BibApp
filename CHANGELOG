@@ -2,6 +2,7 @@
 --------------
 make_resourceful is now available as a gem instead of a plugin, so use it that way (also include backports gem for older rubies)
 paperclip is now used in preference to attachment_fu
+start some experimentation with caching
 
 1.2.1 - February 28, 2012
 --------------
