@@ -7,10 +7,10 @@
       %th #{Work.model_name.human_pl}
     - work_counts = work_count_hash(@current_objects)
     - all_publisher_data = publisher_data_hash(@current_objects)
-    -@current_objects.each do |publication|
-      - bibapp_cache(:controller => 'publications', :action => 'index', :id => publication.id, :action_suffix => "publication-row") do
-        - publisher_data = all_publisher_data[publication.id]
-        %tr{:class => cycle("odd", "even")}
+    - @current_objects.each do |publication|
+      %tr{:class => cycle("odd", "even")}
+        - bibapp_cache(:controller => 'publications', :action => 'index', :id => publication.id, :action_suffix => "publication-row") do
+          - publisher_data = all_publisher_data[publication.id]
           - if publication.issn_isbn.nil?
             %td
           - else
