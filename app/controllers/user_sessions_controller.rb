@@ -27,6 +27,10 @@ class UserSessionsController < ApplicationController
 
   def saved
     @works = session[:saved].all_works
+    if @export = params[:export]
+      ce = WorkExport.new
+      @works = ce.drive_csl(params[:export], @works.sort_by {|w| w.publication_date_string}.reverse)
+    end
   end
 
   protected
