@@ -31,13 +31,13 @@ class PublicationsSweeper < AbstractSweeper
   def get_publication_ids(record)
     case record
       when Work
-        trigger_expiration?(record, :publication_id_changed?) ? [record.publication_id, record.publication_id_was].compact  : []
+        expired_ids(record, :publication_id_changed?) {[record.publication_id, record.publication_id_was].compact}
       when Publisher
-        trigger_expiration?(record, :name_changed?, :romeo_color_changed?) ? record.publication_ids : []
+        expired_ids(record, :name_changed?, :romeo_color_changed?) {record.publication_ids}
       when Publication
-        trigger_expiration?(record, :name_changed?, :issn_isbn_changed?) ? [record.id] : []
+        expired_ids(record, :name_changed?, :issn_isbn_changed?) {record.id}
       when Contributorship
-        trigger_expiration?(record, :contributorship_state_id_changed?) ? [record.work.publication_id] : []
+        expired_ids(record, :contributorship_state_id_changed?) {record.work.publication_id}
     end
   end
 end
