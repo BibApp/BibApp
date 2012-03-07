@@ -26,6 +26,9 @@ class PublicationsSweeper < AbstractSweeper
     publications.collect { |p| p.sort_name.first.upcase }.compact.uniq.each do |page|
       bibapp_expire_fragment_all_locales(:controller => 'publications', :action => 'index', :page => page, :action_suffix => 'index-table')
     end
+    if record.is_a?(Publication) and record.name_changed?
+      bibapp_expire_fragment_all_locales(:controller => 'publications', :action => 'index', :page => (record.sort_name_was.first.upcase), :action_suffix => 'index-table')
+    end
   end
 
   def get_publication_ids(record)
