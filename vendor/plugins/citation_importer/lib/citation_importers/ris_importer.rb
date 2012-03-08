@@ -1,22 +1,22 @@
 #
 # RIS format importer for BibApp
-# 
+#
 # Initializes attribute mapping & value translators,
 # used to generate a valid BibApp attribute Hash.
-# 
+#
 # For the actual processing & attribute hash creation,
 # see the BaseImporter.
 #
 class RisImporter < BaseImporter
-  
+
   attr_reader :type_mapping
-  
+
   class << self
     def import_formats
       [:ris]
     end
   end
-  
+
   #Initialize our RIS Importer
   def initialize
     #Mapping of RIS Attributes => BibApp Attributes
@@ -86,16 +86,18 @@ class RisImporter < BaseImporter
     @value_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     @value_translators[:a2] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
     @value_translators[:ed] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Editor"}}}
-    
-    # Map publication types (see @type_mapping)    
+
+    # Map publication types (see @type_mapping)
     @value_translators[:ty] = lambda { |val_arr| Array(@type_mapping[val_arr[0].to_s]) }
-    
+
     # Parse publication dates
     @value_translators[:py] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     @value_translators[:y1] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     @value_translators[:y2] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
-    
-    
+
+    #squish fields as needed
+    @value_translators[:n2] = lambda {|val_arr| strip_line_breaks(val_arr[0].to_s)}
+
     #Mapping of RIS Publication Types => valid BibApp Types
     @type_mapping = {
        "ABST"  => "Generic",  # Abstract
@@ -135,8 +137,8 @@ class RisImporter < BaseImporter
        "VIDEO" => "RecordingMovingImage" # Video recording
     }
   end
-  
-  
+
+
   def import_callbacks?
     true
   end
