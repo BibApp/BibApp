@@ -43,7 +43,7 @@ class PublicationsSweeper < AbstractSweeper
     publications = record.destroyed? ? [record] : Publication.find(ids)
     expire_ids_and_publications(ids, publications)
     #if the beginning letter of the name changed then we need to expire the page corresponding to the old letter as well
-    if record.name_changed? and record.sort_name.first.upcase != record.sort_name_was.first.upcase
+    if need_to_expire_previous_page?(record)
       expire_page(record.sort_name_was.first)
     end
   end
@@ -56,4 +56,8 @@ class PublicationsSweeper < AbstractSweeper
     bibapp_expire_fragment_all_locales(:controller => 'publications', :action => 'index', :id => id, :action_suffix => 'publication-row')
   end
 
+  def need_to_expire_previous_page?(publication)
+    publication.name_changed? and publication.sort_name_was.present? and
+        publication.sort_name.present? and publication.sort_name.first.upcase != publication.sort_name_was.first.upcase
+  end
 end
