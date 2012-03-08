@@ -7,6 +7,7 @@
 # to the @attribute_mapping and @value_translators for specific Importers.
 #
 class BaseImporter < CitationImporter
+
   #Require ParseDate for better date parsing (see parse_date method below)
   require 'parsedate'
 
@@ -221,6 +222,14 @@ class BaseImporter < CitationImporter
       return value.to_s
     end
     return value
+  end
+
+  def strip_line_breaks(value)
+    value.mb_chars.squish
+  end
+
+  def remove_trailing_period(value)
+    value.gsub(/\.(\s*)$/, "")
   end
 
 end

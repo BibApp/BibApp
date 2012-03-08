@@ -1,25 +1,25 @@
 #
 # Medline format importer for BibApp
-# 
+#
 # Initializes attribute mapping & value translators,
 # used to generate a valid BibApp attribute Hash.
-# 
+#
 # For the actual processing & attribute hash creation,
 # see the BaseImporter.
 #
 class MedlineImporter < BaseImporter
-  
+
   attr_reader :type_mapping
-  
+
   class << self
     def import_formats
       [:medline]
     end
   end
 
-  #Initialize our Medline Importer  
+  #Initialize our Medline Importer
   def initialize
-    
+
     #Mapping of Medline Attributes => BibApp Attributes
     @attribute_mapping = {
        :pt    => :klass,
@@ -45,37 +45,37 @@ class MedlineImporter < BaseImporter
        :la    => :language,
        :ci    => :copyright_holder
     }
-  
+
     #Initialize our Value Translators (which will translate values from normal Medline files)
     @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
-    
+
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :role=> "Author"}
     @value_translators[:au] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
     @value_translators[:fau] = lambda { |val_arr| val_arr.collect!{|n| {:name => n, :role => "Author"}}}
-    
-    # Map publication types (see @type_mapping)    
+
+    # Map publication types (see @type_mapping)
     @value_translators[:pt] = lambda { |val_arr| @type_mapping[val_arr[0].to_s.downcase] }
-    
+
     # Parse start/end page from page-range field
     @value_translators[:pg] = lambda { |val_arr| page_range_parse(val_arr[0].to_s)}
-    
+
     # Parse publication date & ISSN
     @value_translators[:dp] = lambda { |val_arr| publication_date_parse(val_arr[0].to_s)}
     @value_translators[:is] = lambda { |val_arr| issn_parse(val_arr[0].to_s)}
-    
+
     # Strip line breaks from Title, Abstract, Affiliation, Publication
-    @value_translators[:ti] = lambda { |val_arr| 
+    @value_translators[:ti] = lambda { |val_arr|
       remove_trailing_period(strip_line_breaks(val_arr[0].to_s))
     }
-    
+
     @value_translators[:ab] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
     @value_translators[:ad] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
     @value_translators[:jt] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
     @value_translators[:ta] = lambda { |val_arr| strip_line_breaks(val_arr[0].to_s)}
 
     #Mapping of Medline Types => valid BibApp Types
-    @type_mapping = {                         
+    @type_mapping = {
       "abst"                              => "Generic",  # Abstract
       "advs"                              => "RecordingMovingImage",  # Audiovisual material
       "art"                               => "Artwork", # Art work
@@ -252,7 +252,7 @@ class MedlineImporter < BaseImporter
       "validation studies"  => "Generic"
     }
   end
-  
+
   def page_range_parse(range)
     page_range = Hash.new
     pages = range.mb_chars.split("-")
@@ -260,23 +260,13 @@ class MedlineImporter < BaseImporter
     page_range[:end_page]   = pages[1]
     return page_range
   end
-  
+
   def issn_parse(issn)
     identifier = Hash.new
     identifier[:issn_isbn] = issn.mb_chars.split(/ /)[0]
     return identifier
   end
-  
-  def strip_line_breaks(value)
-    clean = value.mb_chars.gsub(/\s+/, " ")
-    return clean
-  end
-  
-  def remove_trailing_period(value)
-    clean = value.gsub(/\.(\s*)$/, "")
-    return clean
-  end
-  
+
   def prioritize_full_names(hash)
 
     # If Full Names exist, accept them over Short Names.
@@ -285,14 +275,14 @@ class MedlineImporter < BaseImporter
     else
       hash[:work_name_strings] = hash[:short_names]
     end
-    
+
     # Remove un-necessary hash keys
     hash.delete(:short_names)
     hash.delete(:full_names)
-    
+
     return hash
   end
-  
+
   def prioritize_full_journal_title(hash)
 
     # If Full Journal Title exists, accept over Short forms.
@@ -301,18 +291,18 @@ class MedlineImporter < BaseImporter
     else
       hash[:publication] = hash[:journal_title_abbreviation]
     end
-    
+
     # Remove un-necessary hash keys
     hash.delete(:journal_title_abbreviation)
     hash.delete(:full_journal_title)
-    
+
     return hash
   end
-  
+
   def import_callbacks?
     true
   end
-  
+
   def callbacks(hash)
     prioritize_full_names(hash)
     prioritize_full_journal_title(hash)
