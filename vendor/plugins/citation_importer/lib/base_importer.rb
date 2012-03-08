@@ -61,7 +61,7 @@ class BaseImporter < CitationImporter
         #Else if our final hash already has this key within it
       elsif r_hash.has_key?(r_key)
         #add this value to existing key (and create an array of values)
-        r_hash[r_key] = Array(r_hash[r_key]) << r_val
+        r_hash[r_key] = Array.wrap(r_hash[r_key]) << r_val
       else #by default, just copy our key & value to final hash
         r_hash[r_key] = r_val
       end
@@ -227,6 +227,16 @@ class BaseImporter < CitationImporter
 
   def remove_trailing_period(value)
     value.gsub(/\.(\s*)$/, "")
+  end
+
+  #Check each source key (in order) until one is found with hash[source_key] present
+  #If one is found then make hash[target_key] = hash[source_key]
+  #If not do not change hash[target_key]
+  #In any case, delete each of the source keys from the hash
+  def prioritize(hash, target_key, *source_keys)
+    matching_key = source_keys.detect { |key| hash[key] }
+    hash[target_key] = hash[matching_key] if matching_key
+    source_keys.each { |key| hash.delete(key) }
   end
 
 end

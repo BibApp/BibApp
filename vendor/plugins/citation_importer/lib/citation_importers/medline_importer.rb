@@ -267,45 +267,13 @@ class MedlineImporter < BaseImporter
     return identifier
   end
 
-  def prioritize_full_names(hash)
-
-    # If Full Names exist, accept them over Short Names.
-    if hash.has_key?(:full_names) && !hash[:full_names].empty?
-      hash[:work_name_strings] = hash[:full_names]
-    else
-      hash[:work_name_strings] = hash[:short_names]
-    end
-
-    # Remove un-necessary hash keys
-    hash.delete(:short_names)
-    hash.delete(:full_names)
-
-    return hash
-  end
-
-  def prioritize_full_journal_title(hash)
-
-    # If Full Journal Title exists, accept over Short forms.
-    if hash.has_key?(:full_journal_title) && !hash[:full_journal_title].empty?
-      hash[:publication] = hash[:full_journal_title]
-    else
-      hash[:publication] = hash[:journal_title_abbreviation]
-    end
-
-    # Remove un-necessary hash keys
-    hash.delete(:journal_title_abbreviation)
-    hash.delete(:full_journal_title)
-
-    return hash
-  end
-
   def import_callbacks?
     true
   end
 
   def callbacks(hash)
-    prioritize_full_names(hash)
-    prioritize_full_journal_title(hash)
+    prioritize(hash, :work_name_strings, :full_names, :short_names)
+    prioritize(hash, :publication, :full_journal_title, :journal_title_abbreviation)
     return hash
   end
 end

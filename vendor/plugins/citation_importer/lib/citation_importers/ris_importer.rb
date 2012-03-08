@@ -144,17 +144,8 @@ class RisImporter < BaseImporter
   end
 
   def callbacks(hash)
-    prioritize_publication(hash)
+    prioritize(hash, :publication, *(@publication_priority))
     hash
-  end
-
-  #pick a single publication field out of all possibilities using priority
-  #set up in @publication_priority. Remove all candidate keys as only
-  #the resulting publication field will be used.
-  def prioritize_publication(hash)
-    publication_field = @publication_priority.detect {|field| hash[field]}
-    hash[:publication] = hash[publication_field] if publication_field
-    @publication_priority.each {|field| hash.delete(field)}
   end
 
 end
