@@ -45,13 +45,13 @@ class BaseImporter < CitationImporter
       r_key = self.attribute_mapping[key]
 
       # skip to next key if the mapping didn't work or no value translation necessary
-      next if r_key.nil? or self.value_translators[r_key].nil?
+      next unless r_key and self.value_translators[r_key]
 
       # Perform any translation of value(s) (using our value translators)
       r_val = self.value_translators[key].call(values)
 
       #if the value is a Hash (i.e. responds to "keys")
-      if r_val.respond_to? :keys
+      if r_val.respond_to?(:keys)
         #Save each value separately in our final hash
         #(This covers cases where we are parsing out two or more properties
         # from a single field, e.g. parsing start & end pages out of a "pages" field)
@@ -68,20 +68,20 @@ class BaseImporter < CitationImporter
     end
 
     #if not already taken care of, copy the entire citation into :original_data
-    r_hash[:original_data] = parsed_citation.properties[:original_data].to_s if r_hash[:original_data].nil?
+    r_hash[:original_data] ||= parsed_citation.properties[:original_data].to_s
 
     # TODO: this is ugly!
     # Hack for RefWorks export of Conference Proceedings:
     # RefWorks XML uses <ed> (:edition) for Conference Location
     # RefWorks RIS uses :vl
     if r_hash[:klass][0].to_s == "ConferencePaper"
-      if parsed_citation.citation_type.to_s == "refworks_xml"
-        r_hash[:location] = parsed_citation.properties[:edition]
-        r_hash[:edition] = nil
-      end
-      if parsed_citation.citation_type.to_s == "ris"
-        r_hash[:location] = parsed_citation.properties[:vl]
-        r_hash[:volume] = nil
+      case parsed_citation.citation_type.to_s == "refworks_xml"
+        when "refworks_xml"
+          r_hash[:location] = parsed_citation.properties[:edition]
+          r_hash[:edition] = nil
+        when "ris"
+          r_hash[:location] = parsed_citation.properties[:vl]
+          r_hash[:volume] = nil
       end
     end
 
@@ -108,7 +108,7 @@ class BaseImporter < CitationImporter
     hash.each do |key, value|
 
       #First, flatten any arrays within arrays, etc.
-      if !value.nil? and value.respond_to? :flatten
+      if value and value.respond_to?(:flatten)
         value = value.flatten
       end
 
@@ -121,7 +121,7 @@ class BaseImporter < CitationImporter
 
       #If we have an Array of Strings (or Unicode Strings) with only a single value,
       # just return the first String as the value
-      if value.is_a?(Array) and value.size==1 and (value[0].is_a?(String) or value[0].is_a?(ActiveSupport::Multibyte::Chars))
+      if value.is_a?(Array) and value.size==1 and value[0].acts_like?(:string)
         value = value[0].to_s.mb_chars.strip
 
         #if this is an empty string, remove it
@@ -218,10 +218,7 @@ class BaseImporter < CitationImporter
   #If a given String is actually a ActiveSupport::Multibyte::Chars",
   #  return its value as a String (so that it will be saved to database as such)
   def chars_to_string(value)
-    if value.is_a?(ActiveSupport::Multibyte::Chars)
-      return value.to_s
-    end
-    return value
+    value.acts_like?(:string) ? value.to_s : value
   end
 
   def strip_line_breaks(value)
