@@ -5,7 +5,7 @@
 
   - elsif @export.present?
     %h2 Works
-    = @works
+    = @works.html_safe
 
   - else
     = render :layout => 'layouts/admin_bar' do

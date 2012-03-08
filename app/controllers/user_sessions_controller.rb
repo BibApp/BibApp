@@ -1,7 +1,7 @@
 class UserSessionsController < ApplicationController
 
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:destroy, :saved]
+  before_filter :require_user, :only => [:destroy]
   helper UserSessionsHelper
 
   def new
@@ -28,6 +28,10 @@ class UserSessionsController < ApplicationController
 
   def saved
     @works = session[:saved].all_works
+    if @export = params[:export]
+      ce = WorkExport.new
+      @works = ce.drive_csl(params[:export], @works.sort_by {|w| w.publication_date_string}.reverse)
+    end
   end
 
   protected
