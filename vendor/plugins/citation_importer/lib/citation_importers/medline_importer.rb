@@ -47,7 +47,7 @@ class MedlineImporter < BaseImporter
     }
 
     #Initialize our Value Translators (which will translate values from normal Medline files)
-    @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
+    @value_translators = Hash.new
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :role=> "Author"}

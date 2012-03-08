@@ -53,7 +53,7 @@ class RefworksXmlImporter < BaseImporter
     @publication_priority = [:full, :abbrev].collect {|suffix| :"periodical_#{suffix}"}
 
     #Initialize our Value Translators (which will translate values from normal RefWorks XML)
-    @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
+    @value_translators = Hash.new
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :type=> "Author"}

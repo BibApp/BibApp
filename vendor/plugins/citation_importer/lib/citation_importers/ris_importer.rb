@@ -78,7 +78,7 @@ class RisImporter < BaseImporter
     @publication_priority = [:jf, :jo, :ja, :j1, :j2].collect {|suffix| :"publication_#{suffix}"}
 
     #Initialize our Value Translators (which will translate values from normal Medline files)
-    @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
+    @value_translators = Hash.new
 
     # Map NameString and CitationNameStringType
     # example {:name => "Larson, EW", :role=> "Author"}
