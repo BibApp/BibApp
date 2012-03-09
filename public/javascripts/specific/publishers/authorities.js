@@ -20,6 +20,7 @@ $jq(document).ready(function() {
     "bSort": true,
     "oLanguage": {
       "sUrl": datatables_language_url()
-    }
+    },
+    "aoColumns": [null, {"sType": 'title-string'}, null, null]
   });
 } );

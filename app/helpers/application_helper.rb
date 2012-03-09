@@ -136,6 +136,7 @@ module ApplicationHelper
 
   def include_data_tables
     include_javascript('datatables/jquery.dataTables')
+    include_javascript('datatables/dataTables.hiddenStringSort.js')
     include_stylesheet('common/datatables')
   end
 
