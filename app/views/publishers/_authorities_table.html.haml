@@ -9,6 +9,8 @@
     -@current_objects.each do |publisher|
       %tr#publisher.publisher{:id => publisher.id, :class => cycle("odd", "even")}
         %td #{link_to t('app.add'), add_to_box_publishers_url(:new_pa => publisher.id, :page => @page)}
-        %td #{link_to name_or_unknown(publisher.name), publisher_path(publisher)}
+        %td
+          %span{:title => publisher.sort_name}
+          #{link_to name_or_unknown(publisher.name), publisher_path(publisher)}
         %td= name_or_unknown(publisher.publisher_source.name) if publisher.publisher_source
         %td #{publisher.publications.length}

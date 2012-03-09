@@ -17,9 +17,10 @@ $jq(document).ready(function() {
     "sPaginationType": "full_numbers",
     "bStateSave": true,
     "iCookieDuration": 600,
-    "bSort": false,
+    "bSort": true,
     "oLanguage": {
       "sUrl": datatables_language_url()
-    }
+    },
+    "aoColumns": [null, null, {"sType": 'title-string'}, {"sType": 'title-string'}, null]
   });
 } );
