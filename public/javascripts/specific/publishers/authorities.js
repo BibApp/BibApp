@@ -21,6 +21,6 @@ $jq(document).ready(function() {
     "oLanguage": {
       "sUrl": datatables_language_url()
     },
-    "aoColumns": [null, {"sType": 'title-string'}, null, null]
+    "aoColumns": [null, {"sType": 'title-string'}, null]
   });
 } );
