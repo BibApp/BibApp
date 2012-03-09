@@ -92,11 +92,11 @@ class PublishersController < ApplicationController
     else
       @page = params[:page] || @a_to_z[0]
       @current_objects = Publisher.authorities.sort_name_like("#{@page}%").order(:sort_name).
-              includes(:publications, :publisher_source)
+              includes(:publications)
     end
 
     #Keep a list of publications in process in session[:publication_auths]
-    @pas = Publisher.includes(:publications, :publisher_source, :authority).find(session[:publisher_auths] || Array.new)
+    @pas = Publisher.includes(:publications, :authority).find(session[:publisher_auths] || Array.new)
   end
 
   def add_to_box

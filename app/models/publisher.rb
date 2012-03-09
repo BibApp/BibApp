@@ -4,8 +4,6 @@ class Publisher < PubCommon
   has_many :publications
   belongs_to :authority, :class_name => "Publisher", :foreign_key => :authority_id
 
-  belongs_to :publisher_source
-
   has_many :works, :conditions => ["work_state_id = ?", Work::STATE_ACCEPTED] #accepted works
 
   ROMEO_COLORS = ['blue', 'yellow', 'green', 'white', 'gray', 'unknown']

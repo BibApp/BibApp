@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120229221908) do
+ActiveRecord::Schema.define(:version => 20120309203420) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "asset_id"
@@ -241,12 +241,6 @@ ActiveRecord::Schema.define(:version => 20120229221908) do
   add_index "publications", ["machine_name"], :name => "publication_machine_name"
   add_index "publications", ["name"], :name => "publication_name"
   add_index "publications", ["publisher_id"], :name => "fk_publication_publisher_id"
-
-  create_table "publisher_sources", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "publishers", :force => true do |t|
     t.integer  "sherpa_id"
