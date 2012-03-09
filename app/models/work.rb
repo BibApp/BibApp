@@ -137,6 +137,7 @@ class Work < ActiveRecord::Base
   end
 
   def after_save_actions
+    deduplicate
     create_contributorships unless self.skip_create_contributorships
   end
 
@@ -146,7 +147,6 @@ class Work < ActiveRecord::Base
     update_archive_state
     update_machine_name
     update_sort_name
-    deduplicate
   end
 
   #### Serialization ####
@@ -372,11 +372,14 @@ class Work < ActiveRecord::Base
 
     #Check if any duplicates found.
     #@TODO: Be smarter about this...first in probably shouldn't always win
+    #IMPORTANT: we update fields directly here because this is in an after save callback and
+    #we don't want to trigger another save when we make a change here!
+    #Eventually (by Rails 3.2) we can just use update_column. For 3.0 we need to do something like this.
     if dupe_candidates.empty?
-      self.is_accepted
+      self.class.where(:id => self.id).update_all(:work_state_id => STATE_ACCEPTED)
       #Only mark as duplicate if this work wasn't previously accepted
     elsif !self.accepted?
-      self.is_duplicate
+      self.class.where(:id => self.id).update_all(:work_state_id => STATE_DUPLICATE)
     end
 
     #@TODO: Is there a way that we can calculate the *canonical best*
