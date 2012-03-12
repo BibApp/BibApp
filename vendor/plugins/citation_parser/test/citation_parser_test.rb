@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'test/unit'
-require 'hpricot'
 require 'htmlentities'
 require 'logger'
 
@@ -35,7 +34,7 @@ class CitationParserTest < Test::Unit::TestCase
       assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
-  
+
   def test_ris_unicode_parser
     citations = @parser.parse(@ris_unicode_data)
     assert_not_nil citations
@@ -48,7 +47,7 @@ class CitationParserTest < Test::Unit::TestCase
       assert_equal c.properties[:a1][1], "González,L. (Trans)"
     end
   end
-  
+
 #  def test_bibtex_parser
 #    citations = @parser.parse(@bib_data)
 #    assert_not_nil citations
@@ -57,28 +56,18 @@ class CitationParserTest < Test::Unit::TestCase
 #      assert_equal :bibtex, c.citation_type
 #    end
 #  end
-  
+
   def test_medline_parser
     citations = @parser.parse(@med_data)
     assert_not_nil citations
     assert_equal citations.size, 8
-   
+
     citations.each do |c|
       assert_equal :medline, c.citation_type
       assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
-  
-  def test_refworks_deprecated_xml_parser
-    citations = @parser.parse(@rxml_deprecated_data)
-    assert_not_nil citations
-    assert_equal citations.size, 34
-    citations.each do |c|
-      assert_equal :refworks_deprecated_xml, c.citation_type
-      assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
-    end
-  end
-  
+
   def test_refworks_xml_parser
     citations = @parser.parse(@rxml_data)
     assert_not_nil citations
@@ -88,7 +77,7 @@ class CitationParserTest < Test::Unit::TestCase
       assert_not_nil c.properties[:original_data], "Missing Original Data: #{c.inspect}"
     end
   end
-  
+
   def test_invalid_format
     citations = @parser.parse(@invalid_data)
     assert_nil citations  #nil means we couldn't parse anything
