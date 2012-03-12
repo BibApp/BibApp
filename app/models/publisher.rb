@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'net/http'
+
 class Publisher < PubCommon
   #### Associations ####
 
@@ -24,7 +27,7 @@ class Publisher < PubCommon
   scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
   scope :name_like, lambda { |name| where('name like ?', name) }
-  scope :sort_name_like, lambda {|name| where('sort_name like ?', name.downcase)}
+  scope :sort_name_like, lambda { |name| where('sort_name like ?', name.downcase) }
 
   #### Methods ####
 
@@ -76,14 +79,6 @@ class Publisher < PubCommon
 
   def self.update_sherpa_data
 
-    # Hpricot chokes on UNICODE; use rexml instead
-    #require 'hpricot'
-    require 'rexml/document'
-
-    require 'open-uri'
-    require 'net/http'
-    require 'config/personalize.rb'
-
     # First check that solr is running
     # We need it to be in order for the new publishers to be indexed
     begin
@@ -107,26 +102,19 @@ class Publisher < PubCommon
       # out. Unless those problems reemerge, it's probably safe to download
       # the SHERPA data via net/http.
 
-      #data = Hpricot.XML(open("public/sherpa/publishers.xml"))
       sherpa_response = Net::HTTP.get_response(URI.parse($SHERPA_API_URL))
-      data = REXML::Document.new(sherpa_response.body)
-
-      data.elements.each('/romeoapi/publishers/publisher') do |pub|
-        sherpa_id = pub.attributes['id']
-        name = pub.elements['name'].text
-        url = pub.elements['homeurl'].text
-        romeo_color = pub.elements['romeocolour'].text
+      data = Nokogiri::XML::Document.parse(sherpa_response.body)
+      data.css('romeoapi publishers publisher').each do |pub|
+        sherpa_id = pub['id']
+        name = pub.at_css('name').text
+        url = pub.at_css('homeurl').text
+        romeo_color = pub.at_css('romeocolour').text
 
         add = Publisher.find_or_create_by_sherpa_id(:sherpa_id => sherpa_id, :romeo_color => 'unknown')
-        add.update_attributes!({
-                                   :name => name,
-                                   :url => url,
-                                   :romeo_color => romeo_color,
-                                   :sherpa_id => sherpa_id,
-                                   :publisher_source_id => SHERPA_SOURCE
-                               })
-        return true
+        add.update_attributes!({:name => name, :url => url, :romeo_color => romeo_color,
+                                :sherpa_id => sherpa_id, :publisher_source_id => SHERPA_SOURCE})
       end
+      return true
 
     rescue
       puts "Unexpected Error: #{$!.class.to_s} #{$!}"
