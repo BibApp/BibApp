@@ -123,7 +123,6 @@ GEM
       json (>= 1.4.6)
     haml (3.1.4)
     highline (1.6.11)
-    hpricot (0.8.6)
     htmlentities (4.0.0)
     i18n (0.5.0)
     isbn-tools (0.1.0)
@@ -323,7 +322,6 @@ DEPENDENCIES
   factory_girl
   fastercsv
   haml
-  hpricot (~> 0.6)
   htmlentities (~> 4.0.0)
   isbn-tools (~> 0.1.0)
   jquery-rails

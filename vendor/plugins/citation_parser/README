@@ -3,7 +3,6 @@ CitationParser Plugin
 
 Gem Requirements:
 ------------------
-  * Hpricot - required for XML-based parsers
   * HTMLEntities - required for XML-based parsers
 
 
@@ -14,14 +13,14 @@ Parses supported citation formats "as-is" into a Ruby Hash.
 During the parsing the following occurs:
   (1) Field names are underscored (and lowercased)
       (e.g. "FirstAuthor" -> "first_author" or "Author" -> "author")
-  (2) Resulting names are turned into Ruby symbols 
+  (2) Resulting names are turned into Ruby symbols
       (e.g. "first_author" -> :first_author)
   (3) Null or empty values are not added to final Hash
-  (4) Values are all converted to Arrays of values 
+  (4) Values are all converted to Arrays of values
       (to better handle mult-value fields)
       (e.g. "2005" -> ["2005"])
 
-However, the actual values within fields are not changed or validated 
+However, the actual values within fields are not changed or validated
 in any way.
 
 In addition, a special :original_data field is added to the
@@ -29,15 +28,15 @@ resulting Hash.  Its value corresponds to the text of
 the entire original citation (in its original structure).
 
   * So, for RIS citations, this :original_data field will contain
-    the entire citation in RIS format.  
+    the entire citation in RIS format.
 
   * For MedLine citations, the :original_data
-    field contains the entire citation in MedLine format.  
+    field contains the entire citation in MedLine format.
 
 You get the idea. :)
 
 
-An RIS example: 
+An RIS example:
 ----------------
 Parsing of the below RIS citation:
  TY  - THES
@@ -51,7 +50,7 @@ Parsing of the below RIS citation:
  PB  - Cornell University
  A3  - Anonymous
  M1  - Dissertation/Thesis
- ER  - 
+ ER  -
 
 Produces a Ruby Hash of the structure:
 {
@@ -67,7 +66,7 @@ Produces a Ruby Hash of the structure:
  :m1 => ["Dissertation/Thesis"],
  :original_data  => "<<entire original citation in RIS format appears here>>"
 }
- 
+
 The above Ruby Hash can then be used as a valid input to the 'citation_importer' plugin.
 
 
