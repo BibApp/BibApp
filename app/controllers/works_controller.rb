@@ -1,6 +1,5 @@
 require 'cmess/guess_encoding'
 require 'will_paginate/array'
-
 class WorksController < ApplicationController
   #require CMess to help guess encoding of uploaded text files
 
@@ -16,16 +15,9 @@ class WorksController < ApplicationController
 
     publish :xml, :json, :yaml, :only => :show, :attributes => [
         :id, :type, :title_primary, :title_secondary, :title_tertiary,
-        :year, :volume, :issue, :start_page, :end_page, :links, :tags, {
-            :publication => [:id, :name]
-        }, {
-            :publisher => [:id, :name]
-        }, {
-            :name_strings => [:id, :name]
-        }, {
-            :people => [:id, :first_last]
-        }
-    ]
+        :year, :volume, :issue, :start_page, :end_page, :links, :tags,
+        {:publication => [:id, :name]}, {:publisher => [:id, :name]},
+        {:name_strings => [:id, :name]}, {:people => [:id, :first_last]}]
 
     #Add a response for METS!
     response_for :show do |format|
@@ -131,7 +123,7 @@ class WorksController < ApplicationController
     work = Work.find(params[:id])
 
     # lazy mapping of all creator/contributor roles to top creator role
-    authors = work.work_name_strings.collect { |wns| [:name=>wns.name_string.name, :role=>t.constantize.creator_role] }
+    authors = work.work_name_strings.collect { |wns| [:name => wns.name_string.name, :role => t.constantize.creator_role] }
 
     work.update_type_and_save(t) if t
     work.set_work_name_strings authors
