@@ -6,7 +6,7 @@ start some experimentation with caching
 fix bugs around saved works
 Remove PublisherSource class and related. It did nothing. Retain publisher_source_id in Publisher (at least for now).
 Replace REXML and Hpricot XML parsing with Nokogiri, except for the citeproc vendored gem.
-Removed parser for depricated Refworks format (this can be resurrected if truly needed, but I don't really want to support it)
+Removed parser for deprecated Refworks format (this can be resurrected if truly needed, but I don't really want to support it)
 
 1.2.1 - February 28, 2012
 --------------
