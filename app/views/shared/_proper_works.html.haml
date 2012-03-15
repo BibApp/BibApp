@@ -1,2 +1,28 @@
+-# list of works
+- hidden_sort_fields ||= []
+= form_tag "#", :method => :get do
+  #sort-by
+    - hidden_sort_fields.each do |k, vals|
+      - Array.wrap(vals).each do |val|
+        = hidden_field_tag k, val
+    %label #{t 'app.show'}:
+    %select{:name => "rows"}
+      - ["10", "20", "50", "100", "250", "500"].each do |opt|
+        %option{:value => opt, :selected => selected_if_equal(opt, @rows)}= opt
+
+    %label #{t 'app.sort_by'}:
+    %select{:name => "sort"}
+      - ['', 'year', 'sort_title', 'score', 'created'].each do |opt|
+        %option{:value => opt, :selected => @sort.match(opt)}= t("app.#{opt.self_or_blank_default(:blank)}")
+
+    %label #{t 'app.order'}:
+    %select{:name => "order"}
+      - [:ascending, :descending].each do |opt|
+        %option{:value => opt.to_s, :selected => selected_if_equal(opt.to_s, @order)}= t("app.#{opt}")
+
+    = submit_tag t('app.go')
+
+.pagination= will_paginate @works
 - @works.each do |work|
   = render 'shared/proper_work', :work => work
+.pagination= will_paginate @works

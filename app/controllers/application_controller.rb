@@ -228,4 +228,11 @@ class ApplicationController < ActionController::Base
     objects.collect { |o| o.name }.to_json
   end
 
+  def proper_prepare_pagination
+    @page = params[:page] || 1
+    @rows = params[:rows] || 10
+    @sort = params[:sort] || 'year'
+    @order = params[:order] || 'ascending'
+  end
+
 end

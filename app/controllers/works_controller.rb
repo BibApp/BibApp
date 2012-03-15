@@ -357,8 +357,10 @@ class WorksController < ApplicationController
   def shared
     @title = t('works.shared.title')
     @authors = Person.find(params[:people])
-    #find works
-    @works = 5.times.collect { ConferenceProceedingWhole.first }
+    proper_prepare_pagination
+    #find works - for now just a dummy set
+    #TODO next - use @sort and @order to affect this before paginating
+    @works = Work.first(37).paginate(:page => @page, :per_page => @rows)
   end
 
   private
