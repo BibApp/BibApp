@@ -681,11 +681,17 @@ div.person {
 }
 
 .person-coauthor-link {
-  background-color: white;
   position: absolute;
   text-align: center;
   right: 16px;
   bottom: 0.25em;
+}
+
+.person-coauthor-link-tiny {
+  position: absolute;
+  text-align: center;
+  right: 2px;
+  bottom: 0em;
 }
 
 .person-last-name {

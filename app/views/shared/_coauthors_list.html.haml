@@ -9,7 +9,7 @@
         .person-image-wrapper
           = link_to(image_tag(image_url, :size => "56x74", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))
           .person-coauthor-link
-            = fugue_icon_tag('users', :alt => 'works')
+            = link_to fugue_icon_tag('users', :alt => t('people.co_authors_list.shared_works'), :title => t('people.co_authors_list.shared_works')), shared_works_url(:people => [@person.id, id])
         .person-image-metadata
           %strong #{ p.value}
         .person-last-name.left

@@ -8,6 +8,8 @@
       .person-coauthor-tiny
         .person-image-wrapper
           #{ link_to(image_tag(image_url, :size => "44x55", :alt => last_name, :title => last_name, :class => "person-image"), person_path(id))}
+          .person-coauthor-link-tiny
+            = link_to fugue_icon_tag('users', :alt => t('people.co_authors_list.shared_works'), :title => t('people.co_authors_list.shared_works')), shared_works_url(:people => [@person.id, id])
         .person-image-metadata-tiny
           %strong #{p.value}
         .person-last-name-tiny.left

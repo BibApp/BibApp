@@ -7,6 +7,7 @@ Bibapp::Application.routes.draw do
         get :orphans
         delete :destroy_multiple
         post :orphans_delete
+        get :shared
       end
       member do
         get :add_to_saved

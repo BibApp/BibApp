@@ -945,6 +945,8 @@ en:
       legend_absent: "Select a comma delimited file"
       legend_present: "CSV Upload"
       select_file: "Select a CSV Comma delimited file for batch processing."
+    co_authors_list:
+      shared_works: "Shared Works"
     edit:
       add: "Add a new person"
       confirm: "Permanently delete this person? This cannot be undone."
