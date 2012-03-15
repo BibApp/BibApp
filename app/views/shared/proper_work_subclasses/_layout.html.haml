@@ -1,0 +1,7 @@
+%p.metadata
+  = proper_link_to_authors(work)
+
+  = yield
+
+  - if work.publication_date_year
+    (#{work.publication_date_year})

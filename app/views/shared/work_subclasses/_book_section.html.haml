@@ -1,11 +1,6 @@
-%p.metadata
-  = link_to_authors(work)
-
+= render :layout => '/shared/work_subclasses/layout', :locals => {:work => work} do
   %br/
   - if work['editors_data']
     = link_to_editors(work)
 
   = link_to_work_publication(work)
-
-  -if work['year']
-    ="(#{work['year']})"
