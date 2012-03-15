@@ -1,0 +1,6 @@
+= render :layout => 'layouts/main_body', :locals => {:header => t('works.shared.header')} do
+  - @authors.each do |author|
+    %h3 #{link_to author.name, person_url(author)}
+  %hr
+  - @works.each do |work|
+    = render 'shared/proper_work', :work => work

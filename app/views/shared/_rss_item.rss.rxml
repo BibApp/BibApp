@@ -4,7 +4,7 @@ xml.item do
 
   xml.description {
     xml.cdata!(work['type'])
-    xml.cdata!(render("shared/work_subclasses/#{work['type'].downcase.gsub(' ', '_')}.html.haml", :work => work))
+    xml.cdata!(render(subclass_partial_for(work) + ".html.haml", :work => work))
     xml.cdata!(work['abstract'])
   }
 

@@ -136,4 +136,9 @@ module SharedHelper
     return items
   end
 
+  def subclass_partial_for(work)
+    file_name = "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}"
+    File.exists?(File.join(Rails.root, 'app', 'views', file_name)) ? file_name : 'shared/work_subclasses/generic'
+  end
+
 end

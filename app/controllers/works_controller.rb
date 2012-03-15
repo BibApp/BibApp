@@ -353,6 +353,14 @@ class WorksController < ApplicationController
     work.set_work_name_strings(accumulator)
   end
 
+  #render a set of works shared between two authors
+  def shared
+    @title = t('works.shared.title')
+    @authors = Person.find(params[:people])
+    #find works
+    @works = 5.times.collect { ConferenceProceedingWhole.first }
+  end
+
   private
 
   # Initializes a new work subclass, but doesn't create it in the database

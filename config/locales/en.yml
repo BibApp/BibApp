@@ -1313,6 +1313,9 @@ en:
       confirm: "Are you sure? This operation cannot be undone."
       header: "Orphaned works"
       submit: "Delete checked works"
+    shared:
+      header: "Shared works for:"
+      title: "Shared works"
     show:
       archive: "Archive Research"
       deposit: "Deposit Attachments"

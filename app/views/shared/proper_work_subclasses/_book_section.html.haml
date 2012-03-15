@@ -1,0 +1,11 @@
+%p.metadata
+  = proper_link_to_authors(work)
+
+  %br/
+  - if work.editors
+    = proper_link_to_editors(work)
+
+  = proper_link_to_work_publication(work)
+
+  -if work.publication_date_year
+    ="(#{work.publication_date_year})"

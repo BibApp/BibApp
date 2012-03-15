@@ -38,7 +38,7 @@
     %h5.work-type #{t_solr_work_type(work['type'])}
     -#display status of a work, if specified
     = render("shared/work_status", :work => work) if show_status
-    = render "shared/work_subclasses/#{work['type'].downcase.gsub(" ", "_")}", :work => work
+    = render subclass_partial_for(work), :work => work
 
     .links
       - unless links_array.include? 'none'

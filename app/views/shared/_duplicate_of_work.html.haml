@@ -13,7 +13,7 @@
     %h5 #{dupe['type']}
     -#display status of a work, if specified
     = render "shared/work_status", :work => dupe
-    = render "shared/work_subclasses/#{dupe['type'].downcase.gsub(" ", "_")}", :work => dupe
+    = render subclass_partial_for(dupe), :work => dupe
 
     .links
       #{link_to t('app.edit'), edit_work_path(dupe['pk_i'], :return_path=>@return_path)}

@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   clear_helpers
   helper SharedHelper
+  helper ProperSharedHelper
   helper TranslationsHelper
   helper CacheHelper
   helper_method :current_user_session, :current_user, :logged_in?
