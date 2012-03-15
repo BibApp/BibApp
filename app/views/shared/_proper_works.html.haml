@@ -1,4 +1,7 @@
 -# list of works
+-# hidden_sort_fields may be provided. By default this gets the same url, but we may need to provide more
+-# parameters to correctly retrieve the page with the new sort options. The caller should pass in
+-# a param => val or val_array hash to set these in the form
 - hidden_sort_fields ||= []
 = form_tag "#", :method => :get do
   #sort-by
