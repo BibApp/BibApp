@@ -49,4 +49,26 @@ module ProperSharedHelper
     File.exists?(File.join(Rails.root, 'app', 'views', file_name)) ? file_name : 'shared/proper_work_subclasses/generic'
   end
 
+  def proper_prepare_pagination
+    @page = params[:page] || 1
+    @rows = params[:rows] || 10
+    @sort = params[:sort] || 'year'
+    @order = params[:order] || 'ascending'
+  end
+
+  def proper_work_order_phrase(sort_field, order)
+    fields = case sort_field
+      when 'year'
+        ['publication_date_year, publication_date_month, publication_date_day']
+      when 'created'
+        ['created_at']
+      when 'sort_title'
+        ['sort_name']
+    end
+    if order == 'descending'
+      fields = fields.collect {|f| "#{f} DESC"}
+    end
+    return fields.join(', ')
+  end
+
 end

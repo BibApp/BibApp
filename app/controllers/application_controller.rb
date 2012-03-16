@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   clear_helpers
   helper SharedHelper
   helper ProperSharedHelper
+  include ProperSharedHelper
   helper TranslationsHelper
   helper CacheHelper
   helper_method :current_user_session, :current_user, :logged_in?
@@ -226,13 +227,6 @@ class ApplicationController < ActionController::Base
     word_search = "% #{name}%"
     objects = klass.select("DISTINCT(name)").where("LOWER(name) LIKE ? OR LOWER(name) LIKE ?", beginning_search, word_search).order_by_name.limit(limit)
     objects.collect { |o| o.name }.to_json
-  end
-
-  def proper_prepare_pagination
-    @page = params[:page] || 1
-    @rows = params[:rows] || 10
-    @sort = params[:sort] || 'year'
-    @order = params[:order] || 'ascending'
   end
 
 end

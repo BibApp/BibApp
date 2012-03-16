@@ -360,7 +360,10 @@ class WorksController < ApplicationController
     proper_prepare_pagination
     #find works - for now just a dummy set
     #TODO next - use @sort and @order to affect this before paginating
-    @works = Work.first(37).paginate(:page => @page, :per_page => @rows)
+    @works = Work.paginate(:page => @page, :per_page => @rows)
+    @works = @works.order(proper_work_order_phrase(@sort, @order))
+    #@works = @works.reverse_order if @order == 'descending'
+    #@works = Work.first(37)
   end
 
   private
