@@ -4,16 +4,22 @@
 -#When fetching works it is helpful to include the publication
 - include_stylesheet('specific/shared/_work')
 - links ||= []
+- allow_select ||= false
+- show_status ||= false
 %li.work{:class => cycle('odd', 'even')}
+  - if allow_select and logged_in?
+    .select_multiple
+      = check_box_tag "work_id[]", work.id
+
   .screen-format
     - publication = work.publication
     - if publication.issn_isbn and publication.issn_isbn.length > 9
       %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN: #{publication.issn_isbn.gsub(' ', '')}"}
     %strong #{link_to work.title_primary, work_path(work)}
     %h5.work-type #{t_solr_work_type(work.type)}
-
+    - if show_status and work.work_state_id
+      %strong [#{t_work_status(work.work_state_id)}]
     = render proper_subclass_partial_for(work), :work => work
-
     = render 'shared/proper_work_links', :links => links, :work => work
 
   .clear-both

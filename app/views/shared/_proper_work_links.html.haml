@@ -3,6 +3,7 @@
 - link_urls = []
 - link_urls << link_to_findit(work) if links.include?(:find_it)
 - link_urls << proper_link_to_saved(work, @saved) if links.include?(:saved)
+- link_urls << proper_link_to_edit(work, @return_path) if links.include?(:edit)
 -#something is links.include?(:edit)
 - if link_urls.present?
   .links
