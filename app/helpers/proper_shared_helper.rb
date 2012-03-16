@@ -59,7 +59,7 @@ module ProperSharedHelper
   def proper_work_order_phrase(sort_field, order)
     fields = case sort_field
       when 'year'
-        ['publication_date_year, publication_date_month, publication_date_day']
+        ['publication_date_year', 'publication_date_month', 'publication_date_day']
       when 'created'
         ['created_at']
       when 'sort_title'
@@ -68,6 +68,7 @@ module ProperSharedHelper
     if order == 'descending'
       fields = fields.collect {|f| "#{f} DESC"}
     end
+    statement = fields.join(', ')
     return fields.join(', ')
   end
 
