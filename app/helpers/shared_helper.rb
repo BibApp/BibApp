@@ -7,7 +7,7 @@ module SharedHelper
 
   def letter_link_for(letters, letter, current, path)
     li_opts = (current == true) ? {:class => "current"} : {}
-    link = path ? "#{path[:path]}?page=#{letter}" : {:page=> letter}
+    link = path ? "#{path[:path]}?page=#{letter}" : {:page => letter}
     content_tag(:li, (letters.index(letter) ? link_to(letter, link, :class => "some") : content_tag(:a, letter, :class => 'none')), li_opts)
   end
 

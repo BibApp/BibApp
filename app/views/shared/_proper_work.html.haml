@@ -3,6 +3,7 @@
 -#It requires work to be passed in as a local
 -#When fetching works it is helpful to include the publication
 - include_stylesheet('specific/shared/_work')
+- links ||= []
 %li.work{:class => cycle('odd', 'even')}
   .screen-format
     - publication = work.publication
@@ -13,6 +14,6 @@
 
     = render proper_subclass_partial_for(work), :work => work
 
-    .links
-      #{link_to_findit(work)} | #{proper_link_to_saved(work, @saved)}
+    = render 'shared/proper_work_links', :links => links, :work => work
+
   .clear-both
