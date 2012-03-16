@@ -1,5 +1,6 @@
 require 'cmess/guess_encoding'
 require 'will_paginate/array'
+require 'set'
 class WorksController < ApplicationController
   #require CMess to help guess encoding of uploaded text files
 
@@ -357,13 +358,14 @@ class WorksController < ApplicationController
   def shared
     @title = t('works.shared.title')
     @authors = Person.find(params[:people])
+    #find works - not elegant, but the easiest way may be to find the ids for each author, intersect,
+    #and then re-find based on the remaining ids. Since the first steps won't instantiate objects it shouldn't
+    #actually be bad
+    work_sets = @authors.collect {|a| a.works.to_set}
+    first_set = work_sets.pop
+    ids = work_sets.inject(first_set) {|intersection, set| intersection.intersection(set) }.to_a
     proper_prepare_pagination
-    #find works - for now just a dummy set
-    #TODO next - use @sort and @order to affect this before paginating
-    @works = Work.paginate(:page => @page, :per_page => @rows)
-    @works = @works.order(proper_work_order_phrase(@sort, @order))
-    #@works = @works.reverse_order if @order == 'descending'
-    #@works = Work.first(37)
+    @works = Work.where(:id => ids).paginate(:page => @page, :per_page => @rows).order(proper_work_order_phrase(@sort, @order))
   end
 
   private

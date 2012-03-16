@@ -53,7 +53,7 @@ module ProperSharedHelper
     @page = params[:page] || 1
     @rows = params[:rows] || 10
     @sort = params[:sort] || 'year'
-    @order = params[:order] || 'ascending'
+    @order = params[:order] || 'descending'
   end
 
   def proper_work_order_phrase(sort_field, order)
