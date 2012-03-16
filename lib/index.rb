@@ -372,23 +372,6 @@ class Index
     return docs.collect { |doc| Work.find(doc["pk_i"]) }
   end
 
-  # Output a Work as if it came directly from Solr index
-  # This is useful if a View has the full Work object
-  # but still wants to take advantage of the
-  # '/views/shared/work' partial (which expects the
-  # work data to be in the Hash format Solr returns).
-  def self.work_to_solr_hash(work)
-    doc = solr_doc_from_record(work)
-
-    # We now have a hash with symbols (e.g. :title) for keys.
-    # However, we need one with strings (e.g. "title") for keys.
-    # So, we use HashWithIndifferentAccess to convert to a
-    # hash which has strings for keys.
-    solr_hash = HashWithIndifferentAccess.new(doc).to_hash
-
-    return solr_hash
-  end
-
   private
 
   #Process the response returned from a Solr query,

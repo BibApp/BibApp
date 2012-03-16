@@ -2,7 +2,7 @@
 .span-14.contributorship{:id => "contributorship_id-#{contributorship.id}"}
   .span-9
     = check_box_tag "contrib_id[]", "#{contributorship.id}", false, :class => 'left child-checkbox'
-    = render "shared/work", :work => Index.work_to_solr_hash(contributorship.work), :links_array => ['none']
+    = render "shared/proper_work", :work => contributorship.work, :links => []
   .prepend-2.span-3.last
     .span-3{:id => "contributorship_admin-#{contributorship.id}"}
       - if contributorship.verified?

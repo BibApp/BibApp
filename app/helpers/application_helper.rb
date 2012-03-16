@@ -18,6 +18,7 @@ module ApplicationHelper
 
   #Generate a "Find It!" OpenURL link,
   # based on Work information as received from Solr
+  #note that since coin works either with a solr work or a proper work, this will as well
   def link_to_findit(work)
 
     #Get our OpenURL information

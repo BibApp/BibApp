@@ -27,5 +27,5 @@
 
 .pagination= will_paginate @works
 - @works.each do |work|
-  = render 'shared/proper_work', :work => work
+  = render 'shared/proper_work', :work => work, :links => [:find_it, :saved]
 .pagination= will_paginate @works

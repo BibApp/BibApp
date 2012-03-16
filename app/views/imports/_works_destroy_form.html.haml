@@ -10,6 +10,6 @@
 
   %ol#work-list.span-14.works.clear-both
     - @works.each do |work|
-      = render "shared/work", :work => Index.work_to_solr_hash(work), :allow_select => true, :show_status=>true, :links_array=>[:edit]
+      = render "shared/proper_work", :work => work, :links => [:edit], :allow_select => true, :show_status => true
 
   .span-14= will_paginate @works

@@ -11,6 +11,10 @@ module ProperSharedHelper
     end
   end
 
+  def proper_link_to_edit(work, return_path = nil)
+    link_to t('app.edit'), edit_work_path(work.id, :return_path => return_path)
+  end
+
   def proper_link_to_authors(work)
     proper_name_string_links(work.authors, '', '', work)
   end

@@ -1,6 +1,6 @@
 - require 'sword_1_3_adapter'
 .links
-  %strong #{t '.local_library'}: #{link_to_findit(Index.work_to_solr_hash(@work))}
+  %strong #{t '.local_library'}: #{link_to_findit(@work)}
   - if @work.attachments.present?
     - if @work.archived?
       - @work.external_system_uris.each do |s|

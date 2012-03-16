@@ -19,6 +19,6 @@
 
     %ol.span-14.works.clear-both
       - @works.each do |work|
-        = render "shared/work", :work => Index.work_to_solr_hash(work)
+        = render "shared/proper_work", :work => work, :links => [:find_it, :saved]
 
     .span-14 #{ will_paginate @works.paginate}

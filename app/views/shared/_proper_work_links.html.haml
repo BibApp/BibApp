@@ -1,0 +1,10 @@
+-#requires links (array) to be passed to indicate which links to show. Allowable entries are :find_it, :saved, :edit
+-#also requires work to be passed if any links are present
+- link_urls = []
+- link_urls << link_to_findit(work) if links.include?(:find_it)
+- link_urls << proper_link_to_saved(work, @saved) if links.include?(:saved)
+- link_urls << proper_link_to_edit(work, @return_path) if links.include?(:edit)
+-#something is links.include?(:edit)
+- if link_urls.present?
+  .links
+    #{link_urls.join(' | ').html_safe}
