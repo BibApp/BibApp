@@ -1,4 +1,4 @@
-locator = link_to_findit(Index.work_to_solr_hash(work))
+locator = link_to_findit(work)
 locator = locator.gsub(/<a\shref="/, "")
 locator = locator.gsub(/">Find It<\/a>/, "")
 
