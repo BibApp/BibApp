@@ -10,51 +10,51 @@
     .span-13
       %h3 #{t('app.result', :count => 2)} (#{@q.total_hits})
 
-    / Sort Form
-    .span-17.append-1
-      = form_tag "#works", :method => :get do
-        #sort-by
-          %label #{t 'app.show'}:
-          %select{:name => "rows"}
-            - ["10", "20", "50", "100", "250", "500"].each do |opt|
-              %option{:value => opt, :selected => selected_if_equal(opt, @rows)}= opt
+  / Sort Form
+  .span-17.append-1
+    = form_tag "#works", :method => :get do
+      #sort-by
+        %label #{t 'app.show'}:
+        %select{:name => "rows"}
+          - ["10", "20", "50", "100", "250", "500"].each do |opt|
+            %option{:value => opt, :selected => selected_if_equal(opt, @rows)}= opt
 
-          %label #{t 'app.sort_by'}:
-          %select{:name => "sort"}
-            - ['', 'year', 'sort_title', 'score', 'created'].each do |opt|
-              %option{:value => opt, :selected => @sort.match(opt)}= t("app.#{opt.self_or_blank_default(:blank)}")
+        %label #{t 'app.sort_by'}:
+        %select{:name => "sort"}
+          - ['', 'year', 'sort_title', 'score', 'created'].each do |opt|
+            %option{:value => opt, :selected => @sort.match(opt)}= t("app.#{opt.self_or_blank_default(:blank)}")
 
-          %label #{t 'app.order'}:
-          %select{:name => "order"}
-            - [:ascending, :descending].each do |opt|
-              %option{:value => opt.to_s, :selected => selected_if_equal(opt.to_s, @order)}= t("app.#{opt}")
+        %label #{t 'app.order'}:
+        %select{:name => "order"}
+          - [:ascending, :descending].each do |opt|
+            %option{:value => opt.to_s, :selected => selected_if_equal(opt.to_s, @order)}= t("app.#{opt}")
 
-          %label #{t 'app.send_to'}:
-          %select{:name => "export"}
-            - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
-              %option{:value => opt.downcase, :selected => selected_if_equal(opt.downcase, @export)}= opt
+        %label #{t 'app.send_to'}:
+        %select{:name => "export"}
+          - ["", "APA", "Chicago", "Harvard", "IEEE", "MLA", "Nature", "NLM"].each do |opt|
+            %option{:value => opt.downcase, :selected => selected_if_equal(opt.downcase, @export)}= opt
 
-          = hidden_field_tag "q", @query
+        = hidden_field_tag "q", @query
 
-          - for filter in @filter
-            = hidden_field_tag "fq[]", filter
+        - for filter in @filter
+          = hidden_field_tag "fq[]", filter
 
-          = hidden_field_tag "view", "all"
-          - @page = 1 if @page == 0
-          = hidden_field_tag "page", @page
+        = hidden_field_tag "view", "all"
+        - @page = 1 if @page == 0
+        = hidden_field_tag "page", @page
 
-          = submit_tag t('app.go')
+        = submit_tag t('app.go')
 
-    = pagination = capture do
-      .span-17.pagination #{ will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)}
+  = pagination = capture do
+    .span-17.pagination #{ will_paginate WillPaginate::Collection.new((params[:page]||1), @rows, @q.total_hits)}
 
-    - if @export.blank?
-      .span-17.clear-both.no-padding-or-margin
-        - @works.each do |work|
-          = render "shared/work", :work => work, :allow_select => allow_select, :show_status => show_status,
-            :show_dupes => show_dupes, :links_array => links_array
-    - else
-      .span-17.clear-both.no-padding-or-margin
-        = @works.html_safe
+  - if @export.blank?
+    .span-17.clear-both.no-padding-or-margin
+      - @works.each do |work|
+        = render "shared/work", :work => work, :allow_select => allow_select, :show_status => show_status,
+          :show_dupes => show_dupes, :links_array => links_array
+  - else
+    .span-17.clear-both.no-padding-or-margin
+      = @works.html_safe
 
-    = pagination
+  = pagination

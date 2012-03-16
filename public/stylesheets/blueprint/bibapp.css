@@ -676,6 +676,24 @@ div.person {
   text-align: center
 }
 
+.person-image-wrapper {
+  position: relative;
+}
+
+.person-coauthor-link {
+  position: absolute;
+  text-align: center;
+  right: 16px;
+  bottom: 0.25em;
+}
+
+.person-coauthor-link-tiny {
+  position: absolute;
+  text-align: center;
+  right: 2px;
+  bottom: 0em;
+}
+
 .person-last-name {
   width: 75px;
   padding-left: 0.5em;

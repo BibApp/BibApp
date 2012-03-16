@@ -1,0 +1,18 @@
+%p.metadata
+  = proper_link_to_authors(work)
+
+  - #Conference
+  %br/
+  = work.title_secondary
+
+  - #Publication
+  %br/
+  = work.title_tertiary
+
+  -if work.publication_date_year
+    (#{work.publication_date_year})
+
+  %br/
+  Published by:
+  - #Publisher
+  = proper_link_to_work_publisher(work)

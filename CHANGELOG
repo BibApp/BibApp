@@ -7,6 +7,8 @@ fix bugs around saved works
 Remove PublisherSource class and related. It did nothing. Retain publisher_source_id in Publisher (at least for now).
 Replace REXML and Hpricot XML parsing with Nokogiri, except for the citeproc vendored gem.
 Removed parser for deprecated Refworks format (this can be resurrected if truly needed, but I don't really want to support it)
+In PeopleController#show add icon link to take a user to shared works with co-author
+Add view to show works shared between authors.
 
 1.2.1 - February 28, 2012
 --------------

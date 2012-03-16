@@ -1,0 +1,4 @@
+= render :layout => 'layouts/main_body', :locals => {:header => t('works.shared.header')} do
+  - @authors.each do |author|
+    %h3 #{link_to author.name, person_url(author)}
+  = render 'shared/proper_works', :hidden_sort_fields => {'people[]' => @authors.collect {|x| x.id}}

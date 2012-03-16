@@ -1,9 +1,7 @@
 %p.metadata
   = link_to_authors(work)
 
-  - #Publication Name
-  %br/
-  = link_to_work_publication(work)
+  = yield
 
   -if work['year']
     (#{work['year']})

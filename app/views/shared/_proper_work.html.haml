@@ -1,0 +1,18 @@
+-#This is an analog of shared/_work for when we have a real Bibapp work instead of a solr record
+-#It doesn't attempt to support all the same options but should display the same when used in a valid way
+-#It requires work to be passed in as a local
+-#When fetching works it is helpful to include the publication
+- include_stylesheet('specific/shared/_work')
+%li.work{:class => cycle('odd', 'even')}
+  .screen-format
+    - publication = work.publication
+    - if publication.issn_isbn and publication.issn_isbn.length > 9
+      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN: #{publication.issn_isbn.gsub(' ', '')}"}
+    %strong #{link_to work.title_primary, work_path(work)}
+    %h5.work-type #{t_solr_work_type(work.type)}
+
+    = render proper_subclass_partial_for(work), :work => work
+
+    .links
+      #{link_to_findit(work)} | #{proper_link_to_saved(work, @saved)}
+  .clear-both
