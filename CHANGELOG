@@ -9,6 +9,7 @@ Replace REXML and Hpricot XML parsing with Nokogiri, except for the citeproc ven
 Removed parser for deprecated Refworks format (this can be resurrected if truly needed, but I don't really want to support it)
 In PeopleController#show add icon link to take a user to shared works with co-author
 Add view to show works shared between authors.
+Use 'proper_works' (i.e. ActiveRecord Works) directly in some places that used to convert them to solr
 
 1.2.1 - February 28, 2012
 --------------
