@@ -15,12 +15,6 @@ GIT
       will_paginate (~> 3.0)
       ya2yaml (~> 0.26)
 
-GIT
-  remote: git://github.com/parasew/acts_as_tree.git
-  revision: ed52495d1671c99e1add582628403bf8104e9077
-  specs:
-    acts_as_tree (1.2.3)
-
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -56,6 +50,7 @@ GEM
       activesupport (= 3.0.10)
     activesupport (3.0.10)
     acts_as_list (0.1.5)
+    acts_as_tree_rails3 (0.1.0)
     addressable (2.2.4)
     arel (2.0.10)
     authlogic (3.1.0)
@@ -90,7 +85,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
-    factory_girl (2.6.0)
+    factory_girl (2.6.4)
       activesupport (>= 2.3.9)
     faraday (0.6.1)
       addressable (~> 2.2.4)
@@ -194,7 +189,7 @@ GEM
       activesupport (= 3.0.10)
       bundler (~> 1.0)
       railties (= 3.0.10)
-    rails-i18n (0.5.1)
+    rails-i18n (0.5.2)
       i18n (~> 0.5)
     railties (3.0.10)
       actionpack (= 3.0.10)
@@ -211,19 +206,19 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rspec (2.8.0)
-      rspec-core (~> 2.8.0)
-      rspec-expectations (~> 2.8.0)
-      rspec-mocks (~> 2.8.0)
-    rspec-core (2.8.0)
-    rspec-expectations (2.8.0)
-      diff-lcs (~> 1.1.2)
-    rspec-mocks (2.8.0)
-    rspec-rails (2.8.1)
+    rspec (2.9.0)
+      rspec-core (~> 2.9.0)
+      rspec-expectations (~> 2.9.0)
+      rspec-mocks (~> 2.9.0)
+    rspec-core (2.9.0)
+    rspec-expectations (2.9.0)
+      diff-lcs (~> 1.1.3)
+    rspec-mocks (2.9.0)
+    rspec-rails (2.9.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec (~> 2.8.0)
+      rspec (~> 2.9.0)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -254,7 +249,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.31)
+    tzinfo (0.3.32)
     will_paginate (3.0.3)
     ya2yaml (0.31)
     yaml_db (0.2.2)
@@ -266,7 +261,7 @@ DEPENDENCIES
   RedCloth (~> 4.1.9)
   aasm
   acts_as_list
-  acts_as_tree (~> 1.2.3)!
+  acts_as_tree_rails3
   authlogic
   authorization
   backports
