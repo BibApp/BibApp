@@ -70,7 +70,7 @@ gem 'delayed_job_active_record'
 
 #data structures
 gem 'acts_as_list'
-gem 'acts_as_tree', "~> 1.2.3", :git => 'https://github.com/parasew/acts_as_tree.git'
+gem 'acts_as_tree_rails3'
 
 #Rails translations
 gem 'rails-i18n'
