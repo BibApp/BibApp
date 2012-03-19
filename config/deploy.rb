@@ -84,6 +84,16 @@ namespace :deploy do
     end
   end
 
+  #Since we can't build on the production server we have to copy the ruby and bundle gems from the test server.
+  #Note that this does mean that a lot of stale gems may accumulate over time.
+  #For the test server, when we move to the new servers, and assuming that we use rvm, the standard procedure should suffice to clear out
+  #gems directly associated with the ruby (clear and rebuild the gemset).
+  #For the shared bundle, make sure the latest code is installed and then move the capistrano shared/bundle and run
+  #cap staging bundle:install. Assuming that is fine the old bundle can be removed
+  #For the production server, you'll have to remove the local cache and also the target directories on the production
+  #server. Then run this and everything should be copied over.
+  #That said, I think by preserving the local copy, instead of having it in /tmp, should really render weeding the old
+  #gems out into an optional activity. (Of course, bundler and rvm help with this as well.)
   desc "rsync the ruby directory from the test server to the production server"
   task :rsync_ruby do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
