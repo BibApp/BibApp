@@ -16,7 +16,7 @@ GIT
       ya2yaml (~> 0.26)
 
 GIT
-  remote: https://github.com/parasew/acts_as_tree.git
+  remote: git://github.com/parasew/acts_as_tree.git
   revision: ed52495d1671c99e1add582628403bf8104e9077
   specs:
     acts_as_tree (1.2.3)

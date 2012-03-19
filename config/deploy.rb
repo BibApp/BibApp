@@ -86,8 +86,8 @@ namespace :deploy do
 
   desc "rsync the ruby directory from the test server to the production server"
   task :rsync_ruby do
-    ruby_dir = "/tmp/ruby/"
-    bundle_dir = "/tmp/bundle/"
+    ruby_dir = "/home/hading/cache/bibapp/ruby/"
+    bundle_dir = "/home/hading/cache/bibapp/bundle/"
     system "rsync -avPe ssh #{user}@#{test_server}:#{home}/ruby/ #{ruby_dir}"
     system "rsync -avPe ssh #{user}@#{test_server}:#{shared}/bundle/ #{bundle_dir}"
     system "rsync -avPe ssh #{ruby_dir} #{user}@#{production_server}:#{home}/ruby/"
