@@ -1,4 +1,4 @@
-- unless @work.publication.nil? or @work.publication.name.blank?
+- unless hide_publication_in_metadata(@work)
   %tr
     %td.label #{@work.class.human_attribute_name(:publication) + ':'}
     %td

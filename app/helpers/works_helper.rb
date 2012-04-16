@@ -159,4 +159,8 @@ module WorksHelper
     end
   end
 
+  def hide_publication_in_metadata(work)
+    work.publication.nil? or work.publication.name.blank? or work.is_a?(BookWhole)
+  end
+
 end
