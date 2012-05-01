@@ -95,7 +95,7 @@ class ApplicationController < ActionController::Base
     # Solr filtering
     # * Start with an empty array or param filters, as appropriate
     # * If we have a nested object, filter for object's works
-    @filter = params[:fq].present? ? params[:fq].clone : []
+    @filter = params[:fq].present? ? Array.wrap(params[:fq].clone) : []
 
     # Are we showing an object's works?
     if @current_object
