@@ -141,7 +141,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     make_resourceful (1.0.1)
-    mime-types (1.17.2)
+    mime-types (1.18)
     multi_json (1.0.4)
     multi_xml (0.4.2)
     multipart-post (1.1.5)
@@ -285,7 +285,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.32)
+    tzinfo (0.3.33)
     uuid (2.3.5)
       macaddr (~> 1.0)
     will_paginate (3.0.3)
@@ -326,7 +326,7 @@ DEPENDENCIES
   namecase (~> 1.1.0)
   net-ldap
   omniauth (~> 0.3)
-  paperclip
+  paperclip (~> 2.7.0)
   pg
   rails (= 3.0.10)
   rails-i18n
