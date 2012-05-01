@@ -20,7 +20,7 @@ gem 'backports'
 gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
-gem 'paperclip'
+gem 'paperclip', "~>2.7.0"
 
 #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
 gem "htmlentities", "~>4.0.0"
