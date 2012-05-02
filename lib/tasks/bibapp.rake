@@ -74,11 +74,11 @@ namespace :bibapp do
     end
   end
 
-  desc 'Delete all sessions that haven''t been updated in over a day'
+  desc 'Delete all sessions that haven' 't been updated in over a day'
   task :clear_old_sessions => :environment do
     Session.where('updated_at < ?', Time.now - 1.day).delete_all
   end
-  
+
 end
 
 def delayed_job_pid_dir()
