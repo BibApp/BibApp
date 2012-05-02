@@ -10,6 +10,8 @@ Removed parser for deprecated Refworks format (this can be resurrected if truly 
 In PeopleController#show add icon link to take a user to shared works with co-author
 Add view to show works shared between authors.
 Use 'proper_works' (i.e. ActiveRecord Works) directly in some places that used to convert them to solr
+Add rake task to delete old sessions to keep the sessions table cleaner
+Fix bug with timeline view
 
 1.2.1 - February 28, 2012
 --------------
