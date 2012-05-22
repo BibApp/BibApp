@@ -62,7 +62,7 @@ class AttachmentFuToPaperclip < ActiveRecord::Migration
       #attachment.reprocess! if attachment
     end
 
-    # After data migration and paperclip reprocessing remove attachement_fu columns
+    # After data migration and paperclip reprocessing remove attachment_fu columns
     remove_column :attachments, :filename
     remove_column :attachments, :content_type
     remove_column :attachments, :size
