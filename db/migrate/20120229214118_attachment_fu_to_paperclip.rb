@@ -28,7 +28,7 @@ module PaperclipMigrations
 
           puts "Copying #{old_path} to #{new_path}"
           system("cp #{old_path} #{new_path}")
-          model.save
+          model.save!
         else
           puts "No such file: #{old_path}"
         end
