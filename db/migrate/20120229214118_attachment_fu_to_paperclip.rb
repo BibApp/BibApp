@@ -52,7 +52,7 @@ class AttachmentFuToPaperclip < ActiveRecord::Migration
     # Update table information
     Attachment.reset_column_information
 
-    # Delete all attachement_fu image sizes
+    # Delete all attachment_fu image sizes
     Attachment.delete_all("parent_id IS NOT NULL")
     remove_column :attachments, :parent_id
 
