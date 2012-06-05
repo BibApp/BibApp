@@ -13,7 +13,7 @@
 
   .screen-format
     - publication = work.publication
-    - if publication.issn_isbn and publication.issn_isbn.length > 9
+    - if publication and publication.issn_isbn and publication.issn_isbn.length > 9
       %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN: #{publication.issn_isbn.gsub(' ', '')}"}
     %strong #{link_to work.title_primary, work_path(work)}
     %h5.work-type #{t_solr_work_type(work.type)}
