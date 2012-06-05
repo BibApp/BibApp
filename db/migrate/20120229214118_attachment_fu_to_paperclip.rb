@@ -28,7 +28,7 @@ module PaperclipMigrations
 
           puts "Copying #{old_path} to #{new_path}"
           system("cp #{old_path} #{new_path}")
-          model.save
+          model.save!
         else
           puts "No such file: #{old_path}"
         end
@@ -52,7 +52,7 @@ class AttachmentFuToPaperclip < ActiveRecord::Migration
     # Update table information
     Attachment.reset_column_information
 
-    # Delete all attachement_fu image sizes
+    # Delete all attachment_fu image sizes
     Attachment.delete_all("parent_id IS NOT NULL")
     remove_column :attachments, :parent_id
 
@@ -62,7 +62,7 @@ class AttachmentFuToPaperclip < ActiveRecord::Migration
       #attachment.reprocess! if attachment
     end
 
-    # After data migration and paperclip reprocessing remove attachement_fu columns
+    # After data migration and paperclip reprocessing remove attachment_fu columns
     remove_column :attachments, :filename
     remove_column :attachments, :content_type
     remove_column :attachments, :size
