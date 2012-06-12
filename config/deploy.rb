@@ -29,12 +29,14 @@ task :new_staging do
   role :web, new_test_server
   role :app, new_test_server
   role :db, new_test_server, :primary => true
+  set :branch, 'new-uiuc-connections'
 end
 
 task :new_production do
   role :web, new_production_server
   role :app, new_production_server
   role :db, new_production_server, :primary => true
+  set :branch, 'new-uiuc-connections'
   #TODO need to do a sync here, but wait to write until we have server
 end
 
@@ -50,7 +52,7 @@ set :rails_env, ENV['RAILS_ENV'] || 'production'
 
 set :scm, :git
 set :repository, 'git://github.com/BibApp/BibApp.git'
-set :branch, 'new-uiuc-connections' unless fetch(:branch, nil)
+set :branch, 'uiuc-connections' unless fetch(:branch, nil)
 set :deploy_via, :remote_cache
 
 #directories on the server to deploy the application
