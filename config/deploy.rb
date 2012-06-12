@@ -4,6 +4,9 @@ require 'fileutils'
 
 set :production_server, "sophia.cites.illinois.edu"
 set :test_server, "athena.cites.illinois.edu"
+set :new_test_server, "saga-dev.cites.illinois.edu"
+set :new_production_server, "saga.cites.illinois.edu"
+default_run_options[:shell] = '/bin/bash -l'
 
 desc 'Set prerequisites for deployment to production server.'
 task :production do
@@ -22,6 +25,19 @@ task :staging do
   set :branch, 'uiuc-connections'
 end
 
+task :new_staging do
+  role :web, new_test_server
+  role :app, new_test_server
+  role :db, new_test_server, :primary => true
+end
+
+task :new_production do
+  role :web, new_production_server
+  role :app, new_production_server
+  role :db, new_production_server, :primary => true
+  #TODO need to do a sync here, but wait to write until we have server
+end
+
 #set this if you want to reindex or to redeploy a new copy of the solr installation (e.g. after a schema change)
 #e.g. cap staging reindex deploy
 task :reindex do
@@ -34,7 +50,7 @@ set :rails_env, ENV['RAILS_ENV'] || 'production'
 
 set :scm, :git
 set :repository, 'git://github.com/BibApp/BibApp.git'
-set :branch, 'uiuc-connections' unless fetch(:branch, nil)
+set :branch, 'new-uiuc-connections' unless fetch(:branch, nil)
 set :deploy_via, :remote_cache
 
 #directories on the server to deploy the application

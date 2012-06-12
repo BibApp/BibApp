@@ -4,6 +4,9 @@ source "http://gems.github.com"
 #Rails itself
 gem "rails", "3.0.10"
 
+#Passenger for deployoment
+gem "passenger"
+
 #Use jquery for javascript - in Rails 3.0 this involves running a generator too
 #once we get to 3.1 all that should be necessary is adding some includes
 #to the application.js file in assets
