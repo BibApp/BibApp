@@ -69,13 +69,13 @@ set :use_sudo, false
 
 namespace :deploy do
   task :start do
-    ;
+    run "cd #{home}/bin ; ./start-bibapp"
   end
   task :stop do
-    ;
+    run "cd #{home}/bin ; ./stop-bibapp"
   end
   task :restart, :roles => :app, :except => {:no_release => true} do
-    run "touch #{current}/tmp/restart.txt"
+    ;
   end
 
   desc "create a config directory under shared"
@@ -124,19 +124,6 @@ namespace :deploy do
 
 end
 
-namespace :bibapp do
-  [:stop, :start, :restart].each do |action|
-    desc "#{action} Bibapp services"
-    task action do
-      begin
-        run "cd #{current}; RAILS_ENV=#{rails_env} bundle exec rake bibapp:#{action}"
-      rescue
-        puts "Current directory doesn't exist yet"
-      end
-    end
-  end
-end
-
 #The sleep is to make sure that solr has enough time to start up before
 #running this.
 namespace :solr do
@@ -145,56 +132,40 @@ namespace :solr do
     run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} bundle exec rake solr:refresh_index"
   end
 
-  set :index_dir, "#{current}/vendor/bibapp-solr/"
-  set :backup_dir, "/tmp/bibapp-solr-backup/"
-
-  desc "Save the current solr index to a temporary location"
-  task :save_index do
-    run "rm -rf #{backup_dir}"
-    run %Q(mv #{index_dir} #{backup_dir})
-  end
-
-  desc "Restore the previous solr index from a temporary location"
-  task :restore_index do
-    run "rm -rf #{index_dir}"
-    run %Q(mv #{backup_dir} #{index_dir})
+  desc "Copy the index from previous to current release"
+  task :copy_index do
+    run "rm -rf #{current_release}/vendor/bibapp-solr"
+    run "cp -r #{previous_release}/vendor/bibapp-solr #{current_release}/vendor/bibapp-solr"
   end
 
 end
 
 after 'deploy:setup', 'deploy:create_shared_dirs'
 
-before 'deploy:update', 'bibapp:stop'
-before 'deploy:update' do
+after 'deploy:update_code' do
   unless exists?(:reindex)
-    find_and_execute_task('solr:save_index')
+    find_and_execute_task('solr:copy_index')
   end
 end
 
-after 'deploy:update', 'deploy:link_config'
-after 'deploy:update', 'deploy:symlink_shared_dirs'
-after 'deploy:update' do
-  unless exists?(:reindex)
-    find_and_execute_task('solr:restore_index')
-  end
+before 'deploy:create_symlink' do
+  run "cd #{home}/bin ; ./stop-bibapp"
 end
 
-after 'deploy:start', 'bibapp:start'
-after 'deploy:stop', 'bibapp:stop'
-after 'deploy:restart', 'bibapp:restart'
-
-after 'bibapp:start' do
-    if exists?(:reindex)
-      find_and_execute_task('solr:refresh_index')
-    end
+after 'deploy:create_symlink', 'deploy:link_config'
+after 'deploy:create_symlink', 'deploy:symlink_shared_dirs'
+after 'deploy:create_symlink' do
+  run "cd #{home}/bin ; ./start-bibapp"
 end
-after 'bibapp:restart' do
+
+after 'deploy:start' do
     if exists?(:reindex)
       find_and_execute_task('solr:refresh_index')
     end
 end
 
-#if exists?(:reindex)
-#  after 'bibapp:start', 'solr:refresh_index'
-#  after 'bibapp:restart', 'solr:refresh_index'
-#end
+after 'deploy:restart' do
+    if exists?(:reindex)
+      find_and_execute_task('solr:refresh_index')
+    end
+end
