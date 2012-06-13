@@ -37,7 +37,7 @@ task :new_production do
   role :app, new_production_server
   role :db, new_production_server, :primary => true
   set :branch, 'new-uiuc-connections'
-  #TODO need to do a sync here, but wait to write until we have server
+  before 'deploy:update_code', 'deploy:rsync_ruby'
 end
 
 #set this if you want to reindex or to redeploy a new copy of the solr installation (e.g. after a schema change)
@@ -111,16 +111,14 @@ namespace :deploy do
   #That said, I think by preserving the local copy, instead of having it in /tmp, should really render weeding the old
   #gems out into an optional activity. (Of course, bundler and rvm help with this as well.)
 
-  #TODO - I think the only difference with the new setup is that we'll copy ~/.rvm instead of ~/ruby. I think the
-  #passenger stuff will come along with the bundle.
   desc "rsync the ruby directory from the test server to the production server"
   task :rsync_ruby do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
     bundle_dir = "/home/hading/cache/bibapp/bundle/"
-    system "rsync -avPe ssh #{user}@#{test_server}:#{home}/ruby/ #{ruby_dir}"
-    system "rsync -avPe ssh #{user}@#{test_server}:#{shared_path}/bundle/ #{bundle_dir}"
-    system "rsync -avPe ssh #{ruby_dir} #{user}@#{production_server}:#{home}/ruby/"
-    system "rsync -avPe ssh #{bundle_dir} #{user}@#{production_server}:#{shared_path}/bundle/"
+    system "rsync -avPe ssh #{user}@#{new_test_server}:#{home}/.rvm/ #{ruby_dir}"
+    system "rsync -avPe ssh #{user}@#{new_test_server}:#{shared_path}/bundle/ #{bundle_dir}"
+    system "rsync -avPe ssh #{ruby_dir} #{user}@#{new_production_server}:#{home}/.rvm/"
+    system "rsync -avPe ssh #{bundle_dir} #{user}@#{new_production_server}:#{shared_path}/bundle/"
   end
 
 end
