@@ -110,6 +110,9 @@ namespace :deploy do
   #server. Then run this and everything should be copied over.
   #That said, I think by preserving the local copy, instead of having it in /tmp, should really render weeding the old
   #gems out into an optional activity. (Of course, bundler and rvm help with this as well.)
+
+  #TODO - I think the only difference with the new setup is that we'll copy ~/.rvm instead of ~/ruby. I think the
+  #passenger stuff will come along with the bundle.
   desc "rsync the ruby directory from the test server to the production server"
   task :rsync_ruby do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
