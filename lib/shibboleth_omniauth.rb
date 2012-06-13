@@ -55,8 +55,14 @@ module OmniAuth
       end
 
       def remote_user
-        request.env["REMOTE_USER"]
+        shibboleth_attribute("REMOTE_USER")
       end
+
+      #Do this in a way that (I think) will work with the attribute passed either by environment variables or header
+      def shibboleth_attribute(name)
+        [request.env[name.to_s], request.env["HTTP_#{name.to_s.upcase.gsub('-', '_')}"]].detect { |att| att.present? }
+      end
+
 
     end
 
