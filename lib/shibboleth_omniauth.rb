@@ -7,7 +7,7 @@ module OmniAuth
       attr_accessor :base_url, :entity_id
 
       #receive and save any needed parameters for the strategy
-      def initialize(app, base_url, entity_id,  options = {})
+      def initialize(app, base_url, entity_id, options = {})
         self.base_url = base_url
         self.entity_id = entity_id
         super(app, :shibboleth, options)
@@ -22,7 +22,7 @@ module OmniAuth
 
       #check to see if we have a successful authentication
       def callback_phase
-        if request.env["REMOTE_USER"]
+        if remote_user
           super
         else
           fail!('No REMOTE_USER from shibboleth authentication')
@@ -30,7 +30,6 @@ module OmniAuth
       end
 
       def auth_hash
-        remote_user = request.env["REMOTE_USER"]
         OmniAuth::Utils.deep_merge(super, {
             'user_info' => {'email' => remote_user},
             'uid' => remote_user
@@ -53,6 +52,10 @@ module OmniAuth
 
       def shibboleth_entity_id
         return CGI.escape(self.entity_id)
+      end
+
+      def remote_user
+        request.env["REMOTE_USER"]
       end
 
     end
