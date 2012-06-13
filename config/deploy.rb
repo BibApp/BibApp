@@ -59,10 +59,8 @@ set :deploy_via, :remote_cache
 #the running instance gets links to [deploy_to]/current
 set :home, "/services/ideals-bibapp"
 set :deploy_to, "#{home}/bibapp-capistrano"
-set :current, "#{deploy_to}/current"
-set :shared, "#{deploy_to}/shared"
-set :shared_config, "#{shared}/config"
-set :public, "#{current}/public"
+set :shared_config, "#{shared_path}/config"
+set :public, "#{current_path}/public"
 
 set :user, 'ideals-bibapp'
 set :use_sudo, false
@@ -80,9 +78,9 @@ namespace :deploy do
 
   desc "create a config directory under shared"
   task :create_shared_dirs do
-    run "mkdir #{shared}/config"
+    run "mkdir #{shared_path}/config"
     [:attachments, :groups, :people].each do |dir|
-      run "mkdir #{shared}/system/#{dir}"
+      run "mkdir #{shared_path}/system/#{dir}"
     end
   end
 
@@ -90,9 +88,9 @@ namespace :deploy do
   task :link_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml',
      'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml', 'locales.yml', 'keyword_exclusions.yml', 'stopwords.yml'].each do |file|
-      run "ln -nfs #{shared_config}/#{file} #{current}/config/#{file}"
+      run "ln -nfs #{shared_config}/#{file} #{current_path}/config/#{file}"
     end
-    run "ln -nfs #{shared_config}/personalize/*.yml #{current}/config/locales/personalize/."
+    run "ln -nfs #{shared_config}/personalize/*.yml #{current_path}/config/locales/personalize/."
   end
 
   desc "symlink shared subdirectories of public"
@@ -117,9 +115,9 @@ namespace :deploy do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
     bundle_dir = "/home/hading/cache/bibapp/bundle/"
     system "rsync -avPe ssh #{user}@#{test_server}:#{home}/ruby/ #{ruby_dir}"
-    system "rsync -avPe ssh #{user}@#{test_server}:#{shared}/bundle/ #{bundle_dir}"
+    system "rsync -avPe ssh #{user}@#{test_server}:#{shared_path}/bundle/ #{bundle_dir}"
     system "rsync -avPe ssh #{ruby_dir} #{user}@#{production_server}:#{home}/ruby/"
-    system "rsync -avPe ssh #{bundle_dir} #{user}@#{production_server}:#{shared}/bundle/"
+    system "rsync -avPe ssh #{bundle_dir} #{user}@#{production_server}:#{shared_path}/bundle/"
   end
 
 end
@@ -129,7 +127,7 @@ end
 namespace :solr do
   desc "Reindex solr"
   task :refresh_index do
-    run "cd #{current}; sleep 10; RAILS_ENV=#{rails_env} bundle exec rake solr:refresh_index"
+    run "cd #{current_path}; sleep 10; RAILS_ENV=#{rails_env} bundle exec rake solr:refresh_index"
   end
 
   desc "Copy the index from previous to current release"
