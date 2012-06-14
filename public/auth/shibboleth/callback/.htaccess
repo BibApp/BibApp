@@ -3,4 +3,6 @@ AuthType shibboleth
 ShibApplicationId default
 ShibExportAssertion On
 require Shibboleth
+ShibUseHeaders On
+
 
