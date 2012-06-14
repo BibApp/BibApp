@@ -22,9 +22,6 @@ module OmniAuth
 
       #check to see if we have a successful authentication
       def callback_phase
-        request.env.keys.sort.each do |k|
-          Rails.logger.error k.to_s
-        end
         if remote_user
           super
         else
