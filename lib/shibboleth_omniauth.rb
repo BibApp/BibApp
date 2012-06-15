@@ -55,7 +55,7 @@ module OmniAuth
       end
 
       def remote_user
-        shibboleth_attribute("REMOTE_USER") || shibboleth_attribute('eppn')
+         shibboleth_attribute('eppn') || shibboleth_attribute('persistent-id') || shibboleth_attribute('targeted-id')
       end
 
       #Do this in a way that (I think) will work with the attribute passed either by environment variables or header
