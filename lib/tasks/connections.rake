@@ -1,4 +1,3 @@
-File Edit Options Buffers Tools Help
 # Rake tasks peculiar to connections
 
 namespace :connections do
