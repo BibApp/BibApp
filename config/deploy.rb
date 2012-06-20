@@ -118,10 +118,10 @@ namespace :deploy do
     passenger_dir = "/home/hading/cache/bibapp/passenger/"
     system "rsync -avPe ssh #{user}@#{new_test_server}:#{home}/.rvm/ #{ruby_dir}"
     system "rsync -avPe ssh #{user}@#{new_test_server}:#{shared_path}/bundle/ #{bundle_dir}"
-    system "rsync -avPE ssh #{user}@#{new_test_server}:#{home}/.passenger/ #{passenger_dir}"
+    system "rsync -avPe ssh #{user}@#{new_test_server}:#{home}/.passenger/ #{passenger_dir}"
     system "rsync -avPe ssh #{ruby_dir} #{user}@#{new_production_server}:#{home}/.rvm/"
     system "rsync -avPe ssh #{bundle_dir} #{user}@#{new_production_server}:#{shared_path}/bundle/"
-    system "rsync -avPE ssh #{passenger_dir} #{user}@#{new_production_server}:#{home}/.passenger/"
+    system "rsync -avPe ssh #{passenger_dir} #{user}@#{new_production_server}:#{home}/.passenger/"
   end
 
 end
