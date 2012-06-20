@@ -212,7 +212,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         store_location
-        redirect_to new_user_session_path
+        redirect_to new_user_session_url
       end
       format.any do
         request_http_basic_authentication t('app.web_password')

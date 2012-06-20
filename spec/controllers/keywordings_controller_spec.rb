@@ -32,7 +32,7 @@ describe KeywordingsController do
       lambda {
         post :create, :keywording => {:keyword_id => keyword.id, :work_id => @keywording.work.id}
       }.should change(Keywording, :count).by(1)
-      response.should redirect_to(keywording_url(assigns(:keywording)))
+      response.should redirect_to(keywording_path(assigns(:keywording)))
     end
 
     it "should get edit" do
@@ -43,7 +43,7 @@ describe KeywordingsController do
 
     it "should update"  do
       put :update, :id => @keywording.id, :keywording => {}
-      response.should redirect_to(keywording_url(:id => @keywording.id))
+      response.should redirect_to(keywording_path(:id => @keywording.id))
     end
 
     it "should destroy" do
@@ -51,7 +51,7 @@ describe KeywordingsController do
       lambda {
         delete :destroy, :id => @keywording.id
       }.should change(Keywording, :count).by(-1)
-      response.should redirect_to(keywordings_url)
+      response.should redirect_to(keywordings_path)
     end
   end
 end
