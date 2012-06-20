@@ -38,10 +38,9 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options = {})
-    if I18n.available_locales.many?
-      {:locale => I18n.locale}
-    else
-      {}
+    Hash.new.tap do |opts|
+      opts[:locale] = I18n.locale if I18n.available_locales.many?
+      opts[:protocol] = 'https'
     end
   end
 
