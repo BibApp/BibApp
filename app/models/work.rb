@@ -857,6 +857,8 @@ class Work < ActiveRecord::Base
       machine_name = make_machine_name(cns[:name])
       name = cns[:name].strip
       name_string = NameString.find_or_create_by_machine_name(:machine_name => machine_name, :name => name)
+      name_string.name = name
+      name_string.save!
       self.work_name_strings.create(:name_string_id => name_string.id, :role => cns[:role])
     end
   end
