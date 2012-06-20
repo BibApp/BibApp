@@ -20,6 +20,8 @@ namespace :connections do
     require 'phusion_passenger/platform_info/binary_compatibility'
     require 'fileutils'
     passenger_dir = "/services/ideals-bibapp/.passenger/standalone"
+    #The below reflects how passenger figures out where to put the nginx installation. If that changes
+    #this would need to.
     system_info = PhusionPassenger::PlatformInfo.passenger_binary_compatibility_id
     version_info = PhusionPassenger::VERSION_STRING
     link_name = "#{version_info}-#{system_info}"
