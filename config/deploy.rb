@@ -116,12 +116,17 @@ namespace :deploy do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
     bundle_dir = "/home/hading/cache/bibapp/bundle/"
     passenger_dir = "/home/hading/cache/bibapp/passenger/"
-    system "rsync -avPe ssh #{user}@#{new_test_server}:#{home}/.rvm/ #{ruby_dir}"
-    system "rsync -avPe ssh #{user}@#{new_test_server}:#{shared_path}/bundle/ #{bundle_dir}"
-    system "rsync -avPe ssh #{user}@#{new_test_server}:#{home}/.passenger/ #{passenger_dir}"
-    system "rsync -avPe ssh #{ruby_dir} #{user}@#{new_production_server}:#{home}/.rvm/"
-    system "rsync -avPe ssh #{bundle_dir} #{user}@#{new_production_server}:#{shared_path}/bundle/"
-    system "rsync -avPe ssh #{passenger_dir} #{user}@#{new_production_server}:#{home}/.passenger/"
+    test_id = "#{user}@#{new_test_server}"
+    production_id = "#{user}@#{new_production_server}"
+    remote_rvm = "#{home}/.rvm/"
+    remote_bundle = "#{shared_path}/bundle/"
+    remote_passenger = "#{home}/.passenger/"
+    system "rsync -avPe ssh #{test_id}:#{remote_rvm} #{ruby_dir}"
+    system "rsync -avPe ssh #{test_id}:#{remote_bundle} #{bundle_dir}"
+    system "rsync -avPe ssh #{test_id}:#{remote_passenger} #{passenger_dir}"
+    system "rsync -avPe ssh #{ruby_dir} #{production_id}:#{remote_rvm}"
+    system "rsync -avPe ssh #{bundle_dir} #{production_id}:#{remote_bundle}"
+    system "rsync -avPe ssh #{passenger_dir} #{production_id}:#{remote_passenger}"
   end
 
 end
