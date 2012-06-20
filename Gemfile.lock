@@ -177,7 +177,7 @@ GEM
       fastthread (>= 1.0.1)
       rack
       rake (>= 0.8.1)
-    pg (0.12.2)
+    pg (0.13.2)
     polyglot (0.3.3)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.2.5)
@@ -291,11 +291,11 @@ DEPENDENCIES
   make_resourceful
   namecase (~> 1.1.0)
   net-ldap
-  nokogiri (~> 1.4.0)
+  nokogiri
   omniauth (~> 0.2)
   paperclip (~> 2.7.0)
   passenger
-  pg (~> 0.12.2)
+  pg
   rails (= 3.0.10)
   rails-i18n
   rake

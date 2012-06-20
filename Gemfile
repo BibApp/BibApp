@@ -83,9 +83,7 @@ gem 'rails-i18n'
 #production, for example. Note that the appropriate database for your
 #set up does need to be specified here, though, or things will fail
 #pretty quickly.
-#For now we need this pegged to 0.12 because the postgres servers are 8.2
-#After the CITES upgrade we should be able to remove this restriction
-gem 'pg', "~> 0.12.2"
+gem 'pg'
 
 #dump database in YAML form - honestly, I'm not sure why we need this, but
 #while I am porting to Rails 3 I'm not going to worry about it.
@@ -100,7 +98,7 @@ gem 'omniauth', "~> 0.2"
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
-gem 'nokogiri', "~> 1.4.0"
+gem 'nokogiri'
 
 #batch loading of authors
 gem 'fastercsv'
