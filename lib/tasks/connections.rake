@@ -34,7 +34,7 @@ namespace :connections do
       #The conditional handles the possibility of running this on staging - if the link_name still exists then
       #it's a real directory and we don't need to link.
       unless File.exists?(link_name)
-        #guess which version to use - we don't try to be very sophisicated here
+        #guess which version to use - we don't try to be very sophisticated here
         #just take the one with the latest mtime
         source_dir = Dir["*gcc*"].sort_by { |x| File.mtime(x) }.reverse.first
         #link
