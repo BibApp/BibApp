@@ -94,7 +94,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
-gem 'omniauth', "~> 0.2"
+gem 'omniauth', "~> 0.3.2"
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
@@ -146,7 +146,7 @@ group :test, :development do
   gem 'ruby-debug'
   gem 'ruby-debug-ide'
   gem 'shoulda'
-  gem 'factory_girl'
+  gem 'factory_girl', "~> 2.6.4"
   gem 'rcov'
 #requires Nokogiri 1.5, but there is a problem with compiling that on
 #our deployment servers until there is an OS upgrade, so taking this
