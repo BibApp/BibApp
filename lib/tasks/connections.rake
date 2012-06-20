@@ -31,12 +31,16 @@ namespace :connections do
           File.unlink(f)
         end
       end
-      #guess which version to use - we don't try to be very sophisicated here
-      #just take the one with the latest mtime
-      source_dir = Dir["*gcc*"].sort_by { |x| File.mtime(x) }.reverse.first
-      #link
-      puts "linking source #{source_dir} to #{link_name}"
-      FileUtils.ln_s(source_dir, link_name)
+      #The conditional handles the possibility of running this on staging - if the link_name still exists then
+      #it's a real directory and we don't need to link.
+      unless File.exists?(link_name)
+        #guess which version to use - we don't try to be very sophisicated here
+        #just take the one with the latest mtime
+        source_dir = Dir["*gcc*"].sort_by { |x| File.mtime(x) }.reverse.first
+        #link
+        puts "linking source #{source_dir} to #{link_name}"
+        FileUtils.ln_s(source_dir, link_name)
+      end
     end
   end
 end
