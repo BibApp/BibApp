@@ -12,6 +12,7 @@ Add view to show works shared between authors.
 Use 'proper_works' (i.e. ActiveRecord Works) directly in some places that used to convert them to solr
 Add rake task to delete old sessions to keep the sessions table cleaner
 Fix bug with timeline view
+Update rails version to 3.0.15
 
 1.2.1 - February 28, 2012
 --------------

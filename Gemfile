@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "3.0.10"
+gem "rails", "~> 3.0.10"
 
 #Use jquery for javascript - in Rails 3.0 this involves running a generator too
 #once we get to 3.1 all that should be necessary is adding some includes
@@ -16,6 +16,7 @@ gem "haml"
 
 #Make resourceful - used by some controllers
 #backports may be needed by a 1.8 ruby to make make_resourceful work
+#TODO - presumably after we get to 1.9.3 backports will be redundant
 gem 'backports'
 gem 'make_resourceful'
 
