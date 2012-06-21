@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "~> 3.0.10"
+gem "rails", "~> 3.0.15"
 
 #Use jquery for javascript - in Rails 3.0 this involves running a generator too
 #once we get to 3.1 all that should be necessary is adding some includes
@@ -133,7 +133,7 @@ group :development do
   # - some necessary requires are missing from the main version
   # - we filter the personalize keys so that Tolk doesn't sync them
   # - we don't generate a new migration - the migration for tolk is committed into Bibapp itself
-  gem 'tolk', :git => 'git://github.com/BibApp/tolk.git', :branch => 'rails3'
+  gem 'tolk', "~> 1.0.1", :git => 'git://github.com/BibApp/tolk.git'
 end
 
 group :test, :development do

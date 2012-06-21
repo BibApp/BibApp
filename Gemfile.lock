@@ -8,10 +8,9 @@ GIT
 
 GIT
   remote: git://github.com/BibApp/tolk.git
-  revision: 0d1aab1ab763acf6f3f21643d7bdf7841e9efd43
-  branch: rails3
+  revision: af92f86c73e6e40bc58864b541ad2d10bf5c5a7b
   specs:
-    tolk (1.0)
+    tolk (1.0.1)
       will_paginate (~> 3.0)
       ya2yaml (~> 0.26)
 
@@ -328,7 +327,7 @@ DEPENDENCIES
   omniauth (~> 0.3)
   paperclip (~> 2.7.0)
   pg
-  rails (~> 3.0.10)
+  rails (~> 3.0.15)
   rails-i18n
   rake
   rcov
@@ -344,6 +343,6 @@ DEPENDENCIES
   sort_alphabetical
   sword2ruby (>= 0.0.6)!
   thin
-  tolk!
+  tolk (~> 1.0.1)!
   will_paginate (~> 3.0.beta)
   yaml_db
