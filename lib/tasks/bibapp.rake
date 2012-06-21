@@ -28,13 +28,13 @@ namespace :bibapp do
       puts "### ERROR - Starting - Delayed Job."
     end
 
-    begin
-      # Spin passenger
-      puts "\n\n* Starting - Passenger."
-      sh "touch tmp/restart.txt"
-    rescue RuntimeError
-      puts "### ERROR - Starting - Passenger."
-    end
+    #begin
+    #  # Spin passenger
+    #  puts "\n\n* Starting - Passenger."
+    #  sh "touch tmp/restart.txt"
+    #rescue RuntimeError
+    #  puts "### ERROR - Starting - Passenger."
+    #end
 
     puts "Finished bibapp:start"
   end
@@ -49,8 +49,8 @@ namespace :bibapp do
       ENV['RAILS_ENV'] = Rails.env
       sh "script/delayed_job -p #{Rails.env} --pid-dir=#{delayed_job_pid_dir} stop"
 
-      # Spin passenger
-      sh "touch tmp/restart.txt"
+      ## Spin passenger
+      #sh "touch tmp/restart.txt"
     end
 
     puts "Finished bibapp:stop"

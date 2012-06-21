@@ -2,6 +2,13 @@
 module ApplicationHelper
   require 'config/personalize.rb'
 
+  def url_for(options = nil)
+    if Hash === options
+      options[:protocol] ||= 'https'
+    end
+    super(options)
+  end
+
   def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected
       pen_name = PenName.find_by_person_id_and_name_string_id(person.id, name_string.id)
@@ -77,7 +84,7 @@ module ApplicationHelper
       err = @errors["#{object}"] rescue nil
     end
     if err.present?
-      options.merge!(:class=>'fieldWithErrors', :id=>"#{[object, method].compact.join('_')}-error", :style=> (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
+      options.merge!(:class => 'fieldWithErrors', :id => "#{[object, method].compact.join('_')}-error", :style => (err ? "#{options[:style]}" : "#{options[:style]};display: none;"))
       content_tag("p", err || "", options)
     end
   end
@@ -151,7 +158,7 @@ module ApplicationHelper
   #Generate boilerplate then yield to the block
   def rdf_document_on(xml_builder)
     xml_builder.instruct!
-    xml_builder.rdf(:RDF, {'xmlns:rdf'=>"http://www.w3.org/1999/02/22-rdf-syntax-ns#", 'xmlns:bibo'=>"http://purl.org/ontology/bibo/", 'xmlns:foaf'=>"http://xmlns.com/foaf/0.1/", 'xmlns:owl'=>"http://www.w3.org/2002/07/owl#", 'xmlns:xsd'=>"http://www.w3.org/2001/XMLSchema#", 'xmlns:core'=>"http://vivoweb.org/ontology/core#", 'xmlns:vitro'=>"http://vitro.mannlib.cornell.edu/ns/vitro/0.7#", 'xmlns:rdfs'=>"http://www.w3.org/2000/01/rdf-schema#"}) do
+    xml_builder.rdf(:RDF, {'xmlns:rdf' => "http://www.w3.org/1999/02/22-rdf-syntax-ns#", 'xmlns:bibo' => "http://purl.org/ontology/bibo/", 'xmlns:foaf' => "http://xmlns.com/foaf/0.1/", 'xmlns:owl' => "http://www.w3.org/2002/07/owl#", 'xmlns:xsd' => "http://www.w3.org/2001/XMLSchema#", 'xmlns:core' => "http://vivoweb.org/ontology/core#", 'xmlns:vitro' => "http://vitro.mannlib.cornell.edu/ns/vitro/0.7#", 'xmlns:rdfs' => "http://www.w3.org/2000/01/rdf-schema#"}) do
       yield
     end
   end
@@ -196,7 +203,7 @@ module ApplicationHelper
 
   #yield the ids of the collection to a block
   def with_ids_from(collection)
-    yield collection.collect {|member| member.id}
+    yield collection.collect { |member| member.id }
   end
 
 end

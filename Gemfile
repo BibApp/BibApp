@@ -4,6 +4,9 @@ source "http://gems.github.com"
 #Rails itself
 gem "rails", "3.0.10"
 
+#Passenger for deployoment
+gem "passenger"
+
 #Use jquery for javascript - in Rails 3.0 this involves running a generator too
 #once we get to 3.1 all that should be necessary is adding some includes
 #to the application.js file in assets
@@ -83,9 +86,7 @@ gem 'rails-i18n'
 #production, for example. Note that the appropriate database for your
 #set up does need to be specified here, though, or things will fail
 #pretty quickly.
-#For now we need this pegged to 0.12 because the postgres servers are 8.2
-#After the CITES upgrade we should be able to remove this restriction
-gem 'pg', "~> 0.12.2"
+gem 'pg'
 
 #dump database in YAML form - honestly, I'm not sure why we need this, but
 #while I am porting to Rails 3 I'm not going to worry about it.
@@ -96,11 +97,11 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
-gem 'omniauth', "~> 0.2"
+gem 'omniauth', "~> 0.3.2"
 
 #there is a problem compiling 1.5 on athena/sophia until they get an
 #os upgrade
-gem 'nokogiri', "~> 1.4.0"
+gem 'nokogiri'
 
 #batch loading of authors
 gem 'fastercsv'
@@ -148,7 +149,7 @@ group :test, :development do
   gem 'ruby-debug'
   gem 'ruby-debug-ide'
   gem 'shoulda'
-  gem 'factory_girl'
+  gem 'factory_girl', "~> 2.6.4"
   gem 'rcov'
 #requires Nokogiri 1.5, but there is a problem with compiling that on
 #our deployment servers until there is an OS upgrade, so taking this

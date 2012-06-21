@@ -1,6 +1,0 @@
-AuthType shibboleth
-#ShibRequireSession On
-ShibApplicationId default
-ShibExportAssertion On
-require Shibboleth
-

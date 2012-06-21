@@ -38,10 +38,9 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options(options = {})
-    if I18n.available_locales.many?
-      {:locale => I18n.locale}
-    else
-      {}
+    Hash.new.tap do |opts|
+      opts[:locale] = I18n.locale if I18n.available_locales.many?
+      opts[:protocol] = 'https'
     end
   end
 
@@ -213,7 +212,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
         store_location
-        redirect_to new_user_session_path
+        redirect_to new_user_session_url
       end
       format.any do
         request_http_basic_authentication t('app.web_password')

@@ -42,7 +42,7 @@ describe KeywordsController do
 
     it "should update keyword" do
       put :update, :id => @keyword.id, :keyword => {:name => 'new_name'}
-      response.should redirect_to(keyword_url(@keyword))
+      response.should redirect_to(keyword_path(@keyword))
       @keyword.reload.name.should == 'new_name'
     end
 
@@ -51,7 +51,7 @@ describe KeywordsController do
       lambda {
       delete :destroy, :id => @keyword.id
       }.should change(Keyword, :count).by(-1)
-      response.should redirect_to(keywords_url())
+      response.should redirect_to(keywords_path())
       Keyword.find_by_id(@keyword.id).should be_nil
     end
   end
