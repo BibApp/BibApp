@@ -10,14 +10,14 @@ task :staging do
   role :web, staging_server
   role :app, staging_server
   role :db, staging_server, :primary => true
-  set :branch, 'new-uiuc-connections'
+  set :branch, 'uiuc-connections'
 end
 
 task :production do
   role :web, production_server
   role :app, production_server
   role :db, production_server, :primary => true
-  set :branch, 'new-uiuc-connections'
+  set :branch, 'uiuc-connections'
   before 'deploy:update_code', 'deploy:rsync_ruby'
 end
 
