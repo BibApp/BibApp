@@ -2,40 +2,21 @@ require 'bundler/capistrano'
 require 'tmpdir'
 require 'fileutils'
 
-set :production_server, "sophia.cites.illinois.edu"
-set :test_server, "athena.cites.illinois.edu"
-set :new_test_server, "saga-dev.cites.illinois.edu"
-set :new_production_server, "saga.cites.illinois.edu"
+set :staging_server, "saga-dev.cites.illinois.edu"
+set :production_server, "saga.cites.illinois.edu"
 default_run_options[:shell] = '/bin/bash -l'
 
-desc 'Set prerequisites for deployment to production server.'
+task :staging do
+  role :web, staging_server
+  role :app, staging_server
+  role :db, staging_server, :primary => true
+  set :branch, 'new-uiuc-connections'
+end
+
 task :production do
   role :web, production_server
   role :app, production_server
   role :db, production_server, :primary => true
-  before 'deploy:update_code', 'deploy:rsync_ruby'
-end
-
-desc 'Set prerequisites for deployment to test(staging) server.'
-task :staging do
-  role :web, test_server
-  role :app, test_server
-  role :db, test_server, :primary => true
-#  set :branch, 'uiuc-connections-omni-shib'
-  set :branch, 'uiuc-connections'
-end
-
-task :new_staging do
-  role :web, new_test_server
-  role :app, new_test_server
-  role :db, new_test_server, :primary => true
-  set :branch, 'new-uiuc-connections'
-end
-
-task :new_production do
-  role :web, new_production_server
-  role :app, new_production_server
-  role :db, new_production_server, :primary => true
   set :branch, 'new-uiuc-connections'
   before 'deploy:update_code', 'deploy:rsync_ruby'
 end
@@ -116,8 +97,8 @@ namespace :deploy do
     ruby_dir = "/home/hading/cache/bibapp/ruby/"
     bundle_dir = "/home/hading/cache/bibapp/bundle/"
     passenger_dir = "/home/hading/cache/bibapp/passenger/"
-    test_id = "#{user}@#{new_test_server}"
-    production_id = "#{user}@#{new_production_server}"
+    test_id = "#{user}@#{staging_server}"
+    production_id = "#{user}@#{production_server}"
     remote_rvm = "#{home}/.rvm/"
     remote_bundle = "#{shared_path}/bundle/"
     remote_passenger = "#{home}/.passenger/"
