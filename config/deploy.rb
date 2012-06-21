@@ -60,7 +60,7 @@ namespace :deploy do
   desc "create a config directory under shared"
   task :create_shared_dirs do
     run "mkdir #{shared_path}/config"
-    [:attachments, :groups, :people].each do |dir|
+    [:attachments, :groups, :people, :data].each do |dir|
       run "mkdir #{shared_path}/system/#{dir}"
     end
   end
