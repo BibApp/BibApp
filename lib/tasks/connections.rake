@@ -38,7 +38,7 @@ namespace :connections do
       unless File.exists?(link_name)
         #guess which version to use - we don't try to be very sophisticated here
         #just take the one with the latest mtime
-        source_dir = Dir["*gcc*"].sort_by { |x| File.mtime(x) }.reverse.first
+        source_dir = Dir["*gcc*"].sort_by { |x| File.mtime(x) }.last
         #link
         puts "linking source #{source_dir} to #{link_name}"
         FileUtils.ln_s(source_dir, link_name)
