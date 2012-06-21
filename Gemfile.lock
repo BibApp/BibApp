@@ -8,10 +8,9 @@ GIT
 
 GIT
   remote: git://github.com/BibApp/tolk.git
-  revision: 0d1aab1ab763acf6f3f21643d7bdf7841e9efd43
-  branch: rails3
+  revision: af92f86c73e6e40bc58864b541ad2d10bf5c5a7b
   specs:
-    tolk (1.0)
+    tolk (1.0.1)
       will_paginate (~> 3.0)
       ya2yaml (~> 0.26)
 
@@ -24,32 +23,32 @@ GEM
       log4r (>= 1.0.4)
     aasm (3.0.8)
     abstract (1.0.0)
-    actionmailer (3.0.10)
-      actionpack (= 3.0.10)
+    actionmailer (3.0.15)
+      actionpack (= 3.0.15)
       mail (~> 2.2.19)
-    actionpack (3.0.10)
-      activemodel (= 3.0.10)
-      activesupport (= 3.0.10)
+    actionpack (3.0.15)
+      activemodel (= 3.0.15)
+      activesupport (= 3.0.15)
       builder (~> 2.1.2)
       erubis (~> 2.6.6)
       i18n (~> 0.5.0)
-      rack (~> 1.2.1)
+      rack (~> 1.2.5)
       rack-mount (~> 0.6.14)
       rack-test (~> 0.5.7)
       tzinfo (~> 0.3.23)
-    activemodel (3.0.10)
-      activesupport (= 3.0.10)
+    activemodel (3.0.15)
+      activesupport (= 3.0.15)
       builder (~> 2.1.2)
       i18n (~> 0.5.0)
-    activerecord (3.0.10)
-      activemodel (= 3.0.10)
-      activesupport (= 3.0.10)
+    activerecord (3.0.15)
+      activemodel (= 3.0.15)
+      activesupport (= 3.0.15)
       arel (~> 2.0.10)
       tzinfo (~> 0.3.23)
-    activeresource (3.0.10)
-      activemodel (= 3.0.10)
-      activesupport (= 3.0.10)
-    activesupport (3.0.10)
+    activeresource (3.0.15)
+      activemodel (= 3.0.15)
+      activesupport (= 3.0.15)
+    activesupport (3.0.15)
     acts_as_list (0.1.6)
     acts_as_tree_rails3 (0.1.0)
     addressable (2.2.8)
@@ -120,7 +119,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     make_resourceful (1.0.1)
-    mime-types (1.18)
+    mime-types (1.19)
     multi_json (1.0.4)
     multi_xml (0.4.4)
     multipart-post (1.1.5)
@@ -194,19 +193,19 @@ GEM
       ruby-openid (>= 2.1.8)
     rack-test (0.5.7)
       rack (>= 1.0)
-    rails (3.0.10)
-      actionmailer (= 3.0.10)
-      actionpack (= 3.0.10)
-      activerecord (= 3.0.10)
-      activeresource (= 3.0.10)
-      activesupport (= 3.0.10)
+    rails (3.0.15)
+      actionmailer (= 3.0.15)
+      actionpack (= 3.0.15)
+      activerecord (= 3.0.15)
+      activeresource (= 3.0.15)
+      activesupport (= 3.0.15)
       bundler (~> 1.0)
-      railties (= 3.0.10)
+      railties (= 3.0.15)
     rails-i18n (0.6.4)
       i18n (~> 0.5)
-    railties (3.0.10)
-      actionpack (= 3.0.10)
-      activesupport (= 3.0.10)
+    railties (3.0.15)
+      actionpack (= 3.0.15)
+      activesupport (= 3.0.15)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (~> 0.14.4)
@@ -305,7 +304,7 @@ DEPENDENCIES
   paperclip (~> 2.7.0)
   passenger
   pg
-  rails (= 3.0.10)
+  rails (~> 3.0.15)
   rails-i18n
   rake
   rcov
@@ -321,6 +320,6 @@ DEPENDENCIES
   sort_alphabetical
   sword2ruby (>= 0.0.6)!
   thin
-  tolk!
+  tolk (~> 1.0.1)!
   will_paginate (~> 3.0.beta)
   yaml_db

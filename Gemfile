@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "3.0.10"
+gem "rails", "~> 3.0.15"
 
 #Passenger for deployoment
 gem "passenger"
@@ -19,6 +19,7 @@ gem "haml"
 
 #Make resourceful - used by some controllers
 #backports may be needed by a 1.8 ruby to make make_resourceful work
+#TODO - presumably after we get to 1.9.3 backports will be redundant
 gem 'backports'
 gem 'make_resourceful'
 
@@ -138,7 +139,7 @@ group :development do
   # - some necessary requires are missing from the main version
   # - we filter the personalize keys so that Tolk doesn't sync them
   # - we don't generate a new migration - the migration for tolk is committed into Bibapp itself
-  gem 'tolk', :git => 'git://github.com/BibApp/tolk.git', :branch => 'rails3'
+  gem 'tolk', "~> 1.0.1", :git => 'git://github.com/BibApp/tolk.git'
 end
 
 group :test, :development do
