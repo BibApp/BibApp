@@ -94,20 +94,17 @@ namespace :deploy do
 
   desc "rsync the ruby directory from the test server to the production server"
   task :rsync_ruby do
-    ruby_dir = "/home/hading/cache/bibapp/ruby/"
-    bundle_dir = "/home/hading/cache/bibapp/bundle/"
-    passenger_dir = "/home/hading/cache/bibapp/passenger/"
-    test_id = "#{user}@#{staging_server}"
+    local_cache_dir = "/home/hading/cache/bibapp"
+    rsync("#{home}/.rvm/", "#{local_cache_dir}/ruby/")
+    rsync("#{shared_path}/bundle/", "#{local_cache_dir}/bundle/")
+    rsync("#{home}/.passenger/", "#{local_cache_dir}/passenger/")
+  end
+
+  def rsync(remote, local)
+    staqing_id = "#{user}@#{staging_server}"
     production_id = "#{user}@#{production_server}"
-    remote_rvm = "#{home}/.rvm/"
-    remote_bundle = "#{shared_path}/bundle/"
-    remote_passenger = "#{home}/.passenger/"
-    system "rsync -avPe ssh #{test_id}:#{remote_rvm} #{ruby_dir}"
-    system "rsync -avPe ssh #{test_id}:#{remote_bundle} #{bundle_dir}"
-    system "rsync -avPe ssh #{test_id}:#{remote_passenger} #{passenger_dir}"
-    system "rsync -avPe ssh #{ruby_dir} #{production_id}:#{remote_rvm}"
-    system "rsync -avPe ssh #{bundle_dir} #{production_id}:#{remote_bundle}"
-    system "rsync -avPe ssh #{passenger_dir} #{production_id}:#{remote_passenger}"
+    system "rsync -avPe ssh #{staqing_id}:#{remote} #{local}"
+    system "rsync -avPe ssh #{local} #{production_id}:#{remote}"
   end
 
 end
