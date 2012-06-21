@@ -20,12 +20,14 @@ gem 'backports'
 gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
+#TODO Can remove version requirement after 1.9 migration
 gem 'paperclip', "~>2.7.0"
 
 #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
 gem "htmlentities", "~>4.0.0"
 
 #Daemons - needed to run delayed_job
+#TODO is this needed or does delayed_job pull it in automatically?
 gem "daemons", "~>1.0.10"
 
 #LibXML Ruby - Dependency of Solr Ruby
@@ -51,6 +53,7 @@ gem "solr-ruby", "~>0.0.6", :require => "solr"
 gem "net-ldap"
 
 #Will Paginate - for fancy pagination
+#TODO may need to update or replace as rails version goes up
 gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'
 
 #CMess - Assists with handling parsing citations from a non-Unicode text file
@@ -91,6 +94,7 @@ gem 'authorization'
 
 #authentication
 gem 'authlogic'
+#TODO will require some work to go to 1.0 series
 gem 'omniauth', "~> 0.3"
 
 #batch loading of authors
