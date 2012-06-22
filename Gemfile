@@ -127,22 +127,15 @@ group :test, :development do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'email_spec'
-
-#  gem 'ruby-debug-base', '>= 0.10.5.rc3'
-#  gem 'ruby-debug'
-#  gem 'ruby-debug-ide', '>= 0.4.17.beta14'
-  gem 'database_cleaner'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'email_spec'
-  gem 'cucumber-rails'
   gem 'ruby-debug-base19'
   gem 'ruby-debug19'
   gem 'ruby-debug-ide19'
   gem 'shoulda'
   gem 'factory_girl'
   gem 'simplecov'
-  gem 'test-unit', "1.2.3"
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+
   #I'd prefer to add metric_fu directly here, but something it pulls
   #in pulls in something else that conflicts with the Keyword class.
   #So instead I've installed the metrical gem separately to see
