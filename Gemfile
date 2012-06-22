@@ -124,6 +124,10 @@ group :development do
 end
 
 group :test, :development do
+  gem 'database_cleaner'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'email_spec'
   gem 'ruby-debug-base19'
   gem 'ruby-debug19'
   gem 'ruby-debug-ide19'
@@ -145,8 +149,4 @@ end
 
 group :test do
   gem 'cucumber-rails'
-  gem 'database_cleaner'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'email_spec'
 end
