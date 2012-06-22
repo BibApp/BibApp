@@ -1,4 +1,3 @@
-.rvmrc
 config/database.yml
 config/ldap.yml
 config/smtp.yml
