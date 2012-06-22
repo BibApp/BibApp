@@ -255,7 +255,7 @@ class MedlineImporter < BaseImporter
 
   def page_range_parse(range)
     page_range = Hash.new
-    pages = range.mb_chars.split("-")
+    pages = range.split("-")
     page_range[:start_page] = pages[0]
     page_range[:end_page]   = pages[1]
     return page_range
@@ -263,7 +263,7 @@ class MedlineImporter < BaseImporter
 
   def issn_parse(issn)
     identifier = Hash.new
-    identifier[:issn_isbn] = issn.mb_chars.split(/ /)[0]
+    identifier[:issn_isbn] = issn.split(/ /)[0]
     return identifier
   end
 

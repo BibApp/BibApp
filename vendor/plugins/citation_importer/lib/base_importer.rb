@@ -120,7 +120,7 @@ class BaseImporter < CitationImporter
       #If we have an Array of Strings (or Unicode Strings) with only a single value,
       # just return the first String as the value
       if value.is_a?(Array) and value.size==1 and value[0].acts_like?(:string)
-        value = value[0].to_s.mb_chars.strip
+        value = value[0].to_s.strip
 
         #if this is an empty string, remove it
         if value.empty?
@@ -225,7 +225,7 @@ class BaseImporter < CitationImporter
   end
 
   def strip_line_breaks(value)
-    value.mb_chars.squish
+    value.squish
   end
 
   def remove_trailing_period(value)
