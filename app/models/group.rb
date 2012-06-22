@@ -47,8 +47,7 @@ class Group < ActiveRecord::Base
   #### Methods ####
 
   def works
-    Work.verified.includes(:contributorships => {:person => :memberships}).
-        where(:contributorships => {:person => {:memberships => {:group_id => self.id}}})
+    self.people.collect {|p| p.works.verified}.flatten.uniq
   end
 
   def get_associated_works
