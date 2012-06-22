@@ -17,7 +17,6 @@ gem "haml"
 #Make resourceful - used by some controllers
 #backports may be needed by a 1.8 ruby to make make_resourceful work
 #TODO - presumably after we get to 1.9.3 backports will be redundant
-gem 'backports'
 gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
@@ -33,9 +32,6 @@ gem "daemons", "~>1.0.10"
 
 #Namecase - converts strings to be properly cased
 gem "namecase", "~>1.1.0"
-
-#RedCloth - converts plain text or textile to HTML (also used by HAML)
-gem "RedCloth",  "~>4.1.9", :require => "redcloth"
 
 #RubyZip - used to create Zip file to send via SWORD
 gem "rubyzip", "~>0.9.1", :require => "zip/zip"
@@ -55,7 +51,7 @@ gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'
 
 #CMess - Assists with handling parsing citations from a non-Unicode text file
 #  See: http://prometheus.rubyforge.org/cmess/
-gem 'cmess', "~>0.1.2"
+gem 'cmess'
 
 #AASM - Acts as State Machine - helps manage batch import state
 gem 'aasm'

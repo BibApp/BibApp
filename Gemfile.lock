@@ -18,7 +18,6 @@ GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
   specs:
-    RedCloth (4.1.9)
     XMLCanonicalizer (1.0.1)
       log4r (>= 1.0.4)
     aasm (3.0.8)
@@ -58,7 +57,6 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
     authorization (1.0.12)
-    backports (2.6.1)
     builder (2.1.2)
     capistrano (2.12.0)
       highline
@@ -75,7 +73,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.2)
       ffi (~> 1.0.6)
-    cmess (0.1.2.288)
+    cmess (0.3.1)
       htmlentities
       ruby-nuggets (>= 0.3.3)
     cocaine (0.2.1)
@@ -311,15 +309,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth (~> 4.1.9)
   aasm
   acts_as_list
   acts_as_tree_rails3
   authlogic
   authorization
-  backports
   capistrano
-  cmess (~> 0.1.2)
+  cmess
   cucumber-rails
   daemons (~> 1.0.10)
   database_cleaner
