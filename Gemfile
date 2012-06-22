@@ -129,7 +129,6 @@ group :development do
 end
 
 group :test, :development do
-<<<<<<< HEAD
   gem 'rspec'
   gem 'rspec-rails'
   gem 'email_spec'
@@ -137,6 +136,10 @@ group :test, :development do
 #  gem 'ruby-debug-base', '>= 0.10.5.rc3'
 #  gem 'ruby-debug'
 #  gem 'ruby-debug-ide', '>= 0.4.17.beta14'
+  gem 'database_cleaner'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'email_spec'
   gem 'ruby-debug-base19'
   gem 'ruby-debug19'
   gem 'ruby-debug-ide19'
@@ -155,8 +158,4 @@ end
 
 group :test do
   gem 'cucumber-rails'
-  gem 'database_cleaner'
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'email_spec'
 end
