@@ -172,7 +172,7 @@ class BaseImporter < CitationImporter
   end
 
   def parse_date_parsedate(date_string)
-    parsed_date = Date.parse(date_string) rescue nil
+    parsed_date = old_parsedate_compat(date_string) rescue nil
     return nil unless parsed_date and parsed_date[0].present? and parsed_date[0].to_s.size >=4
     year = parsed_date[0]
     month = parsed_date[1]
@@ -185,6 +185,11 @@ class BaseImporter < CitationImporter
     rescue
       return nil
     end
+  end
+
+  #ParseDate was removed from ruby 1.9 stdlib - this is just the implementation of its parsedate method
+  def old_parsedate_compat(date_string)
+    Date._parse(date_string).values_at(:year, :mon, :mday, :hour, :min, :sec, :zone, :wday)
   end
 
   def parse_date_mm_yyyy(date_string)
