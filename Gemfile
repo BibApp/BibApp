@@ -124,9 +124,6 @@ group :development do
 end
 
 group :test, :development do
-  gem 'rspec'
-  gem 'rspec-rails'
-  gem 'email_spec'
   gem 'ruby-debug-base19'
   gem 'ruby-debug19'
   gem 'ruby-debug-ide19'
@@ -144,4 +141,12 @@ group :test, :development do
 
   #attempt to remove excess logging caused by postgres
   gem 'silent-postgres'
+end
+
+group :test do
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'email_spec'
 end
