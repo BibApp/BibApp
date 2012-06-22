@@ -58,7 +58,7 @@ gem 'aasm'
 
 #ISBN Tools - Helps validate ISBNs
 # See: http://isbn-tools.rubyforge.org/rdoc/index.html
-gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
+gem 'isbn-tools', "~>0.1.0", :require => "isbn/tools"
 
 #delayed jobs
 gem 'delayed_job'
@@ -118,9 +118,9 @@ group :development do
   #HOWEVER - generating Gemfile.lock with it uncommented can mess up deployment,
   #so whenever adding new Gems or otherwise generating a new Gemfile.lock to check in
   #please recomment it out!
-#  if File.exist?(File.join(File.dirname(__FILE__), 'config', 'newrelic.yml'))
-#    gem 'newrelic_rpm'
-#  end
+  #  if File.exist?(File.join(File.dirname(__FILE__), 'config', 'newrelic.yml'))
+  #    gem 'newrelic_rpm'
+  #  end
   #We use a custom version of tolk for three reasons:
   # - some necessary requires are missing from the main version
   # - we filter the personalize keys so that Tolk doesn't sync them
@@ -129,6 +129,7 @@ group :development do
 end
 
 group :test, :development do
+<<<<<<< HEAD
   gem 'rspec'
   gem 'rspec-rails'
   gem 'email_spec'
@@ -142,8 +143,6 @@ group :test, :development do
   gem 'shoulda'
   gem 'factory_girl'
   gem 'simplecov'
-  gem 'cucumber-rails'
-  gem 'database_cleaner'
   #I'd prefer to add metric_fu directly here, but something it pulls
   #in pulls in something else that conflicts with the Keyword class.
   #So instead I've installed the metrical gem separately to see
@@ -152,4 +151,12 @@ group :test, :development do
 
   #attempt to remove excess logging caused by postgres
   gem 'silent-postgres'
+end
+
+group :test do
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'email_spec'
 end
