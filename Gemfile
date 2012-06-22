@@ -21,7 +21,6 @@ gem 'make_resourceful'
 #file attachment - to replace attachment_fu
 gem 'paperclip'
 
-#HTMLEntities - used to encode/decode UTF-8 data
 gem "htmlentities"
 
 #Namecase - converts strings to be properly cased
