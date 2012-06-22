@@ -14,6 +14,7 @@ Add rake task to delete old sessions to keep the sessions table cleaner
 Fix bug with timeline view
 Update rails version to 3.0.15
 Update tolk version to 1.0.1 (bugfix)
+Fix occasional error in how groups found their associated works
 
 1.2.1 - February 28, 2012
 --------------
