@@ -406,8 +406,8 @@ class Work < ActiveRecord::Base
   # Arguments:
   #  * array of keyword strings
   def set_keyword_strings(keyword_strings)
-    keyword_strings ||= []
-    keywords = keyword_strings.to_a.uniq.collect do |add|
+    keyword_strings = Array.wrap(keyword_strings)
+    keywords = keyword_strings.uniq.collect do |add|
       Keyword.find_or_initialize_by_name(add)
     end
     self.set_keywords(keywords)
