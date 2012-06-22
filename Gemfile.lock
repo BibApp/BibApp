@@ -321,7 +321,6 @@ DEPENDENCIES
   htmlentities (~> 4.0.0)
   isbn-tools (~> 0.1.0)
   jquery-rails
-  libxml-ruby (~> 0.8.3)
   loofah-activerecord
   make_resourceful
   namecase (~> 1.1.0)
@@ -340,7 +339,7 @@ DEPENDENCIES
   rubyzip (~> 0.9.1)
   shoulda
   silent-postgres
-  solr-ruby (~> 0.0.6)
+  solr-ruby
   sort_alphabetical
   sword2ruby (>= 0.0.6)!
   thin

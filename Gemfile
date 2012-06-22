@@ -31,10 +31,6 @@ gem "htmlentities", "~>4.0.0"
 #TODO is this needed or does delayed_job pull it in automatically?
 gem "daemons", "~>1.0.10"
 
-#LibXML Ruby - Dependency of Solr Ruby
-#Bundler should take care of it then
-gem "libxml-ruby", "~>0.8.3", :require => "xml/libxml"
-
 #Namecase - converts strings to be properly cased
 gem "namecase", "~>1.1.0"
 
@@ -48,7 +44,7 @@ gem "rubyzip", "~>0.9.1", :require => "zip/zip"
 gem "sword2ruby", ">=0.0.6", :git => 'git://github.com/BibApp/sword2ruby.git'
 
 #Solr-Ruby - Solr connections for ruby
-gem "solr-ruby", "~>0.0.6", :require => "solr"
+gem "solr-ruby"
 
 #Required for LDAP lookups
 gem "net-ldap"
