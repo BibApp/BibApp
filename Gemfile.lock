@@ -87,7 +87,7 @@ GEM
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
-    daemons (1.0.10)
+    daemons (1.1.8)
     database_cleaner (0.8.0)
     delayed_job (3.0.3)
       activesupport (~> 3.0)
@@ -116,7 +116,7 @@ GEM
     highline (1.6.13)
     hoe (3.0.6)
       rake (~> 0.8)
-    htmlentities (4.0.0)
+    htmlentities (4.3.1)
     i18n (0.5.0)
     isbn-tools (0.1.0)
     jquery-rails (1.0.19)
@@ -321,7 +321,6 @@ DEPENDENCIES
   capistrano
   cmess
   cucumber-rails
-  daemons (~> 1.0.10)
   database_cleaner
   delayed_job
   delayed_job_active_record (~> 0.3.2)
@@ -330,12 +329,12 @@ DEPENDENCIES
   factory_girl
   fastercsv
   haml
-  htmlentities (~> 4.0.0)
+  htmlentities
   isbn-tools (~> 0.1.0)
   jquery-rails
   loofah-activerecord
   make_resourceful
-  namecase (~> 1.1.0)
+  namecase
   net-ldap
   omniauth (~> 0.3)
   paperclip (~> 2.7.0)
@@ -348,7 +347,7 @@ DEPENDENCIES
   ruby-debug-base19
   ruby-debug-ide19
   ruby-debug19
-  rubyzip (~> 0.9.1)
+  rubyzip
   shoulda
   silent-postgres
   simplecov
@@ -358,5 +357,5 @@ DEPENDENCIES
   test-unit (= 1.2.3)
   thin
   tolk (~> 1.0.1)!
-  will_paginate (~> 3.0.beta)
+  will_paginate
   yaml_db

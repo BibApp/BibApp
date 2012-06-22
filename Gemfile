@@ -24,17 +24,14 @@ gem 'make_resourceful'
 gem 'paperclip', "~>2.7.0"
 
 #HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
-gem "htmlentities", "~>4.0.0"
-
-#Daemons - needed to run delayed_job
-#TODO is this needed or does delayed_job pull it in automatically?
-gem "daemons", "~>1.0.10"
+#Only used in one place - is it replaceable in any natural way with Rails internal stuff
+gem "htmlentities"
 
 #Namecase - converts strings to be properly cased
-gem "namecase", "~>1.1.0"
+gem "namecase"
 
 #RubyZip - used to create Zip file to send via SWORD
-gem "rubyzip", "~>0.9.1", :require => "zip/zip"
+gem "rubyzip"
 
 #Sword2Ruby - used for SWORD interaction
 gem "sword2ruby", ">=0.0.6", :git => 'git://github.com/BibApp/sword2ruby.git'
@@ -47,7 +44,7 @@ gem "net-ldap"
 
 #Will Paginate - for fancy pagination
 #TODO may need to update or replace as rails version goes up
-gem 'will_paginate', "~> 3.0.beta", :require => 'will_paginate'
+gem 'will_paginate'
 
 #CMess - Assists with handling parsing citations from a non-Unicode text file
 #  See: http://prometheus.rubyforge.org/cmess/
@@ -58,6 +55,7 @@ gem 'aasm'
 
 #ISBN Tools - Helps validate ISBNs
 # See: http://isbn-tools.rubyforge.org/rdoc/index.html
+#not maintained may be replacable - see lisbn
 gem 'isbn-tools', "~>0.1.0", :require => "isbn/tools"
 
 #delayed jobs
