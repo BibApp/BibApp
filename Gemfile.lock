@@ -114,6 +114,8 @@ GEM
       json (>= 1.4.6)
     haml (3.1.6)
     highline (1.6.13)
+    hoe (3.0.6)
+      rake (~> 0.8)
     htmlentities (4.0.0)
     i18n (0.5.0)
     isbn-tools (0.1.0)
@@ -287,6 +289,8 @@ GEM
     sort_alphabetical (0.1.3)
       activesupport
     systemu (2.5.1)
+    test-unit (1.2.3)
+      hoe (>= 1.5.1)
     thin (1.3.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -351,6 +355,7 @@ DEPENDENCIES
   solr-ruby
   sort_alphabetical
   sword2ruby (>= 0.0.6)!
+  test-unit (= 1.2.3)
   thin
   tolk (~> 1.0.1)!
   will_paginate (~> 3.0.beta)
