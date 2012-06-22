@@ -102,7 +102,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
-    factory_girl (3.4.2)
+    factory_girl (3.5.0)
       activesupport (>= 3.0.0)
     faraday (0.7.6)
       addressable (~> 2.2)
