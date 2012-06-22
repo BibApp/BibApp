@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  require 'config/personalize.rb'
 
   def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected

@@ -9,9 +9,6 @@
 require 'set'
 class BaseImporter < CitationImporter
 
-  #Require ParseDate for better date parsing (see parse_date method below)
-  require 'parsedate'
-
   attr_reader :attribute_mapping, :value_translators
 
   def logger
@@ -175,7 +172,7 @@ class BaseImporter < CitationImporter
   end
 
   def parse_date_parsedate(date_string)
-    parsed_date = ParseDate.parsedate(date_string) rescue nil
+    parsed_date = Date.parse(date_string) rescue nil
     return nil unless parsed_date and parsed_date[0].present? and parsed_date[0].to_s.size >=4
     year = parsed_date[0]
     month = parsed_date[1]
