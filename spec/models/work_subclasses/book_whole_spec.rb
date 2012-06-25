@@ -8,9 +8,9 @@ describe BookWhole do
 
   describe "open_url kevs" do
     before(:each) do
-      authority = Factory.create(:publisher, :name => 'Authority')
-      publisher = Factory.create(:publisher, :authority => authority)
-      @b = Factory.create(:book_whole, :title_primary => 'Title', :publication_date_year => 2011,
+      authority = create(:publisher, :name => 'Authority')
+      publisher = create(:publisher, :authority => authority)
+      @b = create(:book_whole, :title_primary => 'Title', :publication_date_year => 2011,
                           :publication_date_month => 3, :publication_date_day => 2,
                           :publisher => publisher)
     end
@@ -26,8 +26,8 @@ describe BookWhole do
 
     context "with a publication" do
       it "should have isbn open_url kevs" do
-        authority = Factory.create(:publication, :name => 'Authority')
-        publication = Factory.create(:publication, :authority => authority)
+        authority = create(:publication, :name => 'Authority')
+        publication = create(:publication, :authority => authority)
         publication.identifiers << ISBN.new(:name => '978-0-596-51617-8')
         @b.publication = publication
         kevs = @b.open_url_kevs

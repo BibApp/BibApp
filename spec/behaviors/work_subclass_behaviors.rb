@@ -2,7 +2,7 @@ require File.join(Rails.root, 'spec', 'spec_helper')
 
 shared_examples_for "a title_primary validating work subclass" do |subclass, roles, author_role, contributor_role, type_uri|
   before(:each) do
-    @object = Factory.create(subclass.to_s.underscore)
+    @object = create(subclass.to_s.underscore)
   end
 
   it { should validate_presence_of(:title_primary) }

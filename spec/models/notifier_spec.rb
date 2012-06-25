@@ -7,8 +7,8 @@ describe Notifier do
 
   describe "import review notification" do
     before(:all) do
-      @user = Factory.create(:user)
-      @import = Factory.create(:import, :user => @user)
+      @user = create(:user)
+      @import = create(:import, :user => @user)
       @email = Notifier.create_import_review_notification(@import)
     end
 

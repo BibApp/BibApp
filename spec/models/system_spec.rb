@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe System do
 
   before(:each) do
-    @editor = Factory.create(:user)
-    @admin = Factory.create(:user)
+    @editor = create(:user)
+    @admin = create(:user)
     @editor.has_role('editor', System)
     @admin.has_role('admin', System)
     @editor.has_role('role', System)

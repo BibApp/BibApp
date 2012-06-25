@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe KeywordsController do
 
   before(:each) do
-    @keyword = Factory.create(:keyword)
+    @keyword = create(:keyword)
   end
 
   it "should get index" do
@@ -58,7 +58,7 @@ describe KeywordsController do
 
   describe "timeline" do
     it "has a gettable timeline action" do
-      get :timeline, :person_id => Factory.create(:person)
+      get :timeline, :person_id => create(:person)
       response.should be_success
       response.should render_template(:timeline)
     end

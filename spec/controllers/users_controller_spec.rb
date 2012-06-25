@@ -41,7 +41,7 @@ describe UsersController do
 
 
   it 'activates user' do
-    user = Factory.create(:unactivated_user, :password => 'password', :password_confirmation => 'password')
+    user = create(:unactivated_user, :password => 'password', :password_confirmation => 'password')
     user.active?.should be_false
     get :activate, :activation_code => user.activation_code
     response.should redirect_to(login_url)
