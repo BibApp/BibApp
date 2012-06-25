@@ -19,6 +19,7 @@ gem "haml"
 gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
+#TODO Can remove version requirement after 1.9 migration
 gem 'paperclip'
 
 gem "htmlentities"
