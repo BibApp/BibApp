@@ -26,7 +26,7 @@ class BaseXmlParser < CitationParser
       next if key == :original_data #never decode the original citation...keep it as is!
 
       #Determine whether we are cleaning arrays or strings
-      if value.present
+      if value.present?
         case value
           when Array
             value.collect! { |v| coder.decode(v) }
