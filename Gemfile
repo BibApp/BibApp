@@ -21,10 +21,9 @@ gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
 #TODO Can remove version requirement after 1.9 migration
-gem 'paperclip', "~>2.7.0"
+gem 'paperclip', "~> 2.7.0"
 
-#HTMLEntities - used to encode UTF-8 data so that it is valid in HTML
-#Only used in one place - is it replaceable in any natural way with Rails internal stuff
+#HTMLEntities - used to encode/decode UTF-8 data
 gem "htmlentities"
 
 #Namecase - converts strings to be properly cased
@@ -53,10 +52,9 @@ gem 'cmess'
 #AASM - Acts as State Machine - helps manage batch import state
 gem 'aasm'
 
-#ISBN Tools - Helps validate ISBNs
-# See: http://isbn-tools.rubyforge.org/rdoc/index.html
-#not maintained may be replacable - see lisbn
-gem 'isbn-tools', "~>0.1.0", :require => "isbn/tools"
+#lisbn - Helps validate ISBNs - as far as I can tell this is able to replace previously used ISBN_tools with minor
+#modifications
+gem 'lisbn'
 
 #delayed jobs
 gem 'delayed_job'

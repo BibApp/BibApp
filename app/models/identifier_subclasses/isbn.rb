@@ -1,5 +1,4 @@
 class ISBN < Identifier
-  require 'isbn/tools'
 
   validates_presence_of :name
 
@@ -18,11 +17,11 @@ class ISBN < Identifier
   end
 
   def self.cleanup(identifier)
-    ISBN_Tools.cleanup(identifier)
+    Lisbn.new(identifier).isbn
   end
 
   def self.is_valid?(identifier)
-    ISBN_Tools.is_valid?(identifier)
+    Lisbn.new(identifier).valid?
   end
 
 #  def clean_response(isbn_response)
