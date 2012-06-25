@@ -21,7 +21,7 @@ gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
 #TODO Can remove version requirement after 1.9 migration
-gem 'paperclip', "~> 2.7.0"
+gem 'paperclip'
 
 #HTMLEntities - used to encode/decode UTF-8 data
 gem "htmlentities"

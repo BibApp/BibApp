@@ -339,7 +339,7 @@ DEPENDENCIES
   namecase
   net-ldap
   omniauth (~> 0.3)
-  paperclip (~> 2.7.0)
+  paperclip
   pg
   rails (~> 3.0.20)
   rails-i18n
