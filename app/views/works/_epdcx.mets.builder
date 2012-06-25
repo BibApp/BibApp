@@ -7,21 +7,21 @@ xml.mdWrap(:LABEL => "SWORD Metadata - EPrints DC XML schema", :MDTYPE => "OTHER
       xml.epdcx(:description, 'epdcx:resourceId' => "sword-mets-epdcx-#{work.id}") do
         xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI' => "http://purl.org/eprint/entityType/ScholarlyWork")
         xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/title") do
-          xml.epdcx(:valueString, encode_for_xml(work.title_primary))
+          xml.epdcx(:valueString, work.title_primary.to_xs)
         end
         work.tags.each do |tag|
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/subject") do
-            xml.epdcx(:valueString, encode_for_xml(tag.name))
+            xml.epdcx(:valueString, tag.name.to_xs)
           end
         end
         if work.abstract.present? and $EXPORT_ABSTRACTS_AND_KEYWORDS
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/terms/abstract") do
-            xml.epdcx(:valueString, encode_for_xml(work.abstract))
+            xml.epdcx(:valueString, work.abstract.to_xs)
           end
         end
         work.work_name_strings.where(:role => work.creator_role).includes(:name_string).each do |wns|
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/creator") do
-            xml.epdcx(:valueString, encode_for_xml(wns.name_string.name))
+            xml.epdcx(:valueString, wns.name_string.name.to_xs)
           end
         end
         xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/eprint/terms/isExpressedAs", 'epdcx:valueRef' => "sword-mets-expr-#{work.id}")
@@ -30,17 +30,17 @@ xml.mdWrap(:LABEL => "SWORD Metadata - EPrints DC XML schema", :MDTYPE => "OTHER
         xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI' => "http://purl.org/eprint/entityType/Expression")
         if work.title_secondary.present?
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/title") do
-            xml.epdcx(:valueString, encode_for_xml(work.title_secondary))
+            xml.epdcx(:valueString, work.title_secondary.to_xs)
           end
         end
         if work.title_tertiary.present?
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/title") do
-            xml.epdcx(:valueString, encode_for_xml(work.title_tertiary))
+            xml.epdcx(:valueString, work.title_tertiary.to_xs)
           end
         end
         if work.notes.present?
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/description") do
-            xml.epdcx(:value_string, encode_for_xml(work.notes))
+            xml.epdcx(:value_string, work.notes.to_xs)
           end
         end
         if work.publication_date_year
@@ -50,7 +50,7 @@ xml.mdWrap(:LABEL => "SWORD Metadata - EPrints DC XML schema", :MDTYPE => "OTHER
         end
         if work.language
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/language", 'epdcx:vesURI' => "http://purl.org/dc/terms/RFC3066") do
-            xml.epdcx(:valueString, encode_for_xml(work.language))
+            xml.epdcx(:valueString, work.language.to_xs)
           end
         end
         if work.type_uri.present?
@@ -62,16 +62,16 @@ xml.mdWrap(:LABEL => "SWORD Metadata - EPrints DC XML schema", :MDTYPE => "OTHER
         end
         if work.copyright_holder
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/eprint/terms/copyrightHolder") do
-            xml.epdcx(:valueString, encode_for_xml(work.copyright_holder))
+            xml.epdcx(:valueString, work.copyright_holder.to_xs)
           end
         end
         work.work_name_strings.where(:role => work.contributor_role).includes(:name_string).each do |wns|
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://www.loc.gov/loc.terms/relators/EDT") do
-            xml.epdcx(:valueString, encode_for_xml(wns.name_string.name))
+            xml.epdcx(:valueString, wns.name_string.name.to_xs)
           end
         end
         xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/terms/bibliographicCitation") do
-          xml.epdcx(:valueString, encode_for_xml(work.to_s))
+          xml.epdcx(:valueString, work.to_s.to_xs)
           xml << (render(:partial => 'works/epdcx_openurl.mets', :locals => {:work => work}))
         end
         work.attachments.each do |att|
@@ -83,11 +83,11 @@ xml.mdWrap(:LABEL => "SWORD Metadata - EPrints DC XML schema", :MDTYPE => "OTHER
         xml.epdcx(:description, 'epdcx:resourceId' => "sword-mets-manifest-#{att.id}") do
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/type", 'epdcx:valueURI' => "http://purl.org/eprint/entityType/Manifestation")
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/format", 'epdcx:valueURI' => "http://purl.org/dc/terms/IMT") do
-            xml.epdcx(:valueString, encode_for_xml(att.content_type))
+            xml.epdcx(:valueString, att.content_type.to_xs)
           end
           if work.publisher
             xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/dc/elements/1.1/publisher") do
-              xml.epdcx(:valueString, encode_for_xml(work.publisher.authority.name))
+              xml.epdcx(:valueString, work.publisher.authority.name.to_xs)
             end
           end
           xml.epdcx(:statement, 'epdcx:propertyURI' => "http://purl.org/eprint/terms/isAvailableAs", 'epdcx:valueURI' => filepath)

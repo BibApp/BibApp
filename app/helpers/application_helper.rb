@@ -58,12 +58,6 @@ module ApplicationHelper
     coin
   end
 
-  #Encodes UTF-8 data such that it is valid in XML
-  def encode_for_xml(data)
-    code = HTMLEntities.new
-    code.encode(data, :basic)
-  end
-
   #Finds the Error message for a *specific field* in a Form
   # This is useful to display the error messages next to the
   # appropriate field in a form.
