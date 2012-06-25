@@ -79,6 +79,7 @@ gem 'pg'
 gem 'yaml_db'
 
 #authorization, replacing plugin used previously
+#We want to get rid of this, but for now we fork our own version with some ruby 1.9 fixes
 gem 'authorization'
 
 #authentication
@@ -143,7 +144,7 @@ group :test, :development do
   gem 'shoulda'
   gem 'factory_girl'
   gem 'simplecov'
-  gem 'test-unit', "1.2.3"
+  #gem 'test-unit', "1.2.3"
   #I'd prefer to add metric_fu directly here, but something it pulls
   #in pulls in something else that conflicts with the Keyword class.
   #So instead I've installed the metrical gem separately to see
