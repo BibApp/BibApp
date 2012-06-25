@@ -4,7 +4,7 @@ class Attachment < ActiveRecord::Base
   #### Associations ####
   belongs_to :asset, :polymorphic => true # Polymorphism!
 
-  has_attached_file :data
+  has_attached_file :data, :url => '/system/data/:id/:style/:basename.:extension'
   validates_attachment_size :data, :in => 1.byte...100.megabytes
   validates_attachment_presence :data
 
