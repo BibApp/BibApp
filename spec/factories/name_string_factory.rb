@@ -1,3 +1,5 @@
-Factory.define :name_string do |ns|
-  ns.sequence(:name) {|n| "Name #{n}"}
+FactoryGirl.define do
+  factory :name_string do
+    sequence(:name) {|n| "Name #{n}"}
+  end
 end

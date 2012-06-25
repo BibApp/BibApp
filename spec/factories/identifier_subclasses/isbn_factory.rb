@@ -1,3 +1,5 @@
-Factory.define(:isbn, :class => ISBN) do |isbn|
-  isbn.name {ISBN.random}
+FactoryGirl.define do
+  factory :isbn, :class => ISBN do
+    name {ISBN.random}
+  end
 end

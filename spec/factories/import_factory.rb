@@ -1,3 +1,5 @@
-Factory.define(:import) do |import|
-  import.association :user
+FactoryGirl.define do
+  factory :import do
+    association :user
+  end
 end

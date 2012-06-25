@@ -1,3 +1,6 @@
-Factory.define :keyword do |k|
-  k.sequence(:name) {|n| "Keyword_#{n}"}
+FactoryGirl.define do
+  factory :keyword do
+    sequence(:name) {|n| "Keyword_#{n}"}
+  end
 end
+

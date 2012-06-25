@@ -1,4 +1,6 @@
-Factory.define(:identifier) do |i|
-  i.sequence(:name) {|n| "id-#{n}"}
-  i.type 'Identifier'
+FactoryGirl.define do
+  factory :identifier do
+    sequence(:name) { |n| "id-#{n}" }
+    type 'Identifier'
+  end
 end
