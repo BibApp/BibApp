@@ -63,7 +63,7 @@ class ContributorshipsController < ApplicationController
     @person = @contributorship.person
 
     # only 'editor' of this person can deny contributorship
-    permit "editor of person"
+    permit "editor of person", :person => @person
 
     @contributorship.deny_contributorship
     @contributorship.save

@@ -12,7 +12,7 @@ class MembershipsController < ApplicationController
 
     before :update do
       #'editor' of person or group can update membership details
-      permit "editor of person or group"
+      permit "editor of person or group", :person => @person, :group => @group
     end
 
     before :new do
@@ -70,7 +70,7 @@ class MembershipsController < ApplicationController
 
   def create
     #'editor' of person or group can create a membership
-    permit "editor of person or group"
+    permit "editor of person or group", :person => @person, :group => @group
 
     @person.groups << @group
     respond_to do |format|
@@ -122,7 +122,7 @@ class MembershipsController < ApplicationController
 
   def create_group
     #'editor' of person can create new groups
-    permit "editor of person"
+    permit "editor of person", :person => @person
 
     @group = Group.find_or_create_by_name(params[:group][:name])
     @group.hide = false
