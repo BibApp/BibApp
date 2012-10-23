@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120309203420) do
+ActiveRecord::Schema.define(:version => 20121023171020) do
 
   create_table "attachments", :force => true do |t|
     t.integer  "asset_id"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(:version => 20120309203420) do
     t.string   "role"
   end
 
+  add_index "contributorships", ["contributorship_state_id"], :name => "index_contributorships_on_contributorship_state_id"
+  add_index "contributorships", ["person_id"], :name => "index_contributorships_on_person_id"
   add_index "contributorships", ["work_id", "person_id"], :name => "work_person_join"
 
   create_table "delayed_jobs", :force => true do |t|
