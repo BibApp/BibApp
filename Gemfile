@@ -2,7 +2,7 @@ source "http://rubygems.org"
 source "http://gems.github.com"
 
 #Rails itself
-gem "rails", "~> 3.0.15"
+gem "rails", "~> 3.0.19"
 
 #Passenger for deployoment
 gem "passenger"
