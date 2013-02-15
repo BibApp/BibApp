@@ -192,6 +192,7 @@ class WorksController < ApplicationController
           format.xml { render :xml => @work.errors.to_xml }
         end
       end
+      @work.update_solr
     end
   end
 
