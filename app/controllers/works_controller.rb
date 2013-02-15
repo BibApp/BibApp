@@ -181,6 +181,7 @@ class WorksController < ApplicationController
           c = Contributorship.for_person(@person.id).for_work(@work.id).first
           c.verify_contributorship if c
         end
+        @work.update_solr
         respond_to do |format|
           flash[:notice] = t('common.works.flash_create')
           format.html { redirect_to work_url(@work) }
@@ -192,7 +193,6 @@ class WorksController < ApplicationController
           format.xml { render :xml => @work.errors.to_xml }
         end
       end
-      @work.update_solr
     end
   end
 
