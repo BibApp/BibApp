@@ -23,7 +23,9 @@ namespace :bibapp do
         sleep(2)
       end
       ENV['RAILS_ENV'] = Rails.env
-      sh "script/delayed_job -p #{Rails.env} --pid-dir=#{delayed_job_pid_dir} start"
+      delayed_job_command = "script/delayed_job -p #{Rails.env} --pid-dir=#{delayed_job_pid_dir} start"
+      puts "Running #{delayed_job_command}"
+      sh delayed_job_command
     rescue RuntimeError
       puts "### ERROR - Starting - Delayed Job."
     end
