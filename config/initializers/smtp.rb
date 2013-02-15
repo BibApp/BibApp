@@ -16,20 +16,20 @@ if SMTP_SETTINGS and SMTP_SETTINGS['address']
   #determine if login required for SMTP server
   if SMTP_SETTINGS['username'] and !SMTP_SETTINGS['username'].empty?
     ActionMailer::Base.smtp_settings = {
-      :address => SMTP_SETTINGS['address'],
-      :port => port,
-      :domain => SMTP_SETTINGS['domain'],
-      :user_name => SMTP_SETTINGS['username'],
-      :password => SMTP_SETTINGS['password'],
-      :authentication => :login,
-      :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
+        :address => SMTP_SETTINGS['address'],
+        :port => port,
+        :domain => SMTP_SETTINGS['domain'],
+        :user_name => SMTP_SETTINGS['username'],
+        :password => SMTP_SETTINGS['password'],
+        :authentication => :login,
+        :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
     }
   else
     ActionMailer::Base.smtp_settings = {
-      :address => SMTP_SETTINGS['address'],
-      :port => port,
-      :domain => SMTP_SETTINGS['domain'],
-      :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
+        :address => SMTP_SETTINGS['address'],
+        :port => port,
+        :domain => SMTP_SETTINGS['domain'],
+        :openssl_verify_mode => OpenSSL::SSL::VERIFY_NONE
     }
   end
 end
