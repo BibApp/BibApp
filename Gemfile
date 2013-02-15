@@ -146,9 +146,9 @@ group :test, :development do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'email_spec'
-  gem 'ruby-debug-base'
-  gem 'ruby-debug'
-  gem 'ruby-debug-ide'
+  gem 'ruby-debug-base', '>= 0.10.5.rc3'
+#  gem 'ruby-debug'
+  gem 'ruby-debug-ide', '>= 0.4.17.beta14'
   gem 'shoulda'
   gem 'factory_girl', "~> 2.6.4"
   gem 'rcov'
