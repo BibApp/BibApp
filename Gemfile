@@ -70,7 +70,7 @@ gem 'isbn-tools',  "~>0.1.0", :require => "isbn/tools"
 
 #delayed jobs
 gem 'delayed_job'
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', "~> 0.3.2"
 
 #data structures
 gem 'acts_as_list'

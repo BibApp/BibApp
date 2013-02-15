@@ -312,7 +312,7 @@ DEPENDENCIES
   daemons (~> 1.0.10)
   database_cleaner
   delayed_job
-  delayed_job_active_record
+  delayed_job_active_record (~> 0.3.2)
   dynamic_form
   email_spec
   factory_girl
