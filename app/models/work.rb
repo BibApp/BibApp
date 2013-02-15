@@ -375,11 +375,14 @@ class Work < ActiveRecord::Base
     #IMPORTANT: we update fields directly here because this is in an after save callback and
     #we don't want to trigger another save when we make a change here!
     #Eventually (by Rails 3.2) we can just use update_column. For 3.0 we need to do something like this.
+    #Note that we also set the value in self as later callbacks may want the value set here.
     if dupe_candidates.empty?
       self.class.where(:id => self.id).update_all(:work_state_id => STATE_ACCEPTED)
+      self.is_accepted
       #Only mark as duplicate if this work wasn't previously accepted
     elsif !self.accepted?
       self.class.where(:id => self.id).update_all(:work_state_id => STATE_DUPLICATE)
+      self.is_duplicate
     end
 
     #@TODO: Is there a way that we can calculate the *canonical best*
