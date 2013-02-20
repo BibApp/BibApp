@@ -250,9 +250,9 @@ class BaseImporter < CitationImporter
       role = sub_hash[:role]
       name = sub_hash[:name]
       role_set = (seen[role] ||= Set.new)
-      if role_set.exclude?(name)
+      if role_set.exclude?(name.to_s)
         unique_work_name_strings << sub_hash
-        role_set.add(name)
+        role_set.add(name.to_s)
       end
     end
     hash[:work_name_strings] = unique_work_name_strings
