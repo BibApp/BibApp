@@ -244,13 +244,15 @@ class BaseImporter < CitationImporter
   #Each entry is a hash of :role and :name. So we want to take this apart and put it back together with
   #duplicates removed. I don't think that the order matters, but we might as well try to retain it anyway.
   def make_names_unique(hash)
-    seen = Set.new
+    seen = Hash.new
     unique_work_name_strings = []
     hash[:work_name_strings].each do |sub_hash|
-      key = [sub_hash[:name], sub_hash[:role]]
-      if seen.exclude?(key)
+      role = sub_hash[:role]
+      name = sub_hash[:name]
+      role_set = (seen[role] ||= Set.new)
+      if role_set.exclude?(name)
         unique_work_name_strings << sub_hash
-        seen.add(key)
+        role_set.add(name)
       end
     end
     hash[:work_name_strings] = unique_work_name_strings
