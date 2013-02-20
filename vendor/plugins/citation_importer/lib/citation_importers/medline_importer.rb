@@ -274,6 +274,7 @@ class MedlineImporter < BaseImporter
   def callbacks(hash)
     prioritize(hash, :work_name_strings, :full_names, :short_names)
     prioritize(hash, :publication, :full_journal_title, :journal_title_abbreviation)
+    make_names_unique(hash)
     return hash
   end
 end
