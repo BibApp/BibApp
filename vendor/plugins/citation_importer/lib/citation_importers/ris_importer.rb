@@ -150,7 +150,9 @@ class RisImporter < BaseImporter
   end
 
   def make_names_unique(hash)
-    Rails.logger.error hash.inspect
+    File.open('tmp/hash', 'w') do |f|
+      f.puts hash.inspect
+    end
   end
 
 end
