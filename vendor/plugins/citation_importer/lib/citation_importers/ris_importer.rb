@@ -145,7 +145,12 @@ class RisImporter < BaseImporter
 
   def callbacks(hash)
     prioritize(hash, :publication, *(@publication_priority))
+    make_names_unique(hash)
     hash
+  end
+
+  def make_names_unique(hash)
+    Rails.logger.error hash.inspect
   end
 
 end
