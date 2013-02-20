@@ -109,6 +109,7 @@ class RefworksXmlImporter < BaseImporter
 
   def callbacks(hash)
     prioritize(hash, :publication, *(@publication_priority))
+    make_names_unique(hash)
     hash
   end
 

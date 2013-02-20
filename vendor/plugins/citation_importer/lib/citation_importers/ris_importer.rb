@@ -149,10 +149,4 @@ class RisImporter < BaseImporter
     hash
   end
 
-  def make_names_unique(hash)
-    File.open('tmp/hash', 'w') do |f|
-      f.puts hash.inspect
-    end
-  end
-
 end

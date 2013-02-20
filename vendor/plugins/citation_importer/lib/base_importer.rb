@@ -239,4 +239,10 @@ class BaseImporter < CitationImporter
     source_keys.each { |key| hash.delete(key) }
   end
 
+  def make_names_unique(hash)
+    File.open('tmp/hash', 'w') do |f|
+      f.puts hash.inspect
+    end
+  end
+
 end
