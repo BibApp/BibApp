@@ -6,6 +6,7 @@
 # It defines common methods for all citation importers, and performs calls
 # to the @attribute_mapping and @value_translators for specific Importers.
 #
+require 'set'
 class BaseImporter < CitationImporter
 
   #Require ParseDate for better date parsing (see parse_date method below)
@@ -239,10 +240,20 @@ class BaseImporter < CitationImporter
     source_keys.each { |key| hash.delete(key) }
   end
 
+  #The work name strings are an array at :work_name_strings in the hash
+  #Each entry is a hash of :role and :name. So we want to take this apart and put it back together with
+  #duplicates removed. I don't think that the order matters, but we might as well try to retain it anyway.
   def make_names_unique(hash)
-    File.open('tmp/hash', 'w') do |f|
-      f.puts hash.inspect
+    seen = Set.new
+    unique_work_name_strings = []
+    hash[:work_name_strings].each do |sub_hash|
+      key = [sub_hash[:name], sub_hash[:role]]
+      if seen.exclude?(key)
+        unique_work_name_strings << sub_hash
+        seen.add(key)
+      end
     end
+    hash[:work_name_strings] = unique_work_name_strings
   end
 
 end
