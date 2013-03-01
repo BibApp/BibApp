@@ -8,7 +8,7 @@ module OpenUrlConferenceContext
         'volume' => self.volume,
         'issue' => self.issue,
         'spage' => self.start_page,
-        'date' => self.publication_date.try(:year),
+        'date' => (self.publication_date_string rescue nil),
         'issn' => (self.publication_authority.authority.issn_isbn rescue nil),
         'aulast' => self.name_strings.first.last_name
     )
