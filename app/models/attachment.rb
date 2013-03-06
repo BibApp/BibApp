@@ -14,22 +14,26 @@ class Attachment < ActiveRecord::Base
      "Image",
      "Import File"]
   end
+  
+  def content_type
+    self.data_content_type
+  end
 
   # Provide a filesize method to specify
   # actual size in terms of bytes, KB, MB or GB
   def filesize
     # if >= billion bytes, specify in GB
-    if self.size >= 1000000000
-      self.size.div(1000000000).round.to_s + "GB"
+    if self.data_file_size >= 1000000000
+      self.data_file_size.div(1000000000).round.to_s + "GB"
       # if >= million bytes, specify in MB
-    elsif self.size >= 1000000
-      self.size.div(1000000).round.to_s + "MB"
+    elsif self.data_file_size >= 1000000
+      self.data_file_size.div(1000000).round.to_s + "MB"
       # if >= thousand bytes, specify in KB
-    elsif self.size >= 1000
+    elsif self.data_file_size >= 1000
       self.size.div(1000).round.to_s + "KB"
       # if < thousand bytes, specify in bytes
-    elsif self.size < 1000
-      self.size.to_s + "bytes"
+    elsif self.data_file_size < 1000
+      self.data_file_size.to_s + "bytes"
     end
   end
 
@@ -52,8 +56,8 @@ class Attachment < ActiveRecord::Base
     self.data.path
   end
 
-  def filesize
-    self.data_file_size
+  def filename
+    self.data_file_name
   end
 
   def get_associated_works
