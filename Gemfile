@@ -83,7 +83,7 @@ gem 'authorization'
 #authentication
 gem 'authlogic'
 #TODO will require some work to go to 1.0 series
-gem 'omniauth', "~> 0.3"
+gem 'omniauth'
 
 #batch loading of authors
 gem 'fastercsv'
@@ -144,8 +144,6 @@ group :test, :development do
   #if I can get it to work that way.
   #gem 'metric_fu
 
-  #attempt to remove excess logging caused by postgres
-  gem 'silent-postgres'
 end
 
 group :test do
