@@ -133,7 +133,7 @@ describe Person do
     end
 
     it "can parse solr data" do
-      group = create(:group)
+      group = FactoryGirl.create(:group)
       @person.groups << group
       solr_string = @person.to_solr_data
       last_name, id, image_url, group_ids, is_active, research_focus = Person.parse_solr_data(solr_string)
