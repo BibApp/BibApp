@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Notifier do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
 
   describe "import review notification" do
     before(:all) do
