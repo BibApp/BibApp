@@ -50,7 +50,7 @@ module SharedHelper
     label ||= value
     filter = Hash.new
     if params[:fq]
-      filter[:fq] = params[:fq].collect
+      filter[:fq] = params[:fq].collect.to_a
     else
       filter[:fq] = []
     end
@@ -64,7 +64,7 @@ module SharedHelper
   def remove_filter(params, facet)
     filter = Hash.new
     if params[:fq]
-      filter[:fq] = params[:fq].collect
+      filter[:fq] = params[:fq].collect.to_a
       filter[:fq].delete(facet)
       filter[:fq].uniq!
 
