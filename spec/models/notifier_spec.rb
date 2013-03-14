@@ -9,7 +9,7 @@ describe Notifier do
     before(:all) do
       @user = create(:user)
       @import = create(:import, :user => @user)
-      @email = Notifier.create_import_review_notification(@import)
+      @email = Notifier.import_review_notification(@import)
     end
 
     after(:all) do
