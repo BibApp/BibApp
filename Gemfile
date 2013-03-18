@@ -23,7 +23,7 @@ gem 'make_resourceful'
 
 #file attachment - to replace attachment_fu
 #TODO Can remove version requirement after 1.9 migration
-gem 'paperclip'
+gem 'paperclip', "~> 2.7.5"
 
 gem "htmlentities"
 
