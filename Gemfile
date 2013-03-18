@@ -87,6 +87,7 @@ gem 'authorization'
 gem 'authlogic'
 #TODO will require some work to go to 1.0 series
 gem 'omniauth'
+gem 'omniauth-shibboleth', :git => 'git://github.com/medusa-project/omniauth-shibboleth.git'
 
 #batch loading of authors
 gem 'fastercsv'

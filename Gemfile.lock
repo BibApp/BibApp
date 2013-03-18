@@ -6,6 +6,13 @@ GIT
       activerecord
       ratom
 
+GIT
+  remote: git://github.com/medusa-project/omniauth-shibboleth.git
+  revision: 0fe8c4fe0de18fef578b5eceb860888ba0a69571
+  specs:
+    omniauth-shibboleth (1.0.6)
+      omniauth (>= 1.0.0)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -83,6 +90,7 @@ GEM
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
+    daemon_controller (1.1.2)
     daemons (1.1.9)
     database_cleaner (0.9.1)
     delayed_job (3.0.5)
@@ -100,6 +108,7 @@ GEM
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     fastercsv (1.5.5)
+    fastthread (1.0.7)
     ffi (1.4.0)
     gherkin (2.11.6)
       json (>= 1.7.6)
@@ -283,7 +292,7 @@ DEPENDENCIES
   delayed_job_active_record (~> 0.3.2)
   dynamic_form
   email_spec
-  factory_girl (~> 2.6.4)
+  factory_girl
   fastercsv
   haml
   htmlentities
@@ -294,7 +303,9 @@ DEPENDENCIES
   namecase
   net-ldap
   omniauth
+  omniauth-shibboleth!
   paperclip
+  passenger
   pg
   rails (~> 3.2.6)
   rails-i18n
