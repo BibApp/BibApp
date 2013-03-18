@@ -1,6 +1,6 @@
 #mixin for updating a sort_name field from a supplied name (for our use currently always a machine name)
-require 'lib/stop_word_processor'
-require 'lib/machine_name'
+require 'stop_word_processor'
+require 'machine_name'
 
 module StopWordNameSorterClassMethods
   def update_all_sort_names

@@ -8,38 +8,38 @@
 class CitationParser
   #Must require ActiveRecord so we have access to Rails Unicode tools
   # See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
-  require 'active_record' 
-  
+  require 'active_record'
+
   @@parsers = Array.new
-  
+
   class << self
     def inherited(subclass)
       @@parsers << subclass unless @@parsers.include?(subclass)
     end
-    
+
     def parsers
       @@parsers
     end
-    
+
     def logger
       #Use RAILS_DEFAULT_LOGGER by default for all logging
-      @@logger ||= ::RAILS_DEFAULT_LOGGER
+      @@logger ||= Rails.logger
     end
   end
-  
+
   attr_reader :citations
-  
+
   def initialize()
     # Populate the internal list of citaitons
     @citations = Array.new
   end
-  
+
   #Primary parse method.
   # Tries each defined CitationParser, and calls their parse_data()
   # method in an attempt to parse unknown data.
   def parse(data)
     @citations = Array.new
-    
+
     @@parsers.each do |klass|
       parser = klass.new
 
@@ -47,21 +47,21 @@ class CitationParser
 
       unless @citations.blank?
         @citations = cleanup_cites(@citations)
-        
+
         CitationParser.logger.debug("\nSuccessfully parsed #{@citations.size} citations using: #{klass}!\n")
-        return @citations          
-      end       
+        return @citations
+      end
     end
-   
+
     return nil
   end
-  
+
   ## Cleanup the citation attribute hash
   def cleanup_cites(cites)
-    
+
     cites.each do |cite|
       hash = cite.properties
-      
+
       #cleanup our citation properties
       hash.each do |key, value|
 
@@ -69,7 +69,7 @@ class CitationParser
         if !value.nil? and value.respond_to? :flatten
           value = value.flatten
         end
-        
+
         #remove key's which have nil or empty values
         #This removes empty Arrays, Hashes and Strings
         if value.nil? or value.empty?
@@ -80,11 +80,11 @@ class CitationParser
         #save cleaned value
         hash[key] = value
       end
-    end  
+    end
     return cites
   end
-  
-  
+
+
   protected
   attr_writer :citations
 end

@@ -20,7 +20,7 @@ class AttachmentsController < ApplicationController
       end
 
       #only editors of this asset can attach files to it
-      permit "editor of asset"
+      permit "editor of asset", :asset => @asset
 
       #if 'type' unspecified, default to first type in list
       params[:type] ||= Attachment.types[0]
@@ -68,7 +68,7 @@ class AttachmentsController < ApplicationController
   def create
 
     load_asset
-    permit "editor of asset"
+    permit "editor of asset", :asset => @asset
     attachment_count = 0
 
     if params[:file].nil?

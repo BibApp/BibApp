@@ -64,5 +64,6 @@ module Bibapp
 
 end
 
+require File.join(Rails.root, 'config', 'personalize.rb')
 require 'error_handler'
 require 'index'

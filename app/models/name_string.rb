@@ -1,4 +1,4 @@
-require 'lib/machine_name'
+require 'machine_name'
 require 'namecase'
 
 class NameString < ActiveRecord::Base

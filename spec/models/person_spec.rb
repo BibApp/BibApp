@@ -69,7 +69,7 @@ describe Person do
     it "can return a list of first letters of last names over all Persons" do
       Person.destroy_all
       ['Adams', 'Rogers', 'Mendoza', 'Richards'].each do |name|
-        Factory.create(:person, :last_name => name)
+        create(:person, :last_name => name)
       end
       Person.letters.should == ['A', 'M', 'R']
     end
@@ -78,14 +78,14 @@ describe Person do
 
   describe "finding related objects" do
     before(:each) do
-      @person = Factory.create(:person)
+      @person = create(:person)
     end
 
     it "can return its most recent work" do
-      @person = Factory.create(:person)
+      @person = create(:person)
       @person.most_recent_work.should be_nil
       works = 5.times.collect do
-        Factory.create(:work).tap do |work|
+        create(:work).tap do |work|
           add_contributorship(@person, work)
         end
       end
@@ -95,21 +95,21 @@ describe Person do
     end
 
     it "can find all groups in which the person is not" do
-      @person.groups = 3.times.collect { Factory.create(:group) }
-      other_groups = 10.times.collect { Factory.create(:group) }
+      @person.groups = 3.times.collect { create(:group) }
+      other_groups = 10.times.collect { create(:group) }
       @person.groups_not.to_set.should == other_groups.to_set
     end
 
     it "can find name strings like the person's last name but which the person does not have" do
       @person.name_strings.should_not be_empty
-      other_name_strings = ('aa'..'af').collect { |letter| Factory.create(:name_string, :name => "#{@person.last_name}, #{letter}") }
+      other_name_strings = ('aa'..'af').collect { |letter| create(:name_string, :name => "#{@person.last_name}, #{letter}") }
       @person.name_strings_not.to_set.should == other_name_strings.to_set
     end
 
   end
 
   it "can sort an array of persons by the time of their most recent work" do
-    none, old, new = 3.times.collect { Factory.create(:person) }
+    none, old, new = 3.times.collect { create(:person) }
     add_contributorship(old, nil)
     sleep 1
     add_contributorship(new, nil)
@@ -119,7 +119,7 @@ describe Person do
 
   describe "solr interaction" do
     before(:each) do
-      @person = Factory.create(:person, :last_name => 'Peters', :research_focus => 'focus')
+      @person = create(:person, :last_name => 'Peters', :research_focus => 'focus')
       @id = @person.id
     end
 
@@ -133,7 +133,7 @@ describe Person do
     end
 
     it "can parse solr data" do
-      group = Factory.create(:group)
+      group = FactoryGirl.create(:group)
       @person.groups << group
       solr_string = @person.to_solr_data
       last_name, id, image_url, group_ids, is_active, research_focus = Person.parse_solr_data(solr_string)
@@ -161,11 +161,11 @@ describe Person do
   end
 
   it "can return an array of work types and counts of that work type for a person" do
-    person = Factory.create(:person)
+    person = create(:person)
     {:book_whole => [2, 2], :book_review => [1, 0], :composition => [0,2],
      :grant => [3, 1]}.each do |k,v|
-      v.first.times {add_contributorship(person, Factory.create(k), true)}
-      v.second.times {add_contributorship(person, Factory.create(k), false)}
+      v.first.times {add_contributorship(person, create(k), true)}
+      v.second.times {add_contributorship(person, create(k), false)}
     end
     reftypes = person.publication_reftypes.all
     reftypes.size.should == 3
@@ -176,16 +176,16 @@ describe Person do
   end
 
   it "correctly creates pen names when not all names are given" do
-    person = Factory.build(:person,  :first_name => 'First', :last_name => 'Last', :middle_name => '')
+    person = build(:person,  :first_name => 'First', :last_name => 'Last', :middle_name => '')
     person.save.should be_true
     person.name_strings.length.should == 2
     person.name_strings.collect {|ns| ns.name}.to_set.should == ['Last, First', 'Last, F.'].to_set
   end
 
   def add_contributorship(person, work, verified = true)
-    person ||= Factory.create(:person)
-    work ||= Factory.create(:work)
-    person.contributorships << (c = Factory.create(:contributorship, :person => person, :work => work))
+    person ||= create(:person)
+    work ||= create(:work)
+    person.contributorships << (c = create(:contributorship, :person => person, :work => work))
     c.verify_contributorship if verified
     c
   end

@@ -11,9 +11,9 @@ describe PenName do
   it {should validate_presence_of(:person_id)}
 
   it "should be able to index its works" do
-    pen_name = Factory.create(:pen_name)
-    person = Factory.create(:person)
-    work = Factory.create(:work)
+    pen_name = create(:pen_name)
+    person = create(:person)
+    work = create(:work)
     Contributorship.create(:person => person, :work => work, :pen_name => pen_name)
     pen_name.works(true).each {|w| w.should_receive(:set_for_index_and_save)}
     Index.should_receive(:batch_index)
@@ -21,10 +21,10 @@ describe PenName do
   end
 
   it "should be able to set contributorships" do
-    pen_name = Factory.create(:pen_name)
-    pen_name.name_string = Factory.create(:name_string)
+    pen_name = create(:pen_name)
+    pen_name.name_string = create(:name_string)
     5.times do
-      pen_name.name_string.work_name_strings << Factory.build(:work_name_string, :role => 'Author')
+      pen_name.name_string.work_name_strings << build(:work_name_string, :role => 'Author')
     end
     works_to_add = pen_name.name_string.work_name_strings.collect {|wns| wns.work}
     works_to_add.first.is_duplicate

@@ -9,9 +9,6 @@
 require 'set'
 class BaseImporter < CitationImporter
 
-  #Require ParseDate for better date parsing (see parse_date method below)
-  require 'parsedate'
-
   attr_reader :attribute_mapping, :value_translators
 
   def logger
@@ -123,7 +120,7 @@ class BaseImporter < CitationImporter
       #If we have an Array of Strings (or Unicode Strings) with only a single value,
       # just return the first String as the value
       if value.is_a?(Array) and value.size==1 and value[0].acts_like?(:string)
-        value = value[0].to_s.mb_chars.strip
+        value = value[0].to_s.strip
 
         #if this is an empty string, remove it
         if value.empty?
@@ -175,7 +172,7 @@ class BaseImporter < CitationImporter
   end
 
   def parse_date_parsedate(date_string)
-    parsed_date = ParseDate.parsedate(date_string) rescue nil
+    parsed_date = old_parsedate_compat(date_string) rescue nil
     return nil unless parsed_date and parsed_date[0].present? and parsed_date[0].to_s.size >=4
     year = parsed_date[0]
     month = parsed_date[1]
@@ -188,6 +185,11 @@ class BaseImporter < CitationImporter
     rescue
       return nil
     end
+  end
+
+  #ParseDate was removed from ruby 1.9 stdlib - this is just the implementation of its parsedate method
+  def old_parsedate_compat(date_string)
+    Date._parse(date_string).values_at(:year, :mon, :mday, :hour, :min, :sec, :zone, :wday)
   end
 
   def parse_date_mm_yyyy(date_string)
@@ -223,7 +225,7 @@ class BaseImporter < CitationImporter
   end
 
   def strip_line_breaks(value)
-    value.mb_chars.squish
+    value.squish
   end
 
   def remove_trailing_period(value)

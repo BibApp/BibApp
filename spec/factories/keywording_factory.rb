@@ -1,4 +1,6 @@
-Factory.define(:keywording) do |k|
-  k.association :work, :factory => :book_whole
-  k.association :keyword
+FactoryGirl.define do
+  factory :keywording do
+    association :work, :factory => :book_whole
+    association :keyword
+  end
 end

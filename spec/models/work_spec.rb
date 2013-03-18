@@ -26,16 +26,16 @@ describe Work do
     end
 
     it "should return a default type_uri" do
-      Factory.build(:abstract_work).type_uri.should be_nil
+      build(:abstract_work).type_uri.should be_nil
     end
   end
 
   context "should be able to return name information on creators" do
 
     def make_test_data(work_type)
-      @work = Factory.create(work_type)
-      @author_name_strings = 5.times.collect { Factory.create(:name_string) }
-      @editor_name_strings = 5.times.collect { Factory.create(:name_string) }
+      @work = create(work_type)
+      @author_name_strings = 5.times.collect { create(:name_string) }
+      @editor_name_strings = 5.times.collect { create(:name_string) }
       @author_name_strings.each { |ns| @work.work_name_strings.create(:role => @work.creator_role, :name_string => ns) }
       @editor_name_strings.each { |ns| @work.work_name_strings.create(:role => @work.contributor_role, :name_string => ns) }
     end
@@ -60,7 +60,7 @@ describe Work do
     before(:each) do
       #to test the default implementation we need a work subclass that doesn't override open_url_kevs
       #Generic seems a safe choice, but if this test starts failing take that into consideration
-      @work = Factory.create(:generic, :title_primary => 'WorkTitle', :publication_date_year => 2011, :publication_date_month => 3,
+      @work = create(:generic, :title_primary => 'WorkTitle', :publication_date_year => 2011, :publication_date_month => 3,
                              :publication_date_day => 4, :volume => '11', :issue => '9', :start_page => '211', :end_page => '310')
     end
 
@@ -77,9 +77,9 @@ describe Work do
     end
 
     it "with a publication returns some extra kevs" do
-      authority = Factory.create(:publication, :name => 'AuthorityName')
-      publication = Factory.create(:publication, :authority => authority)
-      issn = Factory.create(:issn)
+      authority = create(:publication, :name => 'AuthorityName')
+      publication = create(:publication, :authority => authority)
+      issn = create(:issn)
       publication.identifiers << issn
       @work.publication = publication
       kevs = @work.open_url_kevs
@@ -90,7 +90,7 @@ describe Work do
 
   context "automatic field updates and initialization" do
     it "should call initialization methods when created" do
-      work = Factory.build(:work)
+      work = build(:work)
       [:create_work_name_strings, :create_keywords, :create_tags].each do |method|
         work.should_receive(method)
       end
@@ -98,7 +98,7 @@ describe Work do
     end
 
     it "should call update methods when saving" do
-      work = Factory.create(:work)
+      work = create(:work)
       work.title_primary = work.title_primary + 'make a change'
       [:update_authorities, :update_scoring_hash, :update_archive_state, :update_machine_name, :deduplicate,
        :create_contributorships].each do |method|
@@ -108,9 +108,9 @@ describe Work do
     end
 
     it "should automatically update publication and pubisher information when its publication is set" do
-      work = Factory.create(:work)
-      publisher = Factory.create(:publisher)
-      publication = Factory.create(:publication, :publisher => publisher)
+      work = create(:work)
+      publisher = create(:publisher)
+      publication = create(:publication, :publisher => publisher)
       publication.authority = publication
       work.publisher_id.should be_nil
       work.publication_id.should be_nil
@@ -122,7 +122,7 @@ describe Work do
 
     it "should update the machine name when appropriate" do
       new_title = '  New --- Title , For this'
-      work = Factory.create(:work)
+      work = create(:work)
       work.title_primary = new_title
       work.update_machine_name
       work.machine_name.should == 'new title for this'
@@ -130,7 +130,7 @@ describe Work do
 
     context "updating archive status" do
       before(:each) do
-        @work = Factory.create(:work)
+        @work = create(:work)
       end
 
       it "should mark itself as archived if an archive time has been recorded" do
@@ -157,7 +157,7 @@ describe Work do
     end
 
     it "should be able to update its batch indexing status and save" do
-      work = Factory.create(:work)
+      work = create(:work)
       work.batch_index.should == Work::NOT_TO_BE_BATCH_INDEXED
       work.set_for_index_and_save
       work.reload
@@ -168,10 +168,10 @@ describe Work do
     end
 
     it "should update its scoring hash" do
-      work = Factory.create(:work)
-      publication = Factory.create(:publication)
-      keywords = 3.times.collect { Factory.create(:keyword) }
-      name_strings = 4.times.collect { Factory.create(:name_string) }
+      work = create(:work)
+      publication = create(:publication)
+      keywords = 3.times.collect { create(:keyword) }
+      name_strings = 4.times.collect { create(:name_string) }
       work.publication_date_year = 2008
       work.publication_date_month = 1
       work.publication_date_day = 2
@@ -190,10 +190,10 @@ describe Work do
     context "creating contributorships" do
       before(:each) do
         #create work with exising contributorship and work_name_string/pen_name needed for another one
-        @work = Factory.create(:work)
-        @contributorship = Factory.create(:contributorship, :work => @work, :role => @work.creator_role)
-        @work_name_string = Factory.create(:work_name_string, :work => @work, :role => @work.contributor_role)
-        @pen_name = Factory.build(:pen_name, :name_string => @work_name_string.name_string)
+        @work = create(:work)
+        @contributorship = create(:contributorship, :work => @work, :role => @work.creator_role)
+        @work_name_string = create(:work_name_string, :work => @work, :role => @work.contributor_role)
+        @pen_name = build(:pen_name, :name_string => @work_name_string.name_string)
         #we need to intercept this or the pen_name will actually create the contributorship on save and we're trying
         #to test the work side
         @pen_name.should_receive(:set_contributorships)
@@ -212,7 +212,7 @@ describe Work do
 
   context "dupe_key checking" do
     before(:each) do
-      @work = Factory.create(:generic, :title_primary => 'Work Name', :publication_date_year => 2009,
+      @work = create(:generic, :title_primary => 'Work Name', :publication_date_year => 2009,
                              :publication_date_month => 3, :publication_date_day => 21)
     end
 
@@ -222,13 +222,13 @@ describe Work do
       end
 
       it "returns nil if it has no publication authority" do
-        @work.publication = Factory.create(:publication)
+        @work.publication = create(:publication)
         @work.publication.should_receive(:authority).and_return(nil)
         @work.title_dupe_key.should be_nil
       end
 
       it "returns a solr-like string if it has a publication authority" do
-        @work.publication = Factory.create(:publication)
+        @work.publication = create(:publication)
         @work.title_dupe_key.should == ['work name', '2009', @work.publication.authority.machine_name].join("||")
       end
     end
@@ -239,8 +239,8 @@ describe Work do
       end
 
       it "returns a solr like string with name_strings" do
-        name_string = Factory.create(:name_string, :name => 'Name String Name')
-        Factory.create(:work_name_string, :work => @work, :name_string => name_string)
+        name_string = create(:name_string, :name => 'Name String Name')
+        create(:work_name_string, :work => @work, :name_string => name_string)
         @work.name_strings(true).should == [name_string]
         @work.name_string_dupe_key.should == ['name string name', '2009', 'Generic', 'work name'].join('||')
       end
@@ -248,12 +248,12 @@ describe Work do
   end
 
   it "can create a unique solr id" do
-    work = Factory.create(:work)
+    work = create(:work)
     work.solr_id.should == "Work-#{work.id}"
   end
 
   it 'has specified initial states' do
-    work = Factory.create(:work)
+    work = create(:work)
     work.in_process?
     work.has_init_archive_status?
   end
@@ -261,7 +261,7 @@ describe Work do
   context 'setting publication and publisher information' do
 
     it 'works from a hash' do
-      @work = Factory.create(:work)
+      @work = create(:work)
       @work.set_publication_info(:name => 'Publication Name', :publisher_name => 'Publisher Name', :issn_isbn => ISSN.random)
       @work.publisher.should == Publisher.find_by_name('Publisher Name')
       @work.initial_publisher_id.should == @work.publisher.id
@@ -270,15 +270,15 @@ describe Work do
     end
 
     it 'works without an issn' do
-      @work = Factory.create(:work)
-      @publisher = Factory.create(:publisher, :name => 'Publisher')
+      @work = create(:work)
+      @publisher = create(:publisher, :name => 'Publisher')
       @work.set_publication_from_name('Publication', nil, @publisher)
       @work.publication.should == Publication.find_by_name_and_initial_publisher_id('Publication', @publisher.id)
       @work.initial_publication_id.should == @work.publication.id
     end
 
     it 'works without an issn or publisher' do
-      @work = Factory.create(:work)
+      @work = create(:work)
       @work.set_publication_from_name('Publication', nil, nil)
       @work.publication.should == Publication.find_by_name('Publication')
       @work.initial_publication_id.should == @work.publication.id
@@ -287,8 +287,8 @@ describe Work do
 
   context "work name strings" do
     it "can be set from a hash for an existing record" do
-      work = Factory.create(:generic)
-      work.work_name_strings << (old_name_string = Factory.create(:work_name_string))
+      work = create(:generic)
+      work.work_name_strings << (old_name_string = create(:work_name_string))
       work.set_work_name_strings([{:name => 'Peters, Pete', :role => 'Creator'},
                                   {:name => 'Josephs, Joe', :role => 'Contributor'}])
       work.work_name_strings.size.should == 2
@@ -296,7 +296,7 @@ describe Work do
     end
 
     it "can be set from a hash for a new record" do
-      work = Factory.build(:generic)
+      work = build(:generic)
       work.set_work_name_strings([{:name => 'Peters, Pete', :role => 'Creator'},
                                   {:name => 'Josephs, Joe', :role => 'Contributor'}])
       work.work_name_strings(true).should be_empty
@@ -307,17 +307,17 @@ describe Work do
 
   context "tags" do
     it "sets from a list of tags for an existing work" do
-      work = Factory.create(:generic)
-      work.tags << (old_tag = Factory.create(:tag))
-      new_tags = 3.times.collect { Factory.create(:tag) }
+      work = create(:generic)
+      work.tags << (old_tag = create(:tag))
+      new_tags = 3.times.collect { create(:tag) }
       work.set_tags(new_tags)
       work.tags(true).should_not include(old_tag)
       work.tags.to_set.should == new_tags.to_set
     end
 
     it "sets from a list of tags for a new work" do
-      work = Factory.build(:generic)
-      new_tags = 3.times.collect { Factory.build(:tag) }
+      work = build(:generic)
+      new_tags = 3.times.collect { build(:tag) }
       work.set_tags(new_tags)
       work.tags(true).should be_empty
       work.save
@@ -325,7 +325,7 @@ describe Work do
     end
 
     it "sets from a list of tag names" do
-      work = Factory.build(:generic)
+      work = build(:generic)
       work.set_tag_strings ['Pete', 'Joe', 'Ack']
       work.tags(true).size.should == 3
     end
@@ -333,17 +333,17 @@ describe Work do
 
   context "keywords" do
     it "sets from a list of keywords for an existing work" do
-      work = Factory.create(:generic)
-      work.keywords << (old_keyword = Factory.create(:keyword))
-      new_keywords = 3.times.collect { Factory.create(:keyword) }
+      work = create(:generic)
+      work.keywords << (old_keyword = create(:keyword))
+      new_keywords = 3.times.collect { create(:keyword) }
       work.set_keywords(new_keywords)
       work.keywords(true).should_not include(old_keyword)
       work.keywords.to_set.should == new_keywords.to_set
     end
 
     it "sets from a list of keywords for a new work" do
-      work = Factory.build(:generic)
-      new_keywords = 3.times.collect { Factory.build(:keyword) }
+      work = build(:generic)
+      new_keywords = 3.times.collect { build(:keyword) }
       work.set_keywords(new_keywords)
       work.keywords(true).should be_empty
       work.save
@@ -351,7 +351,7 @@ describe Work do
     end
 
     it "sets from a list of keyword strings" do
-      work = Factory.build(:generic)
+      work = build(:generic)
       work.set_keyword_strings ['Pete', 'Joe', 'Ack']
       work.keywords(true).size.should == 3
     end
@@ -377,7 +377,7 @@ describe Work do
     end
 
     context 'role identification' do
-      before(:each) { @work = Factory.create(:performance) }
+      before(:each) { @work = create(:performance) }
       it "should be able to return a specific creator role in place of 'Author'" do
         @work.denormalize_role('Author').should == 'Director'
       end
@@ -398,7 +398,7 @@ describe Work do
           h[key] = key.to_s
         end
       end
-      work = Factory.create(:work)
+      work = create(:work)
       work.delete_non_work_data(hash)
       hash.size.should == 0
     end
@@ -409,27 +409,27 @@ describe Work do
       end
 
       it "uses title_primary for some classes" do
-        work = Factory.build(:book_whole)
+        work = build(:book_whole)
         work.publication_name_from_hash(@hash).should == 'Title Primary'
       end
 
       it "uses title_secondary for some classes" do
-        work = Factory.build(:report)
+        work = build(:report)
         work.publication_name_from_hash(@hash).should == 'Title Secondary'
       end
 
       it "uses publication for some classes" do
-        work = Factory.build(:book_review)
+        work = build(:book_review)
         work.publication_name_from_hash(@hash).should == 'Publication'
       end
 
       it "uses nil for some classes" do
-        work = Factory.build(:artwork)
+        work = build(:artwork)
         work.publication_name_from_hash(@hash).should be_nil
       end
 
       it "uses 'Unknown' if the right hash key is not set" do
-        work = Factory.build(:monograph)
+        work = build(:monograph)
         work.publication_name_from_hash({}).should == 'Unknown'
       end
     end
@@ -438,9 +438,9 @@ describe Work do
   describe 'orphan detection' do
     def work_with_contributorships(*states)
       title = states.blank? ? 'None' : states.join(' ')
-      Factory.create(:work, :title_primary => title).tap do |work|
+      create(:work, :title_primary => title).tap do |work|
         states.each do |state|
-          Factory.create(:contributorship, :work => work).send("#{state}_contributorship")
+          create(:contributorship, :work => work).send("#{state}_contributorship")
         end
       end
     end
@@ -469,7 +469,7 @@ describe Work do
 
   describe "publication date" do
     before(:each) do
-      @work = Factory.build(:work)
+      @work = build(:work)
     end
 
     def set_date(year = nil, month = nil, day = nil)

@@ -8,7 +8,7 @@ describe Role do
   context 'describing itself' do
 
     it 'for object' do
-      work = Factory.create(:book_whole)
+      work = create(:book_whole)
       role = Role.new(:name => 'editor', :authorizable_type => 'Work', :authorizable_id => work.id)
       role.description.should == "editor of Book Whole '#{work.name}'"
     end

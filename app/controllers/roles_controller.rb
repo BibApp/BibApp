@@ -17,7 +17,7 @@ class RolesController < ApplicationController
       load_authorizable #load the authorizable object this role will be assigned to
 
       #Only admins of the authorizable object can create roles
-      permit "admin of authorizable"
+      permit "admin of authorizable", :authorizable => @authorizable
 
       @role_name = params[:name] if params[:name]
 
@@ -51,7 +51,7 @@ class RolesController < ApplicationController
     load_authorizable
 
     #Only admins of the authorizable object can create roles
-    permit "admin of authorizable"
+    permit "admin of authorizable", :authorizable => @authorizable
 
     #get User
     user = User.find(params["user_id"])
@@ -85,7 +85,7 @@ class RolesController < ApplicationController
     end
 
     #Only admins of the authorizable object can create roles
-    permit "admin of authorizable"
+    permit "admin of authorizable", :authorizable => @authorizable
 
     #Get User and Role to remove from
     user = User.find(params["user_id"])

@@ -6,7 +6,7 @@ class ISSN < Identifier
   end
 
   def self.random
-    stem = 7.times.collect {ActiveSupport::SecureRandom.random_number(10)}.join('')
+    stem = 7.times.collect {SecureRandom.random_number(10)}.join('')
     ((0..9).to_a << 'X').each do |tail|
       candidate = stem + tail.to_s
       return candidate if self.is_valid?(candidate)

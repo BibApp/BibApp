@@ -1,0 +1,1 @@
+require 'citation_importer/citation_importer'

@@ -23,14 +23,16 @@ class BaseXmlParser < CitationParser
 
     #decode XML entities in any value
     props.each do |key, value|
-      next if key==:original_data #never decode the original citation...keep it as is!
+      next if key == :original_data #never decode the original citation...keep it as is!
 
       #Determine whether we are cleaning arrays or strings
-      if value.class.to_s=="Array" and !value.empty?
-        #decode every value
-        value.collect! { |v| coder.decode(v).mb_chars }
-      elsif (value.class.to_s=="String" or value.class.to_s=="ActiveSupport::Multibyte::Chars") and !value.empty?
-        props[key] = coder.decode(value)
+      if value.present?
+        case value
+          when Array
+            value.collect! { |v| coder.decode(v) }
+          when String
+            props[key] = coder.decode(value)
+        end
       end
     end
 

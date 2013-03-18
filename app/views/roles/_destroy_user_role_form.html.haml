@@ -7,6 +7,6 @@
       - else
         = hidden_field_tag :authorizable_type, @authorizable.class
         = hidden_field_tag :authorizable_id, @authorizable.id
-      = hidden_field_tag :user_id, user.user_id
+      = hidden_field_tag :user_id, user.id
       = hidden_field_tag :name, role_name
       = submit_tag "remove", :class => "inline"

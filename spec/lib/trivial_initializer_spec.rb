@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-require 'lib/trivial_initializer'
+require 'trivial_initializer'
 
 describe TrivialInitializer do
 

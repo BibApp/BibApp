@@ -10,7 +10,7 @@ task :staging do
   role :web, staging_server
   role :app, staging_server
   role :db, staging_server, :primary => true
-  set :branch, 'uiuc-connections'
+  set :branch, 'uiuc-connections-rails-3.2'
 end
 
 task :production do

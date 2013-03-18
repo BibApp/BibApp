@@ -10,7 +10,7 @@ describe WorkNameString do
   describe "uniqueness validations" do
 
     before(:each) do
-      @work_name_string = Factory.create(:work_name_string)
+      @work_name_string = create(:work_name_string)
     end
 
     it { should validate_uniqueness_of(:name_string_id).scoped_to(:work_id, :role) }
@@ -18,8 +18,8 @@ describe WorkNameString do
   end
 
   it "can represent itself for solr" do
-    ns = Factory.create(:name_string, :name => 'Name')
-    wns = Factory.create(:work_name_string, :name_string => ns, :role => 'role')
+    ns = create(:name_string, :name => 'Name')
+    wns = create(:work_name_string, :name_string => ns, :role => 'role')
     wns.to_solr_data.should == ['Name', wns.name_string.id, wns.position, 'role'].join('||')
   end
 

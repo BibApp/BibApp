@@ -4,7 +4,7 @@ describe UserSession do
 
   before(:each) do
     activate_authlogic
-    @user = Factory.create(:activated_user)
+    @user = create(:activated_user)
     @session = UserSession.new(@user)
   end
 
