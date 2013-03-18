@@ -68,7 +68,8 @@ namespace :deploy do
   desc "link shared configuration"
   task :link_config do
     ['database.yml', 'ldap.yml', 'personalize.rb', 'smtp.yml',
-     'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml', 'locales.yml', 'keyword_exclusions.yml', 'stopwords.yml'].each do |file|
+     'solr.yml', 'sword.yml', 'oauth.yml', 'open_id.yml', 'locales.yml', 'keyword_exclusions.yml',
+     'stopwords.yml', 'shibboleth.yml'].each do |file|
       run "ln -nfs #{shared_config}/#{file} #{current_path}/config/#{file}"
     end
     run "ln -nfs #{shared_config}/personalize/*.yml #{current_path}/config/locales/personalize/."
