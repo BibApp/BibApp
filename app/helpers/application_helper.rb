@@ -220,7 +220,7 @@ module ApplicationHelper
     else
       isbn = work_or_isbn
     end
-    isbn = isbn.tr(' -_', '')
+    isbn = isbn.tr('-_ ', '')
     Rails.logger.error(isbn)
     return nil unless isbn
     google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
