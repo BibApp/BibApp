@@ -1,3 +1,5 @@
+
+
 $jq(function () {
       get_google_links();
     }
@@ -12,7 +14,7 @@ function get_google_links() {
 
 function get_google_link(span) {
   var isbn = $jq(span).attr('title');
-  var query_url = 'https://www.googleapis.com/books/v1/volumes';
+  var query_url = '/works/google_book_data';
   $jq.ajax({url: query_url,
         data: {q: 'isbn:' + isbn},
         dataType: 'json'}
