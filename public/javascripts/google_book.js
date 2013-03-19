@@ -1,9 +1,10 @@
-$jq(
-  get_google_links()
+$jq(function () {
+      get_google_links();
+    }
 )
 
 function get_google_links() {
-  $jq('span.google-book').each(function() {
+  $jq('span.google-book').each(function () {
     get_google_link(this)
   })
 
