@@ -207,6 +207,7 @@ module ApplicationHelper
   def link_to_google_book(work_or_isbn)
     Rails.logger.error("*" * 70 )
     Rails.logger.error(work_or_isbn)
+    Rails.logger.error(work_or_isbn.class.to_s)
     if work_or_isbn.is_a?(Work)
       return nil unless work_or_isbn.publication.present?
       isbn = if work_or_isbn.publication.isbns.first.present?
