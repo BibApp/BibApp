@@ -1,4 +1,4 @@
 -#must pass work or isbn
-- link_info = link_to_google_book(work_or_isbn)
-%a{:href => link_info[:link]}
-  %img{:src => link_info[:image]}
+- if link_info = link_to_google_book(work_or_isbn)
+  %a{:href => link_info[:link]}
+    %img{:src => link_info[:image]}
