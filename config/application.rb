@@ -65,6 +65,10 @@ module Bibapp
 
 end
 
-load File.join(Rails.root, 'config', 'personalize.rb')
+begin
+  load File.join(Rails.root, 'config', 'personalize.rb')
+rescue
+  load "/services/bibapp/bibapp-capistrano/shared/config/personalize.rb"
+end
 require 'error_handler'
 require 'index'
