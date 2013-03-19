@@ -36,7 +36,7 @@ class UserSessionsController < ApplicationController
 
   def shibboleth
     if Rails.env.production?
-      redirect_to(OmniAuth::Strategies::Shibboleth.login_path(MedusaRails3::Application.shibboleth_host))
+      redirect_to(OmniAuth::Strategies::Shibboleth.login_path(Bibapp::Application.shibboleth_host))
     else
       redirect_to('/auth/developer')
     end
