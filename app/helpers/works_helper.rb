@@ -122,19 +122,23 @@ module WorksHelper
   #TODO An alternate and possibly better way would be to do this in javascript if possible - do the query
   #below in javascript (should be okay since it is https?) then construct the bit of the view instead of in the partial.
   #Alternately, have a callback to the server instead of doing this while constructing the main page.
-  def link_to_google_book(work)
-    return unless work.publication.present?
-    isbn = if work.publication.isbns.first.present?
-      work.publication.isbns.first[:name]
-    elsif work.publication.issn_isbn.present?
-      work.publication.issn_isbn.gsub(' ', '')
+  def link_to_google_book(work_or_isbn)
+    if work_or_isbn.is_a?(Work)
+      return unless work_or_isbn.publication.present?
+      isbn = if work_or_isbn.publication.isbns.first.present?
+        work_or_isbn.publication.isbns.first[:name]
+      elsif work_or_isbn.publication.issn_isbn.present?
+        work_or_isbn.publication.issn_isbn.gsub(' ', '')
+      else
+        nil
+      end
     else
-      nil
+      isbn = work_or_isbn.gsub(' ', '')
     end
     return unless isbn
     google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
     json = JSON.parse(google_response)
-    volume_info =  json['items'][0]['volumeInfo']
+    volume_info = json['items'][0]['volumeInfo']
     return {:link => volume_info['previewLink'], :image => volume_info['imageLinks']['smallThumbnail']}
   rescue Exception => e
     return

@@ -14,7 +14,7 @@
   .screen-format
     - publication = work.publication
     - if publication and publication.issn_isbn and publication.issn_isbn.length > 9
-      %span.gbs-thumbnail.gbs-link-to-preview.work-preview{:title => "ISBN: #{publication.issn_isbn.gsub(' ', '')}"}
+      = render :partial => 'shared/google_book', :locals => {:work_or_isbn => publication.issn_isbn}
     %strong #{link_to work.title_primary, work_path(work)}
     %h5.work-type #{t_solr_work_type(work.type)}
     - if show_status and work.work_state_id

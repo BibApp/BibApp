@@ -21,9 +21,7 @@
     / COinS
     %span.Z3988{:title => "#{coin(@work)}"}
 
-    - link_info = link_to_google_book(@work)
-    %a{:href => link_info[:link]}
-      %img{:src => link_info[:image]}
+    = render :partial => 'shared/google_book', :locals => {:work_or_isbn => work}
     = render 'attachments', :files => @work.attachments
     = render "metadata"
 

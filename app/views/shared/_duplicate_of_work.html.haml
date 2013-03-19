@@ -8,7 +8,7 @@
 .duplicate_box
   - Index.possible_accepted_duplicates(work).each do |dupe|
     - if dupe['issn_isbn']
-      %span.gbs-thumbnail.gbs-link-to-preview.right.padded{:title => "ISBN:#{dupe['issn_isbn'].gsub(" ", "")}"}
+      = render :partial => 'shared/google_book', :locals => {:work_or_isbn => dupe['issn_isbn']}
     %strong #{link_to "#{dupe['title']}", work_path(dupe['pk_i'])}
     %h5 #{dupe['type']}
     -#display status of a work, if specified
