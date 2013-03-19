@@ -36,7 +36,7 @@ class PubCommon < ActiveRecord::Base
   # return the first letter of each name, ordered alphabetically
   def self.letters(upcase = nil)
     letters = self.select('DISTINCT SUBSTR(name, 1, 1) AS letter').order('letter').collect { |x| x.letter } - [' ']
-    letters = letters.collect { |x| x.upcase } if upcase
+    letters = letters.collect { |x| x.upcase rescue x }.uniq.sort if upcase
     return letters
   end
 
