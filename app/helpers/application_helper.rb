@@ -205,6 +205,8 @@ module ApplicationHelper
   #below in javascript (should be okay since it is https?) then construct the bit of the view instead of in the partial.
   #Alternately, have a callback to the server instead of doing this while constructing the main page.
   def link_to_google_book(work_or_isbn)
+    Rails.logger.error("*" * 70 )
+    Rails.logger.error(work['issn_isbn'])
     if work_or_isbn.is_a?(Work)
       return nil unless work_or_isbn.publication.present?
       isbn = if work_or_isbn.publication.isbns.first.present?
