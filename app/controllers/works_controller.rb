@@ -3,6 +3,7 @@ require 'will_paginate/array'
 require 'set'
 require 'rest_client'
 class WorksController < ApplicationController
+  cattr_accessor :google_book_link_cache
   #require CMess to help guess encoding of uploaded text files
 
   #Require a user be logged in to create / update / destroy
@@ -371,11 +372,15 @@ class WorksController < ApplicationController
   end
 
   def google_book_data
+    google_book_link_cache ||= Hash.new
     isbn = params[:isbn]
-    google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
-    json = JSON.parse(google_response)
-    volume_info = json['items'][0]['volumeInfo']
-    render :json => {:link_url => volume_info['previewLink'], :image_url => volume_info['imageLinks']['smallThumbnail']}
+    unless google_book_link_cache[isbn]
+      google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
+      json = JSON.parse(google_response)
+      volume_info = json['items'][0]['volumeInfo']
+      google_book_link_cache[isbn] = {:link_url => volume_info['previewLink'], :image_url => volume_info['imageLinks']['smallThumbnail']}
+    end
+    render :json => google_book_link_cache[isbn]
   end
 
   private
