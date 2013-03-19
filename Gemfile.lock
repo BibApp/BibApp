@@ -195,6 +195,8 @@ GEM
       libxml-ruby (~> 2.3.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -289,6 +291,7 @@ DEPENDENCIES
   rails (~> 3.2.6)
   rails-i18n
   rake
+  rest-client
   rspec
   rspec-rails
   rubyzip

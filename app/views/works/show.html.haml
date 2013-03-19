@@ -21,7 +21,10 @@
     / COinS
     %span.Z3988{:title => "#{coin(@work)}"}
 
-    = link_to_google_book(@work)
+    - link_info = link_to_google_book(@work)
+    %a{:href => link_info[:link]}
+      %span.gbs-thumbnail.gbs-link-to-preview.gbs-link
+        %img{:src => link_info[:image]}
     = render 'attachments', :files => @work.attachments
     = render "metadata"
 

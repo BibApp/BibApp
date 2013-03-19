@@ -1,3 +1,5 @@
+require 'rest_client'
+
 module WorksHelper
   def link_to_work_authors(work, limit= nil)
     if !work.name_strings.author.empty?
@@ -115,22 +117,27 @@ module WorksHelper
     end
   end
 
+  #To get around the fact that we're on https we don't use the gbs javascript library, we query google here and
+  #construct the result directly.
+  #TODO An alternate and possibly better way would be to do this in javascript if possible - do the query
+  #below in javascript (should be okay since it is https?) then construct the bit of the view instead of in the partial.
+  #Alternately, have a callback to the server instead of doing this while constructing the main page.
   def link_to_google_book(work)
-    if !work.publication.nil? and !work.publication.isbns.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => ISBN.model_name.human}
-        work.publication.isbns.first[:name]
-        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.isbns.first[:name]}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
-    elsif !work.publication.nil? and !work.publication.issn_isbn.blank?
-      capture_haml :div, {:class => "right"} do
-        haml_tag :span, {:title => ISBN.model_name.human}
-        work.publication.issn_isbn
-        haml_tag :span, {:title => "#{ISBN.model_name.human}:#{work.publication.issn_isbn.gsub(" ", "")}", :class =>"gbs-thumbnail gbs-link-to-preview gbs-link"}
-      end
+    return unless work.publication.present?
+    isbn = if work.publication.isbns.first.present?
+      work.publication.isbns.first[:name]
+    elsif work.publication.issn_isbn.present?
+      work.publication.issn_isbn.gsub(' ', '')
     else
-      # Nothing
+      nil
     end
+    return unless isbn
+    google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
+    json = JSON.parse(google_response)
+    volume_info =  json['items'][0]['volumeInfo']
+    return {:link => volume_info['previewLink'], :image => volume_info['imageLinks']['smallThumbnail']}
+  rescue Exception => e
+    return
   end
 
   #The self_or_x methods return the passed object if a string or the field value for :x if not.

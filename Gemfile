@@ -62,6 +62,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record', "~> 0.3.2"
 
 gem 'daemons'
+gem 'rest-client'
 
 #data structures
 gem 'acts_as_list'
