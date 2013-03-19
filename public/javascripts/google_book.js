@@ -15,9 +15,9 @@ function get_google_link(span) {
   //lookup stuff
   var urls = lookup_google_links(isbn)
   var image = document.createElement('img');
-  $jq(image).attr('src', urls['link_url']);
+  $jq(image).attr('src', urls['image_url']);
   var link = document.createElement('a');
-  $jq(link).attr('href', urls['image_url']);
+  $jq(link).attr('href', urls['link_url']);
   $jq(link).append(image);
   $jq(span).append(link);
 }
