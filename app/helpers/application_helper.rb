@@ -217,7 +217,7 @@ module ApplicationHelper
         nil
       end
     else
-      isbn = work_or_isbn.gsub(' ', '')
+      isbn = work_or_isbn.tr(' -_', '')
     end
     return nil unless isbn
     google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
