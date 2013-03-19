@@ -1,4 +1,4 @@
-require 'config/personalize.rb'
+require 'config/personalize'
 
 module OmniAuth
   module Strategies
