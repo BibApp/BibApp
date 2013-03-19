@@ -224,6 +224,7 @@ module ApplicationHelper
     Rails.logger.error(isbn)
     return nil unless isbn
     google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
+    Rails.logger.error google_response.to_s
     json = JSON.parse(google_response)
     volume_info = json['items'][0]['volumeInfo']
     return {:link => volume_info['previewLink'], :image => volume_info['imageLinks']['smallThumbnail']}
