@@ -205,6 +205,18 @@ module ApplicationHelper
   #below in javascript (should be okay since it is https?) then construct the bit of the view instead of in the partial.
   #Alternately, have a callback to the server instead of doing this while constructing the main page.
   def link_to_google_book(work_or_isbn)
+    isbn = canonical_isbn(work_or_isbn)
+    return nil unless isbn
+    google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
+    json = JSON.parse(google_response)
+    volume_info = json['items'][0]['volumeInfo']
+    return {:link => volume_info['previewLink'], :image => volume_info['imageLinks']['smallThumbnail']}
+  rescue Exception => e
+    return nil
+  end
+
+  #Take a work or messy isbn string and return an isbn with only numbers or nil if no sensible isbn can be made
+  def canonical_isbn(work_or_isbn)
     if work_or_isbn.is_a?(Work)
       return nil unless work_or_isbn.publication.present?
       isbn = if work_or_isbn.publication.isbns.first.present?
@@ -217,14 +229,7 @@ module ApplicationHelper
     else
       isbn = work_or_isbn
     end
-    isbn = isbn.tr('-_ ', '')
-    return nil unless isbn
-    google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
-    json = JSON.parse(google_response)
-    volume_info = json['items'][0]['volumeInfo']
-    return {:link => volume_info['previewLink'], :image => volume_info['imageLinks']['smallThumbnail']}
-  rescue Exception => e
-    return nil
+    isbn.tr('-_ ', '')
   end
 
 end
