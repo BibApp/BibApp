@@ -67,10 +67,10 @@ end
 
 begin
   puts "Trying to load personalize.rb"
-  #load File.join(Rails.root, 'config', 'personalize.rb')
+  load File.join(Rails.root, 'config', 'personalize.rb')
 rescue Exception => e
   puts "Rescuing - trying to load from absolute path"
-  #load "/services/bibapp/bibapp-capistrano/shared/config/personalize.rb"
+  load "/services/bibapp/bibapp-capistrano/shared/config/personalize.rb"
 end
 require 'error_handler'
 require 'index'
