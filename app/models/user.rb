@@ -172,7 +172,7 @@ class User < ActiveRecord::Base
   end
 
   def apply_omniauth(omniauth)
-    self.email = omniauth['user_info']['email']
+    self.email = omniauth['info']['email']
     #other stuff to make a legal user
     if self.new_record?
       self.password = self.password_confirmation = User.random_password

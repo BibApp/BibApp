@@ -7,7 +7,7 @@ class AuthenticationsController < ApplicationController
       # User is already registered with application
       flash[:info] = t('common.authentications.flash_sign_in')
       sign_in_and_redirect(authentication.user)
-    elsif user = current_user || User.find_by_email(omniauth['user_info']['email'])
+    elsif user = current_user || User.find_by_email(omniauth['info']['email'])
       # User is signed in but has not already authenticated with this social network
       # OR
       #user already has a local account - connect it properly to an authentication
