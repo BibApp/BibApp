@@ -206,7 +206,7 @@ module ApplicationHelper
   #Alternately, have a callback to the server instead of doing this while constructing the main page.
   def link_to_google_book(work_or_isbn)
     Rails.logger.error("*" * 70 )
-    Rails.logger.error(work['issn_isbn'])
+    Rails.logger.error(work_or_isbn)
     if work_or_isbn.is_a?(Work)
       return nil unless work_or_isbn.publication.present?
       isbn = if work_or_isbn.publication.isbns.first.present?
@@ -219,6 +219,7 @@ module ApplicationHelper
     else
       isbn = work_or_isbn.tr(' -_', '')
     end
+    Rails.logger.error(isbn)
     return nil unless isbn
     google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
     json = JSON.parse(google_response)
