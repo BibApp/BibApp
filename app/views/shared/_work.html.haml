@@ -32,6 +32,8 @@
 
   -#Display the work
   %div{:class => (show_dupes ? "screen-format-dupes" : "screen-format")}
+    - Rails.logger.error("*" * 70 )
+    - Rails.logger.error(work['issn_isbn'])
     - if work['issn_isbn'] && work['issn_isbn'].length > 9
       = render :partial => 'shared/google_book', :locals => {:work_or_isbn => work['issn_isbn']}
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
