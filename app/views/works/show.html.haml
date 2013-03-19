@@ -20,7 +20,6 @@
   #work-details.span-14
     / COinS
     %span.Z3988{:title => "#{coin(@work)}"}
-    = render :partial => 'shared/google_book', :locals => {:work_or_isbn => @work}
     %span.work-preview.google-book{:title => canonical_isbn(@work)}
     = render 'attachments', :files => @work.attachments
     = render "metadata"

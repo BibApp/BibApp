@@ -33,7 +33,7 @@
   -#Display the work
   %div{:class => (show_dupes ? "screen-format-dupes" : "screen-format")}
     - if work['issn_isbn'] && work['issn_isbn'].length > 9
-      = render :partial => 'shared/google_book', :locals => {:work_or_isbn => work['issn_isbn']}
+      %span.work-preview.google-book{:title => canonical_isbn(work['issn_isbn'])}
     %strong #{link_to "#{work['title']}", work_path(work['pk_i'])}
     %h5.work-type #{t_solr_work_type(work['type'])}
     -#display status of a work, if specified
