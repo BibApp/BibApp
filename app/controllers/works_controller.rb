@@ -1,6 +1,7 @@
 require 'cmess/guess_encoding'
 require 'will_paginate/array'
 require 'set'
+require 'rest_client'
 class WorksController < ApplicationController
   #require CMess to help guess encoding of uploaded text files
 
@@ -362,11 +363,19 @@ class WorksController < ApplicationController
     #find works - not elegant, but the easiest way may be to find the ids for each author, intersect,
     #and then re-find based on the remaining ids. Since the first steps won't instantiate objects it shouldn't
     #actually be bad
-    work_sets = @authors.collect {|a| a.works.to_set}
+    work_sets = @authors.collect { |a| a.works.to_set }
     first_set = work_sets.pop
-    ids = work_sets.inject(first_set) {|intersection, set| intersection.intersection(set) }.to_a
+    ids = work_sets.inject(first_set) { |intersection, set| intersection.intersection(set) }.to_a
     proper_prepare_pagination
     @works = Work.where(:id => ids).paginate(:page => @page, :per_page => @rows).order(proper_work_order_phrase(@sort, @order))
+  end
+
+  def google_book_data
+    isbn = params[:isbn]
+    google_response = RestClient.get('https://www.googleapis.com/books/v1/volumes', :params => {:q => "isbn:#{isbn}"})
+    json = JSON.parse(google_response)
+    volume_info = json['items'][0]['volumeInfo']
+    render :json => {:link_url => volume_info['previewLink'], :image_url => volume_info['imageLinks']['smallThumbnail']}
   end
 
   private

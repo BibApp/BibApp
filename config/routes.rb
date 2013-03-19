@@ -7,6 +7,7 @@ Bibapp::Application.routes.draw do
         delete :destroy_multiple
         post :orphans_delete
         get :shared
+        get :google_book_data
       end
       member do
         get :add_to_saved
