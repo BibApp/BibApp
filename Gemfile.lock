@@ -265,6 +265,7 @@ DEPENDENCIES
   capistrano
   cmess
   cucumber-rails
+  daemons
   database_cleaner
   delayed_job
   delayed_job_active_record (~> 0.3.2)
