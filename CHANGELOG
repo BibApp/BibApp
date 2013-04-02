@@ -1,3 +1,12 @@
+1.2.3 - April 2, 2013
+--------------
+Track .rvmrc in git
+Add some database indexes
+Update Rails version for security fixes
+Make sure newly created work is indexed
+Pin version of delayed_job_active_record (for Postgres 8.4 compatibility)
+Fix imports with repeated author
+
 1.2.2 - June 22, 2012
 --------------
 make_resourceful is now available as a gem instead of a plugin, so use it that way (also include backports gem for older rubies)
