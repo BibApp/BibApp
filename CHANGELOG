@@ -1,3 +1,18 @@
+2.0.0 - April 2, 2013
+-------------
+Removed some unused gems
+Update ruby to 1.9.3
+Update rails to 3.2
+Replace ISBN_tools gem with lisbn
+Use current version of paperclip
+Configure mailing in environment initializer
+Remove tolk (hopefully) temporarily - Bibapp still needs work to get 
+	the current version to work
+Fix deprecations
+Move vendor/plugins code to lib (vendor/plugins is now deprecated)
+Update omniauth
+Workaround encoding issue
+
 1.2.3 - April 2, 2013
 --------------
 Track .rvmrc in git
