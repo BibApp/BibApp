@@ -6,7 +6,7 @@ describe User do
     before do
       @user = nil
       @creating_user = lambda do
-        @user = Factory.create(:unactivated_user)
+        @user = create(:unactivated_user)
       end
     end
 
@@ -32,7 +32,7 @@ describe User do
 
   context 'validations' do
     before(:each) do
-      @user = Factory.create(:unactivated_user)
+      @user = create(:unactivated_user)
     end
 
     it { should validate_presence_of(:email) }
@@ -52,7 +52,7 @@ describe User do
 
   context 'operations' do
     before(:each) do
-      @user = Factory.create(:activated_user, :password => 'password', :password_confirmation => 'password')
+      @user = create(:activated_user, :password => 'password', :password_confirmation => 'password')
     end
 
     it 'resets password' do
@@ -80,15 +80,15 @@ describe User do
   it "can return a list of first letters of users' emails" do
     emails = ['aaron@example.com', 'fred@example.com', 'joe@example.com', 'John@example.com', 'pete@example.com']
     emails.each do |email|
-      Factory.create(:user, :email => email)
+      create(:user, :email => email)
     end
     User.letters.should == ['A', 'F', 'J', 'P']
   end
 
   context "roles" do
     before(:each) do
-      @user = Factory.create(:user)
-      @work = Factory.create(:work)
+      @user = create(:user)
+      @work = create(:work)
     end
 
     it "has arbitrary roles on arbitrary objects as 'admin' of System" do
@@ -115,7 +115,7 @@ describe User do
 
     it "has role on any group instance, then it has it on Group" do
       @user.has_role?('editor', Group).should be_false
-      group = Factory.create(:group)
+      group = create(:group)
       @user.has_role('editor', group)
       @user.has_role?('editor', Group).should be_true
     end
@@ -128,7 +128,7 @@ describe User do
 
     it 'has role on any group instance then it has it on Person' do
       @user.has_role?('editor', Person).should be_false
-      @user.has_role('editor', Factory.create(:group))
+      @user.has_role('editor', create(:group))
       @user.has_role?('editor', Person).should be_true
     end
 
@@ -140,24 +140,24 @@ describe User do
 
     it 'has role on Work if it has it on any Person' do
       @user.has_role?('editor', Work).should be_false
-      @user.has_role('editor', Factory.create(:person))
+      @user.has_role('editor', create(:person))
       @user.has_role('editor', Work).should be_true
     end
 
     it "has role on Person instance if it has role on any of the instance's groups" do
-      person = Factory.create(:person)
+      person = create(:person)
       @user.has_role?('editor', person).should be_false
-      group = Factory.create(:group)
+      group = create(:group)
       person.groups << group
       @user.has_role('editor', group)
       @user.has_role?('editor', person).should be_true
     end
 
     it "has role on work instance if it has role on any of the instance's works" do
-      work = Factory.create(:work)
+      work = create(:work)
       @user.has_role?('editor', work).should be_false
-      person = Factory.create(:person)
-      pen_name = Factory.create(:pen_name)
+      person = create(:person)
+      pen_name = create(:pen_name)
       Contributorship.create(:pen_name => pen_name, :work => work, :person => person).verify_contributorship
       work.reload
       @user.has_role('editor', person)
@@ -166,7 +166,7 @@ describe User do
 
     context "explicitly checking for roles (no cascading)" do
       it "can check explicitly for roles (e.g. skip cascading)" do
-        work = Factory.create(:work)
+        work = create(:work)
         @user.has_role('editor', Work)
         @user.has_explicit_role?('editor', work).should be_false
       end
@@ -177,7 +177,7 @@ describe User do
       end
 
       it "finds a role for an object if the user has it" do
-        work = Factory.create(:work)
+        work = create(:work)
         @user.has_role('editor', work)
         @user.has_explicit_role?('editor', work)
       end

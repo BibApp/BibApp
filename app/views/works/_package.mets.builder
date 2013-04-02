@@ -1,4 +1,4 @@
-xml.instruct!
+xml.instruct!(:xml, :encoding => 'UTF-8')
 xml.mets(:OBJID=>"sword-mets", :LABEL=>"BibApp SWORD package", :PROFILE=>"DSpace METS SIP Profile 1.0", :xmlns=>"http://www.loc.gov/METS/", 'xmlns:xlink'=>"http://www.w3.org/1999/xlink", 'xmlns:xsi'=>"http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation'=>"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd", 'xmlns:epdcx' => 'http://purl.org/eprint/epdcx/2006-11-16/') do
   xml.metsHdr(:CREATEDATE => DateTime.now.to_s(:xsd)) do
     xml.agent(:ROLE=>"CREATOR", :TYPE=>"OTHER") do

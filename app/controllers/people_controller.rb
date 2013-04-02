@@ -1,6 +1,5 @@
 require 'author_batch_load'
 require 'bibapp_ldap'
-require 'redcloth'
 
 class PeopleController < ApplicationController
   include GoogleChartsHelper

@@ -99,7 +99,7 @@ class GroupsController < ApplicationController
   def hide
     @group = Group.find(params[:id])
 
-    permit "editor on group"
+    permit "editor on group", :group => @group
 
     children = @group.children.select { |c| !c.hide? }
 
@@ -122,7 +122,7 @@ class GroupsController < ApplicationController
   def unhide
     @group = Group.find(params[:id])
 
-    permit "editor on group"
+    permit "editor on group", :group => @group
 
     parent = @group.parent
 

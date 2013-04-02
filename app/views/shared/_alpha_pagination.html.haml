@@ -6,6 +6,6 @@
 - all ||= nil
 %ol#alpha-nav.pagination
   - if path and all
-    %li{:class => {:current => 'all' == @page}} #{link_to t('app.all'), "#{path[:path]}?page=all", :class => 'some'}
+    %li{:class => {:current => 'all' == @page}} #{link_to t('app.all'), "#{path}?page=all", :class => 'some'}
   - alpha_pagination_items(numbers).each do |item|
     = letter_link_for(@a_to_z, item, item == @page, :path => path)

@@ -1,4 +1,4 @@
-require 'lib/open_url_conference_context'
+require 'open_url_conference_context'
 class ConferencePoster < Work
   include OpenUrlConferenceContext
 

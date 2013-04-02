@@ -1,7 +1,7 @@
 require 'sword2ruby'
 require 'nokogiri'
 require 'tempfile'
-require 'zip/zip_output_stream'
+require 'zip/zip'
 
 class Sword_1_3_Adapter
 

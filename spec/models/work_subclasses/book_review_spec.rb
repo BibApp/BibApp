@@ -7,7 +7,7 @@ describe BookReview do
 
   describe "open_url kevs" do
     before(:each) do
-      @br = Factory.create(:book_review, :title_primary => 'Title', :publication_date_year => 2011,
+      @br = create(:book_review, :title_primary => 'Title', :publication_date_year => 2011,
                            :publication_date_month => 3, :publication_date_day => 2,
                            :volume => '11', :issue => '155', :start_page => '200', :end_page => '233')
     end
@@ -26,8 +26,8 @@ describe BookReview do
 
     context "with a publication" do
       it "should have additional open_url kevs" do
-        authority = Factory.create(:publication, :name => 'Authority')
-        publication = Factory.create(:publication, :authority => authority)
+        authority = create(:publication, :name => 'Authority')
+        publication = create(:publication, :authority => authority)
         publication.identifiers << ISSN.new(:name => '1234-4321')
         @br.publication = publication
         kevs = @br.open_url_kevs

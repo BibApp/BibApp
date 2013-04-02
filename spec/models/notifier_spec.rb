@@ -3,13 +3,13 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Notifier do
   include EmailSpec::Helpers
   include EmailSpec::Matchers
-  include ActionController::UrlWriter
+  include Rails.application.routes.url_helpers
 
   describe "import review notification" do
     before(:all) do
-      @user = Factory.create(:user)
-      @import = Factory.create(:import, :user => @user)
-      @email = Notifier.create_import_review_notification(@import)
+      @user = create(:user)
+      @import = create(:import, :user => @user)
+      @email = Notifier.import_review_notification(@import)
     end
 
     after(:all) do

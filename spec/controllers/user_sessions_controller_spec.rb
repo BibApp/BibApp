@@ -22,7 +22,7 @@ describe UserSessionsController do
 
   context 'not logged in' do
     before(:each) do
-      @a_user = Factory.create(:activated_user, :password => 'password', :password_confirmation => 'password')
+      @a_user = create(:activated_user, :password => 'password', :password_confirmation => 'password')
       ensure_logged_out(@a_user)
     end
 

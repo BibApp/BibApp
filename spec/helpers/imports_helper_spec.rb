@@ -5,8 +5,8 @@ describe ImportsHelper do
   describe "Can return text describing/linking person associated with import" do
 
     before(:each) do
-      @person = Factory.create(:person)
-      @import = Factory.create(:import, :person => @person)
+      @person = create(:person)
+      @import = create(:import, :person => @person)
     end
 
     it "Should identify system imports" do

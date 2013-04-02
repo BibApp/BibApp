@@ -1,5 +1,7 @@
-Factory.define :work_name_string do |wns|
-  wns.association :name_string
-  wns.association :work, :factory => :book_whole
-  wns.role 'Author'
+FactoryGirl.define do
+  factory :work_name_string do
+    association :name_string
+    association :work, :factory => :book_whole
+    role 'Author'
+  end
 end

@@ -1,4 +1,4 @@
-require 'lib/trivial_initializer'
+require 'trivial_initializer'
 module KeywordsHelper
 
   class YearTag

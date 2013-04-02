@@ -1,4 +1,4 @@
-require 'lib/open_url_book_context'
+require 'open_url_book_context'
 class BookSection < Work
   include OpenUrlBookContext
 

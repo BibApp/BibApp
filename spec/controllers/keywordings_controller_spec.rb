@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe KeywordingsController do
 
   before(:each) do
-    @keywording = Factory.create(:keywording)
+    @keywording = create(:keywording)
   end
 
   it "should get index" do
@@ -28,7 +28,7 @@ describe KeywordingsController do
     end
 
     it "should create" do
-      keyword = Factory.create(:keyword)
+      keyword = create(:keyword)
       lambda {
         post :create, :keywording => {:keyword_id => keyword.id, :work_id => @keywording.work.id}
       }.should change(Keywording, :count).by(1)

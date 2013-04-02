@@ -30,7 +30,7 @@ class Publication < PubCommon
   scope :authorities, where("id = authority_id")
   scope :for_authority, lambda { |authority_id| where(:authority_id => authority_id) }
   scope :order_by_name, order('name')
-  scope :sort_name_like, lambda {|name| where('sort_name like ?', name.downcase)}
+  scope :sort_name_like, lambda { |name| where('sort_name like ?', name.downcase) }
   scope :name_like, lambda { |name| where('name like ?', name) }
 
   def before_create_actions
@@ -71,26 +71,22 @@ class Publication < PubCommon
   def parse_identifiers
     return if self.issn_isbn.blank?
 
-    # Loop through all publication issn_isbn values
-    self.issn_isbn.each do |issn_isbn|
+    # Field might be separated
+    issn_isbn.split("; ").each do |identifier|
 
-      # Field might be separated
-      issn_isbn.split("; ").each do |identifier|
+      # No spaces, no hyphens, no quotes
+      identifier = identifier.strip.gsub(/[-" ]/, "")
 
-        # No spaces, no hyphens, no quotes
-        identifier = identifier.strip.gsub(/[-" ]/, "")
-
-        # Init new Identifier
-        parsed_identifiers = Identifier.parse(identifier)
-        parsed_identifiers.each do |pi|
-          klass, id = pi
-          pub_id = Identifier.find_or_create_by_name_and_type(id, klass.id_type_string)
-          unless self.identifiers.include?(pub_id)
-            self.identifiers << pub_id
-          end
+      # Init new Identifier
+      parsed_identifiers = Identifier.parse(identifier)
+      parsed_identifiers.each do |pi|
+        klass, id = pi
+        pub_id = Identifier.find_or_create_by_name_and_type(id, klass.id_type_string)
+        unless self.identifiers.include?(pub_id)
+          self.identifiers << pub_id
         end
-
       end
+
     end
   end
 

@@ -1,5 +1,4 @@
 class ISBN < Identifier
-  require 'isbn/tools'
 
   validates_presence_of :name
 
@@ -10,7 +9,7 @@ class ISBN < Identifier
   # I'm not sure this is guaranteed to work (e.g. that every stem as produced will become a valid ISBN
   # by appending one of the possible check digits, but I think it's okay and it seems to work.
   def self.random
-    stem = '978' + 9.times.collect { ActiveSupport::SecureRandom.random_number(10) }.join('')
+    stem = '978' + 9.times.collect { SecureRandom.random_number(10) }.join('')
     ((0..9).to_a << 'X').each do |tail|
       candidate = stem + tail.to_s
       return candidate if self.is_valid?(candidate)
@@ -18,11 +17,11 @@ class ISBN < Identifier
   end
 
   def self.cleanup(identifier)
-    ISBN_Tools.cleanup(identifier)
+    Lisbn.new(identifier).isbn
   end
 
   def self.is_valid?(identifier)
-    ISBN_Tools.is_valid?(identifier)
+    Lisbn.new(identifier).valid?
   end
 
 #  def clean_response(isbn_response)

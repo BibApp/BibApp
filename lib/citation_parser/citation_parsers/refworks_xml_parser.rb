@@ -4,9 +4,6 @@
 # Parses a valid RefWorks XML file into a Ruby Hash.
 #
 #
-# All String parsing is done using String.mb_chars
-# to ensure Unicode strings are parsed properly.
-# See: http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/String/Unicode.html
 #
 class RefworksXmlParser < BaseXmlParser
 

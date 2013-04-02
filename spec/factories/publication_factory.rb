@@ -1,3 +1,5 @@
-Factory.define :publication do |p|
-    
+FactoryGirl.define do
+  factory :publication do
+    #nothing
+  end
 end

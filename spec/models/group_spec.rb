@@ -5,7 +5,7 @@ describe Group do
   it_should_behave_like "a class generating sort_name"
 
   it "can return solr data" do
-    group = Factory.build(:group, :name => 'group_name')
+    group = build(:group, :name => 'group_name')
     id = group.id
     group.to_solr_data.should == "group_name||#{id}"
   end
@@ -13,15 +13,15 @@ describe Group do
   describe "associated works" do
 
     before(:each) do
-      @group = Factory.create(:group)
-      @person_1 = Factory.create(:person)
-      @person_2 = Factory.create(:person)
+      @group = create(:group)
+      @person_1 = create(:person)
+      @person_2 = create(:person)
       @group.people << @person_1
       @group.people << @person_2
-      @work_1 = Factory.create(:work)
-      @work_2 = Factory.create(:work)
-      Factory.create(:contributorship, :person => @person_1, :work => @work_1).verify_contributorship
-      Factory.create(:contributorship, :person => @person_2, :work => @work_2).verify_contributorship
+      @work_1 = create(:work)
+      @work_2 = create(:work)
+      create(:contributorship, :person => @person_1, :work => @work_1).verify_contributorship
+      create(:contributorship, :person => @person_2, :work => @work_2).verify_contributorship
     end
 
     it "can return a list of works from people associated with the group" do
@@ -29,15 +29,15 @@ describe Group do
     end
 
     it "takes into account works co-authored by group members" do
-      shared_work = Factory.create(:work)
-      [@person_1, @person_2].each {|p| Factory.create(:contributorship, :person => p, :work => shared_work).verify_contributorship}
+      shared_work = create(:work)
+      [@person_1, @person_2].each {|p| create(:contributorship, :person => p, :work => shared_work).verify_contributorship}
       @group.works.length.should == 3
     end
   end
 
   describe 'url canonicalization' do
     before(:each) do
-      @group = Factory.build(:group)
+      @group = build(:group)
     end
 
     it "returns an unchanged url for an http or https uri" do

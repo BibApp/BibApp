@@ -3,10 +3,8 @@ module MachineName
   #Machine name is a string with:
   #  1. all punctuation/spaces converted to single space
   #  2. stripped of leading/trailing spaces and downcased
-  # Note we do this in a way that avoids modifying the original string or its mb_chars!
   def make_machine_name(string)
-    normalized_string = string.mb_chars.gsub(/[\W]+/, " ")
-    normalized_string.strip.downcase.to_s
+    string.gsub(/[\W]+/, " ").strip.downcase
   end
 
   def make_machine_name_from_array(array_of_strings)

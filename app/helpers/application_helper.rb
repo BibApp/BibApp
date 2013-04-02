@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  require 'config/personalize.rb'
 
   def ajax_pen_name_checkbox_toggle(name_string, person, selected, reload = false)
     if selected
@@ -57,12 +56,6 @@ module ApplicationHelper
     end
 
     coin
-  end
-
-  #Encodes UTF-8 data such that it is valid in XML
-  def encode_for_xml(data)
-    code = HTMLEntities.new
-    code.encode(data, :basic)
   end
 
   #Finds the Error message for a *specific field* in a Form

@@ -1,3 +1,6 @@
-Factory.define(:group) do |g|
-  g.sequence(:name) {|n| "Group #{n}"}
+FactoryGirl.define do
+  factory :group do
+    sequence(:name) {|n| "Group #{n}"}
+    hide false
+  end
 end
