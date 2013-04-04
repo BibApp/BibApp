@@ -1,3 +1,8 @@
+2.0.1 - April 4, 2013
+-------------
+Fix some migrations for new ruby/rails versions
+Don't use observers when running migrations
+
 2.0.0 - April 2, 2013
 -------------
 Removed some unused gems
@@ -6,7 +11,7 @@ Update rails to 3.2
 Replace ISBN_tools gem with lisbn
 Use current version of paperclip
 Configure mailing in environment initializer
-Remove tolk (hopefully) temporarily - Bibapp still needs work to get 
+Remove tolk (hopefully) temporarily - Bibapp still needs work to get
 	the current version to work
 Fix deprecations
 Move vendor/plugins code to lib (vendor/plugins is now deprecated)
