@@ -1,3 +1,4 @@
+require 'csv'
 #We save all the login names to a csv file in tmp keyed on email so that
 #this can be reverted as long as that is still present and all the emails are still present
 #in the Users table. I see this primarily being useful while I'm still developing this and it'll probably
@@ -8,7 +9,7 @@ class RemoveLoginFromUsers < ActiveRecord::Migration
 
   def self.up
 
-    FasterCSV.open(@@backup_file, 'w') do |csv|
+    CSV.open(@@backup_file, 'w') do |csv|
       User.all.each do |user|
         csv << [user.email, user.login]
       end
@@ -19,7 +20,7 @@ class RemoveLoginFromUsers < ActiveRecord::Migration
   def self.down
     add_column :users, :login, :string
     if File.exists?(@@backup_file)
-      user_alist = FasterCSV.read(@@backup_file)
+      user_alist = CSV.read(@@backup_file)
       user_alist.each do |row|
         email, login = *row
         if user = User.find_by_email(email)
