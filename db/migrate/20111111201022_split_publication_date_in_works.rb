@@ -16,13 +16,13 @@ class SplitPublicationDateInWorks < ActiveRecord::Migration
     else
       Work.all.each do |work|
         if work.publication_date.present?
-          work.update_attribute(:publication_date_year, work.publication_date.year)
-          work.update_attribute(:publication_date_month, work.publication_date.month)
-          work.update_attribute(:publication_date_day, work.publication_date.day)
+          work.update_column(:publication_date_year, work.publication_date.year)
+          work.update_column(:publication_date_month, work.publication_date.month)
+          work.update_column(:publication_date_day, work.publication_date.day)
         else
-          work.update_attribute(:publication_date_year, nil)
-          work.update_attribute(:publication_date_month, nil)
-          work.update_attribute(:publication_date_day, nil)
+          work.update_column(:publication_date_year, nil)
+          work.update_column(:publication_date_month, nil)
+          work.update_column(:publication_date_day, nil)
         end
       end
     end
@@ -44,9 +44,9 @@ class SplitPublicationDateInWorks < ActiveRecord::Migration
     else
       Work.all.each do |work|
         if work.publication_date_year.present?
-          work.update_attribute(:publication_date, Date.new(work.publication_date_year, work.publication_date_month || 1, work.publication_date_day || 1))
+          work.column(:publication_date, Date.new(work.publication_date_year, work.publication_date_month || 1, work.publication_date_day || 1))
         else
-          work.update_attribute(:publication_date, nil)
+          work.update_column(:publication_date, nil)
         end
       end
     end
