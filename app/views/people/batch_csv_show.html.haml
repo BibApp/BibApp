@@ -1,7 +1,7 @@
 - results = params[:completed]
 #admin-actions.span-24
 = render :layout => 'layouts/main_body_no_h2' do
-  = form_for :person, 'whather', :url => batch_csv_create_people_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
+  = form_for :person, :url => batch_csv_create_people_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
     %fieldset.span-15
 
       - if results.present?
