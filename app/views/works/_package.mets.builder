@@ -11,7 +11,7 @@ xml.mets(:OBJID=>"sword-mets", :LABEL=>"BibApp SWORD package", :PROFILE=>"DSpace
   xml.fileSec do
     xml.fileGrp(:ID=>"sword-mets-fgrp-#{work.id}", :USE=>"CONTENT") do
       work.attachments.each do |att|
-        xml.file(:ID=>"sword-mets-file-#{att.id}", :MIMETYPE=>att.content_type, :SIZE=>att.size) do
+        xml.file(:ID=>"sword-mets-file-#{att.id}", :MIMETYPE=>att.content_type, :SIZE=>att.filesize) do
           if filenames_only
             xml.FLocat(:LOCTYPE=>"URL", "xlink:href"=>att.filename)
           else

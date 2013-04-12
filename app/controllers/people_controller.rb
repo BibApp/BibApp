@@ -253,7 +253,7 @@ class PeopleController < ApplicationController
         if msg.empty?
           # is it better to pass the filename instead of storing the csv contents in the db
           # even if the db row is temporary ?
-          Delayed::Job.enqueue CsvPeopleUpload.new(str, current_user.id, filename)
+          CsvPeopleUpload.new(str, current_user.id, filename).perform
           msg = t('common.people.file_accepted')
         end
       end

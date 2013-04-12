@@ -15,7 +15,7 @@ class ConferencePoster < Work
   end
 
   def type_uri
-    "http ://purl.org/eprint/type/ConferencePoster"
+    "http://purl.org/eprint/type/ConferencePoster"
   end
 
 end
