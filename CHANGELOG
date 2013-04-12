@@ -2,6 +2,7 @@
 -------------
 Fix some migrations for new ruby/rails versions
 Don't use observers when running migrations
+Fix CSV import, but only as a synchronous process for now.
 
 2.0.0 - April 2, 2013
 -------------

@@ -252,8 +252,7 @@ class PeopleController < ApplicationController
         if msg.empty?
           # is it better to pass the filename instead of storing the csv contents in the db
           # even if the db row is temporary ?
-          #self.delay.do_csv_upload(str, current_user.id, filename)
-          CsvPeopleUpload.new(str, current_user.id, filename).delay.perform
+          CsvPeopleUpload.new(str, current_user.id, filename).perform
           msg = t('common.people.file_accepted')
         end
       end

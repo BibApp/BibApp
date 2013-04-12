@@ -17,20 +17,12 @@ class CsvPeopleUpload < Object
     self.filename = filename
   end
 
-  def log_action(message)
-    File.open(File.join(Rails.root, 'dj.txt'), 'w+') do |f|
-      f.puts "#{Time.now}: #{message}"
-    end
-  end
-
   # required for DelayedJob
   def perform
-    log_action "Performing delayed job for #{filename}"
     batch_persons_csv(csv_text, user_id, filename)
   end
 
   def batch_persons_csv(str, user_id, filename)
-    log_action "In batch persons csv"
     begin
 
       results = batch_process(str)
@@ -44,13 +36,10 @@ class CsvPeopleUpload < Object
       end
 
     rescue Exception => e
-      log_action "Error in batch persons csv: #{e.to_s}"
       results = "An error was generated processing your request. #{e.to_s}"
 
     end
-    log_action "Notifying in batch_process_csv"
     Notifier.batch_import_persons_notification(user_id, results, filename).deliver
-    log_action "Notified in batch_process_csv"
   end
 
 
