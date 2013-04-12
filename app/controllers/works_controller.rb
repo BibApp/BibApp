@@ -1,8 +1,6 @@
-require 'cmess/guess_encoding'
 require 'will_paginate/array'
 require 'set'
 class WorksController < ApplicationController
-  #require CMess to help guess encoding of uploaded text files
 
   #Require a user be logged in to create / update / destroy
   before_filter :login_required,
