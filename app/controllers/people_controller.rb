@@ -1,4 +1,3 @@
-require 'author_batch_load'
 require 'bibapp_ldap'
 
 class PeopleController < ApplicationController
@@ -240,7 +239,7 @@ class PeopleController < ApplicationController
         end
       end
       if @message.empty?
-        CsvPeopleUpload.new(str, current_user.id, filename).perform
+        BatchUpload::CsvPeople.new(str, current_user.id, filename).delay.perform
         @message = t('common.people.file_accepted')
       end
     rescue Exception => e
