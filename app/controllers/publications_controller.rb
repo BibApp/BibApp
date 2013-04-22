@@ -20,7 +20,7 @@ class PublicationsController < ApplicationController
     #Add a response for RSS
     response_for :show do |format|
       format.html #loads show.html.haml (HTML needs to be first, so I.E. views it by default)
-      format.rss #loads show.rss.rxml
+      format.rss #loads show.rss.builder
     end
 
     response_for :update do |format|
