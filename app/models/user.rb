@@ -214,7 +214,7 @@ class User < ActiveRecord::Base
 
   # return the first letter of each email, ordered alphabetically
   def self.letters
-    self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').order('letter').collect { |x| x.letter.upcase }.uniq
+    self.select('DISTINCT SUBSTR(email, 1, 1) AS letter').collect { |x| x.letter.upcase }.uniq.sort
   end
 
 end
