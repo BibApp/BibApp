@@ -24,27 +24,29 @@ class RisImporter < BaseImporter
       :a1 => :work_name_strings,
       :a2 => :work_name_strings,
 #     :a3 => @TODO - Author Series
-      :ab => :notes,
+      :ab => :abstract,
       :au => :work_name_strings,
       :ad => :affiliation,
 #     :av => @TODO - Availability
       :bn => :issn_isbn, # Non-RIS tag?
       :bt => :title_secondary,
+      :c2 => :links, # Mapped to PMCID by Zotero, https://github.com/aurimasv/translators/wiki/RIS-Tag-Map.
       :cp => :issue,
       :ct => :title_primary,
       :cy => :publication_place,
+      :do => :links,
       :ed => :work_name_strings,
       :ep => :end_page,
-      :id => :identifier,
+#      :id => :identifier, # Usually a local identifier which becomes meaningless in a multi-user system. # No longer appears in the RIS format spec, http://www.refman.com/support/risformat_intro.asp
       :is => :issue,
-      :j1 => :publication_j1,
-      :j2 => :publication_j2,
-      :ja => :publication_ja,
-      :jf => :publication_jf,
-      :jo => :publication_jo,
+      :j1 => :publication_j1, # No longer appears in the RIS format spec, http://www.refman.com/support/risformat_intro.asp
+      :j2 => :publication_j2, # Alternate Title for Journals, Abbreviated Title for Books
+      :ja => :publication_ja, # No longer appears in the RIS format spec, http://www.refman.com/support/risformat_intro.asp
+      :jf => :publication_jf, # No longer appears in the RIS format spec, http://www.refman.com/support/risformat_intro.asp
+      :jo => :publication_jo, # No longer appears in the RIS format spec, http://www.refman.com/support/risformat_intro.asp
       :kw => :keywords,
-      :l1 => :links,
-      :l2 => :links,
+      :l1 => :links, # L1 is now for file attachments, according to spec. Not sure how this is applied in practice.
+      :l2 => :links, # L2 no longer appears in RIS format spec, http://www.refman.com/support/risformat_intro.asp
 #      :l3 => @TODO - Related Records
 #      :l4 => @TODO - Images
       :m1 => :notes,
@@ -58,9 +60,9 @@ class RisImporter < BaseImporter
       :sn => :issn_isbn,
       :sp => :start_page,
       :t1 => :title_primary,
-      :t2 => :title_secondary,
+      :t2 => :publication_t2, # Title of the incorporating work, e.g. if :ti is article, :t2 is journal title. If :ti is book section, :t2 is books. If :ti is book, :t2 is series title.
       :t3 => :title_tertiary,
-      :ti => :title_primary,
+      :ti => :title_primary, # Title of the work being described
       :ty => :klass,
       :u1 => :user_definable,
       :u2 => :user_definable,
@@ -75,7 +77,7 @@ class RisImporter < BaseImporter
 
     #the first of these that matches will eventually become the publication field and
     #the rest will be discarded
-    @publication_priority = [:jf, :jo, :ja, :j1, :j2].collect {|suffix| :"publication_#{suffix}"}
+    @publication_priority = [:jf, :jo, :ja, :j1, :t2, :j2].collect {|suffix| :"publication_#{suffix}"}
 
     #Initialize our Value Translators (which will translate values from normal Medline files)
     @value_translators = Hash.new(lambda { |val_arr| Array(val_arr) })
