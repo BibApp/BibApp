@@ -102,9 +102,9 @@ namespace :deploy do
   end
 
   def rsync(remote, local)
-    staqing_id = "#{user}@#{staging_server}"
+    staging_id = "#{user}@#{staging_server}"
     production_id = "#{user}@#{production_server}"
-    system "rsync -avPe ssh #{staqing_id}:#{remote} #{local}"
+    system "rsync -avPe ssh #{staging_id}:#{remote} #{local}"
     system "rsync -avPe ssh #{local} #{production_id}:#{remote}"
   end
 
