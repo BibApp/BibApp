@@ -27,7 +27,7 @@
 
     %title= t('personalize.application_name') + " - " + (@title || t('layouts.application.default_title'))
   %body
-    = link_to_function('Toggle env', '$("env").toggle();')
+    = link_to_function('Toggle env', '$jq("#env").toggle();')
     %div.container#env{:style => 'display: none;'}
       %ul
         %li ENV
