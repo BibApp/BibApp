@@ -58,6 +58,8 @@ gem 'lisbn'
 gem 'delayed_job'
 gem 'delayed_job_active_record', "~> 0.3.2"
 
+gem 'daemons', '1.1.9'
+
 #data structures
 gem 'acts_as_list'
 gem 'acts_as_tree_rails3'
