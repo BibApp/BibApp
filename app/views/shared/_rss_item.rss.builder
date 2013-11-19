@@ -5,7 +5,7 @@ xml.item do
   xml.description {
     xml.cdata!(work['type'])
     xml.cdata!(render(subclass_partial_for(work) + ".html.haml", :work => work))
-    xml.cdata!(work['abstract'])
+    xml.cdata!(work['abstract']) if work['abstract']
   }
 
   xml.link work_url(:only_path => false, :id => work['id'].split("-")[1])

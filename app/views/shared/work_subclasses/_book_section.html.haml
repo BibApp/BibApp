@@ -1,4 +1,4 @@
-= render :layout => '/shared/work_subclasses/layout', :locals => {:work => work} do
+= render :layout => '/shared/work_subclasses/layout.html.haml', :locals => {:work => work} do
   %br/
   - if work['editors_data']
     = link_to_editors(work)

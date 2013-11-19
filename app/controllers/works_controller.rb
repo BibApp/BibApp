@@ -1,8 +1,8 @@
-require 'cmess/guess_encoding'
 require 'will_paginate/array'
 require 'set'
 require 'rest_client'
 class WorksController < ApplicationController
+
   cattr_accessor :google_book_link_cache
   #require CMess to help guess encoding of uploaded text files
 

@@ -1,15 +1,11 @@
-- results = params[:completed]
 #admin-actions.span-24
 = render :layout => 'layouts/main_body_no_h2' do
   = form_for :person, :url => batch_csv_create_people_url, :html => {:class=>"work_form", :method => :post, :multipart => true} do |form|
     %fieldset.span-15
-
-      - if results.present?
+      - if @message
         %legend #{t 'people.batch_csv_show.legend_present'}
-        %p #{results}
-
+        %p #{@message}
       - else
         %legend #{t 'people.batch_csv_show.legend_absent'}
         %p #{t 'people.batch_csv_show.select_file'}
-
-        = render 'shared/upload_form', :form => form
+      = render 'shared/upload_form', :form => form
