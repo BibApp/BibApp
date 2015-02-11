@@ -3,18 +3,19 @@ require_relative 'ris_writers'
 namespace :cgs_export do
 
   task :ris => :environment do
-    ris_dir = File.join(Rails.root, 'tmp', 'cgs')
+    ris_dir = File.join(Rails.root, 'tmp', 'exports')
     FileUtils.rm_rf(ris_dir)
     FileUtils.mkdir_p(ris_dir)
+    
     work_list.each do |work|
-        write_work_to_file(work, File.join(ris_dir, "#{work.id}.ris"))
+        write_work_to_file(work, File.join(ris_dir, "group_12.ris"))
     end
   end
 
 end
 
 def work_list
-  cgs_group = Group.find 61
+  cgs_group = Group.find 12
   works_for_group(cgs_group)
 end
 
@@ -39,7 +40,7 @@ def write_work_to_file(work, filename)
     raise RuntimeError, "Unrecognized work type #{type}"
   end
   writer = write_klass.new(work)
-  writer.write_to_file(filename)
+  writer.append_to_file(filename)
 rescue Exception => e
   puts e.to_s
   puts work.to_yaml
