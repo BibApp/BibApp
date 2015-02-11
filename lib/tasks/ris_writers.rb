@@ -8,21 +8,33 @@ class RISWriter < Object
   def write_to_file(filename)
     File.open(filename, 'w') do |f|
       self.file = f
-      write_type
-      write_titles
-      write_authors
-      write_keywords
-      write_links
-      write_dates
-      write_language
-      write_abstract_and_notes
-      write_volume
-      write_publication_info
-      write_special
-      write_identifier
-      write_pages
-      write_end
+      write_tags
     end
+  end
+
+  def append_to_file(filename)
+    File.open(filename, 'a') do |f|
+      self.file = f
+      write_tags
+    end
+  end
+
+  def write_tags
+    write_type
+    write_authors
+    write_titles
+    write_publication
+    write_dates
+    write_publisher_info
+    write_volume
+    write_pages
+    write_identifier
+    write_language
+    write_abstract_and_notes
+    write_keywords
+    write_special
+    write_links
+    write_end
   end
 
   def write_type
@@ -42,10 +54,9 @@ class RISWriter < Object
     write_tag(:sn, work.publication.try(:issn_isbn))
   end
 
-  def write_publication_info
-    write_tag(:pb, work.publisher.try(:name))
-    write_tag(:op, work.publication.try(:name))
+  def write_publisher_info
     write_tag(:cy, work.publication_place)
+    write_tag(:pb, work.publisher.try(:name))
   end
 
   def write_volume
@@ -97,6 +108,16 @@ class RISWriter < Object
       end
       write_tag(tag, work_name_string.name_string.name)
     end
+  end
+
+  def write_publication
+    tag = case self.type
+          when 'BOOK' then
+            :op #TODO: is this right?
+          else
+            :t2  
+          end
+    write_tag(tag, work.publication.try(:name))
   end
 
   def write_keywords
